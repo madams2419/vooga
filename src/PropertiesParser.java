@@ -4,25 +4,25 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 
-public class XMLParser {
-	private static XMLParser sharedInstance;
+public class PropertiesParser {
+	private static PropertiesParser sharedInstance;
 	private static String mCurrentFile;
 	private static Map<String,String> labelMap;
 	private ResourceBundle resources;
 
-	public static XMLParser getSharedInstance(String fileName) {
+	public static PropertiesParser getSharedInstance(String fileName) {
 		mCurrentFile = mCurrentFile == null ? fileName : mCurrentFile;
 		if(sharedInstance == null || !mCurrentFile.equals(fileName)) {
-			sharedInstance = new XMLParser(mCurrentFile);
+			sharedInstance = new PropertiesParser(mCurrentFile);
 		}
 		return sharedInstance;
 	}
 	
-	public static XMLParser getSharedInstance(){
+	public static PropertiesParser getSharedInstance(){
 		return getSharedInstance(mCurrentFile);
 	}
 
-	private XMLParser(String language) {
+	private PropertiesParser(String language) {
 		sharedInstance = this;
 		getResources(mCurrentFile);
 	}
