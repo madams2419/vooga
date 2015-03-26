@@ -9,10 +9,10 @@ import javafx.scene.Node;
  *
  */
 public interface CharacterMovement {
-	 void moveLeft(Node n);
-	 void moveRight(Node n);
-	 void jump(Node n);
-	 void crawl(Node n);	
+	 void moveLeft(int n);
+	 void moveRight(int n);
+	 void jump(int n);
+	 void crawl(int n);	
 }
 
 

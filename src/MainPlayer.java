@@ -1,4 +1,7 @@
 import javafx.scene.Node;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 /**
  * 
@@ -9,32 +12,29 @@ import javafx.scene.Node;
  *
  */
 public class MainPlayer implements CharacterMovement {
+Circle c=new Circle(40,40,50);
 
 	@Override
-	public void moveLeft(Node n) {
+	public void moveLeft(int currentLocation) {
+		// TODO Auto-generated method stub
+		c.setTranslateX(currentLocation-1);
+	}
+
+	@Override
+	public void moveRight(int currentLocation) {
+		// TODO Auto-generated method stub
+		c.setTranslateX(currentLocation+1);
+	}
+
+	@Override
+	public void jump(int currentLocation) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void moveRight(Node n) {
+	public void crawl(int currentLocation) {
 		// TODO Auto-generated method stub
-		
+		c=new Circle(10,10,30);
 	}
-
-	@Override
-	public void jump(Node n) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void crawl(Node n) {
-		// TODO Auto-generated method stub
-		
-	}
-
- 
-
-
 }
