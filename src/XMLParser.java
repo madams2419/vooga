@@ -1,5 +1,3 @@
-package voogasalad_HighScrollers;
-
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
