@@ -29,7 +29,7 @@ Circle c=new Circle(40,40,50);
 	@Override
 	public void jump(int currentLocation) {
 		// TODO Auto-generated method stub
-		
+		c.setTranslateY(currentLocation+1);
 	}
 
 	@Override
