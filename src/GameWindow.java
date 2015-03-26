@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 public class GameWindow extends Application {
 private SetBackground myBackground;
 String backgroundName="randombackground";
+
   public static void main(String[] args) {
     launch(args);
   }

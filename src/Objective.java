@@ -1,24 +1,25 @@
 /**
  * @author hojeanniechung
  *
+ *interface for Objectives
  */
-abstract class Objective{
-	abstract void onComplete();
-	abstract void onStart();
-	abstract void isComplete();
-	abstract void update();
+public interface Objective{
+	void onComplete();
+	void onStart();
+	void isComplete();
+	void update();
 
-	class MarioObjective extends Objective{
-		void onComplete(){
+	class MarioObjective implements Objective{
+		public void onComplete(){
 			System.out.println("Now do things after completion of objective");
 		}
-		void onStart(){
+		public void onStart(){
 			System.out.println("Object is Started");
 		}
-		void isComplete(){
+		public void isComplete(){
 			System.out.println("Object is Completed");
 		}
-		void update(){
+		public void update(){
 			System.out.println("update the Objectives");
 		}
 	}
