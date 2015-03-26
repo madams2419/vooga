@@ -29,7 +29,7 @@ public class PropertiesParser {
 
 	public ResourceBundle getResources(String fileName) {
 		if(resources == null || !fileName.equals(mCurrentFile)) {
-			resources = ResourceBundle.getBundle(String.format("resources.languages.%s", fileName));
+			resources = ResourceBundle.getBundle(String.format("Resources.%s", fileName));
 			mCurrentFile = fileName;
 		}
 		return resources;
