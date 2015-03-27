@@ -3,6 +3,7 @@ package game_player;
 import java.io.File;
 
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import game_engine.Game;
 
 public class GameLoop {
@@ -22,6 +23,10 @@ public class GameLoop {
 	
 	public void play() {
 		
+	}
+	
+	private void handleKeyPress(KeyEvent event) {
+		game.handleKeyPress(event.getText());
 	}
 
 }
