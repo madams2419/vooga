@@ -53,3 +53,142 @@ Use Cases
 
 ###Game Data
 * Game designer wants to save a game file
+<<<<<<< HEAD
+
+###Example Code
+package usecases;
+
+import game_engine.CollisionEngine;
+import game_engine.Game;
+import game_engine.Level;
+import game_engine.Objective;
+import game_engine.PhysicsEngine;
+import game_engine.sprite.Player;
+import game_engine.sprite.Sprite;
+import game_engine.sprite.Water;
+
+public class UseCases {
+	
+	/* 
+	 * USE CASE: Player presses spacebar and sprite responds with mapped behavior
+	 * 1. Private method gameLoop.handleKeyInput(KeyEvent event) is called when the spacebar is pressed. See GameLoop.java for implementation of this method.
+	 * 2. Public method game.handleKeyPress(String keyText) is called. See Game.java for implementation details.
+	 * 3. Public method controlsManager.executeBehavior(String keyText) is called. See ControlsManager.java for implementation details.
+	 */
+	public void useCase1() {
+		Game mockGame = new Game();
+		String keyText = "SPACEBAR";
+		mockGame.handleKeyPress(keyText);
+	}
+	
+	/*
+	 * USE CASE: Player completes objective and moves onto new level
+	 * 
+	 * 1. Listener in Objective class detects the completeness of an objective
+	 * 2. Private method onComplete() is called to execute the correspondent predicates
+	 * 3. The predicate triggers the next level and switches activeLevel in Game.java
+	 */
+	
+	public void useCase2(){
+		Game mockGame = new Game();
+		Objective mockObjective = new Objective();
+		mockObjective.onComplete();
+		Level newLevel = new Level();
+		mockGame.switchActiveLevel(newLevel);
+	}
+	
+	
+	/*
+	 * USE CASE: Player enters a new region (water), and the 
+	 * 1. CollisionEngine detects the collision between the Player and the water
+	 * 2. CollisionEngine calls CollisionManager with the two sprites and the correspondent collision object (PlayerWaterCollision) is retrieved
+	 * 3. PlayerWaterCollision executes its configured predicates and changes the gravity parameter in the playerPhysicsEngine
+	 */
+	
+	public void useCase3(){
+		CollisionEngine collisionEngine = new CollisionEngine();
+		PhysicsEngine physicsEngine = new PhysicsEngine();
+		Sprite water = new Water();
+		Sprite player = new Player();
+		collisionEngine.executeCollision(player, water);
+		double acceleration = 9.8;
+		physicsEngine.setAcceleration(acceleration);
+	}
+	
+		/*
+	 * USE CASE: Objective Interface
+	 * 1. Objective Interface handles the objectives that the characters achieve
+	 * 2. Objective Interface has four methods that invoke different actions at the start and complete of an objective. It also has a boolean to check if the objective is completed and an update method to update the objective.
+	 */
+	 
+	 /**
+ 	* @author hojeanniechung
+    *
+     *interface for Objectives
+     */
+ 	public interface Objective{
+		void onComplete();
+		void onStart();
+		void isComplete();
+		void update();
+
+	class MarioObjective implements Objective{
+		public void onComplete(){
+			System.out.println("Now do things after completion of objective");
+		}
+		public void onStart(){
+			System.out.println("Object is Started");
+		}
+		public void isComplete(){
+			System.out.println("Object is Completed");
+		}
+		public void update(){
+			System.out.println("update the Objectives");
+		}
+	}
+	
+	Objective MarioObjective=new MarioObjective();
+	
+	 * USE CASE: Objective Interface
+	 * 1. CharacterMovement Inetface handles the CharacterMovement and hopefully the graphics that occur when the character moves
+	 * 2. The object where these methods are invoked should be able to translate as well as switch to appropriate images based on their movement.
+	 */
+	 
+	public interface CharacterMovement {
+	 void moveLeft(int n);
+	 void moveRight(int n);
+	 void jump(int n);
+	 void crawl(int n);	
+	}
+	
+	class MainPlayer implements CharacterMovement {
+	Circle c=new Circle(40,40,50);
+
+	@Override
+	public void moveLeft(int currentLocation) {
+		// TODO Auto-generated method stub
+		c.setTranslateX(currentLocation-1);
+	}
+
+	@Override
+	public void moveRight(int currentLocation) {
+		// TODO Auto-generated method stub
+		c.setTranslateX(currentLocation+1);
+	}
+
+	@Override
+	public void jump(int currentLocation) {
+		// TODO Auto-generated method stub
+		c.setTranslateY(currentLocation+1);
+	}
+
+	@Override
+	public void crawl(int currentLocation) {
+		// TODO Auto-generated method stub
+		c=new Circle(10,10,30);
+	}
+ }	
+
+
+=======
+>>>>>>> bee88ffca4b298697752e3d0747ed31e92db2961
