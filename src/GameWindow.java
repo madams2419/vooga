@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class GameWindow extends Application {
-private SetBackground myBackground;
+private WindowCharacteristics myBackground;
 String backgroundName="randombackground";
 
   public static void main(String[] args) {
@@ -16,7 +16,7 @@ String backgroundName="randombackground";
 
   @Override
   public void start(Stage primaryStage) {
-    myBackground = new SetBackground();
+    myBackground = new WindowCharacteristics();
     Scene scene=myBackground.setImage(backgroundName);
     
     scene.widthProperty().addListener(new ChangeListener<Number>() {
