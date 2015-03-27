@@ -1,4 +1,7 @@
-package game_engine;
+package game_engine.sprite;
+
+import game_engine.HitBox;
+import game_engine.PhysicsEngine;
 
 public abstract class Sprite {
 	
