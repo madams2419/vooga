@@ -1,5 +1,7 @@
 package game_engine;
 
+import game_engine.sprite.Sprite;
+
 import java.util.Map;
 
 public class ControlsManager {
@@ -13,5 +15,7 @@ public class ControlsManager {
 	public void executeBehavior(String keyText) {
 		controlsMap.get(keyText).execute();
 	}
+	
+
 
 }
