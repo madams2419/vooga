@@ -114,7 +114,78 @@ public class UseCases {
 		physicsEngine.setAcceleration(acceleration);
 	}
 	
-	
+		/*
+	 * USE CASE: Objective Interface
+	 * 1. Objective Interface handles the objectives that the characters achieve
+	 * 2. Objective Interface has four methods that invoke different actions at the start and complete of an objective. It also has a boolean to check if the objective is completed and an update method to update the objective.
+	 */
+	 
+	 /**
+ 	* @author hojeanniechung
+    *
+     *interface for Objectives
+     */
+ 	public interface Objective{
+		void onComplete();
+		void onStart();
+		void isComplete();
+		void update();
 
-}
+	class MarioObjective implements Objective{
+		public void onComplete(){
+			System.out.println("Now do things after completion of objective");
+		}
+		public void onStart(){
+			System.out.println("Object is Started");
+		}
+		public void isComplete(){
+			System.out.println("Object is Completed");
+		}
+		public void update(){
+			System.out.println("update the Objectives");
+		}
+	}
+	
+	Objective MarioObjective=new MarioObjective();
+	
+	 * USE CASE: Objective Interface
+	 * 1. CharacterMovement Inetface handles the CharacterMovement and hopefully the graphics that occur when the character moves
+	 * 2. The object where these methods are invoked should be able to translate as well as switch to appropriate images based on their movement.
+	 */
+	 
+	public interface CharacterMovement {
+	 void moveLeft(int n);
+	 void moveRight(int n);
+	 void jump(int n);
+	 void crawl(int n);	
+	}
+	
+	class MainPlayer implements CharacterMovement {
+	Circle c=new Circle(40,40,50);
+
+	@Override
+	public void moveLeft(int currentLocation) {
+		// TODO Auto-generated method stub
+		c.setTranslateX(currentLocation-1);
+	}
+
+	@Override
+	public void moveRight(int currentLocation) {
+		// TODO Auto-generated method stub
+		c.setTranslateX(currentLocation+1);
+	}
+
+	@Override
+	public void jump(int currentLocation) {
+		// TODO Auto-generated method stub
+		c.setTranslateY(currentLocation+1);
+	}
+
+	@Override
+	public void crawl(int currentLocation) {
+		// TODO Auto-generated method stub
+		c=new Circle(10,10,30);
+	}
+ }	
+
 
