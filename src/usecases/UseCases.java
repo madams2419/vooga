@@ -8,6 +8,7 @@ import game_engine.PhysicsEngine;
 import game_engine.sprite.Player;
 import game_engine.sprite.Sprite;
 import game_engine.sprite.Water;
+import game_engine.Game;
 
 public class UseCases {
 	
@@ -56,7 +57,6 @@ public class UseCases {
 		double acceleration = 9.8;
 		physicsEngine.setAcceleration(acceleration);
 	}
-	
 	
 
 }

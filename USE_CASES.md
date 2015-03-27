@@ -53,6 +53,7 @@ Use Cases
 
 ###Game Data
 * Game designer wants to save a game file
+<<<<<<< HEAD
 
 ###Example Code
 package usecases;
@@ -189,3 +190,5 @@ public class UseCases {
  }	
 
 
+=======
+>>>>>>> bee88ffca4b298697752e3d0747ed31e92db2961

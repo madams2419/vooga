@@ -15,7 +15,5 @@ public class ControlsManager {
 	public void executeBehavior(String keyText) {
 		controlsMap.get(keyText).execute();
 	}
-	
-
 
 }
