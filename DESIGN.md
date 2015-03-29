@@ -363,7 +363,7 @@ Our team is mainly divided up into two sub-teams: game authoring environment and
 
 Team Members
 - Ryan Lavallee (Salty VP of Reality Cheques and party pooper): Brian will work on the front end side of Engine and then shift to back end classes.
-- Emre Sonmez (Expert of female development): Emre will start with working on the core back end engine classes, help with front end, and data.
+- Emre Sonmez (Expert of musical development): Emre will start with working on the core back end engine classes, help with front end, and data.
 - Yancheng Zeng (VP of administration): Yancheng will start with working on the core back end engine classes and then help with data/frontend.
 - Michael Lee (Red Bull Representative): Michael will work on core back end engine classes.
 - Kevin Chang (token Bay Area team member): Kevin will also work on core back end engine classes then transition to front end. 
