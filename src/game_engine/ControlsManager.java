@@ -2,6 +2,11 @@ package game_engine;
 
 import java.util.Map;
 
+/**
+ * Defines controls and maps them to behaviors
+ * @author 
+ *
+ */
 public class ControlsManager {
 	
 	Map<String, Behavior> controlsMap;

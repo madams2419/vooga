@@ -8,7 +8,7 @@ public class ProgramChooser {
 	
 	/**
 	 * Class to choose between authoring or playing
-	 * @return scene for author or player
+	 * @return Scene for author or player
 	 */
 	public Scene initialize() {
 		// TODO

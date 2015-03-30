@@ -1,7 +1,11 @@
 package game_engine;
 
 import java.util.List;
-
+/**
+ * 
+ * @author 
+ *
+ */
 public class Layer {
 	
 	List<Sprite> sprites;
