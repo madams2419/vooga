@@ -1,3 +1,4 @@
+package authoring_environment;
 //XMLFile
 
 import java.io.File;
