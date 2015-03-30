@@ -6,6 +6,10 @@ public class ProgramChooser {
 	
 	Scene scene;
 	
+	/**
+	 * Class to choose between authoring or playing
+	 * @return scene for author or player
+	 */
 	public Scene initialize() {
 		// TODO
 		return null;
