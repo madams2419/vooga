@@ -16,5 +16,9 @@ public class Game {
 	public void handleKeyPress(String keyText) {
 		controlsManager.executeBehavior(keyText);
 	}
+	
+	public void switchActiveLevel(Level newLevel){
+		activeLevel = newLevel;
+	}
 
 }
