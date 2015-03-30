@@ -1,8 +1,4 @@
-import javafx.scene.Node;
-
-/**
- * 
- */
+package authoring_environment;
 
 /**
  * @author hojeanniechung

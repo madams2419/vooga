@@ -1,7 +1,5 @@
-import javafx.scene.Node;
+package authoring_environment;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 
 /**
  * 

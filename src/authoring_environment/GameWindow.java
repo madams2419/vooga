@@ -1,3 +1,4 @@
+package authoring_environment;
 import java.security.acl.Group;
 
 import javafx.application.Application;
