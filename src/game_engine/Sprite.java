@@ -15,6 +15,7 @@ public abstract class Sprite {
 		// TODO
 	}
 	/**
+	 * method update
 	 * Updates the sprite
 	 */
 	public abstract void update();

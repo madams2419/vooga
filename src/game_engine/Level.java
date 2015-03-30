@@ -15,6 +15,7 @@ public class Level {
 		// TODO
 	}
 	/**
+	 * method update
 	 * Update contents of a layer
 	 */
 	public void update() {

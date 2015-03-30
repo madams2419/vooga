@@ -17,6 +17,7 @@ public class HitBox {
 	}
 	
 	/**
+	 * method intersects
 	 * Checks if the hitboxes intersect
 	 * @param compare
 	 * @return true if a hitbox intersects another

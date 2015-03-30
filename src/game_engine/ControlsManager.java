@@ -16,7 +16,11 @@ public class ControlsManager {
 	public ControlsManager() {
 		// TODO
 	}
-	
+	/**
+	 * method executeBehavior
+	 * executes a behavior corresponding to a key
+	 * @param keyText the string that maps to the key
+	 */
 	public void executeBehavior(String keyText) {
 		controlsMap.get(keyText).execute();
 	}
