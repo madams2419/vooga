@@ -34,7 +34,7 @@ public class UseCases {
 	
 	public void useCase2(){
 		Game mockGame = new Game();
-		Objective mockObjective = new Objective();
+		Objective mockObjective = new Objective(null, null, null);
 		mockObjective.onComplete();
 		Level newLevel = new Level();
 		mockGame.switchActiveLevel(newLevel);
