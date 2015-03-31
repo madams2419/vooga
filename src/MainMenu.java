@@ -1,4 +1,4 @@
-package menu;
+
 
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
