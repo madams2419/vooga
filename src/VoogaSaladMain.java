@@ -1,3 +1,5 @@
+import menu.MainMenu;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -18,8 +20,10 @@ public class VoogaSaladMain extends Application
 	stage.setHeight(HEIGHT);
 	stage.setWidth(WIDTH);
 	stage.setResizable(false);
+	
 	MainMenu menu = new MainMenu(WIDTH, HEIGHT);
 	stage.setScene(menu.initialize());
+	
 	stage.show();
     }
     
