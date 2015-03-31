@@ -1,3 +1,5 @@
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -19,6 +21,16 @@ public class WindowCharacteristics {
 
 		// create a place to display the shapes and react to input
 		Scene myScene=new Scene(background,500,500);
+	    myScene.widthProperty().addListener(new ChangeListener<Number>() {
+	        @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+	            System.out.println("Width: " + newSceneWidth);
+	        }
+	    });
+	    myScene.heightProperty().addListener(new ChangeListener<Number>() {
+	        @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
+	            System.out.println("Height: " + newSceneHeight);
+	        }
+	    });
 		myScene.setOnKeyPressed(e -> handleKeyInput(e));
 		return myScene;
 	}
