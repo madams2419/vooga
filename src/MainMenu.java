@@ -1,5 +1,3 @@
-
-
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
@@ -19,7 +17,7 @@ import javafx.util.Duration;
  * to either play an existing game or design a new one.
  * 
  * @author Brian Lavallee
- * @since 30 March 2015
+ * @since 31 March 2015
  */
 public class MainMenu
 {
@@ -48,6 +46,13 @@ public class MainMenu
     private StackPane playButton, designButton;
     private VBox textHolder;
     
+    /**
+     * Primary constructor for a MainMenu.  Sets up all of the components (background,
+     * overlay, title, and buttons) in the root (which is a StackPane).
+     * 
+     * @param w	is the desired width of the Scene.
+     * @param h	is the desired height of the Scene.
+     */
     public MainMenu(int w, int h)
     {
 	width = w;
@@ -87,6 +92,11 @@ public class MainMenu
 	root.getChildren().addAll(background, overlay, textHolder, playButton, designButton);
     }
     
+    /**
+     * Creates a Scene object from the root.
+     * 
+     * @return	A Scene object containing all of the elements in the root.
+     */
     public Scene initialize()
     {
 	Scene scene = new Scene(root, width, height);
@@ -94,6 +104,9 @@ public class MainMenu
 	return scene;
     }
     
+    /*
+     * Creates two text objects and applies a FadeTransition to both.
+     */
     private VBox setUpText()
     {
 	VBox textHolder = new VBox(PADDING);
@@ -128,6 +141,10 @@ public class MainMenu
 	return textHolder;
     }
     
+    /*
+     * Creates a single Text object.  Useful in above method for setting up the
+     * "presented by ..." message.
+     */
     private Text makeText(int size, String message, Color color)
     {
 	Text text = new Text(message);
@@ -136,6 +153,10 @@ public class MainMenu
 	return text;
     }
     
+    /*
+     * Creates a button (which is Text description over a Circle).  Circle is fetched
+     * later to use for MouseEvents.
+     */
     private StackPane makeButton(String description, int location)
     {
 	StackPane button = new StackPane();
@@ -155,6 +176,9 @@ public class MainMenu
 	return button;
     }
     
+    /*
+     * Moves the buttons onto the Screen on the first mouse click.
+     */
     private void moveButton(StackPane button, int location)
     {
 	TranslateTransition moveButton = new TranslateTransition(Duration.millis(TRANSITION_TIME), button);
@@ -162,6 +186,11 @@ public class MainMenu
 	    moveButton.play();
     }
     
+    /*
+     * Gets the internal Circles from the StackPane buttons and uses those Circles
+     * to set up mouse listeners.  Specifies where to move each element of the root
+     * for each case.
+     */
     private void setUpButtons()
     {
 	Circle play = (Circle) playButton.getChildren().get(0);
@@ -198,6 +227,9 @@ public class MainMenu
 	});
     }
     
+    /*
+     * Moves all of the elements in the root to the desired loaction with a pleasant transition.
+     */
     private void buttonSelectedAction(int backgroundTo, int textTo, double playTo, double designTo, double overlayTo)
     {
 	TranslateTransition moveBackground = new TranslateTransition(Duration.millis(TRANSITION_TIME), background);
