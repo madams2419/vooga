@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/formerdefault/XMLBuilder.java
+package formerdefault;
+=======
 <<<<<<< HEAD
+>>>>>>> dd4a5204e379c7d7c57b5c168742362f6c6a705f:src/XMLBuilder.java
 import java.io.*;
 import org.w3c.dom.Node;
 
