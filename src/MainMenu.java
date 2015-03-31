@@ -66,6 +66,7 @@ public class MainMenu
 	Rectangle right = new Rectangle(width, height);
 	right.setFill(Color.DARKBLUE);
 	background.getChildren().addAll(left, right);
+	background.setOpacity(INVISIBLE);
 	
 	overlay = new Rectangle(width, height);
 	overlay.setOpacity(TRANSPARENT);
@@ -77,15 +78,19 @@ public class MainMenu
 	
 	root.setOnMouseClicked((clicked) -> 
 	{
-	    TranslateTransition moveText = new TranslateTransition(Duration.millis(2000), textHolder);
+	    TranslateTransition moveText = new TranslateTransition(Duration.millis(TRANSITION_TIME), textHolder);
 	    moveText.setToY(TITLE_LOCATION);
 	    moveText.play();
 	    
+	    FadeTransition fadeBackgroundIn = new FadeTransition(Duration.millis(TRANSITION_TIME), background);
+	    fadeBackgroundIn.setToValue(OPAQUE);
+	    fadeBackgroundIn.play();
+
 	    moveButton(playButton, -width/4);
 	    moveButton(designButton, width/4);
-	    
+
 	    setUpButtons();
-	    
+
 	    root.setOnMouseClicked(null);
 	});
 	
@@ -117,10 +122,10 @@ public class MainMenu
 	title.setOpacity(INVISIBLE);
 	
 	HBox subHolder = new HBox();
-	subHolder.getChildren().addAll(makeText(SMALL_TEXT, "presented by the ", Color.GRAY),
-				       makeText(LARGE_TEXT, "High ", Color.GRAY),
+	subHolder.getChildren().addAll(makeText(SMALL_TEXT, "presented by the ", Color.BLACK),
+				       makeText(LARGE_TEXT, "High ", Color.BLACK),
 				       makeText(LARGE_TEXT, "$", Color.DARKGOLDENROD),
-				       makeText(LARGE_TEXT, "croller", Color.GRAY),
+				       makeText(LARGE_TEXT, "croller", Color.BLACK),
 				       makeText(LARGE_TEXT, "$", Color.DARKGOLDENROD));
 	subHolder.setAlignment(Pos.CENTER);
 	subHolder.setOpacity(INVISIBLE);
@@ -150,6 +155,7 @@ public class MainMenu
 	Text text = new Text(message);
 	text.setFill(color);
 	text.setFont(new Font(size));
+	text.setStroke(Color.GRAY);
 	return text;
     }
     
@@ -236,7 +242,7 @@ public class MainMenu
 	TranslateTransition moveText = new TranslateTransition(Duration.millis(TRANSITION_TIME), textHolder);
 	FadeTransition fadePlay = new FadeTransition(Duration.millis(TRANSITION_TIME), playButton);
 	FadeTransition fadeDesign = new FadeTransition(Duration.millis(TRANSITION_TIME), designButton);
-	FadeTransition fadeOutOverlay = new FadeTransition(Duration.millis(TRANSITION_TIME), overlay);
+	FadeTransition fadeOverlay = new FadeTransition(Duration.millis(TRANSITION_TIME), overlay);
 	
 	moveBackground.setToX(backgroundTo);
 	moveBackground.play();
@@ -250,7 +256,7 @@ public class MainMenu
 	fadeDesign.setToValue(designTo);
 	fadeDesign.play();
 	
-	fadeOutOverlay.setToValue(overlayTo);
-	fadeOutOverlay.play();
+	fadeOverlay.setToValue(overlayTo);
+	fadeOverlay.play();
     }
 }
