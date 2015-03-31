@@ -23,6 +23,24 @@ import javafx.util.Duration;
  */
 public class MainMenu
 {
+    private static final int PADDING = 10;
+    
+    private static final double INVISIBLE = 0.0;
+    private static final double TRANSPARENT = 0.5;
+    private static final double OPAQUE = 1.0;
+    
+    private static final int TITLE_LOCATION = -300;
+    private static final int TITLE_REMOVED = -600;
+    
+    private static final int BUTTON_RADIUS = 150;
+    
+    private static final int TRANSITION_TIME = 2000;
+    private static final int TRANSITION_DELAY = 500;
+    
+    private static final int SMALL_TEXT = 30;
+    private static final int LARGE_TEXT = 40;
+    private static final int TITLE_TEXT = 80;
+    
     private StackPane root;
     private int width, height;
     private HBox background;
@@ -37,7 +55,7 @@ public class MainMenu
 	
 	root = new StackPane();
 	
-	background = new HBox(20);
+	background = new HBox(2*PADDING);
 	Rectangle left = new Rectangle(width, height);
 	left.setFill(Color.DARKRED);
 	Rectangle right = new Rectangle(width, height);
@@ -45,17 +63,17 @@ public class MainMenu
 	background.getChildren().addAll(left, right);
 	
 	overlay = new Rectangle(width, height);
-	overlay.setOpacity(.5);
+	overlay.setOpacity(TRANSPARENT);
 	
 	textHolder = setUpText();
 	
-	playButton = makeButton("Play", -width/2 - 200);
-	designButton = makeButton("Design", width/2 + 200);
+	playButton = makeButton("Play", -width/2 - 2*BUTTON_RADIUS);
+	designButton = makeButton("Design", width/2 + 2*BUTTON_RADIUS);
 	
 	root.setOnMouseClicked((clicked) -> 
 	{
 	    TranslateTransition moveText = new TranslateTransition(Duration.millis(2000), textHolder);
-	    moveText.setToY(-300);
+	    moveText.setToY(TITLE_LOCATION);
 	    moveText.play();
 	    
 	    moveButton(playButton, -width/4);
@@ -78,33 +96,33 @@ public class MainMenu
     
     private VBox setUpText()
     {
-	VBox textHolder = new VBox(10);
+	VBox textHolder = new VBox(PADDING);
 	
 	Text title = new Text("Welcome to VoogaSalad");
 	title.setStroke(Color.WHITE);
-	title.setFont(new Font(80));
-	title.setOpacity(0.0);
+	title.setFont(new Font(TITLE_TEXT));
+	title.setOpacity(INVISIBLE);
 	
 	HBox subHolder = new HBox();
-	subHolder.getChildren().addAll(makeText(30, "presented by the ", Color.GRAY),
-				       makeText(40, "High ", Color.GRAY),
-				       makeText(40, "$", Color.DARKGOLDENROD),
-				       makeText(40, "croller", Color.GRAY),
-				       makeText(40, "$", Color.DARKGOLDENROD));
+	subHolder.getChildren().addAll(makeText(SMALL_TEXT, "presented by the ", Color.GRAY),
+				       makeText(LARGE_TEXT, "High ", Color.GRAY),
+				       makeText(LARGE_TEXT, "$", Color.DARKGOLDENROD),
+				       makeText(LARGE_TEXT, "croller", Color.GRAY),
+				       makeText(LARGE_TEXT, "$", Color.DARKGOLDENROD));
 	subHolder.setAlignment(Pos.CENTER);
-	subHolder.setOpacity(0.0);
+	subHolder.setOpacity(INVISIBLE);
 	
 	textHolder.getChildren().addAll(title, subHolder);
 	textHolder.setAlignment(Pos.CENTER);
 	
-	FadeTransition fadeTitleIn = new FadeTransition(Duration.millis(2000), title);
-	fadeTitleIn.setToValue(1.0);
-	fadeTitleIn.setDelay(Duration.millis(500));
+	FadeTransition fadeTitleIn = new FadeTransition(Duration.millis(TRANSITION_TIME), title);
+	fadeTitleIn.setToValue(OPAQUE);
+	fadeTitleIn.setDelay(Duration.millis(TRANSITION_DELAY));
 	fadeTitleIn.play();
 	
-	FadeTransition fadeNameIn = new FadeTransition(Duration.millis(2000), subHolder);
-	fadeNameIn.setToValue(1.0);
-	fadeNameIn.setDelay(Duration.millis(3000));
+	FadeTransition fadeNameIn = new FadeTransition(Duration.millis(TRANSITION_TIME), subHolder);
+	fadeNameIn.setToValue(OPAQUE);
+	fadeNameIn.setDelay(Duration.millis(TRANSITION_TIME + 2*TRANSITION_DELAY));
 	fadeNameIn.play();
 	
 	return textHolder;
@@ -122,13 +140,13 @@ public class MainMenu
     {
 	StackPane button = new StackPane();
 	
-	Circle buttonContent = new Circle(150);
+	Circle buttonContent = new Circle(BUTTON_RADIUS);
 	buttonContent.setFill(Color.TRANSPARENT);
 	buttonContent.setStroke(Color.WHITE);
 	
 	Text buttonDescription = new Text(description);
 	buttonDescription.setFill(Color.WHITE);
-	buttonDescription.setFont(new Font(20));
+	buttonDescription.setFont(new Font(SMALL_TEXT));
 	
 	button.getChildren().addAll(buttonContent, buttonDescription);
 	button.setAlignment(Pos.CENTER);
@@ -139,7 +157,7 @@ public class MainMenu
     
     private void moveButton(StackPane button, int location)
     {
-	TranslateTransition moveButton = new TranslateTransition(Duration.millis(2000), button);
+	TranslateTransition moveButton = new TranslateTransition(Duration.millis(TRANSITION_TIME), button);
 	    moveButton.setToX(location);
 	    moveButton.play();
     }
@@ -151,22 +169,22 @@ public class MainMenu
 	
 	play.setOnMouseEntered((event) -> 
 	{
-	    buttonSelectedAction(width/2 + 10, -600, 1.0, 0.0, 0.0);
+	    buttonSelectedAction(width/2 + PADDING, TITLE_REMOVED, OPAQUE, INVISIBLE, INVISIBLE);
 	});
 	
 	design.setOnMouseEntered((event) -> 
 	{
-	    buttonSelectedAction(-width/2 - 10, -600, 0.0, 1.0, 0.0);
+	    buttonSelectedAction(-width/2 - PADDING, TITLE_REMOVED, INVISIBLE, OPAQUE, INVISIBLE);
 	});
 	
 	play.setOnMouseExited((event) -> 
 	{
-	    buttonSelectedAction(0, -300, 1.0, 1.0, 0.5);
+	    buttonSelectedAction(0, TITLE_LOCATION, OPAQUE, OPAQUE, TRANSPARENT);
 	});
 	
 	design.setOnMouseExited((event) -> 
 	{
-	    buttonSelectedAction(0, -300, 1.0, 1.0, 0.5);
+	    buttonSelectedAction(0, TITLE_LOCATION, OPAQUE, OPAQUE, TRANSPARENT);
 	});
 	
 	play.setOnMouseClicked((event) -> 
@@ -182,11 +200,11 @@ public class MainMenu
     
     private void buttonSelectedAction(int backgroundTo, int textTo, double playTo, double designTo, double overlayTo)
     {
-	TranslateTransition moveBackground = new TranslateTransition(Duration.millis(2000), background);
-	TranslateTransition moveText = new TranslateTransition(Duration.millis(2000), textHolder);
-	FadeTransition fadePlay = new FadeTransition(Duration.millis(2000), playButton);
-	FadeTransition fadeDesign = new FadeTransition(Duration.millis(2000), designButton);
-	FadeTransition fadeOutOverlay = new FadeTransition(Duration.millis(2000), overlay);
+	TranslateTransition moveBackground = new TranslateTransition(Duration.millis(TRANSITION_TIME), background);
+	TranslateTransition moveText = new TranslateTransition(Duration.millis(TRANSITION_TIME), textHolder);
+	FadeTransition fadePlay = new FadeTransition(Duration.millis(TRANSITION_TIME), playButton);
+	FadeTransition fadeDesign = new FadeTransition(Duration.millis(TRANSITION_TIME), designButton);
+	FadeTransition fadeOutOverlay = new FadeTransition(Duration.millis(TRANSITION_TIME), overlay);
 	
 	moveBackground.setToX(backgroundTo);
 	moveBackground.play();
