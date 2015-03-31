@@ -1,56 +1,53 @@
-import java.io.*;
-import org.w3c.dom.Node;
+import java.io.File;
+
+import javafx.scene.Node;
 
 /***
- * Interface for a class which will write the game files, after storing them in
- * a temporary location
+ * This is an interface. It represents a class which will be used to write the
+ * elements from the class into an xml file, to be used by the player.
  * 
- * @author daniel
+ * @author Daniel Luker
  *
  */
 interface XMLBuilder {
 
-	/***
-	 * Gets a node with the elements (children) of the element in the xml tree
-	 * 
-	 * @param name
-	 * @param value
-	 * @return
-	 */
-	abstract Node getElements(String name, String value);
+       /***
+        * Returns all of the elements (children) of a given key.
+        * 
+        * @param name
+        * @param value
+        * @return
+        */
+       abstract Node getElements(String name, String value);
 
-	/***
-	 * Adds a new node to the file
-	 * 
-	 * @param name
-	 * @param value
-	 */
-	abstract void add(String name, String value);
+       /***
+        * Puts a value into the file
+        * 
+        * @param name
+        * @param value
+        */
+       abstract void add(String name, String value);
 
-	/***
-	 * Updates a node
-	 * 
-	 * @param name
-	 * @param value
-	 */
-	abstract void update(String name, String value);
+       /***
+        * Updates a value
+        * 
+        * @param name
+        * @param value
+        */
+       abstract void update(String name, String value);
 
-	/***
-	 * Removes a node from an xml file, along with all its associated children
-	 * tags
-	 * 
-	 * @param name
-	 * @param value
-	 */
-	abstract void remove(String name, String value);
+       /***
+        * Removes a file from the map
+        * 
+        * @param name
+        * @param value
+        */
+       abstract void remove(String name, String value);
 
-	/***
-	 * Writes out the file to the specific provided filename
-	 * 
-	 * @param filename
-	 *            String url where we are saving the file
-	 * @return Handler to the saved file.
-	 */
-	abstract File write(String filename);
-
+       /***
+        * Writes out the result of the generated xml file
+        * 
+        * @return a handle to the file object generated.
+        */
+       abstract File write();
 }
