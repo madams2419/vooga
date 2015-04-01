@@ -1,3 +1,4 @@
+package formerdefault;
 import java.io.*;
 import org.w3c.dom.Node;
 
@@ -6,9 +7,20 @@ import org.w3c.dom.Node;
  * a temporary location
  * 
  * @author daniel
+=======
+import java.io.File;
+
+import javafx.scene.Node;
+
+/***
+ * This is an interface. It represents a class which will be used to write the
+ * elements from the class into an xml file, to be used by the player.
+ * 
+ * @author Daniel Luker
+>>>>>>> 3e3e2b71d2d9a29a1fb10ea8a704b72bbd2d36e6
  *
  */
-interface XMLBuilder {
+public interface XMLBuilder {
 
 	/***
 	 * Gets a node with the elements (children) of the element in the xml tree
@@ -52,5 +64,4 @@ interface XMLBuilder {
 	 * @return Handler to the saved file.
 	 */
 	abstract File write(String filename);
-
 }

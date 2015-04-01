@@ -1,3 +1,4 @@
+package formerdefault;
 import javafx.scene.Node;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;

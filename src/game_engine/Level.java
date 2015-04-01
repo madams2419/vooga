@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Level {
 	
-	List<Objective> objectives;
+	List<GameObjective> objectives;
 	List<Layer> layers;
 	
 	public Level() {
