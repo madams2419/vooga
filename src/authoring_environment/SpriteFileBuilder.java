@@ -8,7 +8,7 @@ import org.w3c.dom.Element;
 
 
 
-public class SpriteFileBuilder extends XMLBuilder {
+class SpriteFileBuilder extends XMLBuilder {
 
 	List<Element> mSprites = new ArrayList<>();
 
