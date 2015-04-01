@@ -1,4 +1,4 @@
-package authoring_environment;
+package formerdefault;
 
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;

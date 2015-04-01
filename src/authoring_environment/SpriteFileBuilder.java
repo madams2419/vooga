@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.w3c.dom.Element;
 
-import authoring_environment.Sprite.ACTIONS;
+
 
 public class SpriteFileBuilder extends XMLBuilder {
 
@@ -52,7 +52,7 @@ public class SpriteFileBuilder extends XMLBuilder {
 		s.position.put("Y", "10.0");
 		s.speed = 10;
 		s.key_actions.put(Sprite.ACTIONS.UP.name(), "jump");
-		s.key_actions.put(ACTIONS.RIGHT.name(), "run");
+		s.key_actions.put(Sprite.ACTIONS.RIGHT.name(), "run");
 		}
 		
 		Sprite t = new Sprite(1);
@@ -73,21 +73,5 @@ public class SpriteFileBuilder extends XMLBuilder {
 		
 		b.streamFile("swap/sprites.xml");
 		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	}	
 }
