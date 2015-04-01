@@ -6,10 +6,10 @@ import java.util.Map;
 
 import org.w3c.dom.Element;
 
-
-
 class SpriteFileBuilder extends XMLBuilder {
 
+	// TODO javadoc this badboy
+	
 	List<Element> mSprites = new ArrayList<>();
 
 	SpriteFileBuilder(String rootElement, String... attributes_values) {

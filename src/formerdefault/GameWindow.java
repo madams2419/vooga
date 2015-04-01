@@ -11,6 +11,7 @@ private WindowCharacteristics myBackground;
 String backgroundName="randombackground";
 
   public static void main(String[] args) {
+	  System.out.println("executing");
     launch(args);
   }
 

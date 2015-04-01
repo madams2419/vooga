@@ -14,12 +14,13 @@ String backgroundName="randombackground";
 
   @Override
   public void start(Stage primaryStage) {
-    GameCreateUI Create_Scene = new GameCreateUI();
-    GameLoadUI Load_Scene=new GameLoadUI();
-    Start_Screen SplashScreen = new Start_Screen();
-    Scene scene=SplashScreen.Splash(primaryStage, Load_Scene.GameLoadUI(), Create_Scene.GameCreateUI());
+    AuthoringWindow createScene = new AuthoringWindow();
+//    GameLoadUI loadScene=new GameLoadUI();
+    Start_Screen splashScreen = new Start_Screen();
+    Scene scene= splashScreen.Splash(primaryStage, createScene.GameCreateUI(), createScene.GameCreateUI());
     primaryStage.setScene(scene);
     primaryStage.setResizable(true);
+//    primaryStage.setFullScreen(true);
     primaryStage.show();
   }
   

@@ -8,10 +8,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
- * 
- */
-
-/**
  * @author hojeanniechung
  *
  */
