@@ -1,11 +1,11 @@
 package game_engine;
 
 import game_engine.sprite.Sprite;
-
+import java.util.ArrayList;
 import java.util.List;
 /**
- * 
- * @author 
+ * Layer is an organizational class that contains groupings of specific sprites
+ * @author Kevin Chang
  *
  */
 public class Layer {
@@ -14,6 +14,7 @@ public class Layer {
 	
 	public Layer() {
 		// TODO
+	    sprites = new ArrayList<>();
 	}
 	/**
 	 * method update
