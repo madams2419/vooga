@@ -1,4 +1,5 @@
 package authoring_environment;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +36,7 @@ class XMLBuilder {
 		this(rootElement, arrayToMap(attributes_values));
 	}
 
-	XMLBuilder(String rootElement, Map<String, String> attributes_values) {
+	private XMLBuilder(String rootElement, Map<String, String> attributes_values) {
 		root = createElement(rootElement, attributes_values);
 	}
 
@@ -103,6 +104,10 @@ class XMLBuilder {
 		return newElement;
 	}
 
+	Element createElement(String tagname) {
+		return createElement(tagname, null);
+	}
+
 	/***
 	 * Helper method to turn a String array to a Map, in order to allow
 	 * different input
@@ -142,11 +147,15 @@ class XMLBuilder {
 	 *            Map specifying desired attribute names and values
 	 * @return Instance of Element which is the newly created tag
 	 */
-	private Element add(Element parent, String tagname,
+	protected Element add(Element parent, String tagname,
 			Map<String, String> attributes) {
 		Element ret = this.createElement(tagname, attributes);
 		parent.appendChild(ret);
 		return ret;
+	}
+
+	protected void addToRoot(Element newElement) {
+		root.appendChild(newElement);
 	}
 
 	/***
@@ -158,8 +167,37 @@ class XMLBuilder {
 	 *            Which will define the child node
 	 * @return Instance of Element which is the newly created tag
 	 */
-	private Element add(Element parent, String tagname) {
+	protected Element add(Element parent, String tagname) {
 		return add(parent, tagname, null);
+	}
+
+	/***
+	 * Method for adding a child with a specified tag and the specified text
+	 * field, with no attributes.
+	 * 
+	 * @param element
+	 * @param property
+	 * @param textContent
+	 */
+	protected void addChildWithProperty(Element element, String property,
+			String textContent) {
+		add(element, property).setTextContent(textContent);
+	}
+	
+	/***
+	 * Method to add a map linking nametags and values as a child of parent. So, to add something like the following: 
+	 * {@code 	<childtagname>
+	 * 				<prop1>val1</prop1>
+	 * 				...
+	 * 			</childtagname>}
+	 * @param parent
+	 * @param child_tagname
+	 * @param properties
+	 */
+	protected void addChildProperties(Element parent, String child_tagname,
+			Map<String, String> properties) {
+		Element e = add(parent, child_tagname);
+		properties.forEach((s1, s2) -> add(e, ""+s1).setTextContent(s2));
 	}
 
 	public Element getRoot() {
@@ -194,30 +232,4 @@ class XMLBuilder {
 		b.streamFile("swap/game.xml");
 	}
 
-	private class Sprite {
-
-		Element thisElement;
-		XMLBuilder mBuilder;
-
-		private Sprite(XMLBuilder mBuilder, String nametag) {
-			this.mBuilder = mBuilder;
-			thisElement = mBuilder.createElement(nametag, null);
-		}
-
-		private void setPosition(double x, double y) {
-			mBuilder.add(thisElement, "position");
-		}
-
-	}
-
-	public static class Strings {
-
-		public enum TAGS {
-			sprite, key_actions, speed, imageuri
-		};
-
-		public enum ATTRIBUTES {
-			name
-		};
-	}
 }
