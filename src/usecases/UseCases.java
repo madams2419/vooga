@@ -8,7 +8,7 @@ import game_engine.objective.Objective;
 import game_engine.sprite.Player;
 import game_engine.sprite.Sprite;
 import game_engine.sprite.Water;
-import game_engine.Game;
+import game_engine.GameObjective;
 
 public class UseCases {
 	
@@ -34,7 +34,7 @@ public class UseCases {
 	
 	public void useCase2(){
 		Game mockGame = new Game();
-		Objective mockObjective = new Objective();
+		GameObjective mockObjective = new GameObjective();
 		mockObjective.onComplete();
 		Level newLevel = new Level();
 		mockGame.switchActiveLevel(newLevel);
