@@ -1,0 +1,11 @@
+<Button>
+	<Label>
+		LabelA
+	</Label>
+	<Label>
+		LabelB
+	</Label>
+	<Label>
+		LabelC
+	</Label>
+</Button>

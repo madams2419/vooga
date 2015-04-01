@@ -1,4 +1,5 @@
-//XMLFile
+package XML;
+
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,21 +20,25 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class XMLParser {
-	public Map<String,String> parse(File f) throws Exception {
+	private static String Label = null;
+
+	public Map<String,String> parse(File f, String s) throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
+		Map<String,String> parsedMap=new HashMap<String,String>();
 		Document document = builder.parse(f);
 		document.getDocumentElement().normalize();
-		NodeList nList = document.getElementsByTagName(PropertiesParser.getSharedInstance().getLabelMap().get("Game"));
+		NodeList nList = document.getElementsByTagName(String.format("resources/%s",s));
 
 		for (int temp = 0; temp < nList.getLength(); temp++) {
 			Node node = nList.item(temp);
-			;
+			
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
 				Element eElement = (Element) node;
-				String Player = eElement.getElementsByTagName(PropertiesParser.getSharedInstance().getLabelMap().get("Player")).item(0)
-						.getTextContent().trim();
+				Label = eElement.getNodeName().trim();
 			}
+			
+			parsedMap.put(Label, "Button");
 		}
 
 		// write it back onto the XML File
@@ -43,8 +48,9 @@ public class XMLParser {
 		DOMSource source = new DOMSource(document);
 		StreamResult result = new StreamResult(f);
 		transformer.transform(source, result);
+		System.out.println(parsedMap);
 
-		return null;
+		return parsedMap;
 	}
 	
 
