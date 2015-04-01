@@ -1,5 +1,6 @@
 package game_engine;
 
+import game_engine.objective.Objective;
 import java.util.List;
 
 public class Level {
