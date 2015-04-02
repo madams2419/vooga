@@ -14,11 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UIXMLParser {
-	public static Map<String,String> mAttributeMap;
 	public static File mFile;
 	public static ArrayList<Map> mAttributesList=new ArrayList<Map>();
 	
-	public static File parse(String f, String s) {
+	public static void parse(String f, String s) {
 
 		try {
 			File fXmlFile = new File(f);
@@ -43,15 +42,17 @@ public class UIXMLParser {
 				System.out.println("\nCurrent Element :" + nNode.getNodeName());
 
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-
+					Map<String,String> mAttributeMap=new HashMap<String,String>();
 					Element eElement = (Element) nNode;
-
+					
 
 					/*This is the element we are looking for (i.e.)"button, box, etc."*/					
 					if(eElement.getNodeName().equals(s)){
-						mAttributeMap=new HashMap<String,String>();
+						
+						
 						if(eElement.hasAttribute("file")){
 							mFile=new File(eElement.getAttribute("file"));
+							
 						}
 						
 						
@@ -68,8 +69,10 @@ public class UIXMLParser {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static File getFile(){
 		return mFile;
 	}
-
 
 }
