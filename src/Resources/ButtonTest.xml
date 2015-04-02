@@ -1,4 +1,7 @@
 <Characteristics>
 <Button id="LabelA" MethodName="LabelAListener"/>
 <Button id="LabelB" MethodName="LabelBListener"/>
+<Button id="LabelC" MethodName="LabelCListener"/>
+<Button id="LabelD" MethodName="LabelDListener"/>
+<Button id="LabelE" MethodName="LabelEListener"/>
 </Characteristics>
