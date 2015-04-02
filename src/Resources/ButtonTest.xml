@@ -1,11 +1,4 @@
-<Button>
-	<Label>
-		LabelA
-	</Label>
-	<Label>
-		LabelB
-	</Label>
-	<Label>
-		LabelC
-	</Label>
-</Button>
+<Characteristics>
+<Button id="LabelA" MethodName="LabelAListener"/>
+<Button id="LabelB" MethodName="LabelBListener"/>
+</Characteristics>
