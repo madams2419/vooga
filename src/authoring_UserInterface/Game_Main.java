@@ -17,7 +17,7 @@ String backgroundName="randombackground";
     AuthoringWindow createScene = new AuthoringWindow();
 //    GameLoadUI loadScene=new GameLoadUI();
     Start_Screen splashScreen = new Start_Screen();
-    Scene scene= splashScreen.Splash(primaryStage, createScene.GameCreateUI(), createScene.GameCreateUI());
+    Scene scene= splashScreen.Splash(primaryStage, createScene.GameCreateUI(), null);
     primaryStage.setScene(scene);
     primaryStage.setResizable(true);
 //    primaryStage.setFullScreen(true);

@@ -8,23 +8,16 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import formerdefault.GameWindow;
 
 /**
- * 
- */
-
-/**
- * @author hojeanniechung
+ * @author hojeanniechung & Daniel Luker
  *
  */
 public class AuthoringWindow {
@@ -32,6 +25,9 @@ public class AuthoringWindow {
 	private Scene myScene;
 
 	public Scene GameCreateUI() {
+		
+		
+		
 		VBox root = new VBox();
 		root.getChildren().add(menuBar());
 		BorderPane canvas = new BorderPane();
@@ -60,49 +56,35 @@ public class AuthoringWindow {
 	}
 
 	private HBox setupBottomPane(double width) {
-		HBox bottomPane = new HBox();
-		return bottomPane;
+		return new BottomPane();
 	}
 	
-	public static boolean done = false;
-
 	private HBox setupTopPane(double width) {
-		HBox topPane = new HBox();
-		TopPane mTopPane = new TopPane();
 		Map<String, EventHandler<Event>> mButtons = new HashMap<>();
-		mButtons.put("Test", e -> System.out.println(((Button)(e.getSource())).getText()));
-		mButtons.put("More", e -> {
-			Thread t = new Thread(){
-				@Override
-				public void run() {
-					GameWindow.main(null);
-				}
-			};
-			if(!done){
-				t.start();
-				done = true;
-			}
-		});
+		
+		mButtons.put("Global Settings", null);
+		mButtons.put("Map Settings", null);
+		mButtons.put("Interactions List", null);
+		mButtons.put("Characters", null);
+		mButtons.put("Blocks", null);
+		mButtons.put("Decorations", null);
+		mButtons.put("UI Controls", null);
+		
+		TopPane mTopPane = new TopPane();
 		mTopPane.addButtons(mButtons);
-		topPane.getChildren().add(mTopPane);
-		return topPane;
+		return mTopPane;
 	}
 
 	private VBox setupRightPane() {
-		VBox rightPane = new VBox();
-		// rightPane.getChildren().addAll();
-		return rightPane;
+		return new RightPane();
 	}
 
 	private VBox setupLeftPane() {
-		VBox leftPane = new VBox();
-		// leftPane.getChildren().addAll();
-		return leftPane;
+		return new LeftPane();
 	}
 
 	private Node setupCenterPane() {
-		ScrollPane gameDisplay = new ScrollPane();
-		return gameDisplay;
+		return new CenterPane();
 	}
 
 }

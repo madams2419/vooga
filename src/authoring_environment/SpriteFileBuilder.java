@@ -6,6 +6,12 @@ import java.util.Map;
 
 import org.w3c.dom.Element;
 
+/***
+ * Class to generate sprite.xml files
+ * 
+ * @author Daniel Luker
+ *
+ */
 class SpriteFileBuilder extends XMLBuilder {
 
 	// TODO javadoc this badboy

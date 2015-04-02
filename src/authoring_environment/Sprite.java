@@ -3,6 +3,12 @@ package authoring_environment;
 import java.util.HashMap;
 import java.util.Map;
 
+/***
+ * Class that contains information about the sprites for eventually generating xml files
+ * 
+ * @author Daniel Luker
+ *
+ */
 public class Sprite {
 
 	String name;

@@ -207,7 +207,8 @@ class XMLBuilder {
 	// ====== Testing Main Method ==============================================
 
 	public static void main(String[] args) {
-		XMLBuilder b = new XMLBuilder("game", "name", "Super Mario");
+		
+		XMLBuilder b = new XMLBuilder("game", "name", "Super Mario", "fool", "natalie");
 
 		Map<String, String> mAttributes = new HashMap<>();
 		mAttributes.put("name", "mario");
