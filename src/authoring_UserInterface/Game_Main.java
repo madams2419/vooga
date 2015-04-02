@@ -1,17 +1,10 @@
 package authoring_UserInterface;
-import java.security.acl.Group;
 
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import authoring_interfaces.AuthoringView;
-
-
 public class Game_Main extends Application {
-
 
 String backgroundName="randombackground";
 
@@ -21,12 +14,13 @@ String backgroundName="randombackground";
 
   @Override
   public void start(Stage primaryStage) {
-    GameCreateUI Create_Scene = new GameCreateUI();
-    GameLoadUI Load_Scene=new GameLoadUI();
-    Start_Screen SplashScreen = new Start_Screen();
-    Scene scene=SplashScreen.Splash(primaryStage, Load_Scene.GameLoadUI(), Create_Scene.GameCreateUI());
+    AuthoringWindow createScene = new AuthoringWindow();
+//    GameLoadUI loadScene=new GameLoadUI();
+    Start_Screen splashScreen = new Start_Screen();
+    Scene scene= splashScreen.Splash(primaryStage, createScene.GameCreateUI(), null);
     primaryStage.setScene(scene);
     primaryStage.setResizable(true);
+//    primaryStage.setFullScreen(true);
     primaryStage.show();
   }
   

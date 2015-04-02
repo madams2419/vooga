@@ -1,14 +1,19 @@
 package game_engine;
 
 import java.util.List;
-<<<<<<< HEAD
+import java.util.Observable;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
+
 import javafx.beans.property.BooleanProperty;
 
 /**@author Tony
  * Goal that leads to a specific action when completed
  */
 public class Objective {
+	
+	List<Objective> subObjectives;
+	boolean condition;
 	
         /**
          * Constructor
@@ -20,6 +25,13 @@ public class Objective {
 		// TODO
 	}
 	
+	/***
+	 * Empty constructor for mockObjective in usecases
+	 */
+	public Objective() {
+			
+	}
+
 	/**
 	 * Method setCondition.
 	 * @param condition BooleanProperty
@@ -68,23 +80,18 @@ public class Objective {
 	public void start() {
 		// TODO
 	}
-=======
-import java.util.Observable;
-import java.util.function.Predicate;
-
-public class Objective {
 	
-	List<Objective> subObjectives;
-	boolean condition;
-	
-	public Objective() {
-		// TODO
-	}
-	
+	/**
+	 * Method invoked when this objective is complete
+	 */
 	public void onComplete() {
 		// TODO
 	}
 	
+	/***
+	 * To check whether this objective has been completed
+	 * @return True iff the objective has been completed
+	 */
 	public boolean isComplete() {
 		// TODO
 		return false;
@@ -94,12 +101,4 @@ public class Objective {
 		// TODO
 	}
 	
-	public void setSubObjectivies(List<Objective> subObjectives) {
-		// TODO
-	}
-	
-	public void start() {
-		// TODO
-	}
-
 }
