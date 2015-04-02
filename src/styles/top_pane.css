@@ -1,0 +1,5 @@
+.grid-pane {
+	-fx-alignment: center;
+	-fx-vgap: 5.0;
+	-fx-hgap: 5.0pt 	
+}

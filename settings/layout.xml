@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout name="authoring_environment">
+	<top_pane>
+		<buttons>
+			<button X="0" Y="0">
+				<label>Global Settings</label>
+				<listener>null</listener>
+			</button>
+			<button X="1" Y="0">
+				<label>Map Settings</label>
+				<listener>null</listener>
+			</button>
+			<button X="2" Y="0">
+				<label>Interactions List</label>
+				<listener>null</listener>
+			</button>
+		</buttons>
+		<drop-downs>
+			<drop-down X="0" Y="1">
+				<label>Characters</label>
+				<listener>null</listener>
+			</drop-down>
+			<drop-down X="1" Y="1">
+				<label>Blocks</label>
+				<listener>null</listener>
+			</drop-down>
+			<drop-down X="2" Y="1">
+				<label>Decorations</label>
+				<listener>null</listener>
+			</drop-down>
+			<drop-down X="3" Y="1">
+				<label>UI Controls</label>
+				<listener>null</listener>
+			</drop-down>
+		</drop-downs>
+	</top_pane>
+</layout>
