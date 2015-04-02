@@ -1,8 +1,4 @@
-package formerdefault;
-
-/**
- * 
- */
+package authoring_environment;
 
 /**
  * @author hojeanniechung
