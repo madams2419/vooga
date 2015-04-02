@@ -1,6 +1,5 @@
 package game_engine;
 
-import game_engine.sprite.Sprite;
 
 import java.util.Map;
 
