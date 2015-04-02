@@ -9,12 +9,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class XMLParser {
+public class UIXMLParser {
 	public static Map<String,String> mAttributeMap;
 	public static File mFile;
+	public static ArrayList<Map> mAttributesList=new ArrayList<Map>();
 	
 	public static File parse(String f, String s) {
 
@@ -60,7 +62,7 @@ public class XMLParser {
 							mAttributeMap.put(attr.getNodeName(), attr.getNodeValue());
 						}
 					}
-					System.out.println(mAttributeMap);
+					mAttributesList.add(mAttributeMap);
 				}
 			}
 		} catch (Exception e) {
