@@ -39,7 +39,6 @@ public class LayoutXMLParser {
 	    NodeList children = node.getChildNodes();
         for(int i=0;i<children.getLength();i++){
             if(children.item(i).getNodeType() == Node.ELEMENT_NODE) {
-                System.out.println("children nodes: "+children.item(i).getNodeName());
                 count++;
             }
         }
@@ -51,28 +50,28 @@ public class LayoutXMLParser {
     }
 	
 	private static void traverseXML(Node node){
-    NodeList nList = node.getChildNodes();
-    Map<String,String> newMap = new HashMap<String,String>();
-    for (int temp = 0; temp < nList.getLength(); temp++) {
-        Node nNode = nList.item(temp);
-        if(nNode.getNodeType() == Node.ELEMENT_NODE){
-            System.out.println("parent node: "+nNode.getNodeName());
-            int childrenNum=countChildren(nNode);
-            System.out.println("children number: "+childrenNum);
-            if(childrenNum>0){
-                traverseXML(nNode);
-            }else{
-                newMap.put(nNode.getNodeName(), nNode.getTextContent());
-                Node parent = nNode.getParentNode();
-                HashMap<String,Map> parentMap = new HashMap<String,Map>();
-                parentMap.put(parent.getNodeName(),newMap);
-                for(int i=0; i<parent.getAttributes().getLength(); i++){
-                    Node attr=parent.getAttributes().item(i);
-                    newMap.put(attr.getNodeName(), attr.getNodeValue());
+        NodeList nList = node.getChildNodes();
+        Map<String,String> newMap = new HashMap<String,String>();
+        for (int temp = 0; temp < nList.getLength(); temp++) {
+            Node nNode = nList.item(temp);
+            if(nNode.getNodeType() == Node.ELEMENT_NODE){
+                System.out.println("parent node: "+nNode.getNodeName());
+                int childrenNum=countChildren(nNode);
+                System.out.println("children number: "+childrenNum);
+                if(childrenNum>0){
+                    traverseXML(nNode);
+                }else{
+                    newMap.put(nNode.getNodeName(), nNode.getTextContent());
+                    Node parent = nNode.getParentNode();
+                    HashMap<String,Map> parentMap = new HashMap<String,Map>();
+                    parentMap.put(parent.getNodeName(),newMap);
+                    for(int i=0; i<parent.getAttributes().getLength(); i++){
+                        Node attr=parent.getAttributes().item(i);
+                        newMap.put(attr.getNodeName(), attr.getNodeValue());
+                    }
+                    elements.add(parentMap);
                 }
-                elements.add(parentMap);
             }
-        }
-	}
+    	}
 	}
 }
