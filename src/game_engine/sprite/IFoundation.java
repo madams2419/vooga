@@ -4,5 +4,5 @@ public interface IFoundation {
 	double alignUpperEdge(double y);
 	double alignLowerEdge(double y);
 	double alignLeftEdge(double x);
-	double alignRightEdge(doubly x);
+	double alignRightEdge(double x);
 }

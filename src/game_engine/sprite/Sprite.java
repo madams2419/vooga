@@ -1,5 +1,8 @@
 package game_engine.sprite;
 
+import java.awt.event.ItemListener;
+import java.util.Observable;
+
 import game_engine.HitBox;
 import game_engine.PhysicsEngine;
 
@@ -8,14 +11,17 @@ import game_engine.PhysicsEngine;
  * @author 
  *
  */
-public abstract class Sprite {
+public abstract class Sprite extends Observable{
 	String name;
-	double x;
-    double y;
-    double velocity;
-    double acceleration;
-    double stateID;
 	double id;
+	double x;
+	double y;
+	double targetX;
+	double targetY;
+	double velocity;
+	double acceleration;
+	double stateID;
+	String state;
 	HitBox hitBox;
 	PhysicsEngine physics;
 	
@@ -51,6 +57,56 @@ public abstract class Sprite {
 	 * Updates the sprite
 	 */
 	public abstract void update();
+	
+	public void setVelocity(double vel){
+		velocity = vel;
+		setChanged();
+		notifyObservers();
+	}
+	
+	public double getVelocity(){
+		return velocity;
+	}
+	
+	public void setAcceleration(double accel){
+		acceleration = accel;
+		setChanged();
+		notifyObservers();
+	}
+	
+	public double getAcceleration(){
+		return acceleration;
+	}
+	
+	public void setTargetX(double x){
+		targetX = x;
+		setChanged();
+		notifyObservers();
+	}
+	
+	public void setTargetY(double y){
+		targetY = y;
+		setChanged();
+		notifyObservers();
+	}
+	
+	public double getTargetX(){
+		return targetX;
+	}
+	public double getTargetY(){
+		return targetY;
+	}
+	
+	
+	public void setState(String s){
+		state = s;
+		setChanged();
+		notifyObservers();
+	}
+	
+	public String getState(){
+		return state;
+	}
 	
 	/**
 	 * method setID
@@ -152,4 +208,6 @@ public abstract class Sprite {
 	public double getY(){
 	    return y;
 	}
+	
+	
 }
