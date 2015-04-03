@@ -2,13 +2,8 @@
     <modelVersion>4.0.0</modelVersion>
     <!-- ORGANIZATION is replaced with the organization name (duke-compsci308-fall2014) -->
     <!-- REPO is replaced with the repo name (slogo_team01) -->
-<<<<<<< HEAD
-    <groupId>duke-compsci308-spring2015.voogasalad_High-croller-</groupId>
-    <artifactId>voogasalad_High-croller-</artifactId>
-=======
     <groupId>duke-compsci308-spring2015.voogasalad_HighScroller</groupId>
     <artifactId>voogasalad_HighScroller</artifactId>
->>>>>>> 5cea3388a4ec02fe1992fbe7d883c25aef6b715d
     <version>master-SNAPSHOT</version>
     <packaging>jar</packaging>
     <properties>
@@ -23,8 +18,6 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-<<<<<<< HEAD
-=======
         	<groupId>com.thoughtworks.xstream</groupId>
         	<artifactId>xstream</artifactId>
         	<version>1.4.8</version>
@@ -35,7 +28,6 @@
         	<version>2.4.1</version>
         </dependency>
         <dependency>
->>>>>>> 5cea3388a4ec02fe1992fbe7d883c25aef6b715d
             <groupId>com.oracle</groupId>
             <artifactId>javafx</artifactId>
             <version>8.0.31</version>
@@ -67,8 +59,4 @@
             </plugin>
         </plugins>
     </build>
-<<<<<<< HEAD
 </project>
-=======
-</project>
->>>>>>> 5cea3388a4ec02fe1992fbe7d883c25aef6b715d

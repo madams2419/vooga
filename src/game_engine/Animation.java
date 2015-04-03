@@ -9,7 +9,7 @@ import java.util.Map;
  *
  */
 public class Animation {
-	
+
 	Map<Sprite, String> pathMap;
 	Map<Sprite, Image> imageMap;
 
