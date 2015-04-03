@@ -1,10 +1,14 @@
 package game_engine.sprite;
 
-import groovy.ui.SystemOutputInterceptor;
-
 import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
+
+/**
+ * observes individual Sprites and calls Physics Engine
+ * @author emresonmez
+ *
+ */
 
 public class SpriteManager implements Observer{
 	private HashSet<Sprite> sprites = new HashSet<>();
@@ -21,7 +25,7 @@ public class SpriteManager implements Observer{
 			System.out.println(d);
 		}
 		
-		// call physics engine on params
+		// TODO call physics engine on params
 		
 		
 	}
