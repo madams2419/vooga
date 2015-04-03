@@ -1,7 +1,10 @@
 package game_engine.sprite;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 import game_engine.Animation;
+import game_engine.Behavior;
 import game_engine.HitBox;
 import game_engine.PhysicsEngine;
 
@@ -23,6 +26,7 @@ public abstract class Sprite extends Observable{
 	Animation animation;
 	HitBox hitBox;
 	PhysicsEngine physics;
+	Map<String, Behavior> behaviorMap = new HashMap<>();
 	
 	/**
 	 * Blank Constructor
@@ -73,6 +77,27 @@ public abstract class Sprite extends Observable{
 	 * Updates the sprite
 	 */
 	public abstract void update();
+	
+	public Behavior createBehavior(String behavior) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
+	    Class<?> runClass = null;
+	    Behavior classInstance = null;
+	    String className = "game_engine." + behavior;
+	    runClass = Class.forName(className);
+	    return classInstance = (Behavior) runClass.newInstance();
+	    
+	}
+	
+	public void addBehavior(String behavior) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
+	    behaviorMap.put(behavior, createBehavior(behavior));
+	}
+	
+	public void removeBehavior(String behavior){
+	    behaviorMap.remove(behavior);
+	}
+	
+	public void runBehavior(String behavior){
+	    behaviorMap.get(behavior).execute();
+	}
 	
 	public void setVelocity(double vel){
 		velocity = vel;

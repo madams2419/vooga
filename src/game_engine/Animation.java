@@ -2,6 +2,7 @@ package game_engine;
 
 import game_engine.sprite.Sprite;
 import java.awt.Image;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
@@ -19,6 +20,8 @@ public class Animation implements Observer{
 	
 	public Animation(Observable sprite){
 	   linkToSprite(sprite);
+	   pathMap = new HashMap<>();
+	   imageMap = new HashMap<>();
 	}
 	
 	public void setImage(Enum state, String ImagePath){
