@@ -25,7 +25,7 @@ public class Level {
         public void update() {
                 // TODO
             //Potentially different method
-            //objectives.forEach(objective -> objective.update());
+            objectives.forEach(objective -> objective.update());
             layers.forEach(layer -> layer.update());
         }
         
