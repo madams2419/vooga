@@ -99,6 +99,14 @@ public abstract class Sprite extends Observable{
 	    behaviorMap.get(behavior).execute();
 	}
 	
+	public void addImage(Enum state,String ImagePath){
+	    animation.setImage(state, ImagePath);
+	}
+	
+	public void removeImage(Enum state){
+	    animation.removeImage(state);
+	}
+	
 	public void setVelocity(double vel){
 		velocity = vel;
 		setChanged();

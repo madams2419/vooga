@@ -1,5 +1,7 @@
 package game_engine.sprite;
 
+import static org.junit.Assert.*;
+import org.junit.Test;
 import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
@@ -16,7 +18,6 @@ public class SpriteManager implements Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		Sprite sprite = (Sprite) o;
-		String state = sprite.getState();
 		
 		Double[] params = {sprite.getX(),sprite.getY(),
 				sprite.getTargetX(),sprite.getTargetY(),
@@ -57,6 +58,24 @@ public class SpriteManager implements Observer{
 		tester.setTargetX(100);
 		System.out.println("");
 		tester2.setTargetY(10);
+		
+		
 	}
+	
+	@Test
+	public void checkParams(){
+	    Sprite tester = new Collectible();
+    
+            SpriteManager manager = new SpriteManager();
+            manager.addSprite(tester);
+            tester.setID(10);
+            tester.setTargetX(100);
+ 
+            assertEquals(10,tester.getID(), .1);
+	}
+	
+
+	
+	
 
 }
