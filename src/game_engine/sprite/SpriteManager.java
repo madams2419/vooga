@@ -34,5 +34,15 @@ public class SpriteManager implements Observer{
 		sprites.add(sprite);
 	}
 	
+	// testing
+	public static void main(String[] args){
+		Sprite tester = new Coin();
+		SpriteManager manager = new SpriteManager();
+		tester.addObserver(manager);
+		
+		tester.setAcceleration(40);
+		tester.setID(10);
+		tester.setTargetX(100);
+	}
 
 }
