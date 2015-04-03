@@ -1,14 +1,10 @@
 package game_engine;
 
 import java.util.List;
-<<<<<<< HEAD
+
 import java.util.Observable;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-
-=======
-import java.util.function.Consumer;
->>>>>>> fd367c3d0eadb2b64a3fa011ebf6723da6e1f422
 import javafx.beans.property.BooleanProperty;
 
 /**@author Tony
