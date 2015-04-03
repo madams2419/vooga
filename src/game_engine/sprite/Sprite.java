@@ -1,5 +1,8 @@
 package game_engine.sprite;
 
+import java.awt.event.ItemListener;
+import java.util.Observable;
+
 import game_engine.HitBox;
 import game_engine.PhysicsEngine;
 
@@ -8,12 +11,17 @@ import game_engine.PhysicsEngine;
  * @author 
  *
  */
-public abstract class Sprite {
-	
-        int x;
-        int y;
+public abstract class Sprite extends Observable{
 	String name;
-	int id;
+	double id;
+	double x;
+	double y;
+	double targetX;
+	double targetY;
+	double velocity;
+	double acceleration;
+	double stateID;
+	String state;
 	HitBox hitBox;
 	PhysicsEngine physics;
 	
@@ -40,7 +48,7 @@ public abstract class Sprite {
 	 * @param name the string to name the sprite
 	 * @param id the id of the specific sprite
 	 */
-	public Sprite(String name, int id){
+	public Sprite(String name, double id){
 	    this.name = name;
 	    this.id = id;
 	}
@@ -50,21 +58,71 @@ public abstract class Sprite {
 	 */
 	public abstract void update();
 	
+	public void setVelocity(double vel){
+		velocity = vel;
+		setChanged();
+		notifyObservers();
+	}
+	
+	public double getVelocity(){
+		return velocity;
+	}
+	
+	public void setAcceleration(double accel){
+		acceleration = accel;
+		setChanged();
+		notifyObservers();
+	}
+	
+	public double getAcceleration(){
+		return acceleration;
+	}
+	
+	public void setTargetX(double x){
+		targetX = x;
+		setChanged();
+		notifyObservers();
+	}
+	
+	public void setTargetY(double y){
+		targetY = y;
+		setChanged();
+		notifyObservers();
+	}
+	
+	public double getTargetX(){
+		return targetX;
+	}
+	public double getTargetY(){
+		return targetY;
+	}
+	
+	
+	public void setState(String s){
+		state = s;
+		setChanged();
+		notifyObservers();
+	}
+	
+	public String getState(){
+		return state;
+	}
+	
 	/**
 	 * method setID
 	 * sets the ID of the sprite
-	 * @param id the int id to set to the sprite
+	 * @param id the double id to set to the sprite
 	 */
-	public void setID(int id){
+	public void setID(double id){
 	    this.id = id;
 	}
 	
 	/**
 	 * method getID
 	 * gets the ID of the sprite
-	 * @return int Id of the sprite
+	 * @return double Id of the sprite
 	 */
-	public int getID(){
+	public double getID(){
 	    return this.id;
 	}
 	
@@ -122,7 +180,7 @@ public abstract class Sprite {
 	 * set the X coordinate of the sprite
 	 * @param x the x coordinate
 	 */
-	public void setX(int x){
+	public void setX(double x){
 	    this.x = x;
 	}
 	
@@ -130,7 +188,7 @@ public abstract class Sprite {
 	 * method getX()
 	 * @return x the XCoordinate of the sprite
 	 */
-	public int getX(){
+	public double getX(){
 	    return x;
 	}
 	
@@ -139,7 +197,7 @@ public abstract class Sprite {
          * set the Y coordinate of the sprite
          * @param y the y coordinate
          */
-	public void setY(int y){
+	public void setY(double y){
 	    this.y = y;
 	}
 	
@@ -147,7 +205,9 @@ public abstract class Sprite {
          * method getY()
          * @return y the YCoordinate of the sprite
          */
-	public int getY(){
+	public double getY(){
 	    return y;
 	}
+	
+	
 }
