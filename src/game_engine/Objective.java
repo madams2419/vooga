@@ -1,33 +1,17 @@
 package game_engine;
 
 import java.util.List;
-<<<<<<< HEAD
 
 import java.util.Observable;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-=======
-<<<<<<< HEAD
-import java.util.Observable;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-
-=======
-import java.util.function.Consumer;
->>>>>>> fd367c3d0eadb2b64a3fa011ebf6723da6e1f422
->>>>>>> a0a92939791e66fd1a241414ad2c1c1590c2ec17
 import javafx.beans.property.BooleanProperty;
 
 /**@author Tony
  * Goal that leads to a specific action when completed
  */
 public class Objective {
-<<<<<<< HEAD
 		/**
-=======
-	
-        /**
->>>>>>> a0a92939791e66fd1a241414ad2c1c1590c2ec17
          * Constructor
          * @param condition BooleanProperty Represents a condition for the objective completion
          * @param subObjectives List<Objective> List of objectives that must be completed first
@@ -103,17 +87,11 @@ public class Objective {
 		return false;
 	}
 	
-<<<<<<< HEAD
 
-=======
->>>>>>> a0a92939791e66fd1a241414ad2c1c1590c2ec17
 	public <T extends Observable> void setPredicate(Predicate<T> condition) {
 		// TODO
 	}
 	
 }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> a0a92939791e66fd1a241414ad2c1c1590c2ec17
