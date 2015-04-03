@@ -9,11 +9,13 @@ import game_engine.PhysicsEngine;
  *
  */
 public abstract class Sprite {
-	
-        int x;
-        int y;
 	String name;
-	int id;
+	double x;
+    double y;
+    double velocity;
+    double acceleration;
+    double stateID;
+	double id;
 	HitBox hitBox;
 	PhysicsEngine physics;
 	
@@ -40,7 +42,7 @@ public abstract class Sprite {
 	 * @param name the string to name the sprite
 	 * @param id the id of the specific sprite
 	 */
-	public Sprite(String name, int id){
+	public Sprite(String name, double id){
 	    this.name = name;
 	    this.id = id;
 	}
@@ -53,18 +55,18 @@ public abstract class Sprite {
 	/**
 	 * method setID
 	 * sets the ID of the sprite
-	 * @param id the int id to set to the sprite
+	 * @param id the double id to set to the sprite
 	 */
-	public void setID(int id){
+	public void setID(double id){
 	    this.id = id;
 	}
 	
 	/**
 	 * method getID
 	 * gets the ID of the sprite
-	 * @return int Id of the sprite
+	 * @return double Id of the sprite
 	 */
-	public int getID(){
+	public double getID(){
 	    return this.id;
 	}
 	
@@ -122,7 +124,7 @@ public abstract class Sprite {
 	 * set the X coordinate of the sprite
 	 * @param x the x coordinate
 	 */
-	public void setX(int x){
+	public void setX(double x){
 	    this.x = x;
 	}
 	
@@ -130,7 +132,7 @@ public abstract class Sprite {
 	 * method getX()
 	 * @return x the XCoordinate of the sprite
 	 */
-	public int getX(){
+	public double getX(){
 	    return x;
 	}
 	
@@ -139,7 +141,7 @@ public abstract class Sprite {
          * set the Y coordinate of the sprite
          * @param y the y coordinate
          */
-	public void setY(int y){
+	public void setY(double y){
 	    this.y = y;
 	}
 	
@@ -147,7 +149,7 @@ public abstract class Sprite {
          * method getY()
          * @return y the YCoordinate of the sprite
          */
-	public int getY(){
+	public double getY(){
 	    return y;
 	}
 }
