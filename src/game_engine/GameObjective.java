@@ -11,16 +11,19 @@ public class GameObjective {
 	
 	public GameObjective() {
 		// TODO
+	    condition = false;
 	}
 	
 	public void onComplete() {
 		// TODO
+	    condition = true;
 	}
 	
 	public boolean isComplete() {
 		// TODO
 		return false;
 	}
+
 	
 	public <T extends Observable> void setPredicate(Predicate<T> condition) {
 		// TODO
