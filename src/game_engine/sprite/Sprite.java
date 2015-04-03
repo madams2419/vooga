@@ -1,6 +1,5 @@
 package game_engine.sprite;
 
-import java.awt.event.ItemListener;
 import java.util.Observable;
 
 import game_engine.HitBox;
@@ -20,8 +19,7 @@ public abstract class Sprite extends Observable{
 	double targetY;
 	double velocity;
 	double acceleration;
-	double stateID;
-	String state;
+	State spriteState;
 	HitBox hitBox;
 	PhysicsEngine physics;
 	
@@ -31,6 +29,17 @@ public abstract class Sprite extends Observable{
 	public Sprite() {
 		// TODO
 	    this.id = 0;
+	}
+	
+	/**
+	 * states for sprite
+	 */
+	private enum State {
+		JUMP,
+		FLOAT,
+		MOVE,
+		BOUNCE
+		// TODO add more states (or read these in from file)
 	}
 	
 	/**
@@ -63,7 +72,6 @@ public abstract class Sprite extends Observable{
 		setChanged();
 		notifyObservers();
 	}
-	
 	public double getVelocity(){
 		return velocity;
 	}
@@ -73,7 +81,6 @@ public abstract class Sprite extends Observable{
 		setChanged();
 		notifyObservers();
 	}
-	
 	public double getAcceleration(){
 		return acceleration;
 	}
@@ -83,13 +90,12 @@ public abstract class Sprite extends Observable{
 		setChanged();
 		notifyObservers();
 	}
-	
 	public void setTargetY(double y){
 		targetY = y;
 		setChanged();
 		notifyObservers();
 	}
-	
+
 	public double getTargetX(){
 		return targetX;
 	}
@@ -98,47 +104,27 @@ public abstract class Sprite extends Observable{
 	}
 	
 	
-	public void setState(String s){
-		state = s;
-		setChanged();
-		notifyObservers();
+	public void setState(State state){
+		spriteState = state;
+		
 	}
 	
-	public String getState(){
-		return state;
+	public State getState(){
+		return spriteState;
 	}
 	
-	/**
-	 * method setID
-	 * sets the ID of the sprite
-	 * @param id the double id to set to the sprite
-	 */
+
 	public void setID(double id){
 	    this.id = id;
 	}
-	
-	/**
-	 * method getID
-	 * gets the ID of the sprite
-	 * @return double Id of the sprite
-	 */
 	public double getID(){
 	    return this.id;
 	}
 	
-	/**
-	 * method setName
-	 * sets the Name of the current sprite
-	 * @param name String to name the sprite
-	 */
+
 	public void setName(String name){
 	    this.name = name;
 	}
-	
-	/**
-	 * method getName
-	 * @return String name of current sprite
-	 */
 	public String getName(){
 	    return this.name;
 	}
@@ -166,45 +152,22 @@ public abstract class Sprite extends Observable{
 	public void defineHitBox(){
 	    this.hitBox = hitBox;
 	}
-	
-	/**
-	 * method getHitBox()
-	 * @return the HitBox for the current sprite
-	 */
 	public HitBox getHitBox(){
 	    return this.hitBox;
 	}
 	
-	/**
-	 * method setX()
-	 * set the X coordinate of the sprite
-	 * @param x the x coordinate
-	 */
+
 	public void setX(double x){
 	    this.x = x;
 	}
-	
-	/**
-	 * method getX()
-	 * @return x the XCoordinate of the sprite
-	 */
 	public double getX(){
 	    return x;
 	}
 	
-	/**
-         * method setY()
-         * set the Y coordinate of the sprite
-         * @param y the y coordinate
-         */
+
 	public void setY(double y){
 	    this.y = y;
 	}
-	
-	/**
-         * method getY()
-         * @return y the YCoordinate of the sprite
-         */
 	public double getY(){
 	    return y;
 	}

@@ -17,6 +17,7 @@ public class SpriteManager implements Observer{
 	public void update(Observable o, Object arg) {
 		Sprite sprite = (Sprite) o;
 		String state = sprite.getState();
+		
 		Double[] params = {sprite.getX(),sprite.getY(),
 				sprite.getTargetX(),sprite.getTargetY(),
 				sprite.getVelocity(),sprite.getAcceleration()};
