@@ -1,21 +1,21 @@
 package game_engine;
 
 import java.util.List;
+<<<<<<< HEAD
 import java.util.Observable;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+=======
+import java.util.function.Consumer;
+>>>>>>> fd367c3d0eadb2b64a3fa011ebf6723da6e1f422
 import javafx.beans.property.BooleanProperty;
 
 /**@author Tony
  * Goal that leads to a specific action when completed
  */
 public class Objective {
-	
-	List<Objective> subObjectives;
-	boolean condition;
-	
-        /**
+		/**
          * Constructor
          * @param condition BooleanProperty Represents a condition for the objective completion
          * @param subObjectives List<Objective> List of objectives that must be completed first
@@ -25,13 +25,6 @@ public class Objective {
 		// TODO
 	}
 	
-	/***
-	 * Empty constructor for mockObjective in usecases
-	 */
-	public Objective() {
-			
-	}
-
 	/**
 	 * Method setCondition.
 	 * @param condition BooleanProperty
@@ -82,7 +75,8 @@ public class Objective {
 	}
 	
 	/**
-	 * Method invoked when this objective is complete
+	 * method onComplete
+	 * On completion of an objective, perform action
 	 */
 	public void onComplete() {
 		// TODO
@@ -97,8 +91,11 @@ public class Objective {
 		return false;
 	}
 	
+
 	public <T extends Observable> void setPredicate(Predicate<T> condition) {
 		// TODO
 	}
 	
 }
+
+
