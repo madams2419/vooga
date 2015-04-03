@@ -1,10 +1,14 @@
 package game_engine;
 
 import java.util.List;
+<<<<<<< HEAD
 import java.util.Observable;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+=======
+import java.util.function.Consumer;
+>>>>>>> fd367c3d0eadb2b64a3fa011ebf6723da6e1f422
 import javafx.beans.property.BooleanProperty;
 
 /**@author Tony
@@ -12,9 +16,12 @@ import javafx.beans.property.BooleanProperty;
  */
 public class Objective {
 	
+<<<<<<< HEAD
 	List<Objective> subObjectives;
 	boolean condition;
 	
+=======
+>>>>>>> fd367c3d0eadb2b64a3fa011ebf6723da6e1f422
         /**
          * Constructor
          * @param condition BooleanProperty Represents a condition for the objective completion
@@ -25,6 +32,7 @@ public class Objective {
 		// TODO
 	}
 	
+<<<<<<< HEAD
 	/***
 	 * Empty constructor for mockObjective in usecases
 	 */
@@ -32,6 +40,8 @@ public class Objective {
 			
 	}
 
+=======
+>>>>>>> fd367c3d0eadb2b64a3fa011ebf6723da6e1f422
 	/**
 	 * Method setCondition.
 	 * @param condition BooleanProperty
@@ -82,23 +92,39 @@ public class Objective {
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * Method invoked when this objective is complete
+=======
+	 * method onComplete
+	 * On completion of an objective, perform action
+>>>>>>> fd367c3d0eadb2b64a3fa011ebf6723da6e1f422
 	 */
 	public void onComplete() {
 		// TODO
 	}
+<<<<<<< HEAD
 	
 	/***
 	 * To check whether this objective has been completed
 	 * @return True iff the objective has been completed
+=======
+	/**
+	 * method isComplete
+	 * Check if the objective is complete
+	 * @return true if objective is completed
+>>>>>>> fd367c3d0eadb2b64a3fa011ebf6723da6e1f422
 	 */
 	public boolean isComplete() {
 		// TODO
 		return false;
 	}
 	
+<<<<<<< HEAD
 	public <T extends Observable> void setPredicate(Predicate<T> condition) {
 		// TODO
 	}
 	
 }
+=======
+}
+>>>>>>> fd367c3d0eadb2b64a3fa011ebf6723da6e1f422
