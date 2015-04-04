@@ -3,6 +3,7 @@ package game_engine.sprite;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
+import java.util.Observer;
 
 import game_engine.Animation;
 import game_engine.Behavior;
@@ -11,6 +12,7 @@ import game_engine.PhysicsEngine;
 
 /**
  * Abstract class for the creation of multiple sprite types
+ * @TODO remove observer observable and clean
  * @author 
  *
  */

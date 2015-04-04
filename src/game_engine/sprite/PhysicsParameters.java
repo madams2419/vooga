@@ -25,6 +25,12 @@ public class PhysicsParameters {
 	}
 	
 	// getters/setters
+	protected void setState(String state){
+		myState = state;
+	}
+	protected String getState(){
+		return myState;
+	}
 	protected double getX(){
 		return myX;
 	}
