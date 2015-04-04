@@ -3,6 +3,8 @@ package game_engine.sprite;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
+import java.util.Observer;
+
 import game_engine.Animation;
 import game_engine.Behavior;
 import game_engine.HitBox;
@@ -11,23 +13,21 @@ import game_engine.sprite.attributes.IMovement;
 
 /**
  * Abstract class for the creation of multiple sprite types
+ * @TODO remove observer observable and clean
  * @author 
  *
  */
-public abstract class Sprite extends Observable implements IMovement{
+
+public abstract class Sprite extends Observable{
+
 	String name;
 	double id;
-	double x;
-	double y;
-	double targetX;
-	double targetY;
-	double velocity;
-	double acceleration;
-	State spriteState;
 	Animation animation;
 	HitBox hitBox;
 	PhysicsEngine physics;
 	Map<String, Behavior> behaviorMap = new HashMap<>();
+	PhysicsParameters myPhysicsParams;
+	private String myState;
 	
 	/**
 	 * Blank Constructor
@@ -37,19 +37,7 @@ public abstract class Sprite extends Observable implements IMovement{
 	    this.id = 0;
 	    animation = new Animation(this);
 	}
-	
-	/**
-	 * states for sprite
-	 */
-	private enum State {
-	    IDLE,
-	    WALK,
-		JUMP,
-		FLOAT,
-		MOVE,
-		BOUNCE
-		// TODO add more states (or read these in from file)
-	}
+
 	
 	/**
 	 * Constructor Sprite
@@ -73,6 +61,7 @@ public abstract class Sprite extends Observable implements IMovement{
 	    this.id = id;
 	    animation = new Animation(this);
 	}
+	
 	/**
 	 * method update
 	 * Updates the sprite
@@ -100,92 +89,27 @@ public abstract class Sprite extends Observable implements IMovement{
 	    behaviorMap.get(behavior).execute();
 	}
 	
-	public void addImage(Enum state,String ImagePath){
+	public void addImage(String state,String ImagePath){
 	    animation.setImage(state, ImagePath);
 	}
 	
-	public void removeImage(Enum state){
+	public void removeImage(String state){
 	    animation.removeImage(state);
 	}
 	
-	/**
-	 * @see game_engine.sprite.IMovement#setVelocity(double)
-	 */
-	@Override
-    public void setVelocity(double vel){
-		velocity = vel;
+	public void setState(String state){
+		myState = state;
+		myPhysicsParams.setState(state);
 		setChanged();
 		notifyObservers();
 	}
-	/**
-         * @see game_engine.sprite.IMovement#getVelocity()
-         */
-	@Override
-    public double getVelocity(){
-		return velocity;
+	
+	public PhysicsParameters getPhysicsParams(){
+		return myPhysicsParams;
 	}
 	
-	/** 
-	 * @see game_engine.sprite.IMovement#setAcceleration(double)
-         */
-	@Override
-    public void setAcceleration(double accel){
-		acceleration = accel;
-		setChanged();
-		notifyObservers();
-	}
-	/**
-         * @see game_engine.sprite.IMovement#getAcceleration()
-         */
-	@Override
-    public double getAcceleration(){
-		return acceleration;
-	}
-	
-	/** 
-	 * @see game_engine.sprite.IMovement#setTargetX(double)
-	 */
-	@Override
-    public void setTargetX(double x){
-		targetX = x;
-		setChanged();
-		notifyObservers();
-	}
-	/**
-	 * @see game_engine.sprite.IMovement#setTargetY(double)
-	 */
-	@Override
-    public void setTargetY(double y){
-		targetY = y;
-		setChanged();
-		notifyObservers();
-	}
-
-	/** 
-	 * @see game_engine.sprite.IMovement#getTargetX()
-         */
-	@Override
-    public double getTargetX(){
-		return targetX;
-	}
-	/**
-         * @see game_engine.sprite.IMovement#getTargetY()
-         */
-	@Override
-    public double getTargetY(){
-		return targetY;
-	}
-	
-	
-	public void setState(State state){
-		spriteState = state;
-		setChanged();
-		notifyObservers();
-		
-	}
-	
-	public State getState(){
-		return spriteState;
+	public String getState(){
+		return myState;
 	}
 	
 
@@ -204,17 +128,13 @@ public abstract class Sprite extends Observable implements IMovement{
 	    return this.name;
 	}
 	
-	/* (non-Javadoc)
-     * @see game_engine.sprite.IMovement#definePhysics(game_engine.PhysicsEngine)
-     */
+
 	@Override
     public void definePhysics(PhysicsEngine physics){
 	    this.physics = physics;
 	}
 	
-	/* (non-Javadoc)
-     * @see game_engine.sprite.IMovement#getPhysics()
-     */
+
 	@Override
     public PhysicsEngine getPhysics(){
 	    return this.physics;
@@ -232,49 +152,18 @@ public abstract class Sprite extends Observable implements IMovement{
 	}
 	
 
-	/**
-	 * @see game_engine.sprite.IMovement#setX(double)
-         */
-	@Override
-    public void setX(double x){
-	    this.x = x;
-	}
-	/**
-         * @see game_engine.sprite.IMovement#getX()
-         */
-	@Override
-    public double getX(){
-	    return x;
-	}
-	
-
-	/**
-         * @see game_engine.sprite.IMovement#setY(double)
-         */
-	@Override
-    public void setY(double y){
-	    this.y = y;
-	}
-	/**
-	 * @see game_engine.sprite.IMovement#getY()
-	 */
-	@Override
-    public double getY(){
-	    return y;
-	}
 	
 	public static void main(String[] args){
 	    Sprite player = new Enemy();
-	    player.addImage(State.IDLE, "idle");
-	    player.addImage(State.WALK, "walk");
-	    player.addImage(State.JUMP, "jump");
-	    player.addImage(State.FLOAT, "float");
-	    player.addImage(State.MOVE, "move");
-	    player.addImage(State.BOUNCE, "bounce");
+	    player.addImage("idle", "idle");
+	    player.addImage("walk", "walk");
+	    player.addImage("jump", "jump");
+	    player.addImage("float", "float");
+	    player.addImage("move", "move");
+	    player.addImage("bounce", "bounce");
 	    
-	    player.setState(State.IDLE);
-	    player.setState(State.JUMP);
+	    player.setState("idle");
+	    player.setState("jump");
 	    
 	}
-	
 }
