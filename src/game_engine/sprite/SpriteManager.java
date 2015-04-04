@@ -1,5 +1,6 @@
 package game_engine.sprite;
 
+import game_engine.sprite.attributes.IMovement;
 import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
@@ -35,7 +36,7 @@ public class SpriteManager implements Observer{
 		sprites.add(sprite);
 	}
 	
-	public void removeSprite(Sprite sprite){
+	public void removeSprite(IMovement sprite){
 		if(sprites.contains(sprite)){
 			sprites.remove(sprite);
 		}

@@ -7,13 +7,14 @@ import game_engine.Animation;
 import game_engine.Behavior;
 import game_engine.HitBox;
 import game_engine.PhysicsEngine;
+import game_engine.sprite.attributes.IMovement;
 
 /**
  * Abstract class for the creation of multiple sprite types
  * @author 
  *
  */
-public abstract class Sprite extends Observable{
+public abstract class Sprite extends Observable implements IMovement{
 	String name;
 	double id;
 	double x;
@@ -107,39 +108,71 @@ public abstract class Sprite extends Observable{
 	    animation.removeImage(state);
 	}
 	
-	public void setVelocity(double vel){
+	/**
+	 * @see game_engine.sprite.IMovement#setVelocity(double)
+	 */
+	@Override
+    public void setVelocity(double vel){
 		velocity = vel;
 		setChanged();
 		notifyObservers();
 	}
-	public double getVelocity(){
+	/**
+         * @see game_engine.sprite.IMovement#getVelocity()
+         */
+	@Override
+    public double getVelocity(){
 		return velocity;
 	}
 	
-	public void setAcceleration(double accel){
+	/** 
+	 * @see game_engine.sprite.IMovement#setAcceleration(double)
+         */
+	@Override
+    public void setAcceleration(double accel){
 		acceleration = accel;
 		setChanged();
 		notifyObservers();
 	}
-	public double getAcceleration(){
+	/**
+         * @see game_engine.sprite.IMovement#getAcceleration()
+         */
+	@Override
+    public double getAcceleration(){
 		return acceleration;
 	}
 	
-	public void setTargetX(double x){
+	/** 
+	 * @see game_engine.sprite.IMovement#setTargetX(double)
+	 */
+	@Override
+    public void setTargetX(double x){
 		targetX = x;
 		setChanged();
 		notifyObservers();
 	}
-	public void setTargetY(double y){
+	/**
+	 * @see game_engine.sprite.IMovement#setTargetY(double)
+	 */
+	@Override
+    public void setTargetY(double y){
 		targetY = y;
 		setChanged();
 		notifyObservers();
 	}
 
-	public double getTargetX(){
+	/** 
+	 * @see game_engine.sprite.IMovement#getTargetX()
+         */
+	@Override
+    public double getTargetX(){
 		return targetX;
 	}
-	public double getTargetY(){
+	/**
+         * @see game_engine.sprite.IMovement#getTargetY()
+         */
+	@Override
+    public double getTargetY(){
 		return targetY;
 	}
 	
@@ -171,19 +204,19 @@ public abstract class Sprite extends Observable{
 	    return this.name;
 	}
 	
-	/**
-	 * method definePhysics
-	 * @param physics the corresponding physics engine to set to the sprite
-	 */
-	public void definePhysics(PhysicsEngine physics){
+	/* (non-Javadoc)
+     * @see game_engine.sprite.IMovement#definePhysics(game_engine.PhysicsEngine)
+     */
+	@Override
+    public void definePhysics(PhysicsEngine physics){
 	    this.physics = physics;
 	}
 	
-	/**
-	 * method getPhysics
-	 * @return the PhysicsEngine of the current sprite
-	 */
-	public PhysicsEngine getPhysics(){
+	/* (non-Javadoc)
+     * @see game_engine.sprite.IMovement#getPhysics()
+     */
+	@Override
+    public PhysicsEngine getPhysics(){
 	    return this.physics;
 	}
 	
@@ -199,20 +232,49 @@ public abstract class Sprite extends Observable{
 	}
 	
 
-	public void setX(double x){
+	/**
+	 * @see game_engine.sprite.IMovement#setX(double)
+         */
+	@Override
+    public void setX(double x){
 	    this.x = x;
 	}
-	public double getX(){
+	/**
+         * @see game_engine.sprite.IMovement#getX()
+         */
+	@Override
+    public double getX(){
 	    return x;
 	}
 	
 
-	public void setY(double y){
+	/**
+         * @see game_engine.sprite.IMovement#setY(double)
+         */
+	@Override
+    public void setY(double y){
 	    this.y = y;
 	}
-	public double getY(){
+	/**
+	 * @see game_engine.sprite.IMovement#getY()
+	 */
+	@Override
+    public double getY(){
 	    return y;
 	}
 	
+	public static void main(String[] args){
+	    Sprite player = new Enemy();
+	    player.addImage(State.IDLE, "idle");
+	    player.addImage(State.WALK, "walk");
+	    player.addImage(State.JUMP, "jump");
+	    player.addImage(State.FLOAT, "float");
+	    player.addImage(State.MOVE, "move");
+	    player.addImage(State.BOUNCE, "bounce");
+	    
+	    player.setState(State.IDLE);
+	    player.setState(State.JUMP);
+	    
+	}
 	
 }
