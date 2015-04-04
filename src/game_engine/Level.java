@@ -12,13 +12,13 @@ import java.util.List;
  */
 public class Level {
 	
-	List<Objective> objectives;
-	List<Layer> layers;
+	List<Objective> myObjectives;
+	List<Layer> myLayers;
 	
 	public Level() {
 		// TODO
-	    objectives = new ArrayList<>();
-	    layers = new ArrayList<>();
+	    myObjectives = new ArrayList<>();
+	    myLayers = new ArrayList<>();
 	}
 	
 	/**
@@ -28,8 +28,8 @@ public class Level {
         public void update() {
                 // TODO
             //Potentially different method
-            objectives.forEach(objective -> objective.update());
-            layers.forEach(layer -> layer.update());
+            myObjectives.forEach(objective -> objective.update());
+            myLayers.forEach(layer -> layer.update());
         }
         
 	/**
@@ -38,7 +38,7 @@ public class Level {
 	 * @param objective the GameObjective to be added
 	 */
 	public void addObjective(Objective objective){
-	    objectives.add(objective);
+	    myObjectives.add(objective);
 	}
 	
 	/**
@@ -47,7 +47,11 @@ public class Level {
 	 * @param objective the objective to be removed
 	 */
 	public void removeObjective(Objective objective){
-	    objectives.remove(objective);
+	    myObjectives.remove(objective);
+	}
+	
+	public void setObjectives(List<Objective> objectives){
+	    myObjectives = objectives;
 	}
 	
 	/**
@@ -55,7 +59,7 @@ public class Level {
 	 * @return list of objectives for the current level
 	 */
 	public List<Objective> getObjectives(){
-	            return objectives;
+	            return myObjectives;
 	}
 	
 	/**
@@ -64,7 +68,7 @@ public class Level {
 	 * @param layer the layer to be added
 	 */
 	public void addLayer(Layer layer){
-	    layers.add(layer);
+	    myLayers.add(layer);
 	}
 	
 	/**
@@ -73,7 +77,7 @@ public class Level {
 	 * @param layer the layer to be removed
 	 */
 	public void removeLayer(Layer layer){
-	    layers.remove(layer);
+	    myLayers.remove(layer);
 	}
 	
 	/**
@@ -81,6 +85,6 @@ public class Level {
 	 * @return list of layers for the current level
 	 */
 	public List<Layer> getLayers(){
-	    return layers;
+	    return myLayers;
 	}
 }
