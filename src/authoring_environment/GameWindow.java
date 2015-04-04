@@ -1,4 +1,4 @@
-package formerdefault;
+package authoring_environment;
 
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -11,7 +11,6 @@ private WindowCharacteristics myBackground;
 String backgroundName="randombackground";
 
   public static void main(String[] args) {
-	  System.out.println("executing");
     launch(args);
   }
 

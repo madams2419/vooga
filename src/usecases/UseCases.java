@@ -6,7 +6,7 @@ import game_engine.Level;
 import game_engine.PhysicsEngine;
 import game_engine.objective.Objective;
 import game_engine.sprite.Player;
-import game_engine.sprite.Sprite;
+import game_engine.sprite.InanimateSprite;
 import game_engine.sprite.Water;
 import game_engine.GameObjective;
 
@@ -34,6 +34,7 @@ public class UseCases {
 	
 	public void useCase2(){
 		Game mockGame = new Game();
+
 		GameObjective mockObjective = new GameObjective();
 		mockObjective.onComplete();
 		Level newLevel = new Level();
@@ -51,8 +52,8 @@ public class UseCases {
 	public void useCase3(){
 		CollisionEngine collisionEngine = new CollisionEngine();
 		PhysicsEngine physicsEngine = new PhysicsEngine();
-		Sprite water = new Water();
-		Sprite player = new Player();
+		InanimateSprite water = new Water();
+		InanimateSprite player = new Player();
 		collisionEngine.executeCollision(player, water);
 		double acceleration = 9.8;
 		physicsEngine.setAcceleration(acceleration);
