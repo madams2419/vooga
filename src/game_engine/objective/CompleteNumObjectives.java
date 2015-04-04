@@ -18,9 +18,9 @@ public class CompleteNumObjectives extends DoRemainingObjective{
     }
     
     @Override
-    public void update() {
-        mySubObjectives.forEach(obj -> obj.update());
-        super.update();
+    public void update(long now) {
+        mySubObjectives.forEach(obj -> obj.update(now));
+        super.update(now);
     }
     
     @Override

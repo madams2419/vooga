@@ -19,7 +19,7 @@ public class DoRemainingObjective extends Objective{
      * @param linked List of objectives that need to be complete before an objective is active
      */
     public DoRemainingObjective(IntSupplier numRemaining, Behavior onComplete) {
-        super(()-> numRemaining.getAsInt() <= 0, onComplete);
+        super((now)-> numRemaining.getAsInt() <= 0, onComplete);
         myNumRemaining = numRemaining;
     }
     

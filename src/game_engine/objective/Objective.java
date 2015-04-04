@@ -3,7 +3,8 @@ package game_engine.objective;
 import game_engine.Behavior;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BooleanSupplier;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 
 /**
@@ -18,28 +19,23 @@ public class Objective {
     /**
      * Condition for this objective to be complete.
      */
-    private BooleanSupplier myCondition;
+    private Predicate<Long> myCondition;
     /**
      * Action performed when objective is complete.
      */
     private Behavior myOnComplete;
-    private boolean myIsComplete;
-    private boolean myIsActive;
+    
     /**
      * List of objectives that must be completed before this objective is active.
      */
     private List<Objective> myPreReqs;
     private String myName;
-
-    /**
-     * Constructor
-     * 
-     * @param linked List of objectives that must be completed before this objective is active.
-     */
-    public Objective () {
-        myIsComplete = false;
-        myIsActive = false;
-        myPreReqs = new ArrayList<>();
+    private Optional<GameTimer> myTimer;
+    private Status myStatus;
+    private enum Status {
+        INACTIVE,
+        ACTIVE,
+        COMPLETE;
     }
 
     /**
@@ -49,17 +45,10 @@ public class Objective {
      * @param onComplete
      * @param linked List of objectives that must be completed before this objective is active.
      */
-    public Objective (BooleanSupplier condition, Behavior onComplete) {
-        this();
-        setCondition(condition);
-        setOnComplete(onComplete);
-    }
-
-    public void setCondition (BooleanSupplier condition) {
+    public Objective (Predicate<Long> condition, Behavior onComplete) {
+        myStatus = Status.INACTIVE;
+        myPreReqs = new ArrayList<>();
         myCondition = condition;
-    }
-
-    public void setOnComplete (Behavior onComplete) {
         myOnComplete = onComplete;
     }
 
@@ -71,19 +60,46 @@ public class Objective {
     public void setPreReqs (List<Objective> preReqs) {
         myPreReqs = preReqs;
     }
+    
+    public void setTimer (GameTimer timer){
+        myTimer = Optional.ofNullable(timer);
+    }
+    
+    /**
+     * Returns true if and only if the timer has expired.
+     * @param now
+     * @return
+     */
+    private boolean checkTimer (long now) {
+        return myTimer.filter(timer -> timer.isFinished(now)).isPresent();
+    }
 
     /**
      * Updates active and completion status. Completes if objective is complete.
+     * @param now TODO
      */
-    public void update () {
+    public void update (long now) {
+        updateActive(now);
         if (isActive()) {
-            myIsComplete = myCondition.getAsBoolean();
+            updateComplete(now);
             if (isComplete()) {
-                complete();
+                complete(now);
             }
         }
     }
 
+    private void updateActive(long now) {
+        if (isActive()){
+            return;
+        }
+        setActive(arePreReqsFinished() && !isComplete(), now);
+    }
+    
+    private void updateComplete(long now) {
+        if (myCondition.test(now) || checkTimer(now)){
+            myStatus = Status.COMPLETE;
+        }
+    }
     /**
      * Updates the active status and returns the status. An objective's completion status only if it
      * is active.
@@ -91,8 +107,7 @@ public class Objective {
      * @return true iff objective is active.
      */
     public boolean isActive () {
-        myIsActive |= (arePreReqsFinished() && !isComplete());
-        return myIsActive;
+        return myStatus == Status.ACTIVE;
     }
 
     private boolean arePreReqsFinished () {
@@ -100,21 +115,23 @@ public class Objective {
     }
 
     public boolean isComplete () {
-        return myIsComplete;
+        return myStatus == Status.COMPLETE;
     }
 
-    public void setActive (boolean active) {
-        myIsActive = active;
+    public void setActive (boolean active, long now) {
+        myStatus = Status.ACTIVE;
+        if (isActive()){
+            myTimer.ifPresent(timer -> timer.start(now));
+        }
     }
 
     /**
      * Executes the behavior associated with this object.
      * Also sets the objective to complete and objective is no longer active.
      */
-    public void complete () {
+    public void complete (long now) {
         myOnComplete.execute();
-        myIsComplete = true;
-        setActive(false);
+        myStatus = Status.COMPLETE;
     }
 
     public void setName (String name) {
@@ -124,5 +141,16 @@ public class Objective {
     @Override
     public String toString () {
         return myName;
+    }
+    
+    public static void main (String[] args) {
+        Objective o = new Objective(now -> false, () -> System.out.println("done"));
+        o.setTimer(new GameTimer(3));
+        o.setActive(true, 0);
+        for (int i =0; i < 5; i++){
+            System.out.println("i =" + i);
+            o.update(i);
+        }
+        
     }
 }

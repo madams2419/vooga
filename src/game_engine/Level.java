@@ -25,10 +25,10 @@ public class Level {
          * method update
          * Update contents of a layer
          */
-        public void update() {
+        public void update(long now) {
                 // TODO
             //Potentially different method
-            myObjectives.forEach(objective -> objective.update());
+            myObjectives.forEach(objective -> objective.update(now));
             myLayers.forEach(layer -> layer.update());
         }
         
