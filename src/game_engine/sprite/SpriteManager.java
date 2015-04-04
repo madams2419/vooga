@@ -54,8 +54,8 @@ public class SpriteManager implements Observer{
 		tester.setAcceleration(40);
 		tester.setID(10);
 		tester.setTargetX(100);
-		System.out.println("");
 		tester2.setTargetY(10);
 	}
+	
 
 }
