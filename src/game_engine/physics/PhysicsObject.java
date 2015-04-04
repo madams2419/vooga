@@ -9,17 +9,20 @@ public class PhysicsObject {
 	private Point2D myPos;
 	private Vector myVel;
 	private Vector myAccel;
+	private double myRestitution;
 	private List<Vector> myAppliedForces;
+	private List<Joint> myJoints;
 	
-	public PhysicsObject(Point2D pos, Vector vel, Vector accel, Vector... appliedForces) {
+	public PhysicsObject(Point2D pos, Vector vel, Vector accel, double restitution, Vector... appliedForces) {
 		setPos(pos);
 		setVel(vel);
 		setAccel(accel);
+		setRestitution(restitution);
 		myAppliedForces = Arrays.asList(appliedForces);
 	}
 	
 	public PhysicsObject(Point2D pos) {
-		this(pos, new Vector(), new Vector());
+		this(pos, new Vector(), new Vector(), 0);
 	}
 	
 	public void update() {
@@ -30,24 +33,28 @@ public class PhysicsObject {
 		return myPos;
 	}
 
-	public void setPos(Point2D myPos) {
-		this.myPos = myPos;
+	public void setPos(Point2D pos) {
+		myPos = pos;
 	}
 
 	public Vector getVel() {
 		return myVel;
 	}
 
-	public void setVel(Vector myVel) {
-		this.myVel = myVel;
+	public void setVel(Vector vel) {
+		myVel = vel;
 	}
 
 	public Vector getAccel() {
 		return myAccel;
 	}
 
-	public void setAccel(Vector myAccel) {
-		this.myAccel = myAccel;
+	public void setAccel(Vector accel) {
+		myAccel = accel;
+	}
+	
+	public void setRestitution(double restitution) {
+		myRestitution = restitution;
 	}
 
 }

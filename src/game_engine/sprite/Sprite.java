@@ -3,10 +3,12 @@ package game_engine.sprite;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
+
 import game_engine.Animation;
 import game_engine.Behavior;
 import game_engine.HitBox;
-import game_engine.PhysicsEngine;
+import game_engine.physics.PhysicsEngine;
+import game_engine.physics.PhysicsObject;
 
 /**
  * Abstract class for the creation of multiple sprite types
@@ -25,7 +27,7 @@ public abstract class Sprite extends Observable{
 	State spriteState;
 	Animation animation;
 	HitBox hitBox;
-	PhysicsEngine physics;
+	PhysicsObject myPhysicsObject;
 	Map<String, Behavior> behaviorMap = new HashMap<>();
 	
 	/**
@@ -175,16 +177,16 @@ public abstract class Sprite extends Observable{
 	 * method definePhysics
 	 * @param physics the corresponding physics engine to set to the sprite
 	 */
-	public void definePhysics(PhysicsEngine physics){
-	    this.physics = physics;
+	public void definePhysics(PhysicsObject physicsObject){
+	    myPhysicsObject = physicsObject;
 	}
 	
 	/**
 	 * method getPhysics
 	 * @return the PhysicsEngine of the current sprite
 	 */
-	public PhysicsEngine getPhysics(){
-	    return this.physics;
+	public PhysicsObject getPhysics(){
+	    return myPhysicsObject;
 	}
 	
 	/**
