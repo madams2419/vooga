@@ -9,6 +9,7 @@ import javafx.scene.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -49,6 +50,7 @@ public class ControlTester extends Application{
 		Group myGroup = new Group();
 		Scene scene = new Scene(myGroup, 400, 400, Color.WHITE);
 		myGroup.getChildren().add(text);
+		text.setFont(new Font(20));
 		s.setScene(scene);
 		keyManipulation();
 		scene.setOnKeyPressed(e -> handleKeyInput(e));
