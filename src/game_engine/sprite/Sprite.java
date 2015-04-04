@@ -16,7 +16,7 @@ import game_engine.PhysicsEngine;
  * @author 
  *
  */
-public abstract class Sprite extends Observable{
+public abstract class Sprite {
 	String name;
 	double id;
 	Animation animation;
@@ -100,8 +100,6 @@ public abstract class Sprite extends Observable{
 	
 	public void setState(String state){
 		myState = state;
-		setChanged();
-		notifyObservers();
 		
 	}
 	
