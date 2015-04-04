@@ -29,12 +29,12 @@ public class ControlsManager {
 	 * @param keyText the string that maps to the key
 	 */
 	public void executeBehavior(String keyText) {
-		controlMap.get(keyText).execute();
+		controlMap.get(designerMap.get(keyText)).execute();
 	}
 	
 	public void addBehavior(String key, String behaviorString){
 		designerMap.put(key, behaviorString);
-		addEntryControlMap(key, ControlTester.selectBehavior(behaviorString));
+		addEntryControlMap(behaviorString, ControlTester.selectBehavior(behaviorString));
 	}
 	
 	public void modifyKey(String oldKey, String newKey){

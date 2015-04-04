@@ -7,6 +7,7 @@ public class AddBehavior implements Behavior{
 	@Override
 	public void execute() {
 		ControlTester.addTrack();
+		ControlTester.updateText();
 	}
 
 }
