@@ -1,28 +1,20 @@
 package game_engine.objective;
 
 import game_engine.Behavior;
-import java.util.List;
 import java.util.function.IntSupplier;
 
+public class DoAllObjective extends DoRemainingObjective {
 
-/**
- * Objective class for handling requiring completion of all tasks of a certain nature.
- * 
- * @author Tony
- *
- */
-public class DoAllObjective extends DoNTimesObjective {
-    /**
-     * Constructor
-     * 
-     * @param numTimes Number of tasks still remaining to be done.
-     * @param onComplete See Objective class
-     * @param linked See Objective class
-     */
-    public DoAllObjective (IntSupplier numTimes,
-                           Behavior onComplete,
-                           List<Objective> linked) {
-        super(0, () -> -numTimes.getAsInt(), onComplete, linked);
+    public DoAllObjective (IntSupplier numRemaining, Behavior onComplete) {
+        super(numRemaining, onComplete);
     }
-
+    
+    @Override
+    public String toString() {
+        return convertToAll(super.toString(), getNumRemaining());
+    }
+    
+    public static String convertToAll(String string, int num){
+        return string.replaceFirst(Integer.toString(num), "All");
+    }
 }
