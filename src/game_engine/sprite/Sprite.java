@@ -129,13 +129,13 @@ public abstract class Sprite extends Observable{
 	}
 	
 
-	@Override
+	
     public void definePhysics(PhysicsEngine physics){
 	    this.physics = physics;
 	}
 	
 
-	@Override
+	
     public PhysicsEngine getPhysics(){
 	    return this.physics;
 	}
