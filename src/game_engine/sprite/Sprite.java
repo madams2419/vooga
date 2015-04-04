@@ -3,6 +3,7 @@ package game_engine.sprite;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
+
 import game_engine.Animation;
 import game_engine.Behavior;
 import game_engine.HitBox;
@@ -16,17 +17,12 @@ import game_engine.PhysicsEngine;
 public abstract class Sprite extends Observable{
 	String name;
 	double id;
-	double x;
-	double y;
-	double targetX;
-	double targetY;
-	double velocity;
-	double acceleration;
-	State spriteState;
 	Animation animation;
 	HitBox hitBox;
 	PhysicsEngine physics;
 	Map<String, Behavior> behaviorMap = new HashMap<>();
+	PhysicsParameters myPhysicsParams;
+	private String myState;
 	
 	/**
 	 * Blank Constructor
@@ -36,19 +32,7 @@ public abstract class Sprite extends Observable{
 	    this.id = 0;
 	    animation = new Animation(this);
 	}
-	
-	/**
-	 * states for sprite
-	 */
-	private enum State {
-	    IDLE,
-	    WALK,
-		JUMP,
-		FLOAT,
-		MOVE,
-		BOUNCE
-		// TODO add more states (or read these in from file)
-	}
+
 	
 	/**
 	 * Constructor Sprite
@@ -72,6 +56,7 @@ public abstract class Sprite extends Observable{
 	    this.id = id;
 	    animation = new Animation(this);
 	}
+	
 	/**
 	 * method update
 	 * Updates the sprite
@@ -107,52 +92,19 @@ public abstract class Sprite extends Observable{
 	    animation.removeImage(state);
 	}
 	
-	public void setVelocity(double vel){
-		velocity = vel;
-		setChanged();
-		notifyObservers();
-	}
-	public double getVelocity(){
-		return velocity;
+	public PhysicsParameters getPhysicsParams(){
+		return myPhysicsParams;
 	}
 	
-	public void setAcceleration(double accel){
-		acceleration = accel;
-		setChanged();
-		notifyObservers();
-	}
-	public double getAcceleration(){
-		return acceleration;
-	}
-	
-	public void setTargetX(double x){
-		targetX = x;
-		setChanged();
-		notifyObservers();
-	}
-	public void setTargetY(double y){
-		targetY = y;
-		setChanged();
-		notifyObservers();
-	}
-
-	public double getTargetX(){
-		return targetX;
-	}
-	public double getTargetY(){
-		return targetY;
-	}
-	
-	
-	public void setState(State state){
-		spriteState = state;
+	public void setState(String state){
+		myState = state;
 		setChanged();
 		notifyObservers();
 		
 	}
 	
-	public State getState(){
-		return spriteState;
+	public String getState(){
+		return myState;
 	}
 	
 
@@ -197,22 +149,5 @@ public abstract class Sprite extends Observable{
 	public HitBox getHitBox(){
 	    return this.hitBox;
 	}
-	
-
-	public void setX(double x){
-	    this.x = x;
-	}
-	public double getX(){
-	    return x;
-	}
-	
-
-	public void setY(double y){
-	    this.y = y;
-	}
-	public double getY(){
-	    return y;
-	}
-	
 	
 }
