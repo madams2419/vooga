@@ -24,12 +24,10 @@ public class AuthoringWindow {
 
 	private Scene myScene;
 	private ButtonFactory mbuttonList;
-	private String mFileSelector="src/Resources/FilestoParse.xml";
+	private String mFileSelector = "src/Resources/FilestoParse.xml";
 
 	public Scene GameCreateUI() {
-		
-		
-		
+
 		VBox root = new VBox();
 
 		BorderPane canvas = new BorderPane();
@@ -45,7 +43,7 @@ public class AuthoringWindow {
 		canvas.setCenter(setupCenterPane());
 
 		root.getChildren().add(canvas);
-		//root.getChildren().add(menuBar());
+		// root.getChildren().add(menuBar());
 		// create a place to display the shapes and react to input
 
 		return myScene;
@@ -61,16 +59,19 @@ public class AuthoringWindow {
 
 	private HBox setupBottomPane(double width) {
 		HBox buttonBox = new HBox();
-		for(Button B:mbuttonList.getSharedInstace(mFileSelector, "Button").generateButtonBoxes()){
+		for (Button B : mbuttonList.getSharedInstace(mFileSelector, "Button")
+				.generateButtonBoxes()) {
 			buttonBox.getChildren().add(B);
 		}
-		System.out.println(mbuttonList.getSharedInstace(mFileSelector, "Button").GetAttributes().toString());
+		System.out.println(mbuttonList
+				.getSharedInstace(mFileSelector, "Button").GetAttributes()
+				.toString());
 		return buttonBox;
 	}
-	
+
 	private HBox setupTopPane(double width) {
 		Map<String, EventHandler<Event>> mButtons = new HashMap<>();
-		
+
 		mButtons.put("Global Settings", null);
 		mButtons.put("Map Settings", null);
 		mButtons.put("Interactions List", null);
@@ -78,14 +79,14 @@ public class AuthoringWindow {
 		mButtons.put("Blocks", null);
 		mButtons.put("Decorations", null);
 		mButtons.put("UI Controls", null);
-		
+
 		TopPane mTopPane = new TopPane();
 		mTopPane.addButtons(mButtons);
 		return mTopPane;
 	}
 
 	private VBox setupRightPane() {
-		return new RightPane();
+		return new RightPane(myScene);
 	}
 
 	private VBox setupLeftPane() {
@@ -93,7 +94,7 @@ public class AuthoringWindow {
 	}
 
 	private Node setupCenterPane() {
-		return new CenterPane();
+		return new CenterPane(myScene);
 	}
 
 }
