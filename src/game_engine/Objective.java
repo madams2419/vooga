@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Observable;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-
-
 import java.util.function.Consumer;
 
 import javafx.beans.property.BooleanProperty;
@@ -20,6 +18,9 @@ public class Objective {
 	boolean condition;
 	
         /**
+=======
+		/**
+>>>>>>> 25435599e392a0b513a380c08dd91c54a2744e12
          * Constructor
          * @param condition BooleanProperty Represents a condition for the objective completion
          * @param subObjectives List<Objective> List of objectives that must be completed first
@@ -86,27 +87,16 @@ public class Objective {
 	}
 	
 	/**
-<<<<<<< HEAD
-	 * Method invoked when this objective is complete
-=======
 	 * method onComplete
 	 * On completion of an objective, perform action
->>>>>>> fd367c3d0eadb2b64a3fa011ebf6723da6e1f422
 	 */
 	public void onComplete() {
 		// TODO
 	}
-
 	
 	/***
 	 * To check whether this objective has been completed
 	 * @return True iff the objective has been completed
-=======
-	/**
-	 * method isComplete
-	 * Check if the objective is complete
-	 * @return true if objective is completed
->>>>>>> fd367c3d0eadb2b64a3fa011ebf6723da6e1f422
 	 */
 	public boolean isComplete() {
 		// TODO
