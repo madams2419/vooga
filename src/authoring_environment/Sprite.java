@@ -2,48 +2,76 @@ package authoring_environment;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
 
 /***
  * Class that contains information about the sprites for eventually generating xml files
  * 
- * @author Daniel Luker, Andrew Sun
+ * @author Daniel Luker, Andrew Sun, Natalie Chanfreau
  *
  */
-public class Sprite extends ImageView{
+public class Sprite extends ImageView {
 
-	String name;
-	Map<String, String> position;
-	double speed;
-	double health;
-	Map<String, String> key_actions;
-	String imageuri;
-	private int id;
-	Sprite.GRAVITY mGravity;
+    private final String X_STRING = "x";
+    private final String Y_STRING = "y";
 
-	public Sprite(int id, String image) {
-		this.id = id;
-		imageuri = image;
-		this.setImage(new Image(getClass().getResourceAsStream(imageuri)));
-		position = new HashMap<>();
-		key_actions = new HashMap<>();
-	}
+    private Map<String, Double> myPosition;
+    private Map<String, Double> myVelocity;
+    private Map<String, String> myKeyActions;
+    private Map<String, String> myCharacteristics;
+    private String myImageURI;
+    private int myID;
 
-	// addKeyAction()
+    public Sprite (int ID, String imageURI) {
+        this.myID = ID;
+        myImageURI = imageURI;
+        this.setImage(new Image(getClass().getResourceAsStream(myImageURI)));
+        myPosition = new HashMap<>();
+        myVelocity = new HashMap<>();
+        myKeyActions = new HashMap<>();
+    }
 
-	enum ACTIONS {
-		UP, DOWN, LEFT, RIGHT, SPACEBAR, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z
-	};
+    // addKeyAction()
 
-	enum GRAVITY {
-		UP, DOWN, LEFT, RIGHT
-	};
-	
-	public int getID(){
-		return id;
-		
-	}
+    public int getID () {
+        return myID;
+    }
 
+    public void setXPosition (double value) {
+        myPosition.put(X_STRING, value);
+    }
+
+    public void setYPosition (double value) {
+        myPosition.put(Y_STRING, value);
+    }
+    
+    public double getXPosition () {
+        return myPosition.get(X_STRING);
+    }
+
+    public double getYPosition () {
+        return myPosition.get(Y_STRING);
+    }
+
+    public void setXVelocity (double value) {
+        myVelocity.put(X_STRING, value);
+    }
+
+    public void setYVelocity (double value) {
+        myVelocity.put(Y_STRING, value);
+    }
+    
+    public void setKeyControl (String action, String result) {
+        myKeyActions.put(action, result);
+    }
+    
+    public void setCharacteristic (String characteristic, String value) {
+        myCharacteristics.put(characteristic, value);
+    }
+
+    public String getCharacteristic (String characteristic) {
+        return myCharacteristics.get(characteristic);
+    }
 }

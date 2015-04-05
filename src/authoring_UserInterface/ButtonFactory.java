@@ -10,7 +10,7 @@ import java.util.Map;
 import javafx.scene.control.Button;
 
 import org.w3c.dom.Node;
-import XML.UIXMLParser;
+import XML.LayoutXMLParser;
 /**
  * @author hojeanniechung
  *
@@ -25,9 +25,9 @@ public class ButtonFactory {
 	
 	/*==============================Constructors=================================================*/
 
-	public static ButtonFactory getSharedInstace(String f, String s2) {
+	public static ButtonFactory getSharedInstace(String f) {
 		if(mInstance==null)
-			mInstance=new ButtonFactory(f, s2);
+			mInstance=new ButtonFactory(f);
 		return mInstance;
 		// TODO Auto-generated constructor stub
 	}
@@ -39,27 +39,26 @@ public class ButtonFactory {
 //	public static void main(String[] args){	
 //		s="Button"; //test Case
 //		String f="src/Resources/FilestoParse.xml";
-//		UIXMLParser.parse(f, s);
-//		mFile=UIXMLParser.getFile(); 
+//		LayoutXMLParser.parse(f, s);
+//		mFile=LayoutXMLParser.getFile(); 
 //	}
 //	
-	private ButtonFactory(String f, String s){
+	private ButtonFactory(String f){
 		//s="Button"; //test Case
-		//String f="src/Resources/FilestoParse.xml";
-		UIXMLParser.parse(f, s);
-		mType=s;
-		mFile=UIXMLParser.getFile();
+		f="src/settings/layout.xml";
+		LayoutXMLParser.parse(f);
+		mFile=LayoutXMLParser.getFile();
 		GetAttributes();
 
 	}
 	
 	public static ArrayList<Map> GetAttributes(){	
 		//clear AttributeList from before
-		for(int i=0; i<UIXMLParser.mAttributesList.size(); i++){
-			UIXMLParser.mAttributesList.remove(i);
+		for(int i=0; i<LayoutXMLParser.mAttributesList.size(); i++){
+			LayoutXMLParser.mAttributesList.remove(i);
 		}
-		UIXMLParser.parse(mFile.toString(), mType);
-		mAttributesList= UIXMLParser.mAttributesList;
+		LayoutXMLParser.parse(mFile.toString(), mType);
+		mAttributesList= LayoutXMLParser.mAttributesList;
 		//System.out.println("mAttributesList is "+mAttributesList);
 		return mAttributesList;
 	}
