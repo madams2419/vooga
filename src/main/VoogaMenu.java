@@ -1,9 +1,12 @@
+package main;
+
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -304,8 +307,12 @@ public class VoogaMenu
 	
 	root.getChildren().add(choiceMenu);
 	FadeTransition fadeChoiceIn = new FadeTransition(Duration.millis(TRANSITION_TIME), choiceMenu);
+	fadeChoiceIn.setDelay(Duration.millis(TRANSITION_DELAY));
 	fadeChoiceIn.setToValue(OPAQUE);
 	fadeChoiceIn.play();
+	
+	GaussianBlur blur = new GaussianBlur();
+	background.setEffect(blur);
     }
     
     /*
