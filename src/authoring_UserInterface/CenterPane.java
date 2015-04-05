@@ -34,7 +34,7 @@ public class CenterPane extends ScrollPane {
 		
 		this.setContent(myGroup);
 		myGroup.getChildren().add(new Rectangle(400, 400, Color.WHITE));
-		myGroup.setOnMouseClicked(e -> canvasClicked(e));
+		this.setOnMouseClicked(e -> canvasClicked(e));
 		
 		// Use stack, or just a group?
 		myStack = new Stack<>();
@@ -48,6 +48,7 @@ public class CenterPane extends ScrollPane {
 		s.setOnMouseClicked(p -> spriteClicked(p, s));
 		s.setX(e.getX() - s.getImage().getWidth()/2);
 		s.setY(e.getY() - s.getImage().getHeight()/2);
+		
 		myGroup.getChildren().add(s);
 		
 		System.out.println(s.getID());
@@ -59,11 +60,12 @@ public class CenterPane extends ScrollPane {
 		}
 		catch (NullPointerException b){
 			
-		}
+		}	
 	}
 
 	private void spriteClicked(MouseEvent p, Sprite s) {
 		myGroup.getChildren().remove(s);
+		//s.setTranslateX(100);
 		System.out.println("Removing");
 	}
 	

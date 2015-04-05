@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -44,8 +45,9 @@ public class AuthoringWindow {
 		canvas.setRight(setupRightPane());
 		canvas.setCenter(setupCenterPane());
 
+		root.getChildren().add(menuBar());
 		root.getChildren().add(canvas);
-		//root.getChildren().add(menuBar());
+		
 		// create a place to display the shapes and react to input
 
 		return myScene;
@@ -56,6 +58,7 @@ public class AuthoringWindow {
 		String[] menuItems = { "File", "Edit", "View", "Help" };
 		Arrays.asList(menuItems).forEach(
 				str -> mBar.getMenus().add(new Menu(str)));
+		mBar.getMenus().get(0).getItems().add(new MenuItem("New Game"));
 		return mBar;
 	}
 
