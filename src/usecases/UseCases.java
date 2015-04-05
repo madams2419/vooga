@@ -5,7 +5,7 @@ import game_engine.Game;
 import game_engine.Level;
 import game_engine.physics.PhysicsEngine;
 import game_engine.sprite.Player;
-import game_engine.sprite.InanimateSprite;
+//import game_engine.sprite.InanimateSprite;
 import game_engine.sprite.Water;
 import game_engine.GameObjective;
 
