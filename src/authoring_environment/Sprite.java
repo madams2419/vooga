@@ -43,6 +43,7 @@ public class Sprite extends ImageView{
 	
 	public int getID(){
 		return id;
+		
 	}
 
 }

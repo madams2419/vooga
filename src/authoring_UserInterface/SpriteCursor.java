@@ -9,7 +9,7 @@ public class SpriteCursor extends ImageCursor{
 	private Sprite myCurrentSprite;
 	
 	public SpriteCursor(Sprite s){
-		super(s.getImage());
+		super(s.getImage(), s.getImage().getWidth()/2, s.getImage().getHeight()/2);
 		myCurrentSprite = s;
 	}
 	

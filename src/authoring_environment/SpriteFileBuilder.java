@@ -24,7 +24,7 @@ class SpriteFileBuilder extends XMLBuilder {
 
 	void addSprite(Sprite newSprite) {
 		Element e = super.createElement(newSprite.name);
-		e.setAttribute("id", ""+newSprite.id);
+		e.setAttribute("id", ""+newSprite.getID());
 		addChildWithProperty(e, "health", "" + newSprite.health);
 		addChildWithProperty(e, "imageuri", newSprite.imageuri);
 		addChildWithProperty(e, "speed", "" + newSprite.speed);

@@ -46,8 +46,8 @@ public class CenterPane extends ScrollPane {
 		try{
 		Sprite s = ((SpriteCursor) myScene.getCursor()).getCurrentSprite();
 		s.setOnMouseClicked(p -> spriteClicked(p, s));
-		s.setX(e.getX());
-		s.setY(e.getY());
+		s.setX(e.getX() - s.getImage().getWidth()/2);
+		s.setY(e.getY() - s.getImage().getHeight()/2);
 		myGroup.getChildren().add(s);
 		
 		System.out.println(s.getID());
@@ -55,6 +55,9 @@ public class CenterPane extends ScrollPane {
 		myScene.setCursor(ImageCursor.DEFAULT);
 		}
 		catch (ClassCastException a){
+			
+		}
+		catch (NullPointerException b){
 			
 		}
 	}
