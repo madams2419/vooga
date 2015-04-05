@@ -33,6 +33,7 @@ public class UseCases {
 	
 	public void useCase2(){
 		Game mockGame = new Game();
+
 		GameObjective mockObjective = new GameObjective();
 		mockObjective.onComplete();
 		Level newLevel = new Level();

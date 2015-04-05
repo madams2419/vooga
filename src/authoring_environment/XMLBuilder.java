@@ -42,6 +42,10 @@ public class XMLBuilder {
 
 	// ====== Constructors =====================================================
 
+	XMLBuilder() {
+
+	}
+
 	XMLBuilder(String rootElement, String... attributes_values) {
 		this(rootElement, arrayToMap(attributes_values));
 	}
@@ -71,7 +75,7 @@ public class XMLBuilder {
 	 * Method which will collect all the information stored in the parent node
 	 * into the specified file
 	 */
-	public void streamFile(String filename) {
+	void streamFile(String filename, Element root) {
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory
 				.newInstance();
@@ -283,7 +287,7 @@ public class XMLBuilder {
 
 		// Once we are done adding elements to the tree structure, we stream it
 		// to generate the xml file
-		b.streamFile("swap/game.xml");
+		b.streamFile("swap/game.xml", b.root);
 	}
 
 }
