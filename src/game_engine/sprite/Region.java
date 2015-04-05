@@ -11,7 +11,7 @@ public class Region extends Sprite {
           super(name);
       }
     
-      public Region(String name, double id){
+      public Region(String name, int id){
           super(name,id);
       }
       
