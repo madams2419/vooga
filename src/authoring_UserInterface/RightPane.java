@@ -9,12 +9,13 @@ import javafx.scene.layout.VBox;
 
 /**
  * 
- * @author Andrew Sun
+ * @author Daniel Luker & Andrew Sun
  *
  */
 public class RightPane extends VBox {
 
 	private Scene myScene;
+	
 	RightPane(Scene scene) {
 		myScene = scene;
 		this.getStylesheets().add("styles/right_pane.css");
