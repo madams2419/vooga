@@ -36,53 +36,6 @@ public class Reflection {
 		}
 	}
 
-	/*
-	 * 
-	 */
-	public static Object createMethodInstance (String className, String methodName,Object[] args) throws ReflectionException{	
-		Class<?>[] params=toClasses(args);
-		try {
-			Class<?> c = Class.forName(className);
-			Object t = c.newInstance();
-
-			Method[] allMethods = c.getDeclaredMethods();
-			for (Method m : allMethods) {
-				String mname = m.getName();
-				Type[] pType = m.getGenericParameterTypes();
-
-				System.out.format("invoking %s()%n", mname);
-				try {
-					m.setAccessible(true);
-					Object o =m.invoke(t, params);
-					System.out.format("%s() returned %b%n", mname, (Boolean) o);
-
-					// Handle any exceptions thrown by method to be invoked.
-				} catch (InvocationTargetException x) {
-					Throwable cause = x.getCause();
-					err.format("invocation of %s failed: %s%n",
-							mname, cause.getMessage());
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		catch (InstantiationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IllegalAccessException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		return null;
-	}
-
 
 	/**
 	 * Given String representing fully qualified name of a class and the actual
