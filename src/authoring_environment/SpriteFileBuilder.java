@@ -77,7 +77,7 @@ class SpriteFileBuilder extends XMLBuilder {
 		b.addSprite(s);
 		b.addSprite(t);
 		
-		b.streamFile("swap/sprites.xml");
+		b.streamFile("swap/sprites.xml", b.getRoot());
 		
 	}	
 }
