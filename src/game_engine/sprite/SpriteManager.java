@@ -16,18 +16,7 @@ public class SpriteManager implements Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		Sprite sprite = (Sprite) o;
-		Enum state = sprite.getState();
-		Double[] params = {sprite.getX(),sprite.getY(),
-				sprite.getTargetX(),sprite.getTargetY(),
-				sprite.getVelocity(),sprite.getAcceleration()};
-		// test
-		for(double d: params){
-			System.out.println(d);
-		}
-		
-		// TODO call physics engine on params
-		
-		
+		sprite.getPhysics().update();
 	}
 	
 	public void addSprite(Sprite sprite){
@@ -51,10 +40,8 @@ public class SpriteManager implements Observer{
 		manager.addSprite(tester2);
 //		tester.addObserver(manager);
 		
-		tester.setAcceleration(40);
 		tester.setID(10);
-		tester.setTargetX(100);
-		tester2.setTargetY(10);
+
 	}
 	
 

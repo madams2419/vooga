@@ -16,20 +16,22 @@ import game_engine.physics.PhysicsObject;
  *
  */
 public abstract class Sprite extends Observable{
-	private String name;
+	
+	private int myId;
+	private String myName;
 	private String myState;
-	private Animation animation;
-	private HitBox hitBox;
+	private Animation myAnimation;
+	private HitBox myHitBox;
 	private PhysicsObject myPhysicsObject;
-	private Map<String, Behavior> behaviorMap = new HashMap<>();
+	private Map<String, Behavior> myBehaviorMap = new HashMap<>();
 	
 	/**
 	 * Blank Constructor
 	 */
 	public Sprite() {
 		// TODO
-	    this.id = 0;
-	    animation = new Animation(this);
+	    myId = 0;
+	    myAnimation = new Animation(this);
 	}
 	
 	/**
@@ -38,9 +40,9 @@ public abstract class Sprite extends Observable{
 	 * @param name the string to name the sprite
 	 */
 	public Sprite(String name){
-	    this.id = 0;
-	    this.name = name;
-	    animation = new Animation(this);
+	    myId = 0; //TODO make call to SpriteManager to get unique ID or don't allow sprite to constructed without ID
+	    myName = name;
+	    myAnimation = new Animation(this);
 	}
 	
 	/**
@@ -49,11 +51,12 @@ public abstract class Sprite extends Observable{
 	 * @param name the string to name the sprite
 	 * @param id the id of the specific sprite
 	 */
-	public Sprite(String name, double id){
-	    this.name = name;
-	    this.id = id;
-	    animation = new Animation(this);
+	public Sprite(String name, int id){
+	    myName = name;
+	    myId = id;
+	    myAnimation = new Animation(this);
 	}
+	
 	/**
 	 * method update
 	 * Updates the sprite
@@ -70,23 +73,23 @@ public abstract class Sprite extends Observable{
 	}
 	
 	public void addBehavior(String behavior) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
-	    behaviorMap.put(behavior, createBehavior(behavior));
+	    myBehaviorMap.put(behavior, createBehavior(behavior));
 	}
 	
 	public void removeBehavior(String behavior){
-	    behaviorMap.remove(behavior);
+	    myBehaviorMap.remove(behavior);
 	}
 	
 	public void runBehavior(String behavior){
-	    behaviorMap.get(behavior).execute();
+	    myBehaviorMap.get(behavior).execute();
 	}
 	
 	public void addImage(String state,String ImagePath){
-	    animation.setImage(state, ImagePath);
+	    myAnimation.setImage(state, ImagePath);
 	}
 	
 	public void removeImage(String state){
-	    animation.removeImage(state);
+	    myAnimation.removeImage(state);
 	}
 	
 	public void setState(String state){
@@ -101,19 +104,20 @@ public abstract class Sprite extends Observable{
 	}
 	
 
-	public void setID(double id){
-	    this.id = id;
-	}
-	public double getID(){
-	    return this.id;
+	public void setID(int id){
+	    myId = id;
 	}
 	
+	public double getID(){
+	    return myId;
+	}
 
 	public void setName(String name){
-	    this.name = name;
+	    this.myName = name;
 	}
+	
 	public String getName(){
-	    return this.name;
+	    return this.myName;
 	}
 	
 	/**
@@ -139,25 +143,9 @@ public abstract class Sprite extends Observable{
 	public void defineHitBox(HitBox hitBox){
 	    myHitBox = hitBox;
 	}
+	
 	public HitBox getHitBox(){
-	    return this.hitBox;
+	    return this.myHitBox;
 	}
-	
-
-	public void setX(double x){
-	    this.x = x;
-	}
-	public double getX(){
-	    return x;
-	}
-	
-
-	public void setY(double y){
-	    this.y = y;
-	}
-	public double getY(){
-	    return y;
-	}
-	
 	
 }
