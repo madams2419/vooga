@@ -29,7 +29,12 @@ public class PhysicsEngine {
 		myGlobalForces.put(GRAV_STRING, Vector.getPolarVector(GRAV_DIRECTION, gravity));
 	}
 
-	public void resolveCollision(PhysicsObject a, PhysicsObject b, Vector normal) {
+	public void resolveCollision(Sprite a, Sprite b, Vector normal, double pDepth) {
+		resolveCollision(a.getPhysicsObject(), b.getPhysicsObject(), normal, pDepth);
+	}
+
+
+	public void resolveCollision(PhysicsObject a, PhysicsObject b, Vector normal, double pDepth) {
 		// compute relative velocity
 		Vector relVel = b.getVelocity().minus(b.getVelocity());
 
@@ -52,21 +57,20 @@ public class PhysicsEngine {
 		// apply impulse
 		a.applyImpulse(impulse.negate());
 		b.applyImpulse(impulse);
+
+		// apply sink correction
+		applySinkCorrection(a, b, normal, pDepth);
 	}
 
-	public void resolveCollision(Sprite a, Sprite b, Vector normal) {
-		resolveCollision(a.getPhysicsObject(), b.getPhysicsObject(), normal);
-	}
-
-	private void applySinkCorrection(Object a, Object b, Vector normal, double pDepth) {
+	private void applySinkCorrection(PhysicsObject a, PhysicsObject b, Vector normal, double pDepth) {
 		// return if penetration depth is less than threshold
 		if(pDepth < SC_SLOP) {
 			return;
 		}
 
-		Vector correction = normal.multiply(SC_PERCENT * pDepth / (a.getInvMass() + B.getInvMass()));
-		a.
-
-
+		Vector correction = normal.multiply(SC_PERCENT * pDepth / (a.getInvMass() + b.getInvMass()));
+		a.applyImpulse(correction.negate());
+		b.applyImpulse(correction);
+	}
 
 }
