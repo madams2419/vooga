@@ -21,13 +21,13 @@ public class Sprite extends ImageView {
     private Map<String, Double> myVelocity;
     private Map<String, String> myKeyActions;
     private Map<String, String> myCharacteristics;
-    private String imageuri;
-    private int id;
+    private String myImageURI;
+    private int myID;
 
-    public Sprite (int id, String image) {
-        this.id = id;
-        imageuri = image;
-        this.setImage(new Image(getClass().getResourceAsStream(imageuri)));
+    public Sprite (int ID, String imageURI) {
+        this.myID = ID;
+        myImageURI = imageURI;
+        this.setImage(new Image(getClass().getResourceAsStream(myImageURI)));
         myPosition = new HashMap<>();
         myVelocity = new HashMap<>();
         myKeyActions = new HashMap<>();
@@ -36,7 +36,7 @@ public class Sprite extends ImageView {
     // addKeyAction()
 
     public int getID () {
-        return id;
+        return myID;
     }
 
     public void setXPosition (double value) {
