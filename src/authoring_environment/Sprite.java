@@ -46,6 +46,14 @@ public class Sprite extends ImageView {
     public void setYPosition (double value) {
         myPosition.put(Y_STRING, value);
     }
+    
+    public double getXPosition () {
+        return myPosition.get(X_STRING);
+    }
+
+    public double getYPosition () {
+        return myPosition.get(Y_STRING);
+    }
 
     public void setXVelocity (double value) {
         myVelocity.put(X_STRING, value);
