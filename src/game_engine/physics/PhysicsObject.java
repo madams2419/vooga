@@ -11,24 +11,24 @@ public class PhysicsObject {
 	private double myRestitution;
 
 	private String myState;
-	private Point2D myPos;
-	private Vector myVel;
+	private Vector myPosition;
+	private Vector myVelocity;
 	private Vector myAccel;
 	private List<Vector> myAppliedForces;
 	private List<Joint> myJoints;
 
-	public PhysicsObject(double mass, double restitution, String state, Point2D pos, Vector vel, Vector accel, Vector... appliedForces) {
+	public PhysicsObject(double mass, double restitution, String state, Vector position, Vector velocity, Vector accel, Vector... appliedForces) {
 		setMass(mass);
 		setRestitution(restitution);
 		setState(state);
-		setPos(pos);
-		setVelocity(vel);
+		setPosition(position);
+		setVelocity(velocity);
 		setAccel(accel);
 		myAppliedForces = Arrays.asList(appliedForces);
 	}
 
 	public PhysicsObject(double mass, double restitution, String state, int xPos, int yPos) {
-		this(mass, restitution, state, new Point2D.Double(xPos, yPos), new Vector(), new Vector());
+		this(mass, restitution, state, new Vector(xPos, yPos), new Vector(), new Vector());
 	}
 
 	public PhysicsObject(double mass, double restitution, int xPos, int yPos) {
@@ -40,24 +40,24 @@ public class PhysicsObject {
 	}
 
 	public void applyImpulse(Vector impulse) {
-		Vector newVelocity = myVel.plus(impulse.multiply(myInvMass));
+		Vector newVelocity = myVelocity.plus(impulse.multiply(myInvMass));
 		setVelocity(newVelocity);
 	}
 
-	public Point2D getPos() {
-		return myPos;
+	public Vector getPos() {
+		return myPosition;
 	}
 
-	public void setPos(Point2D pos) {
-		myPos = pos;
+	public void setPosition(Vector position) {
+		myPosition = position;
 	}
 
 	public Vector getVelocity() {
-		return myVel;
+		return myVelocity;
 	}
 
-	public void setVelocity(Vector vel) {
-		myVel = vel;
+	public void setVelocity(Vector velocity) {
+		myVelocity = velocity;
 	}
 
 	public Vector getAccel() {

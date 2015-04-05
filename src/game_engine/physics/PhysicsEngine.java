@@ -11,7 +11,8 @@ public class PhysicsEngine {
 	private static String GRAV_STRING = "gravity";
 	private static double GRAV_DIRECTION = -90;
 	private static double GRAV_MAGNITUDE = 9.8;
-	private static double SLOP = 0.2;
+	private static double SC_PERCENT = 0.2;
+	private static double SC_SLOP = 0.01;
 
 	private Map<String, Vector> myGlobalForces;
 
@@ -57,7 +58,14 @@ public class PhysicsEngine {
 		resolveCollision(a.getPhysicsObject(), b.getPhysicsObject(), normal);
 	}
 
-	private void applyPosCorrection(Object a, Object b, Vector normal, double pDepth) {
+	private void applySinkCorrection(Object a, Object b, Vector normal, double pDepth) {
+		// return if penetration depth is less than threshold
+		if(pDepth < SC_SLOP) {
+			return;
+		}
+
+		Vector correction = normal.multiply(SC_PERCENT * pDepth / (a.getInvMass() + B.getInvMass()));
+		a.
 
 
 
