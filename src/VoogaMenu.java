@@ -2,6 +2,8 @@ import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -17,20 +19,17 @@ import javafx.util.Duration;
  * to either play an existing game or design a new one.
  * 
  * @author Brian Lavallee
- * @since 31 March 2015
+ * @since 5 April 2015
  */
-public class MainMenu
+public class VoogaMenu
 {
-    private static final int PADDING = 10;
+    private static final double PADDING = 10;
     
     private static final double INVISIBLE = 0.0;
-    private static final double TRANSPARENT = 0.5;
+    private static final double TRANSPARENT = 0.6;
     private static final double OPAQUE = 1.0;
     
-    private static final int TITLE_LOCATION = -300;
-    private static final int TITLE_REMOVED = -600;
-    
-    private static final int BUTTON_RADIUS = 150;
+    private static final int BUTTON_RADIUS = 130;
     
     private static final int TRANSITION_TIME = 2000;
     private static final int TRANSITION_DELAY = 500;
@@ -39,28 +38,44 @@ public class MainMenu
     private static final int LARGE_TEXT = 40;
     private static final int TITLE_TEXT = 80;
     
+    private VoogaFileChooser chooser;
+    
     private StackPane root;
-    private int width, height;
+    private Scene scene;
+    
+    private double width, height;
+    
     private HBox background;
+    
+    private StackPane mainMenu;
     private Rectangle overlay;
     private StackPane playButton, designButton;
     private VBox textHolder;
+    
+    private StackPane choiceMenu;
     
     /**
      * Primary constructor for a MainMenu.  Sets up all of the components (background,
      * overlay, title, and buttons) in the root (which is a StackPane).
      * 
-     * @param w	is the desired width of the Scene.
-     * @param h	is the desired height of the Scene.
+     * @param w
+     *          the desired width of the Scene, based on the width of the stage it will be applied to.
+     *          
+     * @param h
+     *          is the desired height of the Scene, also based on the size of the stage.
      */
-    public MainMenu(int w, int h)
+    public VoogaMenu(double w, double h)
     {
 	width = w;
 	height = h;
 	
 	root = new StackPane();
+	mainMenu = new StackPane();
+	chooser = new VoogaFileChooser(width, height);
 	
-	background = new HBox(2*PADDING);
+	// TODO: Replace rectangles with ImageViews which hold screenshots from our working game player / authoring environment
+	
+	background = new HBox(2 * PADDING);
 	Rectangle left = new Rectangle(width, height);
 	left.setFill(Color.DARKRED);
 	Rectangle right = new Rectangle(width, height);
@@ -73,13 +88,13 @@ public class MainMenu
 	
 	textHolder = setUpText();
 	
-	playButton = makeButton("Play", -width/2 - 2*BUTTON_RADIUS);
-	designButton = makeButton("Design", width/2 + 2*BUTTON_RADIUS);
+	playButton = makeButton("Play", -width/2 - 2 * BUTTON_RADIUS);
+	designButton = makeButton("Design", width/2 + 2 * BUTTON_RADIUS);
 	
 	root.setOnMouseClicked((clicked) -> 
 	{
 	    TranslateTransition moveText = new TranslateTransition(Duration.millis(TRANSITION_TIME), textHolder);
-	    moveText.setToY(TITLE_LOCATION);
+	    moveText.setToY(-height/3);
 	    moveText.play();
 	    
 	    FadeTransition fadeBackgroundIn = new FadeTransition(Duration.millis(TRANSITION_TIME), background);
@@ -89,22 +104,25 @@ public class MainMenu
 	    moveButton(playButton, -width/4);
 	    moveButton(designButton, width/4);
 
-	    setUpButtons();
+	    enableButtons();
 
 	    root.setOnMouseClicked(null);
 	});
 	
-	root.getChildren().addAll(background, overlay, textHolder, playButton, designButton);
+	mainMenu.getChildren().addAll(overlay, textHolder, playButton, designButton);
+	
+	root.getChildren().addAll(background, mainMenu);
     }
     
     /**
      * Creates a Scene object from the root.
      * 
-     * @return	A Scene object containing all of the elements in the root.
+     * @return
+     *         A Scene object containing all of the elements in the root.
      */
     public Scene initialize()
     {
-	Scene scene = new Scene(root, width, height);
+	scene = new Scene(root, width, height);
 	scene.setFill(Color.BLACK);
 	return scene;
     }
@@ -117,15 +135,16 @@ public class MainMenu
 	VBox textHolder = new VBox(PADDING);
 	
 	Text title = new Text("Welcome to VoogaSalad");
+	title.setEffect(createShadow(15, 10, 10));
 	title.setStroke(Color.WHITE);
 	title.setFont(new Font(TITLE_TEXT));
 	title.setOpacity(INVISIBLE);
 	
 	HBox subHolder = new HBox();
-	subHolder.getChildren().addAll(makeText(SMALL_TEXT, "presented by the ", Color.BLACK),
-				       makeText(LARGE_TEXT, "High ", Color.BLACK),
+	subHolder.getChildren().addAll(makeText(SMALL_TEXT, "presented by the ", Color.WHITE),
+				       makeText(LARGE_TEXT, "High ", Color.WHITE),
 				       makeText(LARGE_TEXT, "$", Color.DARKGOLDENROD),
-				       makeText(LARGE_TEXT, "croller", Color.BLACK),
+				       makeText(LARGE_TEXT, "croller", Color.WHITE),
 				       makeText(LARGE_TEXT, "$", Color.DARKGOLDENROD));
 	subHolder.setAlignment(Pos.CENTER);
 	subHolder.setOpacity(INVISIBLE);
@@ -140,7 +159,7 @@ public class MainMenu
 	
 	FadeTransition fadeNameIn = new FadeTransition(Duration.millis(TRANSITION_TIME), subHolder);
 	fadeNameIn.setToValue(OPAQUE);
-	fadeNameIn.setDelay(Duration.millis(TRANSITION_TIME + 2*TRANSITION_DELAY));
+	fadeNameIn.setDelay(Duration.millis(TRANSITION_TIME + 2 * TRANSITION_DELAY));
 	fadeNameIn.play();
 	
 	return textHolder;
@@ -153,31 +172,50 @@ public class MainMenu
     private Text makeText(int size, String message, Color color)
     {
 	Text text = new Text(message);
+	text.setEffect(createShadow(15, 5, 5));
 	text.setFill(color);
 	text.setFont(new Font(size));
-	text.setStroke(Color.GRAY);
+	text.setStroke(Color.BLACK);
 	return text;
+    }
+    
+    /*
+     * Creates the shadow for a Text object or a Circle.
+     */
+    private DropShadow createShadow(int blurAmount, int offsetX, int offsetY) {
+	DropShadow shadow = new DropShadow();
+	shadow.setRadius(blurAmount);
+	shadow.setOffsetX(offsetX);
+	shadow.setOffsetY(offsetY);
+	shadow.setBlurType(BlurType.GAUSSIAN);
+	return shadow;
     }
     
     /*
      * Creates a button (which is Text description over a Circle).  Circle is fetched
      * later to use for MouseEvents.
      */
-    private StackPane makeButton(String description, int location)
+    private StackPane makeButton(String description, double location)
     {
 	StackPane button = new StackPane();
+	
+	DropShadow shadow = createShadow(15, 10, 10);
 	
 	Circle buttonContent = new Circle(BUTTON_RADIUS);
 	buttonContent.setFill(Color.TRANSPARENT);
 	buttonContent.setStroke(Color.WHITE);
+	buttonContent.setEffect(shadow);
+	buttonContent.setStrokeWidth(3);
 	
 	Text buttonDescription = new Text(description);
 	buttonDescription.setFill(Color.WHITE);
 	buttonDescription.setFont(new Font(SMALL_TEXT));
+	buttonDescription.setEffect(shadow);
 	
-	button.getChildren().addAll(buttonContent, buttonDescription);
-	button.setAlignment(Pos.CENTER);
+	button.getChildren().addAll(buttonDescription, buttonContent);
 	button.setTranslateX(location);
+	
+	button.setMaxSize(2 * BUTTON_RADIUS, 2 * BUTTON_RADIUS);
 	
 	return button;
     }
@@ -185,7 +223,7 @@ public class MainMenu
     /*
      * Moves the buttons onto the Screen on the first mouse click.
      */
-    private void moveButton(StackPane button, int location)
+    private void moveButton(StackPane button, double location)
     {
 	TranslateTransition moveButton = new TranslateTransition(Duration.millis(TRANSITION_TIME), button);
 	    moveButton.setToX(location);
@@ -197,46 +235,83 @@ public class MainMenu
      * to set up mouse listeners.  Specifies where to move each element of the root
      * for each case.
      */
-    private void setUpButtons()
+    private void enableButtons()
     {
-	Circle play = (Circle) playButton.getChildren().get(0);
-	Circle design = (Circle) designButton.getChildren().get(0);
+	Circle play = (Circle) playButton.getChildren().get(1);
+	Circle design = (Circle) designButton.getChildren().get(1);
 	
 	play.setOnMouseEntered((event) -> 
 	{
-	    buttonSelectedAction(width/2 + PADDING, TITLE_REMOVED, OPAQUE, INVISIBLE, INVISIBLE);
+	    buttonSelectedAction(width/2 + PADDING, -2*height/3, OPAQUE, INVISIBLE, INVISIBLE);
 	});
 	
 	design.setOnMouseEntered((event) -> 
 	{
-	    buttonSelectedAction(-width/2 - PADDING, TITLE_REMOVED, INVISIBLE, OPAQUE, INVISIBLE);
+	    buttonSelectedAction(-width/2 - PADDING, -2*height/3, INVISIBLE, OPAQUE, INVISIBLE);
 	});
 	
 	play.setOnMouseExited((event) -> 
 	{
-	    buttonSelectedAction(0, TITLE_LOCATION, OPAQUE, OPAQUE, TRANSPARENT);
+	    buttonSelectedAction(0, -height/3, OPAQUE, OPAQUE, TRANSPARENT);
 	});
 	
 	design.setOnMouseExited((event) -> 
 	{
-	    buttonSelectedAction(0, TITLE_LOCATION, OPAQUE, OPAQUE, TRANSPARENT);
+	    buttonSelectedAction(0, -height/3, OPAQUE, OPAQUE, TRANSPARENT);
 	});
 	
 	play.setOnMouseClicked((event) -> 
 	{
-	    System.out.println("replace this with code to run a game");
+	    addChoiceMenu("game");
 	});
 	
 	design.setOnMouseClicked((event) -> 
 	{
-	    System.out.println("replace this with code to design a game");
+	    addChoiceMenu("dev");
 	});
     }
     
     /*
-     * Moves all of the elements in the root to the desired loaction with a pleasant transition.
+     * Removes the functionality set up by enableButtons so that when the choice menu is loaded
+     * the events aren't triggered
      */
-    private void buttonSelectedAction(int backgroundTo, int textTo, double playTo, double designTo, double overlayTo)
+    private void disableButtons() {
+	Circle play = (Circle) playButton.getChildren().get(1);
+	Circle design = (Circle) designButton.getChildren().get(1);
+	
+	play.setOnMouseEntered(null);
+	design.setOnMouseEntered(null);
+	play.setOnMouseExited(null);
+	design.setOnMouseExited(null);
+	play.setOnMouseClicked(null);
+	design.setOnMouseClicked(null);
+    }
+    
+    /*
+     * Adds the choice menu to the root and removes the main menu, also
+     * blurs the background for effect.
+     */
+    private void addChoiceMenu(String fileType) {
+	choiceMenu = chooser.getContent(fileType);
+	disableButtons();
+	
+	FadeTransition fadeMainOut = new FadeTransition(Duration.millis(TRANSITION_TIME), mainMenu);
+	fadeMainOut.setToValue(INVISIBLE);
+	fadeMainOut.play();
+	fadeMainOut.setOnFinished((finished) -> {
+	    root.getChildren().remove(mainMenu);
+	});
+	
+	root.getChildren().add(choiceMenu);
+	FadeTransition fadeChoiceIn = new FadeTransition(Duration.millis(TRANSITION_TIME), choiceMenu);
+	fadeChoiceIn.setToValue(OPAQUE);
+	fadeChoiceIn.play();
+    }
+    
+    /*
+     * Moves all of the elements in the root to the desired location with a pleasant transition.
+     */
+    private void buttonSelectedAction(double backgroundTo, double textTo, double playTo, double designTo, double overlayTo)
     {
 	TranslateTransition moveBackground = new TranslateTransition(Duration.millis(TRANSITION_TIME), background);
 	TranslateTransition moveText = new TranslateTransition(Duration.millis(TRANSITION_TIME), textHolder);
