@@ -1,7 +1,5 @@
 package authoring_UserInterface;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,10 +9,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -28,6 +24,7 @@ public class AuthoringWindow {
 
 	private Scene myScene;
 	private ButtonFactory mbuttonList;
+	private String mFileSelector="src/Resources/FilestoParse.xml";
 
 	public Scene GameCreateUI() {
 		
@@ -64,9 +61,10 @@ public class AuthoringWindow {
 
 	private HBox setupBottomPane(double width) {
 		HBox buttonBox = new HBox();
-		for(Button B:mbuttonList.getSharedInstace("src/Resources/FilestoParse.xml", "Button").generateButtonBoxes()){
+		for(Button B:mbuttonList.getSharedInstace(mFileSelector, "Button").generateButtonBoxes()){
 			buttonBox.getChildren().add(B);
 		}
+		System.out.println(mbuttonList.getSharedInstace(mFileSelector, "Button").GetAttributes().toString());
 		return buttonBox;
 	}
 	
