@@ -1,13 +1,11 @@
 package game_engine.sprite;
 
-import java.util.Observable;
-
-public class Player extends Sprite {
+public class Enemy extends Sprite {
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }

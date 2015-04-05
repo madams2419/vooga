@@ -11,7 +11,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
+//import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
@@ -87,7 +87,7 @@ public class AuthoringWindow {
 	}
 
 	private VBox setupRightPane() {
-		return new RightPane();
+		return new RightPane(myScene);
 	}
 
 	private VBox setupLeftPane() {
@@ -95,7 +95,7 @@ public class AuthoringWindow {
 	}
 
 	private Node setupCenterPane() {
-		return new CenterPane();
+		return new CenterPane(myScene);
 	}
 
 }
