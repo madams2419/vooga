@@ -5,13 +5,22 @@ import java.util.List;
 import java.util.Observable;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.function.Consumer;
+
 import javafx.beans.property.BooleanProperty;
 
 /**@author Tony
  * Goal that leads to a specific action when completed
  */
 public class Objective {
+
+	List<Objective> subObjectives;
+	boolean condition;
+	
+        /**
+=======
 		/**
+>>>>>>> 25435599e392a0b513a380c08dd91c54a2744e12
          * Constructor
          * @param condition BooleanProperty Represents a condition for the objective completion
          * @param subObjectives List<Objective> List of objectives that must be completed first
@@ -20,7 +29,14 @@ public class Objective {
 	public Objective(BooleanProperty condition, List<Objective> subObjectives, Consumer<?> action) {
 		// TODO
 	}
-	
+
+	/***
+	 * Empty constructor for mockObjective in usecases
+	 */
+	public Objective() {
+			
+	}
+
 	/**
 	 * Method setCondition.
 	 * @param condition BooleanProperty
@@ -93,5 +109,4 @@ public class Objective {
 	}
 	
 }
-
 
