@@ -18,7 +18,7 @@ public class Controller {
     
     void addElement (String spriteIDorName, String value, String ... path) {
         SpriteElement sprite = mySpriteManager.get(spriteIDorName);
-        sprite.addElement(Arrays.asList(path), value);
+        sprite.addElementAtPath(Arrays.asList(path), value);
     }
 
 //    void onXSpeedSet (String spriteIDorName, String xSpeedString, String xSpeed) {
