@@ -3,13 +3,11 @@ package game_engine.sprite;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-import java.util.Observer;
 
 import game_engine.Animation;
 import game_engine.Behavior;
 import game_engine.HitBox;
-import game_engine.PhysicsEngine;
-import game_engine.sprite.attributes.IMovement;
+import game_engine.physics.PhysicsObject;
 
 /**
  * Abstract class for the creation of multiple sprite types
@@ -17,27 +15,25 @@ import game_engine.sprite.attributes.IMovement;
  * @author 
  *
  */
-
 public abstract class Sprite extends Observable{
-
-	String name;
-	double id;
-	Animation animation;
-	HitBox hitBox;
-	PhysicsEngine physics;
-	Map<String, Behavior> behaviorMap = new HashMap<>();
-	PhysicsParameters myPhysicsParams;
+	
+	private int myId;
+	private String myName;
 	private String myState;
+	private Animation myAnimation;
+	private HitBox myHitBox;
+	private PhysicsObject myPhysicsObject;
+	private Map<String, Behavior> myBehaviorMap = new HashMap<>();
+
 	
 	/**
 	 * Blank Constructor
 	 */
 	public Sprite() {
 		// TODO
-	    this.id = 0;
-	    animation = new Animation(this);
+	    myId = 0;
+	    myAnimation = new Animation(this);
 	}
-
 	
 	/**
 	 * Constructor Sprite
@@ -45,9 +41,9 @@ public abstract class Sprite extends Observable{
 	 * @param name the string to name the sprite
 	 */
 	public Sprite(String name){
-	    this.id = 0;
-	    this.name = name;
-	    animation = new Animation(this);
+	    myId = 0; //TODO make call to SpriteManager to get unique ID or don't allow sprite to constructed without ID
+	    myName = name;
+	    myAnimation = new Animation(this);
 	}
 	
 	/**
@@ -56,10 +52,10 @@ public abstract class Sprite extends Observable{
 	 * @param name the string to name the sprite
 	 * @param id the id of the specific sprite
 	 */
-	public Sprite(String name, double id){
-	    this.name = name;
-	    this.id = id;
-	    animation = new Animation(this);
+	public Sprite(String name, int id){
+	    myName = name;
+	    myId = id;
+	    myAnimation = new Animation(this);
 	}
 	
 	/**
@@ -78,81 +74,67 @@ public abstract class Sprite extends Observable{
 	}
 	
 	public void addBehavior(String behavior) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
-	    behaviorMap.put(behavior, createBehavior(behavior));
+	    myBehaviorMap.put(behavior, createBehavior(behavior));
 	}
 	
 	public void removeBehavior(String behavior){
-	    behaviorMap.remove(behavior);
+	    myBehaviorMap.remove(behavior);
 	}
 	
 	public void runBehavior(String behavior){
-	    behaviorMap.get(behavior).execute();
+	    myBehaviorMap.get(behavior).execute();
 	}
 	
 	public void addImage(String state,String ImagePath){
-	    animation.setImage(state, ImagePath);
+	    myAnimation.setImage(state, ImagePath);
 	}
 	
 	public void removeImage(String state){
-	    animation.removeImage(state);
+	    myAnimation.removeImage(state);
 	}
 	
 	public void setState(String state){
 		myState = state;
-		myPhysicsParams.setState(state);
 		setChanged();
 		notifyObservers();
-	}
-	
-	public PhysicsParameters getPhysicsParams(){
-		return myPhysicsParams;
 	}
 	
 	public String getState(){
 		return myState;
 	}
-	
 
-	public void setID(double id){
-	    this.id = id;
-	}
-	public double getID(){
-	    return this.id;
+	public void setID(int id){
+	    myId = id;
 	}
 	
+	public double getID(){
+	    return myId;
+	}
 
 	public void setName(String name){
-	    this.name = name;
+	    this.myName = name;
 	}
+	
 	public String getName(){
-	    return this.name;
+	    return this.myName;
 	}
 	
-
-	
-    public void definePhysics(PhysicsEngine physics){
-	    this.physics = physics;
+	public void setPhysicsObject(PhysicsObject physicsObject){
+	    myPhysicsObject = physicsObject;
 	}
 	
-
-	
-    public PhysicsEngine getPhysics(){
-	    return this.physics;
+	public PhysicsObject getPhysicsObject(){
+	    return myPhysicsObject;
 	}
 	
-	/**
-	 * method defineHitBox()
-	 * defines the HitBox for sprite collision
-	 */
-	public void defineHitBox(){
-	    this.hitBox = hitBox;
+	public void defineHitBox(HitBox hitBox){
+	    myHitBox = hitBox;
 	}
+	
 	public HitBox getHitBox(){
-	    return this.hitBox;
+	    return this.myHitBox;
 	}
-	
 
-	
 	public static void main(String[] args){
 	    Sprite player = new Enemy();
 	    player.addImage("idle", "idle");
@@ -166,4 +148,5 @@ public abstract class Sprite extends Observable{
 	    player.setState("jump");
 	    
 	}
+
 }

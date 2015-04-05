@@ -1,6 +1,6 @@
 package game_engine.sprite.attributes;
 
-import game_engine.PhysicsEngine;
+import game_engine.physics.PhysicsEngine;
 
 
 public interface IMovement {
