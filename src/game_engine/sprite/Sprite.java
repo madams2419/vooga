@@ -3,10 +3,9 @@ package game_engine.sprite;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-
-import game_engine.Animation;
 import game_engine.Behavior;
 import game_engine.HitBox;
+import game_engine.game_player.Animation;
 import game_engine.physics.PhysicsObject;
 
 /**
