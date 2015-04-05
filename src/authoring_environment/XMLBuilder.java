@@ -17,17 +17,27 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /***
- * This is a class that will contain information about the currently created
- * game, and generate the appropriate files
- * 
+ * This is a class that will contain information in a tree structure, and encode
+ * that information in an xml file
+ *
  * @author Daniel Luker
  *
  */
-class XMLBuilder {
+public class XMLBuilder {
 
 	// ====== Instance variables ===============================================
 
+	/***
+	 * This is the root of the tree structure. The API methods from below will
+	 * allow the user to navigate up/down. To add elements for the appropriate
+	 * child.
+	 */
 	private Element root;
+
+	/***
+	 * This represents the document instance, which will be used to eventually
+	 * stream out the file.
+	 */
 	private Document mDocument;
 
 	// ====== Constructors =====================================================
@@ -49,7 +59,7 @@ class XMLBuilder {
 	 * @param child_tagname
 	 * @return Child node of parent, with name child_tagname
 	 */
-	Element getChild(Element parent, String child_tagname) {
+	public Element getChild(Element parent, String child_tagname) {
 		for (int i = 0; i < parent.getChildNodes().getLength(); i++)
 			if (((Element) parent.getChildNodes().item(i)).getAttribute("name")
 					.equals(child_tagname))
@@ -61,7 +71,7 @@ class XMLBuilder {
 	 * Method which will collect all the information stored in the parent node
 	 * into the specified file
 	 */
-	void streamFile(String filename) {
+	public void streamFile(String filename) {
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory
 				.newInstance();
@@ -89,7 +99,8 @@ class XMLBuilder {
 	 *            value2,...}
 	 * @return
 	 */
-	Element createElement(String tagname, Map<String, String> attributes_values) {
+	public Element createElement(String tagname,
+			Map<String, String> attributes_values) {
 		Element newElement = null;
 		try {
 			mDocument = mDocument == null ? DocumentBuilderFactory
@@ -104,7 +115,7 @@ class XMLBuilder {
 		return newElement;
 	}
 
-	Element createElement(String tagname) {
+	public Element createElement(String tagname) {
 		return createElement(tagname, null);
 	}
 
@@ -147,15 +158,44 @@ class XMLBuilder {
 	 *            Map specifying desired attribute names and values
 	 * @return Instance of Element which is the newly created tag
 	 */
-	protected Element add(Element parent, String tagname,
+	public Element add(Element parent, String tagname,
 			Map<String, String> attributes) {
 		Element ret = this.createElement(tagname, attributes);
 		parent.appendChild(ret);
 		return ret;
 	}
 
-	protected void addToRoot(Element newElement) {
+	/***
+	 * Simplified version of add, which adds directly to the root of the
+	 * document
+	 */
+	public void addToRoot(Element newElement) {
 		root.appendChild(newElement);
+	}
+
+	/***
+	 * Simplified method for adding a new element to the root
+	 * 
+	 * @param tagname
+	 *            of the new element to be created
+	 * @param attributes
+	 *            for the new element
+	 * @return the newly created element
+	 */
+	public Element addToRoot(String tagname, Map<String, String> attributes) {
+		return add(root, tagname, attributes);
+	}
+
+	/***
+	 * Simplified method to add a new element with the specified tagname as a
+	 * child of root, with no attributes
+	 * 
+	 * @param tagname
+	 *            for the new element
+	 * @return the newly created element
+	 */
+	public Element addToRoot(String tagname) {
+		return addToRoot(tagname, null);
 	}
 
 	/***
@@ -167,7 +207,7 @@ class XMLBuilder {
 	 *            Which will define the child node
 	 * @return Instance of Element which is the newly created tag
 	 */
-	protected Element add(Element parent, String tagname) {
+	public Element add(Element parent, String tagname) {
 		return add(parent, tagname, null);
 	}
 
@@ -179,25 +219,26 @@ class XMLBuilder {
 	 * @param property
 	 * @param textContent
 	 */
-	protected void addChildWithProperty(Element element, String property,
+	public void addChildWithProperty(Element element, String property,
 			String textContent) {
 		add(element, property).setTextContent(textContent);
 	}
-	
+
 	/***
-	 * Method to add a map linking nametags and values as a child of parent. So, to add something like the following: 
-	 * {@code 	<childtagname>
+	 * Method to add a map linking nametags and values as a child of parent. So,
+	 * to add something like the following: {@code 	<childtagname>
 	 * 				<prop1>val1</prop1>
 	 * 				...
 	 * 			</childtagname>}
+	 * 
 	 * @param parent
 	 * @param child_tagname
 	 * @param properties
 	 */
-	protected void addChildProperties(Element parent, String child_tagname,
+	public void addChildProperties(Element parent, String child_tagname,
 			Map<String, String> properties) {
 		Element e = add(parent, child_tagname);
-		properties.forEach((s1, s2) -> add(e, ""+s1).setTextContent(s2));
+		properties.forEach((s1, s2) -> add(e, "" + s1).setTextContent(s2));
 	}
 
 	public Element getRoot() {
@@ -207,29 +248,41 @@ class XMLBuilder {
 	// ====== Testing Main Method ==============================================
 
 	public static void main(String[] args) {
-		
-		XMLBuilder b = new XMLBuilder("game", "name", "Super Mario", "fool", "natalie");
 
+		/***
+		 * This will generate a sample xml file in src/sample.xml
+		 */
+		XMLBuilder b = new XMLBuilder("sample", "name", "sample", "author",
+				"daniel");
+
+		/*
+		 * Generate the map with attributes. This is meant to be called by
+		 * either an engine or a gui.
+		 */
 		Map<String, String> mAttributes = new HashMap<>();
-		mAttributes.put("name", "mario");
-		mAttributes.put("gravity", "down");
-		Element mario = b.add(b.getRoot(), "sprite", mAttributes);
+		mAttributes.put("name", "first");
+		Element el1 = b.addToRoot("element", mAttributes);
 
-		b.add(mario, "speed", null).setTextContent("1.0");
-
+		// Adding propertyN with valueN as child of el1
+		b.add(el1, "property1").setTextContent("value1");
+		b.add(el1, "property2").setTextContent("value2");
+		b.add(el1, "property3").setTextContent("value3");
 		mAttributes.clear();
-		Element el = b.add(mario, "position", mAttributes);
 
-		b.add(el, "X").setTextContent("10.0");
-		b.add(el, "Y").setTextContent("10.0");
+		// We want to add a subtree with tagname position to the root
+		Element el2 = b.add(el1, "position");
+		b.add(el2, "X").setTextContent("xpos");
+		b.add(el2, "Y").setTextContent("ypos");
 
-		el = b.add(mario, "key-actions", null);
+		// Adding another subtree
+		Element el3 = b.add(el1, "key-actions");
+		b.add(el3, "prop1").setTextContent("1");
+		b.add(el3, "prop2").setTextContent("2");
+		b.add(el3, "prop3").setTextContent("3");
+		b.add(el3, "prop4").setTextContent("4");
 
-		b.add(el, "UP").setTextContent("jump");
-		b.add(el, "DOWN").setTextContent("crouch");
-		b.add(el, "LEFT").setTextContent("moveBack");
-		b.add(el, "RIGHT").setTextContent("moveForward");
-
+		// Once we are done adding elements to the tree structure, we stream it
+		// to generate the xml file
 		b.streamFile("swap/game.xml");
 	}
 
