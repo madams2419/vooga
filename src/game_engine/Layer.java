@@ -1,6 +1,7 @@
 package game_engine;
 
 import game_engine.sprite.Sprite;
+import game_engine.sprite.attributes.IMovement;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -36,7 +37,7 @@ public class Layer {
 	 * removes a sprite from a layer
 	 * @param sprite to be removed
 	 */
-	public void removeSprite(Sprite sprite) {
+	public void removeSprite(IMovement sprite) {
 		sprites.remove(sprite);
 	}
 	/**
