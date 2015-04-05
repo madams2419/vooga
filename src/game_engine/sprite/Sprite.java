@@ -16,19 +16,12 @@ import game_engine.physics.PhysicsObject;
  *
  */
 public abstract class Sprite extends Observable{
-	String name;
-	String myState;
-	double id;
-	double x;
-	double y;
-	double targetX;
-	double targetY;
-	double velocity;
-	double acceleration;
-	Animation animation;
-	HitBox hitBox;
-	PhysicsObject myPhysicsObject;
-	Map<String, Behavior> behaviorMap = new HashMap<>();
+	private String name;
+	private String myState;
+	private Animation animation;
+	private HitBox hitBox;
+	private PhysicsObject myPhysicsObject;
+	private Map<String, Behavior> behaviorMap = new HashMap<>();
 	
 	/**
 	 * Blank Constructor
@@ -96,43 +89,6 @@ public abstract class Sprite extends Observable{
 	    animation.removeImage(state);
 	}
 	
-	public void setVelocity(double vel){
-		velocity = vel;
-		setChanged();
-		notifyObservers();
-	}
-	public double getVelocity(){
-		return velocity;
-	}
-	
-	public void setAcceleration(double accel){
-		acceleration = accel;
-		setChanged();
-		notifyObservers();
-	}
-	public double getAcceleration(){
-		return acceleration;
-	}
-	
-	public void setTargetX(double x){
-		targetX = x;
-		setChanged();
-		notifyObservers();
-	}
-	public void setTargetY(double y){
-		targetY = y;
-		setChanged();
-		notifyObservers();
-	}
-
-	public double getTargetX(){
-		return targetX;
-	}
-	public double getTargetY(){
-		return targetY;
-	}
-	
-	
 	public void setState(String state){
 		myState = state;
 		setChanged();
@@ -180,8 +136,8 @@ public abstract class Sprite extends Observable{
 	 * method defineHitBox()
 	 * defines the HitBox for sprite collision
 	 */
-	public void defineHitBox(){
-	    this.hitBox = hitBox;
+	public void defineHitBox(HitBox hitBox){
+	    myHitBox = hitBox;
 	}
 	public HitBox getHitBox(){
 	    return this.hitBox;
