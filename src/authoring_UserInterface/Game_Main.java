@@ -15,14 +15,8 @@ String backgroundName="randombackground";
   @Override
   public void start(Stage primaryStage) {
     AuthoringWindow createScene = new AuthoringWindow();
-//    GameLoadUI loadScene=new GameLoadUI();
-    Start_Screen splashScreen = new Start_Screen();
-    Scene scene= splashScreen.Splash(primaryStage, createScene.GameCreateUI(), null);
-    
     Scene myScene = createScene.GameCreateUI();
     primaryStage.setScene(myScene);
-    
-    
     primaryStage.setResizable(true);
 //    primaryStage.setFullScreen(true);
     primaryStage.show();

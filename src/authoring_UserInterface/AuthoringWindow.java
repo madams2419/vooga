@@ -1,6 +1,6 @@
 package authoring_UserInterface;
 
-import java.io.File;
+//import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+//import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -28,8 +28,8 @@ import javafx.stage.FileChooser.ExtensionFilter;
 public class AuthoringWindow {
 
 	private Scene myScene;
-	private ButtonFactory mbuttonList;
-	private String mFileSelector = "src/Resources/FilestoParse.xml";
+//	private ButtonFactory mbuttonList;
+//	private String mFileSelector = "src/Resources/FilestoParse.xml";
 
 	public Scene GameCreateUI() {
 
@@ -81,7 +81,7 @@ public class AuthoringWindow {
 			         new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"),
 			         new ExtensionFilter("Audio Files", "*.wav", "*.mp3", "*.aac"),
 			         new ExtensionFilter("All Files", "*.*"));
-			 File selectedFile = fileChooser.showOpenDialog(null);
+			 fileChooser.showOpenDialog(null);
 		});
 		mBar.getMenus().get(0).getItems().get(2).setOnAction(e -> Platform.exit());
 		
@@ -91,13 +91,13 @@ public class AuthoringWindow {
 
 	private HBox setupBottomPane(double width) {
 		HBox buttonBox = new HBox();
-		for (Button B : mbuttonList.getSharedInstace(mFileSelector, "Button")
-				.generateButtonBoxes()) {
-			buttonBox.getChildren().add(B);
-		}
-		System.out.println(mbuttonList
-				.getSharedInstace(mFileSelector, "Button").GetAttributes()
-				.toString());
+//		for (Button B : mbuttonList.getSharedInstace(mFileSelector, "Button")
+//				.generateButtonBoxes()) {
+//			buttonBox.getChildren().add(B);
+//		}
+//		System.out.println(mbuttonList
+//				.getSharedInstace(mFileSelector, "Button").GetAttributes()
+//				.toString());
 		return buttonBox;
 	}
 
