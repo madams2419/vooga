@@ -8,7 +8,6 @@ import game_engine.Animation;
 import game_engine.Behavior;
 import game_engine.HitBox;
 import game_engine.physics.PhysicsObject;
-import game_engine.physics.PhysicsParameters;
 
 /**
  * Abstract class for the creation of multiple sprite types
@@ -23,7 +22,6 @@ public abstract class Sprite extends Observable{
 	private String myState;
 	private Animation myAnimation;
 	private HitBox myHitBox;
-	private PhysicsParameters myPhysicsParams;
 	private PhysicsObject myPhysicsObject;
 	private Map<String, Behavior> myBehaviorMap = new HashMap<>();
 
@@ -119,14 +117,6 @@ public abstract class Sprite extends Observable{
 	
 	public String getName(){
 	    return this.myName;
-	}
-	
-	public void setPhysicsParams(PhysicsParameters physicsParams) {
-		myPhysicsParams = physicsParams;
-	}
-	
-	public PhysicsParameters getPhysicsParams(){
-		return myPhysicsParams;
 	}
 	
 	public void setPhysicsObject(PhysicsObject physicsObject){
