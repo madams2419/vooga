@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<game fool="natalie" name="Super Mario">
-	<sprite gravity="down" name="mario">
-		<speed>1.0</speed>
+<sample author="daniel" name="sample">
+	<element name="first">
+		<property1>value1</property1>
+		<property2>value2</property2>
+		<property3>value3</property3>
 		<position>
-			<X>10.0</X>
-			<Y>10.0</Y>
+			<X>xpos</X>
+			<Y>ypos</Y>
 		</position>
 		<key-actions>
-			<UP>jump</UP>
-			<DOWN>crouch</DOWN>
-			<LEFT>moveBack</LEFT>
-			<RIGHT>moveForward</RIGHT>
+			<prop1>1</prop1>
+			<prop2>2</prop2>
+			<prop3>3</prop3>
+			<prop4>4</prop4>
 		</key-actions>
-	</sprite>
-</game>
+	</element>
+</sample>
