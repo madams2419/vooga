@@ -43,8 +43,8 @@ public abstract class Sprite extends Observable{
 	 * states for sprite
 	 */
 	private enum State {
-	        IDLE,
-	        WALK,
+	    IDLE,
+	    WALK,
 		JUMP,
 		FLOAT,
 		MOVE,
