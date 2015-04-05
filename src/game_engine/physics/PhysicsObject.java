@@ -40,7 +40,7 @@ public class PhysicsObject {
 	}
 
 	public void applyImpulse(Vector impulse) {
-		Vector newVelocity = myVel.minus(impulse.multiply(myInvMass));
+		Vector newVelocity = myVel.plus(impulse.multiply(myInvMass));
 		setVelocity(newVelocity);
 	}
 
@@ -70,7 +70,7 @@ public class PhysicsObject {
 
 	public void setMass(double mass) {
 		myMass = mass;
-		myInvMass = 1/mass;
+		myInvMass = (mass == 0) ? 0 : 1/mass;
 	}
 
 	public double getMass() {

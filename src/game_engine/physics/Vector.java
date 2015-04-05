@@ -14,7 +14,7 @@ public class Vector {
 		myY = y;
 	}
 
-	public static Vector getVectorPolar(double angle, double magnitude) {
+	public static Vector getPolarVector(double angle, double magnitude) {
 		double x = Math.cos(angle) * magnitude;
 		double y = Math.sin(angle) * magnitude;
 		return new Vector(x, y);
@@ -38,6 +38,10 @@ public class Vector {
 
 	public Vector multiply(double scalar) {
 		return new Vector(myX * scalar, myY * scalar);
+	}
+
+	public Vector negate() {
+		return new Vector(-myX, -myY);
 	}
 
 	public double getX() {
