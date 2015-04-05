@@ -1,5 +1,6 @@
 package authoring_environment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,25 +46,65 @@ public class SpriteElement {
         myAttributes = new HashMap<>();
     }
 
-    void addAttribute (List<String> path, String attribute) {
+    /**
+     * Adds an attribute to the element at a particular path, creating any non-existing elements
+     * along the way.
+     * 
+     * For example:
+     * 
+     * path = {"platform"}
+     * attributeName = "id"
+     * attributeValue = "0"
+     * 
+     * result in XML file:
+     * 
+     * <platform id="0">
+     * </platform>
+     * 
+     * @param path
+     * @param attributeName
+     * @param attributeValue
+     */
+    public void addAttributeAtPath (List<String> path,
+                                    String attributeName,
+                                    String attributeValue) {
         SpriteElement myDescendant = findElement(path);
-        myDescendant.addAttribute(path.get(path.size() - 1), attribute);
+        myDescendant.addAttribute(attributeName, attributeValue);
     }
 
-    void addAttribute (String attributeName, String attributeValue) {
+    private void addAttribute (String attributeName, String attributeValue) {
         myAttributes.put(attributeName, attributeValue);
     }
 
-    public void addElement (List<String> path, String value) {
+    /**
+     * Adds a value to a particular path, creating any non-existing elements along the way.
+     * 
+     * For example:
+     * 
+     * path = {"mario", "location", "x"}
+     * value = "5"
+     * 
+     * result in XML file:
+     * <mario>
+     *   <location>
+     *     <x>5</x>
+     *   </location>
+     * </mario>
+     * 
+     * 
+     * @param path
+     * @param value
+     */
+    public void addElementAtPath (List<String> path, String value) {
         SpriteElement myDescendant = findElement(path);
         myDescendant.setValue(value);
     }
 
-    void addElement (String elementName, SpriteElement element) {
+    private void addElement (String elementName, SpriteElement element) {
         myElements.put(elementName, element);
     }
 
-    void addElement (String elementName, String value) {
+    private void addElement (String elementName, String value) {
         myElements.put(elementName, new SpriteElement(value));
     }
 
