@@ -1,11 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <!-- ORGANIZATION is replaced with the organization name (duke-compsci308-fall2014) -->
-    <!-- REPO is replaced with the repo name (slogo_team01) -->
-    <groupId>duke-compsci308-spring2015.voogasalad_HighScroller</groupId>
-    <artifactId>voogasalad_HighScroller</artifactId>
-    <version>master-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <!-- REPO is replaced with the repo name (slogo_team01) --><groupId>duke-compsci3085.voogasalad_High-croller-</groupId>
+    <artifactId>voogasalad_High-croller-</artifactId>ompsci308-spring2015.voogasalad_HighScroller</groupId>
+    <artifactId>voogasalad_HighScroller</artifactId>upId>
+    <artifactId>voogasalad_High-croller-</artifactId>
+    <groupId>duke-compsci308-spring2015.voogasalad_High-croller-</groupId>
+    <artifactId>voogasalad_High-croller-</artifactId>packaging>
     <properties>
         <project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
     </properties>
@@ -18,6 +19,8 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+<<<<<<< HEAD
+=======
         	<groupId>com.thoughtworks.xstream</groupId>
         	<artifactId>xstream</artifactId>
         	<version>1.4.8</version>
@@ -28,6 +31,7 @@
         	<version>2.4.1</version>
         </dependency>
         <dependency>
+>>>>>>> 51a8e410abab40e62d599a952e298fdc79f7e970
             <groupId>com.oracle</groupId>
             <artifactId>javafx</artifactId>
             <version>8.0.31</version>
@@ -58,5 +62,4 @@
                 </configuration>
             </plugin>
         </plugins>
-    </build>
-</project>
+    </build></project>

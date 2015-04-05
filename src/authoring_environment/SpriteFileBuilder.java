@@ -24,7 +24,7 @@ class SpriteFileBuilder extends XMLBuilder {
 
 	void addSprite(Sprite newSprite) {
 		Element e = super.createElement(newSprite.name);
-		e.setAttribute("id", ""+newSprite.id);
+		e.setAttribute("id", ""+newSprite.getID());
 		addChildWithProperty(e, "health", "" + newSprite.health);
 		addChildWithProperty(e, "imageuri", newSprite.imageuri);
 		addChildWithProperty(e, "speed", "" + newSprite.speed);
@@ -48,7 +48,7 @@ class SpriteFileBuilder extends XMLBuilder {
 	public static void main(String[] args){
 		SpriteFileBuilder b = new SpriteFileBuilder("sprites", "game", "mario", "xmlns:res", "swap/game.xml");
 		
-		Sprite s = new Sprite(0);
+		Sprite s = new Sprite(0, "null");
 		{	// Creating a sprite object, and defining its properties. This will be all done graphically
 		s.health = 1;
 		s.imageuri = "null";
@@ -61,7 +61,7 @@ class SpriteFileBuilder extends XMLBuilder {
 		s.key_actions.put(Sprite.ACTIONS.RIGHT.name(), "run");
 		}
 		
-		Sprite t = new Sprite(1);
+		Sprite t = new Sprite(1, "null");
 		{	// Creating a sprite object, and defining its properties. This will be all done graphically
 		t.health = 1;
 		t.imageuri = "res/images/koopa.jpeg";
@@ -77,7 +77,7 @@ class SpriteFileBuilder extends XMLBuilder {
 		b.addSprite(s);
 		b.addSprite(t);
 		
-		b.streamFile("swap/sprites.xml");
+		b.streamFile("swap/sprites.xml", b.getRoot());
 		
 	}	
 }

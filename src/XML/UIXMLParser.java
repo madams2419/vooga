@@ -1,17 +1,17 @@
 package XML;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-import org.w3c.dom.Element;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class UIXMLParser {
 	public static File mFile;
@@ -29,7 +29,7 @@ public class UIXMLParser {
 			//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
 			doc.getDocumentElement().normalize();
 
-			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+			//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
 			NodeList nList = doc.getElementsByTagName("Button");
 
@@ -39,7 +39,7 @@ public class UIXMLParser {
 
 				Node nNode = nList.item(temp);
 				
-				System.out.println("\nCurrent Element :" + nNode.getNodeName());
+				//System.out.println("\nCurrent Element :" + nNode.getNodeName());
 
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 					Map<String,String> mAttributeMap=new HashMap<String,String>();
@@ -64,6 +64,7 @@ public class UIXMLParser {
 						}
 					}
 					mAttributesList.add(mAttributeMap);
+
 				}
 			}
 		} catch (Exception e) {

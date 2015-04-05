@@ -18,7 +18,11 @@ String backgroundName="randombackground";
 //    GameLoadUI loadScene=new GameLoadUI();
     Start_Screen splashScreen = new Start_Screen();
     Scene scene= splashScreen.Splash(primaryStage, createScene.GameCreateUI(), null);
-    primaryStage.setScene(scene);
+    
+    Scene myScene = createScene.GameCreateUI();
+    primaryStage.setScene(myScene);
+    
+    
     primaryStage.setResizable(true);
 //    primaryStage.setFullScreen(true);
     primaryStage.show();
