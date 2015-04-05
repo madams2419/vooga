@@ -20,6 +20,10 @@ public class Vector {
 		return new Vector(x, y);
 	}
 
+	public Vector copy() {
+		return new Vector(myX, myY);
+	}
+
 	public Vector plus(Vector other) {
 		return new Vector(myX + other.getX(), myY + other.getY());
 	}
@@ -28,9 +32,12 @@ public class Vector {
 		return new Vector(myX - other.getX(), myY + other.getY());
 	}
 
-	public void multiply(double scalar) {
-		myX *= scalar;
-		myY *= scalar;
+	public double dot(Vector other) {
+		return myX * other.getX() + myY * other.getY();
+	}
+
+	public Vector multiply(double scalar) {
+		return new Vector(myX * scalar, myY * scalar);
 	}
 
 	public double getX() {

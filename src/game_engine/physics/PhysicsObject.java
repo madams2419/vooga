@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PhysicsObject {
-	
+
 	private double myMass;
 	private double myInvMass;
 	private double myRestitution;
@@ -22,7 +22,7 @@ public class PhysicsObject {
 		setRestitution(restitution);
 		setState(state);
 		setPos(pos);
-		setVel(vel);
+		setVelocity(vel);
 		setAccel(accel);
 		myAppliedForces = Arrays.asList(appliedForces);
 	}
@@ -30,13 +30,18 @@ public class PhysicsObject {
 	public PhysicsObject(double mass, double restitution, String state, int xPos, int yPos) {
 		this(mass, restitution, state, new Point2D.Double(xPos, yPos), new Vector(), new Vector());
 	}
-	
+
 	public PhysicsObject(double mass, double restitution, int xPos, int yPos) {
 		this(mass, restitution, "default", xPos, yPos);
 	}
 
 	public void update() {
 
+	}
+
+	public void applyImpulse(Vector impulse) {
+		Vector newVelocity = myVel.minus(impulse.multiply(myInvMass));
+		setVelocity(newVelocity);
 	}
 
 	public Point2D getPos() {
@@ -47,11 +52,11 @@ public class PhysicsObject {
 		myPos = pos;
 	}
 
-	public Vector getVel() {
+	public Vector getVelocity() {
 		return myVel;
 	}
 
-	public void setVel(Vector vel) {
+	public void setVelocity(Vector vel) {
 		myVel = vel;
 	}
 
@@ -72,14 +77,22 @@ public class PhysicsObject {
 		return myMass;
 	}
 
+	public double getInvMass() {
+		return myInvMass;
+	}
+
 	public void setRestitution(double restitution) {
 		myRestitution = restitution;
 	}
-	
+
+	public double getRestitution() {
+		return myRestitution;
+	}
+
 	public void setState(String state) {
 		myState = state;
 	}
-	
+
 	public String getState(String state) {
 		return myState;
 	}
