@@ -17,7 +17,11 @@ public class Objective {
 	boolean condition;
 
 	/**
+<<<<<<< HEAD
 	 * Constructor
+=======
+	 * /** Constructor
+>>>>>>> 0b45a86ec15b74fe0045eb3fd10a80a8360b8c27
 	 * 
 	 * @param condition
 	 *            BooleanProperty Represents a condition for the objective
