@@ -1,7 +1,9 @@
 package authoring_environment;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.w3c.dom.Element;
 
 
 /***
@@ -9,13 +11,13 @@ import java.util.Map;
  * 
  * **not finished**
  * 
- * @author Daniel Luker, Natalie Chanfreau
+ * @author Natalie Chanfreau, Daniel Luker
  *
  */
 public class SpriteElement {
+    final static String ROOT_TAGNAME = "sprites";
     Map<String, SpriteElement> myElements;
     Map<String, String> myAttributes;
-    // List<String> myValues; // can there be more than one value?
     String myValue;
 
     /*
@@ -35,19 +37,17 @@ public class SpriteElement {
      */
     SpriteElement (String value) {
         this();
-        // myValues.add(value);
         myValue = value;
     }
 
     public SpriteElement () {
         myElements = new HashMap<>();
         myAttributes = new HashMap<>();
-        // myValues = new ArrayList<>();
     }
 
-    void addAttribute (List<String> path, String value) {
+    void addAttribute (List<String> path, String attribute) {
         SpriteElement myDescendant = findElement(path);
-        myDescendant.addAttribute(path.get(path.size() - 1), value);
+        myDescendant.addAttribute(path.get(path.size() - 1), attribute);
     }
 
     void addAttribute (String attributeName, String attributeValue) {
@@ -56,7 +56,7 @@ public class SpriteElement {
 
     public void addElement (List<String> path, String value) {
         SpriteElement myDescendant = findElement(path);
-        myDescendant.addElement(path.get(path.size() - 1), value);
+        myDescendant.setValue(value);
     }
 
     void addElement (String elementName, SpriteElement element) {
@@ -80,6 +80,10 @@ public class SpriteElement {
         return element;
     }
 
+    void setValue (String value) {
+        myValue = value;
+    }
+
     String getValue (List<String> path) {
         SpriteElement sprite = findElement(path);
         return sprite.getValue();
@@ -89,16 +93,35 @@ public class SpriteElement {
         return myValue;
     }
 
-    // List<String> getValues (List<String> path) {
-    // SpriteElement sprite = findElement(path);
-    // return sprite.getValues();
-    // }
-    //
-    // List<String> getValues () {
-    // return myValues;
-    // }
+    private Map<String, SpriteElement> getElements () {
+        return myElements;
+    }
 
     private SpriteElement getElement (String elementName) {
         return myElements.get(elementName);
+    }
+
+    Map<String, String> getAttributes () {
+        return myAttributes;
+    }
+
+    public void writeToXMLFile () {
+        XMLBuilder builder = new XMLBuilder();
+        Element root = builder.createElement(ROOT_TAGNAME, myAttributes);
+        addChildren(builder, root, this);
+        builder.streamFile("swap/SpriteElementTesting.xml", root);
+    }
+
+    private void addChildren (XMLBuilder builder, Element element, SpriteElement sprite) {
+        if (sprite.getElements().keySet().size() == 0) {
+            element.setTextContent(sprite.getValue());
+        }
+        for (String elementString : sprite.getElements().keySet()) {
+            SpriteElement childSprite = sprite.getElements().get(elementString);
+            Element childElement =
+                    builder.createElement(elementString, childSprite.getAttributes());
+            element.appendChild(childElement);
+            addChildren(builder, childElement, childSprite);
+        }
     }
 }

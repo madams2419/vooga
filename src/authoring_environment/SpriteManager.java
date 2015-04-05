@@ -2,6 +2,11 @@ package authoring_environment;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * @author Natalie
+ *
+ */
 
 public class SpriteManager {
     Map<String, SpriteElement> mySprites;

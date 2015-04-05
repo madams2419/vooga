@@ -2,6 +2,11 @@ package authoring_environment;
 import java.util.Arrays;
 import java.util.Stack;
 
+/**
+ * 
+ * @author Natalie
+ *
+ */
 
 public class Controller {
     SpriteManager mySpriteManager;
