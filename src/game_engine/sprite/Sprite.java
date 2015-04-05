@@ -7,11 +7,12 @@ import java.util.Observable;
 import game_engine.Animation;
 import game_engine.Behavior;
 import game_engine.HitBox;
-import game_engine.physics.PhysicsEngine;
 import game_engine.physics.PhysicsObject;
+import game_engine.physics.PhysicsParameters;
 
 /**
  * Abstract class for the creation of multiple sprite types
+ * @TODO remove observer observable and clean
  * @author 
  *
  */
@@ -22,8 +23,10 @@ public abstract class Sprite extends Observable{
 	private String myState;
 	private Animation myAnimation;
 	private HitBox myHitBox;
+	private PhysicsParameters myPhysicsParams;
 	private PhysicsObject myPhysicsObject;
 	private Map<String, Behavior> myBehaviorMap = new HashMap<>();
+
 	
 	/**
 	 * Blank Constructor
@@ -96,13 +99,11 @@ public abstract class Sprite extends Observable{
 		myState = state;
 		setChanged();
 		notifyObservers();
-		
 	}
 	
 	public String getState(){
 		return myState;
 	}
-	
 
 	public void setID(int id){
 	    myId = id;
@@ -120,26 +121,22 @@ public abstract class Sprite extends Observable{
 	    return this.myName;
 	}
 	
-	/**
-	 * method definePhysics
-	 * @param physics the corresponding physics engine to set to the sprite
-	 */
-	public void definePhysics(PhysicsObject physicsObject){
+	public void setPhysicsParams(PhysicsParameters physicsParams) {
+		myPhysicsParams = physicsParams;
+	}
+	
+	public PhysicsParameters getPhysicsParams(){
+		return myPhysicsParams;
+	}
+	
+	public void setPhysicsObject(PhysicsObject physicsObject){
 	    myPhysicsObject = physicsObject;
 	}
 	
-	/**
-	 * method getPhysics
-	 * @return the PhysicsEngine of the current sprite
-	 */
-	public PhysicsObject getPhysics(){
+	public PhysicsObject getPhysicsObject(){
 	    return myPhysicsObject;
 	}
 	
-	/**
-	 * method defineHitBox()
-	 * defines the HitBox for sprite collision
-	 */
 	public void defineHitBox(HitBox hitBox){
 	    myHitBox = hitBox;
 	}
@@ -147,5 +144,19 @@ public abstract class Sprite extends Observable{
 	public HitBox getHitBox(){
 	    return this.myHitBox;
 	}
-	
+
+	public static void main(String[] args){
+	    Sprite player = new Enemy();
+	    player.addImage("idle", "idle");
+	    player.addImage("walk", "walk");
+	    player.addImage("jump", "jump");
+	    player.addImage("float", "float");
+	    player.addImage("move", "move");
+	    player.addImage("bounce", "bounce");
+	    
+	    player.setState("idle");
+	    player.setState("jump");
+	    
+	}
+
 }

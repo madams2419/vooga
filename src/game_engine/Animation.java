@@ -32,7 +32,7 @@ public class Animation implements Observer{
 	    myPathMap.remove(state);
 	}
 	
-	public void linkToSprite(Observable sprite){
+	private void linkToSprite(Observable sprite){
 	    sprite.addObserver(this);
 	}
 	
@@ -47,6 +47,7 @@ public class Animation implements Observer{
     public void update (Observable o, Object arg) {
         // TODO Auto-generated method stub
        Sprite sprite = (Sprite) o;
+       System.out.println(sprite.getState());
        changeImage(sprite.getState());
     }
 

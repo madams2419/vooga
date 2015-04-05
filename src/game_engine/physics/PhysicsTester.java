@@ -17,13 +17,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import game.SpriteManager;
+import game_engine.sprite.SpriteManager;
 import game_engine.*;
 import game_engine.sprite.Sprite;
 
 public class PhysicsTester extends Application {
 	
-	private final int fps; // animation frames per second
+	private static final int fps = 60; // animation frames per second
 	private Timeline gameLoop; // main game loop
 	private Scene myScene; // javaFX scene
 	private Group myGroup; // group of nodes to be displayed in scene
@@ -74,7 +74,6 @@ public class PhysicsTester extends Application {
 		
 		public void update() {
 			myPhys.update();
-			myNode
 		}
 	}
 	

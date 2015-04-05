@@ -1,3 +1,4 @@
+
 package game_engine.sprite;
 
 import java.util.HashSet;
@@ -16,7 +17,7 @@ public class SpriteManager implements Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		Sprite sprite = (Sprite) o;
-		sprite.getPhysics().update();
+		sprite.getPhysicsObject().update();
 	}
 	
 	public void addSprite(Sprite sprite){
@@ -44,5 +45,5 @@ public class SpriteManager implements Observer{
 
 	}
 	
-
 }
+

@@ -48,15 +48,15 @@ public class UseCases {
 	 * 3. PlayerWaterCollision executes its configured predicates and changes the gravity parameter in the playerPhysicsEngine
 	 */
 	
-	public void useCase3(){
-		CollisionEngine collisionEngine = new CollisionEngine();
-		PhysicsEngine physicsEngine = new PhysicsEngine();
-		InanimateSprite water = new Water();
-		InanimateSprite player = new Player();
-		collisionEngine.executeCollision(player, water);
-		double acceleration = 9.8;
-		physicsEngine.setAcceleration(acceleration);
-	}
+//	public void useCase3(){
+//		CollisionEngine collisionEngine = new CollisionEngine();
+//		PhysicsEngine physicsEngine = new PhysicsEngine();
+//		InanimateSprite water = new Water();
+//		InanimateSprite player = new Player();
+//		collisionEngine.executeCollision(player, water);
+//		double acceleration = 9.8;
+//		physicsEngine.setAcceleration(acceleration);
+//	}
 	
 
 }
