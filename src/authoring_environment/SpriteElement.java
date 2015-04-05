@@ -17,9 +17,9 @@ import org.w3c.dom.Element;
  */
 public class SpriteElement {
     final static String ROOT_TAGNAME = "sprites";
-    Map<String, SpriteElement> myElements;
-    Map<String, String> myAttributes;
-    String myValue;
+    private Map<String, SpriteElement> myElements;
+    private Map<String, String> myAttributes;
+    private String myValue;
 
     /*
      * attributeType = "id"
