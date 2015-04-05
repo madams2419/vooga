@@ -17,6 +17,7 @@ import game_engine.physics.PhysicsObject;
  */
 public abstract class Sprite extends Observable{
 	String name;
+	String myState;
 	double id;
 	double x;
 	double y;
@@ -24,7 +25,6 @@ public abstract class Sprite extends Observable{
 	double targetY;
 	double velocity;
 	double acceleration;
-	State spriteState;
 	Animation animation;
 	HitBox hitBox;
 	PhysicsObject myPhysicsObject;
@@ -37,19 +37,6 @@ public abstract class Sprite extends Observable{
 		// TODO
 	    this.id = 0;
 	    animation = new Animation(this);
-	}
-	
-	/**
-	 * states for sprite
-	 */
-	private enum State {
-	    IDLE,
-	    WALK,
-		JUMP,
-		FLOAT,
-		MOVE,
-		BOUNCE
-		// TODO add more states (or read these in from file)
 	}
 	
 	/**
@@ -101,11 +88,11 @@ public abstract class Sprite extends Observable{
 	    behaviorMap.get(behavior).execute();
 	}
 	
-	public void addImage(Enum state,String ImagePath){
+	public void addImage(String state,String ImagePath){
 	    animation.setImage(state, ImagePath);
 	}
 	
-	public void removeImage(Enum state){
+	public void removeImage(String state){
 	    animation.removeImage(state);
 	}
 	
@@ -146,15 +133,15 @@ public abstract class Sprite extends Observable{
 	}
 	
 	
-	public void setState(State state){
-		spriteState = state;
+	public void setState(String state){
+		myState = state;
 		setChanged();
 		notifyObservers();
 		
 	}
 	
-	public State getState(){
-		return spriteState;
+	public String getState(){
+		return myState;
 	}
 	
 

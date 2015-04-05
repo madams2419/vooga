@@ -14,34 +14,34 @@ import javafx.beans.value.ObservableValue;
  */
 public class Animation implements Observer{
         
-        private String currentImage = "";
-	Map<Enum, String> pathMap;
-	Map<Enum, Image> imageMap;
+	private String myCurrentImage;
+	Map<String, String> myPathMap;
+	Map<String, Image> myImageMap;
 	
 	public Animation(Observable sprite){
 	   linkToSprite(sprite);
-	   pathMap = new HashMap<>();
-	   imageMap = new HashMap<>();
+	   myPathMap = new HashMap<>();
+	   myImageMap = new HashMap<>();
 	}
 	
-	public void setImage(Enum state, String ImagePath){
-	    pathMap.put(state, ImagePath);
+	public void setImage(String state, String ImagePath){
+	    myPathMap.put(state, ImagePath);
 	}
 	
-	public void removeImage(Enum state){
-	    pathMap.remove(state);
+	public void removeImage(String state){
+	    myPathMap.remove(state);
 	}
 	
 	public void linkToSprite(Observable sprite){
 	    sprite.addObserver(this);
 	}
 	
-	private void changeImage(Enum state){
-	    currentImage = pathMap.get(state);
+	private void changeImage(String state){
+	    myCurrentImage = myPathMap.get(state);
 	}
 	
 	public String getImage(){
-	    return currentImage;
+	    return myCurrentImage;
 	}
     
     public void update (Observable o, Object arg) {
