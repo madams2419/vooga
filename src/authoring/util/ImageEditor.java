@@ -11,28 +11,52 @@ import javafx.scene.image.ImageView;
  *
  */
 public class ImageEditor {
+    private static final double maximumOpacity = 1.0;
 
-    public static void reduceOpacity (ImageView s, double reductionRatio) {
-        s.setOpacity(s.getOpacity() * reductionRatio);
+    /**
+     * This method reduces the opacity according to a reduction ratio between 0 and 1.
+     * 
+     * @param imageView
+     * @param reductionRatio
+     */
+    public static void reduceOpacity (ImageView imageView, double reductionRatio) {
+        imageView.setOpacity(reductionRatio);
     }
 
-    public static void restoreOpacity (ImageView s, double reductionRatio) {
-        s.setOpacity(s.getOpacity() / reductionRatio);
+    /**
+     * This method should be used after reduceOpacity has been called in order to restore
+     * the original opacity of the image.
+     * 
+     * @param imageView
+     * @param reductionRatio
+     */
+    public static void restoreOpacity (ImageView imageView) {
+        imageView.setOpacity(maximumOpacity);
     }
 
+    /**
+     * This method adjusts the height and width of an ImageView so the ratio of height to width
+     * remains the same but they are both less than or equal to the maximum allowable width and
+     * height.
+     * 
+     * @param imageView
+     * @param maxWidth
+     * @param maxHeight
+     */
     public static void setToAppropriateWidthAndHeight (ImageView imageView,
                                                        int maxWidth,
                                                        int maxHeight) {
-        
-        double height = imageView.getImage().getHeight();
-        double newHeight = height > maxHeight ? maxHeight : height;
-        double width = imageView.getImage().getWidth();
-        double newWidth = width > maxWidth ? maxWidth : width;
-        
         imageView.setPreserveRatio(true);
-        imageView.setFitHeight(newHeight);
-        imageView.setFitWidth(newWidth);
 
+        boolean shouldScaleHeight =
+                (imageView.getImage().getHeight() / maxHeight) >
+                (imageView.getImage().getWidth() / maxWidth);
+
+        if (shouldScaleHeight) {
+            imageView.setFitHeight(maxHeight);
+        }
+        else {
+            imageView.setFitWidth(maxWidth);
+        }
     }
-
 }

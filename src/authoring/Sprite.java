@@ -3,9 +3,9 @@ package authoring;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
-import authoring.util.ImageEditor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import authoring.util.ImageEditor;
 
 
 /***
@@ -79,9 +79,6 @@ public class Sprite extends ImageView {
     
     private void onMouseClicked(Consumer<Sprite> consumer) {
         setOnMouseClicked(e -> consumer.accept(this));
-        if (!selected) {
-            
-        }
     }
 
     private void setImageIcon (Image image) {

@@ -20,28 +20,46 @@ import authoring.util.ImageEditor;
  */
 
 public class CharacterEditingPane extends EditingPane {
+    private static final String imageChooserTitle = "Change Character Image";
+    private static final String imageChooserDescription = "Image Files";
+    private static final String[] imageChooserExtensions = { "*.png", "*.jpg", "*.gif" };
 
     CharacterEditingPane (Scene scene, Sprite sprite) {
         super(scene);
         getChildren().add(
                           new TextArea(String
                                   .format("Character editing pane")));
-
-        ImageView spriteIcon = sprite.getIcon();
-        getChildren().add(spriteIcon);
-        spriteIcon.setOnMouseClicked(i -> changeCharacterImage(sprite));
-        spriteIcon.setOnMouseEntered(i -> ImageEditor.reduceOpacity(spriteIcon, Sprite.OPACITY_REDUCTION_RATIO));
-        spriteIcon.setOnMouseExited(i -> ImageEditor.restoreOpacity(spriteIcon, Sprite.OPACITY_REDUCTION_RATIO));
+        addSpriteIcon(sprite);
     }
 
-    private void changeCharacterImage (Sprite s) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Change Character Image");
-        fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png",
-                                                                  "*.jpg", "*.gif"));
-        File selectedImageFile = fileChooser.showOpenDialog(null);
+    private void addSpriteIcon (Sprite sprite) {
+        ImageView spriteIcon = sprite.getIcon();
+        spriteIcon.setOnMouseClicked(i -> spriteIconClicked(sprite));
+        spriteIcon.setOnMouseEntered(i -> reduceSpriteOpacity(spriteIcon));
+        spriteIcon.setOnMouseExited(i -> restoreSpriteOpacity(spriteIcon));
+        getChildren().add(spriteIcon);
+    }
+
+    private void spriteIconClicked (Sprite sprite) {
+        changeCharacterImage(sprite);
+    }
+    
+    private void reduceSpriteOpacity (ImageView imageView) {
+        ImageEditor.reduceOpacity(imageView, Sprite.OPACITY_REDUCTION_RATIO);
+    }
+
+    private void restoreSpriteOpacity (ImageView imageView) {
+        ImageEditor.restoreOpacity(imageView);
+    }
+
+    private void changeCharacterImage (Sprite sprite) {
+        FileChooser imageChooser = new FileChooser();
+        imageChooser.setTitle(imageChooserTitle);
+        imageChooser.getExtensionFilters().add(new ExtensionFilter(imageChooserDescription,
+                                                                  imageChooserExtensions));
+        File selectedImageFile = imageChooser.showOpenDialog(null);
         if (selectedImageFile != null) {
-            s.changeImage(new Image(selectedImageFile.toURI().toString()));
+            sprite.changeImage(new Image(selectedImageFile.toURI().toString()));
         }
     }
 }

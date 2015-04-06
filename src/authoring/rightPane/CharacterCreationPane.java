@@ -14,8 +14,6 @@ import authoring.util.ImageEditor;
  * This will allow the user to select from a number of images (or insert his/her own image) to
  * create a character that can be placed on the canvas.
  * 
- * ^^ Is this true? Or are we dragging and dropping from the "characters" drop-down menu?
- * 
  * @author Daniel Luker, Andrew Sun, Natalie Chanfreau
  *
  */
@@ -49,7 +47,7 @@ public class CharacterCreationPane extends EditingPane {
         sampleImageIcon.setOnMouseClicked(e -> imageClicked(spriteClicked, sampleImage, ID));
         sampleImageIcon.setOnMouseDragged(e -> imageDragged(e));
         sampleImageIcon.setOnMouseEntered(i -> ImageEditor.reduceOpacity(sampleImageIcon, Sprite.OPACITY_REDUCTION_RATIO));
-        sampleImageIcon.setOnMouseExited(i -> ImageEditor.restoreOpacity(sampleImageIcon, Sprite.OPACITY_REDUCTION_RATIO));
+        sampleImageIcon.setOnMouseExited(i -> ImageEditor.restoreOpacity(sampleImageIcon));
         
         this.getChildren().add(sampleImageIcon);
         
@@ -59,6 +57,7 @@ public class CharacterCreationPane extends EditingPane {
         
     }
 
+    // an image in the right pane is clicked to be moved to the center pane
     private void imageClicked (Consumer<Sprite> spriteClicked, Sprite sampleImage, int ID) {
         // need to now set mouse cursor to the sprite image
         getScene().setCursor(new SpriteCursor(new Sprite(sampleImage, ID)));
