@@ -23,10 +23,12 @@ public class ImageEditor {
     public static void setToAppropriateWidthAndHeight (ImageView imageView,
                                                        int maxWidth,
                                                        int maxHeight) {
+        
+        // TODO : not working when width is greater than height (sidewaysLuigi.png)
         double newHeight = maxHeight;
         double width = imageView.getFitWidth();
         double newWidth = width > maxWidth ? maxWidth : width;
-
+        
         imageView.setPreserveRatio(true);
         imageView.setFitHeight(newHeight);
         imageView.setFitWidth(newWidth);
