@@ -16,7 +16,8 @@ public class Vector {
 		myY = y;
 	}
 
-	public static Vector getPolarVector(double angle, double magnitude) {
+	public static Vector getPolarVector(double angleDeg, double magnitude) {
+		double angle = Math.toRadians(angleDeg);
 		double x = Math.cos(angle) * magnitude;
 		double y = Math.sin(angle) * magnitude;
 		return new Vector(x, y);
