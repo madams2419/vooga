@@ -19,8 +19,6 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-<<<<<<< HEAD
-=======
         	<groupId>com.thoughtworks.xstream</groupId>
         	<artifactId>xstream</artifactId>
         	<version>1.4.8</version>
@@ -31,7 +29,6 @@
         	<version>2.4.1</version>
         </dependency>
         <dependency>
->>>>>>> 51a8e410abab40e62d599a952e298fdc79f7e970
             <groupId>com.oracle</groupId>
             <artifactId>javafx</artifactId>
             <version>8.0.31</version>
