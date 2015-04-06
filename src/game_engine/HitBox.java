@@ -27,4 +27,9 @@ public class HitBox {
 		return false;
 	}
 
+	public double getVolume() {
+		//TODO
+		return 0.0;
+	}
+
 }

@@ -32,6 +32,10 @@ class XMLBuilder {
 
 	// ====== Constructors =====================================================
 
+	XMLBuilder() {
+	    
+	}
+	
 	XMLBuilder(String rootElement, String... attributes_values) {
 		this(rootElement, arrayToMap(attributes_values));
 	}
@@ -61,7 +65,7 @@ class XMLBuilder {
 	 * Method which will collect all the information stored in the parent node
 	 * into the specified file
 	 */
-	void streamFile(String filename) {
+	void streamFile(String filename, Element root) {
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory
 				.newInstance();
@@ -89,7 +93,7 @@ class XMLBuilder {
 	 *            value2,...}
 	 * @return
 	 */
-	Element createElement(String tagname, Map<String, String> attributes_values) {
+	public Element createElement(String tagname, Map<String, String> attributes_values) {
 		Element newElement = null;
 		try {
 			mDocument = mDocument == null ? DocumentBuilderFactory
@@ -230,7 +234,7 @@ class XMLBuilder {
 		b.add(el, "LEFT").setTextContent("moveBack");
 		b.add(el, "RIGHT").setTextContent("moveForward");
 
-		b.streamFile("swap/game.xml");
+		b.streamFile("swap/game.xml", b.root);
 	}
 
 }
