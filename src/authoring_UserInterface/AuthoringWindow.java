@@ -4,7 +4,7 @@ package authoring_UserInterface;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
+import authoring_RightEditingPane.RightPaneHolder;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -118,7 +118,7 @@ public class AuthoringWindow {
 	}
 
 	private VBox setupRightPane() {
-		return new RightPane(myScene);
+		return new RightPaneHolder().getCurrentContent();
 	}
 
 	private VBox setupLeftPane() {

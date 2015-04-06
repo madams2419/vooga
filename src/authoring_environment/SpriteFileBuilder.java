@@ -23,15 +23,15 @@ class SpriteFileBuilder extends XMLBuilder {
 	}
 
 	void addSprite(Sprite newSprite) {
-		Element e = super.createElement(newSprite.name);
-		e.setAttribute("id", ""+newSprite.getID());
-		addChildWithProperty(e, "health", "" + newSprite.health);
-		addChildWithProperty(e, "imageuri", newSprite.imageuri);
-		addChildWithProperty(e, "speed", "" + newSprite.speed);
-		addChildWithProperty(e, "gravity", "" + newSprite.mGravity);
-		addChildProperties(e, "key-actions", newSprite.key_actions);
-		addChildProperties(e, "position", newSprite.position);
-		this.addToRoot(e);
+//		Element e = super.createElement(newSprite.name);
+//		e.setAttribute("id", ""+newSprite.getID());
+//		addChildWithProperty(e, "health", "" + newSprite.health);
+//		addChildWithProperty(e, "imageuri", newSprite.imageuri);
+//		addChildWithProperty(e, "speed", "" + newSprite.speed);
+//		addChildWithProperty(e, "gravity", "" + newSprite.mGravity);
+//		addChildProperties(e, "key-actions", newSprite.key_actions);
+//		addChildProperties(e, "position", newSprite.position);
+//		this.addToRoot(e);
 	}
 
 	void addProperties(Element element, Map<Object, Object> properties) {
@@ -50,26 +50,26 @@ class SpriteFileBuilder extends XMLBuilder {
 		
 		Sprite s = new Sprite(0, "null");
 		{	// Creating a sprite object, and defining its properties. This will be all done graphically
-		s.health = 1;
-		s.imageuri = "null";
-		s.mGravity = Sprite.GRAVITY.DOWN;
-		s.name = "mario";
-		s.position.put("X", "10.0");
-		s.position.put("Y", "10.0");
-		s.speed = 10;
-		s.key_actions.put(Sprite.ACTIONS.UP.name(), "jump");
-		s.key_actions.put(Sprite.ACTIONS.RIGHT.name(), "run");
+//		s.health = 1;
+//		s.imageuri = "null";
+//		s.mGravity = Sprite.GRAVITY.DOWN;
+//		s.name = "mario";
+//		s.position.put("X", "10.0");
+//		s.position.put("Y", "10.0");
+//		s.speed = 10;
+//		s.key_actions.put(Sprite.ACTIONS.UP.name(), "jump");
+//		s.key_actions.put(Sprite.ACTIONS.RIGHT.name(), "run");
 		}
 		
 		Sprite t = new Sprite(1, "null");
 		{	// Creating a sprite object, and defining its properties. This will be all done graphically
-		t.health = 1;
-		t.imageuri = "res/images/koopa.jpeg";
-		t.mGravity = Sprite.GRAVITY.DOWN;
-		t.name = "koopa";
-		t.position.put("X", "20.0");
-		t.position.put("Y", "30.0");
-		t.speed = 5;
+//		t.health = 1;
+//		t.imageuri = "res/images/koopa.jpeg";
+//		t.mGravity = Sprite.GRAVITY.DOWN;
+//		t.name = "koopa";
+//		t.position.put("X", "20.0");
+//		t.position.put("Y", "30.0");
+//		t.speed = 5;
 		}
 		
 		

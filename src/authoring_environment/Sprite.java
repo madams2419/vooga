@@ -67,6 +67,10 @@ public class Sprite extends ImageView {
         myKeyActions.put(action, result);
     }
     
+    public String getImageURI() {
+        return myImageURI;
+    }
+    
     public void setCharacteristic (String characteristic, String value) {
         myCharacteristics.put(characteristic, value);
     }
