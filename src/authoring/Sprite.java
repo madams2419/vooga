@@ -2,6 +2,7 @@ package authoring;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -25,15 +26,24 @@ public class Sprite extends ImageView {
     private int myID;
 
     public Sprite (int ID, String imageURI) {
+        this();
         this.myID = ID;
         myImageURI = imageURI;
         this.setImage(new Image(getClass().getResourceAsStream(myImageURI)));
+    }
+
+    // addKeyAction()
+    
+    public Sprite (int ID, String imageURI, Consumer<Sprite> consumer) {
+        this(ID, imageURI);
+        setOnMouseClicked(e -> consumer.accept(this));
+    }
+
+    public Sprite () {
         myPosition = new HashMap<>();
         myVelocity = new HashMap<>();
         myKeyActions = new HashMap<>();
     }
-
-    // addKeyAction()
 
     public int getID () {
         return myID;

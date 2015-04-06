@@ -44,7 +44,17 @@ public class CenterPane extends ScrollPane {
 
 		try{
 		Sprite s = ((SpriteCursor) myScene.getCursor()).getCurrentSprite();
-		s.setOnMouseClicked(p -> spriteClicked(p, s));
+		
+		// Hey Andrew! I commented this next line out because I decided to pass in 
+		// a Consumer in the creation of the Sprite (in CharacterCreationPane), and
+		// this line was resetting the setOnMouseClicked method that I had used in 
+		// order to switch between panes (although in the end it should probably be 
+		// sent to some intermediate class rather than directly switch panes so that  
+		// the logic of how many sprites are currently clicked is done before 
+		// deciding what will happen).
+		
+//		s.setOnMouseClicked(p -> spriteClicked(p, s));
+		
 		s.setX(e.getX() - s.getImage().getWidth()/2);
 		s.setY(e.getY() - s.getImage().getHeight()/2);
 		myGroup.getChildren().add(s);

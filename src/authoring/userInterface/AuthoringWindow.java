@@ -4,7 +4,6 @@ package authoring.userInterface;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import authoring.rightEditingPane.RightPaneHolder;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -20,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import authoring.rightPane.RightPane;
 
 /**
  * @author hojeanniechung & Daniel Luker
@@ -118,7 +118,7 @@ public class AuthoringWindow {
 	}
 
 	private VBox setupRightPane() {
-		return new RightPaneHolder().getCurrentContent();
+		return new RightPane(myScene);
 	}
 
 	private VBox setupLeftPane() {
