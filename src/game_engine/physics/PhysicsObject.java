@@ -44,7 +44,7 @@ public class PhysicsObject {
 		setVelocity(newVelocity);
 	}
 
-	public Vector getPos() {
+	public Vector getPosition() {
 		return myPosition;
 	}
 

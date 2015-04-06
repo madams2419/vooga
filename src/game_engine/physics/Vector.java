@@ -44,6 +44,10 @@ public class Vector {
 		return new Vector(-myX, -myY);
 	}
 
+	public Vector normalize() {
+		return getPolarVector(getAngle(), 1);
+	}
+
 	public double getX() {
 		return myX;
 	}

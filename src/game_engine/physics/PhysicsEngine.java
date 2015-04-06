@@ -33,6 +33,11 @@ public class PhysicsEngine {
 		resolveCollision(a.getPhysicsObject(), b.getPhysicsObject(), normal, pDepth);
 	}
 
+	public void resolveCollision(PhysicsObject a, PhysicsObject b) {
+		Vector normal = getCollisionNormal(a, b);
+
+		resolveCollision(a, b, normal, 0);
+	}
 
 	public void resolveCollision(PhysicsObject a, PhysicsObject b, Vector normal, double pDepth) {
 		// compute relative velocity
@@ -60,6 +65,11 @@ public class PhysicsEngine {
 
 		// apply sink correction
 		applySinkCorrection(a, b, normal, pDepth);
+	}
+
+	private Vector getCollisionNormal(PhysicsObject a, PhysicsObject b) {
+		Vector delta = a.getPosition().minus(b.getPosition());
+		return delta.normalize();
 	}
 
 	private void applySinkCorrection(PhysicsObject a, PhysicsObject b, Vector normal, double pDepth) {
