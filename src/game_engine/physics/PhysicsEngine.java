@@ -61,7 +61,7 @@ public class PhysicsEngine {
 		// calculate impulse
 		double implsMag = -(1 + restitution) * projOnNorm;
 		implsMag /= a.getInvMass() + b.getInvMass();
-		Vector impulse = normal.multiply(implsMag);
+		Vector impulse = normal.times(implsMag);
 
 		// apply impulse
 		a.applyImpulse(impulse.negate());
@@ -82,7 +82,7 @@ public class PhysicsEngine {
 			return;
 		}
 
-		Vector correction = normal.multiply(SC_PERCENT * pDepth / (a.getInvMass() + b.getInvMass()));
+		Vector correction = normal.times(SC_PERCENT * pDepth / (a.getInvMass() + b.getInvMass()));
 		a.applyImpulse(correction.negate());
 		b.applyImpulse(correction);
 	}

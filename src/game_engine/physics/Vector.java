@@ -48,7 +48,7 @@ public class Vector {
 		return myX * other.getX() + myY * other.getY();
 	}
 
-	public Vector multiply(double scalar) {
+	public Vector times(double scalar) {
 		return new Vector(myX * scalar, myY * scalar);
 	}
 

@@ -1,8 +1,6 @@
 package game_engine.physics;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PhysicsObject {
@@ -20,19 +18,19 @@ public class PhysicsObject {
 	private List<Joint> myJoints;
 	private PhysicsEngine myPhysics;
 
-	public PhysicsObject(PhysicsEngine physics, double mass, double restitution, String state, Vector position, Vector velocity, Vector accel) {
+	public PhysicsObject(PhysicsEngine physics, double mass, double restitution, String state, Vector position, Vector velocity) {
 		setMass(mass);
 		setRestitution(restitution);
 		setState(state);
 		setPosition(position);
 		setVelocity(velocity);
-		setAccel(accel);
 		myInternalForces = new ArrayList<>();
 		myExternalForces = physics.getGlobalForces();
+		myAccel = computeAccel();
 	}
 
 	public PhysicsObject(PhysicsEngine physics, double mass, double restitution, String state, int xPos, int yPos) {
-		this(physics, mass, restitution, state, new Vector(xPos, yPos), new Vector(), new Vector());
+		this(physics, mass, restitution, state, new Vector(xPos, yPos), new Vector());
 	}
 
 	public PhysicsObject(PhysicsEngine physics, double mass, double restitution, int xPos, int yPos) {
@@ -40,31 +38,31 @@ public class PhysicsObject {
 	}
 
 	public void update() {
-		double dt = physics.getTimeStep();
+		double dt = myPhysics.getTimeStep();
+		myAccel = computeAccel();
+		myVelocity = myVelocity.plus(myAccel).times(dt);
+		myPosition = myPosition.plus(myVelocity).times(dt);
+	}
 
-
-
-		myVelocity = myVelocity.plus(netForce.multiply(myInvMass * dt));
-
+	public Vector computeAccel() {
+		Vector netForce = computeNetForce();
+		return netForce.times(myInvMass);
 	}
 
 	public Vector computeNetForce() {
-		Vector netForce = new Vector();
+		int numForces = myExternalForces.size() + myInternalForces.size();
 
 		// sum external forces
-		for(Vector eForce : myInternalForces) {
-			netForce = netForce.plus(iForce);
-		}
+		Vector extSum = Vector.sum(myExternalForces);
 
 		// sum internal forces
-		for(Vector iForce : myInternalForces) {
-			netForce = netForce.plus(iForce);
-		}
+		Vector intSum = Vector.sum(myInternalForces);
+
+		return extSum.plus(intSum).times(1/numForces);
 	}
 
-
 	public void applyImpulse(Vector impulse) {
-		Vector newVelocity = myVelocity.plus(impulse.multiply(myInvMass));
+		Vector newVelocity = myVelocity.plus(impulse.times(myInvMass));
 		setVelocity(newVelocity);
 	}
 
@@ -86,10 +84,6 @@ public class PhysicsObject {
 
 	public Vector getAccel() {
 		return myAccel;
-	}
-
-	public void setAccel(Vector accel) {
-		myAccel = accel;
 	}
 
 	public void setMass(double mass) {
