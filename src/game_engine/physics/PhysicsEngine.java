@@ -1,5 +1,7 @@
 package game_engine.physics;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -14,15 +16,17 @@ public class PhysicsEngine {
 	private static double SC_PERCENT = 0.2;
 	private static double SC_SLOP = 0.01;
 
+	private double myTimeStep;
 	private Map<String, Vector> myGlobalForces;
 
-	public PhysicsEngine(double gravity) {
+	public PhysicsEngine(double timeStep, double gravity) {
+		myTimeStep = timeStep;
 		myGlobalForces = new HashMap<>();
 		setGravity(gravity);
 	}
 
-	public PhysicsEngine() {
-		this(GRAV_MAGNITUDE);
+	public PhysicsEngine(double timeStep) {
+		this(timeStep, GRAV_MAGNITUDE);
 	}
 
 	public void setGravity(double gravity) {
@@ -81,6 +85,22 @@ public class PhysicsEngine {
 		Vector correction = normal.multiply(SC_PERCENT * pDepth / (a.getInvMass() + b.getInvMass()));
 		a.applyImpulse(correction.negate());
 		b.applyImpulse(correction);
+	}
+
+	public List<Vector> getGlobalForces() {
+		return new ArrayList<>(myGlobalForces.values());
+	}
+
+	public void setGlobalForces(String name, Vector force) {
+		myGlobalForces.put(name, force);
+	}
+
+	public double getTimeStep() {
+		return myTimeStep;
+	}
+
+	public void setTimeStep(double timeStep) {
+		myTimeStep = timeStep;
 	}
 
 }

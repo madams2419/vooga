@@ -1,5 +1,7 @@
 package game_engine.physics;
 
+import java.util.List;
+
 public class Vector {
 
 	private double myX;
@@ -18,6 +20,16 @@ public class Vector {
 		double x = Math.cos(angle) * magnitude;
 		double y = Math.sin(angle) * magnitude;
 		return new Vector(x, y);
+	}
+
+	public static Vector sum(List<Vector> vectors) {
+		Vector sum = new Vector();
+
+		for(Vector vect : vectors) {
+			sum = sum.plus(vect);
+		}
+
+		return sum;
 	}
 
 	public Vector copy() {
