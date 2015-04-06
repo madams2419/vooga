@@ -24,9 +24,9 @@ public class ImageEditor {
                                                        int maxWidth,
                                                        int maxHeight) {
         
-        // TODO : not working when width is greater than height (sidewaysLuigi.png)
-        double newHeight = maxHeight;
-        double width = imageView.getFitWidth();
+        double height = imageView.getImage().getHeight();
+        double newHeight = height > maxHeight ? maxHeight : height;
+        double width = imageView.getImage().getWidth();
         double newWidth = width > maxWidth ? maxWidth : width;
         
         imageView.setPreserveRatio(true);
