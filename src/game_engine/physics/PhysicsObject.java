@@ -64,12 +64,24 @@ public class PhysicsObject {
 		return extSum.plus(intSum).times(1/numForces);
 	}
 
-	public void applyForce(Vector force) {
+	public void addForce(Vector force) {
 		myInternalForces.add(force);
 	}
 
 	public void removeForce(Vector force) {
 		myInternalForces.remove(force);
+	}
+
+	public void addOppositionalForce(double magnitude) {
+		//TODO
+	}
+
+	public void removeOppositionalForce(double magnitude) {
+		//TODO
+	}
+
+	public void applyOppositionalForce(double magnitude) {
+		//TODO
 	}
 
 	public void applyImpulse(Vector impulse) {
