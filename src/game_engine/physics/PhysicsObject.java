@@ -64,6 +64,14 @@ public class PhysicsObject {
 		return extSum.plus(intSum).times(1/numForces);
 	}
 
+	public void applyForce(Vector force) {
+		myInternalForces.add(force);
+	}
+
+	public void removeForce(Vector force) {
+		myInternalForces.remove(force);
+	}
+
 	public void applyImpulse(Vector impulse) {
 		Vector newVelocity = myVelocity.plus(impulse.times(myInvMass));
 		setVelocity(newVelocity);
