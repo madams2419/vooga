@@ -3,7 +3,7 @@ package authoring.userInterface;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
+import authoring.util.FrontEndUtils;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;

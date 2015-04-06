@@ -3,9 +3,11 @@ package authoring.rightPane;
 import java.util.function.Consumer;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import authoring.Sprite;
 import authoring.userInterface.SpriteCursor;
+import authoring.util.ImageEditor;
 
 
 /**
@@ -30,19 +32,36 @@ public class CharacterCreationPane extends EditingPane {
                                                + "selected (up to two%n"
                                                + "selections), its (their)%n"
                                                + "information will be%n" + "shown here.")));
-        Sprite sampleImage = new Sprite(100, "/images/turtle.png");
-        sampleImage.setOnMouseClicked(e -> imageClicked(spriteClicked));
-        sampleImage.setOnMouseDragged(e -> imageDragged(e));
-        this.getChildren().add(sampleImage);
+        addSpriteToPane(100, "/images/turtle.png", spriteClicked);
+        addSpriteToPane(101, "/images/luigi.png", spriteClicked);
+    }
+    
+    private void addSpriteToPane(int id, String imageURI, Consumer<Sprite> spriteClicked) {
+        Sprite sampleImage = new Sprite(id, imageURI, spriteClicked);
+        
+        //these two aren't working for now when the copy is made in imageClicked (Consumer<Sprite> spriteClicked, Sprite sampleImage, int ID):
+//        sampleImage.setOnMouseEntered(i -> ImageEditor.reduceOpacity(sampleImage, Sprite.OPACITY_REDUCTION_RATIO));
+//        sampleImage.setOnMouseExited(i -> ImageEditor.restoreOpacity(sampleImage, Sprite.OPACITY_REDUCTION_RATIO));
+        
+        int ID = 100; //for now, it doesn't change, but this should eventually be unique for each sprite
+        
+        ImageView sampleImageIcon = sampleImage.getIcon();
+        sampleImageIcon.setOnMouseClicked(e -> imageClicked(spriteClicked, sampleImage, ID));
+        sampleImageIcon.setOnMouseDragged(e -> imageDragged(e));
+        sampleImageIcon.setOnMouseEntered(i -> ImageEditor.reduceOpacity(sampleImageIcon, Sprite.OPACITY_REDUCTION_RATIO));
+        sampleImageIcon.setOnMouseExited(i -> ImageEditor.restoreOpacity(sampleImageIcon, Sprite.OPACITY_REDUCTION_RATIO));
+        
+        this.getChildren().add(sampleImageIcon);
+        
     }
 
     private void imageDragged (MouseEvent e) {
-
+        
     }
 
-    private void imageClicked (Consumer<Sprite> spriteClicked) {
+    private void imageClicked (Consumer<Sprite> spriteClicked, Sprite sampleImage, int ID) {
         // need to now set mouse cursor to the sprite image
-        getScene().setCursor(new SpriteCursor(new Sprite(100, "/images/turtle.png", spriteClicked)));
+        getScene().setCursor(new SpriteCursor(new Sprite(sampleImage, ID)));
         
     }
 }

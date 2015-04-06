@@ -3,11 +3,13 @@ package authoring.rightPane;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import authoring.Sprite;
 
 
 /**
- * This is the superclass for any specific pane on the right side of the screen. 
+ * This is the superclass for any specific pane on the right side of the screen.
  * 
  * @author Natalie Chanfreau
  *
@@ -15,17 +17,18 @@ import javafx.scene.layout.VBox;
 public class EditingPane {
     private ObservableList<Node> myChildren;
     private Scene myScene;
-    
-    EditingPane(Scene scene) {
+
+    EditingPane (Scene scene) {
         myChildren = new VBox().getChildren();
         myScene = scene;
     }
-    
-    public ObservableList<Node> getChildren() {
+
+    public ObservableList<Node> getChildren () {
         return myChildren;
     }
-    
-    public Scene getScene() {
+
+    public Scene getScene () {
         return myScene;
     }
+
 }
