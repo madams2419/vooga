@@ -3,9 +3,7 @@ package authoring.rightPane;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import authoring.Sprite;
 
 
 /**
