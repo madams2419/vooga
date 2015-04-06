@@ -1,14 +1,15 @@
 package game_engine.physics;
 
+import game_engine.HitBox;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class PhysicsObject {
 
-	private double myMass;
 	private double myInvMass;
-	private double myRestitution;
-
+	private Material myMaterial;
+	private HitBox myHitBox;
 	private String myState;
 	private Vector myPosition;
 	private Vector myVelocity;
@@ -18,23 +19,20 @@ public class PhysicsObject {
 	private List<Joint> myJoints;
 	private PhysicsEngine myPhysics;
 
-	public PhysicsObject(PhysicsEngine physics, double mass, double restitution, String state, Vector position, Vector velocity) {
-		setMass(mass);
-		setRestitution(restitution);
+	public PhysicsObject(PhysicsEngine physics, Material material, HitBox hitBox, String state, Vector position, Vector velocity) {
+		setMaterial(material);
+		setHitBox(hitBox);
 		setState(state);
 		setPosition(position);
 		setVelocity(velocity);
 		myInternalForces = new ArrayList<>();
 		myExternalForces = physics.getGlobalForces();
+		myInvMass = computeInvMass();
 		myAccel = computeAccel();
 	}
 
-	public PhysicsObject(PhysicsEngine physics, double mass, double restitution, String state, int xPos, int yPos) {
-		this(physics, mass, restitution, state, new Vector(xPos, yPos), new Vector());
-	}
-
-	public PhysicsObject(PhysicsEngine physics, double mass, double restitution, int xPos, int yPos) {
-		this(physics, mass, restitution, "default", xPos, yPos);
+	public PhysicsObject(PhysicsEngine physics, Material material, HitBox hitBox, String state, int xPos, int yPos) {
+		this(physics, material, hitBox, state, new Vector(xPos, yPos), new Vector());
 	}
 
 	public void update() {
@@ -42,6 +40,11 @@ public class PhysicsObject {
 		myAccel = computeAccel();
 		myVelocity = myVelocity.plus(myAccel).times(dt);
 		myPosition = myPosition.plus(myVelocity).times(dt);
+	}
+
+	public double computeInvMass() {
+		double mass = myMaterial.getDensity() * myHitBox.getVolume();
+		return 1/mass;
 	}
 
 	public Vector computeAccel() {
@@ -86,13 +89,8 @@ public class PhysicsObject {
 		return myAccel;
 	}
 
-	public void setMass(double mass) {
-		myMass = mass;
-		myInvMass = (mass == 0) ? 0 : 1/mass;
-	}
-
 	public double getMass() {
-		return myMass;
+		return 1/myInvMass;
 	}
 
 	public double getInvMass() {
@@ -100,11 +98,21 @@ public class PhysicsObject {
 	}
 
 	public void setRestitution(double restitution) {
-		myRestitution = restitution;
+		myMaterial.setRestitution(restitution);
 	}
 
 	public double getRestitution() {
-		return myRestitution;
+		return myMaterial.getRestitution();
+	}
+
+	public void setMaterial(Material material) {
+		myMaterial = material;
+		myInvMass = computeInvMass();
+	}
+
+	public void setHitBox(HitBox hitBox) {
+		myHitBox = hitBox;
+		myInvMass = computeInvMass();
 	}
 
 	public void setState(String state) {
