@@ -1,85 +1,124 @@
 package game_engine.physics;
 
-import java.awt.geom.Point2D;
-import java.util.Arrays;
+import game_engine.HitBox;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class PhysicsObject {
-	
-	private double myMass;
+
 	private double myInvMass;
-	private double myRestitution;
-
+	private Material myMaterial;
+	private HitBox myHitBox;
 	private String myState;
-	private Point2D myPos;
-	private Vector myVel;
+	private Vector myPosition;
+	private Vector myVelocity;
 	private Vector myAccel;
-	private List<Vector> myAppliedForces;
+	private List<Vector> myInternalForces;
+	private List<Vector> myExternalForces;
 	private List<Joint> myJoints;
+	private PhysicsEngine myPhysics;
 
-	public PhysicsObject(double mass, double restitution, String state, Point2D pos, Vector vel, Vector accel, Vector... appliedForces) {
-		setMass(mass);
-		setRestitution(restitution);
+	public PhysicsObject(PhysicsEngine physics, Material material, HitBox hitBox, String state, Vector position, Vector velocity) {
+		setMaterial(material);
+		setHitBox(hitBox);
 		setState(state);
-		setPos(pos);
-		setVel(vel);
-		setAccel(accel);
-		myAppliedForces = Arrays.asList(appliedForces);
+		setPosition(position);
+		setVelocity(velocity);
+		myInternalForces = new ArrayList<>();
+		myExternalForces = physics.getGlobalForces();
+		myInvMass = computeInvMass();
+		myAccel = computeAccel();
 	}
 
-	public PhysicsObject(double mass, double restitution, String state, int xPos, int yPos) {
-		this(mass, restitution, state, new Point2D.Double(xPos, yPos), new Vector(), new Vector());
-	}
-	
-	public PhysicsObject(double mass, double restitution, int xPos, int yPos) {
-		this(mass, restitution, "default", xPos, yPos);
+	public PhysicsObject(PhysicsEngine physics, Material material, HitBox hitBox, String state, int xPos, int yPos) {
+		this(physics, material, hitBox, state, new Vector(xPos, yPos), new Vector());
 	}
 
 	public void update() {
-
+		double dt = myPhysics.getTimeStep();
+		myAccel = computeAccel();
+		myVelocity = myVelocity.plus(myAccel).times(dt);
+		myPosition = myPosition.plus(myVelocity).times(dt);
 	}
 
-	public Point2D getPos() {
-		return myPos;
+	public double computeInvMass() {
+		double mass = myMaterial.getDensity() * myHitBox.getVolume();
+		return 1/mass;
 	}
 
-	public void setPos(Point2D pos) {
-		myPos = pos;
+	public Vector computeAccel() {
+		Vector netForce = computeNetForce();
+		return netForce.times(myInvMass);
 	}
 
-	public Vector getVel() {
-		return myVel;
+	public Vector computeNetForce() {
+		int numForces = myExternalForces.size() + myInternalForces.size();
+
+		// sum external forces
+		Vector extSum = Vector.sum(myExternalForces);
+
+		// sum internal forces
+		Vector intSum = Vector.sum(myInternalForces);
+
+		return extSum.plus(intSum).times(1/numForces);
 	}
 
-	public void setVel(Vector vel) {
-		myVel = vel;
+	public void applyImpulse(Vector impulse) {
+		Vector newVelocity = myVelocity.plus(impulse.times(myInvMass));
+		setVelocity(newVelocity);
+	}
+
+	public Vector getPosition() {
+		return myPosition;
+	}
+
+	public void setPosition(Vector position) {
+		myPosition = position;
+	}
+
+	public Vector getVelocity() {
+		return myVelocity;
+	}
+
+	public void setVelocity(Vector velocity) {
+		myVelocity = velocity;
 	}
 
 	public Vector getAccel() {
 		return myAccel;
 	}
 
-	public void setAccel(Vector accel) {
-		myAccel = accel;
-	}
-
-	public void setMass(double mass) {
-		myMass = mass;
-		myInvMass = 1/mass;
-	}
-
 	public double getMass() {
-		return myMass;
+		return 1/myInvMass;
+	}
+
+	public double getInvMass() {
+		return myInvMass;
 	}
 
 	public void setRestitution(double restitution) {
-		myRestitution = restitution;
+		myMaterial.setRestitution(restitution);
 	}
-	
+
+	public double getRestitution() {
+		return myMaterial.getRestitution();
+	}
+
+	public void setMaterial(Material material) {
+		myMaterial = material;
+		myInvMass = computeInvMass();
+	}
+
+	public void setHitBox(HitBox hitBox) {
+		myHitBox = hitBox;
+		myInvMass = computeInvMass();
+	}
+
 	public void setState(String state) {
 		myState = state;
 	}
-	
+
 	public String getState(String state) {
 		return myState;
 	}
