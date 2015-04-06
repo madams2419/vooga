@@ -1,9 +1,7 @@
 package authoring.rightPane;
 
-import java.util.function.Consumer;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
-import authoring.Sprite;
 
 
 

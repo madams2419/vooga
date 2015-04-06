@@ -6,11 +6,13 @@ import authoring.Sprite;
 
 
 /**
+ * This class represents the right pane on the screen. It will allow the user to edit a particular
+ * character, to edit the interactions between characters, and to create new characters. 
  * 
  * @author Natalie Chanfreau, Daniel Luker
  *
  */
-public class RightPane extends VBox implements IRightPane {
+public class RightPane extends VBox {
     private Scene myScene;
     private final String CSS = "styles/right_pane.css";
     private EditingPane myCurrentContent;
@@ -19,12 +21,13 @@ public class RightPane extends VBox implements IRightPane {
         myScene = scene;
         this.getStylesheets().add(CSS);
 
-//        initializeCurrentContent(new DefaultEditingPane(scene));
+        // initializeCurrentContent(new DefaultEditingPane(scene));
 
-//        initializeCurrentContent(new CharacterEditingPane(scene, null));
-        initializeCurrentContent(new CharacterCreationPane(scene, i -> switchToCharacterEditingPane(i)));
+        // initializeCurrentContent(new CharacterEditingPane(scene, null));
+        initializeCurrentContent(new CharacterCreationPane(scene,
+                                                           i -> switchToCharacterEditingPane(i)));
     }
-    
+
     public void switchToCharacterEditingPane (Sprite sprite) {
         switchToPane(new CharacterEditingPane(myScene, sprite));
     }
@@ -32,7 +35,7 @@ public class RightPane extends VBox implements IRightPane {
     public void switchToCharacterCreationPane () {
         switchToPane(new CharacterCreationPane(myScene, i -> switchToCharacterEditingPane(i)));
     }
-    
+
     public void switchToInteractionEditingPane (Sprite sprite1, Sprite sprite2) {
         switchToPane(new InteractionEditingPane(myScene, sprite1, sprite2));
     }
@@ -54,8 +57,8 @@ public class RightPane extends VBox implements IRightPane {
     private void addFromCurrentContent () {
         getChildren().addAll(myCurrentContent.getChildren());
     }
-    
-    private void initializeCurrentContent(EditingPane content) {
+
+    private void initializeCurrentContent (EditingPane content) {
         myCurrentContent = content;
         this.getChildren().addAll(myCurrentContent.getChildren());
     }
