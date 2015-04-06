@@ -1,12 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <!-- ORGANIZATION is replaced with the organization name (duke-compsci308-fall2014) -->
-    <!-- REPO is replaced with the repo name (slogo_team01) --><groupId>duke-compsci3085.voogasalad_High-croller-</groupId>
-    <artifactId>voogasalad_High-croller-</artifactId>ompsci308-spring2015.voogasalad_HighScroller</groupId>
-    <artifactId>voogasalad_HighScroller</artifactId>upId>
-    <artifactId>voogasalad_High-croller-</artifactId>
-    <groupId>duke-compsci308-spring2015.voogasalad_High-croller-</groupId>
-    <artifactId>voogasalad_High-croller-</artifactId>packaging>
+    <!-- REPO is replaced with the repo name (slogo_team01) -->
+    <groupId>duke-compsci308-spring2015.voogasalad_HighScroller</groupId>
+    <artifactId>voogasalad_HighScroller</artifactId>
+    <version>master-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
     </properties>
@@ -59,4 +58,5 @@
                 </configuration>
             </plugin>
         </plugins>
-    </build></project>
+    </build>
+</project>
