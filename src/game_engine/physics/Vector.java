@@ -60,6 +60,14 @@ public class Vector {
 	public Vector normalize() {
 		return getPolarVector(getAngle(), 1);
 	}
+	
+	public void setX(double x) {
+		myX = x;
+	}
+	
+	public void setY(double y) {
+		myY = y;
+	}
 
 	public double getX() {
 		return myX;
