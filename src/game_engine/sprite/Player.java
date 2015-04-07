@@ -1,5 +1,7 @@
 package game_engine.sprite;
 
+import game_engine.Behavior;
+
 import java.util.Observable;
 
 public class Player extends Sprite {
@@ -9,5 +11,10 @@ public class Player extends Sprite {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	// movement
+	private Behavior moveForward = (params) -> {
+		myPhysicsParams.setX(myPhysicsParams.getX() + params[0]);
+	};
+	p
 }
