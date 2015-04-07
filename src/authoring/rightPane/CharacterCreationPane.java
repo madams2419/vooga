@@ -60,7 +60,7 @@ public class CharacterCreationPane extends EditingPane {
     // an image in the right pane is clicked to be moved to the center pane
     private void imageClicked (Consumer<Sprite> spriteClicked, Sprite sampleImage, int ID) {
         // need to now set mouse cursor to the sprite image
-        getScene().setCursor(new SpriteCursor(new Sprite(sampleImage, ID)));
+        getMyScene().setCursor(new SpriteCursor(new Sprite(sampleImage, ID)));
         
     }
 }

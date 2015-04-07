@@ -26,9 +26,11 @@ public class CharacterEditingPane extends EditingPane {
 
     CharacterEditingPane (Scene scene, Sprite sprite) {
         super(scene);
+        //======================== New design in here ===================== //
         getChildren().add(
                           new TextArea(String
                                   .format("Character editing pane")));
+        //=================================================================
         addSpriteIcon(sprite);
     }
 
