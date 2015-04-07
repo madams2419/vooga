@@ -138,7 +138,18 @@ public abstract class Sprite extends Observable{
 	public HitBox getHitBox(){
 	    return this.myHitBox;
 	}
-
+	
+	public void moveX(double x){
+		myPhysicsObject.getPosition().setX(
+				myPhysicsObject.getPosition().getX() + x);
+	}
+	
+	public void moveY(double y){
+		myPhysicsObject.getPosition().setY(
+				myPhysicsObject.getPosition().getY() + y);
+	}
+	
+	
 	public static void main(String[] args){
 	    Sprite player = new Enemy();
 	    player.addImage("idle", "idle");

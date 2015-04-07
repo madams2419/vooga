@@ -1,11 +1,13 @@
 package game_engine.sprite;
 
 import game_engine.IBehavior;
+import game_engine.physics.Vector;
 
 import java.util.Observable;
 
 public class Player extends Sprite {
-
+	private Vector myPosition = myPhysicsObject.getPosition();
+	
     public Player() {
         super();
       }
@@ -24,8 +26,14 @@ public class Player extends Sprite {
 
 	}
 	
-	// movement
-	private IBehavior moveForward = (params) -> {
-		myPhysicsObject.setX(myPhysicsObject.getX() + params[0]);
+	// params[0] is pixels to move forward
+	private IBehavior moveForward = (params) -> { // movement
+		myPosition.setX(params[0]);
+	};
+
+	// params[0] is upward acceleration change
+	private IBehavior Jump = (params) -> { // movement
+		Vector myVector = new Vector()
+		myPhysicsObject.applyImpulse();;
 	};
 }
