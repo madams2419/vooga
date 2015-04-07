@@ -7,6 +7,9 @@ import java.util.HashMap;
 
 import game_engine.sprite.Sprite;
 
+// TODO
+// - optimize net force computation
+
 public class PhysicsEngine {
 
 	//TODO move these to properties file
@@ -18,6 +21,7 @@ public class PhysicsEngine {
 
 	private double myTimeStep;
 	private Map<String, Vector> myGlobalForces;
+	private Vector myNetGlobalForce;
 
 	public PhysicsEngine(double timeStep, double gravity) {
 		myTimeStep = timeStep;
@@ -31,6 +35,7 @@ public class PhysicsEngine {
 
 	public void setGravity(double gravity) {
 		myGlobalForces.put(GRAV_STRING, Vector.getPolarVector(GRAV_DIRECTION, gravity));
+		computeNetGlobalForce();
 	}
 
 	public void resolveCollision(Sprite a, Sprite b, Vector normal, double pDepth) {
@@ -72,7 +77,7 @@ public class PhysicsEngine {
 	}
 
 	private Vector getCollisionNormal(PhysicsObject a, PhysicsObject b) {
-		Vector delta = a.getPosition().minus(b.getPosition());
+		Vector delta = b.getPosition().minus(a.getPosition());
 		return delta.normalize();
 	}
 
@@ -87,12 +92,26 @@ public class PhysicsEngine {
 		b.applyImpulse(correction);
 	}
 
+	private Vector computeNetGlobalForce() {
+		return Vector.sum(getGlobalForces());
+	}
+
+	public Vector getNetGlobalForce() {
+		return myNetGlobalForce;
+	}
+
 	public List<Vector> getGlobalForces() {
 		return new ArrayList<>(myGlobalForces.values());
 	}
 
-	public void setGlobalForces(String name, Vector force) {
+	public void setGlobalForce(String name, Vector force) {
 		myGlobalForces.put(name, force);
+		computeNetGlobalForce();
+	}
+
+	public void removeGlobalForce(String name) {
+		myGlobalForces.remove(name);
+		computeNetGlobalForce();
 	}
 
 	public double getTimeStep() {
