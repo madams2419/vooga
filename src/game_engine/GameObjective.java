@@ -37,4 +37,9 @@ public class GameObjective {
 		// TODO
 	}
 
+	public Object update() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

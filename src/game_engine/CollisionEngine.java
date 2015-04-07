@@ -1,10 +1,10 @@
 package game_engine;
 
-import game_engine.sprite.Sprite;
+import game_engine.sprite.attributes.IMovement;
 
 public class CollisionEngine {
 	
-	public void executeCollision(Sprite spriteA, Sprite spriteB){
+	public void executeCollision(IMovement spriteA, IMovement spriteB){
 		
 	}
 }

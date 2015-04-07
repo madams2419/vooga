@@ -3,9 +3,9 @@ package usecases;
 import game_engine.CollisionEngine;
 import game_engine.Game;
 import game_engine.Level;
-import game_engine.PhysicsEngine;
+import game_engine.physics.PhysicsEngine;
 import game_engine.sprite.Player;
-import game_engine.sprite.Sprite;
+//import game_engine.sprite.InanimateSprite;
 import game_engine.sprite.Water;
 import game_engine.GameObjective;
 
@@ -48,15 +48,15 @@ public class UseCases {
 	 * 3. PlayerWaterCollision executes its configured predicates and changes the gravity parameter in the playerPhysicsEngine
 	 */
 	
-	public void useCase3(){
-		CollisionEngine collisionEngine = new CollisionEngine();
-		PhysicsEngine physicsEngine = new PhysicsEngine();
-		Sprite water = new Water();
-		Sprite player = new Player();
-		collisionEngine.executeCollision(player, water);
-		double acceleration = 9.8;
-		physicsEngine.setAcceleration(acceleration);
-	}
+//	public void useCase3(){
+//		CollisionEngine collisionEngine = new CollisionEngine();
+//		PhysicsEngine physicsEngine = new PhysicsEngine();
+//		InanimateSprite water = new Water();
+//		InanimateSprite player = new Player();
+//		collisionEngine.executeCollision(player, water);
+//		double acceleration = 9.8;
+//		physicsEngine.setAcceleration(acceleration);
+//	}
 	
 
 }

@@ -16,7 +16,7 @@ public class Start_Screen {
 	
 	public Scene Splash(Stage s, Scene Game_Load, Scene Game_Create){
 		Group Root = new Group();
-		myScene=new Scene(Root,500,500,Color.CADETBLUE);
+		myScene=new Scene(Root,1000,1000,Color.CADETBLUE);
 		
 		myScene.widthProperty().addListener(new ChangeListener<Number>() {
 			@Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {

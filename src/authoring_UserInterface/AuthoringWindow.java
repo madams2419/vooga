@@ -1,5 +1,7 @@
 package authoring_UserInterface;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +10,8 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+//import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
@@ -23,16 +27,19 @@ import javafx.scene.paint.Color;
 public class AuthoringWindow {
 
 	private Scene myScene;
+	private ButtonFactory mbuttonList;
 
 	public Scene GameCreateUI() {
 		
 		
 		
 		VBox root = new VBox();
-		root.getChildren().add(menuBar());
-		BorderPane canvas = new BorderPane();
-		myScene = new Scene(root, 500, 500, Color.ALICEBLUE);
 
+		BorderPane canvas = new BorderPane();
+
+		myScene = new Scene(root, 1000, 1000, Color.WHITE);
+		canvas.setPrefHeight(myScene.getHeight());
+		canvas.setPrefWidth(myScene.getWidth());
 		// Setting up borderPane
 		canvas.setBottom(setupBottomPane(myScene.getWidth()));
 		canvas.setTop(setupTopPane(myScene.getWidth()));
@@ -41,7 +48,7 @@ public class AuthoringWindow {
 		canvas.setCenter(setupCenterPane());
 
 		root.getChildren().add(canvas);
-
+		//root.getChildren().add(menuBar());
 		// create a place to display the shapes and react to input
 
 		return myScene;
@@ -56,7 +63,11 @@ public class AuthoringWindow {
 	}
 
 	private HBox setupBottomPane(double width) {
-		return new BottomPane();
+		HBox buttonBox = new HBox();
+		for(Button B:mbuttonList.getSharedInstace("src/Resources/FilestoParse.xml", "Button").generateButtonBoxes()){
+			buttonBox.getChildren().add(B);
+		}
+		return buttonBox;
 	}
 	
 	private HBox setupTopPane(double width) {
@@ -76,7 +87,7 @@ public class AuthoringWindow {
 	}
 
 	private VBox setupRightPane() {
-		return new RightPane();
+		return new RightPane(myScene);
 	}
 
 	private VBox setupLeftPane() {
@@ -84,7 +95,7 @@ public class AuthoringWindow {
 	}
 
 	private Node setupCenterPane() {
-		return new CenterPane();
+		return new CenterPane(myScene);
 	}
 
 }
