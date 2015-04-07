@@ -69,15 +69,7 @@ public class ControlTester extends Application{
 
 	private void handleKeyInput (KeyEvent e) {
 		KeyCode keyCode = e.getCode();
-
-		if (keyCode == KeyCode.UP) {
-			cManager.executeBehavior("Up");
-		}
-		else if(keyCode == KeyCode.DOWN){
-			cManager.executeBehavior("Down");
-		} else {
-			return;
-		}
+		cManager.executeBehavior(keyCode);
 	}
 	
 	public static void updateText(){

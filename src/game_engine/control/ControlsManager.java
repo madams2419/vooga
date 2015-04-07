@@ -35,9 +35,15 @@ public class ControlsManager {
 		myControlMap.get(myDesignerMap.get(keyText)).execute();
 	}
 	
-	public void addBehavior(String key, String behaviorString){
-		myDesignerMap.put(key, behaviorString);
-		addEntryControlMap(behaviorString, ControlTester.selectBehavior(behaviorString));
+	public void executeBehavior(KeyCode keycode){
+		myControlMap.get(myVirtualKeyboard.get(keycode)).execute();
+	}
+	
+	
+	public void addBehavior(String key, String behaviorName){
+		myDesignerMap.put(key, behaviorName);
+		myVirtualKeyboard.put(KeycodeFactory.generateKeyCode(key), behaviorName);
+		addEntryControlMap(behaviorName, ControlTester.selectBehavior(behaviorName));
 	}
 	
 	public void modifyKey(String oldKey, String newKey){
@@ -47,8 +53,10 @@ public class ControlsManager {
 				return;
 			} else {
 				myDesignerMap.put(newKey, myDesignerMap.get(oldKey));
+				myVirtualKeyboard.put(kcTranslation(newKey), myVirtualKeyboard.get(kcTranslation(oldKey)));
 				addEntryControlMap(newKey, ControlTester.selectBehavior(oldKey));
 				myDesignerMap.remove(oldKey);
+				myVirtualKeyboard.remove(kcTranslation(oldKey));
 				deleteEntryControlMap(oldKey);
 			}
 		} else {
@@ -68,8 +76,9 @@ public class ControlsManager {
 		}
 	}
 	
-	public void mapTranslation(){
-		  
+	//todo: throw exception if keycode not defined
+	private KeyCode kcTranslation(String index){
+		  return KeycodeFactory.generateKeyCode(index);
 	}
 	
 }
