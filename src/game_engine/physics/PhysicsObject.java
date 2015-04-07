@@ -100,6 +100,14 @@ public class PhysicsObject {
 		myPosition = position;
 	}
 	
+	public double getX() {
+		return myPosition.getX();
+	}
+	
+	public double getY() {
+		return myPosition.getY();
+	}
+	
 	public void setX(double x) {
 		myPosition.setX(x);
 	}
@@ -156,6 +164,11 @@ public class PhysicsObject {
 	
 	public Shape getShape() {
 		return myShape;
+	}
+	
+	public void setShape(Shape shape) {
+		myShape = shape;
+		myInvMass = computeInvMass();
 	}
 
 }
