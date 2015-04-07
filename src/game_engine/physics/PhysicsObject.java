@@ -18,7 +18,7 @@ public class PhysicsObject {
 	private List<Vector> myExternalForces;
 	private List<Joint> myJoints;
 	private PhysicsEngine myPhysics;
-
+	
 	public PhysicsObject(PhysicsEngine physics, Material material, HitBox hitBox, String state, Vector position, Vector velocity) {
 		setMaterial(material);
 		setHitBox(hitBox);

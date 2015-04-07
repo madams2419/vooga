@@ -22,7 +22,7 @@ public abstract class Sprite extends Observable{
 	private String myState;
 	private Animation myAnimation;
 	private HitBox myHitBox;
-	private PhysicsObject myPhysicsObject;
+	protected PhysicsObject myPhysicsObject;
 	private Map<String, IBehavior> myBehaviorMap = new HashMap<>();
 
 	
@@ -81,8 +81,8 @@ public abstract class Sprite extends Observable{
 	    myBehaviorMap.remove(behavior);
 	}
 	
-	public void runBehavior(String behavior){
-	    myBehaviorMap.get(behavior).execute();
+	public void runBehavior(String behavior, double[] params){
+	    myBehaviorMap.get(behavior).execute(params);
 	}
 	
 	public void addImage(String state,String ImagePath){

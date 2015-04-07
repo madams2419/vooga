@@ -1,6 +1,6 @@
 package game_engine.sprite;
 
-import game_engine.Behavior;
+import game_engine.IBehavior;
 
 import java.util.Observable;
 
@@ -25,8 +25,7 @@ public class Player extends Sprite {
 	}
 	
 	// movement
-	private Behavior moveForward = (params) -> {
-		myPhysicsParams.setX(myPhysicsParams.getX() + params[0]);
+	private IBehavior moveForward = (params) -> {
+		myPhysicsObject.setX(myPhysicsObject.getX() + params[0]);
 	};
-	p
 }
