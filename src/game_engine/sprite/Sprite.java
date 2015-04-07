@@ -3,6 +3,7 @@ package game_engine.sprite;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
+import javafx.scene.image.ImageView;
 import game_engine.Behavior;
 import game_engine.HitBox;
 import game_engine.game_player.Animation;
@@ -90,6 +91,10 @@ public abstract class Sprite extends Observable{
 	
 	public void removeImage(String state){
 	    myAnimation.removeImage(state);
+	}
+	
+	public ImageView getImageView(){
+	    return myAnimation.getImageView();
 	}
 	
 	public void setState(String state){
