@@ -17,7 +17,7 @@ public class LayoutXMLParser {
     public static ArrayList<Map> myElements;
     public static Map<String,ArrayList> myElementMap=new HashMap<String,ArrayList>();
     
-    public static void parse(String f, String s) {
+    public static void parse(String f) {
 
         try {
             File fXmlFile = new File(f);
