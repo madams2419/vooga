@@ -22,19 +22,19 @@ public class CenterPane extends ScrollPane {
 	
 	private Stack<Sprite> myStack;
 	private Scene myScene;
-	private Canvas myCanvas;
+	//private Canvas myCanvas;
 	private Group myGroup;
 
 	CenterPane(Scene scene) {
 		myScene = scene;
 		myGroup = new Group();
-		myCanvas = new Canvas(400,400);
-		myCanvas.getGraphicsContext2D().setStroke(Color.BLACK);
+//		myCanvas = new Canvas(400,400);
+//		myCanvas.getGraphicsContext2D().setStroke(Color.BLACK);
 		//myCanvas.getGraphicsContext2D().strokeLine(0, 0, 400, 400);
 		
 		this.setContent(myGroup);
-		myGroup.getChildren().add(new Rectangle(400, 400, Color.WHITE));
-		this.setOnMouseClicked(e -> canvasClicked(e));
+		//myGroup.getChildren().add(new Rectangle(400, 400, Color.WHITE));
+		//this.setOnMouseClicked(e -> canvasClicked(e));
 		
 		// Use stack, or just a group?
 		myStack = new Stack<>();
@@ -69,6 +69,11 @@ public class CenterPane extends ScrollPane {
 		System.out.println("Removing");
 	}
 	
+	public void createRegion(double x, double y){
+		Rectangle r = new Rectangle (x, y, Color.WHITE);
+		r.setOnMouseClicked(e -> canvasClicked(e));
+		myGroup.getChildren().add(r);
+	}
 	
 	
 	
