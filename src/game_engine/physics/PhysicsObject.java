@@ -11,7 +11,6 @@ public class PhysicsObject {
 
 	private double myInvMass;
 	private Material myMaterial;
-	private HitBox myHitBox;
 	private String myState;
 	private Vector myPosition;
 	private Vector myVelocity;
@@ -23,14 +22,13 @@ public class PhysicsObject {
 	private Shape myShape;
 
 	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material, HitBox hitBox, String state, Vector position, Vector velocity) {
+		setShape(shape);
 		setMaterial(material);
-		setHitBox(hitBox);
 		setState(state);
 		setPosition(position);
 		setVelocity(velocity);
 		myInvMass = computeInvMass();
 		myAccel = computeAccel();
-		myShape = shape;
 	}
 
 	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material, HitBox hitBox, String state, int xPos, int yPos) {
@@ -45,7 +43,7 @@ public class PhysicsObject {
 	}
 
 	private double computeInvMass() {
-		double mass = myMaterial.getDensity() * myHitBox.getVolume();
+		double mass = myMaterial.getDensity() * myShape.getVolume();
 		return 1/mass;
 	}
 
@@ -143,11 +141,6 @@ public class PhysicsObject {
 
 	public void setMaterial(Material material) {
 		myMaterial = material;
-		myInvMass = computeInvMass();
-	}
-
-	public void setHitBox(HitBox hitBox) {
-		myHitBox = hitBox;
 		myInvMass = computeInvMass();
 	}
 
