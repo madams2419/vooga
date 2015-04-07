@@ -7,6 +7,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.scene.input.KeyCode;
+
 /**
  * Defines controls and maps them to behaviors
  * @author 
@@ -14,13 +16,14 @@ import java.util.Map;
  */
 public class ControlsManager {
 	
-	Map<String, Behavior> controlMap;
-	Map<String, String> designerMap;
-	VirtualKeyboard virtualKeyboard;
+	Map<String, Behavior> myControlMap;
+	Map<String, String> myDesignerMap;
+	Map<KeyCode, String> myVirtualKeyboard;
 	
 	public ControlsManager() {
-		controlMap = new HashMap<>();
-		designerMap = new HashMap<>();
+		myControlMap = new HashMap<>();
+		myDesignerMap = new HashMap<>();
+		myVirtualKeyboard = new HashMap<>();
 	}
 	
 	/**
@@ -29,23 +32,23 @@ public class ControlsManager {
 	 * @param keyText the string that maps to the key
 	 */
 	public void executeBehavior(String keyText) {
-		controlMap.get(designerMap.get(keyText)).execute();
+		myControlMap.get(myDesignerMap.get(keyText)).execute();
 	}
 	
 	public void addBehavior(String key, String behaviorString){
-		designerMap.put(key, behaviorString);
+		myDesignerMap.put(key, behaviorString);
 		addEntryControlMap(behaviorString, ControlTester.selectBehavior(behaviorString));
 	}
 	
 	public void modifyKey(String oldKey, String newKey){
-		if(designerMap.containsKey(oldKey)){
-			if(designerMap.containsKey(newKey)){
+		if(myDesignerMap.containsKey(oldKey)){
+			if(myDesignerMap.containsKey(newKey)){
 				System.out.println("New key is in use. Please try another one.");
 				return;
 			} else {
-				designerMap.put(newKey, designerMap.get(oldKey));
+				myDesignerMap.put(newKey, myDesignerMap.get(oldKey));
 				addEntryControlMap(newKey, ControlTester.selectBehavior(oldKey));
-				designerMap.remove(oldKey);
+				myDesignerMap.remove(oldKey);
 				deleteEntryControlMap(oldKey);
 			}
 		} else {
@@ -54,12 +57,12 @@ public class ControlsManager {
 	}
 	
 	private void addEntryControlMap(String key, Behavior behavior){
-		controlMap.put(key, behavior);
+		myControlMap.put(key, behavior);
 	}
 	
 	private void deleteEntryControlMap(String key){
-		if(controlMap.containsKey(key)){
-			controlMap.remove(key);
+		if(myControlMap.containsKey(key)){
+			myControlMap.remove(key);
 		} else {
 			System.out.println("Nothing to delete in the ControlMap");
 		}
