@@ -37,7 +37,7 @@ public class LayoutXMLParser {
                     myElementMap.put(nNode.getNodeName(),myElements);
                 }
             }
-            System.out.println(myElementMap);
+           // System.out.println(myElementMap);
         } catch (Exception e) {
             e.printStackTrace();
         }
