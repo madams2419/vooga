@@ -90,6 +90,9 @@ public class AuthoringWindow {
 					mBar.getMenus().add(m);
 				});
 		
+		/*
+		 * @author Andrew
+		 */
 		mBar.getMenus().get(FILE_MENU).getItems().get(NEW_FILE).setOnAction(e -> {
 			// Refactor this into new class/method
 			Dialog<ButtonType> dialog = new Dialog<>();

@@ -22,25 +22,33 @@ public class CenterPane extends ScrollPane {
 	
 	private Stack<Sprite> myStack;
 	private Scene myScene;
-	//private Canvas myCanvas;
 	private Group myGroup;
+	private Rectangle myCurrentRectangle;
+	
 
 	CenterPane(Scene scene) {
 		myScene = scene;
 		myGroup = new Group();
-//		myCanvas = new Canvas(400,400);
-//		myCanvas.getGraphicsContext2D().setStroke(Color.BLACK);
-		//myCanvas.getGraphicsContext2D().strokeLine(0, 0, 400, 400);
-		
+//		myMask = new Rectangle(1000, 1000);
+//		myMask.setOpacity(0);
+//		myGroup.getChildren().add(myMask);
 		this.setContent(myGroup);
-		//myGroup.getChildren().add(new Rectangle(400, 400, Color.WHITE));
-		//this.setOnMouseClicked(e -> canvasClicked(e));
 		
-		// Use stack, or just a group?
+		// TODO: change to list
 		myStack = new Stack<>();
 		
 	}
 
+	// TODO: dynamically change size of sprites
+	// Update: may not be possible due difficulty. Could possibly change in our information pane
+	// but does cannot dynamically resize directly.
+	
+	// TODO: dynamically add to or change size of region
+	public void changeRectangleSize(double x, double y){
+		myCurrentRectangle.setX(myCurrentRectangle.getX() + x);
+		myCurrentRectangle.setY(myCurrentRectangle.getY() + y);
+	}
+	
 	private void canvasClicked(MouseEvent e) {
 
 		try{
@@ -49,11 +57,14 @@ public class CenterPane extends ScrollPane {
 		s.setX(e.getX() - s.getImage().getWidth()/2);
 		s.setY(e.getY() - s.getImage().getHeight()/2);
 		
+		//s.getClip().setClip(myMask);
 		myGroup.getChildren().add(s);
 		
 		System.out.println(s.getID());
 		myStack.add(s);
 		myScene.setCursor(ImageCursor.DEFAULT);
+		
+
 		}
 		catch (ClassCastException a){
 			
@@ -63,16 +74,20 @@ public class CenterPane extends ScrollPane {
 		}	
 	}
 
+	
 	private void spriteClicked(MouseEvent p, Sprite s) {
 		myGroup.getChildren().remove(s);
 		//s.setTranslateX(100);
 		System.out.println("Removing");
+		// TODO: Show sprite data in information pane
+		// TODO: Allow stacked sprites
 	}
 	
 	public void createRegion(double x, double y){
-		Rectangle r = new Rectangle (x, y, Color.WHITE);
-		r.setOnMouseClicked(e -> canvasClicked(e));
-		myGroup.getChildren().add(r);
+		// TODO: dynamically change size of rectangle here		
+		myCurrentRectangle = new Rectangle (x, y, Color.WHITE);
+		myCurrentRectangle.setOnMouseClicked(e -> canvasClicked(e));
+		myGroup.getChildren().add(myCurrentRectangle);
 	}
 	
 	
