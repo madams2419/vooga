@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import javafx.scene.image.ImageView;
-import game_engine.Behavior;
+import game_engine.IBehavior;
 import game_engine.HitBox;
 import game_engine.game_player.Animation;
 import game_engine.physics.PhysicsObject;
@@ -23,7 +23,7 @@ public abstract class Sprite extends Observable{
 	private Animation myAnimation;
 	private HitBox myHitBox;
 	private PhysicsObject myPhysicsObject;
-	private Map<String, Behavior> myBehaviorMap = new HashMap<>();
+	private Map<String, IBehavior> myBehaviorMap = new HashMap<>();
 
 	
 	/**
@@ -64,12 +64,12 @@ public abstract class Sprite extends Observable{
 	 */
 	public abstract void update();
 	
-	public Behavior createBehavior(String behavior) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
+	public IBehavior createBehavior(String behavior) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
 	    Class<?> runClass = null;
-	    Behavior classInstance = null;
+	    IBehavior classInstance = null;
 	    String className = "game_engine." + behavior;
 	    runClass = Class.forName(className);
-	    return classInstance = (Behavior) runClass.newInstance();
+	    return classInstance = (IBehavior) runClass.newInstance();
 	    
 	}
 	
