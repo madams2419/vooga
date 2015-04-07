@@ -1,7 +1,7 @@
 package game_engine.control;
 
 
-import game_engine.Behavior;
+import game_engine.IBehavior;
 
 import java.io.File;
 import java.util.HashMap;
@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class ControlsManager {
 	
-	Map<String, Behavior> controlMap;
+	Map<String, IBehavior> controlMap;
 	Map<String, String> designerMap;
 	VirtualKeyboard virtualKeyboard;
 	
@@ -53,7 +53,7 @@ public class ControlsManager {
 		}
 	}
 	
-	private void addEntryControlMap(String key, Behavior behavior){
+	private void addEntryControlMap(String key, IBehavior behavior){
 		controlMap.put(key, behavior);
 	}
 	
