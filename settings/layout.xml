@@ -2,36 +2,68 @@
 <layout name="authoring_environment">
 	<top_pane>
 		<buttons>
-			<button X="0" Y="0">
+			<Button>
+				<X>0</X>
+			 	<Y>0</Y>
 				<label>Global Settings</label>
 				<listener>null</listener>
-			</button>
-			<button X="1" Y="0">
+			</Button>
+			<Button>
+			 	<X>1</X>
+			 	<Y>0</Y>
 				<label>Map Settings</label>
 				<listener>null</listener>
-			</button>
-			<button X="2" Y="0">
+			</Button>
+			<Button>
+			 	<X>2</X>
+			 	<Y>0</Y>
 				<label>Interactions List</label>
 				<listener>null</listener>
-			</button>
+			</Button>
 		</buttons>
-		<drop-downs>
-			<drop-down X="0" Y="1">
+		<dropdowns>
+			<dropdown>
+				<X>0</X>
+				<Y>1</Y>
 				<label>Characters</label>
 				<listener>null</listener>
-			</drop-down>
-			<drop-down X="1" Y="1">
+			</dropdown>
+			<dropdown>
+				<X>1</X>
+				<Y>1</Y>
 				<label>Blocks</label>
 				<listener>null</listener>
-			</drop-down>
-			<drop-down X="2" Y="1">
+			</dropdown>
+			<dropdown>
+				<X>2</X>
+				<Y>1</Y>
 				<label>Decorations</label>
 				<listener>null</listener>
-			</drop-down>
-			<drop-down X="3" Y="1">
+			</dropdown>
+			<dropdown>
+				<X>3</X>
+				<Y>1</Y>
 				<label>UI Controls</label>
 				<listener>null</listener>
-			</drop-down>
-		</drop-downs>
+			</dropdown>
+		</dropdowns>
 	</top_pane>
+	<left_pane>
+		<buttons>
+			<Button>
+				<X>0</X>
+			 	<Y>3</Y>
+				<label>Test Settings</label>
+				<listener>null</listener>
+			</Button>
+		</buttons>
+		<dropdowns>
+			<dropdown>
+				<X>0</X>
+				<Y>3</Y>
+				<label>Test Characters</label>
+				<listener>null</listener>
+			</dropdown>
+		</dropdowns>
+	</left_pane>
 </layout>

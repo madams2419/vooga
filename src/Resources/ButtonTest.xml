@@ -1,7 +1,8 @@
 <Characteristics>
-<Button id="LabelA" MethodName="LabelAListener"/>
-<Button id="LabelB" MethodName="LabelBListener"/>
-<Button id="LabelC" MethodName="LabelCListener"/>
-<Button id="LabelD" MethodName="LabelDListener"/>
-<Button id="LabelE" MethodName="LabelEListener"/>
+<Button id="Global Settings" MethodName="LabelAListener"/>
+<Button id="Map Settings" MethodName="LabelBListener"/>
+<Button id="Interactions List" MethodName="LabelCListener"/>
+<Button id="Blocks" MethodName="LabelDListener"/>
+<Button id="Decorations" MethodName="LabelEListener"/>
+<Button id="UI Controls" MethodName="LabelFListener"/>
 </Characteristics>
