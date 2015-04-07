@@ -1,18 +1,16 @@
-/**
- * 
- */
 package authoring.userInterface;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import XML.LayoutXMLParser;
 
 /**
- * @author hojeanniechung
+ * @author hojeanniechung & mungcheow
  *
  */
 public class UIElementDistributer {
@@ -24,20 +22,19 @@ public class UIElementDistributer {
 //	}
 	
 	public void ElementDistributer(){
-		Iterator it=LayoutXMLParser.myElementMap.entrySet().iterator();
+		Iterator<Entry<String, ArrayList>> it=LayoutXMLParser.myElementMap.entrySet().iterator();
 		String f="settings/layout.xml";
 		LayoutXMLParser.parse(f);
 		while(it.hasNext()){
-			ArrayList<Map> listOfElements = (ArrayList) it.next();
+		    ArrayList<Map> listOfElements = it.next().getValue();
 			for(Map element:listOfElements){
-				System.out.println("element keyset is "+element.keySet().toString());
+				System.out.println("element keyset is "+element.toString());
 				ElementSet.add(element.keySet());	
 			}	
-			System.out.println(ElementSet);
-//			String Classname=String.format("%sFactory",forEach(ElementSet));
-//			reflection.createInstance(Classname);
+			String Classname=String.format("%sFactory",forEach(ElementSet));
+			reflection.createInstance(Classname);
 		}
-		
+		System.out.println(ElementSet);
 	}
 
 }
