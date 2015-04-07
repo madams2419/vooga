@@ -1,4 +1,4 @@
-package main;
+package menu;
 
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;

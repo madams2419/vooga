@@ -1,4 +1,4 @@
-package main;
+package menu;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
@@ -22,17 +22,16 @@ import javafx.util.Duration;
  * to either play an existing game or design a new one.
  * 
  * @author Brian Lavallee
- * @since 5 April 2015
+ * @since 6 April 2015
  */
-public class VoogaMenu
-{
+public class VoogaMenu {
     private static final double PADDING = 10;
     
     private static final double INVISIBLE = 0.0;
     private static final double TRANSPARENT = 0.6;
     private static final double OPAQUE = 1.0;
     
-    private static final int BUTTON_RADIUS = 130;
+    private static final int BUTTON_RADIUS = 250;
     
     private static final int TRANSITION_TIME = 2000;
     private static final int TRANSITION_DELAY = 500;
@@ -67,8 +66,7 @@ public class VoogaMenu
      * @param h
      *          is the desired height of the Scene, also based on the size of the stage.
      */
-    public VoogaMenu(double w, double h)
-    {
+    public VoogaMenu(double w, double h) {
 	width = w;
 	height = h;
 	
@@ -94,8 +92,7 @@ public class VoogaMenu
 	playButton = makeButton("Play", -width/2 - 2 * BUTTON_RADIUS);
 	designButton = makeButton("Design", width/2 + 2 * BUTTON_RADIUS);
 	
-	root.setOnMouseClicked((clicked) -> 
-	{
+	root.setOnMouseClicked((clicked) -> {
 	    TranslateTransition moveText = new TranslateTransition(Duration.millis(TRANSITION_TIME), textHolder);
 	    moveText.setToY(-height/3);
 	    moveText.play();
@@ -123,8 +120,7 @@ public class VoogaMenu
      * @return
      *         A Scene object containing all of the elements in the root.
      */
-    public Scene initialize()
-    {
+    public Scene initialize() {
 	scene = new Scene(root, width, height);
 	scene.setFill(Color.BLACK);
 	return scene;
@@ -133,8 +129,7 @@ public class VoogaMenu
     /*
      * Creates two text objects and applies a FadeTransition to both.
      */
-    private VBox setUpText()
-    {
+    private VBox setUpText() {
 	VBox textHolder = new VBox(PADDING);
 	
 	Text title = new Text("Welcome to VoogaSalad");
@@ -172,8 +167,7 @@ public class VoogaMenu
      * Creates a single Text object.  Useful in above method for setting up the
      * "presented by ..." message.
      */
-    private Text makeText(int size, String message, Color color)
-    {
+    private Text makeText(int size, String message, Color color) {
 	Text text = new Text(message);
 	text.setEffect(createShadow(15, 5, 5));
 	text.setFill(color);
@@ -198,21 +192,18 @@ public class VoogaMenu
      * Creates a button (which is Text description over a Circle).  Circle is fetched
      * later to use for MouseEvents.
      */
-    private StackPane makeButton(String description, double location)
-    {
+    private StackPane makeButton(String description, double location) {
 	StackPane button = new StackPane();
 	
 	DropShadow shadow = createShadow(15, 10, 10);
 	
 	Circle buttonContent = new Circle(BUTTON_RADIUS);
 	buttonContent.setFill(Color.TRANSPARENT);
-	buttonContent.setStroke(Color.WHITE);
-	buttonContent.setEffect(shadow);
-	buttonContent.setStrokeWidth(3);
+	buttonContent.setStroke(Color.TRANSPARENT);
 	
 	Text buttonDescription = new Text(description);
 	buttonDescription.setFill(Color.WHITE);
-	buttonDescription.setFont(new Font(SMALL_TEXT));
+	buttonDescription.setFont(new Font(LARGE_TEXT));
 	buttonDescription.setEffect(shadow);
 	
 	button.getChildren().addAll(buttonDescription, buttonContent);
@@ -226,8 +217,7 @@ public class VoogaMenu
     /*
      * Moves the buttons onto the Screen on the first mouse click.
      */
-    private void moveButton(StackPane button, double location)
-    {
+    private void moveButton(StackPane button, double location) {
 	TranslateTransition moveButton = new TranslateTransition(Duration.millis(TRANSITION_TIME), button);
 	    moveButton.setToX(location);
 	    moveButton.play();
@@ -238,38 +228,31 @@ public class VoogaMenu
      * to set up mouse listeners.  Specifies where to move each element of the root
      * for each case.
      */
-    private void enableButtons()
-    {
+    private void enableButtons() {
 	Circle play = (Circle) playButton.getChildren().get(1);
 	Circle design = (Circle) designButton.getChildren().get(1);
 	
-	play.setOnMouseEntered((event) -> 
-	{
+	play.setOnMouseEntered((event) -> {
 	    buttonSelectedAction(width/2 + PADDING, -2*height/3, OPAQUE, INVISIBLE, INVISIBLE);
 	});
 	
-	design.setOnMouseEntered((event) -> 
-	{
+	design.setOnMouseEntered((event) -> {
 	    buttonSelectedAction(-width/2 - PADDING, -2*height/3, INVISIBLE, OPAQUE, INVISIBLE);
 	});
 	
-	play.setOnMouseExited((event) -> 
-	{
+	play.setOnMouseExited((event) -> {
 	    buttonSelectedAction(0, -height/3, OPAQUE, OPAQUE, TRANSPARENT);
 	});
 	
-	design.setOnMouseExited((event) -> 
-	{
+	design.setOnMouseExited((event) -> {
 	    buttonSelectedAction(0, -height/3, OPAQUE, OPAQUE, TRANSPARENT);
 	});
 	
-	play.setOnMouseClicked((event) -> 
-	{
+	play.setOnMouseClicked((event) -> {
 	    addChoiceMenu("game");
 	});
 	
-	design.setOnMouseClicked((event) -> 
-	{
+	design.setOnMouseClicked((event) -> {
 	    addChoiceMenu("dev");
 	});
     }
@@ -318,8 +301,7 @@ public class VoogaMenu
     /*
      * Moves all of the elements in the root to the desired location with a pleasant transition.
      */
-    private void buttonSelectedAction(double backgroundTo, double textTo, double playTo, double designTo, double overlayTo)
-    {
+    private void buttonSelectedAction(double backgroundTo, double textTo, double playTo, double designTo, double overlayTo) {
 	TranslateTransition moveBackground = new TranslateTransition(Duration.millis(TRANSITION_TIME), background);
 	TranslateTransition moveText = new TranslateTransition(Duration.millis(TRANSITION_TIME), textHolder);
 	FadeTransition fadePlay = new FadeTransition(Duration.millis(TRANSITION_TIME), playButton);
