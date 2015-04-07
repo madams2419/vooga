@@ -30,7 +30,11 @@ public class AuthoringWindow {
 	private Scene myScene;
 //	private ButtonFactory mbuttonList;
 //	private String mFileSelector = "src/Resources/FilestoParse.xml";
-
+	
+	public AuthoringWindow(){
+		// TODO
+	}
+	
 	public Scene GameCreateUI() {
 
 		VBox root = new VBox();

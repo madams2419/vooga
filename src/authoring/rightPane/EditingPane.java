@@ -5,28 +5,29 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 
-
 /**
  * This is the superclass for any specific pane on the right side of the screen.
  * 
  * @author Natalie Chanfreau
  *
  */
-public class EditingPane {
-    private ObservableList<Node> myChildren;
-    private Scene myScene;
+public class EditingPane extends VBox {
 
-    EditingPane (Scene scene) {
-        myChildren = new VBox().getChildren();
-        myScene = scene;
-    }
+	// private ObservableList<Node> myChildren;
+	private Scene myScene;
 
-    public ObservableList<Node> getChildren () {
-        return myChildren;
-    }
+	EditingPane(Scene scene) {
+		// myChildren = new VBox().getChildren();
+		myScene = scene;
+	}
 
-    public Scene getScene () {
-        return myScene;
-    }
+	public ObservableList<Node> getChildren() {
+		// return myChildren;
+		return super.getChildren();
+	}
+
+	public Scene getMyScene() {
+		return myScene;
+	}
 
 }
