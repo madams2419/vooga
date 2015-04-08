@@ -14,64 +14,71 @@ import org.w3c.dom.NodeList;
 
 public class LayoutXMLParser {
 	public static File mFile;
-	public static ArrayList<Map> elements=new ArrayList<Map>();
-	
-	public static void parse(String f, String s) {
+	public static ArrayList<Map> myElements;
+	public static Map<String, ArrayList> myElementMap = new HashMap<String, ArrayList>();
+
+	public static void parse(String f) {
 
 		try {
 			File fXmlFile = new File(f);
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
+					.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
 
-			//optional, but recommended
-			//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+			// optional, but recommended
+			// read this -
+			// http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
 			doc.getDocumentElement().normalize();
-			traverseXML(doc);
-			System.out.println(elements);
+			NodeList nodes = doc.getFirstChild().getChildNodes();
+			for (int temp = 0; temp < nodes.getLength(); temp++) {
+				Node nNode = nodes.item(temp);
+				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+					myElements = new ArrayList<Map>();
+					traverseXML(nNode);
+					myElementMap.put(nNode.getNodeName(), myElements);
+				}
+			}
+			// System.out.println(myElementMap);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	private static int countChildren (Node node) {
-	    int count = 0;
-	    NodeList children = node.getChildNodes();
-        for(int i=0;i<children.getLength();i++){
-            if(children.item(i).getNodeType() == Node.ELEMENT_NODE) {
-                count++;
-            }
-        }
-        return count;
-    }
 
-    public static File getFile(){
+	private static int countChildren(Node node) {
+		int count = 0;
+		NodeList children = node.getChildNodes();
+		for (int i = 0; i < children.getLength(); i++) {
+			if (children.item(i).getNodeType() == Node.ELEMENT_NODE) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	public static File getFile() {
 		return mFile;
-    }
-	
-	private static void traverseXML(Node node){
-        NodeList nList = node.getChildNodes();
-        Map<String,String> newMap = new HashMap<String,String>();
-        for (int temp = 0; temp < nList.getLength(); temp++) {
-            Node nNode = nList.item(temp);
-            if(nNode.getNodeType() == Node.ELEMENT_NODE){
-                System.out.println("parent node: "+nNode.getNodeName());
-                int childrenNum=countChildren(nNode);
-                System.out.println("children number: "+childrenNum);
-                if(childrenNum>0){
-                    traverseXML(nNode);
-                }else{
-                    newMap.put(nNode.getNodeName(), nNode.getTextContent());
-                    Node parent = nNode.getParentNode();
-                    HashMap<String,Map> parentMap = new HashMap<String,Map>();
-                    parentMap.put(parent.getNodeName(),newMap);
-                    for(int i=0; i<parent.getAttributes().getLength(); i++){
-                        Node attr=parent.getAttributes().item(i);
-                        newMap.put(attr.getNodeName(), attr.getNodeValue());
-                    }
-                    elements.add(parentMap);
-                }
-            }
-    	}
+	}
+
+	private static void traverseXML(Node node) {
+		NodeList nList = node.getChildNodes();
+		Map<String, String> newMap = new HashMap<String, String>();
+		Map<String, Map> returnMap = new HashMap<String, Map>();
+		for (int temp = 0; temp < nList.getLength(); temp++) {
+			Node nNode = nList.item(temp);
+			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+				int childrenNum = countChildren(nNode);
+				if (childrenNum > 0) {
+					traverseXML(nNode);
+				} else {
+					newMap.put(nNode.getNodeName(), nNode.getTextContent());
+					Node parent = nNode.getParentNode();
+					returnMap.put(parent.getNodeName(), newMap);
+				}
+			}
+		}
+		if (!returnMap.isEmpty()) {
+			myElements.add(returnMap);
+		}
 	}
 }

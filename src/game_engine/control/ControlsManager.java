@@ -1,7 +1,7 @@
 package game_engine.control;
 
 
-import game_engine.Behavior;
+import game_engine.IBehavior;
 
 import java.io.File;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ import javafx.scene.input.KeyCode;
  */
 public class ControlsManager {
 	
-	Map<String, Behavior> myControlMap;
+	Map<String, IBehavior> myControlMap;
 	Map<String, String> myDesignerMap;
 	Map<KeyCode, String> myVirtualKeyboard;
 	
@@ -32,14 +32,14 @@ public class ControlsManager {
 	 * @param keyText the string that maps to the key
 	 */
 	public void executeBehavior(String keyText) {
-		myControlMap.get(myDesignerMap.get(keyText)).execute();
+		myControlMap.get(myDesignerMap.get(keyText)).execute(new double[3]);
 	}
 	/**
 	 * KeyCode version of executeBehavior
 	 * @param keycode
 	 */
 	public void executeBehavior(KeyCode keycode){
-		myControlMap.get(myVirtualKeyboard.get(keycode)).execute();
+		myControlMap.get(myVirtualKeyboard.get(keycode)).execute(new double[3]);
 	}
 	
 	//adds a new behavior to the maps
@@ -68,7 +68,7 @@ public class ControlsManager {
 		}
 	}
 	
-	private void addEntryControlMap(String key, Behavior behavior){
+	private void addEntryControlMap(String key, IBehavior behavior){
 		myControlMap.put(key, behavior);
 	}
 	
