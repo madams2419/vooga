@@ -3,7 +3,8 @@ package game_engine.sprite;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-import game_engine.Behavior;
+import javafx.scene.image.ImageView;
+import game_engine.IBehavior;
 import game_engine.HitBox;
 import game_engine.game_player.Animation;
 import game_engine.physics.PhysicsObject;
@@ -21,8 +22,8 @@ public abstract class Sprite extends Observable{
 	private String myState;
 	private Animation myAnimation;
 	private HitBox myHitBox;
-	private PhysicsObject myPhysicsObject;
-	private Map<String, Behavior> myBehaviorMap = new HashMap<>();
+	protected PhysicsObject myPhysicsObject;
+	private Map<String, IBehavior> myBehaviorMap = new HashMap<>();
 
 	
 	/**
@@ -63,12 +64,12 @@ public abstract class Sprite extends Observable{
 	 */
 	public abstract void update();
 	
-	public Behavior createBehavior(String behavior) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
+	public IBehavior createBehavior(String behavior) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
 	    Class<?> runClass = null;
-	    Behavior classInstance = null;
+	    IBehavior classInstance = null;
 	    String className = "game_engine." + behavior;
 	    runClass = Class.forName(className);
-	    return classInstance = (Behavior) runClass.newInstance();
+	    return classInstance = (IBehavior) runClass.newInstance();
 	    
 	}
 	
@@ -80,8 +81,8 @@ public abstract class Sprite extends Observable{
 	    myBehaviorMap.remove(behavior);
 	}
 	
-	public void runBehavior(String behavior){
-	    myBehaviorMap.get(behavior).execute();
+	public void runBehavior(String behavior, double[] params){
+	    myBehaviorMap.get(behavior).execute(params);
 	}
 	
 	public void addImage(String state,String ImagePath){
@@ -90,6 +91,10 @@ public abstract class Sprite extends Observable{
 	
 	public void removeImage(String state){
 	    myAnimation.removeImage(state);
+	}
+	
+	public ImageView getImageView(){
+	    return myAnimation.getImageView();
 	}
 	
 	public void setState(String state){
@@ -133,7 +138,18 @@ public abstract class Sprite extends Observable{
 	public HitBox getHitBox(){
 	    return this.myHitBox;
 	}
-
+	
+	public void moveX(double x){
+		myPhysicsObject.getPosition().setX(
+				myPhysicsObject.getPosition().getX() + x);
+	}
+	
+	public void moveY(double y){
+		myPhysicsObject.getPosition().setY(
+				myPhysicsObject.getPosition().getY() + y);
+	}
+	
+	
 	public static void main(String[] args){
 	    Sprite player = new Enemy();
 	    player.addImage("idle", "idle");

@@ -47,9 +47,9 @@ public class PhysicsTester extends Application {
 	public void initDSprites() {
 		myDSprites = new ArrayList<DSprite>();
 
-		PhysicsObject playerPhys = new PhysicsObject(100, 3, 0, 0);
+		//PhysicsObject playerPhys = new PhysicsObject(100, 3, 0, 0);
 		Node playerNode = new Rectangle(100, 100, Color.BLUE);
-		DSprite player = new DSprite(playerPhys, playerNode);
+		//DSprite player = new DSprite(playerPhys, playerNode);
 	}
 
 	public void addSprites() {
