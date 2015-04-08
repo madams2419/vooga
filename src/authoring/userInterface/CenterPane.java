@@ -1,19 +1,15 @@
-package authoring.userInterface;
+package src.authoring.userInterface;
 
-import java.awt.Cursor;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
-
-import authoring.Sprite;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import authoring.SpecificSprite;
 
 /**
  * 
@@ -22,7 +18,7 @@ import javafx.scene.shape.Rectangle;
  */
 public class CenterPane extends ScrollPane {
 	
-	private List<Sprite> mySpriteList;
+	private List<SpecificSprite> mySpriteList;
 	private Scene myScene;
 	private Group myGroup;
 	private Rectangle myCurrentRectangle;
@@ -54,7 +50,7 @@ public class CenterPane extends ScrollPane {
 	private void canvasClicked(MouseEvent e) {
 
 		try{
-		Sprite s = ((SpriteCursor) myScene.getCursor()).getCurrentSprite();
+		SpecificSprite s = ((SpriteCursor) myScene.getCursor()).getCurrentSprite();
 		
 		// Hey Andrew! I commented this next line out because I decided to pass in 
 		// a Consumer in the creation of the Sprite (in CharacterCreationPane), and
@@ -87,7 +83,7 @@ public class CenterPane extends ScrollPane {
 	}
 
 	
-	private void spriteClicked(MouseEvent p, Sprite s) {
+	private void spriteClicked(MouseEvent p, SpecificSprite s) {
 		myGroup.getChildren().remove(s);
 		//s.setTranslateX(100);
 		System.out.println("Removing");

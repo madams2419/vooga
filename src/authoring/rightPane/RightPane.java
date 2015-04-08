@@ -1,10 +1,11 @@
-package authoring.rightPane;
+package src.authoring.rightPane;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
-import authoring.Sprite;
+import authoring.AbstractSprite;
+import authoring.SpriteType;
 
 
 /**
@@ -38,8 +39,8 @@ public class RightPane extends VBox {
                                                            s -> switchToCharacterEditingPane(s)));
     }
 
-    public void switchToCharacterEditingPane (Sprite sprite) {
-        switchToPane(new CharacterEditingPane(myScene, sprite, i -> switchToCharacterCreationPane()));
+    public void switchToCharacterEditingPane (AbstractSprite s) {
+        switchToPane(new CharacterEditingPane(myScene, s, i -> switchToCharacterCreationPane()));
     }
 
     public void switchToCharacterCreationPane () {
@@ -47,7 +48,7 @@ public class RightPane extends VBox {
                                                s -> switchToCharacterEditingPane(s)));
     }
 
-    public void switchToInteractionEditingPane (Sprite sprite1, Sprite sprite2) {
+    public void switchToInteractionEditingPane (SpriteType sprite1, SpriteType sprite2) {
         switchToPane(new InteractionEditingPane(myScene, sprite1, sprite2));
     }
 

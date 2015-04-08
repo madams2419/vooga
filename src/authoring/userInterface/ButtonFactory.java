@@ -1,7 +1,7 @@
 /**
  * 
  */
-package authoring.userInterface;
+package src.authoring.userInterface;
 
 import java.io.File;
 import java.util.ArrayList;

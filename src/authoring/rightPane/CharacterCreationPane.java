@@ -1,11 +1,13 @@
-package authoring.rightPane;
+package src.authoring.rightPane;
 
 import java.util.function.Consumer;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import authoring.Sprite;
+import authoring.AbstractSprite;
+import authoring.SpecificSprite;
+import authoring.SpriteType;
 import authoring.userInterface.SpriteCursor;
 import authoring.util.ImageEditor;
 
@@ -20,7 +22,7 @@ import authoring.util.ImageEditor;
 
 public class CharacterCreationPane extends EditingPane {
 
-    CharacterCreationPane (Scene scene, Consumer<Sprite> spriteClicked) {
+    CharacterCreationPane (Scene scene, Consumer<AbstractSprite> spriteClicked) {
         super(scene);
         this.getChildren().add(
                                new TextArea(String
@@ -34,8 +36,8 @@ public class CharacterCreationPane extends EditingPane {
         addSpriteToPane(101, "/images/luigi.png", spriteClicked);
     }
     
-    private void addSpriteToPane(int id, String imageURI, Consumer<Sprite> spriteClicked) {
-        Sprite sampleImage = new Sprite(id, imageURI, spriteClicked);
+    private void addSpriteToPane(int id, String imageURI, Consumer<AbstractSprite> spriteClicked) {
+        SpriteType sampleImage = new SpriteType(id, imageURI);
         
         //these two aren't working for now when the copy is made in imageClicked (Consumer<Sprite> spriteClicked, Sprite sampleImage, int ID):
 //        sampleImage.setOnMouseEntered(i -> ImageEditor.reduceOpacity(sampleImage, Sprite.OPACITY_REDUCTION_RATIO));
@@ -46,7 +48,7 @@ public class CharacterCreationPane extends EditingPane {
         ImageView sampleImageIcon = sampleImage.getIcon();
         sampleImageIcon.setOnMouseClicked(e -> imageClicked(spriteClicked, sampleImage, ID));
         sampleImageIcon.setOnMouseDragged(e -> imageDragged(e));
-        sampleImageIcon.setOnMouseEntered(i -> ImageEditor.reduceOpacity(sampleImageIcon, Sprite.OPACITY_REDUCTION_RATIO));
+        sampleImageIcon.setOnMouseEntered(i -> ImageEditor.reduceOpacity(sampleImageIcon, SpriteType.OPACITY_REDUCTION_RATIO));
         sampleImageIcon.setOnMouseExited(i -> ImageEditor.restoreOpacity(sampleImageIcon));
         
         this.getChildren().add(sampleImageIcon);
@@ -58,9 +60,9 @@ public class CharacterCreationPane extends EditingPane {
     }
 
     // an image in the right pane is clicked to be moved to the center pane
-    private void imageClicked (Consumer<Sprite> spriteClicked, Sprite sampleImage, int ID) {
+    private void imageClicked (Consumer<AbstractSprite> spriteClicked, SpriteType sampleImage, int ID) {
         // need to now set mouse cursor to the sprite image
-        getMyScene().setCursor(new SpriteCursor(new Sprite(sampleImage, ID)));
+        getMyScene().setCursor(new SpriteCursor(new SpecificSprite(sampleImage, ID, spriteClicked)));
         
     }
 }

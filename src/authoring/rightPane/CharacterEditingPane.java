@@ -1,7 +1,6 @@
-package authoring.rightPane;
+package src.authoring.rightPane;
 
 import java.io.File;
-import java.util.function.Consumer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,7 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import authoring.Sprite;
+import authoring.AbstractSprite;
+import authoring.SpecificSprite;
 import authoring.util.ImageEditor;
 
 
@@ -29,7 +29,7 @@ public class CharacterEditingPane extends EditingPane {
     private static final String[] imageChooserExtensions = { "*.png", "*.jpg", "*.gif" };
 
     CharacterEditingPane (Scene scene,
-                          Sprite sprite,
+                          AbstractSprite s,
                           EventHandler<? super MouseEvent> returnToCreationPane) {
         super(scene);
         // ======================== New design in here ===================== //
@@ -37,7 +37,7 @@ public class CharacterEditingPane extends EditingPane {
                           new TextArea(String
                                   .format("Character editing pane")));
         // =================================================================
-        addSpriteIcon(sprite);
+        addSpriteIcon(s);
         addDoneButton(returnToCreationPane);
     }
 
@@ -48,34 +48,34 @@ public class CharacterEditingPane extends EditingPane {
         getChildren().add(doneButton);
     }
 
-    private void addSpriteIcon (Sprite sprite) {
-        ImageView spriteIcon = sprite.getIcon();
-        spriteIcon.setOnMouseClicked(i -> spriteIconClicked(sprite));
+    private void addSpriteIcon (AbstractSprite s) {
+        ImageView spriteIcon = s.getIcon();
+        spriteIcon.setOnMouseClicked(i -> spriteIconClicked(s));
         spriteIcon.setOnMouseEntered(i -> reduceSpriteOpacity(spriteIcon));
         spriteIcon.setOnMouseExited(i -> restoreSpriteOpacity(spriteIcon));
         getChildren().add(spriteIcon);
     }
 
-    private void spriteIconClicked (Sprite sprite) {
-        changeCharacterImage(sprite);
+    private void spriteIconClicked (AbstractSprite s) {
+        changeCharacterImage(s);
     }
 
     private void reduceSpriteOpacity (ImageView imageView) {
-        ImageEditor.reduceOpacity(imageView, Sprite.OPACITY_REDUCTION_RATIO);
+        ImageEditor.reduceOpacity(imageView, SpecificSprite.OPACITY_REDUCTION_RATIO);
     }
 
     private void restoreSpriteOpacity (ImageView imageView) {
         ImageEditor.restoreOpacity(imageView);
     }
 
-    private void changeCharacterImage (Sprite sprite) {
+    private void changeCharacterImage (AbstractSprite s) {
         FileChooser imageChooser = new FileChooser();
         imageChooser.setTitle(imageChooserTitle);
         imageChooser.getExtensionFilters().add(new ExtensionFilter(imageChooserDescription,
                                                                    imageChooserExtensions));
         File selectedImageFile = imageChooser.showOpenDialog(null);
         if (selectedImageFile != null) {
-            sprite.changeImage(new Image(selectedImageFile.toURI().toString()));
+            s.changeImage(new Image(selectedImageFile.toURI().toString()));
         }
     }
 }
