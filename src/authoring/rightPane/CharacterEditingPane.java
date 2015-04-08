@@ -1,4 +1,4 @@
-package src.authoring.rightPane;
+package authoring.rightPane;
 
 import java.io.File;
 import javafx.event.EventHandler;

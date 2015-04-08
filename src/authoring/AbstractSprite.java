@@ -1,4 +1,4 @@
-package src.authoring;
+package authoring;
 
 import java.util.function.Consumer;
 import javafx.scene.image.Image;

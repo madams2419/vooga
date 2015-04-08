@@ -9,8 +9,8 @@ import java.util.Map;
  * @author hojeanniechung
  *
  */
-public class DropdownFactory {
-	public DropdownFactory(){
+public class dropdownFactory {
+	public dropdownFactory(){
 		
 	}
 	
