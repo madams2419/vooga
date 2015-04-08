@@ -8,16 +8,18 @@ import authoring.Sprite;
 
 
 /**
- * This class represents the right pane on the screen. It will allow the user to edit a particular
- * character, to edit the interactions between characters, and to create new characters. 
+ * This class represents the right pane on the screen. It will allow the user to
+ * edit a particular character, to edit the interactions between characters, and
+ * to create new characters.
  * 
  * @author Natalie Chanfreau, Daniel Luker
  *
  */
 public class RightPane extends VBox {
+
     private Scene myScene;
     private EditingPane myCurrentContent;
-    
+
     private final static int SPACING = 20;
     private final static int PADDING = 10;
     private final static String CSS = "styles/right_pane.css";
@@ -25,7 +27,7 @@ public class RightPane extends VBox {
     public RightPane (Scene scene) {
         super(SPACING);
         myScene = scene;
-        
+
         getStylesheets().add(CSS);
         setPadding(new Insets(PADDING));
         setAlignment(Pos.TOP_CENTER);
@@ -37,11 +39,12 @@ public class RightPane extends VBox {
     }
 
     public void switchToCharacterEditingPane (Sprite sprite) {
-        switchToPane(new CharacterEditingPane(myScene, sprite));
+        switchToPane(new CharacterEditingPane(myScene, sprite, i -> switchToCharacterCreationPane()));
     }
 
     public void switchToCharacterCreationPane () {
-        switchToPane(new CharacterCreationPane(myScene, s -> switchToCharacterEditingPane(s)));
+        switchToPane(new CharacterCreationPane(myScene,
+                                               s -> switchToCharacterEditingPane(s)));
     }
 
     public void switchToInteractionEditingPane (Sprite sprite1, Sprite sprite2) {

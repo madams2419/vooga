@@ -1,43 +1,47 @@
-/**
- * 
- */
 package authoring.userInterface;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import XML.LayoutXMLParser;
 
 /**
- * @author hojeanniechung
+ * @author hojeanniechung & mungcheow
  *
  */
 public class UIElementDistributer {
-	Reflection reflection = new Reflection(); 
+	static Reflection reflection = new Reflection(); 
 	static Set ElementSet=new HashSet();
-	
-//	public static void main(String args[]){
-//		ElementDistributer();
-//	}
-	
-	public void ElementDistributer(){
-		Iterator it=LayoutXMLParser.myElementMap.entrySet().iterator();
-		String f="settings/layout.xml";
-		LayoutXMLParser.parse(f);
-		while(it.hasNext()){
-			ArrayList<Map> listOfElements = (ArrayList) it.next();
-			for(Map element:listOfElements){
-				System.out.println("element keyset is "+element.keySet().toString());
-				ElementSet.add(element.keySet());	
-			}	
-			System.out.println(ElementSet);
-//			String Classname=String.format("%sFactory",forEach(ElementSet));
-//			reflection.createInstance(Classname);
-		}
-		
+	private static String elementNext;
+
+	public static void main(String args[]){
+		ElementDistributer();
 	}
 
+	public static void ElementDistributer(){
+		String f="settings/layout.xml";
+		LayoutXMLParser.parse(f);
+		Iterator<Entry<String, ArrayList>> it=LayoutXMLParser.myElementMap.entrySet().iterator();
+
+		ArrayList<Map> listOfElements = it.next().getValue();
+		for(Map element:listOfElements){
+			//System.out.println("element keyset is "+element.keySet().toString());
+			ElementSet.add(element.keySet().toString());	
+		}
+		Iterator<String> it_element=ElementSet.iterator();
+
+
+		while(it_element.hasNext()){
+			//System.out.println(it_element.next().toString());
+			String temp=it_element.next();
+			elementNext=temp.toString().substring(1,(temp.toString().length())-1);
+			System.out.println(elementNext);
+			String Classname=String.format("authoring.userInterface.%sFactory",elementNext);
+			reflection.createInstance(Classname);
+		}
+	}
 }

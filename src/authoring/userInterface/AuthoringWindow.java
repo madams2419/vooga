@@ -49,6 +49,10 @@ public class AuthoringWindow {
 	
 	private CenterPane myCenterPane;
 	
+	public AuthoringWindow(){
+		// TODO
+	}
+	
 	public Scene GameCreateUI() {
 
 		VBox root = new VBox();
