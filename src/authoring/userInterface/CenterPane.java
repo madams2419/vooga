@@ -1,7 +1,10 @@
 package authoring.userInterface;
 
 import java.awt.Cursor;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
+
 import authoring.Sprite;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
@@ -19,7 +22,7 @@ import javafx.scene.shape.Rectangle;
  */
 public class CenterPane extends ScrollPane {
 	
-	private Stack<Sprite> myStack;
+	private List<Sprite> mySpriteList;
 	private Scene myScene;
 	private Group myGroup;
 	private Rectangle myCurrentRectangle;
@@ -34,7 +37,7 @@ public class CenterPane extends ScrollPane {
 		this.setContent(myGroup);
 		
 		// TODO: change to list
-		myStack = new Stack<>();
+		mySpriteList = new ArrayList<>();
 		
 	}
 
@@ -70,7 +73,7 @@ public class CenterPane extends ScrollPane {
 		myGroup.getChildren().add(s);
 		
 		System.out.println(s.getID());
-		myStack.add(s);
+		mySpriteList.add(s);
 		myScene.setCursor(ImageCursor.DEFAULT);
 		
 
@@ -93,7 +96,6 @@ public class CenterPane extends ScrollPane {
 	}
 	
 	public void createRegion(double x, double y){
-		// TODO: dynamically change size of rectangle here		
 		myCurrentRectangle = new Rectangle (x, y, Color.WHITE);
 		myCurrentRectangle.setOnMouseClicked(e -> canvasClicked(e));
 		myGroup.getChildren().add(myCurrentRectangle);

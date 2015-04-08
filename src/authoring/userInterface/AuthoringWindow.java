@@ -117,6 +117,7 @@ public class AuthoringWindow {
 			// Refactor? Is it possible to get rid of this if statement?
 			if (result.get() == ButtonType.OK){
 				// TODO: check to make sure user entered numbers
+				
 				myCenterPane.createRegion(Double.parseDouble(textBox1.getText()), Double.parseDouble(textBox1.getText()));
 			}
 		});
