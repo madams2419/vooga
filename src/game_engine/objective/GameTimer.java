@@ -13,7 +13,11 @@ public class GameTimer {
         myStart = now;
     }
     
+    public long getTimePassed(long now){
+        return now - myStart;
+    }
+    
     public boolean isFinished(long now){
-        return now - myStart >= myDuration;
+        return getTimePassed(now) >= myDuration;
     }
 }

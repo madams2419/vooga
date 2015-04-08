@@ -29,7 +29,6 @@ public class Objective {
      * List of objectives that must be completed before this objective is active.
      */
     private List<Objective> myPreReqs;
-    private String myName;
     private Optional<GameTimer> myTimer;
     private Status myStatus;
     private enum Status {
@@ -132,25 +131,5 @@ public class Objective {
     public void complete (long now) {
         myOnComplete.execute();
         myStatus = Status.COMPLETE;
-    }
-
-    public void setName (String name) {
-        myName = name;
-    }
-
-    @Override
-    public String toString () {
-        return myName;
-    }
-    
-    public static void main (String[] args) {
-        Objective o = new Objective(now -> false, () -> System.out.println("done"));
-        o.setTimer(new GameTimer(3));
-        o.setActive(true, 0);
-        for (int i =0; i < 5; i++){
-            System.out.println("i =" + i);
-            o.update(i);
-        }
-        
     }
 }

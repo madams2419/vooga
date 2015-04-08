@@ -19,21 +19,8 @@ public class CompleteNumObjectives extends DoRemainingObjective{
     
     @Override
     public void update(long now) {
+        //needed?
         mySubObjectives.forEach(obj -> obj.update(now));
         super.update(now);
-    }
-    
-    @Override
-    public String toString() {
-        super.setName("Complete", "Objectives:");
-        String name = super.toString();
-        for (Objective obj: mySubObjectives){
-            name += tabEveryLine("\n" + obj.toString().trim());
-        }
-        return name;
-    }
-    
-    private String tabEveryLine(String string) {
-        return string.replaceAll("\n", "\n\t");
     }
 }

@@ -9,8 +9,7 @@ import java.util.function.IntSupplier;
  */
 public class DoRemainingObjective extends Objective{
     private IntSupplier myNumRemaining;
-    private String myTask;
-    private String myTarget;
+
     
     /**
      * Constructor for objective representing completion for all sets of objects
@@ -29,15 +28,5 @@ public class DoRemainingObjective extends Objective{
      */
     public int getNumRemaining(){
         return Math.abs(myNumRemaining.getAsInt());
-    }
-    
-    public void setName (String task, String target) {
-        myTask = task;
-        myTarget = target;
-    }
-    
-    @Override
-    public String toString() {
-        return myTask + " " + getNumRemaining() + " " + myTarget;
     }
 }
