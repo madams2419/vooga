@@ -19,6 +19,9 @@ public class PhysicsObject {
 	private double myDirForceMagnitude;
 	private List<Joint> myJoints;
 	private PhysicsEngine myPhysics;
+	
+	public PhysicsObject(PhysicsEngine physics, Material material, HitBox hitBox, String state, Vector position, Vector velocity) {
+	
 	private Shape myShape;
 
 	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material, HitBox hitBox, String state, Vector position, Vector velocity) {
