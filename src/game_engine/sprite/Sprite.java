@@ -142,11 +142,15 @@ public abstract class Sprite extends Observable{
 	public void moveX(double x){
 		myPhysicsObject.getPosition().setX(
 				myPhysicsObject.getPosition().getX() + x);
+		setChanged();
+                notifyObservers();
 	}
 	
 	public void moveY(double y){
 		myPhysicsObject.getPosition().setY(
 				myPhysicsObject.getPosition().getY() + y);
+		setChanged();
+                notifyObservers();
 	}
 	
 	
