@@ -1,7 +1,10 @@
 package game_player;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -12,34 +15,95 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * The XMLInterpreter class constructs a tree of xml entries and puts the lower level ones in a map.
- * The user is then able to access the map using directory names separated by a slash.
+ * XMLInterpreter allows the user to easily and recursively read values in from an XML file.
+ * The class is basically just a Map<String, String> which associates labels with values.
+ * Only the base values are written in the map, rather than every single label.  To implement this,
+ * the Map associates a full path with the value as opposed to just the label.  However, to 
+ * smooth the use of this class, an activePath is stored additionally so the user can access a value
+ * within a path with just the label.  To provide some error checking, a Tree of Directory objects
+ * is also implemented so that the user can't go to a Directory that doesn't exist within the XML
+ * file.
  * 
  * @author Brian Lavallee
  * @since 7 April 2015
  */
 public class XMLInterpreter {
     
+    /*
+     * Directory stores a name and a list of sub-directories.  Thus
+     * it is a basic node-tree implementation.
+     */
+    private class Directory {
+	
+	private String name;
+	private List<Directory> subDirectories;
+	
+	public Directory(String n) {
+	    if (n.charAt(n.length() - 1) != '/') {
+		n += '/';
+	    }
+	    name = n;
+	    subDirectories = new ArrayList<Directory>();
+	}
+	
+	public void addSubDirectory(Directory newSubDirectory) {
+	    subDirectories.add(newSubDirectory);
+	}
+	
+	public List<Directory> getSubDirectories() {
+	    return Collections.unmodifiableList(subDirectories);
+	}
+	
+	public Directory getDirectory(String name) {
+	    if (name.charAt(name.length() - 1) != '/') {
+		name += '/';
+	    }
+	    for (Directory directory : subDirectories) {
+		if (directory.name.equals(name)) {
+		    return directory;
+		}
+	    }
+	    return this;
+	}
+	
+	public String toString() {
+	    return name;
+	}
+	
+	public boolean equals(Object o) {
+	    try {
+		Directory other = (Directory) o;
+		return name.equals(other.name);
+	    }
+	    catch (ClassCastException e) {
+		return false;
+	    }
+	}
+    }
+    
     private static Map<String, String> xml;
     
-    private String activePath;
+    private List<Directory> activePath;
+    
+    private Directory root = new Directory("/");
     
     /**
-     * Initializes the map and activePath and recursively traces the tree and fills the map.
+     * General constructor.
      * 
      * @param data
-     *             is the game or development xml file that the user wants to parse.
+     *             is the XML file that the user wants to parse.
      */
     public XMLInterpreter(File data) {
 	xml = new HashMap<String, String>();
-	activePath = "/";
+	activePath = new ArrayList<Directory>();
+	activePath.add(root);
 
 	try {
 	    DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 	    Document doc = docBuilder.parse(data);
 	    
 	    if (doc.hasChildNodes()) {
-		read(doc.getChildNodes(), "");
+		read(doc.getChildNodes(), "", root);
 	    }
 	}
 	catch (Exception e) {
@@ -48,39 +112,64 @@ public class XMLInterpreter {
     }
     
     /**
-     * Completely resets the activePath to a new value.
-     * (Note) does not check if valid.
-     * 
-     * @param directory
-     *                  is the new path the user wants to work in.
+     * Resets activePath to just the root Directory ("/").
      */
-    public void setActivePath(String path) {
-	activePath = path;
+    public void resetActivePath() {
+	activePath.clear();
+	activePath.add(root);
     }
     
     /**
-     * Returns the current path.  Useful for debugging if necessary.
+     * Sets the activePath to the specified value.  Extensive internal use.  Method
+     * will not change activePath if the path is not valid for the XML file.
+     * 
+     * @param pathName
+     *                 specifies the new path.  Directories are separated by /'s.
+     */
+    public void setActivePath(String pathName) {
+	List<Directory> path = new ArrayList<Directory>();
+	String[] newPath = pathName.split("/");
+	Directory current = root;
+	for (int i = 1; i < newPath.length; i++) {
+	    String directoryName = newPath[i];
+	    if (!current.getSubDirectories().contains(new Directory(directoryName))) {
+		return;
+	    }
+	    current = current.getDirectory(directoryName);
+	    path.add(current);
+	}
+	resetActivePath();
+	activePath.addAll(path);
+    }
+    
+    /**
+     * Returns the activePath for internal and debugging purposes.
      * 
      * @return
-     *         the value of the current activePath.
+     *         the activePath in the form of a String.
      */
     public String getActivePath() {
-	return activePath;
+	String path = "";
+	for (Directory directory : activePath) {
+	    path += directory.toString();
+	}
+	return path;
     }
     
     /**
-     * Moves the path down the specified additional path.  The user can either enter
-     * the entire path as one string and include /'s to distinguish levels (no
-     * leading slash necessary) or they may enter each level of the path as
-     * individual parameters without /'s.
+     * Adds to the activePath from the current Directory.  The user can either put
+     * the entire path in as one String with Directories separated by /'s or
+     * each Directory name can be put as a distinct parameter.
      * 
      * @param path
-     *                  the path the user wants to work in within activePath.
+     *             is either the entire path or an Array representing each step of the path.
      */
     public void moveDown(String ... path) {
+	String pathName = "";
 	for (String component : path) {
-	    activePath += component + "/";
+	    pathName += component + "/";
 	}
+	setActivePath(getActivePath() + pathName);
     }
     
     /**
@@ -91,32 +180,34 @@ public class XMLInterpreter {
     }
     
     /**
-     * Moves the activePath up by a specified amount.
+     * Moves the activePath up by the specified amount.
      * 
      * @param distance
-     *                 the number of levels upwards in the activePath to travel.
+     *                 the number of levels to move up.
      */
     public void moveUp(int distance) {
-	String[] path = activePath.split("/");
-	activePath = "/";
-	for (int i = 0; i < path.length - distance; i++) {
-	    activePath += path[i] + "/";
+	List<Directory> remove = new ArrayList<Directory>();
+	for (int i = activePath.size() - 1; i > activePath.size() - 1 - distance && i >= 0; i--) {
+	    remove.add(activePath.get(i));
 	}
+	activePath.removeAll(remove);
     }
     
     /**
-     * Uses the XML file to evaluate the given String.  The user can either identify
-     * the label they want within the activePath or specify the entire path.
+     * Finds the value associated with the label.  If the label isn't found within
+     * the current directory, then the method checks to see if label is an entire
+     * distinct path.  This allows the user to decide whether or not to use the
+     * activePath functionality.
      * 
      * @param label
-     *              either the label within the activePath or the entire path.
+     *              either represents a label with the activePath or an entire path, user choice.
      *              
      * @return
-     *         The value mapped to label by the XML file.
+     *         The value associated with the label by the XML file.
      */
     public String getValue(String label) {
 	String ret;
-	if ((ret = xml.get(activePath + label))!= null) {
+	if ((ret = xml.get(getActivePath() + label)) != null) {
 	    return ret;
 	}
 	else {
@@ -125,23 +216,25 @@ public class XMLInterpreter {
     }
     
     /*
-     * Used by getValue(String s) to find an entire path as opposed to just a label.
+     * Used by getValue(String) to find a value of an entire path.
      */
     private String getPathValue(String path) {
 	return xml.get(path);
     }
     
     /*
-     * Recursively traces the tree and populates the map.
+     * Recursively builds the Directory tree and populates the map.
      */
-    private void read(NodeList nodes, String path) {
+    private void read(NodeList nodes, String path, Directory parent) {
 	for (int i = 0; i < nodes.getLength(); i++) {
 	    Node node = nodes.item(i);
+	    Directory child = new Directory(node.getNodeName());
+	    parent.addSubDirectory(child);
 	    if (node.getChildNodes().getLength() == 1) {
 		xml.put(path + "/" + node.getNodeName(), node.getTextContent());
 	    }
 	    else {
-		read(node.getChildNodes(), path + "/" + node.getNodeName());
+		read(node.getChildNodes(), path + "/" + node.getNodeName(), child);
 	    }
 	}
     }
