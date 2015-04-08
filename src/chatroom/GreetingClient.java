@@ -8,13 +8,14 @@ import java.io.*;
 public class GreetingClient{
 	public static void main(String [] args)
 	{
-		String serverName = "localhost";
+		String serverName = "10.190.77.51";
 		int port = Integer.parseInt("6066");
 		try
 		{
 			System.out.println("Connecting to " + serverName
 					+ " on port " + port);
 			Socket client = new Socket(serverName, port);
+			System.out.println(InetAddress.getLocalHost());
 			System.out.println("Just connected to "
 					+ client.getRemoteSocketAddress());
 			OutputStream outToServer = client.getOutputStream();
