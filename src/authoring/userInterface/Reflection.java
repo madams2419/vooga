@@ -81,7 +81,7 @@ public class Reflection {
 	 *
 	 * If the method's return type is void, null in returned.
 	 */
-	public static Object callMethod (Object target, String name, Object... args)
+	public static Object callMethod (Object target, String name, Object... args) 
 			throws ReflectionException {
 		try {
 			for (Method current : target.getClass().getDeclaredMethods()) {

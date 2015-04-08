@@ -22,30 +22,30 @@
 			</Button>
 		</buttons>
 		<dropdowns>
-			<dropdown>
+			<Dropdown>
 				<X>0</X>
 				<Y>1</Y>
 				<label>Characters</label>
 				<listener>null</listener>
-			</dropdown>
-			<dropdown>
+			</Dropdown>
+			<Dropdown>
 				<X>1</X>
 				<Y>1</Y>
 				<label>Blocks</label>
 				<listener>null</listener>
-			</dropdown>
-			<dropdown>
+			</Dropdown>
+			<Dropdown>
 				<X>2</X>
 				<Y>1</Y>
 				<label>Decorations</label>
 				<listener>null</listener>
-			</dropdown>
-			<dropdown>
+			</Dropdown>
+			<Dropdown>
 				<X>3</X>
 				<Y>1</Y>
 				<label>UI Controls</label>
 				<listener>null</listener>
-			</dropdown>
+			</Dropdown>
 		</dropdowns>
 	</top_pane>
 	<left_pane>
@@ -58,12 +58,12 @@
 			</Button>
 		</buttons>
 		<dropdowns>
-			<dropdown>
+			<Dropdown>
 				<X>0</X>
 				<Y>3</Y>
 				<label>Test Characters</label>
 				<listener>null</listener>
-			</dropdown>
+			</Dropdown>
 		</dropdowns>
 	</left_pane>
 </layout>
