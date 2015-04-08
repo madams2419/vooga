@@ -1,7 +1,7 @@
 package game_engine;
 
 import java.util.ArrayList;
-import com.sun.javafx.geom.Rectangle;
+import javafx.scene.shape.*;
 /**
  * Hitbox class that defines collisions between objects
  * @author Kevin
@@ -25,6 +25,11 @@ public class HitBox {
 	public boolean intersects(HitBox compare) {
 		// TODO
 		return false;
+	}
+
+	public double getVolume() {
+		//TODO
+		return 0.0;
 	}
 
 }
