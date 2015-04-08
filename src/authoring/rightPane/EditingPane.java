@@ -1,7 +1,5 @@
-package authoring.rightPane;
+package src.authoring.rightPane;
 
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 
@@ -13,17 +11,10 @@ import javafx.scene.layout.VBox;
  */
 public class EditingPane extends VBox {
 
-	// private ObservableList<Node> myChildren;
 	private Scene myScene;
 
 	EditingPane(Scene scene) {
-		// myChildren = new VBox().getChildren();
 		myScene = scene;
-	}
-
-	public ObservableList<Node> getChildren() {
-		// return myChildren;
-		return super.getChildren();
 	}
 
 	public Scene getMyScene() {

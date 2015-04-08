@@ -1,4 +1,4 @@
-package authoring.userInterface;
+package src.authoring.userInterface;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

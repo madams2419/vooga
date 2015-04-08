@@ -1,4 +1,4 @@
-package authoring.userInterface;
+package src.authoring.userInterface;
 
 import java.util.List;
 import java.util.Map;

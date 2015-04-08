@@ -1,4 +1,4 @@
-package authoring.userInterface;
+package src.authoring.userInterface;
 
 import javafx.scene.layout.HBox;
 

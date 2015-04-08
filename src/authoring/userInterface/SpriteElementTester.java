@@ -1,4 +1,4 @@
-package authoring.userInterface;
+package src.authoring.userInterface;
 
 import java.util.Arrays;
 import java.util.HashMap;
