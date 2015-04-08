@@ -8,6 +8,7 @@ public class GreetingServer extends Thread{
 
 	public GreetingServer(int port) throws IOException{
 		serverSocket = new ServerSocket(port);
+		System.out.println(InetAddress.getLocalHost());
 		serverSocket.setSoTimeout(10000);
 	}
 
