@@ -6,8 +6,8 @@ import java.util.Observable;
 import javafx.scene.image.ImageView;
 import game_engine.IBehavior;
 import game_engine.HitBox;
-import game_engine.game_player.Animation;
 import game_engine.physics.PhysicsObject;
+import game_player.Animation;
 
 /**
  * Abstract class for the creation of multiple sprite types

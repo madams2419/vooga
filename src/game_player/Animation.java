@@ -1,4 +1,4 @@
-package game_engine.game_player;
+package game_player;
 
 import game_engine.sprite.Sprite;
 import java.util.HashMap;
