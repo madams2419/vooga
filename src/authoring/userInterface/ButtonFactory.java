@@ -1,7 +1,7 @@
 /**
  * 
  */
-package src.authoring.userInterface;
+package authoring.userInterface;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -36,7 +36,6 @@ public class ButtonFactory {
 		return mInstance;
 	}
 
-
 	//	public static void main(String[] args){	
 	//		s="Button"; //test Case
 	//		String f="src/Resources/FilestoParse.xml";
@@ -44,33 +43,31 @@ public class ButtonFactory {
 	//		mFile=LayoutXMLParser.getFile(); 
 	//	}
 	//	
+	
 	public ButtonFactory(){
-		System.out.println("Button Constructor Created");
-		return;
+		System.out.println("Reached public constructor for ButtonFactory");
 	}
-
 	private ButtonFactory(String f){
 		//s="Button"; //test Case
 		f="src/settings/layout.xml";
 		LayoutXMLParser.parse(f);
 		mFile=LayoutXMLParser.getFile();
+		GetAttributes();
 
 	}
 
-	//	public static ArrayList<Map> GetAttributes(){	
-	//		//clear AttributeList from before
-	//		for(int i=0; i<LayoutXMLParser.mAttributesList.size(); i++){
-	//			LayoutXMLParser.mAttributesList.remove(i);
-	//		}
-	//		LayoutXMLParser.parse(mFile.toString(), mType);
-	//		mAttributesList= LayoutXMLParser.mAttributesList;
-	//		//System.out.println("mAttributesList is "+mAttributesList);
-	//		return mAttributesList;
-	//	}
+	public static ArrayList<Map> GetAttributes(){	
+		//clear AttributeList from before
+		for(int i=0; i<LayoutXMLParser.mAttributesList.size(); i++){
+			LayoutXMLParser.mAttributesList.remove(i);
+		}
+		LayoutXMLParser.parse(mFile.toString(), mType);
+		mAttributesList= LayoutXMLParser.mAttributesList;
+		//System.out.println("mAttributesList is "+mAttributesList);
+		return mAttributesList;
+	}
 
 	public static void generateButton(Map m){
-		System.out.println("button"+m);
-		
+		System.out.println("button" + m);
 	}
-
 }
