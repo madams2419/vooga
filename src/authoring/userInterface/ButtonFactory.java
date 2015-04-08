@@ -22,7 +22,7 @@ public class ButtonFactory {
 	private static String s;
 	private static ArrayList<Map> mAttributesList=new ArrayList<Map>();
 	private static ArrayList<Button> mButtonList=new ArrayList<Button>();
-	
+
 	/*==============================Constructors=================================================*/
 
 	public static ButtonFactory getSharedInstace(String f) {
@@ -31,18 +31,22 @@ public class ButtonFactory {
 		return mInstance;
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public static ButtonFactory getSharedInstance() {
 		return mInstance;
 	}
 
-//	public static void main(String[] args){	
-//		s="Button"; //test Case
-//		String f="src/Resources/FilestoParse.xml";
-//		LayoutXMLParser.parse(f, s);
-//		mFile=LayoutXMLParser.getFile(); 
-//	}
-//	
+	//	public static void main(String[] args){	
+	//		s="Button"; //test Case
+	//		String f="src/Resources/FilestoParse.xml";
+	//		LayoutXMLParser.parse(f, s);
+	//		mFile=LayoutXMLParser.getFile(); 
+	//	}
+	//	
+	
+	public ButtonFactory(){
+		System.out.println("Reached public constructor for ButtonFactory");
+	}
 	private ButtonFactory(String f){
 		//s="Button"; //test Case
 		f="src/settings/layout.xml";
@@ -51,7 +55,7 @@ public class ButtonFactory {
 		GetAttributes();
 
 	}
-	
+
 	public static ArrayList<Map> GetAttributes(){	
 		//clear AttributeList from before
 		for(int i=0; i<LayoutXMLParser.mAttributesList.size(); i++){
@@ -62,15 +66,8 @@ public class ButtonFactory {
 		//System.out.println("mAttributesList is "+mAttributesList);
 		return mAttributesList;
 	}
-	
-	public static ArrayList<Button> generateButtonBoxes(){
-		for(int i=0; i<mAttributesList.size(); i++){
-			//Button box=new Button();
-			Button button=new Button(mAttributesList.get(i).get("id").toString());
-			mButtonList.add(button);
-			//System.out.println(mAttributesList.get(i).get("id"));
-		}
-		return mButtonList;
+
+	public static void generateButton(Map m){
+		System.out.println("button" + m);
 	}
-	
 }
