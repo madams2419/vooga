@@ -1,6 +1,6 @@
 package game_engine;
 
-import game_engine.sprite.Sprite;
+import game_engine.sprite.*;
 import game_engine.sprite.attributes.IMovement;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +17,27 @@ public class Layer {
 		// TODO
 	    sprites = new ArrayList<>();
 	}
+
 	/**
 	 * method update
 	 * updates each layer's contents
 	 */
 	public void update() {
 		sprites.forEach(sprite -> sprite.update());
+	}
+	
+	public void scrollX(int x){
+	    sprites.forEach(sprite -> {
+	        if(!sprite.getClass().isInstance(new Player()))
+	       sprite.getPhysicsObject().setX(sprite.getPhysicsObject().getX()+x);
+	    });
+	}
+	
+	public void scrollY(int y){
+	    sprites.forEach(sprite -> {
+                if(!sprite.getClass().isInstance(new Player()))
+               sprite.getPhysicsObject().setY(sprite.getPhysicsObject().getY()+y);
+            });
 	}
 	/**
 	 * method addSprite

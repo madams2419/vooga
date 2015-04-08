@@ -5,7 +5,7 @@ import game_engine.*;
 public class AddBehavior implements IBehavior{
 	
 	@Override
-	public void execute() {
+	public void execute(double[] params) {
 		ControlTester.addTrack();
 		ControlTester.updateText();
 	}

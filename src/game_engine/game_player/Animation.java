@@ -57,8 +57,9 @@ public class Animation implements Observer{
     public void update (Observable o, Object arg) {
         // TODO Auto-generated method stub
        Sprite sprite = (Sprite) o;
-       System.out.println(sprite.getState());
        changeImage(sprite.getState());
+       myImageView.setTranslateX(sprite.getPhysicsObject().getX());
+       myImageView.setTranslateY(sprite.getPhysicsObject().getY());
     }
 
 }

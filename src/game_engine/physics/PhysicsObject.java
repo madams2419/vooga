@@ -20,7 +20,7 @@ public class PhysicsObject {
 	private List<Joint> myJoints;
 	private PhysicsEngine myPhysics;
 	
-	public PhysicsObject(PhysicsEngine physics, Material material, HitBox hitBox, String state, Vector position, Vector velocity) {
+	public PhysicsObject(PhysicsEngine physics, Material material, HitBox hitBox, String state, Vector position, Vector velocity) {}
 	
 	private Shape myShape;
 
