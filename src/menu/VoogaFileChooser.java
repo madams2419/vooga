@@ -1,5 +1,7 @@
 package menu;
 
+import game_player.XMLParser;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +24,7 @@ import javafx.scene.text.Text;
  * the play mode and .dev for the design mode.
  * 
  * @author Brian Lavallee
- * @since 7 April 2015
+ * @since 8 April 2015
  */
 public class VoogaFileChooser {
     
@@ -40,6 +42,8 @@ public class VoogaFileChooser {
     private Map<String, VBox> layouts;
     
     private double optionSize, horizontalPadding, verticalPadding;
+    
+    private XMLParser chosenFile;
     
     /**
      * General constructor, needs height and width of the stage in order to dynamically space
@@ -77,6 +81,16 @@ public class VoogaFileChooser {
 	content.getChildren().add(layouts.get(fileType));
 	content.setOpacity(INVISIBLE);
 	return content;
+    }
+    
+    /**
+     * Returns the selected file so that a program can be executed.
+     * 
+     * @return
+     *         An XMLParser containing the information of the selected file.
+     */
+    public XMLParser getChosenFile() {
+	return chosenFile;
     }
     
     /*
@@ -128,14 +142,19 @@ public class VoogaFileChooser {
 	    content.setArcHeight(verticalPadding);
 	    content.setArcWidth(horizontalPadding);
 	    
-	    // TODO: change to read beginning of file for a better name
-	    Text name = new Text(f.getName());
+	    XMLParser parser = new XMLParser(f);
+	    
+	    String fileName = parser.getValidSubDirectories().get(0);
+	    fileName = fileName.substring(0, fileName.length() - 1);
+	    fileName = fileName.replace('_', ' ');
+	    Text name = new Text(fileName);
 	    name.setFill(Color.WHITE);
 	    name.setFont(new Font(20));
 	    
 	    StackPane option = new StackPane();
 	    option.getChildren().addAll(content, name);
 	    option.setMaxSize(optionSize, optionSize);
+	    option.setOnMouseClicked((clicked) -> chosenFile = parser);
 	    
 	    row.getChildren().add(option);
 	}
