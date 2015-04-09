@@ -4,6 +4,20 @@ import java.io.*;
 
 public class ChatroomClient{
 	private boolean terminate = false;
+	private boolean continueReading = true;
+	
+	public String readConsoleInput(){
+		System.out.print("Enter reply (type goodbye to terminate): ");
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			String message = br.readLine();
+			System.out.println(message);
+			return message;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "invalid message";
+	}
 	
 	public void run(){
 		String serverName = "10.190.77.51";
@@ -17,16 +31,22 @@ public class ChatroomClient{
 			System.out.println(InetAddress.getLocalHost());
 			System.out.println("Just connected to "
 					+ client.getRemoteSocketAddress());
-			OutputStream outToServer = client.getOutputStream();
-			DataOutputStream out =
-					new DataOutputStream(outToServer);
-
-			out.writeUTF("Hello from "
-					+ client.getLocalSocketAddress());
-			InputStream inFromServer = client.getInputStream();
-			DataInputStream in =
-					new DataInputStream(inFromServer);
-			System.out.println("Server says " + in.readUTF());
+			while(continueReading){
+				OutputStream outToServer = client.getOutputStream();
+				DataOutputStream out =
+						new DataOutputStream(outToServer);
+				out.writeUTF("Hello from "
+						+ client.getLocalSocketAddress());
+				InputStream inFromServer = client.getInputStream();
+				DataInputStream in =
+						new DataInputStream(inFromServer);
+				System.out.println("Server says " + in.readUTF());
+				String s = readConsoleInput();
+				if(s.toLowerCase().equals("goodbye")){
+					continueReading = false;
+				}
+				out.writeUTF(s);
+			}			
 			if(terminate){
 				client.close();
 				System.out.println("here");
