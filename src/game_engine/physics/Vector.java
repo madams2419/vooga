@@ -58,7 +58,8 @@ public class Vector {
 	}
 
 	public Vector normalize() {
-		return getPolarVector(getAngle(), 1);
+		double mag = getMagnitude();
+		return new Vector(myX / mag, myY / mag);
 	}
 
 	public void setX(double x) {
@@ -78,7 +79,11 @@ public class Vector {
 	}
 
 	public double getAngle() {
-		return Math.atan(myY/myX);
+		return isZeroVector() ? 0 : Math.atan(myY/myX);
+	}
+
+	public void isZeroVector() {
+		return (myX == 0 && myY == 0);
 	}
 
 	public double getMagnitude() {
