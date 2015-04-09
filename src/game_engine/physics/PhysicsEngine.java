@@ -9,6 +9,7 @@ import game_engine.Layer;
 import game_engine.sprite.Sprite;
 
 // TODO
+// - implement regions (regions are sprites)
 // - optimize net force computation
 
 public class PhysicsEngine {
@@ -23,12 +24,17 @@ public class PhysicsEngine {
 	private double myGround;
 	private double myTimeStep;
 	private Map<String, Vector> myGlobalForces;
+	private Map<String, Vector> myGlobalAccels;
+	private Vector myNetGlobalAccel;
 	private Vector myNetGlobalForce;
 
 	public PhysicsEngine(double ground, double timeStep, double gravity) {
 		myGround = ground;
 		myTimeStep = timeStep;
 		myGlobalForces = new HashMap<>();
+		myGlobalAccels = new HashMap<>();
+		myNetGlobalForce = new Vector();
+		myNetGlobalAccel = new Vector();
 		setGravity(gravity);
 	}
 
@@ -37,42 +43,42 @@ public class PhysicsEngine {
 	}
 
 	public void setGravity(double gravity) {
-		myGlobalForces.put(GRAV_STRING, Vector.getPolarVector(GRAV_DIRECTION, gravity));
-		computeNetGlobalForce();
+		myGlobalAccels.put(GRAV_STRING, Vector.getPolarVector(GRAV_DIRECTION, GRAV_MAGNITUDE));
+		computeNetGlobalAccel();
 	}
-	
+
 	public void update(Layer layer) {
 		List<Sprite> sprites = layer.getSprites();
-		
+
 		handleCollisions(sprites);
-		
+
 		updatePhysicsObjects(sprites);
 	}
-	
+
 	private void updatePhysicsObjects(List<Sprite> sprites) {
 		for(Sprite sprite : sprites) {
 			sprite.getPhysicsObject().update();
 		}
 	}
-	
+
 	private void handleCollisions(List<Sprite> sprites) {
 		/* check for collisions on unique sprite pairs */
 		for(int i = 0; i < sprites.size(); ++i) {
 			PhysicsObject a = sprites.get(i).getPhysicsObject();
-			
+
 			for(int j = i + 1; j < sprites.size(); ++j) {
 				PhysicsObject b = sprites.get(j).getPhysicsObject();
-				
+
 				if(checkCircleCollision(a, b)) {
 					resolveCollision(a, b);
 				}
 			}
 		}
 	}
-	
+
 	private boolean checkCircleCollision(PhysicsObject a, PhysicsObject b) {
 		double sepDistance = b.getPosition().minus(a.getPosition()).getMagnitude();
-		double radiiSum = ((Circle)b.getShape()).getRadius() + ((Circle)a.getShape()).getRadius();
+		double radiiSum = ((CircleBody)b.getShape()).getRadius() + ((CircleBody)a.getShape()).getRadius();
 		return sepDistance <= radiiSum;
 	}
 
@@ -131,11 +137,25 @@ public class PhysicsEngine {
 	}
 
 	private Vector computeNetGlobalForce() {
-		return Vector.sum(getGlobalForces());
+		myNetGlobalForce = Vector.sum(getGlobalForces());
+		return myNetGlobalForce;
+	}
+
+	private Vector computeNetGlobalAccel() {
+		myNetGlobalAccel = Vector.sum(getGlobalAccels());
+		return myNetGlobalAccel;
 	}
 
 	public Vector getNetGlobalForce() {
 		return myNetGlobalForce;
+	}
+
+	public Vector getNetGlobalAccel() {
+		return myNetGlobalAccel;
+	}
+
+	public List<Vector> getGlobalAccels() {
+		return new ArrayList<>(myGlobalAccels.values());
 	}
 
 	public List<Vector> getGlobalForces() {
@@ -147,9 +167,19 @@ public class PhysicsEngine {
 		computeNetGlobalForce();
 	}
 
+	public void setGlobalAccel(String name, Vector accel) {
+		myGlobalAccels.put(name, accel);
+		computeNetGlobalAccel();
+	}
+
 	public void removeGlobalForce(String name) {
 		myGlobalForces.remove(name);
 		computeNetGlobalForce();
+	}
+
+	public void removeGlobalAccel(String name) {
+		myGlobalAccels.remove(name);
+		computeNetGlobalAccel();
 	}
 
 	public double getTimeStep() {
@@ -159,7 +189,7 @@ public class PhysicsEngine {
 	public void setTimeStep(double timeStep) {
 		myTimeStep = timeStep;
 	}
-	
+
 	public double getGround() {
 		return myGround;
 	}

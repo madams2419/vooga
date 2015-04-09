@@ -11,7 +11,6 @@ public class PhysicsObject {
 
 	private double myInvMass;
 	private Material myMaterial;
-	private String myState;
 	private Vector myPosition;
 	private Vector myVelocity;
 	private Vector myAccel;
@@ -22,10 +21,9 @@ public class PhysicsObject {
 	private Shape myShape;
 
 	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material,
-			HitBox hitBox, String state, Vector position, Vector velocity) {
+			String state, Vector position, Vector velocity) {
 		setShape(shape);
 		setMaterial(material);
-		setState(state);
 		setPosition(position);
 		setVelocity(velocity);
 		myInvMass = computeInvMass();
@@ -33,8 +31,8 @@ public class PhysicsObject {
 	}
 
 	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material,
-			HitBox hitBox, String state, int xPos, int yPos) {
-		this(physics, shape, material, hitBox, state, new Vector(xPos, yPos), new Vector());
+			String state, int xPos, int yPos) {
+		this(physics, shape, material, state, new Vector(xPos, yPos), new Vector());
 	}
 
 	public void update() {
@@ -147,14 +145,6 @@ public class PhysicsObject {
 	public void setMaterial(Material material) {
 		myMaterial = material;
 		myInvMass = computeInvMass();
-	}
-
-	public void setState(String state) {
-		myState = state;
-	}
-
-	public String getState(String state) {
-		return myState;
 	}
 	
 	public Shape getShape() {

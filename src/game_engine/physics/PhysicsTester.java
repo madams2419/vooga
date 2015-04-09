@@ -1,6 +1,11 @@
 package game_engine.physics;
 
+import game_engine.Layer;
+import game_engine.sprite.Player;
+import game_engine.sprite.Sprite;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javafx.animation.Animation;
@@ -20,6 +25,10 @@ public class PhysicsTester extends Application {
 	private Timeline gameLoop; // main game loop
 	private Scene myScene; // javaFX scene
 	private Group myGroup; // group of nodes to be displayed in scene
+	
+	Layer layer;
+	PhysicsEngine globalPhysics;
+	HashMap<Sprite, Node> displayMap;
 
 	private List<DSprite> myDSprites;
 
@@ -29,7 +38,8 @@ public class PhysicsTester extends Application {
 
 	@Override
 	public void start(Stage stg) throws Exception {
-		initDSprites();
+		initBackend();
+		initDisplayMap();
 		addSprites();
 		initGameLoop();
 		initGameStage(stg);
@@ -43,6 +53,28 @@ public class PhysicsTester extends Application {
 	private void handleKeyInput(KeyEvent e) {
 
 	}
+	
+	public void initBackend() {
+		/* init global physics engine */
+		globalPhysics = new PhysicsEngine(0, 1/(double)fps);
+		
+		/* init player sprite */
+		Sprite player = new Player();
+		
+		/* init player sprite physics object */
+		Shape pCircle = new CircleBody(5);
+		Material material = new Material(0.3, 0.2);
+		PhysicsObject po = (pe, pCircle, )
+			
+		layer = new Layer();
+		layer.addSprite(player);
+	}
+	
+	public void initDisplayMap() {
+		for(Sprite sprite : layer.getSprites()) {
+			Node circle = new Circle()
+		}
+	}
 
 	public void initDSprites() {
 		myDSprites = new ArrayList<DSprite>();
@@ -51,23 +83,15 @@ public class PhysicsTester extends Application {
 		Node playerNode = new Rectangle(100, 100, Color.BLUE);
 		//DSprite player = new DSprite(playerPhys, playerNode);
 	}
+	
+	public void drawSprites() {
+		for(Sprite sprite : layer.getSprites()) {
+			
+		}
+	}
 
 	public void addSprites() {
 		myDSprites.forEach(dSprite -> myGroup.getChildren().add(dSprite.myNode));
-	}
-
-	private class DSprite {
-		PhysicsObject myPhys;
-		Node myNode;
-
-		public DSprite(PhysicsObject phys, Node node) {
-			myPhys = phys;
-			myNode = node;
-		}
-
-		public void update() {
-			myPhys.update();
-		}
 	}
 
 	private final void initGameLoop() {
