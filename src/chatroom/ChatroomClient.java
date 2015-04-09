@@ -27,7 +27,7 @@ public class ChatroomClient{
 			System.out.println("Connecting to " + serverName
 					+ " on port " + port);
 			Socket client = new Socket(serverName, port);
-			client.setSoTimeout(10000);
+			client.setSoTimeout(100000000);
 			System.out.println(InetAddress.getLocalHost());
 			System.out.println("Just connected to "
 					+ client.getRemoteSocketAddress());
