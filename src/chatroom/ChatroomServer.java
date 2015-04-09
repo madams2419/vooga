@@ -66,7 +66,7 @@ public class ChatroomServer extends Thread{
 	}
 
 	public static void main(String [] args)	{
-		int port = Integer.parseInt("6066");
+		int port = Integer.parseInt("6059");
 		try{
 			Thread t = new ChatroomServer(port);
 			t.start();
