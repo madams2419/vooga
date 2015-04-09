@@ -1,6 +1,6 @@
 package game_engine.objective;
 
-import game_engine.Behavior;
+import game_engine.IBehavior;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +23,7 @@ public class Objective {
     /**
      * Action performed when objective is complete.
      */
-    private Behavior myOnComplete;
+    private IBehavior myOnComplete;
     
     /**
      * List of objectives that must be completed before this objective is active.
@@ -44,7 +44,7 @@ public class Objective {
      * @param onComplete
      * @param linked List of objectives that must be completed before this objective is active.
      */
-    public Objective (Predicate<Long> condition, Behavior onComplete) {
+    public Objective (Predicate<Long> condition, IBehavior onComplete) {
         myStatus = Status.INACTIVE;
         myPreReqs = new ArrayList<>();
         myCondition = condition;

@@ -9,6 +9,6 @@ import game_engine.sprite.Sprite;
  */
 public interface IBehavior {
 	
-	public void execute(double[] params);
+	public void execute(double...params);
 	
 }

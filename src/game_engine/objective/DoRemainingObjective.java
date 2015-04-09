@@ -1,6 +1,6 @@
 package game_engine.objective;
 
-import game_engine.Behavior;
+import game_engine.IBehavior;
 import java.util.function.IntSupplier;
 /** 
  * Objective class that is completed after some action is done a specified number of times.
@@ -17,7 +17,7 @@ public class DoRemainingObjective extends Objective{
      * @param onComplete Behavior executed when objective is complete
      * @param linked List of objectives that need to be complete before an objective is active
      */
-    public DoRemainingObjective(IntSupplier numRemaining, Behavior onComplete) {
+    public DoRemainingObjective(IntSupplier numRemaining, IBehavior onComplete) {
         super((now)-> numRemaining.getAsInt() <= 0, onComplete);
         myNumRemaining = numRemaining;
     }
