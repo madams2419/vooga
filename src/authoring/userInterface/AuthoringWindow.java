@@ -74,7 +74,7 @@ public class AuthoringWindow {
 //		canvas.setBottom(setupBottomPane(myScene.getWidth()));
 		canvas.setTop(setupTopPane(myScene.getWidth()));
 		canvas.setLeft(setupLeftPane());
-		canvas.setRight(setupRightPane());
+		//canvas.setRight(setupRightPane());
 		canvas.setCenter(setupCenterPane());
 		canvas.setBottom(setupBottomPane(myScene.getWidth()));
 
@@ -135,9 +135,9 @@ public class AuthoringWindow {
 						if (result.get() == ButtonType.OK) {
 							// TODO: check to make sure user entered numbers
 
-							myCenterPane.createRegion(
-									Double.parseDouble(textBox1.getText()),
-									Double.parseDouble(textBox1.getText()));
+//							myCenterPane.createRegion(
+//									Double.parseDouble(textBox1.getText()),
+//									Double.parseDouble(textBox1.getText()));
 						}
 					});
 
@@ -189,9 +189,9 @@ public class AuthoringWindow {
 		return mTopPane;
 	}
 
-	private VBox setupRightPane() {
-		return new RightPane(myScene);
-	}
+//	private VBox setupRightPane() {
+//		return new RightPane(myScene);
+//	}
 
 	private VBox setupLeftPane() {
 		VBox buttonBox = new VBox();
