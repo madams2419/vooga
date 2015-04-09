@@ -47,12 +47,9 @@ public class PhysicsObject {
 		myPosition = myPosition.plus(myVelocity).times(dt);
 		
 		// temporary ground handling
-		if(getLowestY() < myPhysics.getGround()) myPosition.setX(myPhysics.getGround());
-	}
-	
-	/* temporary method to return lowest Y coordinate of shape body for handling ground collisions */
-	private double getLowestY() {
-		return myPosition.getY() - myShape.getRadius();
+		if(myPosition.getY() <= myPhysics.getGround() + myShape.getRadius()) {
+			myPosition.setX(myPhysics.getGround() + myShape.getRadius());
+		}
 	}
 
 	private double computeInvMass() {
