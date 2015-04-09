@@ -5,4 +5,8 @@ public class VoogaGameBuilder {
     public VoogaGameBuilder(XMLParser parser) {
 	
     }
+    
+    public VoogaGameLoop build() {
+	return null;
+    }
 }

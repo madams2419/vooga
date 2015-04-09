@@ -3,7 +3,9 @@
 	<level>
 		<level_0>
 			<objective>
-				<objective_0></objective_0>
+				<objective_0>
+					
+				</objective_0>
 				
 				<objective_1></objective_1>
 			</objective>
@@ -125,6 +127,14 @@
 				<collision_1>
 					<sprites>0 4</sprites>
 				</collision_1>
+				
+				<collision_2>
+					<sprites>0 1</sprites>
+				</collision_2>
+				
+				<collision_3>
+					<sprites>0 3</sprites>
+				</collision_3>
 			</collision>
 		</level_0>
 	</level>
