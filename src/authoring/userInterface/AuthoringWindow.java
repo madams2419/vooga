@@ -9,13 +9,11 @@ import java.util.Optional;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 //import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -25,6 +23,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -50,7 +50,7 @@ public class AuthoringWindow {
 	private static final int CLOSE_GAME = 2;
 
 	private CenterPane myCenterPane;
-	
+
 	private static Object currentlySelected;
 	private static boolean control;
 
@@ -68,13 +68,12 @@ public class AuthoringWindow {
 
 		canvas.setPrefHeight(myScene.getHeight());
 		canvas.setPrefWidth(myScene.getWidth());
-		
+
 		UIElementDistributer ud = new UIElementDistributer();
 		ud.ElementDistributer();
-		
-		
+
 		// Setting up borderPane
-//		canvas.setBottom(setupBottomPane(myScene.getWidth()));
+		// canvas.setBottom(setupBottomPane(myScene.getWidth()));
 		canvas.setTop(setupTopPane(myScene.getWidth()));
 		canvas.setLeft(setupLeftPane());
 		canvas.setRight(setupRightPane());
@@ -91,7 +90,7 @@ public class AuthoringWindow {
 	private MenuBar menuBar() {
 		MenuBar mBar = new MenuBar();
 		String[] menuItems = { "File:New/Load/Close", "Edit:Copy",
-				"View:Sreen Options", "Help:Lol there is no help" };
+				"View:Sreen Options", "Help:Help" };
 
 		Arrays.asList(menuItems).forEach(
 				str -> {
@@ -138,9 +137,9 @@ public class AuthoringWindow {
 						if (result.get() == ButtonType.OK) {
 							// TODO: check to make sure user entered numbers
 
-//							myCenterPane.createRegion(
-//									Double.parseDouble(textBox1.getText()),
-//									Double.parseDouble(textBox1.getText()));
+							// myCenterPane.createRegion(
+							// Double.parseDouble(textBox1.getText()),
+							// Double.parseDouble(textBox1.getText()));
 						}
 					});
 
@@ -161,6 +160,24 @@ public class AuthoringWindow {
 								new ExtensionFilter("All Files", "*.*"));
 						fileChooser.showOpenDialog(null);
 					});
+
+		mBar.getMenus()
+				.get(HELP_MENU)
+				.getItems()
+				.get(0)
+				.setOnAction(
+						e -> {
+							Media media = new Media(
+//									"http://uyeshare.com/music/down/12930540/2068304"
+//									+ "/YWZiMjAwNCs3OGhkUzN5TU52VkRPM0JmL3FzaXF1ZUpz"
+//									+ "angyaEdkekowS2lLcUNEL1E=/The+Beatles+-+01+Help%21.mp3"
+									"file:///home/daniel/Workspace/CS308/voogasalad_HighScrollers/src/Resources/help.mp3"
+									);
+							MediaPlayer player = new MediaPlayer(media);
+							player.setVolume(100);
+							player.play();
+						});
+
 		mBar.getMenus().get(FILE_MENU).getItems().get(CLOSE_GAME)
 				.setOnAction(e -> Platform.exit());
 		return mBar;
@@ -168,8 +185,8 @@ public class AuthoringWindow {
 
 	private HBox setupBottomPane(double width) {
 		HBox buttonBox = new HBox();
-//		UIElementDistributer ud = new UIElementDistributer();
-//		ud.ElementDistributer();
+		// UIElementDistributer ud = new UIElementDistributer();
+		// ud.ElementDistributer();
 		buttonBox.getChildren().addAll(BottomPane.mButtonList);
 		System.out.println("Button Pane is: "
 				+ BottomPane.mButtonList.toString());
@@ -193,9 +210,9 @@ public class AuthoringWindow {
 	}
 
 	private VBox setupRightPane() {
-	    RightPane r = RightPane.getInstance();
-	    r.setScene(myScene);
-	    return r;
+		RightPane r = RightPane.getInstance();
+		r.setScene(myScene);
+		return r;
 	}
 
 	private VBox setupLeftPane() {
@@ -209,24 +226,24 @@ public class AuthoringWindow {
 		myCenterPane = new CenterPane(myScene);
 		return myCenterPane;
 	}
-	
+
 	public static void setCurrentlySelected(Object o) {
 		currentlySelected = o;
 	}
-	
+
 	public static Object getCurrentlySelected() {
 		return currentlySelected;
 	}
-	
-	public static void setControlOn(){
+
+	public static void setControlOn() {
 		control = true;
 	}
-	
-	public static void setControlOff(){
+
+	public static void setControlOff() {
 		control = false;
 	}
-	
-	public static boolean getControl(){
+
+	public static boolean getControl() {
 		return control;
 	}
 
