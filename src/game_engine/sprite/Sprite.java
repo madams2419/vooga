@@ -21,7 +21,6 @@ public abstract class Sprite extends Observable{
 	private String myName;	
 	private String myState;
 	private Animation myAnimation;
-	private HitBox myHitBox;
 	protected PhysicsObject myPhysicsObject;
 	private Map<String, IBehavior> myBehaviorMap = new HashMap<>();
 
@@ -136,13 +135,6 @@ public abstract class Sprite extends Observable{
 	    return myPhysicsObject;
 	}
 	
-	public void defineHitBox(HitBox hitBox){
-	    myHitBox = hitBox;
-	}
-	
-	public HitBox getHitBox(){
-	    return this.myHitBox;
-	}
 	
 	public void moveX(double x){
 		myPhysicsObject.getPosition().setX(
