@@ -6,15 +6,15 @@ public class CollisionBox {
 	 * Assumes that top left is (0,0) 
 	 * Bottom right (+, +)
 	 */
-	private int left;
-	private int top;
-	private int right;
-	private int bottom;
-	CollisionBox(int l, int t, int r, int b){
-		left = l;
-		top = t;
-		right = r;
-		bottom = b;
+	private double left;
+	private double top;
+	private double right;
+	private double bottom;
+	CollisionBox(double highLeft, double highTop, double lowRight, double lowBot){
+		left = highLeft;
+		top = highTop;
+		right = lowRight;
+		bottom = lowBot;
 	}
 	
 	public void setLeft(int value){
@@ -31,22 +31,22 @@ public class CollisionBox {
 		bottom = value;
 	}
 	
-	public int getLeft(){
+	public double getLeft(){
 		return left;
 	}
-	public int getTop(){
+	public double getTop(){
 		return top;
 	}
-	public int getRight(){
+	public double getRight(){
 		return right;
 	}
-	public int getBottom(){
+	public double getBottom(){
 		return bottom;
 	}
-	public int getWidth(){
+	public double getWidth(){
 		return right - left;
 	}
-	public int getHeight(){
+	public double getHeight(){
 		return bottom - top;
 	}
 	
