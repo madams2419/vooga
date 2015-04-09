@@ -1,6 +1,4 @@
 package authoring.userInterface;
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -69,12 +67,11 @@ public class UIElementDistributer  extends AuthoringGUITester {
 				}
 			}
 		}
-
 	}
 
 	public static void MethodInvoker(Object selectedClass,String key, Map map){
 
 		Reflection.callMethod(selectedClass, String.format("generate%s",key),map);
-
 	}
+
 }

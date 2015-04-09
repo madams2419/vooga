@@ -12,17 +12,11 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 //import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -31,7 +25,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import authoring.rightPane.RightPane;
 
 /**
- * @author hojeanniechung & Daniel Luker & Andrew Sun
+ * @author hojeanniechung & Daniel Luker
  *
  */
 public class AuthoringWindow {
@@ -53,7 +47,6 @@ public class AuthoringWindow {
 	private static final int SCENE_HEIGHT = 1000;
 	
 	private CenterPane myCenterPane;
-	
 	public AuthoringWindow(){
 		// TODO
 	}
@@ -98,7 +91,6 @@ public class AuthoringWindow {
 							str1 -> m.getItems().add(new MenuItem(str1)));
 					mBar.getMenus().add(m);
 				});
-		
 		/*
 		 * @author Andrew
 		 */
@@ -138,8 +130,7 @@ public class AuthoringWindow {
 						}
 		});
 		
-		mBar.getMenus().get(FILE_MENU).getItems().get(OPEN_FILE).setOnAction(e -> {
-			//refactor this into new class
+		mBar.getMenus().get(0).getItems().get(1).setOnAction(e -> {
 			 FileChooser fileChooser = new FileChooser();
 			 fileChooser.setTitle("Open Resource File");
 			 fileChooser.getExtensionFilters().addAll(
@@ -149,7 +140,9 @@ public class AuthoringWindow {
 			         new ExtensionFilter("All Files", "*.*"));
 			 fileChooser.showOpenDialog(null);
 		});
-		mBar.getMenus().get(FILE_MENU).getItems().get(CLOSE_GAME).setOnAction(e -> Platform.exit());
+		mBar.getMenus().get(0).getItems().get(2).setOnAction(e -> Platform.exit());
+		
+		
 		return mBar;
 	}
 
@@ -184,7 +177,9 @@ public class AuthoringWindow {
 	}
 
 	private VBox setupRightPane() {
-		return new RightPane(myScene);
+		RightPane r = RightPane.getInstance();
+		r.setScene(myScene);
+		return r;
 	}
 
 	private VBox setupLeftPane() {
@@ -192,8 +187,7 @@ public class AuthoringWindow {
 	}
 
 	private Node setupCenterPane() {
-		myCenterPane = new CenterPane(myScene);
-		return myCenterPane;
+		return new CenterPane(myScene);
 	}
 
 }

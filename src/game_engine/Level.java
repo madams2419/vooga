@@ -29,14 +29,6 @@ public class Level {
             layers.forEach(layer -> layer.update());
         }
         
-        public void scrollX(int x){
-            layers.forEach(layer -> layer.scrollX(x));
-        }
-        
-        public void scrollY(int y){
-            layers.forEach(layer -> layer.scrollY(y));
-        }
-        
 	/**
 	 * method addObjective
 	 * adds a Game objective to the current level

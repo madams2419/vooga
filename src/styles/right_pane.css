@@ -1,3 +1,4 @@
 .text-area {
 	-fx-max-width: 300.0;
+	-fx-spacing: 20; 
 }

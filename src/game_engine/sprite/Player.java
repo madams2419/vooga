@@ -1,26 +1,13 @@
 package game_engine.sprite;
 
-import game_engine.IBehavior;
-import game_engine.physics.Vector;
 import java.util.Observable;
 
-public class Player extends Character {
-        public Player(){
-            
-        }
-        
-	public Player(String name) {
-		super(name);
-	}
-	
-	public Player(String name, int id){
-		super(name,id);
-	}
+public class Player extends Sprite {
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
 
-	}	
-	
+	}
+
 }
