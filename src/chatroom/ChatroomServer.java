@@ -34,12 +34,12 @@ public class ChatroomServer extends Thread{
 				server.setSoTimeout(10000);
 				System.out.println("Just connected to "
 						+ server.getRemoteSocketAddress());
+				DataInputStream in =
+						new DataInputStream(server.getInputStream());
+				System.out.println(in.readUTF());
+				DataOutputStream out =
+						new DataOutputStream(server.getOutputStream());
 				while(continueReading){
-					DataInputStream in =
-							new DataInputStream(server.getInputStream());
-					System.out.println(in.readUTF());
-					DataOutputStream out =
-							new DataOutputStream(server.getOutputStream());
 					String s = readConsoleInput();
 					if(s.toLowerCase().equals("goodbye")){
 						continueReading = false;
