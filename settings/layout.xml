@@ -2,24 +2,24 @@
 <layout name="authoring_environment">
 	<top_pane>
 		<buttons>
-			<Button>
+			<button>
 				<X>0</X>
 			 	<Y>0</Y>
 				<label>Global Settings</label>
 				<listener>null</listener>
-			</Button>
-			<Button>
+			</button>
+			<button>
 			 	<X>1</X>
 			 	<Y>0</Y>
 				<label>Map Settings</label>
 				<listener>null</listener>
-			</Button>
-			<Button>
+			</button>
+			<button>
 			 	<X>2</X>
 			 	<Y>0</Y>
 				<label>Interactions List</label>
 				<listener>null</listener>
-			</Button>
+			</button>
 		</buttons>
 		<dropdowns>
 			<dropdown>
@@ -50,12 +50,12 @@
 	</top_pane>
 	<left_pane>
 		<buttons>
-			<Button>
+			<button>
 				<X>0</X>
 			 	<Y>3</Y>
 				<label>Test Settings</label>
 				<listener>null</listener>
-			</Button>
+			</button>
 		</buttons>
 		<dropdowns>
 			<dropdown>
