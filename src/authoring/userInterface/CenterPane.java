@@ -1,16 +1,17 @@
 package authoring.userInterface;
 
-import java.awt.Cursor;
 import java.util.Stack;
-import authoring.Sprite;
+
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import authoring.Sprite;
 
 /**
  * 
@@ -45,6 +46,15 @@ public class CenterPane extends ScrollPane {
 
 		// Use stack, or just a group?
 		myStack = new Stack<>();
+
+		this.setOnKeyPressed(e -> {
+			if (e.getCode() == KeyCode.CONTROL)
+				AuthoringWindow.setControlOn();
+		});
+		this.setOnKeyReleased(e -> {
+			if (e.getCode() == KeyCode.SHIFT)
+				AuthoringWindow.setControlOff();
+		});
 
 	}
 

@@ -50,6 +50,9 @@ public class AuthoringWindow {
 	private static final int CLOSE_GAME = 2;
 
 	private CenterPane myCenterPane;
+	
+	private static Object currentlySelected;
+	private static boolean control;
 
 	public AuthoringWindow() {
 		// TODO
@@ -205,6 +208,26 @@ public class AuthoringWindow {
 	private Node setupCenterPane() {
 		myCenterPane = new CenterPane(myScene);
 		return myCenterPane;
+	}
+	
+	public static void setCurrentlySelected(Object o) {
+		currentlySelected = o;
+	}
+	
+	public static Object getCurrentlySelected() {
+		return currentlySelected;
+	}
+	
+	public static void setControlOn(){
+		control = true;
+	}
+	
+	public static void setControlOff(){
+		control = false;
+	}
+	
+	public static boolean getControl(){
+		return control;
 	}
 
 }
