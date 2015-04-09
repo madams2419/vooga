@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Simple_Game>
+	<level>
+		<level_0>
+			<objective>
+				<objective_0></objective_0>
+				
+				<objective_1></objective_1>
+			</objective>
+			
+			<sprite>
+				<sprite_0>
+					<type>Player</type>
+					<state>standing</state>
+					<animation>
+						<state_0>
+							<name>standing</name>
+							<image> </image>
+						</state_0>
+						<state_1>
+							<name>win</name>
+							<image> </image>
+						</state_1>
+					</animation>
+					<physics> </physics>
+				</sprite_0>
+				
+				<sprite_1>
+					<type>Platform</type>
+					<state>immobile</state>
+					<animation>
+						<state_0>
+							<name>immobile</name>
+							<image> </image>
+						</state_0>
+					</animation>
+					<physics> </physics>
+				</sprite_1>
+				
+				<sprite_2>
+					<type>Region</type>
+					<state>immobile</state>
+					<animation>
+						<state_0>
+							<name>immobile</name>
+							<image> </image>
+						</state_0>
+					</animation>
+					<physics> </physics>
+				</sprite_2>
+				
+				<sprite_3>
+					<type>Platform</type>
+					<state>immobile</state>
+					<animation>
+						<state_0>
+							<name>immobile</name>
+							<image> </image>
+						</state_0>
+					</animation>
+					<physics> </physics>
+				</sprite_3>
+				
+				<sprite_4>
+					<type>Enemy</type>
+					<state>immobile</state>
+					<animation>
+						<state_0>
+							<name>immobile</name>
+							<image> </image>
+						</state_0>
+					</animation>
+					<physics> </physics>
+				</sprite_4>
+			</sprite>
+			
+			<control>
+				<control_0>
+					<key_0>
+						<key>rightArrow</key>
+						<onPressed>
+							
+						</onPressed>
+						<whilePressed>
+							
+						</whilePressed>
+						<onReleased>
+							
+						</onReleased>
+					</key_0>
+					
+					<key_1>
+						<key>leftArrow</key>
+						<onPressed>
+							
+						</onPressed>
+						<whilePressed>
+							
+						</whilePressed>
+						<onReleased>
+							
+						</onReleased>
+					</key_1>
+					
+					<key_2>
+						<key>upArrow</key>
+						<onPressed>
+							
+						</onPressed>
+						<whilePressed>
+							
+						</whilePressed>
+						<onReleased>
+							
+						</onReleased>
+					</key_2>
+				</control_0>
+			</control>
+			
+			<collision>
+				<collision_0>
+					<sprites>0 2</sprites>
+				</collision_0>
+				
+				<collision_1>
+					<sprites>0 4</sprites>
+				</collision_1>
+			</collision>
+		</level_0>
+	</level>
+</Simple_Game>

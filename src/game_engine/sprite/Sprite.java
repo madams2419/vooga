@@ -18,7 +18,7 @@ import game_engine.physics.PhysicsObject;
 public abstract class Sprite extends Observable{
 	
 	private int myId;
-	private String myName;
+	private String myName;	
 	private String myState;
 	private Animation myAnimation;
 	private HitBox myHitBox;
