@@ -31,7 +31,7 @@ public class BottomPane extends HBox {
 	public Group generateComponents(ArrayList<Map> values){
 		for(int i=0; i<values.size(); i++){
 			Map<String, Map> m=values.get(i);
-			//System.out.println(m);
+			System.out.println(m);
 			for(String key: m.keySet()){
 				if(key.equals("Button")){
 					mButtonList.add(ButtonFactory.generateButton(m.get(key)));
@@ -50,4 +50,3 @@ public class BottomPane extends HBox {
 	
 	
 }
-
