@@ -135,9 +135,9 @@ public class AuthoringWindow {
 						if (result.get() == ButtonType.OK) {
 							// TODO: check to make sure user entered numbers
 
-							myCenterPane.createRegion(
-									Double.parseDouble(textBox1.getText()),
-									Double.parseDouble(textBox1.getText()));
+//							myCenterPane.createRegion(
+//									Double.parseDouble(textBox1.getText()),
+//									Double.parseDouble(textBox1.getText()));
 						}
 					});
 
@@ -190,7 +190,9 @@ public class AuthoringWindow {
 	}
 
 	private VBox setupRightPane() {
-		return RightPane.getInstance();
+	    RightPane r = RightPane.getInstance();
+	    r.setScene(myScene);
+	    return r;
 	}
 
 	private VBox setupLeftPane() {
