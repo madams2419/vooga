@@ -3,10 +3,10 @@ package chatroom;
 import java.net.*;
 import java.io.*;
 
-public class GreetingServer extends Thread{
+public class ChatroomServer extends Thread{
 	private ServerSocket serverSocket;
 
-	public GreetingServer(int port) throws IOException{
+	public ChatroomServer(int port) throws IOException{
 		serverSocket = new ServerSocket(port);
 		System.out.println(InetAddress.getLocalHost());
 		serverSocket.setSoTimeout(10000);
@@ -18,6 +18,7 @@ public class GreetingServer extends Thread{
 				System.out.println("Waiting for client on port " +
 						serverSocket.getLocalPort() + "...");
 				Socket server = serverSocket.accept();
+				server.setSoTimeout(10000);
 				System.out.println("Just connected to "
 						+ server.getRemoteSocketAddress());
 				DataInputStream in =
@@ -26,7 +27,7 @@ public class GreetingServer extends Thread{
 				DataOutputStream out =
 						new DataOutputStream(server.getOutputStream());
 				out.writeUTF("Thank you for connecting to "
-						+ server.getLocalSocketAddress() + "Kevin\nGoodbye!");
+						+ server.getLocalSocketAddress() + "Michael\nGoodbye!");
 				server.close();
 			}catch(SocketTimeoutException s)
 			{
@@ -39,10 +40,11 @@ public class GreetingServer extends Thread{
 			}
 		}
 	}
+	
 	public static void main(String [] args)	{
 		int port = Integer.parseInt("6066");
 		try{
-			Thread t = new GreetingServer(port);
+			Thread t = new ChatroomServer(port);
 			t.start();
 		}catch(IOException e){
 			e.printStackTrace();
