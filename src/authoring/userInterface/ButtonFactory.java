@@ -18,12 +18,12 @@ import XML.LayoutXMLParser;
  *
  */
 public class ButtonFactory{
-	private static File mFile;
-	private static String mType;
+//	private static File mFile;
+//	private static String mType;
 	private static ButtonFactory mInstance;
-	private static String s;
-	private static ArrayList<Map> mAttributesList=new ArrayList<Map>();
-	private static ArrayList<Button> mButtonList=new ArrayList<Button>();
+//	private static String s;
+//	private static ArrayList<Map> mAttributesList=new ArrayList<Map>();
+//	private static ArrayList<Button> mButtonList;
 
 	/*==============================Constructors=================================================*/
 
@@ -34,25 +34,19 @@ public class ButtonFactory{
 		// TODO Auto-generated constructor stub
 	}
 
-
-	//	public static void main(String[] args){	
-	//		s="Button"; //test Case
-	//		String f="src/Resources/FilestoParse.xml";
-	//		LayoutXMLParser.parse(f, s);
-	//		mFile=LayoutXMLParser.getFile(); 
-	//	}
-	//	
 	
 	public ButtonFactory(){
 		System.out.println("Reached public constructor for ButtonFactory");
 		
 	}
 
-
-
-	public static void generateButton(Map m){
-		System.out.println("button" + m);
+	public static Button generateButton(Map<String,String> m){
+		//System.out.println("button" + m);
 		Button b = new Button();
+		b.setText(m.get("label"));
+//		mButtonList.add(b);
+//		return mButtonList;
+		return b;
 	}
 
 
