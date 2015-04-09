@@ -21,18 +21,23 @@ public class PhysicsObject {
 	private Shape myShape;
 
 	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material,
-			String state, Vector position, Vector velocity) {
-		setShape(shape);
-		setMaterial(material);
-		setPosition(position);
-		setVelocity(velocity);
+			Vector position, Vector velocity) {
+		myPhysics = physics;
+		myShape = shape;
+		myMaterial = material;
+		myPosition = position;
+		myVelocity = velocity;
+		
+		myNetInternalForce = new Vector();
+		myDirForceMagnitude = 0;
+		
 		myInvMass = computeInvMass();
 		myAccel = computeAccel();
 	}
 
 	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material,
-			String state, int xPos, int yPos) {
-		this(physics, shape, material, state, new Vector(xPos, yPos), new Vector());
+			int xPos, int yPos) {
+		this(physics, shape, material, new Vector(xPos, yPos), new Vector());
 	}
 
 	public void update() {
@@ -42,7 +47,12 @@ public class PhysicsObject {
 		myPosition = myPosition.plus(myVelocity).times(dt);
 		
 		// temporary ground handling
-		if(myPosition.getY() < myPhysics.getGround()) myPosition.setX(myPhysics.getGround());
+		if(getLowestY() < myPhysics.getGround()) myPosition.setX(myPhysics.getGround());
+	}
+	
+	/* temporary method to return lowest Y coordinate of shape body for handling ground collisions */
+	private double getLowestY() {
+		return myPosition.getY() - myShape.getRadius();
 	}
 
 	private double computeInvMass() {

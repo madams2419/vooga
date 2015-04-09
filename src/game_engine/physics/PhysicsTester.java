@@ -13,24 +13,28 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class PhysicsTester extends Application {
 
-	private static final int fps = 60; // animation frames per second
-	private Timeline gameLoop; // main game loop
-	private Scene myScene; // javaFX scene
-	private Group myGroup; // group of nodes to be displayed in scene
+	private static final int fps = 60;
+	private static final int width = 400;
+	private static final int height = 400;
+	
+	private Timeline gameLoop;
+	private Scene myScene;
+	private Group myGroup;
 	
 	Layer layer;
 	PhysicsEngine globalPhysics;
+	Sprite playerSprite;
 	HashMap<Sprite, Node> displayMap;
-
-	private List<DSprite> myDSprites;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -38,77 +42,88 @@ public class PhysicsTester extends Application {
 
 	@Override
 	public void start(Stage stg) throws Exception {
-		initBackend();
-		initDisplayMap();
-		addSprites();
-		initGameLoop();
-		initGameStage(stg);
-		stg.show();
-	}
-
-	private void handleKeyFrame() {
-
-	}
-
-	private void handleKeyInput(KeyEvent e) {
-
-	}
-	
-	public void initBackend() {
-		/* init global physics engine */
-		globalPhysics = new PhysicsEngine(0, 1/(double)fps);
-		
-		/* init player sprite */
-		Sprite player = new Player();
-		
-		/* init player sprite physics object */
-		Shape pCircle = new CircleBody(5);
-		Material material = new Material(0.3, 0.2);
-		PhysicsObject po = (pe, pCircle, )
-			
-		layer = new Layer();
-		layer.addSprite(player);
-	}
-	
-	public void initDisplayMap() {
-		for(Sprite sprite : layer.getSprites()) {
-			Node circle = new Circle()
-		}
-	}
-
-	public void initDSprites() {
-		myDSprites = new ArrayList<DSprite>();
-
-		//PhysicsObject playerPhys = new PhysicsObject(100, 3, 0, 0);
-		Node playerNode = new Rectangle(100, 100, Color.BLUE);
-		//DSprite player = new DSprite(playerPhys, playerNode);
-	}
-	
-	public void drawSprites() {
-		for(Sprite sprite : layer.getSprites()) {
-			
-		}
-	}
-
-	public void addSprites() {
-		myDSprites.forEach(dSprite -> myGroup.getChildren().add(dSprite.myNode));
-	}
-
-	private final void initGameLoop() {
 		Duration framePeriod = Duration.millis(1000 / (float) fps);
 		KeyFrame frame = new KeyFrame(framePeriod, e -> handleKeyFrame());
 
 		gameLoop = new Timeline();
 		gameLoop.setCycleCount(Animation.INDEFINITE);
 		gameLoop.getKeyFrames().add(frame);
-	}
-
-	public void initGameStage(Stage stg) {
+		
 		stg.setTitle("Physics Demo");
 		myGroup = new Group();
-		myScene = new Scene(myGroup, 400, 400, Color.WHITE);
+		myScene = new Scene(myGroup, width, height, Color.WHITE);
 		myScene.setOnKeyPressed(e -> handleKeyInput(e));
 		stg.setScene(myScene);
+
+		initBackend();
+		initAndDrawNodes();
+		
+		stg.show();
+		gameLoop.play();
+	}
+	
+	public void stop() {
+		gameLoop.stop();
+	}
+
+	private void handleKeyFrame() {
+		globalPhysics.update(layer);
+		updateNodes();
+	}
+	
+	/* update node positioning to reflect sprite positioning */
+	public void updateNodes() {
+		for(Sprite sprite : layer.getSprites()) {
+			PhysicsObject sPhysics = sprite.getPhysicsObject();
+			Node sNode = displayMap.get(sprite);
+			sNode.setTranslateX(sPhysics.getX());
+			sNode.setTranslateY(sPhysics.getY());
+			System.out.printf("(%d, %d)\n", (int)sPhysics.getX(), (int)sPhysics.getY());
+		}
+	}
+	private void handleKeyInput(KeyEvent e) {
+		if(e.getCode() == KeyCode.SPACE) {
+			playerSprite.getPhysicsObject().applyImpulse(new Vector(0, 50));
+		}
+	}
+	
+	public void initBackend() {
+		/* create global physics engine */
+		globalPhysics = new PhysicsEngine(0, 1/(double)fps);
+		
+		/* create player sprite */
+		Sprite player = new Player();
+		
+		/* create player sprite physics object */
+		CircleBody playerShape = new CircleBody(5);
+		Material playerMaterial = new Material(0.3, 0.2);
+		PhysicsObject playerPhysics = new PhysicsObject(globalPhysics, playerShape, playerMaterial, 200, (int)playerShape.getRadius());
+
+		/* set player physics */
+		player.setPhysicsObject(playerPhysics);
+		
+		/* init layer and add player sprite */
+		layer = new Layer();
+		layer.addSprite(player);
+	}
+	
+	public void initAndDrawNodes() {
+		displayMap = new HashMap<>();
+		for(Sprite sprite : layer.getSprites()) {
+			Node node = createNodeFromSprite(sprite);
+			myGroup.getChildren().add(node);
+			displayMap.put(sprite, node);
+		}
+	}
+	
+	/* create a node representation of a sprite */
+	public Node createNodeFromSprite(Sprite sprite) {
+		PhysicsObject sPhysics = sprite.getPhysicsObject();
+		double radius = ((CircleBody)sPhysics.getShape()).getRadius();
+		Node circle = new Circle(radius, Color.BLACK); // right now only circles are supported
+		circle.setTranslateX(sPhysics.getX());
+		circle.setTranslateY(sPhysics.getY());
+		return circle;
 	}
 
 }

@@ -13,6 +13,7 @@ public class CircleBody implements Shape {
 		return (4/3)*Math.PI*Math.pow(myRadius, 3);
 	}
 	
+	@Override
 	public double getRadius() {
 		return myRadius;
 	}
