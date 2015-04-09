@@ -94,6 +94,7 @@ public class Reflection {
 			}
 			throw new ReflectionException("No matching public method %s for %s", name, target.getClass().getName());
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new ReflectionException("No matching public method %s for %s", name, target.getClass().getName());
 		}
 	}

@@ -12,3 +12,4 @@ public class BottomPane extends HBox {
 	//TODO fill out this badboy
 	
 }
+
