@@ -6,8 +6,7 @@ import java.net.*;
 import java.io.*;
 
 public class GreetingClient{
-	public static void main(String [] args)
-	{
+	public static void main(String [] args){ // for future use 104.131.22.182
 		String serverName = "10.190.77.51";
 		int port = Integer.parseInt("6066");
 		try
