@@ -30,7 +30,7 @@ public class CharacterCreationPane extends EditingPane {
                                                + "selected (up to two%n"
                                                + "selections), its (their)%n"
                                                + "information will be%n" + "shown here.")));
-        addSpriteToPane(100, "/images/turtle.png");
+        addSpriteToPane(100, "/images/smallLuigi.png");
         addSpriteToPane(101, "/images/luigi.png");
     }
     
