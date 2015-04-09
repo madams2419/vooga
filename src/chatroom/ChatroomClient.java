@@ -21,7 +21,7 @@ public class ChatroomClient{
 	
 	public void run(){
 		String serverName = "10.190.77.51";
-		int port = Integer.parseInt("6060");
+		int port = Integer.parseInt("6059");
 		try
 		{
 			System.out.println("Connecting to " + serverName

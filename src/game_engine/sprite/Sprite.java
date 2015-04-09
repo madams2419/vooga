@@ -96,6 +96,10 @@ public abstract class Sprite extends Observable{
 	    return myAnimation.getImageView();
 	}
 	
+	public void setImageSize(double xSize, double ySize){
+	    myAnimation.getImageView().resize(xSize, ySize);
+	}
+	
 	public void setState(String state){
 		myState = state;
 		setChanged();

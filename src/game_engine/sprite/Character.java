@@ -37,7 +37,7 @@ public abstract class Character extends Sprite {
 	 */
 	// params[0] is pixels to move forward
 	public IBehavior moveForward = (params) -> { // movement
-		myPosition.setX(Double.parseDouble(params[0]));
+		myPosition.setX(myPosition.getX()+Double.parseDouble(params[0]));
 		setStateName("forward");
 	};
 
