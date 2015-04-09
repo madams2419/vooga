@@ -1,6 +1,7 @@
 package menu;
 
 import game_player.VoogaGameBuilder;
+import authoring.userInterface.*;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
@@ -274,6 +275,9 @@ public class VoogaMenu {
 	
 	design.setOnMouseClicked((event) -> {
 	    addChoiceMenu(DESIGN);
+	    choiceMenu.setOnMouseClicked((clicked) -> {
+		scene = new AuthoringWindow().GameCreateUI();
+	    });
 	});
     }
     
