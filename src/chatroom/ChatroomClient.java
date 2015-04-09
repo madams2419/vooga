@@ -6,6 +6,7 @@ public class ChatroomClient{
 	private boolean terminate = false;
 	private boolean continueReading = true;
 	private String previousInputStream;
+	private View myView;
 	
 	public String readConsoleInput(){
 		System.out.print("Enter reply (type goodbye to terminate): ");
@@ -20,6 +21,8 @@ public class ChatroomClient{
 	}
 	
 	public void run(){
+		myView = new View();
+		
 		String serverName = "10.190.77.51";
 		int port = Integer.parseInt("6066");
 		try
@@ -64,6 +67,5 @@ public class ChatroomClient{
 	public static void main(String [] args){ // for future use 104.131.22.182
 		ChatroomClient c = new ChatroomClient();
 		c.run();
-		c.terminate();
 	}
 }

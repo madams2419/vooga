@@ -3,10 +3,18 @@ package chatroom;
 import java.net.*;
 import java.io.*;
 
-public class ChatroomServer extends Thread{
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+
+public class ChatroomServer extends Thread implements Observable{
 	private ServerSocket serverSocket;
 	private String previousInputStream;
+	private String previousOutputString;
+	private String currentOutputString;
 	private boolean continueReading = true;
+	private DataInputStream in;
+	private DataOutputStream out;
+	
 	public ChatroomServer(int port) throws IOException{
 		serverSocket = new ServerSocket(port);
 		System.out.println(InetAddress.getLocalHost());
@@ -31,23 +39,21 @@ public class ChatroomServer extends Thread{
 				System.out.println("Waiting for client on port " +
 						serverSocket.getLocalPort() + "...");
 				Socket server = serverSocket.accept();
-				server.setSoTimeout(10000000000);
+				server.setSoTimeout(100000000);
 				System.out.println("Just connected to "
 						+ server.getRemoteSocketAddress());
 				
-				DataInputStream in =
-						new DataInputStream(server.getInputStream());
-				DataOutputStream out =
-						new DataOutputStream(server.getOutputStream());
+				in = new DataInputStream(server.getInputStream());
+				out = new DataOutputStream(server.getOutputStream());
 				while(continueReading){
 					if(!server.getInputStream().equals(previousInputStream)){
+						
 						System.out.println(in.readUTF());
 					}
-					String s = readConsoleInput();
-					if(s.toLowerCase().equals("goodbye")){
-						continueReading = false;
+					if(!currentOutputString.equals(previousOutputString)){
+						out.writeUTF(currentOutputString);
+						previousOutputString = currentOutputString;
 					}
-					out.writeUTF(s);
 					previousInputStream = server.getInputStream().toString();
 				}
 //				out.writeUTF("Thank you for connecting to "
@@ -64,14 +70,32 @@ public class ChatroomServer extends Thread{
 			}
 		}
 	}
-
-	public static void main(String [] args)	{
-		int port = Integer.parseInt("6060");
-		try{
-			Thread t = new ChatroomServer(port);
-			t.start();
-		}catch(IOException e){
-			e.printStackTrace();
-		}
+	
+	public void writeString(String string){
+		currentOutputString = string;
 	}
+	
+	
+	
+//	public static void main(String [] args)	{
+//		int port = Integer.parseInt("6060");
+//		try{
+//			Thread t = new ChatroomServer(port);
+//			t.start();
+//		}catch(IOException e){
+//			e.printStackTrace();
+//		}
+//	}
+
+	@Override
+	public void addListener(InvalidationListener arg0) {
+		
+		
+	}
+
+	@Override
+	public void removeListener(InvalidationListener arg0) {
+		
+	}
+
 }

@@ -7,6 +7,13 @@ import javafx.stage.*;
 
 public class ChatroomMainServer extends Application {
 	public static void main(String[] args) {
+		int port = Integer.parseInt("6060");
+		try{
+			Thread t = new ChatroomServer(port);
+			t.start();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 		launch(args);
 	}
 	
@@ -20,7 +27,6 @@ public class ChatroomMainServer extends Application {
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		
 		stage.setResizable(false);
         stage.setTitle("Chat Room");
         stage.setScene(view.getScene());
