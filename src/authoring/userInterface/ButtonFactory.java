@@ -1,21 +1,23 @@
 /**
  * 
  */
-package src.authoring.userInterface;
+package authoring.userInterface;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
+import javafx.application.Application;
 import javafx.scene.control.Button;
-
-import org.w3c.dom.Node;
+import javafx.stage.Stage;
 import XML.LayoutXMLParser;
 /**
  * @author hojeanniechung
  *
  */
-public class ButtonFactory {
+public class ButtonFactory{
 	private static File mFile;
 	private static String mType;
 	private static ButtonFactory mInstance;
@@ -25,15 +27,11 @@ public class ButtonFactory {
 
 	/*==============================Constructors=================================================*/
 
-	public static ButtonFactory getSharedInstace(String f) {
+	public static ButtonFactory getSharedInstace() {
 		if(mInstance==null)
-			mInstance=new ButtonFactory(f);
+			mInstance=new ButtonFactory();
 		return mInstance;
 		// TODO Auto-generated constructor stub
-	}
-
-	public static ButtonFactory getSharedInstance() {
-		return mInstance;
 	}
 
 
@@ -44,33 +42,19 @@ public class ButtonFactory {
 	//		mFile=LayoutXMLParser.getFile(); 
 	//	}
 	//	
+	
 	public ButtonFactory(){
-		System.out.println("Button Constructor Created");
-		return;
-	}
-
-	private ButtonFactory(String f){
-		//s="Button"; //test Case
-		f="src/settings/layout.xml";
-		LayoutXMLParser.parse(f);
-		mFile=LayoutXMLParser.getFile();
-
-	}
-
-	//	public static ArrayList<Map> GetAttributes(){	
-	//		//clear AttributeList from before
-	//		for(int i=0; i<LayoutXMLParser.mAttributesList.size(); i++){
-	//			LayoutXMLParser.mAttributesList.remove(i);
-	//		}
-	//		LayoutXMLParser.parse(mFile.toString(), mType);
-	//		mAttributesList= LayoutXMLParser.mAttributesList;
-	//		//System.out.println("mAttributesList is "+mAttributesList);
-	//		return mAttributesList;
-	//	}
-
-	public static void generateButton(Map m){
-		System.out.println("button"+m);
+		System.out.println("Reached public constructor for ButtonFactory");
 		
 	}
+
+
+
+	public static void generateButton(Map m){
+		System.out.println("button" + m);
+		Button b = new Button();
+	}
+
+
 
 }

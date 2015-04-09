@@ -22,7 +22,7 @@ class SpriteFileBuilder extends XMLBuilder {
 		super(rootElement, attributes_values);
 	}
 
-	void addSprite(Sprite newSprite) {
+//	void addSprite(Sprite newSprite) {
 //		Element e = super.createElement(newSprite.name);
 //		e.setAttribute("id", ""+newSprite.getID());
 //		addChildWithProperty(e, "health", "" + newSprite.health);
@@ -32,7 +32,7 @@ class SpriteFileBuilder extends XMLBuilder {
 //		addChildProperties(e, "key-actions", newSprite.key_actions);
 //		addChildProperties(e, "position", newSprite.position);
 //		this.addToRoot(e);
-	}
+//	}
 
 	void addProperties(Element element, Map<Object, Object> properties) {
 		properties.forEach((e1, e2) -> addChildWithProperty(element, e1.toString(), e2.toString()));
@@ -48,7 +48,7 @@ class SpriteFileBuilder extends XMLBuilder {
 	public static void main(String[] args){
 		SpriteFileBuilder b = new SpriteFileBuilder("sprites", "game", "mario", "xmlns:res", "swap/game.xml");
 		
-		Sprite s = new Sprite(0, "null");
+//		Sprite s = new Sprite(0, "null");
 		{	// Creating a sprite object, and defining its properties. This will be all done graphically
 //		s.health = 1;
 //		s.imageuri = "null";
@@ -61,7 +61,7 @@ class SpriteFileBuilder extends XMLBuilder {
 //		s.key_actions.put(Sprite.ACTIONS.RIGHT.name(), "run");
 		}
 		
-		Sprite t = new Sprite(1, "null");
+//		Sprite t = new Sprite(1, "null");
 		{	// Creating a sprite object, and defining its properties. This will be all done graphically
 //		t.health = 1;
 //		t.imageuri = "res/images/koopa.jpeg";
@@ -74,8 +74,8 @@ class SpriteFileBuilder extends XMLBuilder {
 		
 		
 		
-		b.addSprite(s);
-		b.addSprite(t);
+//		b.addSprite(s);
+//		b.addSprite(t);
 		
 		b.streamFile("swap/sprites.xml", b.getRoot());
 		

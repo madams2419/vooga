@@ -1,4 +1,5 @@
-package src.authoring.userInterface;
+package authoring.userInterface;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,13 +9,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import javafx.application.Application;
 import XML.LayoutXMLParser;
 
 /**
  * @author hojeanniechung & mungcheow
  *
  */
-public class UIElementDistributer {
+public class UIElementDistributer  extends AuthoringGUITester {
 	static Reflection reflection = new Reflection(); 
 	static Set ElementSet=new HashSet();
 	private static String elementNext;

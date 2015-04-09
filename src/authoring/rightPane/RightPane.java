@@ -1,4 +1,4 @@
-package src.authoring.rightPane;
+package authoring.rightPane;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

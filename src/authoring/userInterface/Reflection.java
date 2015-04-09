@@ -1,4 +1,4 @@
-package src.authoring.userInterface;
+package authoring.userInterface;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
@@ -12,7 +12,7 @@ import java.util.Locale;
 import static java.lang.System.out;
 import static java.lang.System.err;
 
-import org.codehaus.groovy.ast.Parameter;
+
 
 
 /**
@@ -94,6 +94,7 @@ public class Reflection {
 			}
 			throw new ReflectionException("No matching public method %s for %s", name, target.getClass().getName());
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new ReflectionException("No matching public method %s for %s", name, target.getClass().getName());
 		}
 	}

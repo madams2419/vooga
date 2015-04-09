@@ -1,4 +1,4 @@
-package src.authoring.userInterface;
+package authoring.userInterface;
 
 import javafx.scene.layout.HBox;
 
@@ -12,3 +12,4 @@ public class BottomPane extends HBox {
 	//TODO fill out this badboy
 	
 }
+

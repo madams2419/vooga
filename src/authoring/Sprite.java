@@ -1,4 +1,4 @@
-package src.authoring;
+package authoring;
 //package authoring;
 //
 //import java.util.HashMap;

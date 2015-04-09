@@ -1,4 +1,4 @@
-package src.authoring.userInterface;
+package authoring.userInterface;
 
 //import java.io.File;
 import java.util.Arrays;
