@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import org.w3c.dom.Element;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import authoring.util.FrontEndUtils;
@@ -16,7 +14,7 @@ import authoring.util.ImageEditor;
 /***
  * Class that contains information about the sprites for eventually generating
  * xml files
- *
+ * 
  * @author Daniel Luker, Andrew Sun, Natalie Chanfreau
  *
  */
@@ -53,12 +51,6 @@ public class Sprite extends ImageView {
 		myCharacteristics.put("ID", String.valueOf(ID));
 		myIcon = new ImageView();
 		changeImage(new Image(getClass().getResourceAsStream(myImageURI)));
-		XMLBuilder b = XMLBuilder.getInstance("game");
-		Element e = b.addToRoot(b.createElement("sprite"));
-		e.setAttribute("name", imageURI.split("/")[1]);
-		
-		(b.add((b.add(e, "velocity")), "x")).setTextContent(myPosition.get(X_STRING).toString());
-//		(b.add((b.add(e, "velocity")), "y")).setTextContent(myPosition.get(Y_STRING).toString());
 	}
 
 	public Sprite(int ID, String imageURI, Consumer<Sprite> consumer) {
