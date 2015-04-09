@@ -190,7 +190,7 @@ public class AuthoringWindow {
 	}
 
 	private VBox setupRightPane() {
-		return new RightPane(myScene);
+		return RightPane.getInstance();
 	}
 
 	private VBox setupLeftPane() {
