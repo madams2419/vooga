@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import authoring.AbstractSprite;
+import authoring.Sprite;
 import authoring.SpriteType;
 
 
@@ -39,7 +40,7 @@ public class RightPane extends VBox {
                                                            s -> switchToCharacterEditingPane(s)));
     }
 
-    public void switchToCharacterEditingPane (AbstractSprite s) {
+    public void switchToCharacterEditingPane (Sprite s) {
         switchToPane(new CharacterEditingPane(myScene, s, i -> switchToCharacterCreationPane()));
     }
 

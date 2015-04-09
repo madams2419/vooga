@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
+
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -47,6 +49,9 @@ public class AuthoringWindow {
 	private static final int OPEN_FILE = 1;
 	private static final int CLOSE_GAME = 2;
 	
+	private static final int SCENE_WIDTH = 1000;
+	private static final int SCENE_HEIGHT = 1000;
+	
 	private CenterPane myCenterPane;
 	
 	public AuthoringWindow(){
@@ -59,7 +64,7 @@ public class AuthoringWindow {
 
 		BorderPane canvas = new BorderPane();
 
-		myScene = new Scene(root, 1000, 1000, Color.WHITE);
+		myScene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, Color.WHITE);
 
 		canvas.setPrefHeight(myScene.getHeight());
 		canvas.setPrefWidth(myScene.getWidth());
@@ -119,11 +124,18 @@ public class AuthoringWindow {
 			
 			Optional<ButtonType> result = dialog.showAndWait();
 			// Refactor? Is it possible to get rid of this if statement?
-			if (result.get() == ButtonType.OK){
-				// TODO: check to make sure user entered numbers
-				
-				myCenterPane.createRegion(Double.parseDouble(textBox1.getText()), Double.parseDouble(textBox1.getText()));
-			}
+						if (result.get() == ButtonType.OK) {
+							if (Pattern.matches("^\\d+(\\.\\d+)?$",
+									textBox1.getText())
+									&& Pattern.matches("^\\d+(\\.\\d+)?$",
+											textBox2.getText())) {
+								myCenterPane.createRegion(
+										Double.parseDouble(textBox1.getText()),
+										Double.parseDouble(textBox2.getText()));
+							} else {
+								System.out.println("error");
+							}
+						}
 		});
 		
 		mBar.getMenus().get(FILE_MENU).getItems().get(OPEN_FILE).setOnAction(e -> {
@@ -156,7 +168,9 @@ public class AuthoringWindow {
 	private HBox setupTopPane(double width) {
 		Map<String, EventHandler<Event>> mButtons = new HashMap<>();
 
-		mButtons.put("Global Settings", null);
+		mButtons.put("Global Settings", e -> {
+			System.out.println("global settings clicked");
+		});
 		mButtons.put("Map Settings", null);
 		mButtons.put("Interactions List", null);
 		mButtons.put("Characters", null);

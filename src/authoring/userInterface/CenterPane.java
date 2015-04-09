@@ -95,8 +95,12 @@ public class CenterPane extends ScrollPane {
 		// TODO: Allow stacked sprites
 	}
 	
-	public void createRegion(double x, double y){x
-		myCurrentRectangle = new Rectangle (x, y, Color.WHITE);
+	public void createRegion(double x, double y){
+		if (myCurrentRectangle != null){
+			myGroup.getChildren().remove(myCurrentRectangle);
+			System.out.println("removing rectangle");
+		}
+		myCurrentRectangle = new Rectangle(x, y, Color.WHITE);
 		myCurrentRectangle.setOnMouseClicked(e -> canvasClicked(e));
 		myGroup.getChildren().add(myCurrentRectangle);
 	}
