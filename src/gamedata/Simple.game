@@ -1,90 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Simple_Game>
 	<level>
-		<number>1</number>
-		<0>
+		<level_0>
 			<objective>
-				<number>2</number>
-				<0>
-					
-				</0>
+				<objective_0></objective_0>
 				
-				<1>
-					
-				</1>
+				<objective_1></objective_1>
 			</objective>
+			
 			<sprite>
-				<number>5</number>
-				<0>
+				<sprite_0>
 					<type>Player</type>
 					<state>standing</state>
 					<animation>
-						<number>2</number>
-						<0>
+						<state_0>
 							<name>standing</name>
 							<image> </image>
-						</0>
-						<1>
+						</state_0>
+						<state_1>
 							<name>win</name>
 							<image> </image>
-						</1>
+						</state_1>
 					</animation>
 					<physics> </physics>
-				</0>
-				<1>
+				</sprite_0>
+				
+				<sprite_1>
 					<type>Platform</type>
 					<state>immobile</state>
 					<animation>
-						<number>1</number>
-						<0>
+						<state_0>
 							<name>immobile</name>
 							<image> </image>
-						</0>
+						</state_0>
 					</animation>
 					<physics> </physics>
-				</1>
-				<2>
+				</sprite_1>
+				
+				<sprite_2>
 					<type>Region</type>
 					<state>immobile</state>
 					<animation>
-						<number>1</number>
-						<0>
+						<state_0>
 							<name>immobile</name>
 							<image> </image>
-						</0>
+						</state_0>
 					</animation>
 					<physics> </physics>
-				</2>
-				<3>
+				</sprite_2>
+				
+				<sprite_3>
 					<type>Platform</type>
 					<state>immobile</state>
 					<animation>
-					<number>1</number>
-						<0>
+						<state_0>
 							<name>immobile</name>
 							<image> </image>
-						</0>
+						</state_0>
 					</animation>
 					<physics> </physics>
-				</3>
-				<4>
+				</sprite_3>
+				
+				<sprite_4>
 					<type>Enemy</type>
 					<state>immobile</state>
 					<animation>
-					<number>1</number>
-						<0>
+						<state_0>
 							<name>immobile</name>
 							<image> </image>
-						</0>
+						</state_0>
 					</animation>
 					<physics> </physics>
-				</4>
+				</sprite_4>
 			</sprite>
+			
 			<control>
-				<number>1</number>
-				<0>
-					<number>3</number>
-					<0>
+				<control_0>
+					<key_0>
 						<key>rightArrow</key>
 						<onPressed>
 							
@@ -95,8 +87,9 @@
 						<onReleased>
 							
 						</onReleased>
-					</0>
-					<1>
+					</key_0>
+					
+					<key_1>
 						<key>leftArrow</key>
 						<onPressed>
 							
@@ -107,8 +100,9 @@
 						<onReleased>
 							
 						</onReleased>
-					</1>
-					<2>
+					</key_1>
+					
+					<key_2>
 						<key>upArrow</key>
 						<onPressed>
 							
@@ -119,9 +113,19 @@
 						<onReleased>
 							
 						</onReleased>
-					</2>
-				</0>
+					</key_2>
+				</control_0>
 			</control>
-		</0>
+			
+			<collision>
+				<collision_0>
+					<sprites>0 2</sprites>
+				</collision_0>
+				
+				<collision_1>
+					<sprites>0 4</sprites>
+				</collision_1>
+			</collision>
+		</level_0>
 	</level>
 </Simple_Game>

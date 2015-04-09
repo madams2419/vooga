@@ -23,7 +23,7 @@ import javafx.util.Duration;
  * to either play an existing game or design a new one.
  * 
  * @author Brian Lavallee
- * @since 8 April 2015
+ * @since 9 April 2015
  */
 public class VoogaMenu {
     private static final double PADDING = 10;
@@ -76,7 +76,6 @@ public class VoogaMenu {
 	
 	root = new StackPane();
 	mainMenu = new StackPane();
-	chooser = new VoogaFileChooser(width, height);
 	
 	// TODO: Replace rectangles with ImageViews which hold screenshots from our working game player / authoring environment
 	
@@ -299,7 +298,8 @@ public class VoogaMenu {
      * blurs the background for effect.
      */
     private void addChoiceMenu(String fileType) {
-	choiceMenu = chooser.getContent(fileType);
+	chooser = new VoogaFileChooser(width, height, fileType);
+	choiceMenu = chooser.getContent();
 	disableButtons();
 	
 	FadeTransition fadeMainOut = new FadeTransition(Duration.millis(TRANSITION_TIME), mainMenu);

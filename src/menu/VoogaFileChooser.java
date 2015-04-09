@@ -4,11 +4,10 @@ import game_player.XMLParser;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javafx.geometry.Pos;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -24,7 +23,7 @@ import javafx.scene.text.Text;
  * the play mode and .dev for the design mode.
  * 
  * @author Brian Lavallee
- * @since 8 April 2015
+ * @since 9 April 2015
  */
 public class VoogaFileChooser {
     
@@ -33,13 +32,10 @@ public class VoogaFileChooser {
     private static final double INVISIBLE = 0.0;
     
     private static final double OPTION_RATIO = .7;
-    
     private static final int OPTIONS_PER_ROW = 5;
     
-    private static final String GAME_FILE_TYPE = "game";
-    private static final String DEV_FILE_TYPE = "dev";
-    
-    private Map<String, VBox> layouts;
+    private VBox layout;
+    private Rectangle blur;
     
     private double optionSize, horizontalPadding, verticalPadding;
     
@@ -47,38 +43,39 @@ public class VoogaFileChooser {
     
     /**
      * General constructor, needs height and width of the stage in order to dynamically space
-     * and size options. Creates the layout for both game files and dev files during preprocess.
+     * and size options. Creates the layout for either game files and dev files during preprocess.
      * 
      * @param width
      *              is the horizontal size of the stage.
      *              
      * @param height
      *               is the vertical size of the stage.
+     *               
+     * @param fileType
+     *                 is a String holding the file extension of the files to be put in the layout
      */
-    public VoogaFileChooser(double width, double height) {
+    public VoogaFileChooser(double width, double height, String fileType) {
 	verticalPadding = height * (1 - OPTION_RATIO) / (1 + OPTIONS_PER_ROW);
 	horizontalPadding = width * (1 - OPTION_RATIO) / (3 + OPTIONS_PER_ROW);
 	optionSize = width * OPTION_RATIO / OPTIONS_PER_ROW;
 	
-	layouts = new HashMap<String, VBox>();
+	blur = new Rectangle(width, height);
+	blur.setEffect(new GaussianBlur());
+	blur.setOpacity(.5);
 	
-	layouts.put(GAME_FILE_TYPE, createLayout(getFiles(GAME_FILE_TYPE), height));
-	layouts.put(DEV_FILE_TYPE, createLayout(getFiles(DEV_FILE_TYPE), height));
+	layout = createLayout(getFiles(fileType), height);
     }
     
     /**
-     * Retrieves the correct layout depending on whether or not the user wants to play
-     * a game or design a new one.
-     * 
-     * @param fileType
-     *                 is a String holding the type of file the user wants to load, either .game or .dev.
+     * Creates the actual menu that will be displayed by placing the layout
+     * on top of a GaussianBlur to blur the background image.
      *                 
      * @return
      *         a StackPane holding the layout of choices.
      */
-    public StackPane getContent(String fileType) {
+    public StackPane getContent() {
 	StackPane content = new StackPane();
-	content.getChildren().add(layouts.get(fileType));
+	content.getChildren().addAll(layout, blur);
 	content.setOpacity(INVISIBLE);
 	return content;
     }
@@ -99,6 +96,7 @@ public class VoogaFileChooser {
     private VBox createLayout(List<File> matchingFiles, double height) {
 	VBox options = new VBox(verticalPadding);
 	
+	HBox lastRow = createRow(new ArrayList<File>());
 	while (!matchingFiles.isEmpty()) {
 	    List<File> temp = new ArrayList<File>();
 	    
@@ -107,7 +105,17 @@ public class VoogaFileChooser {
 		temp.add(matchingFiles.remove(0));
 	    }
 	    
-	    options.getChildren().add(createRow(temp));
+	    lastRow = createRow(temp);
+	    options.getChildren().add(lastRow);
+	}
+	
+	if (lastRow.getChildren().size() != 5) {
+	    lastRow.getChildren().add(newContentOption());
+	}
+	else {
+	    HBox newRow = createRow(new ArrayList<File>());
+	    newRow.getChildren().add(newContentOption());
+	    options.getChildren().add(newRow);
 	}
 	
 	options.setAlignment(Pos.CENTER);
@@ -138,9 +146,7 @@ public class VoogaFileChooser {
 	
 	for (File f : group) {
 	    // TODO: Replace rectangles with imageviews
-	    Rectangle content = new Rectangle(optionSize, optionSize);
-	    content.setArcHeight(verticalPadding);
-	    content.setArcWidth(horizontalPadding);
+	    Rectangle content = createButtonContent(Color.BLACK, Color.BLACK, 0);
 	    
 	    XMLParser parser = new XMLParser(f);
 	    
@@ -161,6 +167,35 @@ public class VoogaFileChooser {
 	
 	row.setAlignment(Pos.CENTER);
 	return row;
+    }
+    
+    /*
+     * Creates the menu option to design a new game rather than playing
+     * or designing an existing one.
+     */
+    private StackPane newContentOption() {
+	Rectangle background = createButtonContent(Color.TRANSPARENT, Color.WHITE, 5);
+	Text description = new Text("Create New Game");
+	description.setFont(new Font(20));
+	description.setFill(Color.WHITE);
+	
+	StackPane content = new StackPane();
+	content.getChildren().addAll(background, description);
+	return content;
+    }
+    
+    /*
+     * Creates the buttons contained in the layout.  Both the fill and stroke
+     * colors can be specified as well as the stroke width.
+     */
+    private Rectangle createButtonContent(Color fill, Color stroke, int width) {
+	Rectangle content = new Rectangle(optionSize, optionSize);
+	content.setArcHeight(verticalPadding);
+	content.setArcWidth(horizontalPadding);
+	content.setFill(fill);
+	content.setStroke(stroke);
+	content.setStrokeWidth(width);
+	return content;
     }
     
     /*
