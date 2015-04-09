@@ -3,7 +3,12 @@ package authoring;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Singleton class that keeps track of the interactions between sprites. 
+ * 
+ * @author Natalie
+ *
+ */
 public class InteractionManager {
     private static InteractionManager myInstance;
     private Map<Sprite, Map<Sprite, Interaction>> myInteractions;

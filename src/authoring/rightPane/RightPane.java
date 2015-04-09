@@ -47,12 +47,12 @@ public class RightPane extends VBox {
 
     public void setScene (Scene scene) {
         myScene = scene;
-         initializeCurrentContent(new CharacterCreationPane(scene,
-         s -> switchToCharacterEditingPane(s)));
+//         initializeCurrentContent(new CharacterCreationPane(scene,
+//         s -> switchToCharacterEditingPane(s)));
         
         // temporary
-//        initializeCurrentContent(new InteractionEditingPane(scene, null, null,
-//                                                            getListOfInteractions()));
+        initializeCurrentContent(new InteractionEditingPane(scene, null, null,
+                                                            getListOfInteractions()));
     }
 
     public void switchToCharacterEditingPane (Sprite sprite) {
