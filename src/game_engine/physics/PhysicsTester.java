@@ -76,8 +76,7 @@ public class PhysicsTester extends Application {
 		for(Sprite sprite : layer.getSprites()) {
 			PhysicsObject sPhysics = sprite.getPhysicsObject();
 			Node sNode = displayMap.get(sprite);
-			sNode.setTranslateX(sPhysics.getX());
-			sNode.setTranslateY(sPhysics.getY());
+			setNodePosition(sNode, sPhysics.getPosition());
 			System.out.printf("(%d, %d)\n", (int)sPhysics.getX(), (int)sPhysics.getY());
 		}
 	}
@@ -95,7 +94,7 @@ public class PhysicsTester extends Application {
 		Sprite player = new Player();
 		
 		/* create player sprite physics object */
-		CircleBody playerShape = new CircleBody(5);
+		Shape playerShape = new CircleBody(5);
 		Material playerMaterial = new Material(0.3, 0.2);
 		PhysicsObject playerPhysics = new PhysicsObject(globalPhysics, playerShape, playerMaterial, 200, (int)playerShape.getRadius());
 
@@ -119,11 +118,15 @@ public class PhysicsTester extends Application {
 	/* create a node representation of a sprite */
 	public Node createNodeFromSprite(Sprite sprite) {
 		PhysicsObject sPhysics = sprite.getPhysicsObject();
-		double radius = ((CircleBody)sPhysics.getShape()).getRadius();
+		double radius = sPhysics.getShape().getRadius();
 		Node circle = new Circle(radius, Color.BLACK); // right now only circles are supported
-		circle.setTranslateX(sPhysics.getX());
-		circle.setTranslateY(sPhysics.getY());
+		setNodePosition(circle, sPhysics.getPosition());
 		return circle;
 	}
-
+	
+	/* set node position applying physics space to javaFX coordinate transform */
+	private void setNodePosition(Node node, Vector position) {
+		node.setTranslateX(position.getX());
+		node.setTranslateY(height - position.getY());
+	}
 }
