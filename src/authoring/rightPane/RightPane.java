@@ -1,10 +1,14 @@
 package authoring.rightPane;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import authoring.Sprite;
+import authoring.userInterface.AuthoringWindow;
 
 /**
  * This class represents the right pane on the screen. It will allow the user to
@@ -23,9 +27,16 @@ public class RightPane extends VBox {
 	private final static int PADDING = 10;
 	private final static String CSS = "styles/right_pane.css";
 
-	public RightPane(Scene scene) {
+	private static RightPane mInstance;
+
+	public static RightPane getInstance() {
+		if (mInstance == null)
+			mInstance = new RightPane();
+		return mInstance;
+	}
+
+	private RightPane() {
 		super(SPACING);
-		myScene = scene;
 
 		getStylesheets().add(CSS);
 		setPadding(new Insets(PADDING));
@@ -33,8 +44,25 @@ public class RightPane extends VBox {
 
 		// initializeCurrentContent(new DefaultEditingPane(scene));
 		// initializeCurrentContent(new CharacterEditingPane(scene, null));
-		initializeCurrentContent(new CharacterCreationPane(scene,
-				s -> switchToCharacterEditingPane(s)));
+	}
+
+	public void setScene(Scene scene) {
+		myScene = scene;
+		// initializeCurrentContent(new CharacterCreationPane(scene,
+		// s -> switchToCharacterEditingPane(s)));
+
+		// temporary
+		initializeCurrentContent(new InteractionEditingPane(scene, null, null,
+				getListOfInteractions()));
+	}
+
+	public void switchPane(Sprite s) {
+		System.out.println("here");
+		if (AuthoringWindow.getControl())
+			switchToInteractionEditingPane(
+					(Sprite) AuthoringWindow.getCurrentlySelected(), s);
+		else
+			switchToCharacterEditingPane(s);
 	}
 
 	public void switchToCharacterEditingPane(Sprite sprite) {
@@ -42,12 +70,12 @@ public class RightPane extends VBox {
 	}
 
 	public void switchToCharacterCreationPane() {
-		switchToPane(new CharacterCreationPane(myScene,
-				s -> switchToCharacterEditingPane(s)));
+		switchToPane(new CharacterCreationPane(myScene));
 	}
 
-	public void switchToInteractionEditingPane(Sprite sprite1, Sprite sprite2) {
-		switchToPane(new InteractionEditingPane(myScene, sprite1, sprite2));
+	private void switchToInteractionEditingPane(Sprite sprite1, Sprite sprite2) {
+		switchToPane(new InteractionEditingPane(myScene, sprite1, sprite2,
+				getListOfInteractions()));
 	}
 
 	public void switchToDefaultPane() {
@@ -73,4 +101,8 @@ public class RightPane extends VBox {
 		this.getChildren().addAll(myCurrentContent.getChildren());
 	}
 
+	// TEMPORARY!!
+	private List<String> getListOfInteractions() {
+		return Arrays.asList(new String[] { "jump", "die", "go to new level" });
+	}
 }

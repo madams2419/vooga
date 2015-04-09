@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class ControlTester extends Application{
-	static Map<String, IBehavior> behaviorPool = new HashMap<>();
+	static Map<String, Behavior> behaviorPool = new HashMap<>();
 	static int track = 10;
 	static String printout = "Tracking Number is: ";
 	static ControlsManager cManager = new ControlsManager();
@@ -31,7 +31,7 @@ public class ControlTester extends Application{
 	}
 
 
-	public static IBehavior selectBehavior(String key){
+	public static Behavior selectBehavior(String key){
 		if(behaviorPool.containsKey(key)){
 			return behaviorPool.get(key);
 		} else {
@@ -58,8 +58,8 @@ public class ControlTester extends Application{
 	}
 	
 	private void keyManipulation(){
-		IBehavior add = new AddBehavior();
-		IBehavior sub = new SubtractBehavior();
+		Behavior add = new AddBehavior();
+		Behavior sub = new SubtractBehavior();
 		behaviorPool.put("Add", add);
 		behaviorPool.put("Sub", sub);
 		cManager.addBehavior("Up", "Add");
@@ -69,7 +69,15 @@ public class ControlTester extends Application{
 
 	private void handleKeyInput (KeyEvent e) {
 		KeyCode keyCode = e.getCode();
-		cManager.executeBehavior(keyCode);
+
+		if (keyCode == KeyCode.UP) {
+			cManager.executeBehavior("Up");
+		}
+		else if(keyCode == KeyCode.DOWN){
+			cManager.executeBehavior("Down");
+		} else {
+			return;
+		}
 	}
 	
 	public static void updateText(){

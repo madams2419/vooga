@@ -1,4 +1,5 @@
 .grid-pane {
+	-fx-max-height: 50;
 	-fx-alignment: center;
 	-fx-vgap: 5.0;
 	-fx-hgap: 5.0pt 	

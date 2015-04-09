@@ -1,6 +1,7 @@
 package game_engine.sprite;
 
 public class Collectible extends Sprite{
+<<<<<<< HEAD
 	private int myCount;
 
 	public Collectible() {
@@ -34,13 +35,18 @@ public class Collectible extends Sprite{
 	public void resetCount(){
 		myCount = 0;
 	}
+=======
+>>>>>>> a6ac6e16e27cd9ddd8d3cb89042487d1eee2b383
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
 
 	}
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> a6ac6e16e27cd9ddd8d3cb89042487d1eee2b383
 
 }

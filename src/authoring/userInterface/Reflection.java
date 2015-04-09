@@ -12,7 +12,7 @@ import java.util.Locale;
 import static java.lang.System.out;
 import static java.lang.System.err;
 
-import org.codehaus.groovy.ast.Parameter;
+
 
 
 /**
@@ -81,7 +81,7 @@ public class Reflection {
 	 *
 	 * If the method's return type is void, null in returned.
 	 */
-	public static Object callMethod (Object target, String name, Object... args)
+	public static Object callMethod (Object target, String name, Object... args) 
 			throws ReflectionException {
 		try {
 			for (Method current : target.getClass().getDeclaredMethods()) {
@@ -94,6 +94,7 @@ public class Reflection {
 			}
 			throw new ReflectionException("No matching public method %s for %s", name, target.getClass().getName());
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new ReflectionException("No matching public method %s for %s", name, target.getClass().getName());
 		}
 	}

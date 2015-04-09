@@ -1,13 +1,11 @@
 package game_engine.control;
 
 
-import game_engine.IBehavior;
+import game_engine.Behavior;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
-import javafx.scene.input.KeyCode;
 
 /**
  * Defines controls and maps them to behaviors
@@ -16,14 +14,13 @@ import javafx.scene.input.KeyCode;
  */
 public class ControlsManager {
 	
-	Map<String, IBehavior> myControlMap;
-	Map<String, String> myDesignerMap;
-	Map<KeyCode, String> myVirtualKeyboard;
+	Map<String, Behavior> controlMap;
+	Map<String, String> designerMap;
+	VirtualKeyboard virtualKeyboard;
 	
 	public ControlsManager() {
-		myControlMap = new HashMap<>();
-		myDesignerMap = new HashMap<>();
-		myVirtualKeyboard = new HashMap<>();
+		controlMap = new HashMap<>();
+		designerMap = new HashMap<>();
 	}
 	
 	/**
@@ -32,35 +29,23 @@ public class ControlsManager {
 	 * @param keyText the string that maps to the key
 	 */
 	public void executeBehavior(String keyText) {
-		myControlMap.get(myDesignerMap.get(keyText)).execute(new double[3]);
-	}
-	/**
-	 * KeyCode version of executeBehavior
-	 * @param keycode
-	 */
-	public void executeBehavior(KeyCode keycode){
-		myControlMap.get(myVirtualKeyboard.get(keycode)).execute(new double[3]);
+		controlMap.get(designerMap.get(keyText)).execute();
 	}
 	
-	//adds a new behavior to the maps
-	public void addBehavior(String key, String behaviorName){
-		myDesignerMap.put(key, behaviorName);
-		myVirtualKeyboard.put(KeycodeFactory.generateKeyCode(key), behaviorName);
-		addEntryControlMap(behaviorName, ControlTester.selectBehavior(behaviorName));
+	public void addBehavior(String key, String behaviorString){
+		designerMap.put(key, behaviorString);
+		addEntryControlMap(behaviorString, ControlTester.selectBehavior(behaviorString));
 	}
 	
-	//change the key of a behavior
 	public void modifyKey(String oldKey, String newKey){
-		if(myDesignerMap.containsKey(oldKey)){
-			if(myDesignerMap.containsKey(newKey)){
+		if(designerMap.containsKey(oldKey)){
+			if(designerMap.containsKey(newKey)){
 				System.out.println("New key is in use. Please try another one.");
 				return;
 			} else {
-				myDesignerMap.put(newKey, myDesignerMap.get(oldKey));
-				myVirtualKeyboard.put(kcTranslation(newKey), myVirtualKeyboard.get(kcTranslation(oldKey)));
+				designerMap.put(newKey, designerMap.get(oldKey));
 				addEntryControlMap(newKey, ControlTester.selectBehavior(oldKey));
-				myDesignerMap.remove(oldKey);
-				myVirtualKeyboard.remove(kcTranslation(oldKey));
+				designerMap.remove(oldKey);
 				deleteEntryControlMap(oldKey);
 			}
 		} else {
@@ -68,21 +53,20 @@ public class ControlsManager {
 		}
 	}
 	
-	private void addEntryControlMap(String key, IBehavior behavior){
-		myControlMap.put(key, behavior);
+	private void addEntryControlMap(String key, Behavior behavior){
+		controlMap.put(key, behavior);
 	}
 	
 	private void deleteEntryControlMap(String key){
-		if(myControlMap.containsKey(key)){
-			myControlMap.remove(key);
+		if(controlMap.containsKey(key)){
+			controlMap.remove(key);
 		} else {
 			System.out.println("Nothing to delete in the ControlMap");
 		}
 	}
 	
-	//TODO: throw exception if keycode not defined
-	private KeyCode kcTranslation(String index){
-		  return KeycodeFactory.generateKeyCode(index);
+	public void mapTranslation(){
+		  
 	}
 	
 }
