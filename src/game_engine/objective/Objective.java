@@ -25,6 +25,8 @@ public class Objective {
      */
     private IBehavior myOnComplete;
     
+    private String[] myOnCompleteParams;
+    
     /**
      * List of objectives that must be completed before this objective is active.
      */
@@ -44,11 +46,12 @@ public class Objective {
      * @param onComplete
      * @param linked List of objectives that must be completed before this objective is active.
      */
-    public Objective (Predicate<Long> condition, IBehavior onComplete) {
+    public Objective (Predicate<Long> condition, IBehavior onComplete, String... onCompleteParams) {
         myStatus = Status.INACTIVE;
         myPreReqs = new ArrayList<>();
         myCondition = condition;
         myOnComplete = onComplete;
+        myOnCompleteParams = onCompleteParams;
     }
 
     /**
@@ -129,7 +132,7 @@ public class Objective {
      * Also sets the objective to complete and objective is no longer active.
      */
     public void complete (long now) {
-        myOnComplete.execute();
+        myOnComplete.execute(myOnCompleteParams);
         myStatus = Status.COMPLETE;
     }
 }
