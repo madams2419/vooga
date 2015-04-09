@@ -1,7 +1,7 @@
 package game_engine;
 
 import java.util.ArrayList;
-import javafx.scene.shape.*;
+import com.sun.javafx.geom.Rectangle;
 /**
  * Hitbox class that defines collisions between objects
  * @author Kevin
