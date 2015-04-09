@@ -9,15 +9,17 @@ import game_engine.Layer;
 import game_engine.sprite.Sprite;
 
 // TODO
+// - todo implement IBehavior
 // - implement regions (regions are sprites)
 // - optimize net force computation
 
 public class PhysicsEngine {
 
 	//TODO move these to properties file
+	private static double SCALE_FACTOR = 0.01; // pixel to meter scaling
 	private static String GRAV_STRING = "gravity";
 	private static double GRAV_DIRECTION = -90;
-	private static double GRAV_MAGNITUDE = 9.8;
+	private static double GRAV_MAGNITUDE = 9.8 / SCALE_FACTOR;
 	private static double SC_PERCENT = 0.2;
 	private static double SC_SLOP = 0.01;
 
@@ -91,7 +93,8 @@ public class PhysicsEngine {
 
 		resolveCollision(a, b, normal, 0);
 	}
-
+	
+	/* implement as IBehavior */
 	public void resolveCollision(PhysicsObject a, PhysicsObject b, Vector normal, double pDepth) {
 		// compute relative velocity
 		Vector relVel = b.getVelocity().minus(b.getVelocity());

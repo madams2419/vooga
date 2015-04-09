@@ -77,12 +77,11 @@ public class PhysicsTester extends Application {
 			PhysicsObject sPhysics = sprite.getPhysicsObject();
 			Node sNode = displayMap.get(sprite);
 			setNodePosition(sNode, sPhysics.getPosition());
-			System.out.printf("(%d, %d)\n", (int)sPhysics.getX(), (int)sPhysics.getY());
 		}
 	}
 	private void handleKeyInput(KeyEvent e) {
 		if(e.getCode() == KeyCode.SPACE) {
-			playerSprite.getPhysicsObject().applyImpulse(new Vector(0, 50));
+			playerSprite.getPhysicsObject().applyImpulse(new Vector(0, 10000));
 		}
 	}
 	
@@ -91,19 +90,19 @@ public class PhysicsTester extends Application {
 		globalPhysics = new PhysicsEngine(0, 1/(double)fps);
 		
 		/* create player sprite */
-		Sprite player = new Player();
+		playerSprite = new Player();
 		
 		/* create player sprite physics object */
 		Shape playerShape = new CircleBody(5);
 		Material playerMaterial = new Material(0.3, 0.2);
-		PhysicsObject playerPhysics = new PhysicsObject(globalPhysics, playerShape, playerMaterial, 200, (int)playerShape.getRadius());
+		PhysicsObject playerPhysics = new PhysicsObject(globalPhysics, playerShape, playerMaterial, 200, 200);
 
 		/* set player physics */
-		player.setPhysicsObject(playerPhysics);
+		playerSprite.setPhysicsObject(playerPhysics);
 		
 		/* init layer and add player sprite */
 		layer = new Layer();
-		layer.addSprite(player);
+		layer.addSprite(playerSprite);
 	}
 	
 	public void initAndDrawNodes() {

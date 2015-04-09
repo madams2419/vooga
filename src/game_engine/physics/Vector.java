@@ -58,8 +58,12 @@ public class Vector {
 	}
 
 	public Vector normalize() {
-		double mag = getMagnitude();
-		return new Vector(myX / mag, myY / mag);
+		if(isZeroVector()) {
+			return new Vector();
+		} else {
+			double mag = getMagnitude();
+			return new Vector(myX / mag, myY / mag);
+		}
 	}
 
 	public void setX(double x) {
@@ -82,7 +86,7 @@ public class Vector {
 		return isZeroVector() ? 0 : Math.atan(myY/myX);
 	}
 
-	public void isZeroVector() {
+	public boolean isZeroVector() {
 		return (myX == 0 && myY == 0);
 	}
 

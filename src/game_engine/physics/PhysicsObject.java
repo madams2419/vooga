@@ -43,12 +43,12 @@ public class PhysicsObject {
 	public void update() {
 		double dt = myPhysics.getTimeStep();
 		myAccel = computeAccel();
-		myVelocity = myVelocity.plus(myAccel).times(dt);
-		myPosition = myPosition.plus(myVelocity).times(dt);
+		myVelocity = myVelocity.plus(myAccel.times(dt));
+		myPosition = myPosition.plus(myVelocity.times(dt));
 		
 		// temporary ground handling
 		if(myPosition.getY() <= myPhysics.getGround() + myShape.getRadius()) {
-			myPosition.setX(myPhysics.getGround() + myShape.getRadius());
+			myPosition.setY(myPhysics.getGround() + myShape.getRadius());
 		}
 	}
 
@@ -58,8 +58,9 @@ public class PhysicsObject {
 	}
 
 	private Vector computeAccel() {
-		Vector netForce = computeNetForce();
-		return netForce.times(myInvMass);
+		Vector intNetAccel = computeNetForce().times(myInvMass);
+		Vector extNetAccel = myPhysics.getNetGlobalAccel();
+		return intNetAccel.plus(extNetAccel);
 	}
 
 	private Vector computeNetForce() {
