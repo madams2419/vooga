@@ -11,9 +11,9 @@ public class ChatroomMain extends Application{
 	}
 
 	public void start(Stage stage) throws Exception {
-		myClient = new ChatroomClient();
-		myClient.run();
 		View view = new View();
+		myClient = new ChatroomClient(view);
+		myClient.run();
 		stage.setResizable(false);
         stage.setTitle("Chat Room");
         stage.setScene(view.getScene());

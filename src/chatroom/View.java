@@ -11,6 +11,8 @@ public class View {
 	private BorderPane root;
 	private CommandHistory history;
 	private CommandLine commandLine;
+	private String current;
+	private boolean stringChanged = false;
 	
 	// Command Line Dimensions
 	private static final int COMMAND_HEIGHT = 50;
@@ -59,7 +61,19 @@ public class View {
 		getCommandHistory().addHistoryText(parse);
 		System.out.println(parse);
 	}
-
+	
+	public void sendText(String test){
+		getCommandHistory().addHistoryText(test);
+	}
+	
+	public boolean getStringChanged(){
+		return stringChanged;
+	}
+	
+	public String getText(){
+		return current;
+	}
+	
 	private EventHandler<KeyEvent> parse = new EventHandler<KeyEvent>() {
 		public void handle(KeyEvent event) {
 			String parse;
@@ -71,6 +85,8 @@ public class View {
 				}
 				getCommandHistory().addHistoryText(parse);
 				System.out.println(parse);
+				current = parse;
+				stringChanged = true;
 			}
 
 		}

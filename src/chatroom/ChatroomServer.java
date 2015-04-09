@@ -6,7 +6,7 @@ import java.io.*;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 
-public class ChatroomServer extends Thread implements Observable{
+public class ChatroomServer extends Thread {
 	private ServerSocket serverSocket;
 	private String previousInputStream;
 	private String previousOutputString;
@@ -14,8 +14,10 @@ public class ChatroomServer extends Thread implements Observable{
 	private boolean continueReading = true;
 	private DataInputStream in;
 	private DataOutputStream out;
+	View myView;
 	
-	public ChatroomServer(int port) throws IOException{
+	public ChatroomServer(int port, View view) throws IOException{
+		myView = view;
 		serverSocket = new ServerSocket(port);
 		System.out.println(InetAddress.getLocalHost());
 		serverSocket.setSoTimeout(10000);
@@ -47,8 +49,12 @@ public class ChatroomServer extends Thread implements Observable{
 				out = new DataOutputStream(server.getOutputStream());
 				while(continueReading){
 					if(!server.getInputStream().equals(previousInputStream)){
-						
-						System.out.println(in.readUTF());
+						myView.sendText(in.readUTF());
+					}
+					if(myView.getStringChanged()){
+						String outputString = myView.getText();
+						out.writeUTF(outputString);
+						previousOutputString = outputString;
 					}
 					if(!currentOutputString.equals(previousOutputString)){
 						out.writeUTF(currentOutputString);
@@ -74,28 +80,6 @@ public class ChatroomServer extends Thread implements Observable{
 	public void writeString(String string){
 		currentOutputString = string;
 	}
-	
-	
-	
-//	public static void main(String [] args)	{
-//		int port = Integer.parseInt("6060");
-//		try{
-//			Thread t = new ChatroomServer(port);
-//			t.start();
-//		}catch(IOException e){
-//			e.printStackTrace();
-//		}
-//	}
 
-	@Override
-	public void addListener(InvalidationListener arg0) {
-		
-		
-	}
-
-	@Override
-	public void removeListener(InvalidationListener arg0) {
-		
-	}
 
 }
