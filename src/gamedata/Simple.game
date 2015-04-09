@@ -1,4 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Simple_Game>
-	<stuff></stuff>
+	<level>
+		<number>1</number>
+		<0>
+			<objective>
+				<number>2</number>
+				<0>
+					
+				</0>
+				
+				<1>
+					
+				</1>
+			</objective>
+			<sprite>
+				<number>5</number>
+				<0>
+					<type>Player</type>
+					<state>standing</state>
+					<animation>
+						<number>2</number>
+						<0>
+							<name>standing</name>
+							<image> </image>
+						</0>
+						<1>
+							<name>win</name>
+							<image> </image>
+						</1>
+					</animation>
+					<physics> </physics>
+				</0>
+				<1>
+					<type>Platform</type>
+					<state>immobile</state>
+					<animation>
+						<number>1</number>
+						<0>
+							<name>immobile</name>
+							<image> </image>
+						</0>
+					</animation>
+					<physics> </physics>
+				</1>
+				<2>
+					<type>Region</type>
+					<state>immobile</state>
+					<animation>
+						<number>1</number>
+						<0>
+							<name>immobile</name>
+							<image> </image>
+						</0>
+					</animation>
+					<physics> </physics>
+				</2>
+				<3>
+					<type>Platform</type>
+					<state>immobile</state>
+					<animation>
+					<number>1</number>
+						<0>
+							<name>immobile</name>
+							<image> </image>
+						</0>
+					</animation>
+					<physics> </physics>
+				</3>
+				<4>
+					<type>Enemy</type>
+					<state>immobile</state>
+					<animation>
+					<number>1</number>
+						<0>
+							<name>immobile</name>
+							<image> </image>
+						</0>
+					</animation>
+					<physics> </physics>
+				</4>
+			</sprite>
+			<control>
+				<number>1</number>
+				<0>
+					<number>3</number>
+					<0>
+						<key>rightArrow</key>
+						<onPressed>
+							
+						</onPressed>
+						<whilePressed>
+							
+						</whilePressed>
+						<onReleased>
+							
+						</onReleased>
+					</0>
+					<1>
+						<key>leftArrow</key>
+						<onPressed>
+							
+						</onPressed>
+						<whilePressed>
+							
+						</whilePressed>
+						<onReleased>
+							
+						</onReleased>
+					</1>
+					<2>
+						<key>upArrow</key>
+						<onPressed>
+							
+						</onPressed>
+						<whilePressed>
+							
+						</whilePressed>
+						<onReleased>
+							
+						</onReleased>
+					</2>
+				</0>
+			</control>
+		</0>
+	</level>
 </Simple_Game>
