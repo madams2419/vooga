@@ -1,25 +1,39 @@
 package game_engine.objective;
 
-import game_engine.IBehavior;
+import game_engine.CollisionEngine;
+import game_engine.sprite.Sprite;
 import java.util.List;
-import java.util.function.IntSupplier;
-import java.util.function.Predicate;
 
+/*
+ * Example of building an objective
+ * Objective obj = makeCollisionObjective (num, spriteA, spriteB)
+ * obj.setPreqs(List<Objective> objectives) => these objectives must be complete 
+ * for objective to be active.
+ * obj.addBehavior (String status, IBehavior behavior, params)
+ * obj.setTimer (new GameTimer(duration) if you want to add a timer, can input null or not call
+ * 
+ */
 public class ObjectiveFactory {
+    private CollisionEngine myCollisionEngine;
 
-    public Objective makeObjective (Predicate<Long> condition, IBehavior behavior) {
-        return new Objective(condition, behavior);
+    public ObjectiveFactory (CollisionEngine collisionEngine) {
+        myCollisionEngine = collisionEngine;
     }
     
-    public Objective makeDoNumObjective (int goal, IntSupplier numDone, IBehavior behavior) {
-        return makeDoAllObjective(() -> goal - numDone.getAsInt(), behavior);
+    public Objective makeObjective () {
+        return new Objective();
     }
     
-    public Objective makeDoAllObjective(IntSupplier numRemaining, IBehavior behavior){
-        return new DoRemainingObjective(numRemaining, behavior);
+    public Objective makeCollisionObjective (int num, Sprite spriteA, Sprite spriteB) {
+        Objective obj = new DoRemainingObjective (num, () -> 0);
+        obj.doNum(myCollisionEngine.countNumCollisions (spriteA, spriteB));
     }
     
-    public Objective makeCompleteSubObjectives(int goal, List<Objective> subObjectives, IBehavior behavior) {
-        return new CompleteNumObjectives(goal, subObjectives, behavior);
+    public Objective makeListObjective (int num, List<Objective> objectives){
+        return new CompleteNumObjectives(num, objectives);
+    }
+    
+    public Objective makeListObjective (List<Objective> objectives) {
+        return new CompleteNumObjectives(objectives);
     }
 }

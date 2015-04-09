@@ -11,7 +11,6 @@ import game_engine.physics.PhysicsEngine;
 >>>>>>> fc9b3f275bab3d9326298b8e7be74165dad4a311
 import game_engine.sprite.Player;
 //import game_engine.sprite.InanimateSprite;
-import game_engine.sprite.Water;
 import game_engine.GameObjective;
 
 public class UseCases {

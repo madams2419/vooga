@@ -1,5 +1,6 @@
 package menu;
 
+import game_player.VoogaGameBuilder;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
@@ -22,7 +23,7 @@ import javafx.util.Duration;
  * to either play an existing game or design a new one.
  * 
  * @author Brian Lavallee
- * @since 7 April 2015
+ * @since 8 April 2015
  */
 public class VoogaMenu {
     private static final double PADDING = 10;
@@ -265,9 +266,16 @@ public class VoogaMenu {
 	design.setOnMouseExited((event) -> 
 	    buttonSelectedAction(0, -height/3, OPAQUE, OPAQUE, TRANSPARENT));
 	
-	play.setOnMouseClicked((event) -> addChoiceMenu(GAME));
+	play.setOnMouseClicked((event) -> {
+	    addChoiceMenu(GAME);
+	    choiceMenu.setOnMouseClicked((clicked) -> {
+		VoogaGameBuilder builder = new VoogaGameBuilder(chooser.getChosenFile());
+	    });
+	});
 	
-	design.setOnMouseClicked((event) -> addChoiceMenu(DESIGN));
+	design.setOnMouseClicked((event) -> {
+	    addChoiceMenu(DESIGN);
+	});
     }
     
     /*
