@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import org.w3c.dom.Element;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import authoring.util.FrontEndUtils;
@@ -42,6 +44,7 @@ public class Sprite extends ImageView {
 	private final static int MAX_ICON_HEIGHT = 100;
 	final String VELOCITY = "velocity";
 	public final String POSITION = "position";
+	private Element xmlHandle;
 
 	public Sprite(int ID, String imageURI) {
 		this();
@@ -51,6 +54,10 @@ public class Sprite extends ImageView {
 		myCharacteristics.put("ID", String.valueOf(ID));
 		myIcon = new ImageView();
 		changeImage(new Image(getClass().getResourceAsStream(myImageURI)));
+		XMLBuilder b = XMLBuilder.getInstance("game");
+		xmlHandle = b.addToRoot(b.createElement("sprite"));
+		xmlHandle.setAttribute("name", imageURI.split("/")[1]);
+		
 	}
 
 	public Sprite(int ID, String imageURI, Consumer<Sprite> consumer) {
@@ -116,11 +123,15 @@ public class Sprite extends ImageView {
 	public void setXPosition(double value) {
 		this.setX(value);
 		myPosition.put(X_STRING, value);
+		XMLBuilder b = XMLBuilder.getInstance("game");
+		(b.add((b.add(xmlHandle, "velocity")), "x")).setTextContent(myPosition.get(X_STRING).toString());
 	}
 
 	public void setYPosition(double value) {
 		this.setY(value);
 		myPosition.put(Y_STRING, value);
+		XMLBuilder b = XMLBuilder.getInstance("game");
+		(b.add((b.add(xmlHandle, "velocity")), "y")).setTextContent(myPosition.get(Y_STRING).toString());
 	}
 
 	public void setPosition(Map<String, String> newPosition) {
@@ -129,6 +140,9 @@ public class Sprite extends ImageView {
 				Double.parseDouble(s2)));
 		setXPosition(myPosition.get(X_STRING));
 		setYPosition(myPosition.get(Y_STRING));
+		XMLBuilder b = XMLBuilder.getInstance("game");
+		(b.add((b.add(xmlHandle, "velocity")), "x")).setTextContent(myPosition.get(X_STRING).toString());
+		(b.add((b.add(xmlHandle, "velocity")), "y")).setTextContent(myPosition.get(Y_STRING).toString());
 	}
 
 	public double getXPosition() {
