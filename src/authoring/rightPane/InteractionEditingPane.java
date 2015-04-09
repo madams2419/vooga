@@ -40,20 +40,19 @@ public class InteractionEditingPane extends EditingPane {
 
         addSpriteAndComboBoxToPane(sprite1, actionPossibilities);
         addSpriteAndComboBoxToPane(sprite2, actionPossibilities);
-//        addButtonToUpdate("Update");
+        addButtonToUpdate("Update");
         addButtonToReturnToCreationPane(doneButtonString);
     }
 
-//    private void addButtonToUpdate (String label) {
-//        Button b = new Button(label);
-//        b.setOnMouseClicked(setInteraction());
-//        this.getChildren().add(b);
-//    }
-//
-//    private EventHandler<? super MouseEvent> setInteraction () {
-//        // TODO Auto-generated method stub
-//        return null;
-//    }
+    private void addButtonToUpdate (String label) {
+        Button b = new Button(label);
+        b.setOnMouseClicked(i -> setInteraction());
+        this.getChildren().add(b);
+    }
+
+    private void setInteraction () {
+        InteractionManager interactionManager = InteractionManager.getInstance();
+    }
 
     private void addSpriteAndComboBoxToPane (Sprite sprite, List<String> actionPossibilities) {
         addSpriteToPane(sprite);

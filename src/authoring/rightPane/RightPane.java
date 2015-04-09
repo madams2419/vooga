@@ -105,5 +105,4 @@ public class RightPane extends VBox {
 	private List<String> getListOfInteractions() {
 		return Arrays.asList(new String[] { "jump", "die", "go to new level" });
 	}
-
 }
