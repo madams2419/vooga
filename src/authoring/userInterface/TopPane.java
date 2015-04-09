@@ -33,8 +33,6 @@ public class TopPane extends HBox {
 		for (int i = 0, j = 0; i < mButtons.size(); i++) {
 			grid.add(mButtons.get(i), (i % 4) + 1, j + 1);
 			j = i / 4;
-			System.out.printf("Added %s at %d,%d%n", mButtons.get(i).getText(),
-					i % 4, j);
 		}
 		this.getChildren().add(grid);
 

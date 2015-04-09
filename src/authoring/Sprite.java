@@ -51,7 +51,6 @@ public class Sprite extends ImageView {
 
 	public Sprite(int ID, String imageURI) {
 		this();
-		System.err.printf("Bar %s%n", imageURI);
 		this.myID = ID;
 		myImageURI = imageURI;
 		myCharacteristics.put("imageURI", myImageURI);
