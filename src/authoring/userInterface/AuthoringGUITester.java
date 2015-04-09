@@ -1,4 +1,4 @@
-package src.authoring.userInterface;
+package authoring.userInterface;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

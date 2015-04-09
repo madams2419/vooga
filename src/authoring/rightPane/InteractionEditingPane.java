@@ -1,8 +1,8 @@
-package src.authoring.rightPane;
+package authoring.rightPane;
 
+import authoring.Sprite;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
-import authoring.SpriteType;
 
 
 /**
@@ -14,7 +14,7 @@ import authoring.SpriteType;
 
 public class InteractionEditingPane extends EditingPane {
 
-    InteractionEditingPane (Scene scene, SpriteType sprite1, SpriteType sprite2) {
+    InteractionEditingPane (Scene scene, Sprite sprite1, Sprite sprite2) {
         super(scene);
         this.getChildren().add(
                                new TextArea(String

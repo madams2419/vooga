@@ -1,4 +1,4 @@
-package src.authoring.userInterface;
+package authoring.userInterface;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;

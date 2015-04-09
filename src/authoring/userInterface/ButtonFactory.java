@@ -1,7 +1,7 @@
 /**
  * 
  */
-package src.authoring.userInterface;
+package authoring.userInterface;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -35,7 +35,6 @@ public class ButtonFactory {
 	public static ButtonFactory getSharedInstance() {
 		return mInstance;
 	}
-	
 
 //	public static void main(String[] args){	
 //		s="Button"; //test Case
@@ -44,28 +43,25 @@ public class ButtonFactory {
 //		mFile=LayoutXMLParser.getFile(); 
 //	}
 //	
-	public ButtonFactory(){
-	System.out.println("Created a Constructor");	
-	}
-	
 	private ButtonFactory(String f){
 		//s="Button"; //test Case
 		f="src/settings/layout.xml";
 		LayoutXMLParser.parse(f);
 		mFile=LayoutXMLParser.getFile();
+		GetAttributes();
 
 	}
 	
-//	public static ArrayList<Map> GetAttributes(){	
-//		//clear AttributeList from before
-//		for(int i=0; i<LayoutXMLParser.mAttributesList.size(); i++){
-//			LayoutXMLParser.mAttributesList.remove(i);
-//		}
-//		LayoutXMLParser.parse(mFile.toString(), mType);
-//		mAttributesList= LayoutXMLParser.mAttributesList;
-//		//System.out.println("mAttributesList is "+mAttributesList);
-//		return mAttributesList;
-//	}
+	public static ArrayList<Map> GetAttributes(){	
+		//clear AttributeList from before
+		for(int i=0; i<LayoutXMLParser.mAttributesList.size(); i++){
+			LayoutXMLParser.mAttributesList.remove(i);
+		}
+		LayoutXMLParser.parse(mFile.toString(), mType);
+		mAttributesList= LayoutXMLParser.mAttributesList;
+		//System.out.println("mAttributesList is "+mAttributesList);
+		return mAttributesList;
+	}
 	
 	public static ArrayList<Button> generateButtonBoxes(){
 		for(int i=0; i<mAttributesList.size(); i++){

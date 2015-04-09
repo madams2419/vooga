@@ -1,12 +1,10 @@
-package src.authoring.rightPane;
+package authoring.rightPane;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
-import authoring.AbstractSprite;
-import authoring.SpriteType;
-
+import authoring.Sprite;
 
 /**
  * This class represents the right pane on the screen. It will allow the user to
@@ -18,61 +16,73 @@ import authoring.SpriteType;
  */
 public class RightPane extends VBox {
 
-    private Scene myScene;
-    private EditingPane myCurrentContent;
+	private Scene myScene;
+	private EditingPane myCurrentContent;
 
-    private final static int SPACING = 20;
-    private final static int PADDING = 10;
-    private final static String CSS = "styles/right_pane.css";
+	private final static int SPACING = 20;
+	private final static int PADDING = 10;
+	private final static String CSS = "styles/right_pane.css";
 
-    public RightPane (Scene scene) {
-        super(SPACING);
-        myScene = scene;
+	private static RightPane mInstance;
 
-        getStylesheets().add(CSS);
-        setPadding(new Insets(PADDING));
-        setAlignment(Pos.TOP_CENTER);
+	public static RightPane getInstance() {
+		if (mInstance == null)
+			mInstance = new RightPane();
+		return mInstance;
+	}
 
-        // initializeCurrentContent(new DefaultEditingPane(scene));
-        // initializeCurrentContent(new CharacterEditingPane(scene, null));
-        initializeCurrentContent(new CharacterCreationPane(scene,
-                                                           s -> switchToCharacterEditingPane(s)));
-    }
 
-    public void switchToCharacterEditingPane (AbstractSprite s) {
-        switchToPane(new CharacterEditingPane(myScene, s, i -> switchToCharacterCreationPane()));
-    }
+	private RightPane() {
+		super(SPACING);
 
-    public void switchToCharacterCreationPane () {
-        switchToPane(new CharacterCreationPane(myScene,
-                                               s -> switchToCharacterEditingPane(s)));
-    }
+		getStylesheets().add(CSS);
+		setPadding(new Insets(PADDING));
+		setAlignment(Pos.TOP_CENTER);
 
-    public void switchToInteractionEditingPane (SpriteType sprite1, SpriteType sprite2) {
-        switchToPane(new InteractionEditingPane(myScene, sprite1, sprite2));
-    }
+		// initializeCurrentContent(new DefaultEditingPane(scene));
+		// initializeCurrentContent(new CharacterEditingPane(scene, null));
+	}
+	
+	public void setScene(Scene scene) {
+		myScene = scene;
+		initializeCurrentContent(new CharacterCreationPane(scene,
+				s -> switchToCharacterEditingPane(s)));
+	}
 
-    public void switchToDefaultPane () {
-        switchToPane(new DefaultEditingPane(myScene));
-    }
+	public void switchToCharacterEditingPane(Sprite sprite) {
+		switchToPane(new CharacterEditingPane(myScene, sprite));
+	}
 
-    private void switchToPane (EditingPane newPane) {
-        clearChildren();
-        myCurrentContent = newPane;
-        addFromCurrentContent();
-    }
+	public void switchToCharacterCreationPane() {
+		switchToPane(new CharacterCreationPane(myScene,
+				s -> switchToCharacterEditingPane(s)));
+	}
 
-    private void clearChildren () {
-        getChildren().clear();
-    }
+	public void switchToInteractionEditingPane(Sprite sprite1, Sprite sprite2) {
+		switchToPane(new InteractionEditingPane(myScene, sprite1, sprite2));
+	}
 
-    private void addFromCurrentContent () {
-        getChildren().addAll(myCurrentContent.getChildren());
-    }
+	public void switchToDefaultPane() {
+		switchToPane(new DefaultEditingPane(myScene));
+	}
 
-    private void initializeCurrentContent (EditingPane content) {
-        myCurrentContent = content;
-        this.getChildren().addAll(myCurrentContent.getChildren());
-    }
+	private void switchToPane(EditingPane newPane) {
+		clearChildren();
+		myCurrentContent = newPane;
+		addFromCurrentContent();
+	}
+
+	private void clearChildren() {
+		getChildren().clear();
+	}
+
+	private void addFromCurrentContent() {
+		getChildren().addAll(myCurrentContent.getChildren());
+	}
+
+	private void initializeCurrentContent(EditingPane content) {
+		myCurrentContent = content;
+		this.getChildren().addAll(myCurrentContent.getChildren());
+	}
 
 }

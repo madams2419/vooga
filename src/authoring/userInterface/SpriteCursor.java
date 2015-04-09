@@ -1,20 +1,19 @@
-package src.authoring.userInterface;
+package authoring.userInterface;
 
+import authoring.Sprite;
 import javafx.scene.ImageCursor;
-import authoring.SpecificSprite;
+import javafx.scene.image.Image;
 
+public class SpriteCursor extends ImageCursor{
 
-public class SpriteCursor extends ImageCursor {
-
-    private SpecificSprite myCurrentSprite;
-
-    public SpriteCursor (SpecificSprite specificSprite) {
-        super(specificSprite.getImage(), specificSprite.getImage().getWidth() / 2, specificSprite
-                .getImage().getHeight() / 2);
-        myCurrentSprite = specificSprite;
-    }
-
-    public SpecificSprite getCurrentSprite () {
-        return myCurrentSprite;
-    }
+	private Sprite myCurrentSprite;
+	
+	public SpriteCursor(Sprite s){
+		super(s.getImage(), s.getImage().getWidth()/2, s.getImage().getHeight()/2);
+		myCurrentSprite = s;
+	}
+	
+	public Sprite getCurrentSprite(){
+		return myCurrentSprite;
+	}
 }
