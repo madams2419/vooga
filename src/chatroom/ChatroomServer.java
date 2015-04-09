@@ -13,7 +13,7 @@ public class ChatroomServer extends Thread{
 	}
 
 	public String readConsoleInput(){
-		System.out.print("Enter message: ");
+		System.out.print("Enter message (type goodbye to terminate): ");
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		try {
 			String message = br.readLine();
