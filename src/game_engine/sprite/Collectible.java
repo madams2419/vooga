@@ -1,7 +1,9 @@
 package game_engine.sprite;
 
 public class Collectible extends Sprite{
-
+    
+    private boolean canCollect;
+    
     public Collectible() {
         super();
        
@@ -18,6 +20,13 @@ public class Collectible extends Sprite{
          
       }
       
+      public void setCollectible(boolean canCollect){
+          this.canCollect = canCollect;
+      }
+      
+      public boolean isCollectible(){
+          return canCollect;
+      }
       
 	@Override
 	public void update() {

@@ -81,7 +81,7 @@ public abstract class Sprite extends Observable{
 	    myBehaviorMap.remove(behavior);
 	}
 	
-	public void runBehavior(String behavior, double[] params){
+	public void runBehavior(String behavior, String... params){
 	    myBehaviorMap.get(behavior).execute(params);
 	}
 	
@@ -102,6 +102,11 @@ public abstract class Sprite extends Observable{
 		setChanged();
 		notifyObservers();
 	}
+	
+	public IBehavior setState = (params) -> { // stateChanging
+            String state = params[0];
+            setState(state);
+	};
 	
 	public String getState(){
 		return myState;

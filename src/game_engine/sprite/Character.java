@@ -37,27 +37,27 @@ public abstract class Character extends Sprite {
 	 */
 	// params[0] is pixels to move forward
 	public IBehavior moveForward = (params) -> { // movement
-		myPosition.setX(params[0]);
+		myPosition.setX(Double.parseDouble(params[0]));
 		setStateName("forward");
 	};
 
 	// params[0] is upward scaling factor
 	public IBehavior jump = (params) -> { // movement
-		Vector myVector = new Vector(0,1*params[0]);
+		Vector myVector = new Vector(0,1*Double.parseDouble(params[0]));
 		myPhysicsObject.applyImpulse(myVector);
 		setStateName("jump");
 	};
 	
 	// params[0] is sideways scaling fire
 	public IBehavior sprint = (params) -> { // movement
-		Vector myVector = new Vector(1*params[0],0);
+		Vector myVector = new Vector(1*Double.parseDouble(params[0]),0);
 		myPhysicsObject.applyImpulse(myVector);
 		setStateName("sprint");
 	};
 	
 	// TODO physics change here?
 	public IBehavior slide = (params) -> { // movement
-		Vector myVector = new Vector(0,1*params[0]);
+		Vector myVector = new Vector(0,1*Double.parseDouble(params[0]));
 		myPhysicsObject.applyImpulse(myVector);
 		setStateName("slide");
 	};
