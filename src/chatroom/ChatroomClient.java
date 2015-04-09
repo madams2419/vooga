@@ -5,13 +5,13 @@ import java.io.*;
 public class ChatroomClient{
 	private boolean terminate = false;
 	private boolean continueReading = true;
+	private String previousInputStream;
 	
 	public String readConsoleInput(){
 		System.out.print("Enter reply (type goodbye to terminate): ");
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		try {
 			String message = br.readLine();
-			System.out.println(message);
 			return message;
 		} catch (IOException e) {
 			e.printStackTrace();

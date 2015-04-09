@@ -5,6 +5,7 @@ import java.io.*;
 
 public class ChatroomServer extends Thread{
 	private ServerSocket serverSocket;
+	private String previousInputStream;
 	private boolean continueReading = true;
 	public ChatroomServer(int port) throws IOException{
 		serverSocket = new ServerSocket(port);
@@ -17,7 +18,6 @@ public class ChatroomServer extends Thread{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		try {
 			String message = br.readLine();
-			System.out.println(message);
 			return message;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -34,17 +34,21 @@ public class ChatroomServer extends Thread{
 				server.setSoTimeout(10000);
 				System.out.println("Just connected to "
 						+ server.getRemoteSocketAddress());
+				
 				DataInputStream in =
 						new DataInputStream(server.getInputStream());
-				System.out.println(in.readUTF());
 				DataOutputStream out =
 						new DataOutputStream(server.getOutputStream());
 				while(continueReading){
+					if(!server.getInputStream().equals(previousInputStream)){
+						System.out.println(in.readUTF());
+					}
 					String s = readConsoleInput();
 					if(s.toLowerCase().equals("goodbye")){
 						continueReading = false;
 					}
 					out.writeUTF(s);
+					previousInputStream = server.getInputStream().toString();
 				}
 //				out.writeUTF("Thank you for connecting to "
 //						+ server.getLocalSocketAddress() + "Michael\nGoodbye!");
