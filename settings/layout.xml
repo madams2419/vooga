@@ -1,69 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layout name="authoring_environment">
 	<BottomPane>
-		<buttons>
-			<button>
-				<X>0</X>
-			 	<Y>0</Y>
-				<label>Global Settings</label>
-				<listener>null</listener>
-			</button>
-			<button>
+	<buttons>
+			<Button>
 			 	<X>1</X>
 			 	<Y>0</Y>
 				<label>Map Settings</label>
-				<listener>null</listener>
-			</button>
-			<button>
+				<listener>switchToMapSettingPane</listener>
+			</Button>
+			<Button>
+				<X>0</X>
+			 	<Y>0</Y>
+				<label>Global Settings</label>
+				<listener>switchToGlobalSettingPane</listener>
+			</Button>
+			<Button>
 			 	<X>2</X>
 			 	<Y>0</Y>
 				<label>Interactions List</label>
-				<listener>null</listener>
-			</button>
-		</buttons>
-		<dropdowns>
-			<Dropdown>
-				<X>0</X>
-				<Y>1</Y>
-				<label>Characters</label>
-				<listener>null</listener>
-			</Dropdown>
-			<Dropdown>
-				<X>1</X>
-				<Y>1</Y>
-				<label>Blocks</label>
-				<listener>null</listener>
-			</Dropdown>
-			<Dropdown>
-				<X>2</X>
-				<Y>1</Y>
-				<label>Decorations</label>
-				<listener>null</listener>
-			</Dropdown>
-			<Dropdown>
-				<X>3</X>
-				<Y>1</Y>
-				<label>UI Controls</label>
-				<listener>null</listener>
-			</Dropdown>
-		</dropdowns>
-	</BottomPane>
-	<LeftPane>
-		<buttons>
-			<button>
+				<listener>InteractionCreate</listener>
+			</Button>
+			<Button>
 				<X>0</X>
 			 	<Y>3</Y>
-				<label>Test Settings</label>
-				<listener>null</listener>
-			</button>
+				<label>Characters</label>
+				<listener>switchToCharacterCreationPane</listener>
+			</Button>
+			<Button>
+				<X>0</X>
+			 	<Y>4</Y>
+				<label>Blocks</label>
+				<listener>switchToBlockCreationPane</listener>
+			</Button>
+			<Button>
+				<X>0</X>
+			 	<Y>5</Y>
+				<label>Decorations</label>
+				<listener>DecorationCreate</listener>
+			</Button>
+			<Button>
+				<X>0</X>
+			 	<Y>6</Y>
+				<label>UI Controls</label>
+				<listener>UIControlCreate</listener>
+			</Button>
 		</buttons>
+	</BottomPane>
+	<TopPane>
 		<dropdowns>
 			<Dropdown>
 				<X>0</X>
 				<Y>3</Y>
-				<label>Test Characters</label>
-				<listener>null</listener>
+				<default>Test Characters</default>
+				<label0>Test Characters</label0>
+				<listener0>null</listener0>
+			</Dropdown>
+			<Dropdown>
+				<X>0</X>
+				<Y>1</Y>
+				<default>Characters</default>
+				<label0>Characters</label0>
+				<listener0>null</listener0>
+			</Dropdown>
+			<Dropdown>
+				<X>1</X>
+				<Y>1</Y>
+				<default>Blocks</default>
+				<label0>Blocks</label0>
+				<listener0>null</listener0>
+			</Dropdown>
+			<Dropdown>
+				<X>2</X>
+				<Y>1</Y>
+				<default>Decorations</default>
+				<label0>Decorations</label0>
+				<listener0>null</listener0>
+			</Dropdown>
+			<Dropdown>
+				<X>3</X>
+				<Y>1</Y>
+				<default>UI Controls</default>
+				<label0>UI Controls</label0>
+				<listener0>null</listener0>
+			</Dropdown>
+			<Dropdown>
+				<X>3</X>
+				<Y>1</Y>
+				<default>Maps</default>
+				<label0>Maps</label0>
+				<listener0>null</listener0>
 			</Dropdown>
 		</dropdowns>
-	</LeftPane>
+	</TopPane>
 </layout>

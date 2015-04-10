@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <Flappy_Bird>
+=======
+<game>
+>>>>>>> a5d1dc109870fd440c5302ac27cbba256ba3519b
 	<sprite>
 		<location>
 			<a>5</a>
@@ -8,10 +12,17 @@
 		<time>
 			<a>5</a>
 		</time>
+<<<<<<< HEAD
 		<fun>30</fun>
+=======
+>>>>>>> a5d1dc109870fd440c5302ac27cbba256ba3519b
 	</sprite>
 	<wall>
 		<length>10</length>
 	</wall>
+<<<<<<< HEAD
 	<stuff>20</stuff>
 </Flappy_Bird>
+=======
+</game>
+>>>>>>> a5d1dc109870fd440c5302ac27cbba256ba3519b

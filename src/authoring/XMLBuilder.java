@@ -1,6 +1,7 @@
 package authoring;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -255,6 +256,10 @@ public class XMLBuilder {
 		return root;
 	}
 
+	public void addAll(Collection<Sprite> sprites) {
+		
+	}
+	
 	// ====== Testing Main Method ==============================================
 
 	public static void main(String[] args) {

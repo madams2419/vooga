@@ -160,6 +160,7 @@ public class VoogaFileChooser {
 	    StackPane option = new StackPane();
 	    option.getChildren().addAll(content, name);
 	    option.setMaxSize(optionSize, optionSize);
+	    
 	    option.setOnMouseClicked((clicked) -> chosenFile = parser);
 	    
 	    row.getChildren().add(option);
