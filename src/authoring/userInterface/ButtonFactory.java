@@ -15,7 +15,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import org.w3c.dom.Node;
-
+import authoring.Sprite;
 import authoring.rightPane.RightPane;
 import authoring.userInterface.Reflection;
 import XML.LayoutXMLParser;
@@ -54,6 +54,5 @@ public class ButtonFactory{
 		//		return mButtonList;
 		return b;
 	}
-
 
 }

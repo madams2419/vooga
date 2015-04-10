@@ -63,7 +63,7 @@ public class VoogaGameBuilder {
 	    }
 	    parser.moveUp();
 	    String state = parser.getValue("initialState");
-	    sprite.setState.execute(state);
+	    sprite.setStateBehavior().execute(state);
 	    return sprite;
 	}
 	catch (Exception e) {

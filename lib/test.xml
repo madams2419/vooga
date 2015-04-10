@@ -4,22 +4,18 @@
 	<sprite name="images" />
 	<sprite name="images" />
 	<sprite name="images" />
-	<sprite name="images">
-		<velocity>
-			<x>369.5</x>
-		</velocity>
-		<velocity>
-			<y>24.0</y>
-		</velocity>
+	<sprite name="">
+		<imageURI>/images/smallLuigi.png</imageURI>
+		<ID>100</ID>
+		<position>x=179.0, y=192.5</position>
+		<velocity>x=0.0, y=0.0</velocity>
+		<Name>Foo</Name>
 	</sprite>
-	<sprite name="images">
-		<velocity>
-			<x>445.5</x>
-		</velocity>
-		<velocity>
-			<y>272.0</y>
-		</velocity>
+	<sprite name="">
+		<imageURI>/images/luigi.png</imageURI>
+		<ID>100</ID>
+		<position>x=281.5, y=24.0</position>
+		<velocity>x=0.0, y=0.0</velocity>
+		<Name>Dan</Name>
 	</sprite>
-	<sprite name="images" />
-	<sprite name="images" />
 </game>

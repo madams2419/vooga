@@ -36,7 +36,7 @@ public class VoogaGame extends AnimationTimer {
     }
 
     public void handle(long now) {
-	activeLevel.update();
+	activeLevel.update(now);
     }
     
     public Group getRoot() {

@@ -8,7 +8,7 @@ import game_engine.sprite.Sprite;
  *
  */
 public interface IBehavior {
-	
-	public void execute(String... params);
-	
+        
+        public void execute(String... params);
+        
 }

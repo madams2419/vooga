@@ -8,7 +8,7 @@ public class AuthoringGUITester extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		BottomPane bp=new BottomPane();
+		//BottomPane bp=new BottomPane();
 		AuthoringWindow w = new AuthoringWindow();
 		Scene s = w.GameCreateUI();
 		primaryStage.setScene(s);

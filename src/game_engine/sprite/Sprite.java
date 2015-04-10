@@ -22,7 +22,7 @@ public abstract class Sprite extends Observable{
 	private String myName;	
 	private String myState;
 	private Animation myAnimation;
-	protected PhysicsObject myPhysicsObject = new PhysicsObject(null, null, null, myName, new Vector(0,0), null);
+	protected PhysicsObject myPhysicsObject = new PhysicsObject(null, null, null, 0, 0);//new PhysicsObject(null, null, null, myName, new Vector(0,0), null);
 	private Map<String, IBehavior> myBehaviorMap = new HashMap<>();
 
 	
