@@ -76,7 +76,7 @@ public class PhysicsTester extends Application {
 		for(Sprite sprite : layer.getSprites()) {
 			PhysicsObject sPhysics = sprite.getPhysicsObject();
 			Node sNode = displayMap.get(sprite);
-			setNodePosition(sNode, sPhysics.getPosition());
+			setNodePosition(sNode, sPhysics.getPositionPixels());
 		}
 	}
 	private void handleKeyInput(KeyEvent e) {
@@ -119,7 +119,7 @@ public class PhysicsTester extends Application {
 		PhysicsObject sPhysics = sprite.getPhysicsObject();
 		double radius = sPhysics.getShape().getRadius();
 		Node circle = new Circle(radius, Color.BLACK); // right now only circles are supported
-		setNodePosition(circle, sPhysics.getPosition());
+		setNodePosition(circle, sPhysics.getPositionPixels());
 		return circle;
 	}
 	

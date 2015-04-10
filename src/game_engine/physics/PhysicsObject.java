@@ -92,28 +92,52 @@ public class PhysicsObject {
 		setVelocity(newVelocity);
 	}
 
-	public Vector getPosition() {
+	public Vector getPositionMeters() {
 		return myPosition;
 	}
+	
+	public Vector getPositionPixels() {
+		return myPhysics.vectorMetersToPixels(getPositionMeters());
+	}
 
-	public void setPosition(Vector position) {
-		myPosition = position;
+	public void setPositionMeters(Vector positionMeters) {
+		myPosition = positionMeters;
 	}
 	
-	public double getX() {
+	public void setPositionPixels(Vector positionPixels) {
+		myPosition = myPhysics.vectorPixelsToMeters(positionPixels);
+	}
+	
+	public double getXMeters() {
 		return myPosition.getX();
 	}
 	
-	public double getY() {
+	public void setXMeters(double xMeters) {
+		myPosition.setX(xMeters);
+	}
+	
+	public double getYMeters() {
 		return myPosition.getY();
 	}
 	
-	public void setX(double x) {
-		myPosition.setX(x);
+	public void setYMeters(double yMeters) {
+		myPosition.setY(yMeters);
 	}
 	
-	public void setY(double y) {
-		myPosition.setY(y);
+	public double getXPixels() {
+		return myPhysics.metersToPixels(getXMeters());
+	}
+	
+	public void setXPixels(double xPixels) {
+		myPosition.setX(myPhysics.pixelsToMeters(xPixels));
+	}
+	
+	public double getYPixels() {
+		return myPhysics.metersToPixels(getYMeters());
+	}
+	
+	public void setYPixels(double yPixels) {
+		myPosition.setY(myPhysics.pixelsToMeters(yPixels));
 	}
 
 	public Vector getVelocity() {

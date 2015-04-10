@@ -79,7 +79,7 @@ public class PhysicsEngine {
 	}
 
 	private boolean checkCircleCollision(PhysicsObject a, PhysicsObject b) {
-		double sepDistance = b.getPosition().minus(a.getPosition()).getMagnitude();
+		double sepDistance = b.getPositionMeters().minus(a.getPositionMeters()).getMagnitude();
 		double radiiSum = ((CircleBody)b.getShape()).getRadius() + ((CircleBody)a.getShape()).getRadius();
 		return sepDistance <= radiiSum;
 	}
@@ -124,7 +124,7 @@ public class PhysicsEngine {
 	}
 
 	private Vector getCollisionNormal(PhysicsObject a, PhysicsObject b) {
-		Vector delta = b.getPosition().minus(a.getPosition());
+		Vector delta = b.getPositionMeters().minus(a.getPositionMeters());
 		return delta.normalize();
 	}
 
