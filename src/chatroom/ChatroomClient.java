@@ -70,7 +70,7 @@ public class ChatroomClient{
 	}
 	
 	public static void main(String[] args){
-		ChatroomClient client = new ChatroomClient("10.190.77.51",5000);
+		ChatroomClient client = new ChatroomClient("10.190.77.51",6050);
 	}
 //	public String readConsoleInput(){
 //		System.out.print("Enter reply (type goodbye to terminate): ");

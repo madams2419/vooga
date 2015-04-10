@@ -92,7 +92,7 @@ public class ChatroomServer extends Thread {
 
 	public static void main(String[] args){
 		try {
-			ChatroomServer myServer = new ChatroomServer(5000);
+			ChatroomServer myServer = new ChatroomServer(6050);
 			myServer.runServer();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
