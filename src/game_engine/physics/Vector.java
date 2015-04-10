@@ -42,7 +42,7 @@ public class Vector {
 	}
 
 	public Vector minus(Vector other) {
-		return new Vector(myX - other.getX(), myY + other.getY());
+		return new Vector(myX - other.getX(), myY - other.getY());
 	}
 
 	public double dot(Vector other) {
@@ -58,13 +58,18 @@ public class Vector {
 	}
 
 	public Vector normalize() {
-		return getPolarVector(getAngle(), 1);
+		if(isZeroVector()) {
+			return new Vector();
+		} else {
+			double mag = getMagnitude();
+			return new Vector(myX / mag, myY / mag);
+		}
 	}
-	
+
 	public void setX(double x) {
 		myX = x;
 	}
-	
+
 	public void setY(double y) {
 		myY = y;
 	}
@@ -78,7 +83,11 @@ public class Vector {
 	}
 
 	public double getAngle() {
-		return Math.atan(myY/myX);
+		return isZeroVector() ? 0 : Math.atan(myY/myX);
+	}
+
+	public boolean isZeroVector() {
+		return (myX == 0 && myY == 0);
 	}
 
 	public double getMagnitude() {

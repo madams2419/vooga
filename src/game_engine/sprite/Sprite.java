@@ -1,13 +1,14 @@
 package game_engine.sprite;
 
+import game_engine.IBehavior;
+import game_engine.physics.PhysicsObject;
+import game_player.Animation;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
+
 import javafx.scene.image.ImageView;
-import game_engine.IBehavior;
-import game_engine.HitBox;
-import game_engine.physics.PhysicsObject;
-import game_player.Animation;
 
 /**
  * Abstract class for the creation of multiple sprite types
@@ -21,7 +22,6 @@ public abstract class Sprite extends Observable{
 	private String myName;	
 	private String myState;
 	private Animation myAnimation;
-	private HitBox myHitBox;
 	protected PhysicsObject myPhysicsObject;
 	private Map<String, IBehavior> myBehaviorMap = new HashMap<>();
 
@@ -136,24 +136,17 @@ public abstract class Sprite extends Observable{
 	    return myPhysicsObject;
 	}
 	
-	public void defineHitBox(HitBox hitBox){
-	    myHitBox = hitBox;
-	}
-	
-	public HitBox getHitBox(){
-	    return this.myHitBox;
-	}
 	
 	public void moveX(double x){
-		myPhysicsObject.getPosition().setX(
-				myPhysicsObject.getPosition().getX() + x);
+		myPhysicsObject.setXPixels(
+				myPhysicsObject.getXPixels() + x);
 		setChanged();
                 notifyObservers();
 	}
 	
 	public void moveY(double y){
-		myPhysicsObject.getPosition().setY(
-				myPhysicsObject.getPosition().getY() + y);
+		myPhysicsObject.setYPixels(
+				myPhysicsObject.getYPixels() + y);
 		setChanged();
                 notifyObservers();
 	}
