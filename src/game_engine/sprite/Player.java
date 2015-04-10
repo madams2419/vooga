@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
-
 public class Player extends Character {
         private Map<Collectible, Integer> myCollectibleMap;
         

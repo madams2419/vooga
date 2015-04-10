@@ -6,8 +6,10 @@ public class AddBehavior implements IBehavior{
 	
 	@Override
 	public void execute(String[] params) {
-		ControlTester.addTrack();
-		ControlTester.updateText();
+
+//		ControlTester.addTrack();
+//		ControlTester.updateText();
+
 	}
 
 }

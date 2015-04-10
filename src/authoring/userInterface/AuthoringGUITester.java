@@ -8,14 +8,15 @@ public class AuthoringGUITester extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		BottomPane bp=new BottomPane();
 		AuthoringWindow w = new AuthoringWindow();
 		Scene s = w.GameCreateUI();
 		primaryStage.setScene(s);
 		primaryStage.show();
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
+//	public static void main(String[] args) {
+//		launch(args);
+//	}
 	
 }

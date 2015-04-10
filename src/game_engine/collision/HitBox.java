@@ -4,6 +4,7 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
 import javafx.scene.shape.Rectangle;
 /**
  * Hitbox class that defines collisions between objects
@@ -19,11 +20,16 @@ public class HitBox {
 	public HitBox(ImageView n) {
 		node = n;
 		image = node.getImage();
+		boolean[][] bitMap = createBitMap(image);
 		
 	}
 	
 	public Bounds getBounds(){
 		return node.getBoundsInParent();
+	}
+	
+	public boolean[][] getBitMap(){
+		return bitMap;
 	}
 	
 	/**
@@ -35,4 +41,17 @@ public class HitBox {
 	public boolean intersects(HitBox compare) {
 		return node.getBoundsInParent().intersects(compare.getBounds());
 	}
+	
+	private boolean[][] createBitMap(Image src) {
+		PixelReader reader = src.getPixelReader();
+		int width = (int) src.getWidth();
+		int height = (int) src.getHeight();
+		boolean[][] bitMap = new boolean[height][width];
+		for (int y = 0; y < height; y++)
+			for (int x = 0; x < width; x++) {
+				bitMap[y][x] = reader.getArgb(x, y) != 0;
+			}
+		return bitMap;
+	}
+
 }

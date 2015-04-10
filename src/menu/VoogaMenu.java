@@ -1,6 +1,8 @@
 package menu;
 
 import game_player.VoogaGameBuilder;
+import game_player.VoogaGameLoop;
+import authoring.userInterface.*;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
@@ -23,7 +25,7 @@ import javafx.util.Duration;
  * to either play an existing game or design a new one.
  * 
  * @author Brian Lavallee
- * @since 8 April 2015
+ * @since 10 April 2015
  */
 public class VoogaMenu {
     private static final double PADDING = 10;
@@ -76,7 +78,6 @@ public class VoogaMenu {
 	
 	root = new StackPane();
 	mainMenu = new StackPane();
-	chooser = new VoogaFileChooser(width, height);
 	
 	// TODO: Replace rectangles with ImageViews which hold screenshots from our working game player / authoring environment
 	
@@ -270,11 +271,17 @@ public class VoogaMenu {
 	    addChoiceMenu(GAME);
 	    choiceMenu.setOnMouseClicked((clicked) -> {
 		VoogaGameBuilder builder = new VoogaGameBuilder(chooser.getChosenFile());
+		VoogaGameLoop gameLoop = builder.build();
+		gameLoop.start();
 	    });
 	});
 	
 	design.setOnMouseClicked((event) -> {
 	    addChoiceMenu(DESIGN);
+	    choiceMenu.setOnMouseClicked((clicked) -> {
+		root.getChildren().removeAll(choiceMenu, background);
+		scene = new AuthoringWindow().GameCreateUI();
+	    });
 	});
     }
     
@@ -299,7 +306,9 @@ public class VoogaMenu {
      * blurs the background for effect.
      */
     private void addChoiceMenu(String fileType) {
-	choiceMenu = chooser.getContent(fileType);
+	chooser = new VoogaFileChooser(width, height, fileType);
+	choiceMenu = chooser.getContent();
+	
 	disableButtons();
 	
 	FadeTransition fadeMainOut = new FadeTransition(Duration.millis(TRANSITION_TIME), mainMenu);
