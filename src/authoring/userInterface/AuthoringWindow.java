@@ -11,6 +11,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -28,6 +29,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import authoring.XMLBuilder;
 import authoring.rightPane.RightPane;
 
 /**
@@ -136,10 +138,10 @@ public class AuthoringWindow {
 						// statement?
 						if (result.get() == ButtonType.OK) {
 							// TODO: check to make sure user entered numbers
+//							myCenterPane.createRegion(
+//									Double.parseDouble(textBox1.getText()),
+//									Double.parseDouble(textBox1.getText()));
 
-							// myCenterPane.createRegion(
-							// Double.parseDouble(textBox1.getText()),
-							// Double.parseDouble(textBox1.getText()));
 						}
 					});
 
@@ -190,6 +192,13 @@ public class AuthoringWindow {
 		buttonBox.getChildren().addAll(BottomPane.mButtonList);
 		System.out.println("Button Pane is: "
 				+ BottomPane.mButtonList.toString());
+
+		Button c = new Button("Output xml");
+		c.setOnAction(e -> {
+			XMLBuilder.getInstance("game").streamFile("lib/test.xml",
+					XMLBuilder.getInstance("game").getRoot());
+		});
+		buttonBox.getChildren().add(c);
 		return buttonBox;
 	}
 
@@ -214,6 +223,7 @@ public class AuthoringWindow {
 		r.setScene(myScene);
 		return r;
 	}
+
 
 	private VBox setupLeftPane() {
 		VBox buttonBox = new VBox();

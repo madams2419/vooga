@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+	<sprite name="images" />
+	<sprite name="images" />
+	<sprite name="images">
+		<velocity>
+			<x>522.5</x>
+		</velocity>
+		<velocity>
+			<y>6.0</y>
+		</velocity>
+	</sprite>
+	<sprite name="images">
+		<velocity>
+			<x>510.5</x>
+		</velocity>
+		<velocity>
+			<y>281.0</y>
+		</velocity>
+	</sprite>
+	<sprite name="images">
+		<velocity>
+			<x>350.5</x>
+		</velocity>
+		<velocity>
+			<y>19.0</y>
+		</velocity>
+	</sprite>
+	<sprite name="images">
+		<velocity>
+			<x>331.5</x>
+		</velocity>
+		<velocity>
+			<y>260.0</y>
+		</velocity>
+	</sprite>
+	<sprite name="images">
+		<velocity>
+			<x>112.5</x>
+		</velocity>
+		<velocity>
+			<y>260.0</y>
+		</velocity>
+	</sprite>
+	<sprite name="images">
+		<velocity>
+			<x>119.5</x>
+		</velocity>
+		<velocity>
+			<y>28.0</y>
+		</velocity>
+	</sprite>
+	<sprite name="images">
+		<velocity>
+			<x>551.5</x>
+		</velocity>
+		<velocity>
+			<y>538.0</y>
+		</velocity>
+	</sprite>
+</game>

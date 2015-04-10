@@ -16,7 +16,7 @@ import authoring.userInterface.AuthoringWindow;
  * edit a particular character, to edit the interactions between characters, and
  * to create new characters.
  * 
- * @author Natalie Chanfreau, Daniel Luker
+ * @author Natalie Chanfreau, Daniel Luker, hojeannie Chung
  *
  */
 public class RightPane extends VBox {
@@ -72,6 +72,7 @@ public class RightPane extends VBox {
     public void switchToCharacterCreationPane () {
         printOutInteractions();
         switchToPane(new CharacterCreationPane(myScene));
+        System.out.println("Character Creation Pane");
     }
 
     private void printOutInteractions () {
@@ -81,6 +82,31 @@ public class RightPane extends VBox {
     private void switchToInteractionEditingPane (Sprite sprite1, Sprite sprite2) {
         switchToPane(new InteractionEditingPane(myScene, sprite1, sprite2,
                                                 getListOfInteractions()));
+    }
+
+    public void InteractionCreate () {
+        System.out.println("Interaction Create");
+    }
+
+    public void switchToBlockCreationPane () {
+        System.out.println("Block Created");
+    }
+
+    public void DecorationCreate () {
+        System.out.println("Decoration Create");
+    }
+
+    public void switchtoGlobalSettingPane () {
+        System.out.println("Global Create");
+    }
+
+    public void switchToMapSettingPane () {
+        switchToPane(new MapSettingPane(myScene));
+        System.out.println("Map Created");
+    }
+
+    public void UIControlCreate () {
+        System.out.println("UI Control Create");
     }
 
     public void switchToDefaultPane () {
