@@ -2,21 +2,15 @@ package authoring.userInterface;
 
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Optional;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
 //import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
@@ -24,6 +18,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import authoring.Sprite;
 import authoring.XMLBuilder;
 import authoring.rightPane.RightPane;
 
@@ -51,7 +46,7 @@ public class AuthoringWindow {
 	
 	private CenterPane myCenterPane;
 
-	private static Object currentlySelected;
+	private static Sprite currentlySelected;
 	private static boolean control;
 
 	public AuthoringWindow() {
@@ -215,8 +210,8 @@ public class AuthoringWindow {
 		return myCenterPane;
 	}
 
-	public static void setCurrentlySelected(Object o) {
-		currentlySelected = o;
+	public static void setCurrentlySelected(Sprite s) {
+		currentlySelected = s;
 	}
 
 	public static Object getCurrentlySelected() {

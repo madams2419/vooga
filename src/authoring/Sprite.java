@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.w3c.dom.Element;
 import authoring.rightPane.RightPane;
+import authoring.userInterface.AuthoringWindow;
 import authoring.userInterface.ClickHandler;
 import authoring.util.FrontEndUtils;
 import authoring.util.ImageEditor;
@@ -111,15 +112,13 @@ public class Sprite extends ImageView {
 
     private void onMouseClicked () {
         try {
-            setOnMouseClicked(new ClickHandler(
-                                               RightPane.class.getMethod(
-                                                                         "switchPane", Sprite.class),
+            setOnMouseClicked(new ClickHandler(RightPane.class.getMethod("switchPane", Sprite.class),
                                                RightPane.getInstance(), this));
         }
         catch (NoSuchMethodException | SecurityException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+                e.printStackTrace();
+            }
     }
 
     private void setImageIcon (Image image) {

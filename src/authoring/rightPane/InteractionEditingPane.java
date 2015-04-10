@@ -35,8 +35,8 @@ public class InteractionEditingPane extends EditingPane {
                                        .format("This will contain the interactions")));
 
         // temporary
-        sprite1 = new Sprite(1, "/images/smallLuigi.png");
-        sprite2 = new Sprite(1, "/images/luigi.png");
+//        sprite1 = new Sprite(1, "/images/smallLuigi.png");
+//        sprite2 = new Sprite(1, "/images/luigi.png");
         
         mySprite1 = sprite1;
         mySprite2 = sprite2;
