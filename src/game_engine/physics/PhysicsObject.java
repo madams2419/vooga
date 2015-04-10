@@ -1,8 +1,5 @@
 package game_engine.physics;
 
-import game_engine.collision.HitBox;
-
-import java.util.ArrayList;
 import java.util.List;
 
 // TODO
@@ -19,8 +16,6 @@ public class PhysicsObject {
 	private double myDirForceMagnitude;
 	private List<Joint> myJoints;
 	private PhysicsEngine myPhysics;
-	
-	public PhysicsObject(PhysicsEngine physics, Material material, HitBox hitBox, String state, Vector position, Vector velocity) {}
 	
 	private Shape myShape;
 
