@@ -40,6 +40,9 @@ public class InteractionEditingPane extends EditingPane {
         
         mySprite1 = sprite1;
         mySprite2 = sprite2;
+        
+        System.out.println("sprite1: " + mySprite1.getName());
+        System.out.println("sprite2: " + mySprite2.getName());
 
         myInteraction = getInteraction();
         myActionProperty1 =
