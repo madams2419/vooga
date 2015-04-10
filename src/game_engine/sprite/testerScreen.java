@@ -17,9 +17,9 @@ public class testerScreen{
     public Scene initialize()
     {   
         Player myPlayer = new Player();
-        myPlayer.addImage("idle", "standingMario.png");
+        myPlayer.addImage("idle", "/Resources/images/standingMario.png");
 //        myPlayer.addImage("walking", "/Resources/images/walkingMario.png");
-//        myPlayer.setState("walking");
+        myPlayer.setState("idle");
         
         Scene scene = new Scene(myRoot, myWidth, myHeight);
         scene.setFill(Color.WHITE);

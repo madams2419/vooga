@@ -39,6 +39,7 @@ public abstract class Character extends Sprite {
 	private IBehavior moveForward = (params) -> { // movement
 		myPosition.setX(myPosition.getX()+Double.parseDouble(params[0]));
 		setStateName("forward");
+		System.out.println("moveForward");
 	};
 	
 	public IBehavior getMoveForward(){
@@ -50,6 +51,7 @@ public abstract class Character extends Sprite {
 		Vector myVector = new Vector(0,1*Double.parseDouble(params[0]));
 		myPhysicsObject.applyImpulse(myVector);
 		setStateName("jump");
+		System.out.println("jump");
 	};
 	
 	public IBehavior getJump(){
@@ -61,6 +63,7 @@ public abstract class Character extends Sprite {
 		Vector myVector = new Vector(1*Double.parseDouble(params[0]),0);
 		myPhysicsObject.applyImpulse(myVector);
 		setStateName("sprint");
+		System.out.println("sprint");
 	};
 	
 	public IBehavior getSprint(){
@@ -72,6 +75,7 @@ public abstract class Character extends Sprite {
 		Vector myVector = new Vector(0,1*Double.parseDouble(params[0]));
 		myPhysicsObject.applyImpulse(myVector);
 		setStateName("slide");
+		System.out.println("slide");
 	};
 	
 	public IBehavior getSlide(){
@@ -80,7 +84,7 @@ public abstract class Character extends Sprite {
 	
 	private IBehavior bounce = (params) -> { // movement 
 		setStateName("bounce");
-		
+		System.out.println("bounce");
 	};
 	
 	public IBehavior getBounce(){

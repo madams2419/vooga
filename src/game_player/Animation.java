@@ -46,9 +46,11 @@ public class Animation implements Observer{
 	}
 	
 	private void changeImage(String state){
+	    if(myPathMap.containsKey(state)){
 	    myCurrentImage = myPathMap.get(state);
 	    myImageView.setImage(new Image(getClass().getResourceAsStream(
                                 myCurrentImage))); 
+	    }
 	}
 	
 	public ImageView getImageView(){
