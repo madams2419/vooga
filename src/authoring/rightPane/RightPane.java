@@ -3,6 +3,7 @@ package authoring.rightPane;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ import javafx.scene.layout.VBox;
 import authoring.InteractionManager;
 import authoring.Sprite;
 import authoring.userInterface.AuthoringWindow;
+import authoring.userInterface.ControlsDialog;
 
 
 /**
@@ -84,7 +86,7 @@ public class RightPane extends VBox {
     }
 
     public void UIControlCreate () {
-        System.out.println("UI Control Create");
+        new ControlsDialog();
     }
 
     public void switchToDefaultPane () {
