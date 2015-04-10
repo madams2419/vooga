@@ -57,6 +57,11 @@ public class InteractionManager {
         }
         myInteractions.put(sprite1, sprite1map);
         sprite1map.put(sprite2, interaction);
+        
+        // TODO
+        // do we want sprite to hold the interaction or have them all in a seperate section?
+        // the following line is for having the sprites hold their interactions
+        sprite1.setInteraction(sprite2, interaction);
     }
 
     public void printOut () {

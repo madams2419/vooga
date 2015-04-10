@@ -10,7 +10,6 @@ import javafx.scene.image.ImageView;
 import authoring.Interaction;
 import authoring.InteractionManager;
 import authoring.Sprite;
-import com.sun.xml.internal.bind.v2.runtime.property.ValueProperty;
 
 
 /**
@@ -38,6 +37,7 @@ public class InteractionEditingPane extends EditingPane {
         // temporary
         sprite1 = new Sprite(1, "/images/turtle.png");
         sprite2 = new Sprite(1, "/images/luigi.png");
+        
         mySprite1 = sprite1;
         mySprite2 = sprite2;
 
