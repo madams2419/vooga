@@ -23,8 +23,8 @@ public static Group root=new Group();
 					mButtonList.add(ButtonFactory.generateButton(m.get(key)));
 				}
 				if(key.equals("Dropdown")){
-					DropdownFactory dFactory=new DropdownFactory();
-					dFactory.generateDropdown(m.get(key));
+//					DropdownFactory dFactory=new DropdownFactory();
+//					dFactory.generateDropdown(m.get(key));
 				}
 			}
 		}	

@@ -44,7 +44,7 @@ public class Collision {
 	}
 	
 	private boolean collidingHitBox(Sprite spriteA, Sprite spriteB){
-		//get sprite hitbox
+	    return false;
 	}
 
 	private boolean collide(Sprite spriteA, Sprite spriteB) {

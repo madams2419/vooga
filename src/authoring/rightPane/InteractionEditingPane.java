@@ -35,7 +35,7 @@ public class InteractionEditingPane extends EditingPane {
                                        .format("This will contain the interactions")));
 
         // temporary
-        sprite1 = new Sprite(1, "/images/turtle.png");
+        sprite1 = new Sprite(1, "/images/smallLuigi.png");
         sprite2 = new Sprite(1, "/images/luigi.png");
         
         mySprite1 = sprite1;
@@ -94,4 +94,6 @@ public class InteractionEditingPane extends EditingPane {
         ImageView spriteIcon = sprite.getIcon();
         this.getChildren().add(spriteIcon);
     }
+    
+    
 }

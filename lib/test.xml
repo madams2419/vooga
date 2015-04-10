@@ -1,1 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?><game><sprite name="Koopa"><imageURI>/images/turtle.png</imageURI><ID>100</ID><position>x=100.5, y=219.0</position><velocity>x=0.0, y=0.0</velocity><Name>Koopa</Name></sprite><sprite name="Daniel"><imageURI>/images/luigi.png</imageURI><ID>100</ID><position>x=525.0, y=166.0</position><velocity>x=0.0, y=0.0</velocity><Name>Daniel</Name></sprite><sprite name="Jeannie"><imageURI>/images/luigi.png</imageURI><ID>100</ID><position>x=330.0, y=245.0</position><velocity>x=0.0, y=0.0</velocity><Name>Jeannie</Name></sprite></game>
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+	<sprite name="Daniel">
+		<imageURI>/images/smallLuigi.png</imageURI>
+		<name>Daniel</name>
+		<ID>100</ID>
+		<position>x=204.0, y=179.5</position>
+		<velocity>x=0.0, y=0.0</velocity>
+	</sprite>
+	<sprite name="john">
+		<imageURI>/images/luigi.png</imageURI>
+		<name>john</name>
+		<ID>100</ID>
+		<position>x=245.5, y=-3.0</position>
+		<velocity>x=0.0, y=0.0</velocity>
+	</sprite>
+</game>

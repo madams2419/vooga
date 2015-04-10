@@ -63,7 +63,7 @@ public class Sprite extends ImageView {
 		myVelocity.put(Y_STRING, 0.0);
 		myKeyActions = new HashMap<>();
 		myCharacteristics = new HashMap<>();
-		addDefaultCharacteristics(Arrays.asList(new String[] { "Name" }));
+		addDefaultCharacteristics(Arrays.asList(new String[] { "name" }));
 		onMouseClicked();
 		FrontEndUtils.setKeyActions(this);
 	}
@@ -78,7 +78,7 @@ public class Sprite extends ImageView {
 	}
 
 	public String getName() {
-		return myCharacteristics.get("Name");
+		return myCharacteristics.get("name");
 	}
 
 	public Consumer<Sprite> getConsumer() {

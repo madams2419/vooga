@@ -1,4 +1,8 @@
 package chatroom;
+import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
+
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -6,18 +10,17 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
-public class View {
+public class ViewServer implements Observer{
 	private Scene scene;
 	private BorderPane root;
 	private CommandHistory history;
 	private CommandLine commandLine;
-	private String current;
-	private boolean stringChanged = false;
+	private ChatroomServer myServer;
 	
 	// Command Line Dimensions
 	private static final int COMMAND_HEIGHT = 50;
 
-	public View() {
+	public ViewServer() {
 		root = new BorderPane();
 		history = new CommandHistory(400);
 		commandLine = new CommandLine(COMMAND_HEIGHT);
@@ -25,6 +28,12 @@ public class View {
 		root.setBottom(commandLine.getCommandLine());
 		scene = new Scene(root);
 		setCommandLine(parse);
+		try {
+			myServer = new ChatroomServer(6060, new View());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public CommandLine getCommandLine() {
@@ -61,19 +70,7 @@ public class View {
 		getCommandHistory().addHistoryText(parse);
 		System.out.println(parse);
 	}
-	
-	public void sendText(String test){
-		getCommandHistory().addHistoryText(test);
-	}
-	
-	public boolean getStringChanged(){
-		return stringChanged;
-	}
-	
-	public String getText(){
-		return current;
-	}
-	
+
 	private EventHandler<KeyEvent> parse = new EventHandler<KeyEvent>() {
 		public void handle(KeyEvent event) {
 			String parse;
@@ -85,10 +82,14 @@ public class View {
 				}
 				getCommandHistory().addHistoryText(parse);
 				System.out.println(parse);
-				current = parse;
-				stringChanged = true;
 			}
 
 		}
 	};
+
+	@Override
+	public void update(Observable o, Object arg) {
+
+		
+	}
 }
