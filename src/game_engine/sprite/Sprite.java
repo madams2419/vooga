@@ -116,7 +116,7 @@ public abstract class Sprite extends Observable{
             setState(state);
 	};
 	
-	public IBehavior setStateBehavior(){
+	public IBehavior getStateBehavior(){
 	    return setState;
 	}
 	
