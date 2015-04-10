@@ -19,7 +19,7 @@ public class EditingPane extends VBox {
     private static final String returnToCreationMethod = "switchToCharacterCreationPane";
     private Scene myScene;
 
-    EditingPane (Scene scene) {
+    public EditingPane (Scene scene) {
         assert (scene != null);
         myScene = scene;
     }

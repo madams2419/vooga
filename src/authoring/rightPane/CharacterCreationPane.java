@@ -1,11 +1,17 @@
 package authoring.rightPane;
 
 import java.util.function.Consumer;
+
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import authoring.AbstractSprite;
+import authoring.SpecificSprite;
 import authoring.Sprite;
+import authoring.SpriteType;
+import authoring.Sprite;
+import authoring.rightPane.EditingPane;
 import authoring.userInterface.SpriteCursor;
 import authoring.util.ImageEditor;
 
@@ -33,7 +39,7 @@ public class CharacterCreationPane extends EditingPane {
         addSpriteToPane(100, "/images/turtle.png");
         addSpriteToPane(101, "/images/luigi.png");
     }
-    
+
     private void addSpriteToPane(int id, String imageURI) {
         Sprite sampleImage = new Sprite(id, imageURI);
         
@@ -60,6 +66,7 @@ public class CharacterCreationPane extends EditingPane {
     // an image in the right pane is clicked to be moved to the center pane
     private void imageClicked (Sprite sampleImage, int ID) {
         // need to now set mouse cursor to the sprite image
+        //getMyScene().setCursor(new SpriteCursor(new Sprite(sampleImage, ID, spriteClicked)));
         getMyScene().setCursor(new SpriteCursor(new Sprite(sampleImage, ID)));
         
     }

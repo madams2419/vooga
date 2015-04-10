@@ -3,7 +3,6 @@ package authoring.rightPane;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -39,7 +38,7 @@ public class RightPane extends VBox {
         return mInstance;
     }
 
-    public RightPane () {
+    private RightPane () {
         super(SPACING);
 
         getStylesheets().add(CSS);
@@ -50,31 +49,22 @@ public class RightPane extends VBox {
         // initializeCurrentContent(new CharacterEditingPane(scene, null));
     }
 
-    public void switchPane (Sprite s) {
-        if (AuthoringWindow.getControl())
-            switchToInteractionEditingPane(
-                                           (Sprite) AuthoringWindow.getCurrentlySelected(), s);
-        else
-            switchToCharacterEditingPane(s);
-    }
-
     public void switchToCharacterEditingPane (Sprite sprite) {
         switchToPane(new CharacterEditingPane(myScene, sprite));
     }
 
     public void switchToCharacterCreationPane () {
-        printOutInteractions();
         switchToPane(new CharacterCreationPane(myScene));
         System.out.println("Character Creation Pane");
     }
 
-    private void printOutInteractions () {
-        InteractionManager.getInstance().printOut();
+    public void switchToInteractionEditingPane (Sprite sprite1, Sprite sprite2) {
+        switchToPane(new InteractionEditingPane(myScene, sprite1, sprite2, getListOfInteractions()));
+        printOutInteractions();
     }
 
-    private void switchToInteractionEditingPane (Sprite sprite1, Sprite sprite2) {
-        switchToPane(new InteractionEditingPane(myScene, sprite1, sprite2,
-                                                getListOfInteractions()));
+    private void printOutInteractions () {
+        InteractionManager.getInstance().printOut();
     }
 
     public void InteractionCreate () {
@@ -101,6 +91,13 @@ public class RightPane extends VBox {
         switchToPane(new DefaultEditingPane(myScene));
     }
 
+	public void switchPane(Sprite s) {
+	if (AuthoringWindow.getControl())
+		switchToInteractionEditingPane(
+				(Sprite) AuthoringWindow.getCurrentlySelected(), s);
+	else
+		switchToCharacterEditingPane(s);
+}
     private void switchToPane (EditingPane newPane) {
         clearChildren();
         myCurrentContent = newPane;
@@ -136,7 +133,7 @@ public class RightPane extends VBox {
     private void addFromCurrentContent () {
         getChildren().addAll(myCurrentContent.getChildren());
     }
-    
+
     public void addContent(EditingPane p) {
     	myCurrentContent = p;
     	addFromCurrentContent();
