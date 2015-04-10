@@ -3,6 +3,7 @@ package game_engine.sprite;
 import javafx.animation.KeyFrame;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -23,7 +24,8 @@ public class testerScreen{
     {   
         
         myPlayer.addImage("idle", "/Resources/images/standingMario.png");
-        myPlayer.addImage("walking", "/Resources/images/jumpingMario.png");
+        myPlayer.addImage("walking", "/Resources/images/walkingMario.png");
+        myPlayer.addImage("jumping", "/Resources/images/jumpingMario.png");
         myPlayer.setState("idle");
         
         myRoot.getChildren().add(myPlayer.getImageView());
@@ -34,7 +36,18 @@ public class testerScreen{
     }
 
     private void handleKeyInput (KeyEvent e) {
-       myPlayer.setState("walking");
+        System.out.println(myPlayer.getState());
+        KeyCode keyCode = e.getCode();
+        if(keyCode == KeyCode.LEFT){
+        if(!myPlayer.getState().equals("idle")){
+       myPlayer.setState("idle");
+        }
+        else if(!myPlayer.getState().equals("walking"))
+        myPlayer.setState("walking");
+        }
+        else if(keyCode ==KeyCode.UP)
+            myPlayer.setState("jumping");
+        
     }
     
     public KeyFrame start(int frameRate) {
