@@ -64,7 +64,7 @@ public class Objective {
     public void addCondition (Predicate<Long> condition, String status) {
         addCondition(condition, Status.valueOf(status.toUpperCase()));
     }
-    
+     
     public void addCondition (Predicate<Long> condition, Status status) {
         myConditions.put(condition, status);
     }
