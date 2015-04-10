@@ -8,12 +8,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-<<<<<<< HEAD
+
 import authoring.Sprite;
 import authoring.userInterface.CenterPane;
 import authoring.util.FrontEndUtils;
-=======
->>>>>>> 6ad72a8c6b11f52733db07ff1433528f2ec6701a
+
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
