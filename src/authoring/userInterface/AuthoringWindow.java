@@ -70,7 +70,7 @@ public class AuthoringWindow {
 		canvas.setLeft(setupLeftPane());
 		canvas.setRight(setupRightPane());
 		canvas.setCenter(setupCenterPane());
-		canvas.setBottom(setupBottomPane(myScene.getWidth()));
+		canvas.setBottom(setupBottomPane(myCenterPane));
 
 		root.getChildren().add(menuBar());
 		root.getChildren().add(canvas);
@@ -161,10 +161,11 @@ public class AuthoringWindow {
 		return mBar;
 	}
 
-	private HBox setupBottomPane(double width) {
+	private HBox setupBottomPane(double width, CenterPane centerPane) {
 		HBox buttonBox = new HBox();
 		// UIElementDistributer ud = new UIElementDistributer();
 		// ud.ElementDistributer();
+		//BottomPane b = new BottomPane(myCenterPane);
 		buttonBox.getChildren().addAll(BottomPane.mButtonList);
 		System.out.println("Button Pane is: "
 				+ BottomPane.mButtonList.toString());
@@ -177,7 +178,12 @@ public class AuthoringWindow {
 					XMLBuilder.getInstance("game").getRoot());
 		});
 		buttonBox.getChildren().add(c);
+		//buttonBox.getChildren().add(new MapLevelTabPane(myCenterPane));
 		return buttonBox;
+	}
+	
+	private Node setupBottomPane(CenterPane centerPane){
+		return new MapLevelTabPane(myCenterPane);
 	}
 
 	private HBox setupTopPane(double width) {

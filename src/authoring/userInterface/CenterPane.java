@@ -97,6 +97,10 @@ public class CenterPane extends ScrollPane {
 
 	}
 
+	public Object[] getData(){
+		return new Object[]{myCurrentRectangle, myListOfSprites};
+	}
+	
 	public Collection<Sprite> getSprites() {
 		return myListOfSprites;
 	}
