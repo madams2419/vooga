@@ -1,5 +1,10 @@
 package menu;
 
+<<<<<<< HEAD
+=======
+import game_player.XMLParser;
+
+>>>>>>> 5906d07736834aa2964e861ab11f8aadea64f60e
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +27,11 @@ import javafx.scene.text.Text;
  * the play mode and .dev for the design mode.
  * 
  * @author Brian Lavallee
+<<<<<<< HEAD
  * @since 7 April 2015
+=======
+ * @since 8 April 2015
+>>>>>>> 5906d07736834aa2964e861ab11f8aadea64f60e
  */
 public class VoogaFileChooser {
     
@@ -41,6 +50,11 @@ public class VoogaFileChooser {
     
     private double optionSize, horizontalPadding, verticalPadding;
     
+<<<<<<< HEAD
+=======
+    private XMLParser chosenFile;
+    
+>>>>>>> 5906d07736834aa2964e861ab11f8aadea64f60e
     /**
      * General constructor, needs height and width of the stage in order to dynamically space
      * and size options. Creates the layout for both game files and dev files during preprocess.
@@ -79,6 +93,19 @@ public class VoogaFileChooser {
 	return content;
     }
     
+<<<<<<< HEAD
+=======
+    /**
+     * Returns the selected file so that a program can be executed.
+     * 
+     * @return
+     *         An XMLParser containing the information of the selected file.
+     */
+    public XMLParser getChosenFile() {
+	return chosenFile;
+    }
+    
+>>>>>>> 5906d07736834aa2964e861ab11f8aadea64f60e
     /*
      * Creates the layout via a VBox, also defines the scrolling limits of the VBox.
      */
@@ -128,14 +155,27 @@ public class VoogaFileChooser {
 	    content.setArcHeight(verticalPadding);
 	    content.setArcWidth(horizontalPadding);
 	    
+<<<<<<< HEAD
 	    // TODO: change to read beginning of file for a better name
 	    Text name = new Text(f.getName());
+=======
+	    XMLParser parser = new XMLParser(f);
+	    
+	    String fileName = parser.getValidSubDirectories().get(0);
+	    fileName = fileName.substring(0, fileName.length() - 1);
+	    fileName = fileName.replace('_', ' ');
+	    Text name = new Text(fileName);
+>>>>>>> 5906d07736834aa2964e861ab11f8aadea64f60e
 	    name.setFill(Color.WHITE);
 	    name.setFont(new Font(20));
 	    
 	    StackPane option = new StackPane();
 	    option.getChildren().addAll(content, name);
 	    option.setMaxSize(optionSize, optionSize);
+<<<<<<< HEAD
+=======
+	    option.setOnMouseClicked((clicked) -> chosenFile = parser);
+>>>>>>> 5906d07736834aa2964e861ab11f8aadea64f60e
 	    
 	    row.getChildren().add(option);
 	}
