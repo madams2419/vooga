@@ -1,10 +1,9 @@
 package authoring.userInterface;
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.Cursor;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
@@ -20,9 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import authoring.Sprite;
-
 import authoring.rightPane.GlobalCreationPane;
-import authoring.rightPane.RightPane;
 import authoring.util.FrontEndUtils;
 
 
@@ -71,7 +68,8 @@ public class CenterPane extends ScrollPane {
 //		});
 	}
 	
-	public CenterPane getInstance(Scene scene){
+
+	public static CenterPane getInstance(Scene scene){
 		if (mInstance == null)
 			mInstance = new CenterPane(scene);
 		return mInstance;

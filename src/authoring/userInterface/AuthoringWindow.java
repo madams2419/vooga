@@ -17,6 +17,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import authoring.Sprite;
 import authoring.XMLBuilder;
 import authoring.rightPane.RightPane;
 
@@ -42,7 +43,7 @@ public class AuthoringWindow {
 	private static final int SCENE_HEIGHT = 600;
 	private CenterPane myCenterPane;
 
-	private static Object currentlySelected;
+	private static Sprite currentlySelected;
 	private static boolean control;
 
 	public AuthoringWindow() {
@@ -206,8 +207,8 @@ public class AuthoringWindow {
 		return myCenterPane;
 	}
 
-	public static void setCurrentlySelected(Object o) {
-		currentlySelected = o;
+	public static void setCurrentlySelected(Sprite s) {
+		currentlySelected = s;
 	}
 
 	public static Object getCurrentlySelected() {
