@@ -15,7 +15,7 @@ import authoring.userInterface.AuthoringWindow;
  * edit a particular character, to edit the interactions between characters, and
  * to create new characters.
  * 
- * @author Natalie Chanfreau, Daniel Luker
+ * @author Natalie Chanfreau, Daniel Luker, hojeannie Chung
  *
  */
 public class RightPane extends VBox {
@@ -82,7 +82,7 @@ public class RightPane extends VBox {
 		System.out.println("Interaction Create");
 	}
 	
-	public void BlockCreate(){
+	public void switchToBlockCreationPane(){
 		System.out.println("Block Created");
 	}
 	
@@ -90,11 +90,12 @@ public class RightPane extends VBox {
 		System.out.println("Decoration Create");
 	}
 	
-	public void GlobalCreate(){
+	public void switchtoGlobalSettingPane(){
 		System.out.println("Global Create");
 	}
 	
-	public void MapCreate(){
+	public void switchToMapSettingPane(){
+		switchToPane(new MapSettingPane(myScene));
 		System.out.println("Map Created");
 	}
 	
