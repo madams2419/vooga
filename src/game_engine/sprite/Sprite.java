@@ -160,18 +160,18 @@ public abstract class Sprite extends Observable{
 	}
 	
 	
-	public static void main(String[] args){
-	    Sprite player = new Enemy();
-	    player.addImage("idle", "idle");
-	    player.addImage("walk", "walk");
-	    player.addImage("jump", "jump");
-	    player.addImage("float", "float");
-	    player.addImage("move", "move");
-	    player.addImage("bounce", "bounce");
-	    
-	    player.setState("idle");
-	    player.setState("jump");
-	    
-	}
+//	public static void main(String[] args){
+//	    Sprite player = new Enemy();
+//	    player.addImage("idle", "idle");
+//	    player.addImage("walk", "walk");
+//	    player.addImage("jump", "jump");
+//	    player.addImage("float", "float");
+//	    player.addImage("move", "move");
+//	    player.addImage("bounce", "bounce");
+//	    
+//	    player.setState("idle");
+//	    player.setState("jump");
+//	    
+//	}
 
 }
