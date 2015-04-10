@@ -32,14 +32,14 @@ public class ControlsManager {
 	 * @param keyText the string that maps to the key
 	 */
 	public void executeBehavior(String keyText) {
-		myControlMap.get(myDesignerMap.get(keyText)).execute(new double[3]);
+		myControlMap.get(myDesignerMap.get(keyText)).execute(new String[3]);
 	}
 	/**
 	 * KeyCode version of executeBehavior
 	 * @param keycode
 	 */
 	public void executeBehavior(KeyCode keycode){
-		myControlMap.get(myVirtualKeyboard.get(keycode)).execute(new double[3]);
+		myControlMap.get(myVirtualKeyboard.get(keycode)).execute(new String[3]);
 	}
 	
 	//adds a new behavior to the maps
