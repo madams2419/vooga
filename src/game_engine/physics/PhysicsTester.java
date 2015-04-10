@@ -1,6 +1,7 @@
 package game_engine.physics;
 
 import game_engine.Layer;
+import game_engine.sprite.Enemy;
 import game_engine.sprite.Player;
 import game_engine.sprite.Sprite;
 
@@ -109,16 +110,30 @@ public class PhysicsTester extends Application {
 		playerSprite = new Player();
 		
 		/* create player sprite physics object */
-		Shape playerShape = new CircleBody(5);
+		int playerRadius = 5;
+		Shape playerShape = new CircleBody(playerRadius);
 		Material playerMaterial = new Material(0.3, 0.2);
 		PhysicsObject playerPhysics = new PhysicsObject(globalPhysics, playerShape, playerMaterial, 200, 200);
 
 		/* set player physics */
 		playerSprite.setPhysicsObject(playerPhysics);
 		
-		/* init layer and add player sprite */
+		/* create enemy sprite */
+		Sprite enemySprite = new Enemy();
+		
+		/* create player sprite physics object */
+		int enemyRadius = 30;
+		Shape enemyShape = new CircleBody(enemyRadius);
+		Material enemyMaterial = new Material(0.3, 0.2);
+		PhysicsObject enemyPhysics = new PhysicsObject(globalPhysics, enemyShape, enemyMaterial, 50, 200);
+		
+		/* set player physics */
+		enemySprite.setPhysicsObject(enemyPhysics);
+		
+		/* init layer and add sprites */
 		layer = new Layer();
 		layer.addSprite(playerSprite);
+		layer.addSprite(enemySprite);
 	}
 	
 	public void initAndDrawNodes() {
