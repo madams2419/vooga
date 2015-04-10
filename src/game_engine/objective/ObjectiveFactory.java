@@ -1,5 +1,6 @@
 package game_engine.objective;
 
+import game_engine.Collision;
 import game_engine.CollisionEngine;
 import game_engine.sprite.Sprite;
 import java.util.List;
@@ -14,19 +15,18 @@ import java.util.List;
  * 
  */
 public class ObjectiveFactory {
-    private CollisionEngine myCollisionEngine;
 
-    public ObjectiveFactory (CollisionEngine collisionEngine) {
-        myCollisionEngine = collisionEngine;
+    public ObjectiveFactory () {
     }
     
     public Objective makeObjective () {
         return new Objective();
     }
     
-    public Objective makeCollisionObjective (int num, Sprite spriteA, Sprite spriteB) {
-        Objective obj = new DoRemainingObjective (num, () -> 0);
-        obj.doNum(myCollisionEngine.countNumCollisions (spriteA, spriteB));
+    public Objective makeCollisionObjective (Sprite spriteA, Sprite spriteB, String status) {
+        Objective objective = new Objective ();
+        //addCondition(Collision.collide(spriteA, spriteB, direction), status);
+        return objective;
     }
     
     public Objective makeListObjective (int num, List<Objective> objectives){
