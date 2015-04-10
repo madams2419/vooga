@@ -1,6 +1,9 @@
 package game_engine.physics;
 
 import game_engine.Layer;
+import game_engine.physics.PhysicsEngine;
+import game_engine.physics.PhysicsObject;
+import game_engine.physics.Vector;
 import game_engine.sprite.Enemy;
 import game_engine.sprite.Player;
 import game_engine.sprite.Sprite;
@@ -22,7 +25,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class PhysicsTester extends Application {
+public class CollisionTester extends Application {
 
 	private static int fps = 60;
 	private static int width = 800;
@@ -190,3 +193,4 @@ public class PhysicsTester extends Application {
 		System.out.printf("(%d, %d)\n", (int)sPhysics.getXPixels(), (int)sPhysics.getYPixels());
 	}
 }
+
