@@ -25,12 +25,13 @@ import javafx.util.Duration;
 public class PhysicsTester extends Application {
 
 	private static int fps = 60;
-	private static int width = 400;
-	private static int height = 400;
+	private static int width = 800;
+	private static int height = 800;
 	
-	private static Vector upImpulse = new Vector(0, 0.1); 
-	private static Vector rightImpulse = new Vector(0.1, 0);
-	private static Vector leftImpulse = new Vector(-0.1, 0);
+	private static Vector upImpulse = new Vector(0, 0.02); 
+	private static Vector rightImpulse = new Vector(0.01, 0);
+	private static Vector leftImpulse = new Vector(-0.01, 0);
+	private static Vector downImpulse = new Vector(0, -0.02);
 	
 	private Timeline gameLoop;
 	private Scene myScene;
@@ -91,6 +92,9 @@ public class PhysicsTester extends Application {
 		case UP :
 			sPhysics.applyImpulse(upImpulse);
 			break;
+		case DOWN :
+			sPhysics.applyImpulse(downImpulse);
+			break;
 		case RIGHT :
 			sPhysics.applyImpulse(rightImpulse);
 			break;
@@ -103,6 +107,9 @@ public class PhysicsTester extends Application {
 	}
 	
 	public void initBackend() {
+		/* init layer */
+		layer = new Layer();
+		
 		/* create global physics engine */
 		globalPhysics = new PhysicsEngine(0, 1/(double)fps);
 		
@@ -112,27 +119,34 @@ public class PhysicsTester extends Application {
 		/* create player sprite physics object */
 		int playerRadius = 15;
 		Shape playerShape = new CircleBody(playerRadius);
-		Material playerMaterial = new Material(0.3, 0.5);
-		PhysicsObject playerPhysics = new PhysicsObject(globalPhysics, playerShape, playerMaterial, 200, 200);
+		Material playerMaterial = new Material(0.3, 0.8);
+		PhysicsObject playerPhysics = new PhysicsObject(globalPhysics, playerShape, playerMaterial, 400, 400);
 
 		/* set player physics */
 		playerSprite.setPhysicsObject(playerPhysics);
 		
+		/* add player to layer */
+		layer.addSprite(playerSprite);
+		
+		/* create and add enemy sprites */
+		createAndAddEnemy(300, 700, 50, 0.4, 0.3);
+		createAndAddEnemy(500, 700, 30, 0.3, 0.2);
+		createAndAddEnemy(700, 200, 200, 0.3, 0.2);
+	}
+	
+	public void createAndAddEnemy(int x, int y, double radius, double density, double restitution) {
 		/* create enemy sprite */
 		Sprite enemySprite = new Enemy();
 		
-		/* create player sprite physics object */
-		int enemyRadius = 30;
-		Shape enemyShape = new CircleBody(enemyRadius);
-		Material enemyMaterial = new Material(0.3, 0.2);
-		PhysicsObject enemyPhysics = new PhysicsObject(globalPhysics, enemyShape, enemyMaterial, 50, 200);
+		/* create enemy sprite physics object */
+		Shape enemyShape = new CircleBody(radius);
+		Material enemyMaterial = new Material(density, restitution);
+		PhysicsObject enemyPhysics = new PhysicsObject(globalPhysics, enemyShape, enemyMaterial, x, y);
 		
 		/* set player physics */
 		enemySprite.setPhysicsObject(enemyPhysics);
 		
-		/* init layer and add sprites */
-		layer = new Layer();
-		layer.addSprite(playerSprite);
+		/* add to layer */
 		layer.addSprite(enemySprite);
 	}
 	
