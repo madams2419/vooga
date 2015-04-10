@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.geometry.Pos;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -35,7 +34,6 @@ public class VoogaFileChooser {
     private static final int OPTIONS_PER_ROW = 5;
     
     private VBox layout;
-    private Rectangle blur;
     
     private double optionSize, horizontalPadding, verticalPadding;
     
@@ -59,10 +57,6 @@ public class VoogaFileChooser {
 	horizontalPadding = width * (1 - OPTION_RATIO) / (3 + OPTIONS_PER_ROW);
 	optionSize = width * OPTION_RATIO / OPTIONS_PER_ROW;
 	
-	blur = new Rectangle(width, height);
-	blur.setEffect(new GaussianBlur());
-	blur.setOpacity(.5);
-	
 	layout = createLayout(getFiles(fileType), height);
     }
     
@@ -75,7 +69,7 @@ public class VoogaFileChooser {
      */
     public StackPane getContent() {
 	StackPane content = new StackPane();
-	content.getChildren().addAll(layout, blur);
+	content.getChildren().add(layout);
 	content.setOpacity(INVISIBLE);
 	return content;
     }
@@ -150,9 +144,9 @@ public class VoogaFileChooser {
 	    
 	    XMLParser parser = new XMLParser(f);
 	    
-	    String fileName = parser.getValidSubDirectories().get(0);
-	    fileName = fileName.substring(0, fileName.length() - 1);
-	    fileName = fileName.replace('_', ' ');
+	    parser.moveDown("game");
+	    String fileName = parser.getValue("title");
+	    parser.moveUp();
 	    Text name = new Text(fileName);
 	    name.setFill(Color.WHITE);
 	    name.setFont(new Font(20));
