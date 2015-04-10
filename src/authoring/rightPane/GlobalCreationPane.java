@@ -61,6 +61,7 @@ public class GlobalCreationPane extends EditingPane
 			parent.add(h);
 			myFields.add(h);
 		});
+		
 	}
 
 	private Map<String, String> updateMap() {
@@ -70,6 +71,7 @@ public class GlobalCreationPane extends EditingPane
 			String s, t;
 			fields.put((s=((Text)hbox.getChildren().get(0)).getText()), (t=((TextField)hbox.getChildren().get(1)).getText()));
 		});
+		System.out.println(fields.toString());
 		return fields;
 		//		System.out.println(sprite.getCharacteristics().toString());
 	}
