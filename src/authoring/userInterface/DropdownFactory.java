@@ -4,10 +4,12 @@ package authoring.userInterface;
  */
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 
 /**

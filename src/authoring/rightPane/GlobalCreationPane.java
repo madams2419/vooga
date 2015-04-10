@@ -29,9 +29,21 @@ public class GlobalCreationPane extends EditingPane
 		super(myScene);
 		System.out.println("Blah");
 		setFields(this.getChildren(),createFieldMap());
+		Button set=new Button("Set");
+		for(HBox b: myFields){
+			System.out.println(myFields.toString());
+		}
+		
+		//set.setOnMouseClicked(e->renderMap());
 	}
 	
-	public Map<String,String> createFieldMap(){
+//	private Map<String,String> renderMap(){
+//		myFields.g
+//		return null;
+//		
+//	}
+	
+	private Map<String,String> createFieldMap(){
 		Map<String,String> fields = new HashMap<String,String>();
 		fields.put("Frame Rate", "");
 		fields.put("Scroll Type", "");

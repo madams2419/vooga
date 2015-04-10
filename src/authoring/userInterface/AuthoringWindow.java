@@ -207,6 +207,7 @@ public class AuthoringWindow {
 		// UIElementDistributer ud = new UIElementDistributer();
 		// ud.ElementDistributer();
 		buttonBox.getChildren().addAll(TopPane.mButtonList);
+		System.out.println(TopPane.mButtonList.toString());
 		return buttonBox;
 	}
 

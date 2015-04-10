@@ -6,6 +6,7 @@ import java.util.Map;
 import com.sun.prism.paint.Color;
 
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -21,7 +22,7 @@ import authoring.userInterface.UIElementDistributer;
 
 public class TopPane extends HBox {
 	//TODO fill out this badboy
-	static ArrayList<Button> mButtonList=new ArrayList<Button>();
+	static ArrayList<Node> mButtonList=new ArrayList<Node>();
 	public static Group root=new Group();
 
 
@@ -32,7 +33,6 @@ public class TopPane extends HBox {
 	public Group generateComponents(ArrayList<Map> values){
 		for(int i=0; i<values.size(); i++){
 			Map<String, Map> m=values.get(i);
-			System.out.println(m);
 			for(String key: m.keySet()){
 				if(key.equals("Button")){	
 					mButtonList.add(ButtonFactory.generateButton(m.get(key)));
@@ -40,7 +40,7 @@ public class TopPane extends HBox {
 				}
 				if(key.equals("Dropdown")){
 					DropdownFactory dFactory=new DropdownFactory();
-					dFactory.generateDropdown(m.get(key));
+					mButtonList.add(dFactory.generateDropdown(m.get(key)));
 				}
 			}
 		}	
