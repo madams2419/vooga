@@ -1,19 +1,12 @@
 package authoring.userInterface;
 
-//import java.io.File;
-import java.util.ArrayList;
+import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.regex.Pattern;
-
 import javafx.application.Platform;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -31,8 +24,8 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import authoring.XMLBuilder;
 import authoring.rightPane.RightPane;
-import javafx.scene.control.ComboBox;
 
 /**
  * @author hojeanniechung & Daniel Luker & Andrew Sun
@@ -128,27 +121,77 @@ public class AuthoringWindow {
 			 fileChooser.showOpenDialog(null);
 		});
 		mBar.getMenus()
-		.get(FILE_MENU)
-		.getItems()
-		.get(OPEN_FILE)
-		.setOnAction(e -> {
-			// refactor this into new class
-				FileChooser fileChooser = new FileChooser();
-				fileChooser.setTitle("Open Resource File");
-				fileChooser.getExtensionFilters().addAll(
-						new ExtensionFilter("Text Files", "*.txt"),
-						new ExtensionFilter("Image Files", "*.png",
-								"*.jpg", "*.gif"),
-						new ExtensionFilter("Audio Files", "*.wav",
-								"*.mp3", "*.aac"),
-						new ExtensionFilter("All Files", "*.*"));
-				fileChooser.showOpenDialog(null);
-			});
+				.get(FILE_MENU)
+				.getItems()
+				.get(NEW_FILE)
+				.setOnAction(e -> {
+					// Refactor this into new class/method
+						Dialog<ButtonType> dialog = new Dialog<>();
+						dialog.setTitle("Create New Game Scene");
 
+						GridPane grid = new GridPane();
+						grid.setHgap(10);
+						grid.setVgap(10);
 
+						grid.add(new Label("xSize"), 0, 0);
+						TextField textBox1 = new TextField("400");
+						grid.add(textBox1, 0, 1);
+						grid.add(new Label("ySize"), 1, 0);
+						TextField textBox2 = new TextField("400");
+						grid.add(textBox2, 1, 1);
 
-mBar.getMenus().get(FILE_MENU).getItems().get(CLOSE_GAME)
-		.setOnAction(e -> Platform.exit());
+						dialog.getDialogPane().setContent(grid);
+						dialog.getDialogPane().getButtonTypes()
+								.addAll(ButtonType.OK, ButtonType.CANCEL);
+
+						Optional<ButtonType> result = dialog.showAndWait();
+						// Refactor? Is it possible to get rid of this if
+						// statement?
+						if (result.get() == ButtonType.OK) {
+							// TODO: check to make sure user entered numbers
+//							myCenterPane.createRegion(
+//									Double.parseDouble(textBox1.getText()),
+//									Double.parseDouble(textBox1.getText()));
+
+						}
+					});
+
+		mBar.getMenus()
+				.get(FILE_MENU)
+				.getItems()
+				.get(OPEN_FILE)
+				.setOnAction(e -> {
+					// refactor this into new class
+						FileChooser fileChooser = new FileChooser();
+						fileChooser.setTitle("Open Resource File");
+						fileChooser.getExtensionFilters().addAll(
+								new ExtensionFilter("Text Files", "*.txt"),
+								new ExtensionFilter("Image Files", "*.png",
+										"*.jpg", "*.gif"),
+								new ExtensionFilter("Audio Files", "*.wav",
+										"*.mp3", "*.aac"),
+								new ExtensionFilter("All Files", "*.*"));
+						fileChooser.showOpenDialog(null);
+					});
+
+		mBar.getMenus()
+				.get(HELP_MENU)
+				.getItems()
+				.get(0)
+				.setOnAction(
+						e -> {
+
+							Media media = new Media(Paths
+									.get("src/Resources/help.mp3").toUri()
+									.toString());
+
+							MediaPlayer player = new MediaPlayer(media);
+							player.setVolume(100);
+							player.play();
+						});
+
+		mBar.getMenus().get(FILE_MENU).getItems().get(CLOSE_GAME)
+				.setOnAction(e -> Platform.exit());
 		return mBar;
 	}
 
@@ -159,26 +202,23 @@ mBar.getMenus().get(FILE_MENU).getItems().get(CLOSE_GAME)
 		buttonBox.getChildren().addAll(BottomPane.mButtonList);
 		System.out.println("Button Pane is: "
 				+ BottomPane.mButtonList.toString());
+
+		Button c = new Button("Output xml");
+		c.setOnAction(e -> {
+			XMLBuilder.getInstance("game").streamFile("lib/test.xml",
+					XMLBuilder.getInstance("game").getRoot());
+		});
+		buttonBox.getChildren().add(c);
 		return buttonBox;
 	}
 
 	private HBox setupTopPane(double width) {
-		Map<String, EventHandler<Event>> mButtons = new HashMap<>();
-
-		mButtons.put("Global Settings", e -> {
-			ControlsDialog myControls = new ControlsDialog();
-			
-		});
-		mButtons.put("Map Settings", null);
-		mButtons.put("Interactions List", null);
-		mButtons.put("Characters", null);
-		mButtons.put("Blocks", null);
-		mButtons.put("Decorations", null);
-		mButtons.put("UI Controls", null);
-
-		TopPane mTopPane = new TopPane();
-		mTopPane.addButtons(mButtons);
-		return mTopPane;
+		HBox buttonBox = new HBox();
+		// UIElementDistributer ud = new UIElementDistributer();
+		// ud.ElementDistributer();
+		buttonBox.getChildren().addAll(TopPane.mButtonList);
+		System.out.println(TopPane.mButtonList.toString());
+		return buttonBox;
 	}
 
 	private VBox setupRightPane() {
@@ -186,6 +226,7 @@ mBar.getMenus().get(FILE_MENU).getItems().get(CLOSE_GAME)
 		r.setScene(myScene);
 		return r;
 	}
+
 
 	private VBox setupLeftPane() {
 		VBox buttonBox = new VBox();

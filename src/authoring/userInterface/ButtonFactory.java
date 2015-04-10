@@ -15,7 +15,8 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import org.w3c.dom.Node;
-
+import authoring.Sprite;
+import authoring.rightPane.RightPane;
 import authoring.userInterface.Reflection;
 import XML.LayoutXMLParser;
 /**
@@ -47,12 +48,11 @@ public class ButtonFactory{
 		//System.out.println("button" + m);
 		Button b = new Button();
 		b.setText(m.get("label"));
-		Object listenerClass=reflection.createInstance(String.format("authoring.buttonlisteners.%sClass",m.get("listener")));
+		Object listenerClass=RightPane.getInstance();
 		b.setOnMouseClicked(e->Reflection.callMethod(listenerClass, m.get("listener")));
 		//		mButtonList.add(b);
 		//		return mButtonList;
 		return b;
 	}
 
-	
 }

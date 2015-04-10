@@ -1,13 +1,12 @@
 package authoring.rightPane;
 
 import java.util.List;
-import javafx.event.EventHandler;
+import javafx.beans.property.ObjectProperty;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import authoring.Interaction;
 import authoring.InteractionManager;
 import authoring.Sprite;
@@ -22,8 +21,9 @@ import authoring.Sprite;
 
 public class InteractionEditingPane extends EditingPane {
     private static final String doneButtonString = "done";
-    private Sprite sprite1, sprite2;
-    private Interaction interaction;
+    private Sprite mySprite1, mySprite2;
+    private ObjectProperty<String> myActionProperty1, myActionProperty2;
+    private Interaction myInteraction;
 
     InteractionEditingPane (Scene scene,
                             Sprite sprite1,
@@ -37,32 +37,55 @@ public class InteractionEditingPane extends EditingPane {
         // temporary
         sprite1 = new Sprite(1, "/images/turtle.png");
         sprite2 = new Sprite(1, "/images/luigi.png");
+        
+        mySprite1 = sprite1;
+        mySprite2 = sprite2;
 
-        addSpriteAndComboBoxToPane(sprite1, actionPossibilities);
-        addSpriteAndComboBoxToPane(sprite2, actionPossibilities);
+        myInteraction = getInteraction();
+        myActionProperty1 =
+                addSpriteAndComboBoxToPane(sprite1, actionPossibilities, myInteraction.getAction1());
+        myActionProperty2 =
+                addSpriteAndComboBoxToPane(sprite2, actionPossibilities, myInteraction.getAction2());
         addButtonToUpdate("Update");
         addButtonToReturnToCreationPane(doneButtonString);
     }
 
     private void addButtonToUpdate (String label) {
         Button b = new Button(label);
-        b.setOnMouseClicked(i -> setInteraction());
+        b.setOnMouseClicked(i -> setInteraction(myActionProperty1.getValue(),
+                                                myActionProperty2.getValue()));
         this.getChildren().add(b);
     }
 
-    private void setInteraction () {
-        InteractionManager interactionManager = InteractionManager.getInstance();
+    private Interaction getInteraction () {
+        return InteractionManager.getInstance().getOrCreateInteraction(mySprite1, mySprite2);
     }
 
-    private void addSpriteAndComboBoxToPane (Sprite sprite, List<String> actionPossibilities) {
+    private void setInteraction (String action1, String action2) {
+        myInteraction = new Interaction(mySprite1, mySprite2, action1, action2);
+        InteractionManager.getInstance().setInteraction(mySprite1, mySprite2, myInteraction);
+    }
+
+    private ObjectProperty<String> addSpriteAndComboBoxToPane (Sprite sprite,
+                                                               List<String> actionPossibilities,
+                                                               String action) {
         addSpriteToPane(sprite);
-        addComboBoxToPane(actionPossibilities);
+        return addComboBoxToPane(actionPossibilities, action);
     }
 
-    private void addComboBoxToPane (List<String> actionPossibilities) {
-        final ComboBox<String> emailComboBox = new ComboBox<>();
-        emailComboBox.getItems().addAll(actionPossibilities);
-        getChildren().add(emailComboBox);
+    private ObjectProperty<String> addComboBoxToPane (List<String> actionPossibilities,
+                                                      String action) {
+        final ComboBox<String> actionComboBox = new ComboBox<>();
+        actionComboBox.getItems().addAll(actionPossibilities);
+        getChildren().add(actionComboBox);
+        setInitialComboBoxValue(actionComboBox, action);
+        return actionComboBox.valueProperty();
+    }
+
+    private void setInitialComboBoxValue (ComboBox<String> actionComboBox, String action) {
+        if (action != null) {
+            actionComboBox.setValue(action);
+        }
     }
 
     // TODO

@@ -28,7 +28,7 @@ public static Group root=new Group();
 				}
 			}
 		}	
-		System.out.println("LeftPane Buttons: " + mButtonList);
+		//System.out.println("LeftPane Buttons: " + mButtonList);
 		return root;		
 	}
 	
