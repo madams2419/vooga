@@ -1,6 +1,7 @@
 package game_engine.physics;
 
-import game_engine.HitBox;
+import game_engine.collision.HitBox;
+
 import java.util.ArrayList;
 import java.util.List;
 
