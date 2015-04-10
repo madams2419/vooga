@@ -16,7 +16,7 @@ import authoring.util.FrontEndUtils;
 
 /**
  * 
- * @author Andrew Sun
+ * @author Andrew Sun & Daniel "the fresh code machine of bel-duke" Luker
  *
  */
 public class CenterPane extends ScrollPane {

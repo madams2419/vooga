@@ -8,12 +8,13 @@ import java.util.function.Consumer;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import org.w3c.dom.Element;
+
 import authoring.rightPane.RightPane;
-import authoring.userInterface.AuthoringWindow;
 import authoring.userInterface.ClickHandler;
 import authoring.util.FrontEndUtils;
 import authoring.util.ImageEditor;
-
 
 /***
  * Class that contains information about the sprites for eventually generating
@@ -35,9 +36,12 @@ public class Sprite extends ImageView {
 	private Map<String, String> myKeyActions;
 	private Map<String, String> myCharacteristics;
 
+	private String myName;
 	private String myImageURI;
 	private int myID;
 	private ImageView myIcon;
+
+	private Map<Sprite, Interaction> myInteractions;
 
 	private Consumer<Sprite> myOnMouseClickedAction;
 
@@ -45,6 +49,7 @@ public class Sprite extends ImageView {
 	private final static int MAX_ICON_HEIGHT = 100;
 	final String VELOCITY = "velocity";
 	public final String POSITION = "position";
+	private Element xmlHandle;
 
 	public Sprite(int ID, String imageURI) {
 		this();
@@ -54,18 +59,22 @@ public class Sprite extends ImageView {
 		myCharacteristics.put("ID", String.valueOf(ID));
 		myIcon = new ImageView();
 		changeImage(new Image(getClass().getResourceAsStream(myImageURI)));
+		XMLBuilder b = XMLBuilder.getInstance("game");
+		xmlHandle = b.addToRoot(b.createElement("sprite"));
+		xmlHandle.setAttribute("name", imageURI.split("/")[1]);
+
 	}
 
 	public Sprite() {
+		myInteractions = new HashMap<>();
 		myPosition = new HashMap<>();
 		myVelocity = new HashMap<>();
 		myVelocity.put(X_STRING, 0.0);
 		myVelocity.put(Y_STRING, 0.0);
 		myKeyActions = new HashMap<>();
 		myCharacteristics = new HashMap<>();
-		addDefaultCharacteristics(Arrays.asList(new String[] { "name" }));
+		addDefaultCharacteristics(Arrays.asList(new String[] { "Name" }));
 		onMouseClicked();
-		FrontEndUtils.setKeyActions(this);
 	}
 
 	public Sprite(Sprite sprite, int ID) {
@@ -77,8 +86,12 @@ public class Sprite extends ImageView {
 				characteristic, ""));
 	}
 
+	public void setName(String name) {
+		this.myName = name;
+	}
+
 	public String getName() {
-		return myCharacteristics.get("name");
+		return this.myName;
 	}
 
 	public Consumer<Sprite> getConsumer() {
@@ -99,14 +112,14 @@ public class Sprite extends ImageView {
 	}
 
 	private void onMouseClicked() {
-		try {
-			setOnMouseClicked(new ClickHandler(RightPane.class.getMethod(
-					"switchPane", Sprite.class), RightPane.getInstance(), this));
-			System.out.println(AuthoringWindow.getControl());
-		} catch (NoSuchMethodException | SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			try {
+				setOnMouseClicked(new ClickHandler(RightPane.class.getMethod(
+						"switchPane", Sprite.class), RightPane.getInstance(),
+						this));
+			} catch (NoSuchMethodException | SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
 	private void setImageIcon(Image image) {
@@ -131,6 +144,7 @@ public class Sprite extends ImageView {
 				Double.parseDouble(s2)));
 		setXPosition(myPosition.get(X_STRING));
 		setYPosition(myPosition.get(Y_STRING));
+		XMLBuilder b = XMLBuilder.getInstance("game");
 	}
 
 	public double getXPosition() {
@@ -174,6 +188,10 @@ public class Sprite extends ImageView {
 
 	public String getCharacteristic(String characteristic) {
 		return myCharacteristics.get(characteristic);
+	}
+
+	public void setInteraction(Sprite otherSprite, Interaction interaction) {
+		myInteractions.put(otherSprite, interaction);
 	}
 
 	public Map<String, String> getCharacteristics() {
