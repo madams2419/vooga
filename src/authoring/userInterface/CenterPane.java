@@ -2,6 +2,7 @@ package authoring.userInterface;
 
 import java.awt.Cursor;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
@@ -17,9 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import authoring.Sprite;
-
 import authoring.rightPane.GlobalCreationPane;
-import authoring.rightPane.RightPane;
 import authoring.util.FrontEndUtils;
 
 

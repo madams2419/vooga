@@ -184,7 +184,6 @@ public class Sprite extends ImageView {
         }
 
         public void setInteraction(Sprite otherSprite, Interaction interaction) {
-            System.out.println("interaction set between " + this.myName + " and " + otherSprite.myName);
                 myInteractions.put(otherSprite, interaction);
         }
 
