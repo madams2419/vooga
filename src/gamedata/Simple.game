@@ -3,75 +3,43 @@
 	<level>
 		<level_0>
 			<objective>
-				<objective_0></objective_0>
+				<objective_0>
+					end goal reach region
+				</objective_0>
 				
-				<objective_1></objective_1>
+				<objective_1>
+					collect a key to be able to enter region
+				</objective_1>
+				
+				<objective_2>
+					collide with enemy
+				</objective_2>
 			</objective>
 			
 			<sprite>
 				<sprite_0>
-					<type>Player</type>
-					<state>standing</state>
-					<animation>
-						<state_0>
-							<name>standing</name>
-							<image> </image>
-						</state_0>
-						<state_1>
-							<name>win</name>
-							<image> </image>
-						</state_1>
-					</animation>
-					<physics> </physics>
+					player
 				</sprite_0>
 				
 				<sprite_1>
-					<type>Platform</type>
-					<state>immobile</state>
-					<animation>
-						<state_0>
-							<name>immobile</name>
-							<image> </image>
-						</state_0>
-					</animation>
-					<physics> </physics>
+					ground
 				</sprite_1>
 				
 				<sprite_2>
-					<type>Region</type>
-					<state>immobile</state>
-					<animation>
-						<state_0>
-							<name>immobile</name>
-							<image> </image>
-						</state_0>
-					</animation>
-					<physics> </physics>
+					raised platform
 				</sprite_2>
 				
 				<sprite_3>
-					<type>Platform</type>
-					<state>immobile</state>
-					<animation>
-						<state_0>
-							<name>immobile</name>
-							<image> </image>
-						</state_0>
-					</animation>
-					<physics> </physics>
+					enemy
 				</sprite_3>
 				
 				<sprite_4>
-					<type>Enemy</type>
-					<state>immobile</state>
-					<animation>
-						<state_0>
-							<name>immobile</name>
-							<image> </image>
-						</state_0>
-					</animation>
-					<physics> </physics>
+					key
 				</sprite_4>
+				
+				<sprite_5>
+					region
+				</sprite_5>
 			</sprite>
 			
 			<control>
@@ -119,12 +87,20 @@
 			
 			<collision>
 				<collision_0>
-					<sprites>0 2</sprites>
+					colliding with enemy
 				</collision_0>
 				
 				<collision_1>
-					<sprites>0 4</sprites>
+					colliding with platforms
 				</collision_1>
+				
+				<collision_2>
+					colliding with key
+				</collision_2>
+				
+				<collision_3>
+					colliding with region
+				</collision_3>
 			</collision>
 		</level_0>
 	</level>

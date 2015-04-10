@@ -23,7 +23,7 @@ import javafx.scene.text.Text;
  * the play mode and .dev for the design mode.
  * 
  * @author Brian Lavallee
- * @since 9 April 2015
+ * @since 10 April 2015
  */
 public class VoogaFileChooser {
     
@@ -160,6 +160,7 @@ public class VoogaFileChooser {
 	    StackPane option = new StackPane();
 	    option.getChildren().addAll(content, name);
 	    option.setMaxSize(optionSize, optionSize);
+	    
 	    option.setOnMouseClicked((clicked) -> chosenFile = parser);
 	    
 	    row.getChildren().add(option);

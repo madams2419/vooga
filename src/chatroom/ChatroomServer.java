@@ -76,9 +76,15 @@ public class ChatroomServer extends Thread {
 			}
 		}
 	}
-	
-	public void writeString(String string){
-		currentOutputString = string;
+
+	public static void main(String [] args)	{
+		int port = Integer.parseInt("6059");
+		try{
+			Thread t = new ChatroomServer(port, new View());
+			t.start();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 
 
