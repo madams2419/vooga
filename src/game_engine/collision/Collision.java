@@ -1,15 +1,13 @@
 package game_engine.collision;
 
 import game_engine.IBehavior;
+import game_engine.physics.PhysicsEngine;
 import game_engine.sprite.Sprite;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
 
 /**
  * Defines behavior when collision occurs
@@ -21,7 +19,6 @@ import javafx.scene.image.PixelReader;
 public class Collision {
 	private Sprite spriteA;
 	private List<Sprite> spriteList;
-
 	private Map<Sprite, Map<IBehavior, String[]>> behaviorList;
 	private CollisionDirection direction;
 
@@ -35,7 +32,7 @@ public class Collision {
 	}
 
 	public void getColliding() {
-		spriteList.stream().filter(sprite -> collide(sprite, spriteA))
+		spriteList.stream().filter(sprite -> collidingHitBox(sprite, spriteA)).filter(sprite->collide(sprite,spriteA))
 				.forEach(this::execute);
 	}
 
@@ -44,14 +41,13 @@ public class Collision {
 	}
 	
 	private boolean collidingHitBox(Sprite spriteA, Sprite spriteB){
-	    return false;
+		return spriteA.getHitBox().intersects(spriteB.getHitBox());
 	}
 
 	private boolean collide(Sprite spriteA, Sprite spriteB) {
-		// change parameters back to sprites
 
-		boolean[][] bitMapA = createBitMap(spriteA.getImageView().getImage());
-		boolean[][] bitMapB = createBitMap(spriteB.getImageView().getImage());
+		boolean[][] bitMapA = spriteA.getHitBox().getBitMap();
+		boolean[][] bitMapB = spriteB.getHitBox().getBitMap();
 
 		ImageView s1 = spriteA.getImageView();
 		double aLeft = s1.getX();
@@ -65,48 +61,36 @@ public class Collision {
 		double bRight = s2.getX() + s2.getImage().getWidth();
 		double bBot = s2.getY() + s2.getImage().getHeight();
 
-		double highLeft;
-		double lowRight;
-		double highTop;
-		double lowBot;
-
-		if (aLeft > bLeft)
-			highLeft = aLeft;
-		else
-			highLeft = bLeft;
-		if (aTop > bTop)
-			highTop = aTop;
-		else
-			highTop = bTop;
-		if (aRight > bRight)
-			lowRight = bRight;
-		else
-			lowRight = aRight;
-		if (aBot > bBot)
-			lowBot = bBot;
-		else
-			lowBot = aBot;
+		double highLeft = Math.max(aLeft, bLeft);
+		double highTop = Math.max(aLeft, bLeft);
+		double lowRight = Math.min(aRight, bRight);
+		double lowBot = Math.min(aBot, bBot);
 		
-		
-		CollisionBox collisionBox = new CollisionBox(highLeft, highTop,
-				lowRight, lowBot);
 
 		int startY = (int) (highTop - aTop);
 		int endY = (int) (lowBot - aTop);
 		int startX = (int) (highLeft - aLeft);
 		int endX = (int) (lowRight - aLeft);
+		
 		boolean[][] mapA = spliceBitMap(bitMapA, startY, endY, startX, endX);
+		
 		int startY2 = (int) (highTop - bTop);
 		int endY2 = (int) (lowBot - bTop);
 		int startX2 = (int) (highLeft - bLeft);
 		int endX2 = (int) (lowRight - bLeft);
+		
 		boolean[][] mapB = spliceBitMap(bitMapB, startY2, endY2, startX2, endX2);
 
 		boolean[][] collisionMap = isColliding(mapA, mapB);
-		System.out.println(Arrays.deepToString(collisionMap));
 
-		return true;
-
+		for(boolean[] bList: collisionMap){
+			for(boolean b: bList){
+				if(b){
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean[][] spliceBitMap(boolean[][] bitMap, int startX, int endX,
@@ -122,18 +106,7 @@ public class Collision {
 		return bitSplice;
 	}
 
-	private boolean[][] createBitMap(Image src) {
-		PixelReader reader = src.getPixelReader();
-		int width = (int) src.getWidth();
-		int height = (int) src.getHeight();
-		boolean[][] bitMap = new boolean[height][width];
-		for (int y = 0; y < height; y++)
-			for (int x = 0; x < width; x++) {
-				bitMap[y][x] = reader.getArgb(x, y) != 0;
-			}
-		return bitMap;
-	}
-
+	
 	private boolean[][] isColliding(boolean[][] mapA, boolean[][] mapB) {
 		boolean[][] bitMap = new boolean[mapA.length][mapA[0].length];
 		for (int i = 0; i < mapA.length; i++)
