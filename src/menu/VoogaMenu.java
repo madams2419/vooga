@@ -25,11 +25,7 @@ import javafx.util.Duration;
  * to either play an existing game or design a new one.
  * 
  * @author Brian Lavallee
-<<<<<<< HEAD
- * @since 9 April 2015
-=======
- * @since 7 April 2015
->>>>>>> a5d1dc109870fd440c5302ac27cbba256ba3519b
+ * @since 10 April 2015
  */
 public class VoogaMenu {
     private static final double PADDING = 10;
