@@ -113,18 +113,23 @@ public class PhysicsTester extends Application {
 		/* create global physics engine */
 		globalPhysics = new PhysicsEngine(0, 1/(double)fps);
 		
-		/* create player sprite */
-		playerSprite = new Player();
-		
 		/* create player sprite physics object */
 		int playerRadius = 15;
 		Shape playerShape = new CircleBody(playerRadius);
 		Material playerMaterial = new Material(0.3, 0.8);
 		PhysicsObject playerPhysics = new PhysicsObject(globalPhysics, playerShape, playerMaterial, 400, 400);
 
+		/* create player sprite */
+                playerSprite = new Player(playerPhysics);
+                
 		/* set player physics */
 		playerSprite.setPhysicsObject(playerPhysics);
 		
+		playerSprite.addImage("walking", "/Resources/images/standingMario.png");
+                playerSprite.setState("walking");
+                playerSprite.getImageView().setFitHeight(50);
+                playerSprite.getImageView().setFitWidth(50);
+                myGroup.getChildren().add(playerSprite.getImageView());
 		/* add player to layer */
 		layer.addSprite(playerSprite);
 		
@@ -135,14 +140,14 @@ public class PhysicsTester extends Application {
 	}
 	
 	public void createAndAddEnemy(int x, int y, double radius, double density, double restitution) {
-		/* create enemy sprite */
-		Sprite enemySprite = new Enemy();
 		
 		/* create enemy sprite physics object */
 		Shape enemyShape = new CircleBody(radius);
 		Material enemyMaterial = new Material(density, restitution);
 		PhysicsObject enemyPhysics = new PhysicsObject(globalPhysics, enemyShape, enemyMaterial, x, y);
 		
+		/* create enemy sprite */
+                Sprite enemySprite = new Enemy(enemyPhysics);
 		/* set player physics */
 		enemySprite.setPhysicsObject(enemyPhysics);
 		
@@ -157,6 +162,7 @@ public class PhysicsTester extends Application {
 			myGroup.getChildren().add(node);
 			displayMap.put(sprite, node);
 		}
+		
 	}
 	
 	/* create a node representation of a sprite */

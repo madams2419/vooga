@@ -1,14 +1,14 @@
 package game_engine.sprite;
 
-import game_engine.IBehavior;
-import game_engine.physics.PhysicsObject;
-import game_player.Animation;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-
 import javafx.scene.image.ImageView;
+import game_engine.IBehavior;
+import game_engine.collision.HitBox;
+import game_engine.physics.PhysicsObject;
+import game_engine.physics.Vector;
+import game_player.Animation;
 
 /**
  * Abstract class for the creation of multiple sprite types
@@ -29,10 +29,11 @@ public abstract class Sprite extends Observable{
 	/**
 	 * Blank Constructor
 	 */
-	public Sprite() {
+	public Sprite(PhysicsObject physics) {
 		// TODO
+	    myPhysicsObject = physics;
 	    myId = 0;
-	    myAnimation = new Animation(this);
+	    myAnimation = new Animation(this,myPhysicsObject);
 	}
 	
 	/**
@@ -40,10 +41,11 @@ public abstract class Sprite extends Observable{
 	 * Creates sprite object with a defined name
 	 * @param name the string to name the sprite
 	 */
-	public Sprite(String name){
+	public Sprite(PhysicsObject physics, String name){
+	    myPhysicsObject = physics;
 	    myId = 0; //TODO make call to SpriteManager to get unique ID or don't allow sprite to constructed without ID
 	    myName = name;
-	    myAnimation = new Animation(this);
+	    myAnimation = new Animation(this,myPhysicsObject);
 	}
 	
 	/**
@@ -52,10 +54,11 @@ public abstract class Sprite extends Observable{
 	 * @param name the string to name the sprite
 	 * @param id the id of the specific sprite
 	 */
-	public Sprite(String name, int id){
+	public Sprite(PhysicsObject physics, String name, int id){
+	    myPhysicsObject = physics;
 	    myName = name;
 	    myId = id;
-	    myAnimation = new Animation(this);
+	    myAnimation = new Animation(this,myPhysicsObject);
 	}
 	
 	/**
@@ -97,16 +100,25 @@ public abstract class Sprite extends Observable{
 	    return myAnimation.getImageView();
 	}
 	
+	public void setImageSize(double xSize, double ySize){
+	    myAnimation.getImageView().setFitHeight(ySize);
+	    myAnimation.getImageView().setFitWidth(xSize);
+	}
+	
 	public void setState(String state){
 		myState = state;
 		setChanged();
 		notifyObservers();
 	}
 	
-	public IBehavior setState = (params) -> { // stateChanging
+	private IBehavior setState = (params) -> { // stateChanging
             String state = params[0];
             setState(state);
 	};
+	
+	public IBehavior setStateBehavior(){
+	    return setState;
+	}
 	
 	public String getState(){
 		return myState;
@@ -126,6 +138,10 @@ public abstract class Sprite extends Observable{
 	
 	public String getName(){
 	    return this.myName;
+	}
+	
+	public HitBox getHitBox(){
+	    return myAnimation.getHitBox();
 	}
 	
 	public void setPhysicsObject(PhysicsObject physicsObject){
@@ -152,18 +168,18 @@ public abstract class Sprite extends Observable{
 	}
 	
 	
-	public static void main(String[] args){
-	    Sprite player = new Enemy();
-	    player.addImage("idle", "idle");
-	    player.addImage("walk", "walk");
-	    player.addImage("jump", "jump");
-	    player.addImage("float", "float");
-	    player.addImage("move", "move");
-	    player.addImage("bounce", "bounce");
-	    
-	    player.setState("idle");
-	    player.setState("jump");
-	    
-	}
+//	public static void main(String[] args){
+//	    Sprite player = new Enemy();
+//	    player.addImage("idle", "idle");
+//	    player.addImage("walk", "walk");
+//	    player.addImage("jump", "jump");
+//	    player.addImage("float", "float");
+//	    player.addImage("move", "move");
+//	    player.addImage("bounce", "bounce");
+//	    
+//	    player.setState("idle");
+//	    player.setState("jump");
+//	    
+//	}
 
 }

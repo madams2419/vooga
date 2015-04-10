@@ -21,13 +21,13 @@ public class ChatroomClient{
 	
 	public void run(){
 		String serverName = "10.190.77.51";
-		int port = Integer.parseInt("6060");
+		int port = Integer.parseInt("6059");
 		try
 		{
 			System.out.println("Connecting to " + serverName
 					+ " on port " + port);
 			Socket client = new Socket(serverName, port);
-			client.setSoTimeout(10000);
+			client.setSoTimeout(100000000);
 			System.out.println(InetAddress.getLocalHost());
 			System.out.println("Just connected to "
 					+ client.getRemoteSocketAddress());

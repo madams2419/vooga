@@ -31,7 +31,7 @@ public class ChatroomServer extends Thread{
 				System.out.println("Waiting for client on port " +
 						serverSocket.getLocalPort() + "...");
 				Socket server = serverSocket.accept();
-				server.setSoTimeout(10000);
+				server.setSoTimeout(10000000000);
 				System.out.println("Just connected to "
 						+ server.getRemoteSocketAddress());
 				
@@ -66,7 +66,9 @@ public class ChatroomServer extends Thread{
 	}
 
 	public static void main(String [] args)	{
+
 		int port = Integer.parseInt("6059");
+
 		try{
 			Thread t = new ChatroomServer(port);
 			t.start();

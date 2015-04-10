@@ -1,11 +1,12 @@
 package game_engine.physics;
 
 import java.util.List;
+import java.util.Observable;
 
 // TODO
 // - ability to run back time...some mechanism to do that
 
-public class PhysicsObject {
+public class PhysicsObject extends Observable {
 
 	private double myInvMass;
 	private Material myMaterial;
@@ -34,6 +35,7 @@ public class PhysicsObject {
 	}
 
 	public void update() {
+	       
 		double dt = myPhysics.getTimeStep();
 		myAccel = computeAccel();
 		myVelocity = myVelocity.plus(myAccel.times(dt));
@@ -43,7 +45,9 @@ public class PhysicsObject {
 		if(myPosition.getY() <= myPhysics.getGround() + myShape.getRadiusMeters()) {
 			myPosition.setY(myPhysics.getGround() + myShape.getRadiusMeters());
 			myVelocity.setY(0);
-		}
+		} 
+		setChanged();
+	        notifyObservers();
 	}
 
 	private double computeInvMass() {
@@ -91,6 +95,7 @@ public class PhysicsObject {
 	public void applyImpulse(Vector impulse) {
 		Vector newVelocity = myVelocity.plus(impulse.times(myInvMass));
 		setVelocity(newVelocity);
+		
 	}
 
 	protected Vector getPositionMeters() {
