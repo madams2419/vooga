@@ -14,8 +14,8 @@ import game_engine.physics.Vector;
 
 public abstract class Character extends Sprite {
 	private Vector myPosition;
-	private ResourceBundle myStateNames = ResourceBundle 
-			.getBundle("resources.engineutilities/movements");
+//	private ResourceBundle myStateNames = ResourceBundle 
+//			.getBundle("resources.engineutilities/movements");
 	private HashMap<String,String> myStateNameMap = new HashMap<>(); // TODO implement this 	
 	
 	// TODO check design on feeding 2 constructors into themselves
@@ -70,6 +70,6 @@ public abstract class Character extends Sprite {
 	};
 	
 	public void setStateName(String movementName){
-		setState(myStateNames.getString(movementName));
+	//	setState(myStateNames.getString(movementName));
 	}
 }

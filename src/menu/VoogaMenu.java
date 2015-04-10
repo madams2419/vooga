@@ -1,7 +1,7 @@
 package menu;
 
+import game_player.VoogaGame;
 import game_player.VoogaGameBuilder;
-import game_player.VoogaGameLoop;
 import authoring.userInterface.*;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
@@ -271,8 +271,9 @@ public class VoogaMenu {
 	    addChoiceMenu(GAME);
 	    choiceMenu.setOnMouseClicked((clicked) -> {
 		VoogaGameBuilder builder = new VoogaGameBuilder(chooser.getChosenFile());
-		VoogaGameLoop gameLoop = builder.build();
-		gameLoop.start();
+		VoogaGame gameLoop = builder.build();
+		scene.setRoot(gameLoop.getRoot());
+		//gameLoop.start();
 	    });
 	});
 	
