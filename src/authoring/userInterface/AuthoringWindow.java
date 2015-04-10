@@ -173,8 +173,9 @@ public class AuthoringWindow {
 //									"http://uyeshare.com/music/down/12930540/2068304"
 //									+ "/YWZiMjAwNCs3OGhkUzN5TU52VkRPM0JmL3FzaXF1ZUpz"
 //									+ "angyaEdkekowS2lLcUNEL1E=/The+Beatles+-+01+Help%21.mp3"
-									"file:///home/daniel/Workspace/CS308/voogasalad_HighScrollers/src/Resources/help.mp3"
+									"http://a.tumblr.com/tumblr_mc06mtQ9V81qefr98o1.mp3"
 									);
+							System.out.println(media.toString());
 							MediaPlayer player = new MediaPlayer(media);
 							player.setVolume(100);
 							player.play();
