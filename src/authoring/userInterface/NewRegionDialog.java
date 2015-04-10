@@ -19,7 +19,8 @@ public class NewRegionDialog {
 	private static final int NUM_COLS = 2;
 	private static final int GRID_HGAP = 10;
 	private static final int GRID_VGAP = 10;
-	private static final String DEFAULT_SIZE = "400";
+	private static final String DEFAULT_SIZE_HEIGHT = "400";
+	private static final String DEFAULT_SIZE_WIDTH = "1000";
 	
 	private static final String X_lABEL = "xSize";
 	private static final String Y_lABEL = "ySize";
@@ -34,8 +35,8 @@ public class NewRegionDialog {
 		grid.setHgap(GRID_HGAP);
 		grid.setVgap(GRID_VGAP);
 		
-		xField = new TextField(DEFAULT_SIZE);
-		yField = new TextField(DEFAULT_SIZE);
+		xField = new TextField(DEFAULT_SIZE_WIDTH);
+		yField = new TextField(DEFAULT_SIZE_HEIGHT);
 		
 		grid.addRowEnd(new Label(X_lABEL), new Label(Y_lABEL));
 		grid.addRowEnd(xField, yField);

@@ -1,5 +1,6 @@
 package authoring.userInterface;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.Cursor;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,22 +42,12 @@ public class CenterPane extends ScrollPane {
 	private Rectangle myCurrentRectangle;
 	public static CenterPane mInstance;
 	public GlobalCreationPane gp;
-
-	private int width;
-	private int height;
 	
 
 	private CenterPane(Scene scene) {
 		myScene = scene;
 		myGroup = new Group();
-		// myCanvas = new Canvas(
-		// (width = (int) (scene.getWidth() - this.RIGHT_PANE_WIDTH)),
-		// (height = (int) (scene.getHeight() - this.TOP_PANE_HEIGHT)));
-		// myCanvas.getGraphicsContext2D().setStroke(Color.BLACK);
-		// myCanvas.getGraphicsContext2D().strokeLine(0, 0, 400, 400);
-
 		this.setContent(myGroup);
-		myGroup.getChildren().add(new Rectangle(width, height, Color.WHITE));
 		myGroup.setOnMouseClicked(e -> canvasClicked(e));
 
 		// Use stack, or just a group?
@@ -67,14 +58,21 @@ public class CenterPane extends ScrollPane {
 		myEnvironmentList=new ArrayList<Map>();	
 		addMaptoEnvironment(gp.getInstance().fields);
 
-
+//		this.setOnKeyPressed(e -> {
+//			if (e.getCode() == KeyCode.CONTROL)
+//				AuthoringWindow.setControlOn();
+//		});
+//		this.setOnKeyReleased(e -> {
+//			if (e.getCode() == KeyCode.SHIFT)
+//				AuthoringWindow.setControlOff();
+//		});
 	}
 	
+
 	public static CenterPane getInstance(Scene scene){
 		if (mInstance == null)
 			mInstance = new CenterPane(scene);
 		return mInstance;
-
 	}
 
 	public void addMaptoEnvironment(Map m){
@@ -94,13 +92,15 @@ public class CenterPane extends ScrollPane {
 			myScene.setCursor(ImageCursor.DEFAULT);
 
 		} catch (ClassCastException a) {
-			System.out.println("error");
 		} catch (NullPointerException b) {
-			System.out.println("error");
 		}
 
 	}
 
+	public Object[] getData(){
+		return new Object[]{myCurrentRectangle, myListOfSprites};
+	}
+	
 	public Collection<Sprite> getSprites() {
 		return myListOfSprites;
 	}
