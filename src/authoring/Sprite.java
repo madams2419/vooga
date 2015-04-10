@@ -5,12 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import org.w3c.dom.Element;
-
 import authoring.rightPane.RightPane;
 import authoring.userInterface.ClickHandler;
 import authoring.util.FrontEndUtils;
@@ -47,15 +44,18 @@ public class Sprite extends ImageView {
 
         private final static int MAX_ICON_WIDTH = 100;
         private final static int MAX_ICON_HEIGHT = 100;
-        final String VELOCITY = "velocity";
-        public final String POSITION = "position";
-
+        public final static String VELOCITY = "velocity";
+        public final static String POSITION = "position";
+        public final static String SCALE = "scale";
+        private final double initialScale = 1.0;
+        
         public Sprite(int ID, String imageURI) {
                 this();
                 this.myID = ID;
                 myImageURI = imageURI;
                 myCharacteristics.put("imageURI", myImageURI);
                 myCharacteristics.put("ID", String.valueOf(ID));
+                myCharacteristics.put(SCALE, String.valueOf(initialScale));
                 myIcon = new ImageView();
                 changeImage(new Image(getClass().getResourceAsStream(myImageURI)));
         }
@@ -139,6 +139,14 @@ public class Sprite extends ImageView {
                 setXPosition(myPosition.get(X_STRING));
                 setYPosition(myPosition.get(Y_STRING));
         }
+        
+        public void setScale(String scale) {
+            myCharacteristics.put(SCALE, scale);
+            double newScale = Double.parseDouble(scale);
+            
+//            this.setFitWidth(mySize.get(X_STRING));
+//            this.setFitHeight(mySize.get(Y_STRING));
+    }
 
         public double getXPosition() {
                 return myPosition.get(X_STRING);
