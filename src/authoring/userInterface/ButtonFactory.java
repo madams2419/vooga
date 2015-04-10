@@ -14,9 +14,9 @@ import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-
 import org.w3c.dom.Node;
 
+import authoring.userInterface.Reflection;
 import XML.LayoutXMLParser;
 /**
  * @author hojeanniechung
@@ -24,14 +24,9 @@ import XML.LayoutXMLParser;
  */
 
 public class ButtonFactory{
-	//	private static File mFile;
-	//	private static String mType;
-
 
 	private static ButtonFactory mInstance;
-	//	private static String s;
-	//	private static ArrayList<Map> mAttributesList=new ArrayList<Map>();
-	//	private static ArrayList<Button> mButtonList;
+	private static Reflection reflection=new Reflection();
 
 	/*==============================Constructors=================================================*/
 
@@ -52,6 +47,8 @@ public class ButtonFactory{
 		//System.out.println("button" + m);
 		Button b = new Button();
 		b.setText(m.get("label"));
+		Object listenerClass=reflection.createInstance(String.format("authoring.buttonlisteners.%sClass",m.get("listener")));
+		b.setOnMouseClicked(e->Reflection.callMethod(listenerClass, m.get("listener")));
 		//		mButtonList.add(b);
 		//		return mButtonList;
 		return b;
