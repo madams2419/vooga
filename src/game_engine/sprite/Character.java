@@ -72,5 +72,4 @@ public abstract class Character extends Sprite {
 	public void setStateName(String movementName){
 		setState(myStateNames.getString(movementName));
 	}
-
 }

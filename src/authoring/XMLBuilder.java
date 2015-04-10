@@ -1,6 +1,7 @@
 package authoring;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,13 +41,17 @@ public class XMLBuilder {
 	 */
 	private Document mDocument;
 
+	private static XMLBuilder mInstance;
+	
 	// ====== Constructors =====================================================
 
-	XMLBuilder() {
-
+	public static XMLBuilder getInstance(String rootElement) {
+		if(mInstance==null)
+			mInstance = new XMLBuilder(rootElement);
+		return mInstance;
 	}
-
-	XMLBuilder(String rootElement, String... attributes_values) {
+	
+	private XMLBuilder(String rootElement, String... attributes_values) {
 		this(rootElement, arrayToMap(attributes_values));
 	}
 
@@ -75,7 +80,7 @@ public class XMLBuilder {
 	 * Method which will collect all the information stored in the parent node
 	 * into the specified file
 	 */
-	void streamFile(String filename, Element root) {
+	public void streamFile(String filename, Element root) {
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory
 				.newInstance();
@@ -88,6 +93,7 @@ public class XMLBuilder {
 		} catch (TransformerException e) {
 			e.printStackTrace();
 		}
+		System.out.println("streamed file");
 	}
 
 	/***
@@ -173,8 +179,9 @@ public class XMLBuilder {
 	 * Simplified version of add, which adds directly to the root of the
 	 * document
 	 */
-	public void addToRoot(Element newElement) {
+	public Element addToRoot(Element newElement) {
 		root.appendChild(newElement);
+		return newElement;
 	}
 
 	/***
@@ -249,6 +256,10 @@ public class XMLBuilder {
 		return root;
 	}
 
+	public void addAll(Collection<Sprite> sprites) {
+		
+	}
+	
 	// ====== Testing Main Method ==============================================
 
 	public static void main(String[] args) {

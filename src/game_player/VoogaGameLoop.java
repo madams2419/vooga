@@ -24,6 +24,10 @@ public class VoogaGameLoop {
 	gameLoop.getKeyFrames().add(new KeyFrame(Duration.millis(FRAME_RATE), (frame) -> update()));
     }
     
+    public void start() {
+	
+    }
+    
     private void update() {
 	System.out.println("frame");
     }
