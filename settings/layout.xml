@@ -12,7 +12,7 @@
 				<X>0</X>
 			 	<Y>0</Y>
 				<label>Global Settings</label>
-				<listener>switchtoGlobalSettingPane</listener>
+				<listener>switchToGlobalSettingPane</listener>
 			</Button>
 			<Button>
 			 	<X>2</X>
@@ -46,38 +46,50 @@
 			</Button>
 		</buttons>
 	</BottomPane>
-	<LeftPane>
+	<TopPane>
 		<dropdowns>
 			<Dropdown>
 				<X>0</X>
 				<Y>3</Y>
-				<label>Test Characters</label>
-				<listener>null</listener>
+				<default>Test Characters</default>
+				<label0>Test Characters</label0>
+				<listener0>null</listener0>
 			</Dropdown>
 			<Dropdown>
 				<X>0</X>
 				<Y>1</Y>
-				<label>Characters</label>
-				<listener>null</listener>
+				<default>Characters</default>
+				<label0>Characters</label0>
+				<listener0>null</listener0>
 			</Dropdown>
 			<Dropdown>
 				<X>1</X>
 				<Y>1</Y>
-				<label>Blocks</label>
-				<listener>null</listener>
+				<default>Blocks</default>
+				<label0>Blocks</label0>
+				<listener0>null</listener0>
 			</Dropdown>
 			<Dropdown>
 				<X>2</X>
 				<Y>1</Y>
-				<label>Decorations</label>
-				<listener>null</listener>
+				<default>Decorations</default>
+				<label0>Decorations</label0>
+				<listener0>null</listener0>
 			</Dropdown>
 			<Dropdown>
 				<X>3</X>
 				<Y>1</Y>
-				<label>UI Controls</label>
-				<listener>null</listener>
+				<default>UI Controls</default>
+				<label0>UI Controls</label0>
+				<listener0>null</listener0>
+			</Dropdown>
+			<Dropdown>
+				<X>3</X>
+				<Y>1</Y>
+				<default>Maps</default>
+				<label0>Maps</label0>
+				<listener0>null</listener0>
 			</Dropdown>
 		</dropdowns>
-	</LeftPane>
+	</TopPane>
 </layout>

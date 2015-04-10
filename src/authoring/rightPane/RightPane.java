@@ -47,16 +47,6 @@ public class RightPane extends VBox {
         // initializeCurrentContent(new CharacterEditingPane(scene, null));
     }
 
-    public void setScene (Scene scene) {
-        myScene = scene;
-        initializeCurrentContent(new CharacterCreationPane(scene));
-
-        // temporary
-        // initializeCurrentContent(new InteractionEditingPane(scene, null, null,
-        // getListOfInteractions()));
-
-    }
-
     public void switchPane (Sprite s) {
         if (AuthoringWindow.getControl())
             switchToInteractionEditingPane(
@@ -100,11 +90,6 @@ public class RightPane extends VBox {
         System.out.println("Global Create");
     }
 
-    public void switchToMapSettingPane () {
-        switchToPane(new MapSettingPane(myScene));
-        System.out.println("Map Created");
-    }
-
     public void UIControlCreate () {
         System.out.println("UI Control Create");
     }
@@ -117,6 +102,28 @@ public class RightPane extends VBox {
         clearChildren();
         myCurrentContent = newPane;
         addFromCurrentContent();
+    }
+
+    public void switchToGlobalSettingPane () {
+        // switchToPane(new CharacterEditingPane(myScene, new Sprite()));
+        switchToPane(new GlobalCreationPane(myScene));
+        System.out.println("Global Create");
+    }
+
+    public void switchToMapSettingPane () {
+        switchToPane(new MapSettingPane(myScene));
+        System.out.println("Map Created");
+    }
+
+    public void setScene (Scene scene) {
+        myScene = scene;
+        initializeCurrentContent(new CharacterCreationPane(scene));
+
+        // temporary
+        // initializeCurrentContent(new InteractionEditingPane(scene, null,
+        // null,
+        // getListOfInteractions()));
+
     }
 
     private void clearChildren () {
