@@ -1,11 +1,14 @@
 package authoring.userInterface;
 
 //import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
+
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -29,6 +32,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import authoring.rightPane.RightPane;
+import javafx.scene.control.ComboBox;
 
 /**
  * @author hojeanniechung & Daniel Luker & Andrew Sun
@@ -110,40 +114,7 @@ public class AuthoringWindow {
 		 * @author Andrew
 		 */
 		mBar.getMenus().get(FILE_MENU).getItems().get(NEW_FILE).setOnAction(e -> {
-			// Refactor this into new class/method
-			Dialog<ButtonType> dialog = new Dialog<>();
-			dialog.setTitle("Create New Game Scene");
-			
-			GridPane grid = new GridPane();
-			grid.setHgap(10);
-			grid.setVgap(10);
-			
-			grid.add(new Label("xSize"), 0, 0);
-			TextField textBox1 = new TextField("400");
-			grid.add(textBox1, 0, 1);
-			grid.add(new Label("ySize"), 1, 0);
-			TextField textBox2 = new TextField("400");
-			grid.add(textBox2, 1, 1);
-			
-			
-			dialog.getDialogPane().setContent(grid);
-			dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-			
-			
-			Optional<ButtonType> result = dialog.showAndWait();
-			// Refactor? Is it possible to get rid of this if statement?
-						if (result.get() == ButtonType.OK) {
-							if (Pattern.matches("^\\d+(\\.\\d+)?$",
-									textBox1.getText())
-									&& Pattern.matches("^\\d+(\\.\\d+)?$",
-											textBox2.getText())) {
-								myCenterPane.createRegion(
-										Double.parseDouble(textBox1.getText()),
-										Double.parseDouble(textBox2.getText()));
-							} else {
-								System.out.println("error");
-							}
-						}
+			new NewRegionDialog(myCenterPane);
 		});
 		
 		mBar.getMenus().get(0).getItems().get(1).setOnAction(e -> {
@@ -195,9 +166,9 @@ mBar.getMenus().get(FILE_MENU).getItems().get(CLOSE_GAME)
 		Map<String, EventHandler<Event>> mButtons = new HashMap<>();
 
 		mButtons.put("Global Settings", e -> {
-			System.out.println("global settings clicked");
+			ControlsDialog myControls = new ControlsDialog();
+			
 		});
-		mButtons.put("Controls", null);
 		mButtons.put("Map Settings", null);
 		mButtons.put("Interactions List", null);
 		mButtons.put("Characters", null);
