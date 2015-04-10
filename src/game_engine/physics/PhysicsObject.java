@@ -69,7 +69,8 @@ public class PhysicsObject {
 
 	private Vector computeDirectionalForce() {
 		Vector direction = myVelocity.normalize();
-		return direction.times(myDirForceMagnitude);
+		Vector intForce = direction.times(myDirForceMagnitude);
+		return intForce.plus(myPhysics.getDragForce(this));
 	}
 
 	public void addForce(Vector force) {

@@ -19,17 +19,19 @@ public class PhysicsEngine {
 	private static double SCALE_FACTOR = 0.1; // pixel to meter scaling
 	private static String GRAV_STRING = "gravity";
 	private static double GRAV_MAGNITUDE = 9.8 / SCALE_FACTOR;
+	private static double DRAG_COEF = 0.2;
 	private static double SC_PERCENT = 0.2;
 	private static double SC_SLOP = 0.01;
 
 	private double myGround;
 	private double myTimeStep;
+	private double myDrag;
 	private Map<String, Vector> myGlobalForces;
 	private Map<String, Vector> myGlobalAccels;
 	private Vector myNetGlobalAccel;
 	private Vector myNetGlobalForce;
 
-	public PhysicsEngine(double groundPixels, double timeStep, double gravity) {
+	public PhysicsEngine(double groundPixels, double timeStep, double gravity, double drag) {
 		myGround = pixelsToMeters(groundPixels);
 		myTimeStep = timeStep;
 		myGlobalForces = new HashMap<>();
@@ -37,10 +39,16 @@ public class PhysicsEngine {
 		myNetGlobalForce = new Vector();
 		myNetGlobalAccel = new Vector();
 		setGravity(gravity);
+		myDrag = drag;
 	}
-
-	public PhysicsEngine(double ground, double timeStep) {
-		this(ground, timeStep, GRAV_MAGNITUDE);
+	
+	public PhysicsEngine(double groundPixels, double timeStep) {
+		this(groundPixels, timeStep, GRAV_MAGNITUDE, DRAG_COEF);
+	}
+	
+	public Vector getDragForce(PhysicsObject physObj) {
+		double dragCoef = - myDrag * physObj.getShape().getCxArea();
+		return physObj.getVelocity().times(dragCoef);
 	}
 
 	public void setGravity(double gravity) {

@@ -10,6 +10,7 @@ public interface Shape {
 	/* return radius bounding circle in meters */
 	public double getRadiusMeters();
 	
-	
+	/* return cross sectional area in meters */
+	public double getCxArea();
 
 }
