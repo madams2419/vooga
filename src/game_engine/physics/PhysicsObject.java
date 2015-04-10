@@ -24,12 +24,12 @@ public class PhysicsObject {
 		myPhysics = physics;
 		myShape = shape;
 		myMaterial = material;
-		
+
 		myPosition = PhysicsEngine.vectorPixelsToMeters(xPosPixels, yPosPixels);
 		myVelocity = new Vector();
 		myNetInternalForce = new Vector();
 		myDirForceMagnitude = 0;
-		
+
 		myInvMass = computeInvMass();
 		myAccel = computeAccel();
 	}
@@ -39,7 +39,7 @@ public class PhysicsObject {
 		myAccel = computeAccel();
 		myVelocity = myVelocity.plus(myAccel.times(dt));
 		myPosition = myPosition.plus(myVelocity.times(dt));
-		
+
 		// temporary ground handling
 		if(myPosition.getY() <= myPhysics.getGround() + myShape.getRadiusMeters()) {
 			myPosition.setY(myPhysics.getGround() + myShape.getRadiusMeters());
@@ -97,39 +97,39 @@ public class PhysicsObject {
 	protected Vector getPositionMeters() {
 		return myPosition;
 	}
-	
+
 	protected Vector getPositionPixels() {
 		return PhysicsEngine.vectorMetersToPixels(getPositionMeters());
 	}
-	
+
 	public double getXMeters() {
 		return myPosition.getX();
 	}
-	
+
 	public void setXMeters(double xMeters) {
 		myPosition.setX(xMeters);
 	}
-	
+
 	public double getYMeters() {
 		return myPosition.getY();
 	}
-	
+
 	public void setYMeters(double yMeters) {
 		myPosition.setY(yMeters);
 	}
-	
+
 	public double getXPixels() {
 		return PhysicsEngine.metersToPixels(getXMeters());
 	}
-	
+
 	public void setXPixels(double xPixels) {
 		myPosition.setX(PhysicsEngine.pixelsToMeters(xPixels));
 	}
-	
+
 	public double getYPixels() {
 		return PhysicsEngine.metersToPixels(getYMeters());
 	}
-	
+
 	public void setYPixels(double yPixels) {
 		myPosition.setY(PhysicsEngine.pixelsToMeters(yPixels));
 	}
@@ -166,11 +166,11 @@ public class PhysicsObject {
 		myMaterial = material;
 		myInvMass = computeInvMass();
 	}
-	
+
 	public Shape getShape() {
 		return myShape;
 	}
-	
+
 	public void setShape(Shape shape) {
 		myShape = shape;
 		myInvMass = computeInvMass();

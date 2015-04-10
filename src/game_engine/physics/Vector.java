@@ -42,7 +42,7 @@ public class Vector {
 	}
 
 	public Vector minus(Vector other) {
-		return new Vector(myX - other.getX(), myY + other.getY());
+		return new Vector(myX - other.getX(), myY - other.getY());
 	}
 
 	public double dot(Vector other) {

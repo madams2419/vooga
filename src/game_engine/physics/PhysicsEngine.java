@@ -41,11 +41,11 @@ public class PhysicsEngine {
 		setGravity(gravity);
 		myDrag = drag;
 	}
-	
+
 	public PhysicsEngine(double groundPixels, double timeStep) {
 		this(groundPixels, timeStep, GRAV_MAGNITUDE, DRAG_COEF);
 	}
-	
+
 	public Vector getDragForce(PhysicsObject physObj) {
 		double dragCoef = - myDrag * physObj.getShape().getCxArea();
 		return physObj.getVelocity().times(dragCoef);
@@ -87,7 +87,9 @@ public class PhysicsEngine {
 
 	private boolean checkCircleCollision(PhysicsObject a, PhysicsObject b) {
 		double sepDistance = b.getPositionMeters().minus(a.getPositionMeters()).getMagnitude();
-		double radiiSum = ((CircleBody)b.getShape()).getRadiusMeters() + ((CircleBody)a.getShape()).getRadiusMeters();
+		System.out.println("sep  : " + sepDistance);
+		double radiiSum = b.getShape().getRadiusMeters() + a.getShape().getRadiusMeters();
+		System.out.println("rsum : " + radiiSum);
 		return sepDistance <= radiiSum;
 	}
 
@@ -100,7 +102,7 @@ public class PhysicsEngine {
 
 		resolveCollision(a, b, normal, 0);
 	}
-	
+
 	/* implement as IBehavior */
 	public void resolveCollision(PhysicsObject a, PhysicsObject b, Vector normal, double pDepth) {
 		// compute relative velocity
@@ -203,25 +205,25 @@ public class PhysicsEngine {
 	public double getGround() {
 		return myGround;
 	}
-	
+
 	/* Scaling utility functions */
-	
+
 	public static double pixelsToMeters(double pixels) {
 		return pixels * SCALE_FACTOR;
 	}
-	
+
 	public static double metersToPixels(double meters) {
 		return meters / SCALE_FACTOR;
 	}
-	
+
 	public static Vector vectorPixelsToMeters(Vector vectorPixels) {
 		return vectorPixelsToMeters(vectorPixels.getX(), vectorPixels.getY());
 	}
-	
+
 	public static Vector vectorPixelsToMeters(double xPixels, double yPixels) {
 		return new Vector(pixelsToMeters(xPixels), pixelsToMeters(yPixels));
 	}
-	
+
 	public static Vector vectorMetersToPixels(Vector vector) {
 		return vectorMetersToPixels(vector.getX(), vector.getY());
 	}
