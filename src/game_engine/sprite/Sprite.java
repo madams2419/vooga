@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import game_engine.IBehavior;
 import game_engine.HitBox;
 import game_engine.physics.PhysicsObject;
+import game_engine.physics.Vector;
 import game_player.Animation;
 
 /**
@@ -21,7 +22,7 @@ public abstract class Sprite extends Observable{
 	private String myName;	
 	private String myState;
 	private Animation myAnimation;
-	protected PhysicsObject myPhysicsObject;
+	protected PhysicsObject myPhysicsObject = new PhysicsObject(null, null, null, myName, new Vector(0,0), null);
 	private Map<String, IBehavior> myBehaviorMap = new HashMap<>();
 
 	
@@ -106,10 +107,14 @@ public abstract class Sprite extends Observable{
 		notifyObservers();
 	}
 	
-	public IBehavior setState = (params) -> { // stateChanging
+	private IBehavior setState = (params) -> { // stateChanging
             String state = params[0];
             setState(state);
 	};
+	
+	public IBehavior setStateBehavior(){
+	    return setState;
+	}
 	
 	public String getState(){
 		return myState;

@@ -36,36 +36,56 @@ public abstract class Character extends Sprite {
 	 * @TODO add state changes (going to do this from utilities file)
 	 */
 	// params[0] is pixels to move forward
-	public IBehavior moveForward = (params) -> { // movement
+	private IBehavior moveForward = (params) -> { // movement
 		myPosition.setX(myPosition.getX()+Double.parseDouble(params[0]));
 		setStateName("forward");
 	};
+	
+	public IBehavior getMoveForward(){
+	    return this.moveForward;
+	}
 
 	// params[0] is upward scaling factor
-	public IBehavior jump = (params) -> { // movement
+	private IBehavior jump = (params) -> { // movement
 		Vector myVector = new Vector(0,1*Double.parseDouble(params[0]));
 		myPhysicsObject.applyImpulse(myVector);
 		setStateName("jump");
 	};
 	
+	public IBehavior getJump(){
+	    return this.jump;
+	}
+	
 	// params[0] is sideways scaling fire
-	public IBehavior sprint = (params) -> { // movement
+	private IBehavior sprint = (params) -> { // movement
 		Vector myVector = new Vector(1*Double.parseDouble(params[0]),0);
 		myPhysicsObject.applyImpulse(myVector);
 		setStateName("sprint");
 	};
 	
+	public IBehavior getSprint(){
+	    return this.sprint;
+	}
+	
 	// TODO physics change here?
-	public IBehavior slide = (params) -> { // movement
+	private IBehavior slide = (params) -> { // movement
 		Vector myVector = new Vector(0,1*Double.parseDouble(params[0]));
 		myPhysicsObject.applyImpulse(myVector);
 		setStateName("slide");
 	};
 	
-	public IBehavior bounce = (params) -> { // movement 
+	public IBehavior getSlide(){
+	    return this.slide;
+	}
+	
+	private IBehavior bounce = (params) -> { // movement 
 		setStateName("bounce");
 		
 	};
+	
+	public IBehavior getBounce(){
+	    return this.bounce;
+	}
 	
 	public void setStateName(String movementName){
 		setState(myStateNames.getString(movementName));
