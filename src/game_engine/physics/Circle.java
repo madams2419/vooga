@@ -3,7 +3,7 @@ package game_engine.physics;
 
 public class Circle implements Shape {
 	
-	public double myRadius;
+	private double myRadius;
 	
 	public Circle(double radius) {
 		myRadius = radius;
@@ -11,6 +11,10 @@ public class Circle implements Shape {
 	
 	public double getVolume() {
 		return (4/3)*Math.PI*Math.pow(myRadius, 3);
+	}
+	
+	public double getRadius() {
+		return myRadius;
 	}
 
 }
