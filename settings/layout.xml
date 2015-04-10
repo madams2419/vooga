@@ -24,7 +24,7 @@
 				<X>0</X>
 			 	<Y>3</Y>
 				<label>Characters</label>
-				<listener>CharacterCreate</listener>
+				<listener>switchToCharacterCreationPane</listener>
 			</Button>
 			<Button>
 				<X>0</X>

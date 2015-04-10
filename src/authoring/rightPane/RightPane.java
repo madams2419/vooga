@@ -35,7 +35,7 @@ public class RightPane extends VBox {
 		return mInstance;
 	}
 
-	private RightPane() {
+	public RightPane() {
 		super(SPACING);
 
 		getStylesheets().add(CSS);
@@ -70,12 +70,38 @@ public class RightPane extends VBox {
 
 	public void switchToCharacterCreationPane() {
 		switchToPane(new CharacterCreationPane(myScene));
+		System.out.println("Character Creation Pane");
 	}
 
 	private void switchToInteractionEditingPane(Sprite sprite1, Sprite sprite2) {
 		switchToPane(new InteractionEditingPane(myScene, sprite1, sprite2,
 				getListOfInteractions()));
 	}
+	
+	public void InteractionCreate(){
+		System.out.println("Interaction Create");
+	}
+	
+	public void BlockCreate(){
+		System.out.println("Block Created");
+	}
+	
+	public void DecorationCreate(){
+		System.out.println("Decoration Create");
+	}
+	
+	public void GlobalCreate(){
+		System.out.println("Global Create");
+	}
+	
+	public void MapCreate(){
+		System.out.println("Map Created");
+	}
+	
+	public void UIControlCreate(){
+		System.out.println("UI Control Create");
+	}
+	
 
 	public void switchToDefaultPane() {
 		switchToPane(new DefaultEditingPane(myScene));

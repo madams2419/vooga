@@ -47,12 +47,12 @@ public class ButtonFactory{
 		//System.out.println("button" + m);
 		Button b = new Button();
 		b.setText(m.get("label"));
-		Object listenerClass=reflection.createInstance(String.format("authoring.buttonlisteners.%sClass",m.get("listener")));
+		Object listenerClass=reflection.createInstance("authoring.rightPane.RightPane");
 		b.setOnMouseClicked(e->Reflection.callMethod(listenerClass, m.get("listener")));
 		//		mButtonList.add(b);
 		//		return mButtonList;
 		return b;
 	}
 
-	
+
 }
