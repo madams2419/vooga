@@ -1,4 +1,4 @@
-package game_engine.game_player;
+package game_player;
 
 import game_engine.sprite.Sprite;
 import java.util.HashMap;
@@ -58,8 +58,8 @@ public class Animation implements Observer{
         // TODO Auto-generated method stub
        Sprite sprite = (Sprite) o;
        changeImage(sprite.getState());
-       myImageView.setTranslateX(sprite.getPhysicsObject().getX());
-       myImageView.setTranslateY(sprite.getPhysicsObject().getY());
+       //myImageView.setTranslateX(sprite.getPhysicsObject().getX());
+       //myImageView.setTranslateY(sprite.getPhysicsObject().getY());
     }
 
 }

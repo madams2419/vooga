@@ -3,11 +3,12 @@ package game_engine.sprite;
 public class Collectible extends Sprite{
     
     private int myCount;
+    private boolean canCollect;
 
     public Collectible() {
         super();
         myCount = 0;
-      }
+    }
 
    
       public Collectible(String name){
@@ -34,11 +35,20 @@ public class Collectible extends Sprite{
       
       public void resetCount(){
           myCount = 0;
+         
+      }
+      
+      public void setCollectible(boolean canCollect){
+          this.canCollect = canCollect;
+      }
+      
+      public boolean isCollectible(){
+          return canCollect;
       }
       
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-
+		
 	}
 }
