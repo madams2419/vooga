@@ -1,10 +1,10 @@
-package menu;
-
+package menu;           
+               
 import javafx.application.Application;
-import javafx.geometry.Rectangle2D;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-
+import javafx.geometry.Rectangle2D;            
+import javafx.stage.Screen;            
+import javafx.stage.Stage;             
+               
 /**
  * VoogaSaladMain is responsible only for launching the application.
  * 

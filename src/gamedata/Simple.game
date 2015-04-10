@@ -1,4 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Simple_Game>
-	<stuff></stuff>
+	<level>
+		<level_0>
+			<objective>
+				<objective_0>
+					end goal reach region
+				</objective_0>
+				
+				<objective_1>
+					collect a key to be able to enter region
+				</objective_1>
+				
+				<objective_2>
+					collide with enemy
+				</objective_2>
+			</objective>
+			
+			<sprite>
+				<sprite_0>
+					player
+				</sprite_0>
+				
+				<sprite_1>
+					ground
+				</sprite_1>
+				
+				<sprite_2>
+					raised platform
+				</sprite_2>
+				
+				<sprite_3>
+					enemy
+				</sprite_3>
+				
+				<sprite_4>
+					key
+				</sprite_4>
+				
+				<sprite_5>
+					region
+				</sprite_5>
+			</sprite>
+			
+			<control>
+				<control_0>
+					<key_0>
+						<key>rightArrow</key>
+						<onPressed>
+							
+						</onPressed>
+						<whilePressed>
+							
+						</whilePressed>
+						<onReleased>
+							
+						</onReleased>
+					</key_0>
+					
+					<key_1>
+						<key>leftArrow</key>
+						<onPressed>
+							
+						</onPressed>
+						<whilePressed>
+							
+						</whilePressed>
+						<onReleased>
+							
+						</onReleased>
+					</key_1>
+					
+					<key_2>
+						<key>upArrow</key>
+						<onPressed>
+							
+						</onPressed>
+						<whilePressed>
+							
+						</whilePressed>
+						<onReleased>
+							
+						</onReleased>
+					</key_2>
+				</control_0>
+			</control>
+			
+			<collision>
+				<collision_0>
+					colliding with enemy
+				</collision_0>
+				
+				<collision_1>
+					colliding with platforms
+				</collision_1>
+				
+				<collision_2>
+					colliding with key
+				</collision_2>
+				
+				<collision_3>
+					colliding with region
+				</collision_3>
+			</collision>
+		</level_0>
+	</level>
 </Simple_Game>
