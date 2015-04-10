@@ -12,7 +12,7 @@ import javafx.util.Duration;
 public class testerScreen{
     private int myWidth, myHeight;
     private StackPane myRoot;
-    Player myPlayer = new Player();
+    Player myPlayer = new Player(null);
     
     public testerScreen(int h, int w){
         myHeight = h;
