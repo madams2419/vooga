@@ -203,19 +203,11 @@ public class AuthoringWindow {
 	}
 
 	private HBox setupTopPane(double width) {
-		Map<String, EventHandler<Event>> mButtons = new HashMap<>();
-
-		mButtons.put("Global Settings", null);
-		mButtons.put("Map Settings", null);
-		mButtons.put("Interactions List", null);
-		mButtons.put("Characters", null);
-		mButtons.put("Blocks", null);
-		mButtons.put("Decorations", null);
-		mButtons.put("UI Controls", null);
-
-		TopPane mTopPane = new TopPane();
-		mTopPane.addButtons(mButtons);
-		return mTopPane;
+		HBox buttonBox = new HBox();
+		// UIElementDistributer ud = new UIElementDistributer();
+		// ud.ElementDistributer();
+		buttonBox.getChildren().addAll(TopPane.mButtonList);
+		return buttonBox;
 	}
 
 	private VBox setupRightPane() {

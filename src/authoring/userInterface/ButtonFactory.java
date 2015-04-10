@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import org.w3c.dom.Node;
 
+import authoring.rightPane.RightPane;
 import authoring.userInterface.Reflection;
 import XML.LayoutXMLParser;
 /**
@@ -47,7 +48,7 @@ public class ButtonFactory{
 		//System.out.println("button" + m);
 		Button b = new Button();
 		b.setText(m.get("label"));
-		Object listenerClass=reflection.createInstance("authoring.rightPane.RightPane");
+		Object listenerClass=RightPane.getInstance();
 		b.setOnMouseClicked(e->Reflection.callMethod(listenerClass, m.get("listener")));
 		//		mButtonList.add(b);
 		//		return mButtonList;

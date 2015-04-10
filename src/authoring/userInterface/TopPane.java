@@ -1,47 +1,54 @@
 package authoring.userInterface;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import authoring.XMLBuilder;
-import authoring.util.FrontEndUtils;
-import javafx.event.Event;
-import javafx.event.EventHandler;
+import com.sun.prism.paint.Color;
+
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 /***
  * 
- * @author daniel
+ * @author daniel and Jeannie
  *
  */
+
+import authoring.userInterface.UIElementDistributer;
+
 public class TopPane extends HBox {
+	//TODO fill out this badboy
+	static ArrayList<Button> mButtonList=new ArrayList<Button>();
+	public static Group root=new Group();
+
 
 	TopPane() {
 		this.getStylesheets().add("styles/top_pane.css");
 	}
 
-	void addButtons(Map<String, EventHandler<Event>> labels_listeners) {
-		GridPane grid = new GridPane();
+	public Group generateComponents(ArrayList<Map> values){
+		for(int i=0; i<values.size(); i++){
+			Map<String, Map> m=values.get(i);
+			System.out.println(m);
+			for(String key: m.keySet()){
+				if(key.equals("Button")){	
+					mButtonList.add(ButtonFactory.generateButton(m.get(key)));
 
-		List<Button> mButtons = (List<Button>) labels_listeners.entrySet()
-				.stream().map(FrontEndUtils::makeButton)
-				.collect(Collectors.toList());
+				}
+				if(key.equals("Dropdown")){
+					DropdownFactory dFactory=new DropdownFactory();
+					dFactory.generateDropdown(m.get(key));
+				}
+			}
+		}	
+		root.getChildren().addAll(mButtonList);
+		System.out.println("TopPane Drops: " + mButtonList);
+		return root;
 
-		for (int i = 0, j = 0; i < mButtons.size(); i++) {
-			grid.add(mButtons.get(i), (i % 4) + 1, j + 1);
-			j = i / 4;
-		}
-		this.getChildren().add(grid);
-
-		Button c = new Button("Output xml");
-		c.setOnAction(e -> {
-			XMLBuilder.getInstance("game").streamFile("lib/test.xml",
-					XMLBuilder.getInstance("game").getRoot());
-		});
-		this.getChildren().add(c);
 	}
+
 
 }

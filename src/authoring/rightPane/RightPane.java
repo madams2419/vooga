@@ -35,7 +35,7 @@ public class RightPane extends VBox {
 		return mInstance;
 	}
 
-	public RightPane() {
+	private RightPane() {
 		super(SPACING);
 
 		getStylesheets().add(CSS);
@@ -90,7 +90,9 @@ public class RightPane extends VBox {
 		System.out.println("Decoration Create");
 	}
 	
-	public void switchtoGlobalSettingPane(){
+	public void switchToGlobalSettingPane(){
+//		switchToPane(new CharacterEditingPane(myScene, new Sprite()));
+		switchToPane(new GlobalCreationPane(myScene));
 		System.out.println("Global Create");
 	}
 	
