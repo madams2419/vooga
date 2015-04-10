@@ -45,9 +45,10 @@ public class PhysicsObject extends Observable {
 		if(myPosition.getY() <= myPhysics.getGround() + myShape.getRadiusMeters()) {
 			myPosition.setY(myPhysics.getGround() + myShape.getRadiusMeters());
 			myVelocity.setY(0);
-		} 
+		}
+
 		setChanged();
-	        notifyObservers();
+		notifyObservers();
 	}
 
 	private double computeInvMass() {
@@ -77,11 +78,11 @@ public class PhysicsObject extends Observable {
 	}
 
 	public void addForce(Vector force) {
-		myNetInternalForce.plus(force);
+		myNetInternalForce = myNetInternalForce.plus(force);
 	}
 
 	public void removeForce(Vector force) {
-		myNetInternalForce.minus(force);
+		myNetInternalForce = myNetInternalForce.minus(force);
 	}
 
 	public void addDirectionalForce(double magnitude) {
