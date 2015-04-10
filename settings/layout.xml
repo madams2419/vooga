@@ -51,31 +51,43 @@
 			<Dropdown>
 				<X>0</X>
 				<Y>3</Y>
+				<default>Test Characters</default>
 				<label0>Test Characters</label0>
 				<listener0>null</listener0>
 			</Dropdown>
 			<Dropdown>
 				<X>0</X>
 				<Y>1</Y>
+				<default>Characters</default>
 				<label0>Characters</label0>
 				<listener0>null</listener0>
 			</Dropdown>
 			<Dropdown>
 				<X>1</X>
 				<Y>1</Y>
+				<default>Blocks</default>
 				<label0>Blocks</label0>
 				<listener0>null</listener0>
 			</Dropdown>
 			<Dropdown>
 				<X>2</X>
 				<Y>1</Y>
+				<default>Decorations</default>
 				<label0>Decorations</label0>
 				<listener0>null</listener0>
 			</Dropdown>
 			<Dropdown>
 				<X>3</X>
 				<Y>1</Y>
+				<default>UI Controls</default>
 				<label0>UI Controls</label0>
+				<listener0>null</listener0>
+			</Dropdown>
+			<Dropdown>
+				<X>3</X>
+				<Y>1</Y>
+				<default>Maps</default>
+				<label0>Maps</label0>
 				<listener0>null</listener0>
 			</Dropdown>
 		</dropdowns>

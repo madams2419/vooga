@@ -47,6 +47,7 @@ public class DropdownFactory {
             ObservableList<String> options = FXCollections.observableArrayList(labels);
             final ComboBox<String> comboBox = new ComboBox<String>();
             comboBox.getItems().addAll(options);
+            comboBox.setValue(m.get("default"));
             return comboBox;
         }
 
