@@ -17,8 +17,8 @@ public class testerScreen{
     public Scene initialize()
     {   
         Player myPlayer = new Player();
-        myPlayer.addImage("idle", "src/Resources/images/jumpingMario.png");
-        myPlayer.addImage("walking", "src/Resources/images/jumpingMario.png");
+        myPlayer.addImage("idle", "d:/voogasalad_HighScrollers/src/game_engine/sprite/standingMario.png");
+//        myPlayer.addImage("walking", "/Resources/images/walkingMario.png");
         
         Scene scene = new Scene(myRoot, myWidth, myHeight);
         scene.setFill(Color.WHITE);
