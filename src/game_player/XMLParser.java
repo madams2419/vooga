@@ -15,7 +15,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * XMLInterpreter allows the user to easily and recursively read values in from an XML file.
+ * XMLParser allows the user to easily and recursively read values in from an XML file.
  * The class is basically just a Map<String, String> which associates labels with values.
  * Only the base values are written in the map, rather than every single label.  To implement this,
  * the Map associates a full path with the value as opposed to just the label.  However, to 
@@ -25,9 +25,9 @@ import org.w3c.dom.NodeList;
  * file.
  * 
  * @author Brian Lavallee
- * @since 7 April 2015
+ * @since 8 April 2015
  */
-public class XMLInterpreter {
+public class XMLParser {
     
     /*
      * Directory stores a name and a list of sub-directories.  Thus
@@ -93,7 +93,7 @@ public class XMLInterpreter {
      * @param data
      *             is the XML file that the user wants to parse.
      */
-    public XMLInterpreter(File data) {
+    public XMLParser(File data) {
 	xml = new HashMap<String, String>();
 	activePath = new ArrayList<Directory>();
 	activePath.add(root);
@@ -154,6 +154,39 @@ public class XMLInterpreter {
 	    path += directory.toString();
 	}
 	return path;
+    }
+    
+    /**
+     * Finds all of the sub-Directories of the current activePath.  Useful for interpreting
+     * the parsed XML file.
+     * 
+     * @return
+     *         a List of all of the possible sub-Directories the user could move into next.
+     */
+    public List<String> getValidSubDirectories() {
+	List<String> subDirectories = new ArrayList<String>();
+	for (Directory directory : activePath.get(activePath.size() - 1).getSubDirectories()) {
+	    subDirectories.add(directory.toString());
+	}
+	return subDirectories;
+    }
+    
+    /**
+     * Finds all of the valid labels within the current activePath.  Also useful for interpreting
+     * the parser XML file.
+     * 
+     * @return
+     *         a List of all of the Map keys that begin with the activePath but are only labels not directories.
+     */
+    public List<String> getValidLabels() {
+	List<String> labels = new ArrayList<String>();
+	String prefix = getActivePath();
+	for (String key : xml.keySet()) {
+	    if (key.startsWith(prefix) && key.split("/").length == prefix.split("/").length + 1) {
+		labels.add(key);
+	    }
+	}
+	return labels;
     }
     
     /**
@@ -228,12 +261,12 @@ public class XMLInterpreter {
     private void read(NodeList nodes, String path, Directory parent) {
 	for (int i = 0; i < nodes.getLength(); i++) {
 	    Node node = nodes.item(i);
-	    Directory child = new Directory(node.getNodeName());
-	    parent.addSubDirectory(child);
 	    if (node.getChildNodes().getLength() == 1) {
 		xml.put(path + "/" + node.getNodeName(), node.getTextContent());
 	    }
-	    else {
+	    else if (node.getChildNodes().getLength() > 1){
+		Directory child = new Directory(node.getNodeName());
+		parent.addSubDirectory(child);
 		read(node.getChildNodes(), path + "/" + node.getNodeName(), child);
 	    }
 	}
