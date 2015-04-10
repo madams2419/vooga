@@ -23,7 +23,7 @@ import javafx.scene.text.Text;
  * the play mode and .dev for the design mode.
  * 
  * @author Brian Lavallee
- * @since 9 April 2015
+ * @since 10 April 2015
  */
 public class VoogaFileChooser {
     
