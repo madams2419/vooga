@@ -47,8 +47,8 @@
                     <encoding>iso-8859-1</encoding>
                     <excludes>
                         <exclude>src/**/*Test.java</exclude>
-                        <exclude>src/**/Test*.java</exclude>
-                        <exclude>src/**/*Test*.java</exclude>
+                        <!--<exclude>src/**/Test*.java</exclude>
+                        <exclude>src/**/*Test*.java</exclude>-->
                     </excludes>
                     <includes>
                         <include>src/**/*.java</include>
