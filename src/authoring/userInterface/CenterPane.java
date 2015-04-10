@@ -24,7 +24,6 @@ import authoring.Sprite;
 
 import authoring.rightPane.GlobalCreationPane;
 import authoring.rightPane.RightPane;
-
 import authoring.util.FrontEndUtils;
 
 
