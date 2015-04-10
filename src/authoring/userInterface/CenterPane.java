@@ -1,6 +1,15 @@
 package authoring.userInterface;
 
+<<<<<<< HEAD
+import java.awt.Cursor;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
+import java.util.Stack;
+=======
 import java.util.Collection;
+>>>>>>> 6ad72a8c6b11f52733db07ff1433528f2ec6701a
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +21,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import authoring.Sprite;
+
+import authoring.rightPane.GlobalCreationPane;
+import authoring.rightPane.RightPane;
+
 import authoring.util.FrontEndUtils;
+
 
 /**
  * 
@@ -21,22 +35,22 @@ import authoring.util.FrontEndUtils;
  */
 public class CenterPane extends ScrollPane {
 
+
+	private List<Sprite> mySpriteList;
+	private List<Map> myEnvironmentList;
+
 	private ObservableList<Sprite> myListOfSprites;
+
 
 	private Scene myScene;
 	private Group myGroup;
 	private Rectangle myCurrentRectangle;
+	public static CenterPane mInstance;
+	public GlobalCreationPane gp;
 
 	private int width;
 	private int height;
-
-	private static CenterPane mInstance;
-
-	public static CenterPane getInstance(Scene s) {
-		if (mInstance == null)
-			mInstance = new CenterPane(s);
-		return mInstance;
-	}
+	
 
 	private CenterPane(Scene scene) {
 		myScene = scene;
@@ -55,9 +69,24 @@ public class CenterPane extends ScrollPane {
 		myListOfSprites = FXCollections.observableArrayList();
 
 		FrontEndUtils.setKeyActions(this);
+		mySpriteList = new ArrayList<Sprite>();
+		myEnvironmentList=new ArrayList<Map>();	
+		addMaptoEnvironment(gp.getInstance().fields);
+
+
+	}
+	
+	public CenterPane getInstance(){
+		if (mInstance == null)
+			mInstance = new CenterPane(myScene);
+		return mInstance;
 
 	}
 
+	public void addMaptoEnvironment(Map m){
+		myEnvironmentList.add(m);
+		System.out.println(m.toString());
+	}
 	private void canvasClicked(MouseEvent e) {
 		try {
 			Sprite s = ((SpriteCursor) myScene.getCursor()).getCurrentSprite();
