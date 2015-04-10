@@ -41,7 +41,7 @@ public class ChatroomServer extends Thread {
 				socket = serverSocket.accept();
 				open();
 				boolean run = false;
-				while(!run){
+				if(!run){
 					try{
 						String input = in.readUTF();
 						System.out.println(input);
@@ -55,6 +55,7 @@ public class ChatroomServer extends Thread {
 							if(console != null){
 								output = console.readLine("Enter message: ");
 								out.writeUTF("Server: " + output);
+								out.flush();
 							}
 						}catch(IOException e){
 							e.printStackTrace();
