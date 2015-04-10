@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flappy_Bird>
+	<sprite>
+		<location>
+			<a>5</a>
+			<b>6</b>
+		</location>
+		<time>
+			<a>5</a>
+		</time>
+		<fun>30</fun>
+	</sprite>
+	<wall>
+		<length>10</length>
+	</wall>
+	<stuff>20</stuff>
+</Flappy_Bird>

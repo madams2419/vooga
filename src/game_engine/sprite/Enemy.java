@@ -1,10 +1,8 @@
 package game_engine.sprite;
 
-import game_engine.game_player.Animation;
+import game_player.Animation;
 
-public class Enemy extends Sprite {
-
-  
+public class Enemy extends Character {
     public Enemy() {
       super();
     }

@@ -24,7 +24,8 @@ public class PhysicsObject {
 	
 	private Shape myShape;
 
-	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material, HitBox hitBox, String state, Vector position, Vector velocity) {
+	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material,
+			HitBox hitBox, String state, Vector position, Vector velocity) {
 		setShape(shape);
 		setMaterial(material);
 		setState(state);
@@ -34,7 +35,8 @@ public class PhysicsObject {
 		myAccel = computeAccel();
 	}
 
-	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material, HitBox hitBox, String state, int xPos, int yPos) {
+	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material,
+			HitBox hitBox, String state, int xPos, int yPos) {
 		this(physics, shape, material, hitBox, state, new Vector(xPos, yPos), new Vector());
 	}
 
@@ -43,6 +45,9 @@ public class PhysicsObject {
 		myAccel = computeAccel();
 		myVelocity = myVelocity.plus(myAccel).times(dt);
 		myPosition = myPosition.plus(myVelocity).times(dt);
+		
+		// temporary ground handling
+		if(myPosition.getY() < myPhysics.getGround()) myPosition.setX(myPhysics.getGround());
 	}
 
 	private double computeInvMass() {
