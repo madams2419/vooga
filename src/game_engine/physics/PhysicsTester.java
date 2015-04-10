@@ -37,10 +37,12 @@ public class PhysicsTester extends Application {
 	private Scene myScene;
 	private Group myGroup;
 	
-	Layer layer;
-	PhysicsEngine globalPhysics;
-	Sprite playerSprite;
-	HashMap<Sprite, Node> displayMap;
+	private List<KeyCode> keyCodeList;
+	
+	private Layer layer;
+	private PhysicsEngine globalPhysics;
+	private Sprite playerSprite;
+	private HashMap<Sprite, Node> displayMap;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -48,6 +50,8 @@ public class PhysicsTester extends Application {
 
 	@Override
 	public void start(Stage stg) throws Exception {
+		keyCodeList = new ArrayList<>();
+
 		Duration framePeriod = Duration.millis(1000 / (float) fps);
 		KeyFrame frame = new KeyFrame(framePeriod, e -> handleKeyFrame());
 
@@ -73,6 +77,7 @@ public class PhysicsTester extends Application {
 	}
 
 	private void handleKeyFrame() {
+		applyKeyBehavior();
 		globalPhysics.update(layer);
 		updateNodes();
 	}
@@ -86,24 +91,30 @@ public class PhysicsTester extends Application {
 		}
 	}
 	private void handleKeyInput(KeyEvent event) {
+		keyCodeList.add(event.getCode());
+	}
+	
+	private void applyKeyBehavior() {
 		PhysicsObject sPhysics = playerSprite.getPhysicsObject();
-		
-		switch(event.getCode()) {
-		case UP :
-			sPhysics.applyImpulse(upImpulse);
-			break;
-		case DOWN :
-			sPhysics.applyImpulse(downImpulse);
-			break;
-		case RIGHT :
-			sPhysics.applyImpulse(rightImpulse);
-			break;
-		case LEFT :
-			sPhysics.applyImpulse(leftImpulse);
-			break;
-		default:
-			break; 
+		for(KeyCode keycode : keyCodeList) {
+			switch(keycode) {
+			case UP :
+				sPhysics.applyImpulse(upImpulse);
+				break;
+			case DOWN :
+				sPhysics.applyImpulse(downImpulse);
+				break;
+			case RIGHT :
+				sPhysics.applyImpulse(rightImpulse);
+				break;
+			case LEFT :
+				sPhysics.applyImpulse(leftImpulse);
+				break;
+			default:
+				break; 
+			}
 		}
+		keyCodeList.clear();
 	}
 	
 	public void initBackend() {
