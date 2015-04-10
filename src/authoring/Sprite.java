@@ -49,7 +49,6 @@ public class Sprite extends ImageView {
 	private final static int MAX_ICON_HEIGHT = 100;
 	final String VELOCITY = "velocity";
 	public final String POSITION = "position";
-	private Element xmlHandle;
 
 	public Sprite(int ID, String imageURI) {
 		this();
@@ -59,10 +58,6 @@ public class Sprite extends ImageView {
 		myCharacteristics.put("ID", String.valueOf(ID));
 		myIcon = new ImageView();
 		changeImage(new Image(getClass().getResourceAsStream(myImageURI)));
-		XMLBuilder b = XMLBuilder.getInstance("game");
-		xmlHandle = b.addToRoot(b.createElement("sprite"));
-		xmlHandle.setAttribute("name", imageURI.split("/")[1]);
-
 	}
 
 	public Sprite() {
@@ -112,14 +107,13 @@ public class Sprite extends ImageView {
 	}
 
 	private void onMouseClicked() {
-			try {
-				setOnMouseClicked(new ClickHandler(RightPane.class.getMethod(
-						"switchPane", Sprite.class), RightPane.getInstance(),
-						this));
-			} catch (NoSuchMethodException | SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		try {
+			setOnMouseClicked(new ClickHandler(RightPane.class.getMethod(
+					"switchPane", Sprite.class), RightPane.getInstance(), this));
+		} catch (NoSuchMethodException | SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void setImageIcon(Image image) {
@@ -144,7 +138,6 @@ public class Sprite extends ImageView {
 				Double.parseDouble(s2)));
 		setXPosition(myPosition.get(X_STRING));
 		setYPosition(myPosition.get(Y_STRING));
-		XMLBuilder b = XMLBuilder.getInstance("game");
 	}
 
 	public double getXPosition() {

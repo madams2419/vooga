@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game>
-	<sprite name="Daniel">
+	<sprite name="images" />
+	<sprite name="images" />
+	<sprite name="images" />
+	<sprite name="images" />
+	<sprite name="">
 		<imageURI>/images/smallLuigi.png</imageURI>
-		<name>Daniel</name>
 		<ID>100</ID>
-		<position>x=204.0, y=179.5</position>
+		<position>x=179.0, y=192.5</position>
 		<velocity>x=0.0, y=0.0</velocity>
+		<Name>Foo</Name>
 	</sprite>
-	<sprite name="john">
+	<sprite name="">
 		<imageURI>/images/luigi.png</imageURI>
-		<name>john</name>
 		<ID>100</ID>
-		<position>x=245.5, y=-3.0</position>
+		<position>x=281.5, y=24.0</position>
 		<velocity>x=0.0, y=0.0</velocity>
+		<Name>Dan</Name>
 	</sprite>
 </game>
