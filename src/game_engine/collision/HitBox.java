@@ -1,18 +1,29 @@
 package game_engine.collision;
 
-import java.util.ArrayList;
-import javafx.scene.shape.*;
+import javafx.geometry.Bounds;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 /**
  * Hitbox class that defines collisions between objects
  * @author Kevin, Michael 
  *
  */
 public class HitBox {
+    
+    private boolean[][] bitMap;
+    private ImageView node;
+    private Image image;
 	
-    private ArrayList<Shape> hitList = new ArrayList<>();
+	public HitBox(ImageView n) {
+		node = n;
+		image = node.getImage();
+		
+	}
 	
-	public HitBox(ArrayList<Shape> hitList) {
-		this.hitList = hitList;
+	public Bounds getBounds(){
+		return node.getBoundsInParent();
 	}
 	
 	/**
@@ -22,13 +33,6 @@ public class HitBox {
 	 * @return true if a hitbox intersects another
 	 */
 	public boolean intersects(HitBox compare) {
-		// TODO
-		
+		return node.getBoundsInParent().intersects(compare.getBounds());
 	}
-
-//	public double getVolume() {
-//		//TODO
-//		return 0.0;
-//	}
-
 }

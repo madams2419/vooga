@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<game>
+<Flappy_Bird>
 	<sprite>
 		<location>
 			<a>5</a>
@@ -8,8 +8,10 @@
 		<time>
 			<a>5</a>
 		</time>
+		<fun>30</fun>
 	</sprite>
 	<wall>
 		<length>10</length>
 	</wall>
-</game>
+	<stuff>20</stuff>
+</Flappy_Bird>
