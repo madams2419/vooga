@@ -17,7 +17,7 @@ public class ControlTester extends Application{
 	static Map<String, IBehavior> behaviorPool = new HashMap<>();
 	static int track = 10;
 	static String printout = "Tracking Number is: ";
-	static ControlsManager cManager = new ControlsManager();
+	static ControlManager cManager = new ControlManager();
 	static Text text = new Text(100, 200, printout + track);
 	
 	public static void addTrack(){
@@ -62,14 +62,15 @@ public class ControlTester extends Application{
 		IBehavior sub = new SubtractBehavior();
 		behaviorPool.put("Add", add);
 		behaviorPool.put("Sub", sub);
-		cManager.addBehavior("Up", "Add");
-		cManager.addBehavior("Down", "Sub");
+		KeyControl myControl = cManager.addControl();
+		myControl.addBehavior("UP", "Add");
+		myControl.addBehavior("DOWN", "Sub");
 	}
 
 
 	private void handleKeyInput (KeyEvent e) {
 		KeyCode keyCode = e.getCode();
-		cManager.executeBehavior(keyCode);
+		cManager.getActiveControl().executeBehavior(keyCode);
 	}
 	
 	public static void updateText(){

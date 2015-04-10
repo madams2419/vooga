@@ -3,9 +3,7 @@ package game_engine.control;
 
 import game_engine.IBehavior;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import javafx.scene.input.KeyCode;
 
@@ -14,17 +12,44 @@ import javafx.scene.input.KeyCode;
  * @author 
  *
  */
-public class ControlsManager {
+public class KeyControl {
 	
 	Map<String, IBehavior> myControlMap;
 	Map<String, String> myDesignerMap;
 	Map<KeyCode, String> myVirtualKeyboard;
 	
-	public ControlsManager() {
+	Map<KeyCode, Map<IBehavior, String[]>> myKeyPressedMap;
+	Map<KeyCode, Map<IBehavior, String[]>> myKeyReleasedMap;
+	List<KeyCode> myWhilePressedKey;
+	
+	public KeyControl(Map<KeyCode, Map<IBehavior, String[]>> keyPressMap, Map<KeyCode, Map<IBehavior, String[]>> keyReleaseMap) {
 		myControlMap = new HashMap<>();
 		myDesignerMap = new HashMap<>();
 		myVirtualKeyboard = new HashMap<>();
+		myKeyPressedMap = keyPressMap;
+		myKeyReleasedMap = keyReleaseMap;
+		myWhilePressedKey = new ArrayList<>();
 	}
+	
+	
+
+	public void executeKeyEvent(KeyCode keycode, boolean pressed){
+		if(pressed){
+			if(myKeyPressedMap.containsKey(keycode)){
+				//add error checking later
+				myKeyPressedMap.get(keycode).forEach((iBehavior, params) -> iBehavior.execute(params)));
+			}
+		} else {
+			
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * method executeBehavior
@@ -45,7 +70,7 @@ public class ControlsManager {
 	//adds a new behavior to the maps
 	public void addBehavior(String key, String behaviorName){
 		myDesignerMap.put(key, behaviorName);
-		myVirtualKeyboard.put(KeycodeFactory.generateKeyCode(key), behaviorName);
+		myVirtualKeyboard.put(KeyCode.valueOf(key), behaviorName);
 		addEntryControlMap(behaviorName, ControlTester.selectBehavior(behaviorName));
 	}
 	
@@ -57,10 +82,10 @@ public class ControlsManager {
 				return;
 			} else {
 				myDesignerMap.put(newKey, myDesignerMap.get(oldKey));
-				myVirtualKeyboard.put(kcTranslation(newKey), myVirtualKeyboard.get(kcTranslation(oldKey)));
+				myVirtualKeyboard.put(KeyCode.valueOf(newKey), myVirtualKeyboard.get(kcTranslation(oldKey)));
 				addEntryControlMap(newKey, ControlTester.selectBehavior(oldKey));
 				myDesignerMap.remove(oldKey);
-				myVirtualKeyboard.remove(kcTranslation(oldKey));
+				myVirtualKeyboard.remove(KeyCode.valueOf(oldKey));
 				deleteEntryControlMap(oldKey);
 			}
 		} else {
