@@ -36,7 +36,7 @@ public class RightPane extends VBox {
         return mInstance;
     }
 
-    public RightPane () {
+    private RightPane () {
         super(SPACING);
 
         getStylesheets().add(CSS);
