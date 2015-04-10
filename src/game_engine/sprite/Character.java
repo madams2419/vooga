@@ -39,7 +39,7 @@ public abstract class Character extends Sprite {
 	 */
 	// params[0] is pixels to move forward
 	private IBehavior moveForward = (params) -> { // movement
-		myPosition.setX(myPosition.getX()+Double.parseDouble(params[0]));
+	        this.myPhysicsObject.applyImpulse(new Vector(Double.parseDouble(params[0]),Double.parseDouble(params[1])));
 		setStateName("forward");
 		System.out.println("moveForward");
 	};

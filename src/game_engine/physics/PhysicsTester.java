@@ -29,8 +29,8 @@ public class PhysicsTester extends Application {
 	private static int height = 800;
 	
 	private static Vector upImpulse = new Vector(0, 0.02); 
-	private static Vector rightImpulse = new Vector(0.01, 0);
-	private static Vector leftImpulse = new Vector(-0.01, 0);
+	private static Vector rightImpulse = new Vector(0.005, 0);
+	private static Vector leftImpulse = new Vector(-0.005, 0);
 	private static Vector downImpulse = new Vector(0, -0.02);
 	
 	private Timeline gameLoop;
@@ -99,11 +99,24 @@ public class PhysicsTester extends Application {
 			break;
 		case RIGHT :
 			sPhysics.applyImpulse(rightImpulse);
+			if(playerSprite.getImageView().getScaleX()>0)
+	                        playerSprite.getImageView().setScaleX(-1);
+			
+			if(!playerSprite.getState().equals("standing")){
+                            playerSprite.setState("standing");
+                             }
+                             else if(!playerSprite.getState().equals("walking")){
+                             playerSprite.setState("walking");
+                             }
 			break;
 		case LEFT :
 			sPhysics.applyImpulse(leftImpulse);
-			if(!playerSprite.getState().equals("idle")){
-			       playerSprite.setState("idle");
+			System.out.println(playerSprite.getImageView().getScaleX());
+			if(playerSprite.getImageView().getScaleX()<0)
+			playerSprite.getImageView().setScaleX(1);
+			
+			if(!playerSprite.getState().equals("standing")){
+			       playerSprite.setState("standing");
 			        }
 			        else if(!playerSprite.getState().equals("walking")){
 			        playerSprite.setState("walking");
@@ -134,6 +147,7 @@ public class PhysicsTester extends Application {
 		
 		playerSprite.addImage("standing", "/Resources/images/standingMario.png");
 		playerSprite.addImage("jump", "/Resources/images/jumpingMario.png");
+		playerSprite.addImage("walking", "/Resources/images/walkingMario.png");
                 playerSprite.setState("standing");
                 playerSprite.getImageView().setFitHeight(50);
                 playerSprite.getImageView().setFitWidth(50);
