@@ -107,7 +107,7 @@ public class PhysicsTester extends Application {
 		globalPhysics = new PhysicsEngine(0, 1/(double)fps);
 		
 		/* create player sprite */
-		playerSprite = new Player(Color.BLACK);
+		playerSprite = new Player();
 		
 		/* create player sprite physics object */
 		int playerRadius = 5;
@@ -119,7 +119,7 @@ public class PhysicsTester extends Application {
 		playerSprite.setPhysicsObject(playerPhysics);
 		
 		/* create enemy sprite */
-		Sprite enemySprite = new Enemy(Color.BURLYWOOD);
+		Sprite enemySprite = new Enemy();
 		
 		/* create player sprite physics object */
 		int enemyRadius = 30;
@@ -149,7 +149,17 @@ public class PhysicsTester extends Application {
 	public Node createNodeFromSprite(Sprite sprite) {
 		PhysicsObject sPhysics = sprite.getPhysicsObject();
 		double radius = sPhysics.getShape().getRadiusPixels();
-		Node circle = new Circle(radius, sprite.color); // right now only circles are supported
+		
+		// just to make things prettier...
+		Color sColor = Color.BLACK;
+		String className = sprite.getClass().getName();
+		if(className.contains("Player")) {
+			sColor = Color.BLACK;
+		} else if(className.contains("Enemy")) {
+			sColor = Color.BURLYWOOD;
+		}
+		
+		Node circle = new Circle(radius, sColor); // right now only circles are supported
 		setNodePosition(circle, sPhysics.getPositionPixels());
 		return circle;
 	}
