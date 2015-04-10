@@ -91,17 +91,24 @@ public class PhysicsTester extends Application {
 		switch(event.getCode()) {
 		case UP :
 			sPhysics.applyImpulse(upImpulse);
+			playerSprite.setState("jump");
 			break;
 		case DOWN :
 			sPhysics.applyImpulse(downImpulse);
+			playerSprite.setState("standing");
 			break;
 		case RIGHT :
 			sPhysics.applyImpulse(rightImpulse);
 			break;
 		case LEFT :
 			sPhysics.applyImpulse(leftImpulse);
-			break;
-		default:
+			if(!playerSprite.getState().equals("idle")){
+			       playerSprite.setState("idle");
+			        }
+			        else if(!playerSprite.getState().equals("walking")){
+			        playerSprite.setState("walking");
+			        }
+			 
 			break; 
 		}
 	}
@@ -111,7 +118,7 @@ public class PhysicsTester extends Application {
 		layer = new Layer();
 		
 		/* create global physics engine */
-		globalPhysics = new PhysicsEngine(0, 1/(double)fps);
+		globalPhysics = new PhysicsEngine(200, 1/(double)fps);
 		
 		/* create player sprite physics object */
 		int playerRadius = 15;
@@ -125,8 +132,9 @@ public class PhysicsTester extends Application {
 		/* set player physics */
 		playerSprite.setPhysicsObject(playerPhysics);
 		
-		playerSprite.addImage("walking", "/Resources/images/standingMario.png");
-                playerSprite.setState("walking");
+		playerSprite.addImage("standing", "/Resources/images/standingMario.png");
+		playerSprite.addImage("jump", "/Resources/images/jumpingMario.png");
+                playerSprite.setState("standing");
                 playerSprite.getImageView().setFitHeight(50);
                 playerSprite.getImageView().setFitWidth(50);
                 myGroup.getChildren().add(playerSprite.getImageView());
