@@ -94,4 +94,6 @@ public class InteractionEditingPane extends EditingPane {
         ImageView spriteIcon = sprite.getIcon();
         this.getChildren().add(spriteIcon);
     }
+    
+    
 }

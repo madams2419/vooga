@@ -1,15 +1,9 @@
 package authoring.userInterface;
 
-//import java.io.File;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
-
 import javafx.application.Platform;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -30,13 +24,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-
 import authoring.XMLBuilder;
-
-
-import javax.print.DocFlavor.URL;
-
-
 import authoring.rightPane.RightPane;
 
 /**
@@ -53,11 +41,14 @@ public class AuthoringWindow {
 	private static final int EDIT_MENU = 1;
 	private static final int VIEW_MENU = 2;
 	private static final int HELP_MENU = 3;
-
+	
 	private static final int NEW_FILE = 0;
 	private static final int OPEN_FILE = 1;
 	private static final int CLOSE_GAME = 2;
-
+	
+	private static final int SCENE_WIDTH = 1000;
+	private static final int SCENE_HEIGHT = 1000;
+	
 	private CenterPane myCenterPane;
 
 	private static Object currentlySelected;
@@ -73,7 +64,7 @@ public class AuthoringWindow {
 
 		BorderPane canvas = new BorderPane();
 
-		myScene = new Scene(root, 1000, 1000, Color.WHITE);
+		myScene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, Color.WHITE);
 
 		canvas.setPrefHeight(myScene.getHeight());
 		canvas.setPrefWidth(myScene.getWidth());
@@ -86,6 +77,11 @@ public class AuthoringWindow {
 		canvas.setTop(setupTopPane(myScene.getWidth()));
 		canvas.setLeft(setupLeftPane());
 		canvas.setRight(setupRightPane());
+		
+		
+		
+		
+		
 		canvas.setCenter(setupCenterPane());
 		canvas.setBottom(setupBottomPane(myScene.getWidth()));
 
@@ -112,45 +108,28 @@ public class AuthoringWindow {
 							str1 -> m.getItems().add(new MenuItem(str1)));
 					mBar.getMenus().add(m);
 				});
-
 		/*
 		 * @author Andrew
 		 */
+		mBar.getMenus().get(FILE_MENU).getItems().get(NEW_FILE).setOnAction(e -> {
+			new NewRegionDialog(myCenterPane);
+		});
+		
+		mBar.getMenus().get(0).getItems().get(1).setOnAction(e -> {
+			 FileChooser fileChooser = new FileChooser();
+			 fileChooser.setTitle("Open Resource File");
+			 fileChooser.getExtensionFilters().addAll(
+			         new ExtensionFilter("Text Files", "*.txt"),
+			         new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"),
+			         new ExtensionFilter("Audio Files", "*.wav", "*.mp3", "*.aac"),
+			         new ExtensionFilter("All Files", "*.*"));
+			 fileChooser.showOpenDialog(null);
+		});
 		mBar.getMenus()
 				.get(FILE_MENU)
 				.getItems()
 				.get(NEW_FILE)
-				.setOnAction(e -> {
-					// Refactor this into new class/method
-						Dialog<ButtonType> dialog = new Dialog<>();
-						dialog.setTitle("Create New Game Scene");
-
-						GridPane grid = new GridPane();
-						grid.setHgap(10);
-						grid.setVgap(10);
-
-						grid.add(new Label("xSize"), 0, 0);
-						TextField textBox1 = new TextField("400");
-						grid.add(textBox1, 0, 1);
-						grid.add(new Label("ySize"), 1, 0);
-						TextField textBox2 = new TextField("400");
-						grid.add(textBox2, 1, 1);
-
-						dialog.getDialogPane().setContent(grid);
-						dialog.getDialogPane().getButtonTypes()
-								.addAll(ButtonType.OK, ButtonType.CANCEL);
-
-						Optional<ButtonType> result = dialog.showAndWait();
-						// Refactor? Is it possible to get rid of this if
-						// statement?
-						if (result.get() == ButtonType.OK) {
-							// TODO: check to make sure user entered numbers
-//							myCenterPane.createRegion(
-//									Double.parseDouble(textBox1.getText()),
-//									Double.parseDouble(textBox1.getText()));
-
-						}
-					});
+				.setOnAction(e -> new NewRegionDialog(myCenterPane));
 
 		mBar.getMenus()
 				.get(FILE_MENU)

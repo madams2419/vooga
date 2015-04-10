@@ -39,8 +39,8 @@ public class BottomPane extends HBox {
 
 				}
 				if(key.equals("Dropdown")){
-					DropdownFactory dFactory=new DropdownFactory();
-					dFactory.generateDropdown(m.get(key));
+					//DropdownFactory dFactory=new DropdownFactory();
+					//dFactory.generateDropdown(m.get(key));
 				}
 			}
 		}	
