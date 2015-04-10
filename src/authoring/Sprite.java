@@ -43,8 +43,12 @@ public class Sprite extends ImageView {
 
 	private final static int MAX_ICON_WIDTH = 100;
 	private final static int MAX_ICON_HEIGHT = 100;
-	final String VELOCITY = "velocity";
-	public final String POSITION = "position";
+
+	public final static String VELOCITY = "velocity";
+	public final static String POSITION = "position";
+	public final static String SCALE = "scale";
+
+	private final double initialScale = 1.0;
 
 	public Sprite(int ID, String imageURI) {
 		this();
@@ -101,6 +105,7 @@ public class Sprite extends ImageView {
 		setImageIcon(image);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void onMouseClicked() {
 		try {
 			setOnMouseClicked(new ClickHandler(RightPane.class.getMethod(
@@ -133,6 +138,14 @@ public class Sprite extends ImageView {
 				Double.parseDouble(s2)));
 		setXPosition(myPosition.get(X_STRING));
 		setYPosition(myPosition.get(Y_STRING));
+	}
+
+	public void setScale(String scale) {
+		myCharacteristics.put(SCALE, scale);
+		double newScale = Double.parseDouble(scale);
+
+		// this.setFitWidth(mySize.get(X_STRING));
+		// this.setFitHeight(mySize.get(Y_STRING));
 	}
 
 	public double getXPosition() {

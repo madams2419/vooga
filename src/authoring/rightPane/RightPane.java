@@ -91,11 +91,14 @@ public class RightPane extends VBox {
     }
 
 	public void switchPane(Sprite s) {
+	    System.out.println(AuthoringWindow.getCurrentlySelected());
 	if (AuthoringWindow.getControl())
 		switchToInteractionEditingPane(
 				(Sprite) AuthoringWindow.getCurrentlySelected(), s);
-	else
+	else {
+	    AuthoringWindow.setCurrentlySelected(s);
 		switchToCharacterEditingPane(s);
+	}
 }
     private void switchToPane (EditingPane newPane) {
         clearChildren();

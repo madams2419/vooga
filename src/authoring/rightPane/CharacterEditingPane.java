@@ -62,7 +62,11 @@ class CharacterEditingPane extends EditingPane {
 			case "name":
 				sprite.setName(t);
 				break;
+			case Sprite.SCALE:
+				sprite.setScale(t);
+				break;
 			}
+
 		});
 		System.out.println(sprite.getCharacteristics().toString());
 	}
