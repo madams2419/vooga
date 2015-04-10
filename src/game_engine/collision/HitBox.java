@@ -1,18 +1,17 @@
-package game_engine;
+package game_engine.collision;
 
 import java.util.ArrayList;
 import javafx.scene.shape.*;
 /**
  * Hitbox class that defines collisions between objects
- * @author Kevin
+ * @author Kevin, Michael 
  *
  */
 public class HitBox {
 	
-        ArrayList<Rectangle> hitList = new ArrayList<>();
-	Rectangle rect;
+    private ArrayList<Shape> hitList = new ArrayList<>();
 	
-	public HitBox(ArrayList<Rectangle> hitList) {
+	public HitBox(ArrayList<Shape> hitList) {
 		this.hitList = hitList;
 	}
 	
@@ -24,12 +23,12 @@ public class HitBox {
 	 */
 	public boolean intersects(HitBox compare) {
 		// TODO
-		return false;
+		
 	}
 
-	public double getVolume() {
-		//TODO
-		return 0.0;
-	}
+//	public double getVolume() {
+//		//TODO
+//		return 0.0;
+//	}
 
 }

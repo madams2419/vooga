@@ -1,9 +1,10 @@
-package game_engine;
+package game_engine.collision;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.List;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,6 +19,12 @@ import game_engine.sprite.Sprite;
  */
 
 public class CollisionEngine {
+	List<Collision> collisionList;
+	
+	
+	public CollisionEngine(List<Collision> list){
+		collisionList = list;
+	}
 	
 	/**
 	 * 
@@ -29,19 +36,23 @@ public class CollisionEngine {
 	 */
 	//TODO Implement collision class
 	//TODO allow for resizing images
-	public void executeCollision(ImageView spriteA, ImageView spriteB){
+	public List<Collision> getCollisions(){
+		return collisionList.stream().filter(c -> checkCollision(c.getSpriteA(),c.getSpriteB())).toArray();
+	}
+	
+	public boolean checkCollision(Sprite spriteA, Sprite spriteB){
 		//change parameters back to sprites
 		
-		boolean[][] bitMapA = createBitMap(spriteA.getImage());
-		boolean[][] bitMapB = createBitMap(spriteB.getImage());
+		boolean[][] bitMapA = createBitMap(spriteA.getImageView().getImage());
+		boolean[][] bitMapB = createBitMap(spriteB.getImageView().getImage());
 
-		ImageView s1 = spriteA;
+		ImageView s1 = spriteA.getImageView();
 		double aLeft = s1.getX();
 		double aTop = s1.getY();
 		double aRight = s1.getX()+s1.getImage().getWidth();
 		double aBot = s1.getY()+s1.getImage().getHeight();
 		
-		ImageView s2 = spriteB;
+		ImageView s2 = spriteB.getImageView();
 		double bLeft = s2.getX();
 		double bTop = s2.getY();
 		double bRight = s2.getX()+s2.getImage().getWidth();
@@ -84,10 +95,7 @@ public class CollisionEngine {
 		boolean[][] collisionMap = isColliding(mapA,mapB);
 		System.out.println(Arrays.deepToString(collisionMap));
 		
-//		
-//	
-//		
-		
+		return true;
 		
 		
 	}
@@ -112,62 +120,7 @@ public class CollisionEngine {
 		s2.setX(15);
 		s2.setY(15);
 		
-		engine.executeCollision(s1,s2);
-		
-		
-		//position for 1st image centered (0,0) size 32x32
-//		int aLeft = -15;
-//		int aTop =-15;
-//		int aRight =17 ;
-//		int aBot = 17;
-//		int bLeft = 15;
-//		int bTop = 15;
-//		int bRight = 47;
-//		int bBot = 47;
-//		//position for 2nd image centered (31,31) size 32x32
-//		int highLeft;
-//		int lowRight;
-//		int highTop;
-//		int lowBot;
-//		if(aLeft > bLeft)
-//			highLeft = aLeft;
-//		else
-//			highLeft = bLeft;
-//		if(aTop > bTop)
-//			highTop = aTop;
-//		else
-//			highTop = bTop;
-//		if(aRight > bRight)
-//			lowRight = bRight;
-//		else
-//			lowRight = aRight;
-//		if(aBot > bBot)
-//			lowBot = bBot;
-//		else
-//			lowBot = aBot;
-//		System.out.println(highLeft);
-//		System.out.println(lowRight);
-//		System.out.println(highTop);
-//		System.out.println(lowBot);
-//		boolean[][] map = new boolean[lowBot-highTop][lowRight - highLeft];
-//		//spriteA loop
-//		int startY = highTop - aTop;
-//		int endY = lowBot - aTop;
-//		int startX = highLeft - aLeft;
-//		int endX = lowRight - aLeft;
-////		System.out.println(startY);
-////		System.out.println(endY);
-////		System.out.println(startX);
-////		System.out.println(endX);
-////		int startY = highTop - bTop;
-////		int endY = lowBot - bTop;
-////		int startX = highLeft - bLeft;
-////		int endX = lowRight - bLeft;
-//		System.out.println(startY);
-//		System.out.println(endY);
-//		System.out.println(startX);
-//		System.out.println(endX);
-
+//		engine.checkCollision(s1,s2);
 	}
 	//two sprites with positions
 	//figure out collision box -> return to physics engine

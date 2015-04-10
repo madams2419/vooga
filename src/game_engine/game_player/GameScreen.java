@@ -1,7 +1,8 @@
 package game_engine.game_player;
 
 import java.util.ArrayList;
-import game_engine.HitBox;
+
+import game_engine.collision.HitBox;
 import game_engine.physics.Material;
 import game_engine.physics.PhysicsEngine;
 import game_engine.physics.PhysicsObject;
