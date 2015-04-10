@@ -176,10 +176,11 @@ public class AuthoringWindow {
 
 		Button c = new Button("Output xml");
 		c.setOnAction(e -> {
-			XMLBuilder.getInstance("game").addAll(
+			XMLBuilder.getInstance("game").addAllSprites(
 					CenterPane.getInstance(null).getSprites());
-			XMLBuilder.getInstance("game").streamFile("lib/test.xml",
-					XMLBuilder.getInstance("game").getRoot());
+			XMLBuilder.getInstance("game").addAllEnvironment(
+					CenterPane.getInstance(null).getEnvironment());
+			XMLBuilder.getInstance("game").streamFile("lib/test.xml");
 		});
 		buttonBox.getChildren().add(c);
 		return buttonBox;

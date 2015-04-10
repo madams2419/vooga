@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game>
-	<sprite name="images" />
-	<sprite name="images" />
-	<sprite name="images" />
-	<sprite name="images" />
 	<sprite name="">
 		<imageURI>/images/smallLuigi.png</imageURI>
 		<ID>100</ID>
-		<position>x=179.0, y=192.5</position>
+		<position>x=70.0, y=125.5</position>
 		<velocity>x=0.0, y=0.0</velocity>
-		<Name>Foo</Name>
+		<Name>Dr. Duvall</Name>
 	</sprite>
 	<sprite name="">
 		<imageURI>/images/luigi.png</imageURI>
 		<ID>100</ID>
-		<position>x=281.5, y=24.0</position>
+		<position>x=278.5, y=18.0</position>
 		<velocity>x=0.0, y=0.0</velocity>
-		<Name>Dan</Name>
+		<Name>Jeannie</Name>
 	</sprite>
+	<sprite name="">
+		<imageURI>/images/smallLuigi.png</imageURI>
+		<ID>100</ID>
+		<position>x=162.0, y=243.5</position>
+		<velocity>x=0.0, y=0.0</velocity>
+		<Name>Daniel</Name>
+	</sprite>
+	<map>
+		<ScrollingSize>Default</ScrollingSize>
+		<ScrollingSpeed>Default</ScrollingSpeed>
+		<FrameRate>Default</FrameRate>
+	</map>
 </game>

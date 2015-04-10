@@ -81,9 +81,9 @@ public class GlobalCreationPane extends EditingPane
 		//		System.out.println(sprite.getCharacteristics().toString());
 	}
 
-	public static GlobalCreationPane getInstance(){
+	public static GlobalCreationPane getInstance(Scene scene){
 		if (mInstance == null)
-			mInstance = new GlobalCreationPane(mScene);
+			mInstance = new GlobalCreationPane(scene);
 		return mInstance;
 	}
 }

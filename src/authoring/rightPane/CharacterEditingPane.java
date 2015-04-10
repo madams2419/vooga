@@ -55,8 +55,14 @@ class CharacterEditingPane extends EditingPane {
 			sprite.setCharacteristic(
 					(s = ((Text) hbox.getChildren().get(0)).getText()),
 					(t = ((TextField) hbox.getChildren().get(1)).getText()));
-			if(s.equals("position"))
+			switch(s) {
+			case "position":
 				sprite.setPosition(FrontEndUtils.stringToMap(t));
+				break;
+			case "name":
+				sprite.setName(t);
+				break;
+			}
 		});
 		System.out.println(sprite.getCharacteristics().toString());
 	}

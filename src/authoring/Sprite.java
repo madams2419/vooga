@@ -8,9 +8,6 @@ import java.util.function.Consumer;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import org.w3c.dom.Element;
-
 import authoring.rightPane.RightPane;
 import authoring.userInterface.ClickHandler;
 import authoring.util.FrontEndUtils;
@@ -37,7 +34,6 @@ public class Sprite extends ImageView {
 	private Map<String, String> myCharacteristics;
 
 	private String myName;
-	private String myImageURI;
 	private int myID;
 	private ImageView myIcon;
 
@@ -53,11 +49,10 @@ public class Sprite extends ImageView {
 	public Sprite(int ID, String imageURI) {
 		this();
 		this.myID = ID;
-		myImageURI = imageURI;
-		myCharacteristics.put("imageURI", myImageURI);
+		myCharacteristics.put("imageURI", imageURI);
 		myCharacteristics.put("ID", String.valueOf(ID));
 		myIcon = new ImageView();
-		changeImage(new Image(getClass().getResourceAsStream(myImageURI)));
+		changeImage(new Image(getClass().getResourceAsStream(imageURI)));
 	}
 
 	public Sprite() {
@@ -167,7 +162,7 @@ public class Sprite extends ImageView {
 	}
 
 	public String getImageURI() {
-		return myImageURI;
+		return myCharacteristics.get("imageURI");
 	}
 
 	public void setCharacteristic(String characteristic, String value) {

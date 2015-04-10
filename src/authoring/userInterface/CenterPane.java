@@ -28,7 +28,7 @@ public class CenterPane extends ScrollPane {
 
 
 	private List<Sprite> mySpriteList;
-	private List<Map> myEnvironmentList;
+	private List<Map<String,String>> myEnvironmentList;
 
 	private ObservableList<Sprite> myListOfSprites;
 
@@ -61,8 +61,8 @@ public class CenterPane extends ScrollPane {
 
 		FrontEndUtils.setKeyActions(this);
 		mySpriteList = new ArrayList<Sprite>();
-		myEnvironmentList=new ArrayList<Map>();	
-		addMaptoEnvironment(gp.getInstance().fields);
+		myEnvironmentList=new ArrayList<>();	
+		addMaptoEnvironment(gp.getInstance(scene).fields);
 
 
 	}
@@ -100,6 +100,10 @@ public class CenterPane extends ScrollPane {
 
 	public Collection<Sprite> getSprites() {
 		return myListOfSprites;
+	}
+	
+	public Collection<Map<String,String>> getEnvironment() {
+		return myEnvironmentList;
 	}
 
 	public void createRegion(double x, double y) {

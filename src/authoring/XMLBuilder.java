@@ -1,8 +1,10 @@
 package authoring;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -42,15 +44,15 @@ public class XMLBuilder {
 	private Document mDocument;
 
 	private static XMLBuilder mInstance;
-	
+
 	// ====== Constructors =====================================================
 
 	public static XMLBuilder getInstance(String rootElement) {
-		if(mInstance==null)
+		if (mInstance == null)
 			mInstance = new XMLBuilder(rootElement);
 		return mInstance;
 	}
-	
+
 	private XMLBuilder(String rootElement, String... attributes_values) {
 		this(rootElement, arrayToMap(attributes_values));
 	}
@@ -80,7 +82,7 @@ public class XMLBuilder {
 	 * Method which will collect all the information stored in the parent node
 	 * into the specified file
 	 */
-	public void streamFile(String filename, Element root) {
+	public void streamFile(String filename) {
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory
 				.newInstance();
@@ -116,11 +118,19 @@ public class XMLBuilder {
 			mDocument = mDocument == null ? DocumentBuilderFactory
 					.newInstance().newDocumentBuilder().newDocument()
 					: mDocument;
+			if (tagname.contains(" ")) {
+				tagname = tagname.trim();
+				StringBuilder s = new StringBuilder();
+				Arrays.asList(tagname.split("\\s")).forEach(s1 -> s.append(s1));
+				tagname = s.toString();
+				System.out.println("updated tagname to " + tagname);
+			}
 			newElement = mDocument.createElement(tagname);
 			if (attributes_values != null && !attributes_values.isEmpty())
 				addAttributes(newElement, attributes_values);
-		} catch (DOMException | ParserConfigurationException e) {
+		} catch (Exception e) {
 			// TODO define error reaction
+			e.printStackTrace();
 		}
 		return newElement;
 	}
@@ -219,6 +229,7 @@ public class XMLBuilder {
 	 * @return Instance of Element which is the newly created tag
 	 */
 	public Element add(Element parent, String tagname) {
+		assert (parent != null);
 		return add(parent, tagname, null);
 	}
 
@@ -226,13 +237,18 @@ public class XMLBuilder {
 	 * Method for adding a child with a specified tag and the specified text
 	 * field, with no attributes.
 	 * 
-	 * @param element
+	 * @param parent
+	 *            of the new element to be created
 	 * @param property
 	 * @param textContent
+	 *            value of the property
+	 * @return new element which was created
 	 */
-	public void addChildWithValue(Element element, String property,
+	public Element addChildWithValue(Element parent, String property,
 			String textContent) {
-		add(element, property).setTextContent(textContent);
+		Element newElement = add(parent, property);
+		newElement.setTextContent(textContent);
+		return newElement;
 	}
 
 	/***
@@ -256,57 +272,60 @@ public class XMLBuilder {
 		return root;
 	}
 
-	public void addAll(Collection<Sprite> sprites) {
+	public void addAllSprites(Collection<Sprite> sprites) {
 		sprites.forEach(sprite -> addSprite(sprite));
 	}
-	
+
 	private void addSprite(Sprite sprite) {
 		Element s = add(root, "sprite");
 		s.setAttribute("name", sprite.getName());
-		sprite.getCharacteristics().forEach((key, value) -> {
-			addChildWithValue(s,key,value);
+		sprite.getCharacteristics().forEach(
+				(key, value) -> addChildWithValue(s, key, value));
+	}
+
+	public void addAllEnvironment(Collection<Map<String, String>> environments) {
+		Element mapElement = addToRoot("map");
+		assert (mapElement != null);
+		System.err.println(environments.toString());
+		environments.forEach(map -> {
+			System.out.println(map.toString());
+			map.forEach((s1, s2) -> {
+				Element newel = add(mapElement, (String) s1);
+				newel.setTextContent((String) s2);
+			});
 		});
 	}
-	
-	// ====== Testing Main Method ==============================================
+
+	// private void addEnvironment(Element parent, Map value) {
+	// add
+	// }
 
 	public static void main(String[] args) {
+		Map<String, String> m = new HashMap<>();
+		Map<String, String> n = new HashMap<>();
+		Map<String, String> o = new HashMap<>();
 
-		/***
-		 * This will generate a sample xml file in src/sample.xml
-		 */
-		XMLBuilder b = new XMLBuilder("sample", "name", "sample", "author",
-				"daniel");
+		m.put("scroll speed", "10");
+		m.put("frame rate", "60");
+		m.put("background image", "res/images/image1.png");
 
-		/*
-		 * Generate the map with attributes. This is meant to be called by
-		 * either an engine or a gui.
-		 */
-		Map<String, String> mAttributes = new HashMap<>();
-		mAttributes.put("name", "first");
-		Element el1 = b.addToRoot("element", mAttributes);
+		n.put("a", "1");
+		n.put("b", "2");
+		n.put("c", "3");
 
-		// Adding propertyN with valueN as child of el1
-		b.add(el1, "property1").setTextContent("value1");
-		b.add(el1, "property2").setTextContent("value2");
-		b.add(el1, "property3").setTextContent("value3");
-		mAttributes.clear();
+		o.put("i", "1");
+		o.put("ii", "2");
+		o.put("iii", "3");
 
-		// We want to add a subtree with tagname position to the root
-		Element el2 = b.add(el1, "position");
-		b.add(el2, "X").setTextContent("xpos");
-		b.add(el2, "Y").setTextContent("ypos");
+		Collection<Map<String, String>> coll = new LinkedList<>();
+		coll.add(m);
+		coll.add(n);
+		coll.add(o);
 
-		// Adding another subtree
-		Element el3 = b.add(el1, "key-actions");
-		b.add(el3, "prop1").setTextContent("1");
-		b.add(el3, "prop2").setTextContent("2");
-		b.add(el3, "prop3").setTextContent("3");
-		b.add(el3, "prop4").setTextContent("4");
+		XMLBuilder.getInstance("game").addAllEnvironment(coll);
 
-		// Once we are done adding elements to the tree structure, we stream it
-		// to generate the xml file
-		b.streamFile("swap/game.xml", b.root);
+		XMLBuilder.getInstance("map").streamFile("settings/test.xml");
+
 	}
 
 }
