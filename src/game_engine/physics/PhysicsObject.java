@@ -97,7 +97,7 @@ public class PhysicsObject {
 		return myPosition;
 	}
 
-	protected Vector getPositionPixels() {
+	public Vector getPositionPixels() {
 		return PhysicsEngine.vectorMetersToPixels(getPositionMeters());
 	}
 
