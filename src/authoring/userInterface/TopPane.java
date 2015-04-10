@@ -38,10 +38,13 @@ public class TopPane extends HBox {
 
 		Button c = new Button("Output xml");
 		c.setOnAction(e -> {
+			XMLBuilder.getInstance("game").addAll(CenterPane.getInstance(null).getSprites());
 			XMLBuilder.getInstance("game").streamFile("lib/test.xml",
 					XMLBuilder.getInstance("game").getRoot());
 		});
 		this.getChildren().add(c);
+		
+		FrontEndUtils.setKeyActions(this);
 	}
 
 }

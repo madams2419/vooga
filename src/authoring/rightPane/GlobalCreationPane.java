@@ -31,7 +31,7 @@ public class GlobalCreationPane extends EditingPane
 		setFields(this.getChildren(),createFieldMap());
 		Button set=new Button("Set");
 		Button c = new Button("Update");
-		c.setOnAction(e -> updateSprite(sprite));
+//		c.setOnAction(e -> updateSprite(sprite));
 		
 		//set.setOnMouseClicked(e->renderMap());
 	}

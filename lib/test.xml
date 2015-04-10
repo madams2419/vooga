@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game>
-	<sprite name="images" />
-	<sprite name="images" />
-	<sprite name="images" />
-	<sprite name="images" />
-	<sprite name="images">
-		<velocity>
-			<x>369.5</x>
-		</velocity>
-		<velocity>
-			<y>24.0</y>
-		</velocity>
+	<sprite name="Jeannie">
+		<imageURI>/images/turtle.png</imageURI>
+		<ID>100</ID>
+		<position>x=19.5, y=174.0</position>
+		<velocity>x=0.0, y=0.0</velocity>
+		<Name>Jeannie</Name>
 	</sprite>
-	<sprite name="images">
-		<velocity>
-			<x>445.5</x>
-		</velocity>
-		<velocity>
-			<y>272.0</y>
-		</velocity>
+	<sprite name="Andrew">
+		<imageURI>/images/luigi.png</imageURI>
+		<ID>100</ID>
+		<position>x=364.5, y=80.0</position>
+		<velocity>x=0.0, y=0.0</velocity>
+		<Name>Andrew</Name>
 	</sprite>
-	<sprite name="images" />
-	<sprite name="images" />
+	<sprite name="Daniel">
+		<imageURI>/images/turtle.png</imageURI>
+		<ID>100</ID>
+		<position>x=151.5, y=368.0</position>
+		<velocity>x=0.0, y=0.0</velocity>
+		<Name>Daniel</Name>
+	</sprite>
+	<sprite name="Natalie">
+		<imageURI>/images/luigi.png</imageURI>
+		<ID>100</ID>
+		<position>x=493.5, y=334.0</position>
+		<velocity>x=0.0, y=0.0</velocity>
+		<Name>Natalie</Name>
+	</sprite>
+	<sprite name="Mengchao">
+		<imageURI>/images/turtle.png</imageURI>
+		<ID>100</ID>
+		<position>x=542.5, y=120.0</position>
+		<velocity>x=0.0, y=0.0</velocity>
+		<Name>Mengchao</Name>
+	</sprite>
 </game>

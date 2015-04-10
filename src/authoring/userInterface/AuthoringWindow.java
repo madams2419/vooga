@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javafx.application.Platform;
 import javafx.event.Event;
@@ -29,9 +31,6 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-
-import javax.print.DocFlavor.URL;
-
 import authoring.rightPane.RightPane;
 
 /**
@@ -181,6 +180,7 @@ public class AuthoringWindow {
 
 		mBar.getMenus().get(FILE_MENU).getItems().get(CLOSE_GAME)
 				.setOnAction(e -> Platform.exit());
+		
 		return mBar;
 	}
 
@@ -224,7 +224,7 @@ public class AuthoringWindow {
 	}
 
 	private Node setupCenterPane() {
-		myCenterPane = new CenterPane(myScene);
+		myCenterPane = CenterPane.getInstance(myScene);
 		return myCenterPane;
 	}
 

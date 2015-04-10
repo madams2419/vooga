@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import org.w3c.dom.Element;
 
 import authoring.rightPane.RightPane;
+import authoring.userInterface.AuthoringWindow;
 import authoring.userInterface.ClickHandler;
 import authoring.util.FrontEndUtils;
 import authoring.util.ImageEditor;
@@ -57,10 +58,6 @@ public class Sprite extends ImageView {
 		myCharacteristics.put("ID", String.valueOf(ID));
 		myIcon = new ImageView();
 		changeImage(new Image(getClass().getResourceAsStream(myImageURI)));
-		XMLBuilder b = XMLBuilder.getInstance("game");
-		xmlHandle = b.addToRoot(b.createElement("sprite"));
-		xmlHandle.setAttribute("name", imageURI.split("/")[1]);
-
 	}
 
 	public Sprite() {
@@ -72,6 +69,7 @@ public class Sprite extends ImageView {
 		myCharacteristics = new HashMap<>();
 		addDefaultCharacteristics(Arrays.asList(new String[] { "Name" }));
 		onMouseClicked();
+		FrontEndUtils.setKeyActions(this);
 	}
 
 	public Sprite(Sprite sprite, int ID) {
@@ -88,7 +86,8 @@ public class Sprite extends ImageView {
 	}
 
 	public String getName() {
-		return this.myName;
+//		return this.myName;
+		return myCharacteristics.get("Name");
 	}
 
 	public Consumer<Sprite> getConsumer() {
@@ -115,8 +114,8 @@ public class Sprite extends ImageView {
 	private void onMouseClicked() {
 		try {
 			setOnMouseClicked(new ClickHandler(RightPane.class.getMethod(
-					"switchPane", Sprite.class),
-					RightPane.getInstance(), this));
+					"switchPane", Sprite.class), RightPane.getInstance(), this));
+			System.out.println(AuthoringWindow.getControl());
 		} catch (NoSuchMethodException | SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -132,17 +131,11 @@ public class Sprite extends ImageView {
 	public void setXPosition(double value) {
 		this.setX(value);
 		myPosition.put(X_STRING, value);
-		XMLBuilder b = XMLBuilder.getInstance("game");
-		(b.add((b.add(xmlHandle, "velocity")), "x")).setTextContent(myPosition
-				.get(X_STRING).toString());
 	}
 
 	public void setYPosition(double value) {
 		this.setY(value);
 		myPosition.put(Y_STRING, value);
-		XMLBuilder b = XMLBuilder.getInstance("game");
-		(b.add((b.add(xmlHandle, "velocity")), "y")).setTextContent(myPosition
-				.get(Y_STRING).toString());
 	}
 
 	public void setPosition(Map<String, String> newPosition) {
@@ -152,10 +145,6 @@ public class Sprite extends ImageView {
 		setXPosition(myPosition.get(X_STRING));
 		setYPosition(myPosition.get(Y_STRING));
 		XMLBuilder b = XMLBuilder.getInstance("game");
-		(b.add((b.add(xmlHandle, "velocity")), "x")).setTextContent(myPosition
-				.get(X_STRING).toString());
-		(b.add((b.add(xmlHandle, "velocity")), "y")).setTextContent(myPosition
-				.get(Y_STRING).toString());
 	}
 
 	public double getXPosition() {
