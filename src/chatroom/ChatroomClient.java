@@ -3,7 +3,7 @@ import java.net.*;
 import java.io.*;
 
 public class ChatroomClient{
-	private Socket socket;
+	private Socket client;
 	private boolean terminate = false;
 	private boolean continueReading = true;
 	private String previousInputStream;
@@ -18,13 +18,33 @@ public class ChatroomClient{
 		console = System.console();
 		System.out.println("Connecting to "+ serverName + "..");
 		try{
-			socket = new Socket(serverName, serverPort);
+			client = new Socket(serverName, serverPort);
 			System.out.println("Connected.");
 			start();
 		}catch(IOException e){
 			e.printStackTrace();
 		}
 		boolean run = false;
+		try{
+		while(continueReading){
+			if(!client.getInputStream().equals(previousInputStream)){
+				myView.sendText(in.readUTF());
+			}
+			if(myView.getStringChanged()){
+				String outputString = myView.getText();
+				out.writeUTF(outputString);
+				previousOutputString = outputString;
+			}
+			if(!currentOutputString.equals(previousOutputString)){
+				out.writeUTF(currentOutputString);
+				previousOutputString = currentOutputString;
+			}
+			previousInputStream = client.getInputStream().toString();
+		}
+		}catch(IOException e){
+			e.pr
+		}
+		
 		while(!run){
 			try{
 				String input = in.readUTF();
@@ -50,7 +70,7 @@ public class ChatroomClient{
 	
 	public void start() throws IOException{
 		in = new DataInputStream(System.in);
-		out = new DataOutputStream(socket.getOutputStream());
+		out = new DataOutputStream(client.getOutputStream());
 	}
 	
 	public void stop(){
@@ -61,8 +81,8 @@ public class ChatroomClient{
 			if(out != null){
 				out.close();
 			}
-			if(socket != null){
-				socket.close();
+			if(client != null){
+				client.close();
 			}
 		}catch(IOException e){
 			e.printStackTrace();

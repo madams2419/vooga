@@ -39,6 +39,7 @@ public class ChatroomServer extends Thread {
 			try{
 				System.out.println("Waiting for client...");
 				socket = serverSocket.accept();
+				System.out.println("Connected");
 				open();
 				boolean run = false;
 				if(!run){
