@@ -87,9 +87,7 @@ public class PhysicsEngine {
 
 	private boolean checkCircleCollision(PhysicsObject a, PhysicsObject b) {
 		double sepDistance = b.getPositionMeters().minus(a.getPositionMeters()).getMagnitude();
-		System.out.println("sep  : " + sepDistance);
 		double radiiSum = b.getShape().getRadiusMeters() + a.getShape().getRadiusMeters();
-		System.out.println("rsum : " + radiiSum);
 		return sepDistance <= radiiSum;
 	}
 
@@ -106,7 +104,7 @@ public class PhysicsEngine {
 	/* implement as IBehavior */
 	public void resolveCollision(PhysicsObject a, PhysicsObject b, Vector normal, double pDepth) {
 		// compute relative velocity
-		Vector relVel = b.getVelocity().minus(b.getVelocity());
+		Vector relVel = b.getVelocity().minus(a.getVelocity());
 
 		// project relative velocity along collision normal
 		double projOnNorm = relVel.dot(normal);

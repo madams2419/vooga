@@ -112,7 +112,7 @@ public class PhysicsTester extends Application {
 		/* create player sprite physics object */
 		int playerRadius = 5;
 		Shape playerShape = new CircleBody(playerRadius);
-		Material playerMaterial = new Material(0.3, 0.2);
+		Material playerMaterial = new Material(0.3, 0.5);
 		PhysicsObject playerPhysics = new PhysicsObject(globalPhysics, playerShape, playerMaterial, 200, 200);
 
 		/* set player physics */
@@ -125,7 +125,7 @@ public class PhysicsTester extends Application {
 		int enemyRadius = 30;
 		Shape enemyShape = new CircleBody(enemyRadius);
 		Material enemyMaterial = new Material(0.3, 0.2);
-		PhysicsObject enemyPhysics = new PhysicsObject(globalPhysics, enemyShape, enemyMaterial, 200, 200);
+		PhysicsObject enemyPhysics = new PhysicsObject(globalPhysics, enemyShape, enemyMaterial, 50, 200);
 		
 		/* set player physics */
 		enemySprite.setPhysicsObject(enemyPhysics);
