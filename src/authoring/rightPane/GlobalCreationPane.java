@@ -8,15 +8,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+<<<<<<< HEAD
 import authoring.Sprite;
 import authoring.userInterface.CenterPane;
 import authoring.util.FrontEndUtils;
+=======
+>>>>>>> 6ad72a8c6b11f52733db07ff1433528f2ec6701a
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
@@ -44,7 +46,6 @@ public class GlobalCreationPane extends EditingPane
 		c.setOnAction(e -> updateMap());
 		this.getChildren().add(c);
 		System.out.println("blah is " + myFields.toString());
-
 	}	
 
 	private Map<String,String> createDefaultMap(){

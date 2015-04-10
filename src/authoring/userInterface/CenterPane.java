@@ -1,24 +1,32 @@
 package authoring.userInterface;
 
+<<<<<<< HEAD
 import java.awt.Cursor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import java.util.Stack;
+=======
+import java.util.Collection;
+>>>>>>> 6ad72a8c6b11f52733db07ff1433528f2ec6701a
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import authoring.Sprite;
+
 import authoring.rightPane.GlobalCreationPane;
 import authoring.rightPane.RightPane;
+
+import authoring.util.FrontEndUtils;
+
 
 /**
  * 
@@ -27,46 +35,44 @@ import authoring.rightPane.RightPane;
  */
 public class CenterPane extends ScrollPane {
 
+
 	private List<Sprite> mySpriteList;
 	private List<Map> myEnvironmentList;
+
+	private ObservableList<Sprite> myListOfSprites;
+
+
 	private Scene myScene;
-	private Canvas myCanvas;
 	private Group myGroup;
 	private Rectangle myCurrentRectangle;
 	public static CenterPane mInstance;
 	public GlobalCreationPane gp;
 
-	private static final int TOP_PANE_HEIGHT = 50;
-	private static final int RIGHT_PANE_WIDTH = 300;
-
 	private int width;
 	private int height;
+	
 
-	public CenterPane(Scene scene) {
+	private CenterPane(Scene scene) {
 		myScene = scene;
 		myGroup = new Group();
-		//		myCanvas = new Canvas(
-		//				(width = (int) (scene.getWidth() - this.RIGHT_PANE_WIDTH)),
-		//				(height = (int) (scene.getHeight() - this.TOP_PANE_HEIGHT)));
-		//		myCanvas.getGraphicsContext2D().setStroke(Color.BLACK);
+		// myCanvas = new Canvas(
+		// (width = (int) (scene.getWidth() - this.RIGHT_PANE_WIDTH)),
+		// (height = (int) (scene.getHeight() - this.TOP_PANE_HEIGHT)));
+		// myCanvas.getGraphicsContext2D().setStroke(Color.BLACK);
 		// myCanvas.getGraphicsContext2D().strokeLine(0, 0, 400, 400);
 
 		this.setContent(myGroup);
-		//myGroup.getChildren().add(new Rectangle(width, height, Color.WHITE));
-		//myGroup.setOnMouseClicked(e -> canvasClicked(e));
+		myGroup.getChildren().add(new Rectangle(width, height, Color.WHITE));
+		myGroup.setOnMouseClicked(e -> canvasClicked(e));
+
+		// Use stack, or just a group?
+		myListOfSprites = FXCollections.observableArrayList();
+
+		FrontEndUtils.setKeyActions(this);
 		mySpriteList = new ArrayList<Sprite>();
-		myEnvironmentList=new ArrayList<Map>();
-		
+		myEnvironmentList=new ArrayList<Map>();	
 		addMaptoEnvironment(gp.getInstance().fields);
-		
-		this.setOnKeyPressed(e -> {
-			if (e.getCode() == KeyCode.CONTROL)
-				AuthoringWindow.setControlOn();
-		});
-		this.setOnKeyReleased(e -> {
-			if (e.getCode() == KeyCode.SHIFT)
-				AuthoringWindow.setControlOff();
-		});
+
 
 	}
 	
@@ -81,18 +87,16 @@ public class CenterPane extends ScrollPane {
 		myEnvironmentList.add(m);
 		System.out.println(m.toString());
 	}
-
 	private void canvasClicked(MouseEvent e) {
-
-		try{
+		try {
 			Sprite s = ((SpriteCursor) myScene.getCursor()).getCurrentSprite();
 
-			s.setX(e.getX() - s.getImage().getWidth()/2);
-			s.setY(e.getY() - s.getImage().getHeight()/2);
+			s.setXPosition(e.getX() - s.getImage().getWidth() / 2);
+			s.setYPosition(e.getY() - s.getImage().getHeight() / 2);
 			myGroup.getChildren().add(s);
 
 			System.out.println(s.getID());
-			mySpriteList.add(s);
+			this.myListOfSprites.add(s);
 			myScene.setCursor(ImageCursor.DEFAULT);
 
 		} catch (ClassCastException a) {
@@ -103,15 +107,12 @@ public class CenterPane extends ScrollPane {
 
 	}
 
-	//	private void spriteClicked(MouseEvent p, Sprite s) {
-	//		myGroup.getChildren().remove(s);
-	//		System.out.println("Removing");
-	//		// TODO: Show sprite data in information pane
-	//		// TODO: Allow stacked sprites
-	//	}
-	//	
-	public void createRegion(double x, double y){
-		if (myCurrentRectangle != null){
+	public Collection<Sprite> getSprites() {
+		return myListOfSprites;
+	}
+
+	public void createRegion(double x, double y) {
+		if (myCurrentRectangle != null) {
 			myGroup.getChildren().remove(myCurrentRectangle);
 			System.out.println("removing rectangle");
 		}
@@ -119,6 +120,4 @@ public class CenterPane extends ScrollPane {
 		myCurrentRectangle.setOnMouseClicked(e -> canvasClicked(e));
 		myGroup.getChildren().add(myCurrentRectangle);
 	}
-
-
 }
