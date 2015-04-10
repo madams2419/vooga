@@ -77,6 +77,11 @@ public class AuthoringWindow {
 		canvas.setTop(setupTopPane(myScene.getWidth()));
 		canvas.setLeft(setupLeftPane());
 		canvas.setRight(setupRightPane());
+		
+		
+		
+		
+		
 		canvas.setCenter(setupCenterPane());
 		canvas.setBottom(setupBottomPane(myScene.getWidth()));
 
@@ -124,37 +129,7 @@ public class AuthoringWindow {
 				.get(FILE_MENU)
 				.getItems()
 				.get(NEW_FILE)
-				.setOnAction(e -> {
-					// Refactor this into new class/method
-						Dialog<ButtonType> dialog = new Dialog<>();
-						dialog.setTitle("Create New Game Scene");
-
-						GridPane grid = new GridPane();
-						grid.setHgap(10);
-						grid.setVgap(10);
-
-						grid.add(new Label("xSize"), 0, 0);
-						TextField textBox1 = new TextField("400");
-						grid.add(textBox1, 0, 1);
-						grid.add(new Label("ySize"), 1, 0);
-						TextField textBox2 = new TextField("400");
-						grid.add(textBox2, 1, 1);
-
-						dialog.getDialogPane().setContent(grid);
-						dialog.getDialogPane().getButtonTypes()
-								.addAll(ButtonType.OK, ButtonType.CANCEL);
-
-						Optional<ButtonType> result = dialog.showAndWait();
-						// Refactor? Is it possible to get rid of this if
-						// statement?
-						if (result.get() == ButtonType.OK) {
-							// TODO: check to make sure user entered numbers
-//							myCenterPane.createRegion(
-//									Double.parseDouble(textBox1.getText()),
-//									Double.parseDouble(textBox1.getText()));
-
-						}
-					});
+				.setOnAction(e -> new NewRegionDialog(myCenterPane));
 
 		mBar.getMenus()
 				.get(FILE_MENU)
