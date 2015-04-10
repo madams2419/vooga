@@ -1,6 +1,7 @@
 package authoring.userInterface;
 
 //import java.io.File;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +29,9 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+
+import javax.print.DocFlavor.URL;
+
 import authoring.rightPane.RightPane;
 
 /**
@@ -167,12 +171,9 @@ public class AuthoringWindow {
 				.get(0)
 				.setOnAction(
 						e -> {
-							Media media = new Media(
-//									"http://uyeshare.com/music/down/12930540/2068304"
-//									+ "/YWZiMjAwNCs3OGhkUzN5TU52VkRPM0JmL3FzaXF1ZUpz"
-//									+ "angyaEdkekowS2lLcUNEL1E=/The+Beatles+-+01+Help%21.mp3"
-									"file:///home/daniel/Workspace/CS308/voogasalad_HighScrollers/src/Resources/help.mp3"
-									);
+							Media media = new Media(Paths
+									.get("src/Resources/help.mp3").toUri()
+									.toString());
 							MediaPlayer player = new MediaPlayer(media);
 							player.setVolume(100);
 							player.play();
