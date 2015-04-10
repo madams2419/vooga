@@ -5,8 +5,8 @@ public class CircleBody implements Shape {
 	
 	private double myRadius;
 	
-	public CircleBody(double radius) {
-		myRadius = radius;
+	public CircleBody(double radiusPixels) {
+		myRadius = PhysicsEngine.pixelsToMeters(radiusPixels);
 	}
 	
 	public double getVolume() {
@@ -14,7 +14,12 @@ public class CircleBody implements Shape {
 	}
 	
 	@Override
-	public double getRadius() {
+	public double getRadiusPixels() {
+		return PhysicsEngine.metersToPixels(getRadiusMeters());
+	}
+	
+	@Override
+	public double getRadiusMeters() {
 		return myRadius;
 	}
 

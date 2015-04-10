@@ -16,9 +16,8 @@ import game_engine.sprite.Sprite;
 public class PhysicsEngine {
 
 	//TODO move these to properties file
-	private static double SCALE_FACTOR = 0.01; // pixel to meter scaling
+	private static double SCALE_FACTOR = 0.1; // pixel to meter scaling
 	private static String GRAV_STRING = "gravity";
-	private static double GRAV_DIRECTION = -90;
 	private static double GRAV_MAGNITUDE = 9.8 / SCALE_FACTOR;
 	private static double SC_PERCENT = 0.2;
 	private static double SC_SLOP = 0.01;
@@ -30,8 +29,8 @@ public class PhysicsEngine {
 	private Vector myNetGlobalAccel;
 	private Vector myNetGlobalForce;
 
-	public PhysicsEngine(double ground, double timeStep, double gravity) {
-		myGround = ground;
+	public PhysicsEngine(double groundPixels, double timeStep, double gravity) {
+		myGround = pixelsToMeters(groundPixels);
 		myTimeStep = timeStep;
 		myGlobalForces = new HashMap<>();
 		myGlobalAccels = new HashMap<>();
@@ -45,7 +44,7 @@ public class PhysicsEngine {
 	}
 
 	public void setGravity(double gravity) {
-		myGlobalAccels.put(GRAV_STRING, Vector.getPolarVector(GRAV_DIRECTION, GRAV_MAGNITUDE));
+		myGlobalAccels.put(GRAV_STRING, new Vector(0, -GRAV_MAGNITUDE));
 		computeNetGlobalAccel();
 	}
 
@@ -80,7 +79,7 @@ public class PhysicsEngine {
 
 	private boolean checkCircleCollision(PhysicsObject a, PhysicsObject b) {
 		double sepDistance = b.getPositionMeters().minus(a.getPositionMeters()).getMagnitude();
-		double radiiSum = ((CircleBody)b.getShape()).getRadius() + ((CircleBody)a.getShape()).getRadius();
+		double radiiSum = ((CircleBody)b.getShape()).getRadiusMeters() + ((CircleBody)a.getShape()).getRadiusMeters();
 		return sepDistance <= radiiSum;
 	}
 
@@ -199,27 +198,27 @@ public class PhysicsEngine {
 	
 	/* Scaling utility functions */
 	
-	public double pixelsToMeters(double pixels) {
+	public static double pixelsToMeters(double pixels) {
 		return pixels * SCALE_FACTOR;
 	}
 	
-	public double metersToPixels(double meters) {
-		return meters * SCALE_FACTOR;
+	public static double metersToPixels(double meters) {
+		return meters / SCALE_FACTOR;
 	}
 	
-	public Vector vectorPixelsToMeters(Vector vector) {
-		return vectorPixelsToMeters(vector.getX(), vector.getY());
+	public static Vector vectorPixelsToMeters(Vector vectorPixels) {
+		return vectorPixelsToMeters(vectorPixels.getX(), vectorPixels.getY());
 	}
 	
-	public Vector vectorPixelsToMeters(double xPixels, double yPixels) {
-		return new Vector(metersToPixels(xPixels), metersToPixels(yPixels));
+	public static Vector vectorPixelsToMeters(double xPixels, double yPixels) {
+		return new Vector(pixelsToMeters(xPixels), pixelsToMeters(yPixels));
 	}
 	
-	public Vector vectorMetersToPixels(Vector vector) {
+	public static Vector vectorMetersToPixels(Vector vector) {
 		return vectorMetersToPixels(vector.getX(), vector.getY());
 	}
 
-	public Vector vectorMetersToPixels(double xMeters, double yMeters) {
+	public static Vector vectorMetersToPixels(double xMeters, double yMeters) {
 		return new Vector(metersToPixels(xMeters), metersToPixels(yMeters));
 	}
 }

@@ -4,7 +4,12 @@ public interface Shape {
 	
 	public double getVolume();
 	
-	/* return radius bounding circle */
-	public double getRadius();
+	/* return radius bounding circle in pixels */
+	public double getRadiusPixels();
+	
+	/* return radius bounding circle in meters */
+	public double getRadiusMeters();
+	
+	
 
 }

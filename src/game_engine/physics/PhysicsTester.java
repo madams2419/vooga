@@ -23,9 +23,13 @@ import javafx.util.Duration;
 
 public class PhysicsTester extends Application {
 
-	private static final int fps = 60;
-	private static final int width = 400;
-	private static final int height = 400;
+	private static int fps = 60;
+	private static int width = 400;
+	private static int height = 400;
+	
+	private static Vector upImpulse = new Vector(0, 5); 
+	private static Vector rightImpulse = new Vector(5, 0);
+	private static Vector leftImpulse = new Vector(-5, 0);
 	
 	private Timeline gameLoop;
 	private Scene myScene;
@@ -79,9 +83,21 @@ public class PhysicsTester extends Application {
 			setNodePosition(sNode, sPhysics.getPositionPixels());
 		}
 	}
-	private void handleKeyInput(KeyEvent e) {
-		if(e.getCode() == KeyCode.SPACE) {
-			playerSprite.getPhysicsObject().applyImpulse(new Vector(0, 10000));
+	private void handleKeyInput(KeyEvent event) {
+		PhysicsObject sPhysics = playerSprite.getPhysicsObject();
+		
+		switch(event.getCode()) {
+		case UP :
+			sPhysics.applyImpulse(upImpulse);
+			break;
+		case RIGHT :
+			sPhysics.applyImpulse(rightImpulse);
+			break;
+		case LEFT :
+			sPhysics.applyImpulse(leftImpulse);
+			break;
+		default:
+			break; 
 		}
 	}
 	
@@ -117,15 +133,21 @@ public class PhysicsTester extends Application {
 	/* create a node representation of a sprite */
 	public Node createNodeFromSprite(Sprite sprite) {
 		PhysicsObject sPhysics = sprite.getPhysicsObject();
-		double radius = sPhysics.getShape().getRadius();
+		double radius = sPhysics.getShape().getRadiusPixels();
 		Node circle = new Circle(radius, Color.BLACK); // right now only circles are supported
 		setNodePosition(circle, sPhysics.getPositionPixels());
 		return circle;
 	}
 	
 	/* set node position applying physics space to javaFX coordinate transform */
-	private void setNodePosition(Node node, Vector position) {
-		node.setTranslateX(position.getX());
-		node.setTranslateY(height - position.getY());
+	private void setNodePosition(Node node, Vector positionPixels) {
+		node.setTranslateX(positionPixels.getX());
+		node.setTranslateY(height - positionPixels.getY());
+	}
+	
+	/* debug function to print player sprite's location */
+	private void printLoc() {
+		PhysicsObject sPhysics = playerSprite.getPhysicsObject();
+		System.out.printf("(%d, %d)\n", (int)sPhysics.getXPixels(), (int)sPhysics.getYPixels());
 	}
 }

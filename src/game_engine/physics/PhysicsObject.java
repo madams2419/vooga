@@ -25,7 +25,7 @@ public class PhysicsObject {
 		myShape = shape;
 		myMaterial = material;
 		
-		myPosition = physics.vectorPixelsToMeters(xPosPixels, yPosPixels);
+		myPosition = PhysicsEngine.vectorPixelsToMeters(xPosPixels, yPosPixels);
 		myVelocity = new Vector();
 		myNetInternalForce = new Vector();
 		myDirForceMagnitude = 0;
@@ -41,8 +41,9 @@ public class PhysicsObject {
 		myPosition = myPosition.plus(myVelocity.times(dt));
 		
 		// temporary ground handling
-		if(myPosition.getY() <= myPhysics.getGround() + myShape.getRadius()) {
-			myPosition.setY(myPhysics.getGround() + myShape.getRadius());
+		if(myPosition.getY() <= myPhysics.getGround() + myShape.getRadiusMeters()) {
+			myPosition.setY(myPhysics.getGround() + myShape.getRadiusMeters());
+			myVelocity.setY(0);
 		}
 	}
 
@@ -92,20 +93,12 @@ public class PhysicsObject {
 		setVelocity(newVelocity);
 	}
 
-	public Vector getPositionMeters() {
+	protected Vector getPositionMeters() {
 		return myPosition;
 	}
 	
-	public Vector getPositionPixels() {
-		return myPhysics.vectorMetersToPixels(getPositionMeters());
-	}
-
-	public void setPositionMeters(Vector positionMeters) {
-		myPosition = positionMeters;
-	}
-	
-	public void setPositionPixels(Vector positionPixels) {
-		myPosition = myPhysics.vectorPixelsToMeters(positionPixels);
+	protected Vector getPositionPixels() {
+		return PhysicsEngine.vectorMetersToPixels(getPositionMeters());
 	}
 	
 	public double getXMeters() {
@@ -125,19 +118,19 @@ public class PhysicsObject {
 	}
 	
 	public double getXPixels() {
-		return myPhysics.metersToPixels(getXMeters());
+		return PhysicsEngine.metersToPixels(getXMeters());
 	}
 	
 	public void setXPixels(double xPixels) {
-		myPosition.setX(myPhysics.pixelsToMeters(xPixels));
+		myPosition.setX(PhysicsEngine.pixelsToMeters(xPixels));
 	}
 	
 	public double getYPixels() {
-		return myPhysics.metersToPixels(getYMeters());
+		return PhysicsEngine.metersToPixels(getYMeters());
 	}
 	
 	public void setYPixels(double yPixels) {
-		myPosition.setY(myPhysics.pixelsToMeters(yPixels));
+		myPosition.setY(PhysicsEngine.pixelsToMeters(yPixels));
 	}
 
 	public Vector getVelocity() {
