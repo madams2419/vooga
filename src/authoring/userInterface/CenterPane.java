@@ -55,7 +55,7 @@ public class CenterPane extends ScrollPane {
 				AuthoringWindow.setControlOn();
 		});
 		this.setOnKeyReleased(e -> {
-			if (e.getCode() == KeyCode.SHIFT)
+			if (e.getCode() == KeyCode.CONTROL)
 				AuthoringWindow.setControlOff();
 		});
 
