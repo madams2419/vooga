@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-<?xml version="1.0" encoding="UTF-8"?><game><sprite name="images"/><sprite name="images"/></game>
-=======
+
 <?xml version="1.0" encoding="UTF-8"?>
 <game>
 	<sprite name="images" />
@@ -26,4 +24,3 @@
 	<sprite name="images" />
 	<sprite name="images" />
 </game>
->>>>>>> a5d1dc109870fd440c5302ac27cbba256ba3519b
