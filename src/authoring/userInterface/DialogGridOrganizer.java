@@ -7,8 +7,17 @@ import javafx.scene.layout.GridPane;
 
 public class DialogGridOrganizer extends GridPane{
 	
-	public DialogGridOrganizer(ArrayList<Node>... args){
-		
+	
+	private int myNumCols;
+	
+	public DialogGridOrganizer(int numCols){
+		myNumCols = numCols;
 	}
+	
+	public void addRow(Node...args){
+		//this.getChildren().add(e)
+	}
+	
+	
 	
 }

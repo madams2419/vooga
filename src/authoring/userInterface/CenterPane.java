@@ -5,15 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import java.util.Stack;
-import authoring.Sprite;
+
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import authoring.Sprite;
 
 /**
  * 
@@ -45,8 +47,17 @@ public class CenterPane extends ScrollPane {
 
 		this.setContent(myGroup);
 		//myGroup.getChildren().add(new Rectangle(width, height, Color.WHITE));
-		myGroup.setOnMouseClicked(e -> canvasClicked(e));
+		//myGroup.setOnMouseClicked(e -> canvasClicked(e));
 
+
+		this.setOnKeyPressed(e -> {
+			if (e.getCode() == KeyCode.CONTROL)
+				AuthoringWindow.setControlOn();
+		});
+		this.setOnKeyReleased(e -> {
+			if (e.getCode() == KeyCode.SHIFT)
+				AuthoringWindow.setControlOff();
+		});
 
 	}
 
@@ -76,9 +87,9 @@ public class CenterPane extends ScrollPane {
 		myScene.setCursor(ImageCursor.DEFAULT);
 		
 		} catch (ClassCastException a) {
-
+			System.out.println("error");
 		} catch (NullPointerException b) {
-			
+			System.out.println("error");
 		}
 		
 	}

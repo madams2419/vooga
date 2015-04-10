@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -17,7 +16,6 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import authoring.Sprite;
-import authoring.userInterface.ClickHandler;
 import authoring.util.FrontEndUtils;
 import authoring.util.ImageEditor;
 
@@ -25,7 +23,7 @@ import authoring.util.ImageEditor;
  * This will be for when a character already on the screen is clicked on. It
  * will allow the designer to edit the character.
  * 
- * @author Natalie Chanfreau
+ * @author Natalie Chanfreau, Daniel Luker
  *
  */
 
@@ -44,15 +42,7 @@ class CharacterEditingPane extends EditingPane {
 		Button c = new Button("Update");
 		c.setOnAction(e -> updateSprite(sprite));
 		this.getChildren().add(c);
-		Button b = new Button("Back");
-		try {
-			b.setOnAction(new ClickHandler(RightPane.class
-					.getMethod("switchToCharacterCreationPane"), RightPane
-					.getInstance(), null));
-		} catch (NoSuchMethodException | SecurityException e) {
-			// TODO
-		}
-		this.getChildren().add(b);
+		addButtonToReturnToCreationPane("Back");
 
 		// ================================================================= //
 		addSpriteIcon(sprite);

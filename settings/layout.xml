@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layout name="authoring_environment">
-	<top_pane>
+	<BottomPane>
 		<buttons>
 			<button>
 				<X>0</X>
@@ -47,8 +47,8 @@
 				<listener>null</listener>
 			</Dropdown>
 		</dropdowns>
-	</top_pane>
-	<left_pane>
+	</BottomPane>
+	<LeftPane>
 		<buttons>
 			<button>
 				<X>0</X>
@@ -65,5 +65,5 @@
 				<listener>null</listener>
 			</Dropdown>
 		</dropdowns>
-	</left_pane>
+	</LeftPane>
 </layout>

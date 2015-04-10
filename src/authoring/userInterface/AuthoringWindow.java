@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
-
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -24,20 +23,22 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import authoring.rightPane.RightPane;
 
 /**
- * @author hojeanniechung & Daniel Luker
+ * @author hojeanniechung & Daniel Luker & Andrew Sun
  *
  */
 public class AuthoringWindow {
 
 	private Scene myScene;
-//	private ButtonFactory mbuttonList;
-//	private String mFileSelector = "src/Resources/FilestoParse.xml";
+	// private ButtonFactory mbuttonList;
+	// private String mFileSelector = "src/Resources/FilestoParse.xml";
 
 	private static final int FILE_MENU = 0;
 	private static final int EDIT_MENU = 1;
@@ -52,10 +53,14 @@ public class AuthoringWindow {
 	private static final int SCENE_HEIGHT = 1000;
 	
 	private CenterPane myCenterPane;
-	public AuthoringWindow(){
+
+	private static Object currentlySelected;
+	private static boolean control;
+
+	public AuthoringWindow() {
 		// TODO
 	}
-	
+
 	public Scene GameCreateUI() {
 
 		VBox root = new VBox();
@@ -66,12 +71,17 @@ public class AuthoringWindow {
 
 		canvas.setPrefHeight(myScene.getHeight());
 		canvas.setPrefWidth(myScene.getWidth());
+
+		UIElementDistributer ud = new UIElementDistributer();
+		ud.ElementDistributer();
+
 		// Setting up borderPane
-		canvas.setBottom(setupBottomPane(myScene.getWidth()));
+		// canvas.setBottom(setupBottomPane(myScene.getWidth()));
 		canvas.setTop(setupTopPane(myScene.getWidth()));
 		canvas.setLeft(setupLeftPane());
 		canvas.setRight(setupRightPane());
 		canvas.setCenter(setupCenterPane());
+		canvas.setBottom(setupBottomPane(myScene.getWidth()));
 
 		root.getChildren().add(menuBar());
 		root.getChildren().add(canvas);
@@ -83,8 +93,8 @@ public class AuthoringWindow {
 	private MenuBar menuBar() {
 		MenuBar mBar = new MenuBar();
 		String[] menuItems = { "File:New/Load/Close", "Edit:Copy",
-				"View:Sreen Options", "Help:Lol there is no help" };
-		
+				"View:Sreen Options", "Help:Help" };
+
 		Arrays.asList(menuItems).forEach(
 				str -> {
 					String a = str.split(":")[0];
@@ -146,21 +156,38 @@ public class AuthoringWindow {
 			         new ExtensionFilter("All Files", "*.*"));
 			 fileChooser.showOpenDialog(null);
 		});
-		mBar.getMenus().get(0).getItems().get(2).setOnAction(e -> Platform.exit());
-		
-		
+		mBar.getMenus()
+		.get(FILE_MENU)
+		.getItems()
+		.get(OPEN_FILE)
+		.setOnAction(e -> {
+			// refactor this into new class
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.setTitle("Open Resource File");
+				fileChooser.getExtensionFilters().addAll(
+						new ExtensionFilter("Text Files", "*.txt"),
+						new ExtensionFilter("Image Files", "*.png",
+								"*.jpg", "*.gif"),
+						new ExtensionFilter("Audio Files", "*.wav",
+								"*.mp3", "*.aac"),
+						new ExtensionFilter("All Files", "*.*"));
+				fileChooser.showOpenDialog(null);
+			});
+
+
+
+mBar.getMenus().get(FILE_MENU).getItems().get(CLOSE_GAME)
+		.setOnAction(e -> Platform.exit());
 		return mBar;
 	}
 
 	private HBox setupBottomPane(double width) {
 		HBox buttonBox = new HBox();
-//		for (Button B : mbuttonList.getSharedInstace(mFileSelector, "Button")
-//				.generateButtonBoxes()) {
-//			buttonBox.getChildren().add(B);
-//		}
-//		System.out.println(mbuttonList
-//				.getSharedInstace(mFileSelector, "Button").GetAttributes()
-//				.toString());
+		// UIElementDistributer ud = new UIElementDistributer();
+		// ud.ElementDistributer();
+		buttonBox.getChildren().addAll(BottomPane.mButtonList);
+		System.out.println("Button Pane is: "
+				+ BottomPane.mButtonList.toString());
 		return buttonBox;
 	}
 
@@ -170,6 +197,7 @@ public class AuthoringWindow {
 		mButtons.put("Global Settings", e -> {
 			System.out.println("global settings clicked");
 		});
+		mButtons.put("Controls", null);
 		mButtons.put("Map Settings", null);
 		mButtons.put("Interactions List", null);
 		mButtons.put("Characters", null);
@@ -189,12 +217,35 @@ public class AuthoringWindow {
 	}
 
 	private VBox setupLeftPane() {
-		return new LeftPane();
+		VBox buttonBox = new VBox();
+		buttonBox.getChildren().addAll(LeftPane.mButtonList);
+		System.out.println("Left Pane is: " + LeftPane.mButtonList.toString());
+		return buttonBox;
 	}
 
 	private Node setupCenterPane() {
 		myCenterPane = new CenterPane(myScene);
 		return myCenterPane;
+	}
+
+	public static void setCurrentlySelected(Object o) {
+		currentlySelected = o;
+	}
+
+	public static Object getCurrentlySelected() {
+		return currentlySelected;
+	}
+
+	public static void setControlOn() {
+		control = true;
+	}
+
+	public static void setControlOff() {
+		control = false;
+	}
+
+	public static boolean getControl() {
+		return control;
 	}
 
 }

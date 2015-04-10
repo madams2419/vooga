@@ -22,7 +22,7 @@ public class UIElementDistributer  extends AuthoringGUITester {
 	private static ArrayList<String> GeneratorLabel=new ArrayList<String>();
 	private static ArrayList<String> ListenerNames=new ArrayList<String>();
 	private static ArrayList<Map> listOfElements=new ArrayList<Map>();
-
+	public static ArrayList<Map> MapofValues=new ArrayList<Map>();
 
 	public static void main(String args[]){
 		ElementDistributer();
@@ -31,47 +31,27 @@ public class UIElementDistributer  extends AuthoringGUITester {
 	public static void ElementDistributer(){
 		String f="settings/layout.xml";
 		LayoutXMLParser.parse(f);
-		Iterator<Entry<String, ArrayList>> it=LayoutXMLParser.myElementMap.entrySet().iterator();
-		listOfElements = it.next().getValue();
-		for(Map element:listOfElements){
-			//System.out.println("element keyset is "+element.keySet().toString());
-			ElementSet.add(element.keySet().toString());
-		}
-		Iterator<String> it_element=ElementSet.iterator();
+		//		Iterator<Entry<String, ArrayList>> it=LayoutXMLParser.myElementMap.entrySet().iterator();
+		//		listOfElements = it.next().getValue();
+		//		for(Map element:listOfElements){
+		//			//System.out.println("element keyset is "+element.keySet().toString());
+		//			ElementSet.add(element.keySet().toString());
+		//		}
+		//		Iterator<String> it_element=ElementSet.iterator();
 
 
-		while(it_element.hasNext()){
-			String temp=it_element.next();
-			elementNext=temp.toString().substring(1,(temp.toString().length())-1);
-			String Classname=String.format("authoring.userInterface.%sFactory",elementNext);
+		for(Entry<String, ArrayList> Entry: LayoutXMLParser.myElementMap.entrySet()){
+			String Panes=Entry.getKey();
+			ArrayList<Map> values=Entry.getValue();
+			String Classname=String.format("authoring.userInterface.%s",Panes);
 			ClassConstructors.put(Classname,Reflection.createInstance(Classname));
-			GeneratorLabel.add(elementNext);
-		}
-		/*
-		 * Get the Type, and a map of its characteristic to the and map it with the constructed class
-		 */
-		for(ArrayList<Map> values: LayoutXMLParser.myElementMap.values()){
-			for(int i=0; i<values.size(); i++){
-				Map<String, Map> m=values.get(i);
-				//System.out.println(m);
-				for(String key: m.keySet()){
-					if(ClassConstructors.containsKey(key)){
-						Object SelectedClass=ClassConstructors.get(key);
-						MethodInvoker(SelectedClass,key,m.get(key));
-					}
-					else{
-						ClassConstructors.put(key,Reflection.createInstance(String.format("authoring.userInterface.%sFactory",key)));
-						Object SelectedClass=ClassConstructors.get(key);
-						MethodInvoker(SelectedClass,key,m.get(key));
-					}
-				}
-			}
+			MethodInvoker(ClassConstructors.get(Classname),"Components",values);
 		}
 	}
 
-	public static void MethodInvoker(Object selectedClass,String key, Map map){
 
-		Reflection.callMethod(selectedClass, String.format("generate%s",key),map);
+	public static void MethodInvoker(Object selectedClass,String key, ArrayList<Map> values){
+		MapofValues=values;
+		Reflection.callMethod(selectedClass, String.format("generate%s",key),values);
 	}
-
 }
