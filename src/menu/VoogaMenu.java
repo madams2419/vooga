@@ -1,5 +1,8 @@
 package menu;
 
+import java.io.File;
+import java.nio.file.Paths;
+
 import game_player.VoogaGameBuilder;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
@@ -11,6 +14,8 @@ import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -292,7 +297,6 @@ public class VoogaMenu {
 	play.setOnMouseClicked(null);
 	design.setOnMouseClicked(null);
     }
-    
     /*
      * Adds the choice menu to the root and removes the main menu, also
      * blurs the background for effect.

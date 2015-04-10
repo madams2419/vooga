@@ -1,7 +1,13 @@
 package menu;
 
+import java.io.File;
+import java.net.URL;
+import java.nio.file.Paths;
+
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -18,11 +24,13 @@ public class VoogaSaladMain extends Application {
      * application to the use.
      */
     public void start(Stage stage) throws Exception {
-
 	stage.setTitle("VoogaSalad");
 
 	Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-
+	Media media = new Media(Paths.get("src/music/opening.mp3").toUri().toString());
+	MediaPlayer player = new MediaPlayer(media);
+	player.setVolume(100);
+	
 	stage.setX(primaryScreenBounds.getMinX());
 	stage.setY(primaryScreenBounds.getMinY());
 
@@ -33,7 +41,7 @@ public class VoogaSaladMain extends Application {
 
 	VoogaMenu menu = new VoogaMenu(stage.getWidth(), stage.getHeight());
 	stage.setScene(menu.initialize());
-
+	player.play();
 	stage.show();
     }
 
