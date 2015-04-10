@@ -44,6 +44,7 @@ public class BottomPane extends HBox {
 				}
 			}
 		}	
+		
 		root.getChildren().addAll(mButtonList);
 		System.out.println("BottomPane Buttons: " + mButtonList);
 		return root;

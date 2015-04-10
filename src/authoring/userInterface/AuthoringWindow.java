@@ -31,17 +31,15 @@ public class AuthoringWindow {
 	// private String mFileSelector = "src/Resources/FilestoParse.xml";
 
 	private static final int FILE_MENU = 0;
-	private static final int EDIT_MENU = 1;
-	private static final int VIEW_MENU = 2;
+	// private static final int EDIT_MENU = 1;
+	// private static final int VIEW_MENU = 2;
 	private static final int HELP_MENU = 3;
-	
+
 	private static final int NEW_FILE = 0;
 	private static final int OPEN_FILE = 1;
 	private static final int CLOSE_GAME = 2;
-	
 	private static final int SCENE_WIDTH = 1200;
 	private static final int SCENE_HEIGHT = 600;
-	
 	private CenterPane myCenterPane;
 
 	private static Object currentlySelected;
@@ -97,15 +95,29 @@ public class AuthoringWindow {
 							str1 -> m.getItems().add(new MenuItem(str1)));
 					mBar.getMenus().add(m);
 				});
-		
+
 		mBar.getMenus().get(FILE_MENU).getItems().get(NEW_FILE).setOnAction(e -> {
 			new NewRegionDialog(myCenterPane);
 		});
 		
 		mBar.getMenus()
-				.get(FILE_MENU)
+				.get(0)
 				.getItems()
-				.get(NEW_FILE)
+				.get(1)
+				.setOnAction(
+						e -> {
+							FileChooser fileChooser = new FileChooser();
+							fileChooser.setTitle("Open Resource File");
+							fileChooser.getExtensionFilters().addAll(
+									new ExtensionFilter("Text Files", "*.txt"),
+									new ExtensionFilter("Image Files", "*.png",
+											"*.jpg", "*.gif"),
+									new ExtensionFilter("Audio Files", "*.wav",
+											"*.mp3", "*.aac"),
+									new ExtensionFilter("All Files", "*.*"));
+							fileChooser.showOpenDialog(null);
+						});
+		mBar.getMenus().get(FILE_MENU).getItems().get(NEW_FILE)
 				.setOnAction(e -> new NewRegionDialog(myCenterPane));
 
 		mBar.getMenus()
@@ -144,6 +156,7 @@ public class AuthoringWindow {
 
 		mBar.getMenus().get(FILE_MENU).getItems().get(CLOSE_GAME)
 				.setOnAction(e -> Platform.exit());
+
 		return mBar;
 	}
 
@@ -157,6 +170,8 @@ public class AuthoringWindow {
 
 		Button c = new Button("Output xml");
 		c.setOnAction(e -> {
+			XMLBuilder.getInstance("game").addAll(
+					CenterPane.getInstance(null).getSprites());
 			XMLBuilder.getInstance("game").streamFile("lib/test.xml",
 					XMLBuilder.getInstance("game").getRoot());
 		});
@@ -179,7 +194,6 @@ public class AuthoringWindow {
 		return r;
 	}
 
-
 	private VBox setupLeftPane() {
 		VBox buttonBox = new VBox();
 		buttonBox.getChildren().addAll(LeftPane.mButtonList);
@@ -188,7 +202,7 @@ public class AuthoringWindow {
 	}
 
 	private Node setupCenterPane() {
-		myCenterPane = new CenterPane(myScene);
+		myCenterPane = CenterPane.getInstance(myScene);
 		return myCenterPane;
 	}
 
