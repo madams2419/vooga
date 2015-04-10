@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <<<<<<< HEAD
+<<<<<<< HEAD
 <game>
 =======
 <Flappy_Bird>
@@ -26,3 +27,8 @@
 	<stuff>20</stuff>
 </Flappy_Bird>
 >>>>>>> 5906d07736834aa2964e861ab11f8aadea64f60e
+=======
+<Flappy_Bird>
+	<stuff>20</stuff>
+</Flappy_Bird>
+>>>>>>> 2a636b54a22139d1c2efc1a948e9906095af7076
