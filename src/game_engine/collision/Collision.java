@@ -45,7 +45,6 @@ public class Collision {
 	}
 
 	private boolean collide(Sprite spriteA, Sprite spriteB) {
-		// change parameters back to sprites
 
 		boolean[][] bitMapA = spriteA.getHitBox().getBitMap();
 		boolean[][] bitMapB = spriteB.getHitBox().getBitMap();
@@ -62,27 +61,11 @@ public class Collision {
 		double bRight = s2.getX() + s2.getImage().getWidth();
 		double bBot = s2.getY() + s2.getImage().getHeight();
 
-		double highLeft;
-		double lowRight;
-		double highTop;
-		double lowBot;
-
-		if (aLeft > bLeft)
-			highLeft = aLeft;
-		else
-			highLeft = bLeft;
-		if (aTop > bTop)
-			highTop = aTop;
-		else
-			highTop = bTop;
-		if (aRight > bRight)
-			lowRight = bRight;
-		else
-			lowRight = aRight;
-		if (aBot > bBot)
-			lowBot = bBot;
-		else
-			lowBot = aBot;
+		double highLeft = Math.max(aLeft, bLeft);
+		double highTop = Math.max(aLeft, bLeft);
+		double lowRight = Math.min(aRight, bRight);
+		double lowBot = Math.min(aBot, bBot);
+		
 
 		int startY = (int) (highTop - aTop);
 		int endY = (int) (lowBot - aTop);
