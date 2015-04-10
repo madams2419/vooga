@@ -16,10 +16,10 @@ import game_engine.sprite.Sprite;
 public class PhysicsEngine {
 
 	//TODO move these to properties file
-	private static double SCALE_FACTOR = 0.1; // pixel to meter scaling
+	private static double SCALE_FACTOR = 0.01; // pixel to meter scaling
 	private static String GRAV_STRING = "gravity";
-	private static double GRAV_MAGNITUDE = 9.8 / SCALE_FACTOR;
-	private static double DRAG_COEF = 0.2;
+	private static double GRAV_MAGNITUDE = 9.8;
+	private static double DRAG_COEF = 0.0;
 	private static double SC_PERCENT = 0.2;
 	private static double SC_SLOP = 0.01;
 
@@ -89,6 +89,10 @@ public class PhysicsEngine {
 		double sepDistance = b.getPositionMeters().minus(a.getPositionMeters()).getMagnitude();
 		double radiiSum = b.getShape().getRadiusMeters() + a.getShape().getRadiusMeters();
 		return sepDistance <= radiiSum;
+	}
+	
+	public void resolveCollision(Sprite a, Sprite b) {
+		resolveCollision(a.getPhysicsObject(), b.getPhysicsObject());
 	}
 
 	public void resolveCollision(Sprite a, Sprite b, Vector normal, double pDepth) {

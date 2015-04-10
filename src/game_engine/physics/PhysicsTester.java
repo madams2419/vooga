@@ -28,9 +28,9 @@ public class PhysicsTester extends Application {
 	private static int width = 400;
 	private static int height = 400;
 	
-	private static Vector upImpulse = new Vector(0, 5); 
-	private static Vector rightImpulse = new Vector(5, 0);
-	private static Vector leftImpulse = new Vector(-5, 0);
+	private static Vector upImpulse = new Vector(0, 0.1); 
+	private static Vector rightImpulse = new Vector(0.1, 0);
+	private static Vector leftImpulse = new Vector(-0.1, 0);
 	
 	private Timeline gameLoop;
 	private Scene myScene;
@@ -110,7 +110,7 @@ public class PhysicsTester extends Application {
 		playerSprite = new Player();
 		
 		/* create player sprite physics object */
-		int playerRadius = 5;
+		int playerRadius = 15;
 		Shape playerShape = new CircleBody(playerRadius);
 		Material playerMaterial = new Material(0.3, 0.5);
 		PhysicsObject playerPhysics = new PhysicsObject(globalPhysics, playerShape, playerMaterial, 200, 200);
