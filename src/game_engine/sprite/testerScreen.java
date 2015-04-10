@@ -17,7 +17,7 @@ public class testerScreen{
     public Scene initialize()
     {   
         Player myPlayer = new Player();
-        myPlayer.addImage("idle", "d:/voogasalad_HighScrollers/src/game_engine/sprite/standingMario.png");
+        myPlayer.addImage("idle", "Resources/images/standingMario.png");
 //        myPlayer.addImage("walking", "/Resources/images/walkingMario.png");
         
         Scene scene = new Scene(myRoot, myWidth, myHeight);
