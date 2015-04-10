@@ -110,7 +110,7 @@ public class Sprite extends ImageView {
         setImageIcon(image);
     }
 
-    private void onMouseClicked () {
+    private void onMouseClicked () {if (AuthoringWindow.getControl())
         try {
             setOnMouseClicked(new ClickHandler(RightPane.class.getMethod("switchPane", Sprite.class),
                                                RightPane.getInstance(), this));

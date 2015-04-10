@@ -230,7 +230,7 @@ public class XMLBuilder {
 	 * @param property
 	 * @param textContent
 	 */
-	public void addChildWithProperty(Element element, String property,
+	public void addChildWithValue(Element element, String property,
 			String textContent) {
 		add(element, property).setTextContent(textContent);
 	}
@@ -257,7 +257,15 @@ public class XMLBuilder {
 	}
 
 	public void addAll(Collection<Sprite> sprites) {
-		
+		sprites.forEach(sprite -> addSprite(sprite));
+	}
+	
+	private void addSprite(Sprite sprite) {
+		Element s = add(root, "sprite");
+		s.setAttribute("name", sprite.getName());
+		sprite.getCharacteristics().forEach((key, value) -> {
+			addChildWithValue(s,key,value);
+		});
 	}
 	
 	// ====== Testing Main Method ==============================================
