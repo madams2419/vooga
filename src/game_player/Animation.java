@@ -2,11 +2,14 @@ package game_player;
 
 import game_engine.collision.HitBox;
 import game_engine.physics.PhysicsObject;
+import game_engine.physics.Vector;
 import game_engine.sprite.Sprite;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+
 import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -76,8 +79,9 @@ public class Animation implements Observer{
         // TODO Auto-generated catch block
         PhysicsObject physics;
         physics = (PhysicsObject) o;
-        myImageView.setTranslateX(physics.getXMeters());
-        myImageView.setTranslateY(physics.getYMeters());
+        Vector jfxPosition = Utilities.normalToJFXCoords(physics.getPositionPixels());
+        myImageView.setTranslateX(jfxPosition.getX());
+        myImageView.setTranslateY(jfxPosition.getY());
     }
      
     }
