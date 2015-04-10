@@ -21,11 +21,18 @@ public class ControlManager {
 		myActiveControl++;
 	}
 
-	public void setActiveControl(int index){
+	public IBehavior setActiveControl(String... indexArray){
+		int index = Integer.parseInt(indexArray[0]);
+		//needs to replace this error checking with something else
 		if(myActiveControl < 0 || index > myKeyControls.size()){
 			System.out.println("Invalid Active Control Index");
+			return null;
 		} else {
-			myActiveControl = index;
+			IBehavior activeControl = (params) -> {
+				int activeIndex = Integer.parseInt(params[0]);
+				myActiveControl = activeIndex;
+			};
+			return activeControl;
 		}
 	}
 
