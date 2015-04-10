@@ -1,13 +1,14 @@
 package game_engine.sprite;
 
+import game_engine.IBehavior;
+import game_engine.physics.PhysicsObject;
+import game_player.Animation;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
+
 import javafx.scene.image.ImageView;
-import game_engine.IBehavior;
-import game_engine.HitBox;
-import game_engine.physics.PhysicsObject;
-import game_player.Animation;
 
 /**
  * Abstract class for the creation of multiple sprite types
