@@ -196,5 +196,30 @@ public class PhysicsEngine {
 	public double getGround() {
 		return myGround;
 	}
+	
+	/* Scaling utility functions */
+	
+	public double pixelsToMeters(double pixels) {
+		return pixels * SCALE_FACTOR;
+	}
+	
+	public double metersToPixels(double meters) {
+		return meters * SCALE_FACTOR;
+	}
+	
+	public Vector vectorPixelsToMeters(Vector vector) {
+		return vectorPixelsToMeters(vector.getX(), vector.getY());
+	}
+	
+	public Vector vectorPixelsToMeters(double xPixels, double yPixels) {
+		return new Vector(metersToPixels(xPixels), metersToPixels(yPixels));
+	}
+	
+	public Vector vectorMetersToPixels(Vector vector) {
+		return vectorMetersToPixels(vector.getX(), vector.getY());
+	}
 
+	public Vector vectorMetersToPixels(double xMeters, double yMeters) {
+		return new Vector(metersToPixels(xMeters), metersToPixels(yMeters));
+	}
 }

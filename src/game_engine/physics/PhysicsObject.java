@@ -20,24 +20,18 @@ public class PhysicsObject {
 	private PhysicsEngine myPhysics;
 	private Shape myShape;
 
-	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material,
-			Vector position, Vector velocity) {
+	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material, int xPosPixels, int yPosPixels) {
 		myPhysics = physics;
 		myShape = shape;
 		myMaterial = material;
-		myPosition = position;
-		myVelocity = velocity;
 		
+		myPosition = physics.vectorPixelsToMeters(xPosPixels, yPosPixels);
+		myVelocity = new Vector();
 		myNetInternalForce = new Vector();
 		myDirForceMagnitude = 0;
 		
 		myInvMass = computeInvMass();
 		myAccel = computeAccel();
-	}
-
-	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material,
-			int xPos, int yPos) {
-		this(physics, shape, material, new Vector(xPos, yPos), new Vector());
 	}
 
 	public void update() {
