@@ -6,8 +6,8 @@ public class SubtractBehavior implements IBehavior{
 
 	@Override
 	public void execute(String[] params) {
-		ControlTester.subTrack();
-		ControlTester.updateText();
+//		ControlTester.subTrack();
+//		ControlTester.updateText();
 	}
 
 }
