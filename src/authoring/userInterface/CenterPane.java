@@ -1,15 +1,10 @@
 package authoring.userInterface;
 
-import java.awt.Cursor;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
-import java.util.Stack;
-
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
@@ -26,30 +21,14 @@ public class CenterPane extends ScrollPane {
 	
 	private List<Sprite> mySpriteList;
 	private Scene myScene;
-	private Canvas myCanvas;
 	private Group myGroup;
 	private Rectangle myCurrentRectangle;
-
-	private static final int TOP_PANE_HEIGHT = 50;
-	private static final int RIGHT_PANE_WIDTH = 300;
-
-	private int width;
-	private int height;
 
 	CenterPane(Scene scene) {
 		myScene = scene;
 		myGroup = new Group();
-//		myCanvas = new Canvas(
-//				(width = (int) (scene.getWidth() - this.RIGHT_PANE_WIDTH)),
-//				(height = (int) (scene.getHeight() - this.TOP_PANE_HEIGHT)));
-//		myCanvas.getGraphicsContext2D().setStroke(Color.BLACK);
-		// myCanvas.getGraphicsContext2D().strokeLine(0, 0, 400, 400);
-
 		this.setContent(myGroup);
-		//myGroup.getChildren().add(new Rectangle(width, height, Color.WHITE));
-		//myGroup.setOnMouseClicked(e -> canvasClicked(e));
 		mySpriteList = new ArrayList<Sprite>();
-
 		this.setOnKeyPressed(e -> {
 			if (e.getCode() == KeyCode.CONTROL)
 				AuthoringWindow.setControlOn();
@@ -58,7 +37,6 @@ public class CenterPane extends ScrollPane {
 			if (e.getCode() == KeyCode.SHIFT)
 				AuthoringWindow.setControlOff();
 		});
-
 	}
 
 	private void canvasClicked(MouseEvent e) {
@@ -75,20 +53,11 @@ public class CenterPane extends ScrollPane {
 		myScene.setCursor(ImageCursor.DEFAULT);
 		
 		} catch (ClassCastException a) {
-			System.out.println("error");
 		} catch (NullPointerException b) {
-			System.out.println("error");
 		}
 		
 	}
 
-//	private void spriteClicked(MouseEvent p, Sprite s) {
-//		myGroup.getChildren().remove(s);
-//		System.out.println("Removing");
-//		// TODO: Show sprite data in information pane
-//		// TODO: Allow stacked sprites
-//	}
-//	
 	public void createRegion(double x, double y){
 		if (myCurrentRectangle != null){
 			myGroup.getChildren().remove(myCurrentRectangle);

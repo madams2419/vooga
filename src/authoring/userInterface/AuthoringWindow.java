@@ -2,21 +2,14 @@ package authoring.userInterface;
 
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Optional;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-//import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
@@ -46,8 +39,8 @@ public class AuthoringWindow {
 	private static final int OPEN_FILE = 1;
 	private static final int CLOSE_GAME = 2;
 	
-	private static final int SCENE_WIDTH = 1000;
-	private static final int SCENE_HEIGHT = 1000;
+	private static final int SCENE_WIDTH = 1200;
+	private static final int SCENE_HEIGHT = 600;
 	
 	private CenterPane myCenterPane;
 
@@ -77,11 +70,6 @@ public class AuthoringWindow {
 		canvas.setTop(setupTopPane(myScene.getWidth()));
 		canvas.setLeft(setupLeftPane());
 		canvas.setRight(setupRightPane());
-		
-		
-		
-		
-		
 		canvas.setCenter(setupCenterPane());
 		canvas.setBottom(setupBottomPane(myScene.getWidth()));
 
@@ -97,6 +85,7 @@ public class AuthoringWindow {
 		String[] menuItems = { "File:New/Load/Close", "Edit:Copy",
 				"View:Sreen Options", "Help:Help" };
 
+		// TODO: refactor
 		Arrays.asList(menuItems).forEach(
 				str -> {
 					String a = str.split(":")[0];
@@ -108,23 +97,11 @@ public class AuthoringWindow {
 							str1 -> m.getItems().add(new MenuItem(str1)));
 					mBar.getMenus().add(m);
 				});
-		/*
-		 * @author Andrew
-		 */
+		
 		mBar.getMenus().get(FILE_MENU).getItems().get(NEW_FILE).setOnAction(e -> {
 			new NewRegionDialog(myCenterPane);
 		});
 		
-		mBar.getMenus().get(0).getItems().get(1).setOnAction(e -> {
-			 FileChooser fileChooser = new FileChooser();
-			 fileChooser.setTitle("Open Resource File");
-			 fileChooser.getExtensionFilters().addAll(
-			         new ExtensionFilter("Text Files", "*.txt"),
-			         new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"),
-			         new ExtensionFilter("Audio Files", "*.wav", "*.mp3", "*.aac"),
-			         new ExtensionFilter("All Files", "*.*"));
-			 fileChooser.showOpenDialog(null);
-		});
 		mBar.getMenus()
 				.get(FILE_MENU)
 				.getItems()
