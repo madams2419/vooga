@@ -6,18 +6,18 @@ import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import authoring.Sprite;
 import authoring.userInterface.AuthoringWindow;
 import authoring.util.FrontEndUtils;
+
 
 /**
  * This class represents the right pane on the screen. It will allow the user to
  * edit a particular character, to edit the interactions between characters, and
  * to create new characters.
  * 
- * @author Natalie Chanfreau, Daniel Luker
+ * @author Natalie Chanfreau, Daniel Luker, hojeannie Chung
  *
  */
 public class RightPane extends VBox {

@@ -13,7 +13,7 @@ import javafx.scene.layout.HBox;
 
 /***
  * 
- * @author daniel
+ * @author daniel and Jeannie
  *
  */
 
@@ -24,6 +24,7 @@ public class BottomPane extends HBox {
 	static ArrayList<Button> mButtonList=new ArrayList<Button>();
 	public static Group root=new Group();
 
+
 	BottomPane() {
 		this.getStylesheets().add("styles/top_pane.css");
 	}
@@ -31,10 +32,11 @@ public class BottomPane extends HBox {
 	public Group generateComponents(ArrayList<Map> values){
 		for(int i=0; i<values.size(); i++){
 			Map<String, Map> m=values.get(i);
-			//System.out.println(m);
+			System.out.println(m);
 			for(String key: m.keySet()){
-				if(key.equals("Button")){
+				if(key.equals("Button")){	
 					mButtonList.add(ButtonFactory.generateButton(m.get(key)));
+
 				}
 				if(key.equals("Dropdown")){
 					DropdownFactory dFactory=new DropdownFactory();
@@ -42,12 +44,12 @@ public class BottomPane extends HBox {
 				}
 			}
 		}	
+		
 		root.getChildren().addAll(mButtonList);
 		System.out.println("BottomPane Buttons: " + mButtonList);
 		return root;
-		
-	}
-	
-	
-}
 
+	}
+
+
+}

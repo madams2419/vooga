@@ -8,14 +8,12 @@ import java.util.function.Consumer;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import org.w3c.dom.Element;
-
 import authoring.rightPane.RightPane;
 import authoring.userInterface.AuthoringWindow;
 import authoring.userInterface.ClickHandler;
 import authoring.util.FrontEndUtils;
 import authoring.util.ImageEditor;
+
 
 /***
  * Class that contains information about the sprites for eventually generating
@@ -37,7 +35,6 @@ public class Sprite extends ImageView {
 	private Map<String, String> myKeyActions;
 	private Map<String, String> myCharacteristics;
 
-	private String myName;
 	private String myImageURI;
 	private int myID;
 	private ImageView myIcon;
@@ -48,7 +45,6 @@ public class Sprite extends ImageView {
 	private final static int MAX_ICON_HEIGHT = 100;
 	final String VELOCITY = "velocity";
 	public final String POSITION = "position";
-	private Element xmlHandle;
 
 	public Sprite(int ID, String imageURI) {
 		this();
@@ -81,12 +77,7 @@ public class Sprite extends ImageView {
 				characteristic, ""));
 	}
 
-	public void setName(String name) {
-		this.myName = name;
-	}
-
 	public String getName() {
-//		return this.myName;
 		return myCharacteristics.get("Name");
 	}
 
@@ -105,10 +96,6 @@ public class Sprite extends ImageView {
 	public void changeImage(Image image) {
 		setImage(image);
 		setImageIcon(image);
-	}
-
-	private void onMouseClicked(Consumer<Sprite> consumer) {
-		setOnMouseClicked(e -> consumer.accept(this));
 	}
 
 	private void onMouseClicked() {
@@ -144,7 +131,6 @@ public class Sprite extends ImageView {
 				Double.parseDouble(s2)));
 		setXPosition(myPosition.get(X_STRING));
 		setYPosition(myPosition.get(Y_STRING));
-		XMLBuilder b = XMLBuilder.getInstance("game");
 	}
 
 	public double getXPosition() {

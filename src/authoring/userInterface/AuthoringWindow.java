@@ -3,21 +3,15 @@ package authoring.userInterface;
 //import java.io.File;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javafx.application.Platform;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-//import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -31,6 +25,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import authoring.XMLBuilder;
 import authoring.rightPane.RightPane;
 
 /**
@@ -44,8 +39,8 @@ public class AuthoringWindow {
 	// private String mFileSelector = "src/Resources/FilestoParse.xml";
 
 	private static final int FILE_MENU = 0;
-	private static final int EDIT_MENU = 1;
-	private static final int VIEW_MENU = 2;
+	// private static final int EDIT_MENU = 1;
+	// private static final int VIEW_MENU = 2;
 	private static final int HELP_MENU = 3;
 
 	private static final int NEW_FILE = 0;
@@ -139,10 +134,10 @@ public class AuthoringWindow {
 						// statement?
 						if (result.get() == ButtonType.OK) {
 							// TODO: check to make sure user entered numbers
-
 							// myCenterPane.createRegion(
 							// Double.parseDouble(textBox1.getText()),
 							// Double.parseDouble(textBox1.getText()));
+
 						}
 					});
 
@@ -170,9 +165,11 @@ public class AuthoringWindow {
 				.get(0)
 				.setOnAction(
 						e -> {
+
 							Media media = new Media(Paths
 									.get("src/Resources/help.mp3").toUri()
 									.toString());
+
 							MediaPlayer player = new MediaPlayer(media);
 							player.setVolume(100);
 							player.play();
@@ -180,7 +177,7 @@ public class AuthoringWindow {
 
 		mBar.getMenus().get(FILE_MENU).getItems().get(CLOSE_GAME)
 				.setOnAction(e -> Platform.exit());
-		
+
 		return mBar;
 	}
 
@@ -191,23 +188,25 @@ public class AuthoringWindow {
 		buttonBox.getChildren().addAll(BottomPane.mButtonList);
 		System.out.println("Button Pane is: "
 				+ BottomPane.mButtonList.toString());
+
+		Button c = new Button("Output xml");
+		c.setOnAction(e -> {
+			XMLBuilder.getInstance("game").addAll(
+					CenterPane.getInstance(null).getSprites());
+			XMLBuilder.getInstance("game").streamFile("lib/test.xml",
+					XMLBuilder.getInstance("game").getRoot());
+		});
+		buttonBox.getChildren().add(c);
 		return buttonBox;
 	}
 
 	private HBox setupTopPane(double width) {
-		Map<String, EventHandler<Event>> mButtons = new HashMap<>();
-
-		mButtons.put("Global Settings", null);
-		mButtons.put("Map Settings", null);
-		mButtons.put("Interactions List", null);
-		mButtons.put("Characters", null);
-		mButtons.put("Blocks", null);
-		mButtons.put("Decorations", null);
-		mButtons.put("UI Controls", null);
-
-		TopPane mTopPane = new TopPane();
-		mTopPane.addButtons(mButtons);
-		return mTopPane;
+		HBox buttonBox = new HBox();
+		// UIElementDistributer ud = new UIElementDistributer();
+		// ud.ElementDistributer();
+		buttonBox.getChildren().addAll(TopPane.mButtonList);
+		System.out.println(TopPane.mButtonList.toString());
+		return buttonBox;
 	}
 
 	private VBox setupRightPane() {
