@@ -22,6 +22,8 @@ public class ControlTester extends Application{
 	static ControlManager cManager = new ControlManager();
 	static Text text = new Text(100, 200, printout + track1);
 	static private int activeControl = 0;
+	static private final boolean PRESSED_KEY = true;
+	static private final boolean RELEASED_KEY = false;
 	
 	public static void addTrack(){
 		track1++;
@@ -65,8 +67,8 @@ public class ControlTester extends Application{
 		text.setFont(new Font(20));
 		s.setScene(scene);
 		keyManipulation();
-		scene.setOnKeyPressed(e -> handleKeyInput(e,true));
-		scene.setOnKeyReleased(e -> handleKeyInput(e,false));
+		scene.setOnKeyPressed(e -> handleKeyInput(e,PRESSED_KEY));
+		scene.setOnKeyReleased(e -> handleKeyInput(e,RELEASED_KEY));
 		s.show();
 	}
 	

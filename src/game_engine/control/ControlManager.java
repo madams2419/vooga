@@ -16,7 +16,12 @@ public class ControlManager {
 	}
 
 	public void addControl(Map<KeyCode, Map<IBehavior, String[]>> keyPressMap, Map<KeyCode, Map<IBehavior, String[]>> keyReleaseMap){
-		KeyControl newControl = new KeyControl(keyPressMap, keyReleaseMap);
+		//KeyControl newControl = new KeyControl(keyPressMap, keyReleaseMap, null);
+		//myKeyControls.add(newControl);
+		myActiveControl++;
+	}
+	
+	public void addControl(KeyControl newControl){
 		myKeyControls.add(newControl);
 		myActiveControl++;
 	}
