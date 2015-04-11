@@ -16,28 +16,22 @@ import javafx.scene.layout.HBox;
  * @author Daniel Luker and Jeannie
  *
  */
-public class BottomPane extends HBox {
-
-	private static Scene myScene;
-	private static BottomPane mInstance;
+public class BottomPane extends WindowPane {
 
 	private List<Button> mButtonList = new ArrayList<>();
 
-	public static BottomPane getInstance() {
-		return mInstance == null ? mInstance = new BottomPane() : mInstance;
-	}
+//	BottomPane() {
+//		this(myScene,myContainer);
+//	}
 
-	BottomPane() {
-		this(myScene);
-		mInstance = this;
-	}
-
-	BottomPane(Scene s) {
+	BottomPane(Scene s, AuthoringWindow parent) {
+		super(s,new HBox(), parent);
 		myScene = s;
-		this.getStylesheets().add("styles/top_pane.css");
+		myContainer.getStylesheets().add("styles/top_pane.css");
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public Group generateComponents(
 			ArrayList<Map<String, Map<String, String>>> values) {
 		for (int i = 0; i < values.size(); i++) {
@@ -56,23 +50,22 @@ public class BottomPane extends HBox {
 		Button b = new Button("+");
 		try {
 			b.setOnAction(new ClickHandler(
-					CenterPane.class.getMethod("addTab"), CenterPane
-							.getInstance(myScene)));
+					CenterPane.class.getMethod("addTab"), myParent.getMyCenterPane()));
 		} catch (NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		}
-		this.getChildren().add(b);
 		Button c = new Button("Output xml");
 		c.setOnAction(e -> {
 			XMLBuilder.getInstance("game").addAllSprites(
-					CenterPane.getInstance(null).getActiveTab().getSprites());
+					myParent.getMyCenterPane().getActiveTab().getSprites());
 			XMLBuilder.getInstance("game").addAllEnvironment(
-					CenterPane.getInstance(null).getActiveTab()
+					myParent.getMyCenterPane().getActiveTab()
 							.getEnvironment());
 			XMLBuilder.getInstance("game").streamFile("lib/test.xml");
 		});
+		mButtonList.add(b);
 		mButtonList.add(c);
-		this.getChildren().addAll(mButtonList);
+		((HBox)myContainer).getChildren().addAll(mButtonList);
 		return new Group();
 	}
 

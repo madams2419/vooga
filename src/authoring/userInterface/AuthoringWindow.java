@@ -2,6 +2,7 @@ package authoring.userInterface;
 
 import java.nio.file.Paths;
 import java.util.Arrays;
+
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -28,8 +29,12 @@ import authoring.rightPane.RightPane;
 public class AuthoringWindow {
 
 	private Scene myScene;
-	// private ButtonFactory mbuttonList;
-	// private String mFileSelector = "src/Resources/FilestoParse.xml";
+
+	private TopPane myTopPane;
+	private CenterPane myCenterPane;
+	private BottomPane myBottomPane;
+	private RightPane myRightPane;
+	private LeftPane myLeftPane;
 
 	private static final int FILE_MENU = 0;
 	// private static final int EDIT_MENU = 1;
@@ -41,40 +46,39 @@ public class AuthoringWindow {
 	private static final int CLOSE_GAME = 2;
 	private static final int SCENE_WIDTH = 1200;
 	private static final int SCENE_HEIGHT = 600;
-	private CenterPane myCenterPane;
 
 	private static Sprite currentlySelected;
 	private static boolean control;
 
 	public AuthoringWindow() {
 		// TODO
+		System.out.println("Instantiated AuthoringWindow");
 	}
 
 	public Scene GameCreateUI() {
 
 		VBox root = new VBox();
 
-		BorderPane canvas = new BorderPane();
+		BorderPane rootContainer = new BorderPane();
 
 		myScene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, Color.WHITE);
 
-		canvas.setPrefHeight(myScene.getHeight());
-		canvas.setPrefWidth(myScene.getWidth());
+		rootContainer.setPrefHeight(myScene.getHeight());
+		rootContainer.setPrefWidth(myScene.getWidth());
 
-		UIElementDistributer ud = new UIElementDistributer();
-		ud.ElementDistributer();
 
 		// Setting up borderPane
 		// canvas.setBottom(setupBottomPane(myScene.getWidth()));
-		canvas.setTop(setupTopPane(myScene.getWidth()));
-		canvas.setLeft(setupLeftPane());
-		canvas.setRight(setupRightPane());
-		canvas.setCenter(setupCenterPane());
-		canvas.setBottom(setupBottomPane(myCenterPane, myScene));
+		rootContainer.setTop(setupTopPane());
+		rootContainer.setLeft(setupLeftPane());
+		rootContainer.setRight(setupRightPane());
+		rootContainer.setCenter(setupCenterPane());
+		rootContainer.setBottom(setupBottomPane());
 
+		UIElementDistributer.ElementDistributer(myScene, this);
+		
 		root.getChildren().add(menuBar());
-		root.getChildren().add(canvas);
-		// create a place to display the shapes and react to input
+		root.getChildren().add(rootContainer);
 
 		return myScene;
 	}
@@ -162,41 +166,26 @@ public class AuthoringWindow {
 		return mBar;
 	}
 
-	private BottomPane setupBottomPane(double width, CenterPane centerPane) {
-		return new BottomPane();
+	private Node setupBottomPane() {
+		return (myBottomPane = new BottomPane(myScene, this)).myContainer;
 	}
 
-	private Node setupBottomPane(CenterPane centerPane, Scene s) {
-		return BottomPane.getInstance();
-		// return new MapLevelTabPane(myCenterPane);
+	private Node setupTopPane() {
+		return (myTopPane = new TopPane(myScene, this)).myContainer;
 	}
 
-	private TopPane setupTopPane(double width) {
-		// HBox buttonBox = new HBox();
-		// UIElementDistributer ud = new UIElementDistributer();
-		// ud.ElementDistributer();
-		// buttonBox.getChildren().addAll(TopPane.mButtonList);
-		// System.out.println(TopPane.mButtonList.toString());
-		
-		return TopPane.getInstance();
+	private Node setupRightPane() {
+		myRightPane = RightPane.getInstance();
+		myRightPane.setScene(myScene);
+		return myRightPane;
 	}
 
-	private VBox setupRightPane() {
-		RightPane r = RightPane.getInstance();
-		r.setScene(myScene);
-		return r;
-	}
-
-	private VBox setupLeftPane() {
-		VBox buttonBox = new VBox();
-		buttonBox.getChildren().addAll(LeftPane.mButtonList);
-		System.out.println("Left Pane is: " + LeftPane.mButtonList.toString());
-		return buttonBox;
+	private Node setupLeftPane() {
+		return (myLeftPane = new LeftPane(myScene, this)).myContainer;
 	}
 
 	private Node setupCenterPane() {
-		myCenterPane = CenterPane.getInstance(myScene);
-		return myCenterPane;
+		return (myCenterPane = new CenterPane(myScene, this)).myContainer;
 	}
 
 	public static void setCurrentlySelected(Sprite s) {
@@ -219,4 +208,19 @@ public class AuthoringWindow {
 		return control;
 	}
 
+	public TopPane getMyTopPane() {
+		return myTopPane;
+	}
+
+	public RightPane getMyRightPane() {
+		return myRightPane;
+	}
+
+	public LeftPane getMyLeftPane() {
+		return myLeftPane;
+	}
+
+	public CenterPane getMyCenterPane() {
+		return myCenterPane;
+	}
 }

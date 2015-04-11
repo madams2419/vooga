@@ -26,44 +26,37 @@ import authoring.util.FrontEndUtils;
  * @author Andrew Sun & Daniel "the fresh code machine of bel-duke" Luker
  *
  */
-public class CenterPane extends TabPane {
+public class CenterPane extends WindowPane {
 
-
-	private Scene myScene;
 	private Group myGroup;
-	
-	public static CenterPane mInstance;
-	
-	public static CenterPane getInstance(Scene scene) {
-		if (mInstance == null)
-			mInstance = new CenterPane(scene);
-		return mInstance;
-	}
-	
-	private CenterPane(Scene s) {
-		myScene = s;
-		this.setSide(Side.BOTTOM);
+
+	CenterPane(Scene s, AuthoringWindow w) {
+		super(s, new TabPane(), w);
+		((TabPane) myContainer).setSide(Side.BOTTOM);
 		addTab();
 	}
-	
+
 	public void addTab() {
-		this.getTabs().add(new Tab("", new CenterCanvas(myScene)));
+		((TabPane) myContainer).getTabs().add(
+				new Tab("Map", new CenterCanvas(myScene)));
 	}
-	
+
 	public CenterCanvas getActiveTab() {
-		return (CenterCanvas) this.getTabs().get(this.getSelectionModel().getSelectedIndex()).getContent();
+		return (CenterCanvas) ((TabPane) myContainer)
+				.getTabs()
+				.get(((TabPane) myContainer).getSelectionModel()
+						.getSelectedIndex()).getContent();
 	}
-	
-	
+
 	class CenterCanvas extends ScrollPane {
 
 		private List<Map<String, String>> myEnvironmentList;
 		private ObservableList<Sprite> myListOfSprites;
 		private Rectangle myCurrentRectangle;
 		public GlobalCreationPane gp;
-		
+
 		CenterCanvas(Scene scene) {
-			assert(scene!=null);
+			assert (scene != null);
 			myScene = scene;
 			myGroup = new Group();
 			this.setContent(myGroup);
@@ -77,7 +70,6 @@ public class CenterPane extends TabPane {
 			addMaptoEnvironment(gp.getInstance(scene).fields);
 
 		}
-
 
 		public void addMaptoEnvironment(Map<String, String> m) {
 			myEnvironmentList.add(m);
@@ -124,5 +116,12 @@ public class CenterPane extends TabPane {
 			myCurrentRectangle.setOnMouseClicked(e -> canvasClicked(e));
 			myGroup.getChildren().add(myCurrentRectangle);
 		}
+	}
+
+	@Override
+	public Group generateComponents(
+			ArrayList<Map<String, Map<String, String>>> values) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
