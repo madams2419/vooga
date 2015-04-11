@@ -16,13 +16,21 @@ public class Region extends Sprite implements IRegion{
           super(name,id);
       }
       
-      public IBehavior changePhysics = (params) ->{
+      private IBehavior changePhysics = (params) ->{
           //Change corresponding physics params
       };
       
-      public IBehavior negatePhysics = (params) ->{
+      public IBehavior getChangePhysics(){
+          return this.changePhysics;
+      }
+      
+      private IBehavior negatePhysics = (params) ->{
           
       };
+      
+      public IBehavior getNegatePhysics(){
+          return this.negatePhysics;
+      }
       
 	@Override
 	public void update() {

@@ -1,5 +1,6 @@
 package game_player;
 
+import game_engine.collision.HitBox;
 import game_engine.sprite.Sprite;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +18,7 @@ public class Animation implements Observer{
         
         private ImageView myImageView;
 	private String myCurrentImage;
+	private HitBox myHitBox;
 	Map<String, String> myPathMap;
 
 	
@@ -24,6 +26,7 @@ public class Animation implements Observer{
 	   linkToSprite(sprite);
 	   myPathMap = new HashMap<>();
 	   myImageView = new ImageView();
+	   myHitBox = new HitBox(myImageView);
 	}
 	
 	public void setImage(String state, String ImagePath){
@@ -52,14 +55,18 @@ public class Animation implements Observer{
 	    return myImageView;
 	}
 	
+	public HitBox getHitBox(){
+	    return myHitBox;
+	}
+	
 	
     
     public void update (Observable o, Object arg) {
         // TODO Auto-generated method stub
        Sprite sprite = (Sprite) o;
        changeImage(sprite.getState());
-       myImageView.setTranslateX(sprite.getPhysicsObject().getX());
-       myImageView.setTranslateY(sprite.getPhysicsObject().getY());
+       //myImageView.setTranslateX(sprite.getPhysicsObject().getX());
+       //myImageView.setTranslateY(sprite.getPhysicsObject().getY());
     }
 
 }

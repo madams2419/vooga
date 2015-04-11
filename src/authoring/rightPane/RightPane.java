@@ -1,76 +1,146 @@
 package authoring.rightPane;
 
+import java.util.Arrays;
+import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
+import authoring.InteractionManager;
 import authoring.Sprite;
+import authoring.userInterface.AuthoringWindow;
+
 
 /**
  * This class represents the right pane on the screen. It will allow the user to
  * edit a particular character, to edit the interactions between characters, and
  * to create new characters.
  * 
- * @author Natalie Chanfreau, Daniel Luker
+ * @author Natalie Chanfreau, Daniel Luker, hojeannie Chung
  *
  */
 public class RightPane extends VBox {
 
-	private Scene myScene;
-	private EditingPane myCurrentContent;
+    private Scene myScene;
+    private EditingPane myCurrentContent;
 
-	private final static int SPACING = 20;
-	private final static int PADDING = 10;
-	private final static String CSS = "styles/right_pane.css";
+    private final static int SPACING = 20;
+    private final static int PADDING = 10;
+    private final static String CSS = "styles/right_pane.css";
 
-	public RightPane(Scene scene) {
-		super(SPACING);
-		myScene = scene;
+    private static RightPane mInstance;
 
-		getStylesheets().add(CSS);
-		setPadding(new Insets(PADDING));
-		setAlignment(Pos.TOP_CENTER);
+    public static RightPane getInstance () {
+        if (mInstance == null)
+            mInstance = new RightPane();
+        return mInstance;
+    }
 
-		// initializeCurrentContent(new DefaultEditingPane(scene));
-		// initializeCurrentContent(new CharacterEditingPane(scene, null));
-		initializeCurrentContent(new CharacterCreationPane(scene,
-				s -> switchToCharacterEditingPane(s)));
-	}
+    private RightPane () {
+        super(SPACING);
 
-	public void switchToCharacterEditingPane(Sprite sprite) {
-		switchToPane(new CharacterEditingPane(myScene, sprite));
-	}
+        getStylesheets().add(CSS);
+        setPadding(new Insets(PADDING));
+        setAlignment(Pos.TOP_CENTER);
 
-	public void switchToCharacterCreationPane() {
-		switchToPane(new CharacterCreationPane(myScene,
-				s -> switchToCharacterEditingPane(s)));
-	}
+        // initializeCurrentContent(new DefaultEditingPane(scene));
+        // initializeCurrentContent(new CharacterEditingPane(scene, null));
+    }
 
-	public void switchToInteractionEditingPane(Sprite sprite1, Sprite sprite2) {
-		switchToPane(new InteractionEditingPane(myScene, sprite1, sprite2));
-	}
+    public void switchPane (Sprite s) {
+        if (AuthoringWindow.getControl())
+            switchToInteractionEditingPane(
+                                           (Sprite) AuthoringWindow.getCurrentlySelected(), s);
+        else
+            switchToCharacterEditingPane(s);
+    }
 
-	public void switchToDefaultPane() {
-		switchToPane(new DefaultEditingPane(myScene));
-	}
+    public void switchToCharacterEditingPane (Sprite sprite) {
+        switchToPane(new CharacterEditingPane(myScene, sprite));
+    }
 
-	private void switchToPane(EditingPane newPane) {
-		clearChildren();
-		myCurrentContent = newPane;
-		addFromCurrentContent();
-	}
+    public void switchToCharacterCreationPane () {
+        printOutInteractions();
+        switchToPane(new CharacterCreationPane(myScene));
+        System.out.println("Character Creation Pane");
+    }
 
-	private void clearChildren() {
-		getChildren().clear();
-	}
+    private void printOutInteractions () {
+        InteractionManager.getInstance().printOut();
+    }
 
-	private void addFromCurrentContent() {
-		getChildren().addAll(myCurrentContent.getChildren());
-	}
+    private void switchToInteractionEditingPane (Sprite sprite1, Sprite sprite2) {
+        switchToPane(new InteractionEditingPane(myScene, sprite1, sprite2,
+                                                getListOfInteractions()));
+    }
 
-	private void initializeCurrentContent(EditingPane content) {
-		myCurrentContent = content;
-		this.getChildren().addAll(myCurrentContent.getChildren());
-	}
+    public void InteractionCreate () {
+        System.out.println("Interaction Create");
+    }
 
+    public void switchToBlockCreationPane () {
+        System.out.println("Block Created");
+    }
+
+    public void DecorationCreate () {
+        System.out.println("Decoration Create");
+    }
+
+    public void switchtoGlobalSettingPane () {
+        System.out.println("Global Create");
+    }
+
+    public void UIControlCreate () {
+        System.out.println("UI Control Create");
+    }
+
+    public void switchToDefaultPane () {
+        switchToPane(new DefaultEditingPane(myScene));
+    }
+
+    private void switchToPane (EditingPane newPane) {
+        clearChildren();
+        myCurrentContent = newPane;
+        addFromCurrentContent();
+    }
+
+    public void switchToGlobalSettingPane () {
+        // switchToPane(new CharacterEditingPane(myScene, new Sprite()));
+        switchToPane(new GlobalCreationPane(myScene));
+        System.out.println("Global Create");
+    }
+
+    public void switchToMapSettingPane () {
+        switchToPane(new MapSettingPane(myScene));
+        System.out.println("Map Created");
+    }
+
+    public void setScene (Scene scene) {
+        myScene = scene;
+        initializeCurrentContent(new CharacterCreationPane(scene));
+
+        // temporary
+        // initializeCurrentContent(new InteractionEditingPane(scene, null,
+        // null,
+        // getListOfInteractions()));
+
+    }
+
+    private void clearChildren () {
+        getChildren().clear();
+    }
+
+    private void addFromCurrentContent () {
+        getChildren().addAll(myCurrentContent.getChildren());
+    }
+
+    private void initializeCurrentContent (EditingPane content) {
+        myCurrentContent = content;
+        this.getChildren().addAll(myCurrentContent.getChildren());
+    }
+
+    // TEMPORARY!!
+    private List<String> getListOfInteractions () {
+        return Arrays.asList(new String[] { "jump", "die", "go to new level" });
+    }
 }

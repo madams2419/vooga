@@ -69,7 +69,7 @@ public class ChatroomServer extends Thread {
 			}
 		}
 	}
-
+	
 	public void start(){
 		if(myThread == null){
 			myThread = new Thread(this);
@@ -91,15 +91,16 @@ public class ChatroomServer extends Thread {
 		}
 	}
 
-	public static void main(String[] args){
-		try {
-			ChatroomServer myServer = new ChatroomServer(6050);
-			myServer.runServer();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+	public static void main(String [] args)	{
+
+		int port = Integer.parseInt("6059");
+
+//		try{
+//			Thread t = new ChatroomServer(port, new View());
+//			t.start();
+//		}catch(IOException e){
+//			e.printStackTrace();
+//		}
 	}
 	//	
 	//	public String readConsoleInput(){
