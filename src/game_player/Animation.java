@@ -70,6 +70,7 @@ public class Animation implements Observer{
     
     public void update (Observable o, Object arg) {
         // TODO Auto-generated method stub
+<<<<<<< HEAD
     try {
         Sprite sprite;
         sprite = (Sprite) o;
@@ -84,6 +85,12 @@ public class Animation implements Observer{
         myImageView.setTranslateY(jfxPosition.getY());
     }
      
+=======
+       Sprite sprite = (Sprite) o;
+       changeImage(sprite.getState());
+       //myImageView.setTranslateX(sprite.getPhysicsObject().getX());
+       //myImageView.setTranslateY(sprite.getPhysicsObject().getY());
+>>>>>>> 7d5e946f9ea3ce34ddf23ca286c9b20436d7254d
     }
 
 }

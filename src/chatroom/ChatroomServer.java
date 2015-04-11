@@ -3,11 +3,21 @@ package chatroom;
 import java.net.*;
 import java.io.*;
 
-public class ChatroomServer extends Thread{
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+
+public class ChatroomServer extends Thread {
 	private ServerSocket serverSocket;
 	private String previousInputStream;
+	private String previousOutputString;
+	private String currentOutputString;
 	private boolean continueReading = true;
-	public ChatroomServer(int port) throws IOException{
+	private DataInputStream in;
+	private DataOutputStream out;
+	View myView;
+	
+	public ChatroomServer(int port, View view) throws IOException{
+		myView = view;
 		serverSocket = new ServerSocket(port);
 		System.out.println(InetAddress.getLocalHost());
 		serverSocket.setSoTimeout(10000);
@@ -31,23 +41,25 @@ public class ChatroomServer extends Thread{
 				System.out.println("Waiting for client on port " +
 						serverSocket.getLocalPort() + "...");
 				Socket server = serverSocket.accept();
-				server.setSoTimeout(10000000000);
+				server.setSoTimeout(100000000);
 				System.out.println("Just connected to "
 						+ server.getRemoteSocketAddress());
 				
-				DataInputStream in =
-						new DataInputStream(server.getInputStream());
-				DataOutputStream out =
-						new DataOutputStream(server.getOutputStream());
+				in = new DataInputStream(server.getInputStream());
+				out = new DataOutputStream(server.getOutputStream());
 				while(continueReading){
 					if(!server.getInputStream().equals(previousInputStream)){
-						System.out.println(in.readUTF());
+						myView.sendText(in.readUTF());
 					}
-					String s = readConsoleInput();
-					if(s.toLowerCase().equals("goodbye")){
-						continueReading = false;
+					if(myView.getStringChanged()){
+						String outputString = myView.getText();
+						out.writeUTF(outputString);
+						previousOutputString = outputString;
 					}
-					out.writeUTF(s);
+					if(!currentOutputString.equals(previousOutputString)){
+						out.writeUTF(currentOutputString);
+						previousOutputString = currentOutputString;
+					}
 					previousInputStream = server.getInputStream().toString();
 				}
 //				out.writeUTF("Thank you for connecting to "
@@ -70,10 +82,12 @@ public class ChatroomServer extends Thread{
 		int port = Integer.parseInt("6059");
 
 		try{
-			Thread t = new ChatroomServer(port);
+			Thread t = new ChatroomServer(port, new View());
 			t.start();
 		}catch(IOException e){
 			e.printStackTrace();
 		}
 	}
+
+
 }

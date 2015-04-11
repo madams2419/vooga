@@ -4,16 +4,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.function.Function;
 
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 
-class ClickHandler implements EventHandler<Event> {
+public class ClickHandler implements EventHandler {
 	
 	private Object reactor;
 	private Object target;
 	private Object[] args;
 
-	ClickHandler(Method reactor, Object target, Object... args){
+	public ClickHandler(Method reactor, Object target, Object... args){
 		this.reactor = reactor;
 		this.target = target;
 		this.args = args;
