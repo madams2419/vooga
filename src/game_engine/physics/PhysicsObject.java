@@ -17,7 +17,7 @@ public class PhysicsObject extends Observable {
 	private double myDirForceMagnitude;
 	private List<Joint> myJoints;
 	private PhysicsEngine myPhysics;
-	
+
 	private Shape myShape;
 
 	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material, int xPosPixels, int yPosPixels) {
@@ -35,7 +35,7 @@ public class PhysicsObject extends Observable {
 	}
 
 	public void update() {
-	       
+
 		double dt = myPhysics.getTimeStep();
 		myAccel = computeAccel();
 		myVelocity = myVelocity.plus(myAccel.times(dt));
@@ -94,12 +94,15 @@ public class PhysicsObject extends Observable {
 	}
 
 	public void applyImpulse(Vector impulse) {
-		Vector newVelocity = myVelocity.plus(impulse.times(myInvMass));
-		setVelocity(newVelocity);
-		
+		applyVelocity(impulse.times(myInvMass));
 	}
 
-	protected Vector getPositionMeters() {
+	public void applyVelocity(Vector velocity) {
+		Vector newVelocity = myVelocity.plus(velocity);
+		setVelocity(newVelocity);
+	}
+
+	public Vector getPositionMeters() {
 		return myPosition;
 	}
 
@@ -158,7 +161,7 @@ public class PhysicsObject extends Observable {
 	public double getInvMass() {
 		return myInvMass;
 	}
-	
+
 	public double getRestitution() {
 		return myMaterial.getRestitution();
 	}
