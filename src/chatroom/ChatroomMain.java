@@ -12,7 +12,7 @@ public class ChatroomMain extends Application{
 
 	public void start(Stage stage) throws Exception {
 		View view = new View();
-		myClient = new ChatroomClient(view);
+//		myClient = new ChatroomClient(view);
 		myClient.run();
 		stage.setResizable(false);
         stage.setTitle("Chat Room");
