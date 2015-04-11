@@ -146,10 +146,12 @@ public class PhysicsEngine {
 		if(pDepth < SC_SLOP) {
 			return;
 		}
-
-		Vector correction = normal.times(SC_PERCENT * pDepth / (a.getInvMass() + b.getInvMass()));
-		a.applyImpulse(correction.negate());
-		b.applyImpulse(correction);
+		
+		double correctionCoef = SC_PERCENT * pDepth / (a.getInvMass() + b.getInvMass());
+		System.out.println(correctionCoef);
+		Vector correction = normal.times(correctionCoef);
+		a.applyVelocity(correction.negate());
+		b.applyVelocity(correction);
 	}
 
 	private Vector computeNetGlobalForce() {
