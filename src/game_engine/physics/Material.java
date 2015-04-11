@@ -22,16 +22,8 @@ public class Material {
 		return myDensity;
 	}
 
-	public void setDensity(double density) {
-		myDensity = density;
-	}
-
 	public double getRestitution() {
 		return myRestitution;
-	}
-
-	public void setRestitution(double restitution) {
-		myRestitution = restitution;
 	}
 
 }

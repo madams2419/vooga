@@ -158,11 +158,7 @@ public class PhysicsObject extends Observable {
 	public double getInvMass() {
 		return myInvMass;
 	}
-
-	public void setRestitution(double restitution) {
-		myMaterial.setRestitution(restitution);
-	}
-
+	
 	public double getRestitution() {
 		return myMaterial.getRestitution();
 	}

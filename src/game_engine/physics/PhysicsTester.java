@@ -95,20 +95,21 @@ public class PhysicsTester extends Application {
 
 	/* update node positioning to reflect sprite positioning */
 	public void updateNodes() {
-		for(Sprite sprite : layer.getSprites()) {
+		for (Sprite sprite : layer.getSprites()) {
 			PhysicsObject sPhysics = sprite.getPhysicsObject();
 			Node sNode = displayMap.get(sprite);
 			setNodePosition(sNode, sPhysics.getPositionPixels());
 		}
 	}
+
 	private void handleKeyPress(KeyEvent event) {
-		if(event.getEventType() == KeyEvent.KEY_PRESSED) {
-			if(!keyHoldList.contains(event.getCode())) {
+		if (event.getEventType() == KeyEvent.KEY_PRESSED) {
+			if (!keyHoldList.contains(event.getCode())) {
 				keyHoldList.add(event.getCode());
 				keyPressList.add(event.getCode());
 			}
 
-		} else if(event.getEventType() == KeyEvent.KEY_RELEASED) {
+		} else if (event.getEventType() == KeyEvent.KEY_RELEASED) {
 			keyHoldList.remove(event.getCode());
 			keyReleaseList.add(event.getCode());
 		}
@@ -116,22 +117,22 @@ public class PhysicsTester extends Application {
 
 	private void applyKeyPressBehavior() {
 		PhysicsObject sPhysics = playerSprite.getPhysicsObject();
-		for(KeyCode keycode : keyPressList) {
-			switch(keycode) {
-			case UP :
-				//sPhysics.applyImpulse(upImpulse);
+		for (KeyCode keycode : keyPressList) {
+			switch (keycode) {
+			case UP:
+				// sPhysics.applyImpulse(upImpulse);
 				sPhysics.addForce(upForce);
 				break;
-			case DOWN :
-				//sPhysics.applyImpulse(downImpulse);
+			case DOWN:
+				// sPhysics.applyImpulse(downImpulse);
 				sPhysics.addForce(downForce);
 				break;
-			case RIGHT :
-				//sPhysics.applyImpulse(rightImpulse);
+			case RIGHT:
+				// sPhysics.applyImpulse(rightImpulse);
 				sPhysics.addForce(rightForce);
 				break;
-			case LEFT :
-				//sPhysics.applyImpulse(leftImpulse);
+			case LEFT:
+				// sPhysics.applyImpulse(leftImpulse);
 				sPhysics.addForce(leftForce);
 				break;
 			default:
@@ -143,18 +144,18 @@ public class PhysicsTester extends Application {
 
 	private void applyKeyReleaseBehavior() {
 		PhysicsObject sPhysics = playerSprite.getPhysicsObject();
-		for(KeyCode keycode : keyReleaseList) {
-			switch(keycode) {
-			case UP :
+		for (KeyCode keycode : keyReleaseList) {
+			switch (keycode) {
+			case UP:
 				sPhysics.removeForce(upForce);
 				break;
-			case DOWN :
+			case DOWN:
 				sPhysics.removeForce(downForce);
 				break;
-			case RIGHT :
+			case RIGHT:
 				sPhysics.removeForce(rightForce);
 				break;
-			case LEFT :
+			case LEFT:
 				sPhysics.removeForce(leftForce);
 				break;
 			default:
@@ -169,25 +170,27 @@ public class PhysicsTester extends Application {
 		layer = new Layer();
 
 		/* create global physics engine */
-		globalPhysics = new PhysicsEngine(0, 1/(double)fps);
+		globalPhysics = new PhysicsEngine(0, 1 / (double) fps);
 
 		/* create player sprite physics object */
 		int playerRadius = 15;
 		Shape playerShape = new CircleBody(playerRadius);
-		Material playerMaterial = new Material(0.3, 0.8);
-		PhysicsObject playerPhysics = new PhysicsObject(globalPhysics, playerShape, playerMaterial, 400, 400);
+		Material playerMaterial = Material.BOUNCY_BALL;
+		PhysicsObject playerPhysics = new PhysicsObject(globalPhysics,
+				playerShape, playerMaterial, 400, 400);
 
 		/* create player sprite */
-                playerSprite = new Player(playerPhysics);
+		playerSprite = new Player(playerPhysics);
 
 		/* set player physics */
 		playerSprite.setPhysicsObject(playerPhysics);
 
 		playerSprite.addImage("walking", "/Resources/images/standingMario.png");
-                playerSprite.setState("walking");
-                playerSprite.getImageView().setFitHeight(50);
-                playerSprite.getImageView().setFitWidth(50);
-                myGroup.getChildren().add(playerSprite.getImageView());
+		playerSprite.setState("walking");
+		playerSprite.getImageView().setFitHeight(50);
+		playerSprite.getImageView().setFitWidth(50);
+		myGroup.getChildren().add(playerSprite.getImageView());
+		
 		/* add player to layer */
 		layer.addSprite(playerSprite);
 
@@ -197,15 +200,17 @@ public class PhysicsTester extends Application {
 		createAndAddEnemy(700, 200, 200, 0.3, 0.2);
 	}
 
-	public void createAndAddEnemy(int x, int y, double radius, double density, double restitution) {
+	public void createAndAddEnemy(int x, int y, double radius, double density,
+			double restitution) {
 
 		/* create enemy sprite physics object */
 		Shape enemyShape = new CircleBody(radius);
 		Material enemyMaterial = new Material(density, restitution);
-		PhysicsObject enemyPhysics = new PhysicsObject(globalPhysics, enemyShape, enemyMaterial, x, y);
+		PhysicsObject enemyPhysics = new PhysicsObject(globalPhysics,
+				enemyShape, enemyMaterial, x, y);
 
 		/* create enemy sprite */
-                Sprite enemySprite = new Enemy(enemyPhysics);
+		Sprite enemySprite = new Enemy(enemyPhysics);
 		/* set player physics */
 		enemySprite.setPhysicsObject(enemyPhysics);
 
@@ -215,7 +220,7 @@ public class PhysicsTester extends Application {
 
 	public void initAndDrawNodes() {
 		displayMap = new HashMap<>();
-		for(Sprite sprite : layer.getSprites()) {
+		for (Sprite sprite : layer.getSprites()) {
 			Node node = createNodeFromSprite(sprite);
 			myGroup.getChildren().add(node);
 			displayMap.put(sprite, node);
@@ -231,13 +236,14 @@ public class PhysicsTester extends Application {
 		// just to make things prettier...
 		Color sColor = Color.BLACK;
 		String className = sprite.getClass().getName();
-		if(className.contains("Player")) {
+		if (className.contains("Player")) {
 			sColor = Color.BLACK;
-		} else if(className.contains("Enemy")) {
+		} else if (className.contains("Enemy")) {
 			sColor = Color.BURLYWOOD;
 		}
 
-		Node circle = new Circle(radius, sColor); // right now only circles are supported
+		Node circle = new Circle(radius, sColor); // right now only circles are
+													// supported
 		setNodePosition(circle, sPhysics.getPositionPixels());
 		return circle;
 	}
@@ -251,6 +257,7 @@ public class PhysicsTester extends Application {
 	/* debug function to print player sprite's location */
 	private void printLoc() {
 		PhysicsObject sPhysics = playerSprite.getPhysicsObject();
-		System.out.printf("(%d, %d)\n", (int)sPhysics.getXPixels(), (int)sPhysics.getYPixels());
+		System.out.printf("(%d, %d)\n", (int) sPhysics.getXPixels(),
+				(int) sPhysics.getYPixels());
 	}
 }
