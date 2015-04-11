@@ -32,7 +32,7 @@ public class Animation implements Observer {
 		linkToSprite(physics);
 		myPathMap = new HashMap<>();
 		myImageView = new ImageView();
-		myHitBox = new HitBox(myImageView);
+		myHitBox = null; //DEBUG
 	}
 
 	public void setImage(String state, String ImagePath) {

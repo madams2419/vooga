@@ -175,7 +175,7 @@ public class PhysicsTester extends Application {
 		/* create player sprite physics object */
 		int playerRadius = 15;
 		Shape playerShape = new CircleBody(playerRadius);
-		Material playerMaterial = Material.BOUNCY_BALL;
+		Material playerMaterial = Material.SUPER_BALL;
 		PhysicsObject playerPhysics = new PhysicsObject(globalPhysics,
 				playerShape, playerMaterial, 400, 400);
 
@@ -193,9 +193,9 @@ public class PhysicsTester extends Application {
 		layer.addSprite(playerSprite);
 
 		/* create and add enemy sprites */
-		createAndAddEnemy(300, 700, 50, Material.METAL);
-		createAndAddEnemy(500, 700, 30, Material.METAL);
-		createAndAddEnemy(700, 200, 200, Material.METAL);
+		createAndAddEnemy(300, 700, 50, Material.BOUNCY_BALL);
+		createAndAddEnemy(500, 700, 30, Material.BOUNCY_BALL);
+		createAndAddEnemy(700, 200, 200, Material.BOUNCY_BALL);
 	}
 
 	public void createAndAddEnemy(int x, int y, double radius, Material material) {
