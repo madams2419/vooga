@@ -17,8 +17,6 @@ import javafx.scene.layout.HBox;
  *
  */
 
-import authoring.userInterface.UIElementDistributer;
-
 public class BottomPane extends HBox {
 	//TODO fill out this badboy
 	static ArrayList<Button> mButtonList=new ArrayList<Button>();
