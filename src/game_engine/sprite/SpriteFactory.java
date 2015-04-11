@@ -11,6 +11,7 @@ public class SpriteFactory {
     public Sprite createSprite(String spriteType) throws InstantiationException, IllegalAccessException{
        Class<?> runClass = null;
        Sprite classInstance = null;
+       System.out.println(spriteType);
        String className =  "game_engine.sprite." + spriteType;
        try {
         runClass = Class.forName(className);
@@ -22,8 +23,7 @@ public class SpriteFactory {
         
         try {
 	    return classInstance =  (Sprite) runClass.getConstructor().newInstance();
-	} catch (IllegalArgumentException | InvocationTargetException
-		| NoSuchMethodException | SecurityException e) {
+	} catch (IllegalArgumentException | SecurityException | InvocationTargetException | NoSuchMethodException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	    return null;

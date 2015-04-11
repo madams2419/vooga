@@ -1,6 +1,5 @@
 package game_player;
 
-import game_engine.Layer;
 import game_engine.Level;
 import game_engine.sprite.Sprite;
 import game_engine.sprite.SpriteFactory;
@@ -30,15 +29,13 @@ public class VoogaGameBuilder {
     
     private Level buildLevel() {
 	Level level = new Level();
-	Layer sprites = new Layer();
-	level.addLayer(sprites);
 	
 	parser.moveDown("sprite");
 	
 	for (String directory : parser.getValidSubDirectories()) {
 	    parser.moveDown(directory);
 	    Sprite sprite = buildSprite();
-	    sprites.addSprite(sprite);
+	    level.addSprite(sprite);
 	    parser.moveUp();
 	}
 	

@@ -1,6 +1,5 @@
 package game_engine.physics;
 
-import game_engine.Layer;
 import game_engine.sprite.Enemy;
 import game_engine.sprite.Player;
 import game_engine.sprite.Sprite;
@@ -37,7 +36,7 @@ public class PhysicsTester extends Application {
 	private Scene myScene;
 	private Group myGroup;
 	
-	Layer layer;
+	List<Sprite> sprites;
 	PhysicsEngine globalPhysics;
 	Sprite playerSprite;
 	HashMap<Sprite, Node> displayMap;
@@ -73,13 +72,13 @@ public class PhysicsTester extends Application {
 	}
 
 	private void handleKeyFrame() {
-		globalPhysics.update(layer);
+		globalPhysics.update(sprites);
 		updateNodes();
 	}
 	
 	/* update node positioning to reflect sprite positioning */
 	public void updateNodes() {
-		for(Sprite sprite : layer.getSprites()) {
+		for(Sprite sprite : sprites) {
 			PhysicsObject sPhysics = sprite.getPhysicsObject();
 			Node sNode = displayMap.get(sprite);
 			setNodePosition(sNode, sPhysics.getPositionPixels());
@@ -108,7 +107,7 @@ public class PhysicsTester extends Application {
 	
 	public void initBackend() {
 		/* init layer */
-		layer = new Layer();
+		sprites = new ArrayList<Sprite>();
 		
 		/* create global physics engine */
 		globalPhysics = new PhysicsEngine(0, 1/(double)fps);
@@ -126,7 +125,7 @@ public class PhysicsTester extends Application {
 		playerSprite.setPhysicsObject(playerPhysics);
 		
 		/* add player to layer */
-		layer.addSprite(playerSprite);
+		sprites.add(playerSprite);
 		
 		/* create and add enemy sprites */
 		createAndAddEnemy(300, 700, 50, 0.4, 0.3);
@@ -147,12 +146,12 @@ public class PhysicsTester extends Application {
 		enemySprite.setPhysicsObject(enemyPhysics);
 		
 		/* add to layer */
-		layer.addSprite(enemySprite);
+		sprites.add(enemySprite);
 	}
 	
 	public void initAndDrawNodes() {
 		displayMap = new HashMap<>();
-		for(Sprite sprite : layer.getSprites()) {
+		for(Sprite sprite : sprites) {
 			Node node = createNodeFromSprite(sprite);
 			myGroup.getChildren().add(node);
 			displayMap.put(sprite, node);

@@ -1,7 +1,10 @@
 package menu;
 
+import java.io.File;
+
 import game_player.VoogaGame;
 import game_player.VoogaGameBuilder;
+import game_player.XMLParser;
 import authoring.userInterface.*;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
@@ -45,6 +48,8 @@ public class VoogaMenu {
     
     private static final String GAME = "game";
     private static final String DESIGN = "dev";
+    
+    private static final String SIMPLE_GAME = "src/gamedata/Simple.game";
     
     private VoogaFileChooser chooser;
     
@@ -113,6 +118,11 @@ public class VoogaMenu {
     public Scene initialize() {
 	scene = new Scene(root, width, height);
 	scene.setFill(Color.BLACK);
+	
+	scene.setOnKeyTyped((key) -> {
+	    launchGame(new XMLParser(new File(SIMPLE_GAME)));
+	});
+	
 	return scene;
     }
     
@@ -164,7 +174,6 @@ public class VoogaMenu {
      * hasn't been called before, indicated by the root onMouseClicked action.
      */
     private void displayMenu() {
-	// TODO: get rid of this if statement if possible
 	if (root.getOnMouseClicked() != null) {
 	    TranslateTransition moveText = new TranslateTransition(Duration.millis(TRANSITION_TIME), textHolder);
 	    moveText.setToY(-height / 3);
@@ -266,14 +275,19 @@ public class VoogaMenu {
 	
 	design.setOnMouseExited((event) -> 
 	    buttonSelectedAction(0, -height/3, OPAQUE, OPAQUE, TRANSPARENT));
+    }
+    
+    /*
+     * Allows the user to click on one of the buttons to display the relevant options.
+     */
+    private void enableClicking() {
+	Circle play = (Circle) playButton.getChildren().get(1);
+	Circle design = (Circle) designButton.getChildren().get(1);
 	
 	play.setOnMouseClicked((event) -> {
 	    addChoiceMenu(GAME);
 	    choiceMenu.setOnMouseClicked((clicked) -> {
-		VoogaGameBuilder builder = new VoogaGameBuilder(chooser.getChosenFile());
-		VoogaGame gameLoop = builder.build();
-		scene.setRoot(gameLoop.getRoot());
-		//gameLoop.start();
+		launchGame(chooser.getChosenFile());
 	    });
 	});
 	
@@ -284,6 +298,13 @@ public class VoogaMenu {
 		scene = new AuthoringWindow().GameCreateUI();
 	    });
 	});
+    }
+    
+    private void launchGame(XMLParser file) {
+	VoogaGameBuilder gameBuilder = new VoogaGameBuilder(file);
+	VoogaGame game = gameBuilder.build();
+	scene.setRoot(game.getRoot());
+	game.start();
     }
     
     /*
@@ -351,5 +372,7 @@ public class VoogaMenu {
 	
 	fadeOverlay.setToValue(overlayTo);
 	fadeOverlay.play();
+	
+	enableClicking();
     }
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-import game_engine.Layer;
 import game_engine.sprite.Sprite;
 
 // TODO
@@ -56,9 +55,7 @@ public class PhysicsEngine {
 		computeNetGlobalAccel();
 	}
 
-	public void update(Layer layer) {
-		List<Sprite> sprites = layer.getSprites();
-
+	public void update(List<Sprite> sprites) {
 		handleCollisions(sprites);
 
 		updatePhysicsObjects(sprites);

@@ -41,7 +41,7 @@ public class VoogaGame extends AnimationTimer {
     
     public Group getRoot() {
 	Group root = new Group();
-	for (Sprite sprite : activeLevel.getLayers().get(0).getSprites()) {
+	for (Sprite sprite : activeLevel.getSprites()) {
 	    root.getChildren().add(sprite.getImageView());
 	}
 	return root;

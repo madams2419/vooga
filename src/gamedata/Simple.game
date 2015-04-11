@@ -258,13 +258,21 @@
 				
 				<collision_1>
 					<sprite_1>0</sprite_1>
-					<sprite_2>1 2</sprite_2>
+					<sprite_2>1</sprite_2>
 					<direction>0 1 2</direction>
 					<realistic>true</realistic>
 					<behaviors></behaviors>
 				</collision_1>
 				
 				<collision_2>
+					<sprite_1>0</sprite_1>
+					<sprite_2>2</sprite_2>
+					<direction>0 1 2</direction>
+					<realistic>true</realistic>
+					<behaviors></behaviors>
+				</collision_2>
+				
+				<collision_3>
 					<sprite_1>0</sprite_1>
 					<sprite_2>4</sprite_2>
 					<direction>0 1 2 3</direction>
@@ -277,9 +285,9 @@
 							<parameters>complete</parameters>
 						</behavior_0>
 					</behaviors>
-				</collision_2>
+				</collision_3>
 				
-				<collision_3>
+				<collision_4>
 					<sprite_1>0</sprite_1>
 					<sprite_2>5</sprite_2>
 					<direction>0 1 2 3</direction>
@@ -292,7 +300,7 @@
 							<parameters>complete</parameters>
 						</behavior_0>
 					</behaviors>
-				</collision_3>
+				</collision_4>
 			</collision>
 		</level_0>
 	</level>

@@ -1,6 +1,7 @@
 package game_engine;
 
 import game_engine.objective.Objective;
+import game_engine.sprite.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +15,12 @@ import java.util.List;
 public class Level {
 	
 	List<Objective> myObjectives;
-	List<Layer> myLayers;
+	List<Sprite> mySprites;
 	
 	public Level() {
 		// TODO
 	    myObjectives = new ArrayList<>();
-	    myLayers = new ArrayList<>();
+	    mySprites = new ArrayList<>();
 	}
 	
 	/**
@@ -30,15 +31,7 @@ public class Level {
                 // TODO
             //Potentially different method
             myObjectives.forEach(objective -> objective.update(now));
-            myLayers.forEach(layer -> layer.update());
-        }
-        
-        public void scrollX(int x){
-            myLayers.forEach(layer -> layer.scrollX(x));
-        }
-        
-        public void scrollY(int y){
-            myLayers.forEach(layer -> layer.scrollY(y));
+            mySprites.forEach(sprite -> sprite.update());
         }
         
 	/**
@@ -76,8 +69,8 @@ public class Level {
 	 * adds a layer into a specific level
 	 * @param layer the layer to be added
 	 */
-	public void addLayer(Layer layer){
-	    myLayers.add(layer);
+	public void addSprite(Sprite layer){
+	    mySprites.add(layer);
 	}
 	
 	/**
@@ -85,15 +78,15 @@ public class Level {
 	 * removes a layer from a specific layer
 	 * @param layer the layer to be removed
 	 */
-	public void removeLayer(Layer layer){
-	    myLayers.remove(layer);
+	public void removeSprite(Sprite layer){
+	    mySprites.remove(layer);
 	}
 	
 	/**
 	 * method getLayers
 	 * @return list of layers for the current level
 	 */
-	public List<Layer> getLayers(){
-	    return myLayers;
+	public List<Sprite> getSprites(){
+	    return mySprites;
 	}
 }
