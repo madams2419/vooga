@@ -28,14 +28,14 @@ public class Layer {
 	
 	public void scrollX(int x){
 	    sprites.forEach(sprite -> {
-	        if(!sprite.getClass().isInstance(new Player()))
+	        if(!sprite.getClass().isInstance(new Player(null)))
 	       sprite.getPhysicsObject().setXPixels(sprite.getPhysicsObject().getXPixels()+x);
 	    });
 	}
 	
 	public void scrollY(int y){
 	    sprites.forEach(sprite -> {
-                if(!sprite.getClass().isInstance(new Player()))
+                if(!sprite.getClass().isInstance(new Player(null)))
                sprite.getPhysicsObject().setYPixels(sprite.getPhysicsObject().getYPixels()+y);
             });
 	}

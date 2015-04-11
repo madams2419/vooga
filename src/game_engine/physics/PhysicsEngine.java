@@ -20,7 +20,7 @@ public class PhysicsEngine {
 	private static String GRAV_STRING = "gravity";
 	private static double GRAV_MAGNITUDE = 9.8;
 	private static double DRAG_COEF = 0.05;
-	private static double SC_PERCENT = 0.2;
+	private static double SC_PERCENT = 0.5;
 	private static double SC_SLOP = 0.01;
 
 	private double myGround;
@@ -78,19 +78,23 @@ public class PhysicsEngine {
 			for(int j = i + 1; j < sprites.size(); ++j) {
 				PhysicsObject b = sprites.get(j).getPhysicsObject();
 
-				if(checkCircleCollision(a, b)) {
+				if(checkCollision(a, b)) {
 					resolveCollision(a, b);
 				}
 			}
 		}
 	}
 
-	private boolean checkCircleCollision(PhysicsObject a, PhysicsObject b) {
+	private boolean checkCollision(PhysicsObject a, PhysicsObject b) {
+		return getCollisionDepth(a, b) >= 0;
+	}
+
+	private double getCollisionDepth(PhysicsObject a, PhysicsObject b) {
 		double sepDistance = b.getPositionMeters().minus(a.getPositionMeters()).getMagnitude();
 		double radiiSum = b.getShape().getRadiusMeters() + a.getShape().getRadiusMeters();
-		return sepDistance <= radiiSum;
+		return radiiSum - sepDistance;
 	}
-	
+
 	public void resolveCollision(Sprite a, Sprite b) {
 		resolveCollision(a.getPhysicsObject(), b.getPhysicsObject());
 	}
@@ -100,12 +104,9 @@ public class PhysicsEngine {
 	}
 
 	public void resolveCollision(PhysicsObject a, PhysicsObject b) {
-		Vector normal = getCollisionNormal(a, b);
-
-		resolveCollision(a, b, normal, 0);
+		resolveCollision(a, b, getCollisionNormal(a, b), getCollisionDepth(a, b));
 	}
 
-	/* implement as IBehavior */
 	public void resolveCollision(PhysicsObject a, PhysicsObject b, Vector normal, double pDepth) {
 		// compute relative velocity
 		Vector relVel = b.getVelocity().minus(a.getVelocity());
@@ -140,14 +141,17 @@ public class PhysicsEngine {
 	}
 
 	private void applySinkCorrection(PhysicsObject a, PhysicsObject b, Vector normal, double pDepth) {
+		System.out.println(pDepth);
 		// return if penetration depth is less than threshold
 		if(pDepth < SC_SLOP) {
 			return;
 		}
-
-		Vector correction = normal.times(SC_PERCENT * pDepth / (a.getInvMass() + b.getInvMass()));
-		a.applyImpulse(correction.negate());
-		b.applyImpulse(correction);
+		
+		double correctionCoef = SC_PERCENT * pDepth / (a.getInvMass() + b.getInvMass());
+		System.out.println(correctionCoef);
+		Vector correction = normal.times(correctionCoef);
+		a.applyVelocity(correction.negate());
+		b.applyVelocity(correction);
 	}
 
 	private Vector computeNetGlobalForce() {
