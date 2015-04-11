@@ -1,9 +1,27 @@
 package game_engine.sprite;
 
+import game_engine.physics.PhysicsObject;
+
 public class Collectible extends Sprite{
     
     private int myCount;
     private boolean canCollect;
+<<<<<<< HEAD
+    
+    public Collectible(PhysicsObject physics) {
+        super(physics);
+       
+      }
+
+   
+      public Collectible(PhysicsObject physics, String name){
+          super(physics,name);
+          
+      }
+    
+      public Collectible(PhysicsObject physics,String name, int id){
+          super(physics,name,id);
+=======
 
     public Collectible() {
         super();
@@ -35,6 +53,7 @@ public class Collectible extends Sprite{
       
       public void resetCount(){
           myCount = 0;
+>>>>>>> 7d5e946f9ea3ce34ddf23ca286c9b20436d7254d
          
       }
       
