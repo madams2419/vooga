@@ -1,5 +1,6 @@
 package game_engine.collision;
 
+import game_engine.Behavior;
 import game_engine.IBehavior;
 import game_engine.physics.PhysicsEngine;
 import game_engine.sprite.Sprite;
@@ -10,7 +11,7 @@ import java.util.Map;
 import javafx.scene.image.ImageView;
 
 /**
- * Defines behavior when collision occurs
+ * 
  * 
  * @author Michael Lee
  *
@@ -18,33 +19,52 @@ import javafx.scene.image.ImageView;
 
 public class Collision {
 	private Sprite spriteA;
-	private List<Sprite> spriteList;
-	private Map<Sprite, Map<IBehavior, String[]>> behaviorList;
+	private Sprite spriteB;
+//	private Map<Sprite, Map<IBehavior, String[]>> behaviorList;
+	private IBehavior behavior;
 	private CollisionDirection direction;
+	private boolean isRealistic;
+	private PhysicsEngine physics;
 
-	
-	public Collision(Sprite a, List<Sprite> list,
-			Map<Sprite, Map<IBehavior, String[]>> b, CollisionDirection d) {
+	/**
+	 * 
+	 * @param a
+	 * @param b
+	 * @param behave
+	 * @param d
+	 * @param real
+	 * @param p
+	 */
+	public Collision(Sprite a, Sprite b, IBehavior behave, CollisionDirection d, boolean real, PhysicsEngine p) {
 		spriteA = a;
-		spriteList = list;
-		behaviorList = b;
+		spriteB = b;
+		behavior = behave;
 		direction = d;
+		isRealistic = real;
+		physics = p;
 	}
 
 	public void getColliding() {
-		spriteList.stream().filter(sprite -> collidingHitBox(sprite, spriteA)).filter(sprite->collide(sprite,spriteA))
-				.forEach(this::execute);
+//		spriteList.stream().filter(sprite -> collidingHitBox(sprite, spriteA)).filter(sprite->collide(sprite,spriteA))
+//				.forEach(this::execute);
+		if(collidingHitBox() && collide()){
+			execute();
+		}
+		
+		if(isRealistic){
+			physics.resolveCollision(spriteA, spriteB);
+		}
 	}
 
-	private void execute(Sprite sprite) {
-		behaviorList.get(sprite).forEach((behavior, params) -> behavior.execute(params) );
+	private void execute() {
+//		behavior.perform();
 	}
 	
-	private boolean collidingHitBox(Sprite spriteA, Sprite spriteB){
+	private boolean collidingHitBox(){
 		return spriteA.getHitBox().intersects(spriteB.getHitBox());
 	}
 
-	private boolean collide(Sprite spriteA, Sprite spriteB) {
+	private boolean collide() {
 
 		boolean[][] bitMapA = spriteA.getHitBox().getBitMap();
 		boolean[][] bitMapB = spriteB.getHitBox().getBitMap();
