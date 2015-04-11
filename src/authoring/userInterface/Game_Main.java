@@ -22,6 +22,4 @@ String backgroundName="randombackground";
     primaryStage.show();
   }
   
-
 }
-

@@ -1,7 +1,5 @@
 package game_engine.physics;
 
-import game_engine.HitBox;
-import java.util.ArrayList;
 import java.util.List;
 
 // TODO
@@ -11,7 +9,6 @@ public class PhysicsObject {
 
 	private double myInvMass;
 	private Material myMaterial;
-	private String myState;
 	private Vector myPosition;
 	private Vector myVelocity;
 	private Vector myAccel;
@@ -20,29 +17,33 @@ public class PhysicsObject {
 	private List<Joint> myJoints;
 	private PhysicsEngine myPhysics;
 	
-	public PhysicsObject(PhysicsEngine physics, Material material, HitBox hitBox, String state, Vector position, Vector velocity) {
-	
 	private Shape myShape;
 
-	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material, HitBox hitBox, String state, Vector position, Vector velocity) {
-		setShape(shape);
-		setMaterial(material);
-		setState(state);
-		setPosition(position);
-		setVelocity(velocity);
+	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material, int xPosPixels, int yPosPixels) {
+		myPhysics = physics;
+		myShape = shape;
+		myMaterial = material;
+
+		myPosition = PhysicsEngine.vectorPixelsToMeters(xPosPixels, yPosPixels);
+		myVelocity = new Vector();
+		myNetInternalForce = new Vector();
+		myDirForceMagnitude = 0;
+
 		myInvMass = computeInvMass();
 		myAccel = computeAccel();
-	}
-
-	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material, HitBox hitBox, String state, int xPos, int yPos) {
-		this(physics, shape, material, hitBox, state, new Vector(xPos, yPos), new Vector());
 	}
 
 	public void update() {
 		double dt = myPhysics.getTimeStep();
 		myAccel = computeAccel();
-		myVelocity = myVelocity.plus(myAccel).times(dt);
-		myPosition = myPosition.plus(myVelocity).times(dt);
+		myVelocity = myVelocity.plus(myAccel.times(dt));
+		myPosition = myPosition.plus(myVelocity.times(dt));
+
+		// temporary ground handling
+		if(myPosition.getY() <= myPhysics.getGround() + myShape.getRadiusMeters()) {
+			myPosition.setY(myPhysics.getGround() + myShape.getRadiusMeters());
+			myVelocity.setY(0);
+		}
 	}
 
 	private double computeInvMass() {
@@ -51,8 +52,9 @@ public class PhysicsObject {
 	}
 
 	private Vector computeAccel() {
-		Vector netForce = computeNetForce();
-		return netForce.times(myInvMass);
+		Vector intNetAccel = computeNetForce().times(myInvMass);
+		Vector extNetAccel = myPhysics.getNetGlobalAccel();
+		return intNetAccel.plus(extNetAccel);
 	}
 
 	private Vector computeNetForce() {
@@ -66,7 +68,8 @@ public class PhysicsObject {
 
 	private Vector computeDirectionalForce() {
 		Vector direction = myVelocity.normalize();
-		return direction.times(myDirForceMagnitude);
+		Vector intForce = direction.times(myDirForceMagnitude);
+		return intForce.plus(myPhysics.getDragForce(this));
 	}
 
 	public void addForce(Vector force) {
@@ -90,28 +93,44 @@ public class PhysicsObject {
 		setVelocity(newVelocity);
 	}
 
-	public Vector getPosition() {
+	protected Vector getPositionMeters() {
 		return myPosition;
 	}
 
-	public void setPosition(Vector position) {
-		myPosition = position;
+	public Vector getPositionPixels() {
+		return PhysicsEngine.vectorMetersToPixels(getPositionMeters());
 	}
-	
-	public double getX() {
+
+	public double getXMeters() {
 		return myPosition.getX();
 	}
-	
-	public double getY() {
+
+	public void setXMeters(double xMeters) {
+		myPosition.setX(xMeters);
+	}
+
+	public double getYMeters() {
 		return myPosition.getY();
 	}
-	
-	public void setX(double x) {
-		myPosition.setX(x);
+
+	public void setYMeters(double yMeters) {
+		myPosition.setY(yMeters);
 	}
-	
-	public void setY(double y) {
-		myPosition.setY(y);
+
+	public double getXPixels() {
+		return PhysicsEngine.metersToPixels(getXMeters());
+	}
+
+	public void setXPixels(double xPixels) {
+		myPosition.setX(PhysicsEngine.pixelsToMeters(xPixels));
+	}
+
+	public double getYPixels() {
+		return PhysicsEngine.metersToPixels(getYMeters());
+	}
+
+	public void setYPixels(double yPixels) {
+		myPosition.setY(PhysicsEngine.pixelsToMeters(yPixels));
 	}
 
 	public Vector getVelocity() {
@@ -147,18 +166,10 @@ public class PhysicsObject {
 		myInvMass = computeInvMass();
 	}
 
-	public void setState(String state) {
-		myState = state;
-	}
-
-	public String getState(String state) {
-		return myState;
-	}
-	
 	public Shape getShape() {
 		return myShape;
 	}
-	
+
 	public void setShape(Shape shape) {
 		myShape = shape;
 		myInvMass = computeInvMass();
