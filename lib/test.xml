@@ -1,21 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game>
-	<sprite name="images" />
-	<sprite name="images" />
-	<sprite name="images" />
-	<sprite name="images" />
 	<sprite name="">
 		<imageURI>/images/smallLuigi.png</imageURI>
 		<ID>100</ID>
-		<position>x=179.0, y=192.5</position>
+		<position>x=298.0, y=122.5</position>
 		<velocity>x=0.0, y=0.0</velocity>
-		<Name>Foo</Name>
+		<Name />
 	</sprite>
 	<sprite name="">
 		<imageURI>/images/luigi.png</imageURI>
 		<ID>100</ID>
-		<position>x=281.5, y=24.0</position>
+		<position>x=178.5, y=150.0</position>
 		<velocity>x=0.0, y=0.0</velocity>
-		<Name>Dan</Name>
+		<Name />
+	</sprite>
+	<sprite name="">
+		<imageURI>/images/smallLuigi.png</imageURI>
+		<ID>100</ID>
+		<position>x=149.0, y=65.5</position>
+		<velocity>x=0.0, y=0.0</velocity>
+		<Name />
+	</sprite>
+	<sprite name="">
+		<imageURI>/images/smallLuigi.png</imageURI>
+		<ID>100</ID>
+		<position>x=298.0, y=122.5</position>
+		<velocity>x=0.0, y=0.0</velocity>
+		<Name />
+	</sprite>
+	<sprite name="">
+		<imageURI>/images/luigi.png</imageURI>
+		<ID>100</ID>
+		<position>x=178.5, y=150.0</position>
+		<velocity>x=0.0, y=0.0</velocity>
+		<Name />
+	</sprite>
+	<sprite name="">
+		<imageURI>/images/smallLuigi.png</imageURI>
+		<ID>100</ID>
+		<position>x=149.0, y=65.5</position>
+		<velocity>x=0.0, y=0.0</velocity>
+		<Name />
 	</sprite>
 </game>
