@@ -2,6 +2,7 @@ package authoring.userInterface;
 
 import java.nio.file.Paths;
 import java.util.Arrays;
+
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -28,8 +29,12 @@ import authoring.rightPane.RightPane;
 public class AuthoringWindow {
 
 	private Scene myScene;
-	// private ButtonFactory mbuttonList;
-	// private String mFileSelector = "src/Resources/FilestoParse.xml";
+
+	private TopPane myTopPane;
+	private CenterPane myCenterPane;
+	private BottomPane myBottomPane;
+	private RightPane myRightPane;
+	private LeftPane myLeftPane;
 
 	private static final int FILE_MENU = 0;
 	// private static final int EDIT_MENU = 1;
@@ -39,45 +44,40 @@ public class AuthoringWindow {
 	private static final int NEW_FILE = 0;
 	private static final int OPEN_FILE = 1;
 	private static final int CLOSE_GAME = 2;
-
-	private static final int SCENE_WIDTH = 1000;
-	private static final int SCENE_HEIGHT = 1000;
-
-	private CenterPane myCenterPane;
+	private static final int SCENE_WIDTH = 1200;
+	private static final int SCENE_HEIGHT = 600;
 
 	private static Sprite currentlySelected;
 	private static boolean control;
 
 	public AuthoringWindow() {
 		// TODO
+		System.out.println("Instantiated AuthoringWindow");
 	}
 
 	public Scene GameCreateUI() {
 
 		VBox root = new VBox();
 
-		BorderPane canvas = new BorderPane();
+		BorderPane rootContainer = new BorderPane();
 
 		myScene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, Color.WHITE);
 
-		canvas.setPrefHeight(myScene.getHeight());
-		canvas.setPrefWidth(myScene.getWidth());
-
-		UIElementDistributer ud = new UIElementDistributer();
-		ud.ElementDistributer();
+		rootContainer.setPrefHeight(myScene.getHeight());
+		rootContainer.setPrefWidth(myScene.getWidth());
 
 		// Setting up borderPane
 		// canvas.setBottom(setupBottomPane(myScene.getWidth()));
-		canvas.setTop(setupTopPane(myScene.getWidth()));
-		canvas.setLeft(setupLeftPane());
-		canvas.setRight(setupRightPane());
+		rootContainer.setTop(setupTopPane());
+		rootContainer.setLeft(setupLeftPane());
+		rootContainer.setRight(setupRightPane());
+		rootContainer.setCenter(setupCenterPane());
+		rootContainer.setBottom(setupBottomPane());
 
-		canvas.setCenter(setupCenterPane());
-		canvas.setBottom(setupBottomPane(myScene.getWidth()));
+		UIElementDistributer.ElementDistributer(myScene, this);
 
 		root.getChildren().add(menuBar());
-		root.getChildren().add(canvas);
-		// create a place to display the shapes and react to input
+		root.getChildren().add(rootContainer);
 
 		return myScene;
 	}
@@ -87,6 +87,7 @@ public class AuthoringWindow {
 		String[] menuItems = { "File:New/Load/Close", "Edit:Copy",
 				"View:Sreen Options", "Help:Help" };
 
+		// TODO: refactor
 		Arrays.asList(menuItems).forEach(
 				str -> {
 					String a = str.split(":")[0];
@@ -98,9 +99,7 @@ public class AuthoringWindow {
 							str1 -> m.getItems().add(new MenuItem(str1)));
 					mBar.getMenus().add(m);
 				});
-		/*
-		 * @author Andrew
-		 */
+
 		mBar.getMenus().get(FILE_MENU).getItems().get(NEW_FILE)
 				.setOnAction(e -> {
 					new NewRegionDialog(myCenterPane);
@@ -166,50 +165,26 @@ public class AuthoringWindow {
 		return mBar;
 	}
 
-	private HBox setupBottomPane(double width) {
-		HBox buttonBox = new HBox();
-		// UIElementDistributer ud = new UIElementDistributer();
-		// ud.ElementDistributer();
-		buttonBox.getChildren().addAll(BottomPane.mButtonList);
-		System.out.println("Button Pane is: "
-				+ BottomPane.mButtonList.toString());
-
-		Button c = new Button("Output xml");
-		c.setOnAction(e -> {
-			XMLBuilder.getInstance("game").addAll(
-					CenterPane.getInstance(null).getSprites());
-			XMLBuilder.getInstance("game").streamFile("lib/test.xml",
-					XMLBuilder.getInstance("game").getRoot());
-		});
-		buttonBox.getChildren().add(c);
-		return buttonBox;
+	private Node setupBottomPane() {
+		return (myBottomPane = new BottomPane(myScene, this)).myContainer;
 	}
 
-	private HBox setupTopPane(double width) {
-		HBox buttonBox = new HBox();
-		// UIElementDistributer ud = new UIElementDistributer();
-		// ud.ElementDistributer();
-		buttonBox.getChildren().addAll(TopPane.mButtonList);
-		System.out.println(TopPane.mButtonList.toString());
-		return buttonBox;
+	private Node setupTopPane() {
+		return (myTopPane = new TopPane(myScene, this)).myContainer;
 	}
 
-	private VBox setupRightPane() {
-		RightPane r = RightPane.getInstance();
-		r.setScene(myScene);
-		return r;
+	private Node setupRightPane() {
+		myRightPane = RightPane.getInstance();
+		myRightPane.setScene(myScene);
+		return myRightPane;
 	}
 
-	private VBox setupLeftPane() {
-		VBox buttonBox = new VBox();
-		buttonBox.getChildren().addAll(LeftPane.mButtonList);
-		System.out.println("Left Pane is: " + LeftPane.mButtonList.toString());
-		return buttonBox;
+	private Node setupLeftPane() {
+		return (myLeftPane = new LeftPane(myScene, this)).myContainer;
 	}
 
 	private Node setupCenterPane() {
-		myCenterPane = CenterPane.getInstance(myScene);
-		return myCenterPane;
+		return (myCenterPane = new CenterPane(myScene, this)).myContainer;
 	}
 
 	public static void setCurrentlySelected(Sprite s) {
@@ -232,4 +207,19 @@ public class AuthoringWindow {
 		return control;
 	}
 
+	public TopPane getMyTopPane() {
+		return myTopPane;
+	}
+
+	public RightPane getMyRightPane() {
+		return myRightPane;
+	}
+
+	public LeftPane getMyLeftPane() {
+		return myLeftPane;
+	}
+
+	public CenterPane getMyCenterPane() {
+		return myCenterPane;
+	}
 }

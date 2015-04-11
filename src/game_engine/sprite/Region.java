@@ -16,11 +16,15 @@ public class Region extends Sprite implements IRegion{
           super(name,id);
       }
       
-      public IBehavior changePhysics = (params) ->{
+      private IBehavior changePhysics = (params) ->{
           //Change corresponding physics params
       };
       
-      public IBehavior negatePhysics = (params) ->{
+      public IBehavior getChangePhysics(){
+          return this.changePhysics;
+      }
+      
+      private IBehavior negatePhysics = (params) ->{
           
       };
       
@@ -29,6 +33,15 @@ public class Region extends Sprite implements IRegion{
                 // TODO Auto-generated method stub
                 
         }
+      public IBehavior getNegatePhysics(){
+          return this.negatePhysics;
+      }
+      
+////	@Override
+////	public void update() {
+////		// TODO Auto-generated method stub
+////		
+//	}
 
     @Override
     public void setGravity (double gravity) {

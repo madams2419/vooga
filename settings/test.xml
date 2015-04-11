@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+	<map>
+		<backgroundimage>res/images/image1.png</backgroundimage>
+		<framerate>60</framerate>
+		<scrollspeed>10</scrollspeed>
+		<a>1</a>
+		<b>2</b>
+		<c>3</c>
+		<ii>2</ii>
+		<iii>3</iii>
+		<i>1</i>
+	</map>
+</game>
