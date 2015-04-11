@@ -1,38 +1,43 @@
 package authoring.userInterface;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
-import com.sun.prism.paint.Color;
-
+import authoring.XMLBuilder;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 /***
  * 
- * @author daniel and Jeannie
+ * @author Daniel Luker and Jeannie
  *
  */
-
-import authoring.userInterface.UIElementDistributer;
-
 public class BottomPane extends HBox {
-	// TODO fill out this badboy
-	static ArrayList<Button> mButtonList = new ArrayList<Button>();
-	private CenterPane myCenterPane;
-	public static Group root = new Group();
+
+	private static Scene myScene;
+	private static BottomPane mInstance;
+
+	private List<Button> mButtonList = new ArrayList<>();
+
+	public static BottomPane getInstance() {
+		return mInstance == null ? mInstance = new BottomPane() : mInstance;
+	}
 
 	BottomPane() {
+		this(myScene);
+		mInstance = this;
+	}
+
+	BottomPane(Scene s) {
+		myScene = s;
 		this.getStylesheets().add("styles/top_pane.css");
 	}
 
-	public BottomPane(CenterPane c) {
-		myCenterPane = c;
-	}
-
+	@SuppressWarnings("unchecked")
 	public Group generateComponents(
 			ArrayList<Map<String, Map<String, String>>> values) {
 		for (int i = 0; i < values.size(); i++) {
@@ -48,13 +53,35 @@ public class BottomPane extends HBox {
 				}
 			}
 		}
+		Button b = new Button("+");
+		try {
+			b.setOnAction(new ClickHandler(
+					CenterPane.class.getMethod("addTab"), CenterPane
+							.getInstance(myScene)));
+		} catch (NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+		}
+		this.getChildren().add(b);
+		Button c = new Button("Output xml");
+		c.setOnAction(e -> {
+			XMLBuilder.getInstance("game").addAllSprites(
+					CenterPane.getInstance(null).getActiveTab().getSprites());
+			XMLBuilder.getInstance("game").addAllEnvironment(
+					CenterPane.getInstance(null).getActiveTab()
+							.getEnvironment());
+			XMLBuilder.getInstance("game").streamFile("lib/test.xml");
+		});
+		mButtonList.add(c);
+		this.getChildren().addAll(mButtonList);
+		return new Group();
+	}
 
-		root.getChildren().addAll(mButtonList);
-		System.out.println("BottomPane Buttons: " + mButtonList);
+	public Iterator<Button> getButtons() {
+		return mButtonList.iterator();
+	}
 
-		// root.getChildren().add(new MapLevelTabPane(myCenterPane));
-		return root;
-
+	public Button[] getButtonArray() {
+		return (Button[]) mButtonList.toArray();
 	}
 
 }

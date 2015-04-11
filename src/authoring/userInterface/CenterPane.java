@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Side;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
@@ -32,8 +33,6 @@ public class CenterPane extends TabPane {
 	private Group myGroup;
 	
 	public static CenterPane mInstance;
-
-	
 	
 	public static CenterPane getInstance(Scene scene) {
 		if (mInstance == null)
@@ -43,10 +42,11 @@ public class CenterPane extends TabPane {
 	
 	private CenterPane(Scene s) {
 		myScene = s;
+		this.setSide(Side.BOTTOM);
 		addTab();
 	}
 	
-	private void addTab() {
+	public void addTab() {
 		this.getTabs().add(new Tab("", new CenterCanvas(myScene)));
 	}
 	
@@ -63,6 +63,7 @@ public class CenterPane extends TabPane {
 		public GlobalCreationPane gp;
 		
 		CenterCanvas(Scene scene) {
+			assert(scene!=null);
 			myScene = scene;
 			myGroup = new Group();
 			this.setContent(myGroup);

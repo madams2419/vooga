@@ -35,7 +35,6 @@ public class ButtonFactory{
 		if(mInstance==null)
 			mInstance=new ButtonFactory();
 		return mInstance;
-		// TODO Auto-generated constructor stub
 	}
 
 	public ButtonFactory(){
@@ -50,8 +49,6 @@ public class ButtonFactory{
 		b.setText(m.get("label"));
 		Object listenerClass=RightPane.getInstance();
 		b.setOnMouseClicked(e->Reflection.callMethod(listenerClass, m.get("listener")));
-		//		mButtonList.add(b);
-		//		return mButtonList;
 		return b;
 	}
 
