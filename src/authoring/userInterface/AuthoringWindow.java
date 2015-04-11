@@ -39,10 +39,8 @@ public class AuthoringWindow {
 	private static final int NEW_FILE = 0;
 	private static final int OPEN_FILE = 1;
 	private static final int CLOSE_GAME = 2;
-
-	private static final int SCENE_WIDTH = 1000;
-	private static final int SCENE_HEIGHT = 1000;
-
+	private static final int SCENE_WIDTH = 1200;
+	private static final int SCENE_HEIGHT = 600;
 	private CenterPane myCenterPane;
 
 	private static Sprite currentlySelected;
@@ -71,9 +69,8 @@ public class AuthoringWindow {
 		canvas.setTop(setupTopPane(myScene.getWidth()));
 		canvas.setLeft(setupLeftPane());
 		canvas.setRight(setupRightPane());
-
 		canvas.setCenter(setupCenterPane());
-		canvas.setBottom(setupBottomPane(myScene.getWidth()));
+		canvas.setBottom(setupBottomPane(myCenterPane, myScene));
 
 		root.getChildren().add(menuBar());
 		root.getChildren().add(canvas);
@@ -87,6 +84,7 @@ public class AuthoringWindow {
 		String[] menuItems = { "File:New/Load/Close", "Edit:Copy",
 				"View:Sreen Options", "Help:Help" };
 
+		// TODO: refactor
 		Arrays.asList(menuItems).forEach(
 				str -> {
 					String a = str.split(":")[0];
@@ -98,9 +96,7 @@ public class AuthoringWindow {
 							str1 -> m.getItems().add(new MenuItem(str1)));
 					mBar.getMenus().add(m);
 				});
-		/*
-		 * @author Andrew
-		 */
+
 		mBar.getMenus().get(FILE_MENU).getItems().get(NEW_FILE)
 				.setOnAction(e -> {
 					new NewRegionDialog(myCenterPane);
@@ -166,32 +162,23 @@ public class AuthoringWindow {
 		return mBar;
 	}
 
-	private HBox setupBottomPane(double width) {
-		HBox buttonBox = new HBox();
-		// UIElementDistributer ud = new UIElementDistributer();
-		// ud.ElementDistributer();
-		buttonBox.getChildren().addAll(BottomPane.mButtonList);
-		System.out.println("Button Pane is: "
-				+ BottomPane.mButtonList.toString());
-
-		Button c = new Button("Output xml");
-		c.setOnAction(e -> {
-			XMLBuilder.getInstance("game").addAll(
-					CenterPane.getInstance(null).getSprites());
-			XMLBuilder.getInstance("game").streamFile("lib/test.xml",
-					XMLBuilder.getInstance("game").getRoot());
-		});
-		buttonBox.getChildren().add(c);
-		return buttonBox;
+	private BottomPane setupBottomPane(double width, CenterPane centerPane) {
+		return new BottomPane();
 	}
 
-	private HBox setupTopPane(double width) {
-		HBox buttonBox = new HBox();
+	private Node setupBottomPane(CenterPane centerPane, Scene s) {
+		return BottomPane.getInstance();
+		// return new MapLevelTabPane(myCenterPane);
+	}
+
+	private TopPane setupTopPane(double width) {
+		// HBox buttonBox = new HBox();
 		// UIElementDistributer ud = new UIElementDistributer();
 		// ud.ElementDistributer();
-		buttonBox.getChildren().addAll(TopPane.mButtonList);
-		System.out.println(TopPane.mButtonList.toString());
-		return buttonBox;
+		// buttonBox.getChildren().addAll(TopPane.mButtonList);
+		// System.out.println(TopPane.mButtonList.toString());
+		
+		return TopPane.getInstance();
 	}
 
 	private VBox setupRightPane() {
