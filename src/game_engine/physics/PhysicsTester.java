@@ -182,9 +182,7 @@ public class PhysicsTester extends Application {
 		/* create player sprite */
 		playerSprite = new Player(playerPhysics);
 
-		/* set player physics */
-		playerSprite.setPhysicsObject(playerPhysics);
-
+		/* set image behavior */
 		playerSprite.addImage("walking", "/Resources/images/standingMario.png");
 		playerSprite.setState("walking");
 		playerSprite.getImageView().setFitHeight(50);
@@ -195,19 +193,17 @@ public class PhysicsTester extends Application {
 		layer.addSprite(playerSprite);
 
 		/* create and add enemy sprites */
-		createAndAddEnemy(300, 700, 50, 0.4, 0.3);
-		createAndAddEnemy(500, 700, 30, 0.3, 0.2);
-		createAndAddEnemy(700, 200, 200, 0.3, 0.2);
+		createAndAddEnemy(300, 700, 50, Material.METAL);
+		createAndAddEnemy(500, 700, 30, Material.METAL);
+		createAndAddEnemy(700, 200, 200, Material.METAL);
 	}
 
-	public void createAndAddEnemy(int x, int y, double radius, double density,
-			double restitution) {
+	public void createAndAddEnemy(int x, int y, double radius, Material material) {
 
 		/* create enemy sprite physics object */
 		Shape enemyShape = new CircleBody(radius);
-		Material enemyMaterial = new Material(density, restitution);
 		PhysicsObject enemyPhysics = new PhysicsObject(globalPhysics,
-				enemyShape, enemyMaterial, x, y);
+				enemyShape, material, x, y);
 
 		/* create enemy sprite */
 		Sprite enemySprite = new Enemy(enemyPhysics);
