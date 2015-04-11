@@ -20,7 +20,7 @@ public class HitBox {
 	public HitBox(ImageView n) {
 		node = n;
 		image = node.getImage();
-		boolean[][] bitMap = createBitMap(image);
+//		boolean[][] bitMap = createBitMap(image);
 		
 	}
 	
@@ -42,16 +42,16 @@ public class HitBox {
 		return node.getBoundsInParent().intersects(compare.getBounds());
 	}
 	
-	private boolean[][] createBitMap(Image src) {
-		PixelReader reader = src.getPixelReader();
-		int width = (int) src.getWidth();
-		int height = (int) src.getHeight();
-		boolean[][] bitMap = new boolean[height][width];
-		for (int y = 0; y < height; y++)
-			for (int x = 0; x < width; x++) {
-				bitMap[y][x] = reader.getArgb(x, y) != 0;
-			}
-		return bitMap;
-	}
+//	private boolean[][] createBitMap(Image src) {
+//		PixelReader reader = src.getPixelReader();
+//		int width = (int) src.getWidth();
+//		int height = (int) src.getHeight();
+//		boolean[][] bitMap = new boolean[height][width];
+//		for (int y = 0; y < height; y++)
+//			for (int x = 0; x < width; x++) {
+//				bitMap[y][x] = reader.getArgb(x, y) != 0;
+//			}
+//		return bitMap;
+//	}
 
 }
