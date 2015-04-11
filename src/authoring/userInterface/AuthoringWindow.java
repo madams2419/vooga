@@ -66,7 +66,6 @@ public class AuthoringWindow {
 		rootContainer.setPrefHeight(myScene.getHeight());
 		rootContainer.setPrefWidth(myScene.getWidth());
 
-
 		// Setting up borderPane
 		// canvas.setBottom(setupBottomPane(myScene.getWidth()));
 		rootContainer.setTop(setupTopPane());
@@ -76,7 +75,7 @@ public class AuthoringWindow {
 		rootContainer.setBottom(setupBottomPane());
 
 		UIElementDistributer.ElementDistributer(myScene, this);
-		
+
 		root.getChildren().add(menuBar());
 		root.getChildren().add(rootContainer);
 

@@ -1,7 +1,10 @@
 package game_engine;
 
+import game_engine.objective.Objective;
 import java.util.ArrayList;
 import java.util.List;
+
+
 /**
  * Level contains the information for each different game level and updates 
  * @author Kevin Chang
@@ -9,32 +12,32 @@ import java.util.List;
  */
 public class Level {
 	
-	List<GameObjective> objectives;
-	List<Layer> layers;
+	List<Objective> myObjectives;
+	List<Layer> myLayers;
 	
 	public Level() {
 		// TODO
-	    objectives = new ArrayList<>();
-	    layers = new ArrayList<>();
+	    myObjectives = new ArrayList<>();
+	    myLayers = new ArrayList<>();
 	}
 	
 	/**
          * method update
          * Update contents of a layer
          */
-        public void update() {
+        public void update(long now) {
                 // TODO
             //Potentially different method
-            objectives.forEach(objective -> objective.update());
-            layers.forEach(layer -> layer.update());
+            myObjectives.forEach(objective -> objective.update(now));
+            myLayers.forEach(layer -> layer.update());
         }
         
         public void scrollX(int x){
-            layers.forEach(layer -> layer.scrollX(x));
+            myLayers.forEach(layer -> layer.scrollX(x));
         }
         
         public void scrollY(int y){
-            layers.forEach(layer -> layer.scrollY(y));
+            myLayers.forEach(layer -> layer.scrollY(y));
         }
         
 	/**
@@ -42,8 +45,8 @@ public class Level {
 	 * adds a Game objective to the current level
 	 * @param objective the GameObjective to be added
 	 */
-	public void addObjective(GameObjective objective){
-	    objectives.add(objective);
+	public void addObjective(Objective objective){
+	    myObjectives.add(objective);
 	}
 	
 	/**
@@ -51,16 +54,20 @@ public class Level {
 	 * removes a Game objective from the current level
 	 * @param objective the objective to be removed
 	 */
-	public void removeObjective(GameObjective objective){
-	    objectives.remove(objective);
+	public void removeObjective(Objective objective){
+	    myObjectives.remove(objective);
+	}
+	
+	public void setObjectives(List<Objective> objectives){
+	    myObjectives = objectives;
 	}
 	
 	/**
 	 * method getObjectives
 	 * @return list of objectives for the current level
 	 */
-	public List<GameObjective> getObjectives(){
-	            return objectives;
+	public List<Objective> getObjectives(){
+	            return myObjectives;
 	}
 	
 	/**
@@ -69,7 +76,7 @@ public class Level {
 	 * @param layer the layer to be added
 	 */
 	public void addLayer(Layer layer){
-	    layers.add(layer);
+	    myLayers.add(layer);
 	}
 	
 	/**
@@ -78,7 +85,7 @@ public class Level {
 	 * @param layer the layer to be removed
 	 */
 	public void removeLayer(Layer layer){
-	    layers.remove(layer);
+	    myLayers.remove(layer);
 	}
 	
 	/**
@@ -86,6 +93,6 @@ public class Level {
 	 * @return list of layers for the current level
 	 */
 	public List<Layer> getLayers(){
-	    return layers;
+	    return myLayers;
 	}
 }

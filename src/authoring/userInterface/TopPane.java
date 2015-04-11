@@ -24,10 +24,6 @@ public class TopPane extends WindowPane {
 		// this.getStylesheets().add("styles/top_pane.css");
 	}
 
-	TopPane() {
-
-	}
-
 	@Override
 	public Group generateComponents(
 			ArrayList<Map<String, Map<String, String>>> values) {
