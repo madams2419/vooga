@@ -8,26 +8,19 @@ import java.util.Map;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Control;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 
 public abstract class WindowPane {
 
-	private List<Pane> myFields;
 	private List<Control> myControlsList;
-	private boolean instantiated = false;
 	protected Region myContainer;
 	protected Scene myScene;
 	protected AuthoringWindow myParent;
 
-	WindowPane(Scene scene, Region container, AuthoringWindow parent) {
+	protected WindowPane(Scene scene, Region container, AuthoringWindow parent) {
 		myScene = scene;
 		myContainer = container;
 		myParent = parent;
-	}
-
-	WindowPane() {
-		// this(myScene, myContainer);
 	}
 
 	Region getContainer() {

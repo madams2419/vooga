@@ -8,11 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 
 public class MapLevelTabPane extends AnchorPane {
 
-	private CenterPane myCenterPane;
+//	private CenterPane myCenterPane;
 	
 	public MapLevelTabPane(CenterPane c){
 

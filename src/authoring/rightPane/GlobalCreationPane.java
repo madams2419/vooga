@@ -28,13 +28,12 @@ public class GlobalCreationPane extends EditingPane {
 
 	private List<HBox> myFields = new LinkedList<>();
 	private CenterPane cp;
-	private static GlobalCreationPane mInstance;
 	public Map<String, String> fields;
 	private static Scene mScene;
 
-	GlobalCreationPane(Scene myScene) {
+	public GlobalCreationPane(Scene myScene, RightPane parent) {
 		// TODO Auto-generated constructor stub
-		super(myScene);
+		super(myScene, parent);
 		mScene = myScene;
 		/* Default Map */
 		createDefaultMap();
@@ -42,7 +41,6 @@ public class GlobalCreationPane extends EditingPane {
 		Button c = new Button("Update");
 		c.setOnAction(e -> updateMap());
 		this.getChildren().add(c);
-		System.out.println("blah is " + myFields.toString());
 	}
 
 	private Map<String, String> createDefaultMap() {
@@ -75,14 +73,13 @@ public class GlobalCreationPane extends EditingPane {
 			fields.put((s = ((Text) hbox.getChildren().get(0)).getText()),
 					(t = ((TextField) hbox.getChildren().get(1)).getText()));
 		});
-		System.out.println(fields.toString());
 		return fields;
 		// System.out.println(sprite.getCharacteristics().toString());
 	}
 
-	public static GlobalCreationPane getInstance(Scene scene) {
-		if (mInstance == null)
-			mInstance = new GlobalCreationPane(scene);
-		return mInstance;
-	}
+//	public static GlobalCreationPane getInstance(Scene scene) {
+//		if (mInstance == null)
+//			mInstance = new GlobalCreationPane(scene);
+//		return mInstance;
+//	}
 }

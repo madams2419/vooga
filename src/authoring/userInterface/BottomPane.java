@@ -20,26 +20,27 @@ public class BottomPane extends WindowPane {
 
 	private List<Button> mButtonList = new ArrayList<>();
 
-//	BottomPane() {
-//		this(myScene,myContainer);
-//	}
+	// BottomPane() {
+	// this(myScene,myContainer);
+	// }
 
 	BottomPane(Scene s, AuthoringWindow parent) {
-		super(s,new HBox(), parent);
+		super(s, new HBox(), parent);
+		System.out.printf("Instantiated %s%n", this.getClass().getName());
 		myScene = s;
 		myContainer.getStylesheets().add("styles/top_pane.css");
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
+	@SuppressWarnings("unchecked")
 	public Group generateComponents(
 			ArrayList<Map<String, Map<String, String>>> values) {
 		for (int i = 0; i < values.size(); i++) {
 			Map<String, Map<String, String>> m = values.get(i);
-			System.out.println(m);
 			for (String key : m.keySet()) {
 				if (key.equals("Button")) {
-					mButtonList.add(ButtonFactory.generateButton(m.get(key)));
+					mButtonList.add(ButtonFactory.generateButton(
+							myParent.getMyRightPane(), m.get(key)));
 				}
 				if (key.equals("Dropdown")) {
 					DropdownFactory dFactory = new DropdownFactory();
@@ -50,7 +51,8 @@ public class BottomPane extends WindowPane {
 		Button b = new Button("+");
 		try {
 			b.setOnAction(new ClickHandler(
-					CenterPane.class.getMethod("addTab"), myParent.getMyCenterPane()));
+					CenterPane.class.getMethod("addTab"), myParent
+					.getMyCenterPane()));
 		} catch (NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		}
@@ -59,14 +61,13 @@ public class BottomPane extends WindowPane {
 			XMLBuilder.getInstance("game").addAllSprites(
 					myParent.getMyCenterPane().getActiveTab().getSprites());
 			XMLBuilder.getInstance("game").addAllEnvironment(
-					myParent.getMyCenterPane().getActiveTab()
-							.getEnvironment());
+					myParent.getMyCenterPane().getActiveTab().getEnvironment());
 			XMLBuilder.getInstance("game").streamFile("lib/test.xml");
 		});
 		mButtonList.add(b);
 		mButtonList.add(c);
-		((HBox)myContainer).getChildren().addAll(mButtonList);
-		return new Group();
+		((HBox) myContainer).getChildren().addAll(mButtonList);
+		return null;
 	}
 
 	public Iterator<Button> getButtons() {

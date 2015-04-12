@@ -15,6 +15,7 @@ public class LeftPane extends WindowPane {
 
 	LeftPane(Scene scene, AuthoringWindow myParent) {
 		super(scene, new VBox(), myParent);
+		System.out.printf("Instantiated %s%n", this.getClass().getName());
 	}
 
 	@Override
@@ -25,7 +26,8 @@ public class LeftPane extends WindowPane {
 			// System.out.println(m);
 			for (String key : m.keySet()) {
 				if (key.equals("Button")) {
-					mButtonList.add(ButtonFactory.generateButton(m.get(key)));
+					mButtonList.add(ButtonFactory.generateButton(
+							myParent.getMyRightPane(), m.get(key)));
 				}
 				if (key.equals("Dropdown")) {
 					// DropdownFactory dFactory=new DropdownFactory();
@@ -35,5 +37,4 @@ public class LeftPane extends WindowPane {
 		}
 		return root;
 	}
-
 }
