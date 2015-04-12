@@ -3,7 +3,7 @@ package game_engine.collision;
 public class CollisionBox {
 	/**
 	 * Defines coordinates of the collision to the view
-	 * Assumes that top left is (0,0)
+	 * Assumes that top left is (0,0) 
 	 * Bottom right (+, +)
 	 */
 	private double left;
@@ -16,11 +16,11 @@ public class CollisionBox {
 		right = lowRight;
 		bottom = lowBot;
 	}
-
+	
 	public void setLeft(int value){
 		left = value;
 	}
-
+	
 	public void setTop(int value){
 		top = value;
 	}
@@ -30,7 +30,7 @@ public class CollisionBox {
 	public void setBottom(int value){
 		bottom = value;
 	}
-
+	
 	public double getLeft(){
 		return left;
 	}
@@ -49,6 +49,6 @@ public class CollisionBox {
 	public double getHeight(){
 		return bottom - top;
 	}
-
+	
 
 }
