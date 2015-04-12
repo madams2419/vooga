@@ -22,17 +22,18 @@ public abstract class Sprite extends Observable{
 	private String myName;	
 	private String myState;
 	private Animation myAnimation;
-	protected PhysicsObject myPhysicsObject = new PhysicsObject(null, null, null, 0, 0);//new PhysicsObject(null, null, null, myName, new Vector(0,0), null);
+	protected PhysicsObject myPhysicsObject;
 	private Map<String, IBehavior> myBehaviorMap = new HashMap<>();
 
 	
 	/**
 	 * Blank Constructor
 	 */
-	public Sprite() {
+	public Sprite(PhysicsObject physics) {
 		// TODO
+	    myPhysicsObject = physics;
 	    myId = 0;
-	    myAnimation = new Animation(this);
+	    myAnimation = new Animation(this,myPhysicsObject);
 	}
 	
 	/**
@@ -40,10 +41,11 @@ public abstract class Sprite extends Observable{
 	 * Creates sprite object with a defined name
 	 * @param name the string to name the sprite
 	 */
-	public Sprite(String name){
+	public Sprite(PhysicsObject physics, String name){
+	    myPhysicsObject = physics;
 	    myId = 0; //TODO make call to SpriteManager to get unique ID or don't allow sprite to constructed without ID
 	    myName = name;
-	    myAnimation = new Animation(this);
+	    myAnimation = new Animation(this,myPhysicsObject);
 	}
 	
 	/**
@@ -52,10 +54,11 @@ public abstract class Sprite extends Observable{
 	 * @param name the string to name the sprite
 	 * @param id the id of the specific sprite
 	 */
-	public Sprite(String name, int id){
+	public Sprite(PhysicsObject physics, String name, int id){
+	    myPhysicsObject = physics;
 	    myName = name;
 	    myId = id;
-	    myAnimation = new Animation(this);
+	    myAnimation = new Animation(this,myPhysicsObject);
 	}
 	
 	/**
@@ -98,7 +101,8 @@ public abstract class Sprite extends Observable{
 	}
 	
 	public void setImageSize(double xSize, double ySize){
-	    myAnimation.getImageView().resize(xSize, ySize);
+	    myAnimation.getImageView().setFitHeight(ySize);
+	    myAnimation.getImageView().setFitWidth(xSize);
 	}
 	
 	public void setState(String state){

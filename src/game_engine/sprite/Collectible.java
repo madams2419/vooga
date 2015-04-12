@@ -1,24 +1,25 @@
 package game_engine.sprite;
 
+import game_engine.physics.PhysicsObject;
+
 public class Collectible extends Sprite{
     
     private int myCount;
     private boolean canCollect;
-
-    public Collectible() {
-        super();
-        myCount = 0;
-    }
+    
+    public Collectible(PhysicsObject physics) {
+        super(physics);
+       
+      }
 
    
-      public Collectible(String name){
-          super(name);
-          myCount = 0;
+      public Collectible(PhysicsObject physics, String name){
+          super(physics,name);
+          
       }
     
-      public Collectible(String name, int id){
-          super(name,id);
-          myCount = 0;
+      public Collectible(PhysicsObject physics,String name, int id){
+          super(physics,name,id);
       }
       
       public void collect(int amount){

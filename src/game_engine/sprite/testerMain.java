@@ -1,6 +1,9 @@
 package game_engine.sprite;
 
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
@@ -20,11 +23,16 @@ public class testerMain extends Application {
             stage.setWidth(primaryScreenBounds.getWidth());
             stage.setHeight(primaryScreenBounds.getHeight());
             stage.setResizable(false);
-
+            
+            Timeline animation = new Timeline();
             testerScreen menu = new testerScreen((int)primaryScreenBounds.getWidth(), (int)primaryScreenBounds.getHeight());
             stage.setScene(menu.initialize());
+            KeyFrame frame = menu.start(60);
 
             stage.show();
+            animation.setCycleCount(Animation.INDEFINITE);
+            animation.getKeyFrames().add(frame);
+            animation.play();
     }
 
     /**
