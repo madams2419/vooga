@@ -161,7 +161,7 @@ public class VoogaFileChooser {
 	row.setSpacing(horizontalPadding);
 	
 	for (File f : group) {
-	    Rectangle content = createButtonContent(Color.BLACK, Color.BLACK, 3, .4);
+	    Rectangle content = createButtonContent(Color.BLACK, Color.BLACK, 3, .5);
 	    
 	    XMLParser parser = new XMLParser(f);
 	    

@@ -1,8 +1,6 @@
 package menu;
 
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import game_player.VoogaGame;
 import game_player.VoogaGameBuilder;
@@ -13,12 +11,12 @@ import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -272,16 +270,16 @@ public class VoogaMenu {
 	Circle design = (Circle) designButton.getChildren().get(1);
 	
 	play.setOnMouseClicked((event) -> {
-	    addChoiceMenu(GAME);
-	    root.getChildren().add(createBackButton(Pos.TOP_RIGHT));
+	    addChoiceMenu(GAME, playButton, -1);
+	    root.getChildren().add(createBackButton(Pos.CENTER_RIGHT, 180, 1));
 	    choiceMenu.setOnMouseClicked((clicked) -> {
 		launchGame(chooser.getChosenFile());
 	    });
 	});
 	
 	design.setOnMouseClicked((event) -> {
-	    addChoiceMenu(DESIGN);
-	    choiceMenu.getChildren().add(0, createBackButton(Pos.CENTER_LEFT));
+	    addChoiceMenu(DESIGN, designButton, 1);
+	    root.getChildren().add(createBackButton(Pos.CENTER_LEFT, 0, -1));
 	    choiceMenu.setOnMouseClicked((clicked) -> {
 		root.getChildren().removeAll(choiceMenu, background);
 		scene = new AuthoringWindow().GameCreateUI();
@@ -289,28 +287,32 @@ public class VoogaMenu {
 	});
     }
     
-    private Group createBackButton(Pos position) {
-	Rectangle backButton = new Rectangle(100, height);
-	backButton.setTranslateX(100);
+    private StackPane createBackButton(Pos position, double rotate, double sign) {
+	ImageView backButton = new ImageView(new Image("menu/images/backButton.png"));
+	backButton.setFitWidth(100);
+	backButton.setFitHeight(100);
+	backButton.setTranslateX(50 * sign);
 	backButton.setOpacity(INVISIBLE);
-	backButton.setOnMouseClicked((clicked) -> {
-	    System.out.println("back");
-	});
-	backButton.setOnMouseExited((exited) -> {
-	    doTranslate(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, 100, backButton.getTranslateY(), DO_NOTHING);
-	    doFade(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, INVISIBLE, DO_NOTHING);
-	});
+	backButton.setRotate(rotate);
 	
-	Rectangle buttonOutline = new Rectangle(100, height);
+	Rectangle buttonOutline = new Rectangle(200, height);
 	buttonOutline.setFill(Color.TRANSPARENT);
+	buttonOutline.setTranslateX(100 * sign);
 	buttonOutline.setOnMouseEntered((entered) -> {
 	    doTranslate(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, 0, backButton.getTranslateY(), DO_NOTHING);
 	    doFade(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, OPAQUE, DO_NOTHING);
 	});
+	buttonOutline.setOnMouseExited((exited) -> {
+	    doTranslate(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, 50 * sign, backButton.getTranslateY(), DO_NOTHING);
+	    doFade(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, INVISIBLE, DO_NOTHING);
+	});
+	buttonOutline.setOnMouseClicked((clicked) -> {
+	    System.out.println("click");
+	});
 	
-	Group button = new Group();
-	button.getChildren().addAll(buttonOutline, backButton);
-	button.setTranslateX(width/2 - 50);
+	StackPane button = new StackPane();
+	button.getChildren().addAll(backButton, buttonOutline);
+	button.setAlignment(position);
 	
 	return button;
     }
@@ -319,10 +321,12 @@ public class VoogaMenu {
      * Launches the game specified by the XMLParser input.
      */
     private void launchGame(XMLParser file) {
-	VoogaGameBuilder gameBuilder = new VoogaGameBuilder(file);
-	VoogaGame game = gameBuilder.build();
-	scene.setRoot(game.getRoot());
-	game.start();
+	if (file != null) {
+	    VoogaGameBuilder gameBuilder = new VoogaGameBuilder(file);
+	    VoogaGame game = gameBuilder.build();
+	    scene.setRoot(game.getRoot());
+	    game.start();
+	}
     }
     
     /*
@@ -345,14 +349,14 @@ public class VoogaMenu {
      * Adds the choice menu to the root and removes the main menu, also
      * blurs the background for effect.
      */
-    private void addChoiceMenu(String fileType) {
+    private void addChoiceMenu(String fileType, StackPane button, int sign) {
 	chooser = new VoogaFileChooser(width, height, fileType);
 	choiceMenu = chooser.getContent();
 	
 	disableButtons();
 	
-	doTranslate(playButton, IMMEDIATE, -width/2 - 50, playButton.getTranslateY(), (finished) -> root.getChildren().remove(mainMenu));
-	doFade(playButton, IMMEDIATE, INVISIBLE, DO_NOTHING);
+	doTranslate(button, IMMEDIATE, (width/2 + 50) * sign, playButton.getTranslateY(), (finished) -> root.getChildren().remove(mainMenu));
+	doFade(button, IMMEDIATE, INVISIBLE, DO_NOTHING);
 	
 	root.getChildren().add(choiceMenu);
 	
