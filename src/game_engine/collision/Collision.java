@@ -13,7 +13,7 @@ import javafx.scene.image.ImageView;
  *
  */
 
-public class Collision implements PhysicsCollision {
+public abstract class Collision implements PhysicsCollision {
 
 	private Sprite mySpriteA;
 	private Sprite mySpriteB;
@@ -48,9 +48,7 @@ public class Collision implements PhysicsCollision {
 		myBehavior.perform();
 	}
 
-	private boolean collidingHitBox(){
-		return mySpriteA.getHitBox().intersects(mySpriteB.getHitBox());
-	}
+	protected abstract boolean collidingHitBox();
 
 	private boolean collide() {
 

@@ -8,30 +8,32 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.shape.Rectangle;
 /**
  * Hitbox class that defines collisions between objects
- * @author Kevin, Michael 
+ * @author Kevin, Michael
  *
  */
 public class HitBox {
-    
+
+	private PhysicsBody myPhysicsBody;
+
     private boolean[][] bitMap;
     private ImageView node;
     private Image image;
-	
+
 	public HitBox(ImageView n) {
 		node = n;
 		image = node.getImage();
 		boolean[][] bitMap = createBitMap(image);
-		
+
 	}
-	
+
 	public Bounds getBounds(){
 		return node.getBoundsInParent();
 	}
-	
+
 	public boolean[][] getBitMap(){
 		return bitMap;
 	}
-	
+
 	/**
 	 * method intersects
 	 * Checks if the hitboxes intersect
@@ -41,7 +43,7 @@ public class HitBox {
 	public boolean intersects(HitBox compare) {
 		return node.getBoundsInParent().intersects(compare.getBounds());
 	}
-	
+
 	private boolean[][] createBitMap(Image src) {
 		PixelReader reader = src.getPixelReader();
 		int width = (int) src.getWidth();
