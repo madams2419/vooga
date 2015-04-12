@@ -1,8 +1,7 @@
 package game_engine.collision;
 
 import game_engine.IBehavior;
-import game_engine.physics.PhysicsCollision;
-import game_engine.physics.PhysicsEngine;
+import game_engine.physics.*;
 import game_engine.physics.Vector;
 import game_engine.sprite.Sprite;
 import javafx.scene.image.ImageView;
@@ -18,7 +17,9 @@ public class Collision implements PhysicsCollision {
 
 	private Sprite mySpriteA;
 	private Sprite mySpriteB;
-	private Vector myCollisionNormal;
+	private Vector myNormal;
+	private double myPenetrationDepth;
+
 	private IBehavior myBehavior;
 	private CollisionDirection myDirection;
 	private boolean myRealism;
@@ -36,10 +37,10 @@ public class Collision implements PhysicsCollision {
 	public void getColliding() {
 		if(collidingHitBox() && collide()) {
 			execute();
-		}
 
-		if(myRealism){
-			myPhysics.resolveCollision(mySpriteA, mySpriteB);
+			if(myRealism){
+				myPhysics.resolveCollision(this);
+			}
 		}
 	}
 
@@ -123,15 +124,19 @@ public class Collision implements PhysicsCollision {
 		return bitMap;
 	}
 
-	public Sprite getSpriteA() {
-		return mySpriteA;
+	public PhysicsObject getPhysicsObjectA() {
+		return mySpriteA.getPhysicsObject();
 	}
 
-	public Sprite getSpriteB() {
-		return mySpriteB;
+	public PhysicsObject getPhysicsObjectB() {
+		return mySpriteB.getPhysicsObject();
 	}
 
-	public Vector getCollisionNormal() {
-		return myCollisionNormal;
+	public Vector getNormal() {
+		return myNormal;
+	}
+
+	public double getPenetrationDepth() {
+		return myPenetrationDepth;
 	}
 }

@@ -95,19 +95,16 @@ public class PhysicsEngine {
 		return radiiSum - sepDistance;
 	}
 
-	public void resolveCollision(Sprite a, Sprite b) {
-		resolveCollision(a.getPhysicsObject(), b.getPhysicsObject());
+	public void resolveCollision(PhysicsCollision collision) {
+		PhysicsObject poA = collision.getPhysicsObjectA();
+		PhysicsObject poB = collision.getPhysicsObjectB();
+		Vector normal = collision.getNormal();
+		double pDepth = collision.getPenetrationDepth();
+
+		resolveCollision(poA, poB, normal, pDepth);
 	}
 
-	public void resolveCollision(Sprite a, Sprite b, Vector normal, double pDepth) {
-		resolveCollision(a.getPhysicsObject(), b.getPhysicsObject(), normal, pDepth);
-	}
-
-	public void resolveCollision(PhysicsObject a, PhysicsObject b) {
-		resolveCollision(a, b, getCollisionNormal(a, b), getCollisionDepth(a, b));
-	}
-
-	public void resolveCollision(PhysicsObject a, PhysicsObject b, Vector normal, double pDepth) {
+	private void resolveCollision(PhysicsObject a, PhysicsObject b, Vector normal, double pDepth) {
 		// compute relative velocity
 		Vector relVel = b.getVelocity().minus(a.getVelocity());
 
