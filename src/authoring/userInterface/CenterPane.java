@@ -28,7 +28,6 @@ import authoring.util.FrontEndUtils;
  */
 public class CenterPane extends WindowPane {
 
-	private Group myGroup;
 
 	CenterPane(Scene s, AuthoringWindow w) {
 		super(s, new TabPane(), w);
@@ -44,12 +43,14 @@ public class CenterPane extends WindowPane {
 	}
 
 	public CenterCanvas getActiveTab() {
+		System.out.printf("Changing tabs to tab %d%n", ((TabPane) myContainer)
+				.getSelectionModel().getSelectedIndex());
 		return (CenterCanvas) ((TabPane) myContainer)
 				.getTabs()
 				.get(((TabPane) myContainer).getSelectionModel()
 						.getSelectedIndex()).getContent();
 	}
-	
+
 	@Override
 	public Group generateComponents(
 			ArrayList<Map<String, Map<String, String>>> values) {
@@ -62,7 +63,8 @@ public class CenterPane extends WindowPane {
 		private List<Map<String, String>> myEnvironmentList;
 		private ObservableList<Sprite> myListOfSprites;
 		private Rectangle myCurrentRectangle;
-		public GlobalCreationPane gp;
+		private GlobalCreationPane gp;
+		private Group myGroup;
 
 		CenterCanvas(Scene scene) {
 			assert (scene != null);
@@ -76,7 +78,6 @@ public class CenterPane extends WindowPane {
 			myListOfSprites = FXCollections.observableArrayList();
 			myEnvironmentList = new ArrayList<>();
 
-			
 			FrontEndUtils.setKeyActions(this);
 			addMaptoEnvironment(gp.fields);
 
