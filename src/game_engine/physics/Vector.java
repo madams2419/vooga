@@ -68,12 +68,20 @@ public class Vector {
 		}
 	}
 
-	public Vector setXCopy(double x) {
+	public Vector setX(double x) {
 		return new Vector(x, myY);
 	}
 
-	public Vector setYCopy(double y) {
+	public Vector setY(double y) {
 		return new Vector(myX, y);
+	}
+
+	public Vector incrementX(double increment) {
+		return setX(myX + increment);
+	}
+
+	public Vector incrementY(double increment) {
+		return setY(myY + increment);
 	}
 
 	public double getX() {

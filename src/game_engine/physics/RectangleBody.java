@@ -5,14 +5,24 @@ public class RectangleBody extends RigidBody {
 	private Vector myUpperRight;
 	private Vector myLowerLeft;
 
-	public RectangleBody(Vector upperRight, Vector lowerLeft) {
-		this(0, upperRight, lowerLeft);
+	public RectangleBody(double depth, Vector upperLeft, double height, double width) {
+		this(depth, upperLeft.incrementX(width), upperLeft.incrementY(-height));
 	}
 
 	public RectangleBody(double depth, Vector upperRight, Vector lowerLeft) {
 		super(depth);
 		myUpperRight = upperRight;
 		myLowerLeft = lowerLeft;
+	}
+
+	public static RectangleBody getRectBodyULLR(double depth, Vector upperLeft, Vector lowerRight) {
+		Vector upperRight = upperLeft.setX(lowerRight.getX());
+		Vector lowerLeft = lowerRight.setX(upperLeft.getX());
+		return new RectangleBody(depth, upperRight, lowerLeft);
+	}
+
+	public static RectangleBody getRectBodyURLL(double depth, Vector upperRight, Vector lowerLeft) {
+		return new RectangleBody(depth, upperRight, lowerLeft);
 	}
 
 	public double getArea() {
@@ -47,6 +57,22 @@ public class RectangleBody extends RigidBody {
 
 	public double getWidth() {
 		return myUpperRight.getX() - myLowerLeft.getX();
+	}
+
+	public Vector getUpperLeft() {
+		return myUpperRight.setX(myLowerLeft.getX());
+	}
+
+	public Vector getUpperRight() {
+		return myUpperRight;
+	}
+
+	public Vector getLowerLeft() {
+		return myLowerLeft;
+	}
+
+	public Vector getLowerRight() {
+		return myLowerLeft.setX(myUpperRight.getX());
 	}
 
 }

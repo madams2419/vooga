@@ -2,14 +2,14 @@ package game_engine.physics;
 
 public class CircleRectCollision extends PhysicsCollision {
 
-	private RectangleBody rectA;
-	private RectangleBody rectB;
+	private CircleBody myCircle;
+	private RectangleBody myRectangle;
 	private RectangleBody collisionRegion;
 
 	public CircleRectCollision(PhysicsObject poA, PhysicsObject poB) {
 		super(poA, poB);
-		rectA = (RectangleBody) poA.getRigidBody();
-		rectB = (RectangleBody) poA.getRigidBody();
+		myCircle = (CircleBody) poA.getRigidBody();
+		myRectangle = (RectangleBody) poA.getRigidBody();
 	}
 
 	protected Vector computeNormal() {
@@ -17,11 +17,17 @@ public class CircleRectCollision extends PhysicsCollision {
 	}
 
 	protected double computePenetrationDepth() {
-		double radiiSum = circleA.getRadius() + circleB.getRadius();
-		return radiiSum - getSeparationDistance();
 	}
 
 	private RectangleBody computeCollisionRegion() {
+		double cRegionDepth = 0;
+
+		if(rectA.containsPoint(rectB.getUpperLeft()) {
+			return RectangleBody.getRectBodyULLR(cRegionDepth, rectB.getUpperLeft(), rectA.get
+
+
+
+	}
 
 
 }
