@@ -271,7 +271,7 @@ public class VoogaMenu {
 	
 	play.setOnMouseClicked((event) -> {
 	    addChoiceMenu(GAME, playButton, -1);
-	    root.getChildren().add(createBackButton(Pos.CENTER_RIGHT, 180, 1));
+	    setUpBackButtons();
 	    choiceMenu.setOnMouseClicked((clicked) -> {
 		launchGame(chooser.getChosenFile());
 	    });
@@ -279,12 +279,17 @@ public class VoogaMenu {
 	
 	design.setOnMouseClicked((event) -> {
 	    addChoiceMenu(DESIGN, designButton, 1);
-	    root.getChildren().add(createBackButton(Pos.CENTER_LEFT, 0, -1));
+	    setUpBackButtons();
 	    choiceMenu.setOnMouseClicked((clicked) -> {
 		root.getChildren().removeAll(choiceMenu, background);
 		scene = new AuthoringWindow().GameCreateUI();
 	    });
 	});
+    }
+    
+    private void setUpBackButtons() {
+	root.getChildren().add(createBackButton(Pos.CENTER_RIGHT, 180, 1));
+	root.getChildren().add(createBackButton(Pos.CENTER_LEFT, 0, -1));
     }
     
     private StackPane createBackButton(Pos position, double rotate, double sign) {
