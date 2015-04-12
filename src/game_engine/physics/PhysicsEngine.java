@@ -19,7 +19,7 @@ public class PhysicsEngine {
 	private static double SCALE_FACTOR = 0.01; // pixel to meter scaling
 	private static String GRAV_STRING = "gravity";
 	private static double GRAV_MAGNITUDE = 9.8;
-	private static double DRAG_COEF = 0.05;
+	private static double DRAG_COEF = 0.9;
 
 	private double myGround;
 	private double myTimeStep;
