@@ -2,9 +2,11 @@ package game_engine.control;
 
 
 import game_engine.IAction;
-
-import java.util.*;
-
+import game_engine.IBehavior;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javafx.scene.input.KeyCode;
 
 /**
@@ -18,16 +20,18 @@ public class KeyControl {
 	Map<String, String> myDesignerMap;
 	Map<KeyCode, String> myVirtualKeyboard;
 
-	Map<KeyCode, Map<IAction, String[]>> myKeyPressedMap;
-	Map<KeyCode, Map<IAction, String[]>> myKeyReleasedMap;
+	Map<KeyCode, IBehavior> myKeyPressedMap;
+	Map<KeyCode, IBehavior> myKeyReleasedMap;
+	Map<KeyCode, IBehavior> myKeyHeldMap;
 	List<KeyCode> myWhilePressedKey;
 
-	public KeyControl(Map<KeyCode, Map<IAction, String[]>> keyPressMap, Map<KeyCode, Map<IAction, String[]>> keyReleaseMap) {
+	public KeyControl(Map<KeyCode, IBehavior> keyPressMap, Map<KeyCode, IBehavior> keyReleaseMap, Map<KeyCode, IBehavior> keyHeldMap) {
 		myControlMap = new HashMap<>();
 		myDesignerMap = new HashMap<>();
 		myVirtualKeyboard = new HashMap<>();
 		myKeyPressedMap = keyPressMap;
 		myKeyReleasedMap = keyReleaseMap;
+		myKeyHeldMap = keyHeldMap;
 		myWhilePressedKey = new ArrayList<>();
 	}
 
@@ -37,10 +41,10 @@ public class KeyControl {
 		if(myKeyPressedMap.containsKey(keycode)){
 			if(pressed){
 				//add error checking later
-				myKeyPressedMap.get(keycode).forEach((iBehavior, params) -> iBehavior.execute(params));
+				myKeyPressedMap.get(keycode).perform();
 				myWhilePressedKey.add(keycode);
 			} else {
-				myKeyReleasedMap.get(keycode).forEach((iBehavior, params) -> iBehavior.execute(params));
+				myKeyReleasedMap.get(keycode).perform();
 				myWhilePressedKey.remove(keycode);
 			}
 		}

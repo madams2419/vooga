@@ -1,10 +1,9 @@
 package game_engine.sprite;
 
-import java.util.HashMap;
-import java.util.ResourceBundle;
-
 import game_engine.IAction;
+import game_engine.physics.PhysicsObject;
 import game_engine.physics.Vector;
+import java.util.HashMap;
 
 /**
  * class that implements behaviors for movable sprites
@@ -13,26 +12,25 @@ import game_engine.physics.Vector;
  */
 
 public abstract class Character extends Sprite {
-	private Vector myPosition;
-//	private ResourceBundle myStateNames = ResourceBundle 
-//			.getBundle("resources.engineutilities/movements");
-	private HashMap<String,String> myStateNameMap = new HashMap<>(); // TODO implement this 	
-	
-	// TODO check design on feeding 2 constructors into themselves
-	public Character(){
-		super();
-		myPosition = myPhysicsObject.getPositionPixels();
-	}
-	
-	public Character(String name){
-		super(name);
-		myPosition = myPhysicsObject.getPositionPixels();
-	}
+    private Vector myPosition;
+//  private ResourceBundle myStateNames = ResourceBundle 
+//                  .getBundle("resources.engineutilities/movements");
+    private HashMap<String,String> myStateNameMap = new HashMap<>(); // TODO implement this         
+    
+    // TODO check design on feeding 2 constructors into themselves
+    public Character(PhysicsObject physics){
+            super(physics);
+    }
+    
+    public Character(PhysicsObject physics, String name){
+            super(physics, name);
+            myPosition = myPhysicsObject.getPositionPixels();
+    }
 
-	public Character(String name, int id){
-		super(name,id);
-		myPosition = myPhysicsObject.getPositionPixels();
-	}
+    public Character(PhysicsObject physics, String name, int id){
+            super(physics, name,id);
+            myPosition = myPhysicsObject.getPositionPixels();
+    }
 	
 	/**
 	 * behaviors

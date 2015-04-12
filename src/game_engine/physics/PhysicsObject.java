@@ -1,11 +1,12 @@
 package game_engine.physics;
 
 import java.util.List;
+import java.util.Observable;
 
 // TODO
 // - ability to run back time...some mechanism to do that
 
-public class PhysicsObject {
+public class PhysicsObject extends Observable {
 
 	private double myInvMass;
 	private Material myMaterial;
@@ -16,7 +17,7 @@ public class PhysicsObject {
 	private double myDirForceMagnitude;
 	private List<Joint> myJoints;
 	private PhysicsEngine myPhysics;
-	
+
 	private Shape myShape;
 
 	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material, int xPosPixels, int yPosPixels) {
@@ -34,6 +35,7 @@ public class PhysicsObject {
 	}
 
 	public void update() {
+
 		double dt = myPhysics.getTimeStep();
 		myAccel = computeAccel();
 		myVelocity = myVelocity.plus(myAccel.times(dt));
@@ -44,6 +46,9 @@ public class PhysicsObject {
 			myPosition.setY(myPhysics.getGround() + myShape.getRadiusMeters());
 			myVelocity.setY(0);
 		}
+
+		setChanged();
+		notifyObservers();
 	}
 
 	private double computeInvMass() {
@@ -73,11 +78,11 @@ public class PhysicsObject {
 	}
 
 	public void addForce(Vector force) {
-		myNetInternalForce.plus(force);
+		myNetInternalForce = myNetInternalForce.plus(force);
 	}
 
 	public void removeForce(Vector force) {
-		myNetInternalForce.minus(force);
+		myNetInternalForce = myNetInternalForce.minus(force);
 	}
 
 	public void addDirectionalForce(double magnitude) {
@@ -89,11 +94,15 @@ public class PhysicsObject {
 	}
 
 	public void applyImpulse(Vector impulse) {
-		Vector newVelocity = myVelocity.plus(impulse.times(myInvMass));
+		applyVelocity(impulse.times(myInvMass));
+	}
+
+	public void applyVelocity(Vector velocity) {
+		Vector newVelocity = myVelocity.plus(velocity);
 		setVelocity(newVelocity);
 	}
 
-	protected Vector getPositionMeters() {
+	public Vector getPositionMeters() {
 		return myPosition;
 	}
 
@@ -151,10 +160,6 @@ public class PhysicsObject {
 
 	public double getInvMass() {
 		return myInvMass;
-	}
-
-	public void setRestitution(double restitution) {
-		myMaterial.setRestitution(restitution);
 	}
 
 	public double getRestitution() {

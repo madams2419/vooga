@@ -1,5 +1,6 @@
 package game_player;
 
+
 import game_engine.Behavior;
 import game_engine.IAction;
 import game_engine.IActor;
@@ -9,6 +10,8 @@ import game_engine.Level;
 import game_engine.MultipleBehaviors;
 import game_engine.collision.Collision;
 import game_engine.collision.CollisionEngine;
+import game_engine.control.ControlManager;
+import game_engine.control.KeyControl;
 import game_engine.objective.Objective;
 import game_engine.sprite.Sprite;
 import game_engine.sprite.SpriteFactory;
@@ -18,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javafx.scene.input.KeyCode;
 
 
 public class VoogaGameBuilder {
@@ -82,6 +86,7 @@ public class VoogaGameBuilder {
 
             String state = parser.getValue("initialState");
             sprite.setState(state);
+            sprite.setPhysicsObject(buildPhysicsObject(engine));
             parser.moveUp();
             mySpriteMap.put(spriteID, sprite);
             return sprite;
@@ -189,4 +194,44 @@ public class VoogaGameBuilder {
             return myObjectiveMap.get(id);
         }
     }
+	
+	private ControlManager buildControl(){
+		parser.moveDown("control");
+		ControlManager controlManager = new ControlManager();
+		for(String controlDirectory: parser.getValidSubDirectories()){
+			parser.moveDown(controlDirectory);
+			KeyControl newControl = buildKeyControl();
+			controlManager.addControl(buildKeyControl());
+		}
+		parser.moveUp();
+		return controlManager;
+	}
+	
+	private KeyControl buildKeyControl(){
+		Map<KeyCode, IBehavior> pressedKeyMap = new HashMap<>();
+		Map<KeyCode, IBehavior> releasedKeyMap = new HashMap<>();
+		Map<KeyCode, IBehavior> heldKeyMap = new HashMap<>();
+		
+			for(String keyDirectory: parser.getValidSubDirectories()){
+				parser.moveDown(keyDirectory);
+				String keyName = parser.getValue("key");
+				KeyCode keyCode = KeyCode.valueOf(keyName);
+				
+				parser.moveDown("onPressed");
+				pressedKeyMap.put(keyCode, buildBehaviorList());
+				parser.moveUp();
+				
+				parser.moveDown("onReleased");
+                                releasedKeyMap.put(keyCode, buildBehaviorList());
+                                parser.moveUp();
+                                
+                                parser.moveDown("whilePressed");
+                                heldKeyMap.put(keyCode, buildBehaviorList());
+                                parser.moveUp();
+				
+				parser.moveUp();
+			}
+		parser.moveUp();
+		return new KeyControl(pressedKeyMap, releasedKeyMap, heldKeyMap);
+	}
 }

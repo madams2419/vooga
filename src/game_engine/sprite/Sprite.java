@@ -2,10 +2,8 @@ package game_engine.sprite;
 
 import game_engine.IAction;
 import game_engine.IActor;
+import game_engine.IBehavior;
 import game_engine.collision.HitBox;
-import game_engine.physics.CircleBody;
-import game_engine.physics.Material;
-import game_engine.physics.PhysicsEngine;
 import game_engine.physics.PhysicsObject;
 import game_player.Animation;
 import java.util.HashMap;
@@ -25,17 +23,18 @@ public abstract class Sprite extends Observable implements IActor{
 	private String myName;	
 	private String myState;
 	private Animation myAnimation;
-	protected PhysicsObject myPhysicsObject = new PhysicsObject(new PhysicsEngine(10,10), new CircleBody(20), new Material(0,0), 0, 0);
+	protected PhysicsObject myPhysicsObject;
 	private Map<String, IAction> myBehaviorMap = new HashMap<>();
 
 	
 	/**
 	 * Blank Constructor
 	 */
-	public Sprite() {
+	public Sprite(PhysicsObject physics) {
 		// TODO
+	    myPhysicsObject = physics;
 	    myId = 0;
-	    myAnimation = new Animation(this);
+	    myAnimation = new Animation(this,myPhysicsObject);
 	}
 	
 	/**
@@ -43,10 +42,11 @@ public abstract class Sprite extends Observable implements IActor{
 	 * Creates sprite object with a defined name
 	 * @param name the string to name the sprite
 	 */
-	public Sprite(String name){
+	public Sprite(PhysicsObject physics, String name){
+	    myPhysicsObject = physics;
 	    myId = 0; //TODO make call to SpriteManager to get unique ID or don't allow sprite to constructed without ID
 	    myName = name;
-	    myAnimation = new Animation(this);
+	    myAnimation = new Animation(this,myPhysicsObject);
 	}
 	
 	/**
@@ -55,10 +55,11 @@ public abstract class Sprite extends Observable implements IActor{
 	 * @param name the string to name the sprite
 	 * @param id the id of the specific sprite
 	 */
-	public Sprite(String name, int id){
+	public Sprite(PhysicsObject physics, String name, int id){
+	    myPhysicsObject = physics;
 	    myName = name;
 	    myId = id;
-	    myAnimation = new Animation(this);
+	    myAnimation = new Animation(this,myPhysicsObject);
 	}
 	
 	/**
@@ -101,7 +102,8 @@ public abstract class Sprite extends Observable implements IActor{
 	}
 	
 	public void setImageSize(double xSize, double ySize){
-	    myAnimation.getImageView().resize(xSize, ySize);
+	    myAnimation.getImageView().setFitHeight(ySize);
+	    myAnimation.getImageView().setFitWidth(xSize);
 	}
 	
 	public void setState(String state){

@@ -1,19 +1,22 @@
 package game_engine.sprite;
 
 import game_engine.IAction;
+import game_engine.physics.PhysicsObject;
+
+
 
 public class Region extends Sprite implements IRegion{
 
-    public Region() {
-        super();
+    public Region(PhysicsObject physics) {
+        super(physics);
       }
 
-      public Region(String name){
-          super(name);
+      public Region(PhysicsObject physics, String name){
+          super(physics, name);
       }
     
-      public Region(String name, int id){
-          super(name,id);
+      public Region(PhysicsObject physics, String name, int id){
+          super(physics,name,id);
       }
       
       private IAction changePhysics = (params) ->{

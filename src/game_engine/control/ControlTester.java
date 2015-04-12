@@ -1,13 +1,13 @@
 package game_engine.control;
 
+import game_engine.IAction;
+import game_engine.IBehavior;
+import game_engine.MultipleBehaviors;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
-
-import game_engine.*;
 import javafx.application.Application;
-import javafx.scene.*;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -22,6 +22,8 @@ public class ControlTester extends Application{
 	static ControlManager cManager = new ControlManager();
 	static Text text = new Text(100, 200, printout + track1);
 	static private int activeControl = 0;
+	static private final boolean PRESSED_KEY = true;
+	static private final boolean RELEASED_KEY = false;
 	
 	public static void addTrack(){
 		track1++;
@@ -65,8 +67,8 @@ public class ControlTester extends Application{
 		text.setFont(new Font(20));
 		s.setScene(scene);
 		keyManipulation();
-		scene.setOnKeyPressed(e -> handleKeyInput(e,true));
-		scene.setOnKeyReleased(e -> handleKeyInput(e,false));
+		scene.setOnKeyPressed(e -> handleKeyInput(e,PRESSED_KEY));
+		scene.setOnKeyReleased(e -> handleKeyInput(e,RELEASED_KEY));
 		s.show();
 	}
 	
@@ -77,11 +79,22 @@ public class ControlTester extends Application{
 		IAction div = new DivBehavior();
 		behaviorPool.put("Add", add);
 		behaviorPool.put("Sub", sub);
+		MultipleBehaviors map1 = new MultipleBehaviors();
+		map1.addBehavior(() -> add.execute(new String[3]));
+		map1.addBehavior(() -> mul.execute(new String[3]));
+		MultipleBehaviors map2 = new MultipleBehaviors();
+		map2.addBehavior(() -> sub.execute(new String[3]));
+		map2.addBehavior(() -> div.execute(new String[3]));
+		Map<KeyCode, IBehavior> pressMap = new HashMap<>();
+		pressMap.put(KeyCode.UP, map1);
+		pressMap.put(KeyCode.DOWN, map2);
+		Map<KeyCode, IBehavior> releaseMap = new HashMap<>();
+                pressMap.put(KeyCode.UP, map2);
+                pressMap.put(KeyCode.DOWN, map2);
 		
-		Map<IAction, String[]> map1 = new LinkedHashMap<IAction, String[]>(){{put(add, new String[3]); put(mul, new String[3]);}};
-		Map<IAction, String[]> map2 = new LinkedHashMap<IAction, String[]>(){{put(sub, new String[3]); put(div, new String[3]);}};
-		Map<KeyCode, Map<IAction, String[]>> pressMap = new HashMap<KeyCode, Map<IAction, String[]>>(){{  put(KeyCode.UP, map1); put(KeyCode.DOWN, map2);}};
-		Map<KeyCode, Map<IAction, String[]>> releaseMap = new HashMap<KeyCode, Map<IAction, String[]>>(){{  put(KeyCode.DOWN, map2); put(KeyCode.UP, map2);}};
+		//Map<IAction, String[]> map2 = new LinkedHashMap<IAction, String[]>(){{put(sub, new String[3]); put(div, new String[3]);}};
+		//Map<KeyCode, Map<IAction, String[]>> pressMap = new HashMap<KeyCode, Map<IAction, String[]>>(){{  put(KeyCode.UP, map1); put(KeyCode.DOWN, map2);}};
+		//Map<KeyCode, Map<IAction, String[]>> releaseMap = new HashMap<KeyCode, Map<IAction, String[]>>(){{  put(KeyCode.DOWN, map2); put(KeyCode.UP, map2);}};
 		cManager.addControl(pressMap, releaseMap);
 		
 //		myControl.addBehavior("UP", "Add");

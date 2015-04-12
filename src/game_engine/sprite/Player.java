@@ -1,25 +1,25 @@
 package game_engine.sprite;
 
-import game_engine.IAction;
-import game_engine.physics.Vector;
+
+import game_engine.physics.PhysicsObject;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observable;
 
 public class Player extends Character {
         private Map<Collectible, Integer> myCollectibleMap;
         
-        public Player(){
+        public Player(PhysicsObject physics){
+            super(physics);
             myCollectibleMap = new HashMap<>();
         }
         
-	public Player(String name) {
-		super(name);
+	public Player(PhysicsObject physics, String name) {
+		super(physics,name);
 		myCollectibleMap = new HashMap<>();
 	}
 	
-	public Player(String name, int id){
-		super(name,id);
+	public Player(PhysicsObject physics,String name, int id){
+		super(physics,name,id);
 		myCollectibleMap = new HashMap<>();
 	}
 	
@@ -51,7 +51,9 @@ public class Player extends Character {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-
+	    this.getPhysicsObject().update();
+	    setChanged();
+            notifyObservers();
 	}	
 	
 }
