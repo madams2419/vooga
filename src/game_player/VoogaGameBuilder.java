@@ -12,14 +12,17 @@ import game_engine.collision.CollisionEngine;
 import game_engine.control.ControlManager;
 import game_engine.control.KeyControl;
 import game_engine.objective.Objective;
+import game_engine.physics.PhysicsEngine;
 import game_engine.sprite.Sprite;
 import game_engine.sprite.SpriteFactory;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 import javafx.scene.input.KeyCode;
 
 
@@ -51,6 +54,8 @@ public class VoogaGameBuilder {
         parser.moveDown(levelID);
         Level level = new Level();
 
+        PhysicsEngine engine = buildPhysicsEngine();
+        
         parser.moveDown("sprite");
         for (String directory : parser.getValidSubDirectories()) {
             Sprite sprite = buildSprite(directory);
@@ -69,7 +74,7 @@ public class VoogaGameBuilder {
         String spriteType = parser.getValue("type");
         SpriteFactory factory = new SpriteFactory();
         try {
-            Sprite sprite = factory.createSprite(spriteType);
+            Sprite sprite = factory.createSprite(spriteType, buildPhysicsObject());
             parser.moveDown("animation");
             for (String directory : parser.getValidSubDirectories()) {
                 parser.moveDown(directory);
@@ -82,7 +87,6 @@ public class VoogaGameBuilder {
 
             String state = parser.getValue("initialState");
             sprite.setState(state);
-            //sprite.setPhysicsObject(buildPhysicsObject(engine));
             parser.moveUp();
             mySpriteMap.put(spriteID, sprite);
             return sprite;
