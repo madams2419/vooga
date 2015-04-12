@@ -54,11 +54,7 @@ public class PhysicsEngine {
 		computeNetGlobalAccel();
 	}
 
-	public void update(Layer layer) {
-		List<Sprite> sprites = layer.getSprites();
-
-		handleCollisions(sprites);
-
+	public void update(List<Sprite> sprites) {
 		updatePhysicsObjects(sprites);
 	}
 
@@ -66,30 +62,6 @@ public class PhysicsEngine {
 		for(Sprite sprite : sprites) {
 			sprite.getPhysicsObject().update();
 		}
-	}
-
-	private void handleCollisions(List<Sprite> sprites) {
-		/* check for collisions on unique sprite pairs */
-		for(int i = 0; i < sprites.size(); ++i) {
-			PhysicsObject a = sprites.get(i).getPhysicsObject();
-
-			for(int j = i + 1; j < sprites.size(); ++j) {
-				PhysicsObject b = sprites.get(j).getPhysicsObject();
-
-				if(checkCollision(a, b)) {
-					resolveCollision(a, b);
-				}
-			}
-		}
-	}
-
-	public void resolveCollision(PhysicsCollision collision) {
-		PhysicsObject poA = collision.getPhysicsObjectA();
-		PhysicsObject poB = collision.getPhysicsObjectB();
-		Vector normal = collision.getNormal();
-		double pDepth = collision.getPenetrationDepth();
-
-		resolveCollision(poA, poB, normal, pDepth);
 	}
 
 	private Vector computeNetGlobalForce() {

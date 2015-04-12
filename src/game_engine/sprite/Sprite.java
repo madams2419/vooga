@@ -85,7 +85,7 @@ public abstract class Sprite extends Observable{
 	}
 	
 	public void runBehavior(String behavior, String... params){
-	    myBehaviorMap.get(behavior).execute(params);
+	    myBehaviorMap.get(behavior).perform(params);
 	}
 	
 	public void addImage(String state,String ImagePath){
