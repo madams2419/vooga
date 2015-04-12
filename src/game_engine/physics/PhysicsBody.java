@@ -1,16 +1,25 @@
 package game_engine.physics;
 
-public interface PhysicsBody {
+public abstract class PhysicsBody {
 
-	public double getVolume();
+	protected double myDepth;
 
-	/* return radius bounding circle in pixels */
-	public double getRadiusPixels();
+	public PhysicsBody(double depth) {
+		myDepth = depth;
+	}
 
-	/* return radius bounding circle in meters */
-	public double getRadiusMeters();
+	public abstract double getArea();
 
-	/* return cross sectional area in meters */
-	public double getCxArea();
+	public abstract double getCxLength();
+
+	public abstract double getRadius();
+
+	public double getVolume() {
+		return myDepth * getArea();
+	}
+
+	public double getCxArea() {
+		return myDepth * getCxLength();
+	}
 
 }

@@ -1,6 +1,5 @@
 package game_engine.physics;
 
-
 public class CircleBody implements PhysicsBody {
 
 	private double myRadius;
@@ -11,10 +10,6 @@ public class CircleBody implements PhysicsBody {
 
 	public double getVolume() {
 		return (4/3)*Math.PI*Math.pow(myRadius, 3);
-	}
-
-	public double getRadiusPixels() {
-		return PhysicsEngine.metersToPixels(getRadiusMeters());
 	}
 
 	public double getRadiusMeters() {
