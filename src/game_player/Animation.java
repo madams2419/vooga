@@ -29,6 +29,7 @@ public class Animation implements Observer {
 		linkToSprite(physics);
 		myPathMap = new HashMap<>();
 		myImageView = new ImageView();
+		updatePosition(physics);
 	}
 
 	public void setImage(String state, String ImagePath) {
@@ -60,7 +61,6 @@ public class Animation implements Observer {
 	}
 
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
 		try {
 			Sprite sprite;
 			sprite = (Sprite) o;
@@ -69,11 +69,15 @@ public class Animation implements Observer {
 			// TODO Auto-generated catch block
 			PhysicsObject physics;
 			physics = (PhysicsObject) o;
-			Vector jfxPosition = Utilities.normalToJFXCoords(physics
-					.getPositionPixels());
-			myImageView.setTranslateX(jfxPosition.getX());
-			myImageView.setTranslateY(jfxPosition.getY());
+			updatePosition(physics);
 		}
+	}
+	
+	public void updatePosition(PhysicsObject physics) {
+		Vector jfxPosition = Utilities.normalToJFXCoords(physics
+				.getPositionPixels());
+		myImageView.setTranslateX(jfxPosition.getX());
+		myImageView.setTranslateY(jfxPosition.getY());
 	}
 
 }

@@ -22,8 +22,8 @@ public class PhysicsObject extends Observable {
 
 	private RigidBody myRigidBody;
 	
-	public PhysicsObject(PhysicsEngine physics, RBodyType rbType, int width, int height, Material material, int xPosPixels, int yPosPixels) {
-		this(physics, RigidBodyFactory.createRigidBody(height, width, rbType), material, xPosPixels, yPosPixels);
+	public PhysicsObject(PhysicsEngine physics, RBodyType rbType, int widthPixels, int heightPixels, Material material, int xPosPixels, int yPosPixels) {
+		this(physics, RigidBodyFactory.createRigidBody(heightPixels, widthPixels, rbType), material, xPosPixels, yPosPixels);
 	}
 
 	public PhysicsObject(PhysicsEngine physics, RigidBody rigidBody, Material material, int xPosPixels, int yPosPixels) {
@@ -49,7 +49,7 @@ public class PhysicsObject extends Observable {
 
 		// temporary ground handling
 		if(myPosition.getY() <= myPhysics.getGround() + myRigidBody.getRadius()) {
-			myPosition.setY(myPhysics.getGround() + myRigidBody.getRadius());
+			myPosition = myPosition.setY(myPhysics.getGround() + myRigidBody.getRadius());
 			myVelocity = myVelocity.setY(0);
 		}
 
@@ -174,11 +174,6 @@ public class PhysicsObject extends Observable {
 
 	public void setMaterial(Material material) {
 		myMaterial = material;
-		myInvMass = computeInvMass();
-	}
-
-	public void setRigidBody(RigidBody rigidBody) {
-		myRigidBody = rigidBody;
 		myInvMass = computeInvMass();
 	}
 

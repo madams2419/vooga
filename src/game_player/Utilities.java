@@ -7,10 +7,7 @@ public class Utilities {
 	private static final int SCREEN_HEIGHT = 800;
 	
 	public static Vector normalToJFXCoords(Vector normal) {
-		Vector jfxVect = new Vector();
-		jfxVect.setX(normal.getX());
-		jfxVect.setY(SCREEN_HEIGHT - normal.getY());
-		return jfxVect;
+		return new Vector(normal.getX(), SCREEN_HEIGHT - normal.getY());
 	}
 
 }

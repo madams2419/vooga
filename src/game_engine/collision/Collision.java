@@ -51,7 +51,8 @@ public class Collision {
 	public void getColliding() {
 //		spriteList.stream().filter(sprite -> collidingHitBox(sprite, spriteA)).filter(sprite->collide(sprite,spriteA))
 //				.forEach(this::execute);
-		if(collidingHitBox() && collide()){
+		//if(collidingHitBox() && collide()){ //TODO collide() throws null pointer exceptions
+		if(collidingHitBox()){
 			execute();
 			
 			if(isRealistic){

@@ -14,11 +14,11 @@ public abstract class PhysicsCollision {
 	public PhysicsCollision(PhysicsObject objectA, PhysicsObject objectB) {
 		myObjectA = objectA;
 		myObjectB = objectB;
-		computeNormal();
-		computePenetrationDepth();
 	}
 
 	public boolean collide() {
+		myNormal = computeNormal();
+		myPenetrationDepth = computePenetrationDepth();
 		return (myPenetrationDepth >= 0);
 	}
 

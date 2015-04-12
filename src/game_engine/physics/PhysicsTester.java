@@ -93,8 +93,8 @@ public class PhysicsTester extends Application {
 	private void handleKeyFrame() {
 		applyKeyPressBehavior();
 		applyKeyReleaseBehavior();
+		//cEngine.checkCollisions();
 		globalPhysics.update(layer.getSprites());
-		updateNodes();
 	}
 
 	/* update node positioning to reflect sprite positioning */
@@ -191,39 +191,32 @@ public class PhysicsTester extends Application {
 		layer.addSprite(playerSprite);
 
 		/* create and add enemy sprites */
-		Sprite e1 = createAndAddEnemy(300, 700, 50, Material.BOUNCY_BALL);
+		//Sprite e1 = createAndAddEnemy(300, 700, 50, Material.BOUNCY_BALL);
 		//createAndAddEnemy(500, 700, 30, Material.BOUNCY_BALL);
 		//createAndAddEnemy(700, 200, 200, Material.BOUNCY_BALL);
 		
 		/* create collisions list */
-		Collision c1 = new Collision(playerSprite, e1, null, null, true, globalPhysics);
+		//Collision c1 = new Collision(playerSprite, e1, null, null, true, globalPhysics);
 		
 		ArrayList<Collision> cList = new ArrayList<>();
-		cList.add(c1);
+		//cList.add(c1);
 		
 		/* create collision engine */
 		cEngine = new CollisionEngine(cList);
 	}
 
 	public Sprite createAndAddEnemy(int x, int y, double radius, Material material) {
+		String defaultState = "existing";
+		String defaultImage = "/Resources/images/bouncy_ball.jpg";
+		int height = (int) radius;
+		int width = (int) radius;
+		RBodyType rType = RBodyType.CIRCLE;
+		int startX = x;
+		int startY = y;
 		
-		/* create player sprite */
-		Sprite enemySprite = new Enemy(null);
-
-		/* set image behavior */
-		enemySprite.addImage("existing", "/Resources/images/bouncy_ball.jpg");
-		enemySprite.setState("existing");
-		enemySprite.getImageView().setFitHeight(radius);
-		enemySprite.getImageView().setFitWidth(radius);
+		Sprite enemySprite = new Player(defaultState, defaultImage, height, width, rType, globalPhysics, material, startX, startY);
 		myGroup.getChildren().add(enemySprite.getImageView());
-		
-		/* create player sprite physics object */
-		Material enemyMaterial = Material.BOUNCY_BALL;
-		PhysicsObject enemyPhysics = new PhysicsObject(playerSprite, globalPhysics, enemyMaterial, x, y);
-		playerSprite.setPhysicsObject(enemyPhysics);
-
-		/* add player to layer */
-		layer.addSprite(playerSprite);
+		layer.addSprite(enemySprite);
 		
 		return enemySprite;
 		

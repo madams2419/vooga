@@ -8,8 +8,8 @@ public class PhysicsCollisionFactory {
 	public static PhysicsCollision getCollision(Sprite a, Sprite b) {
 		PhysicsObject poA = a.getPhysicsObject();
 		PhysicsObject poB = b.getPhysicsObject();
-		RigidBody rbA = a.getRigidBody();
-		RigidBody rbB = b.getRigidBody();
+		RigidBody rbA = poA.getRigidBody();
+		RigidBody rbB = poB.getRigidBody();
 
 		if(rbA.getType() == RBodyType.CIRCLE) {
 			CircleBody circleA = (CircleBody) rbA;
