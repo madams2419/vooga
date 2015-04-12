@@ -1,23 +1,24 @@
 package game_engine.physics;
 
-public class CircleBody implements PhysicsBody {
+public class CircleBody extends PhysicsBody {
 
 	private double myRadius;
 
-	public CircleBody(double radiusPixels) {
-		myRadius = PhysicsEngine.pixelsToMeters(radiusPixels);
+	public CircleBody(double depth, double radius) {
+		super(depth);
+		myRadius = radius;
 	}
 
-	public double getVolume() {
-		return (4/3)*Math.PI*Math.pow(myRadius, 3);
+	public double getArea() {
+		return Math.PI * myRadius * myRadius;
 	}
 
-	public double getRadiusMeters() {
+	public double getCxLength() {
+		return getRadius();
+	}
+
+	public double getRadius() {
 		return myRadius;
-	}
-
-	public double getCxArea() {
-		return Math.PI*myRadius*myRadius;
 	}
 
 }
