@@ -17,7 +17,7 @@ public class PhysicsObject extends Observable {
 	private double myDirForceMagnitude;
 	private List<Joint> myJoints;
 	private PhysicsEngine myPhysics;
-	
+
 	private Shape myShape;
 
 	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material, int xPosPixels, int yPosPixels) {
@@ -35,7 +35,7 @@ public class PhysicsObject extends Observable {
 	}
 
 	public void update() {
-	       
+
 		double dt = myPhysics.getTimeStep();
 		myAccel = computeAccel();
 		myVelocity = myVelocity.plus(myAccel.times(dt));
@@ -45,9 +45,10 @@ public class PhysicsObject extends Observable {
 		if(myPosition.getY() <= myPhysics.getGround() + myShape.getRadiusMeters()) {
 			myPosition.setY(myPhysics.getGround() + myShape.getRadiusMeters());
 			myVelocity.setY(0);
-		} 
+		}
+
 		setChanged();
-	        notifyObservers();
+		notifyObservers();
 	}
 
 	private double computeInvMass() {
@@ -77,11 +78,11 @@ public class PhysicsObject extends Observable {
 	}
 
 	public void addForce(Vector force) {
-		myNetInternalForce.plus(force);
+		myNetInternalForce = myNetInternalForce.plus(force);
 	}
 
 	public void removeForce(Vector force) {
-		myNetInternalForce.minus(force);
+		myNetInternalForce = myNetInternalForce.minus(force);
 	}
 
 	public void addDirectionalForce(double magnitude) {
@@ -93,12 +94,15 @@ public class PhysicsObject extends Observable {
 	}
 
 	public void applyImpulse(Vector impulse) {
-		Vector newVelocity = myVelocity.plus(impulse.times(myInvMass));
-		setVelocity(newVelocity);
-		
+		applyVelocity(impulse.times(myInvMass));
 	}
 
-	protected Vector getPositionMeters() {
+	public void applyVelocity(Vector velocity) {
+		Vector newVelocity = myVelocity.plus(velocity);
+		setVelocity(newVelocity);
+	}
+
+	public Vector getPositionMeters() {
 		return myPosition;
 	}
 
@@ -156,10 +160,6 @@ public class PhysicsObject extends Observable {
 
 	public double getInvMass() {
 		return myInvMass;
-	}
-
-	public void setRestitution(double restitution) {
-		myMaterial.setRestitution(restitution);
 	}
 
 	public double getRestitution() {

@@ -4,7 +4,7 @@ import game_engine.physics.PhysicsObject;
 
 public class Collectible extends Sprite{
     
-    private boolean canCollect;
+    private boolean canCollect = true;
     
     public Collectible(PhysicsObject physics) {
         super(physics);
@@ -19,7 +19,7 @@ public class Collectible extends Sprite{
     
       public Collectible(PhysicsObject physics,String name, int id){
           super(physics,name,id);
-         
+
       }
       
       public void setCollectible(boolean canCollect){

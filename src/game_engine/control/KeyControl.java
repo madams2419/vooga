@@ -1,11 +1,10 @@
 package game_engine.control;
 
 
+import game_engine.Behavior;
 import game_engine.IBehavior;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import javafx.scene.input.KeyCode;
 
@@ -14,41 +13,65 @@ import javafx.scene.input.KeyCode;
  * @author 
  *
  */
-public class ControlsManager {
-	
+public class KeyControl {
+
 	Map<String, IBehavior> myControlMap;
 	Map<String, String> myDesignerMap;
 	Map<KeyCode, String> myVirtualKeyboard;
-	
-	public ControlsManager() {
+
+	Map<KeyCode, List<Behavior>> myKeyPressedMap;
+	Map<KeyCode, List<Behavior>> myKeyReleasedMap;
+	Map<KeyCode, List<Behavior>> myKeyHeldMap;
+	List<KeyCode> myWhilePressedKey;
+
+	public KeyControl(Map<KeyCode, List<Behavior>> keyPressMap, Map<KeyCode, List<Behavior>> keyReleaseMap, Map<KeyCode, List<Behavior>> keyHeldMap) {
 		myControlMap = new HashMap<>();
 		myDesignerMap = new HashMap<>();
 		myVirtualKeyboard = new HashMap<>();
+		myKeyPressedMap = keyPressMap;
+		myKeyReleasedMap = keyReleaseMap;
+		myKeyHeldMap = keyHeldMap;
+		myWhilePressedKey = new ArrayList<>();
 	}
-	
+
+
+
+	public void executeKeyEvent(KeyCode keycode, boolean pressed){
+		if(myKeyPressedMap.containsKey(keycode)){
+			if(pressed){
+				//add error checking later
+				myKeyPressedMap.get(keycode).forEach((behavior) -> behavior.execute());
+				myWhilePressedKey.add(keycode);
+			} else {
+				myKeyReleasedMap.get(keycode).forEach((behavior) -> behavior.execute());
+				myWhilePressedKey.remove(keycode);
+			}
+		}
+	}
+
 	/**
 	 * method executeBehavior
 	 * executes a behavior corresponding to a key
 	 * @param keyText the string that maps to the key
 	 */
 	public void executeBehavior(String keyText) {
-		myControlMap.get(myDesignerMap.get(keyText)).execute(new String[3]);
+		myControlMap.get(myDesignerMap.get(keyText)).execute();
 	}
 	/**
 	 * KeyCode version of executeBehavior
 	 * @param keycode
 	 */
 	public void executeBehavior(KeyCode keycode){
-		myControlMap.get(myVirtualKeyboard.get(keycode)).execute(new String[3]);
+		myControlMap.get(myVirtualKeyboard.get(keycode)).execute();
 	}
-	
+
 	//adds a new behavior to the maps
 	public void addBehavior(String key, String behaviorName){
 		myDesignerMap.put(key, behaviorName);
-		myVirtualKeyboard.put(KeycodeFactory.generateKeyCode(key), behaviorName);
+		myVirtualKeyboard.put(KeyCode.valueOf(key), behaviorName);
 		addEntryControlMap(behaviorName, ControlTester.selectBehavior(behaviorName));
 	}
-	
+
 	//change the key of a behavior
 	public void modifyKey(String oldKey, String newKey){
 		if(myDesignerMap.containsKey(oldKey)){
@@ -57,21 +80,21 @@ public class ControlsManager {
 				return;
 			} else {
 				myDesignerMap.put(newKey, myDesignerMap.get(oldKey));
-				myVirtualKeyboard.put(kcTranslation(newKey), myVirtualKeyboard.get(kcTranslation(oldKey)));
+				myVirtualKeyboard.put(KeyCode.valueOf(newKey), myVirtualKeyboard.get(kcTranslation(oldKey)));
 				addEntryControlMap(newKey, ControlTester.selectBehavior(oldKey));
 				myDesignerMap.remove(oldKey);
-				myVirtualKeyboard.remove(kcTranslation(oldKey));
+				myVirtualKeyboard.remove(KeyCode.valueOf(oldKey));
 				deleteEntryControlMap(oldKey);
 			}
 		} else {
 			System.out.println("Key modification is aborted");
 		}
 	}
-	
+
 	private void addEntryControlMap(String key, IBehavior behavior){
 		myControlMap.put(key, behavior);
 	}
-	
+
 	private void deleteEntryControlMap(String key){
 		if(myControlMap.containsKey(key)){
 			myControlMap.remove(key);
@@ -79,10 +102,10 @@ public class ControlsManager {
 			System.out.println("Nothing to delete in the ControlMap");
 		}
 	}
-	
+
 	//TODO: throw exception if keycode not defined
 	private KeyCode kcTranslation(String index){
-		  return KeycodeFactory.generateKeyCode(index);
+		return KeycodeFactory.generateKeyCode(index);
 	}
-	
+
 }
