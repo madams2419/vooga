@@ -1,5 +1,7 @@
 package game_engine.sprite;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class SpriteFactory {
     
     public SpriteFactory(){
@@ -18,6 +20,13 @@ public class SpriteFactory {
         e.printStackTrace();
     }
         
-        return classInstance =  (Sprite) runClass.newInstance();   
+        try {
+	    return classInstance =  (Sprite) runClass.getConstructor().newInstance();
+	} catch (IllegalArgumentException | InvocationTargetException
+		| NoSuchMethodException | SecurityException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	    return null;
+	}
     }
 }

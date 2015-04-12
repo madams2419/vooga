@@ -1,6 +1,6 @@
 package game_engine;
 
-import game_engine.control.ControlsManager;
+import game_engine.control.KeyControl;
 
 /**
  * 
@@ -10,7 +10,7 @@ import game_engine.control.ControlsManager;
 public class Game {
 	
 	Level activeLevel;
-	ControlsManager controlsManager;
+	KeyControl controlsManager;
 	
 	public Game() {
 		// TODO
