@@ -2,16 +2,16 @@ package authoring.userInterface;
 
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -19,7 +19,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import authoring.Sprite;
-import authoring.XMLBuilder;
 import authoring.rightPane.RightPane;
 
 /**
@@ -35,6 +34,7 @@ public class AuthoringWindow {
 	private BottomPane myBottomPane;
 	private RightPane myRightPane;
 	private LeftPane myLeftPane;
+	private Map<String, WindowPane> myPanes = new HashMap<String, WindowPane>();
 
 	private static final int FILE_MENU = 0;
 	// private static final int EDIT_MENU = 1;
@@ -74,11 +74,17 @@ public class AuthoringWindow {
 		rootContainer.setCenter(setupCenterPane());
 		rootContainer.setBottom(setupBottomPane());
 
-		UIElementDistributer.ElementDistributer(myScene, this);
-
 		root.getChildren().add(menuBar());
 		root.getChildren().add(rootContainer);
 
+		myPanes.put(myBottomPane.getClass().getName(), myBottomPane);
+		myPanes.put(myTopPane.getClass().getName(), myTopPane);
+		myPanes.put(myCenterPane.getClass().getName(), myCenterPane);
+		myPanes.put(myLeftPane.getClass().getName(), myLeftPane);
+		myPanes.put(myRightPane.getClass().getName(), myRightPane);
+
+		UIElementDistributer.ElementDistributer(myScene, this);
+		
 		return myScene;
 	}
 
@@ -91,7 +97,6 @@ public class AuthoringWindow {
 		Arrays.asList(menuItems).forEach(
 				str -> {
 					String a = str.split(":")[0];
-					System.out.println(a);
 					Menu m = new Menu(a);
 					String s = str.split(":")[1];
 					String[] t = s.split("/");
@@ -174,9 +179,7 @@ public class AuthoringWindow {
 	}
 
 	private Node setupRightPane() {
-		myRightPane = RightPane.getInstance();
-		myRightPane.setScene(myScene);
-		return myRightPane;
+		return (myRightPane = new RightPane(myScene, this)).myContainer;
 	}
 
 	private Node setupLeftPane() {
@@ -193,6 +196,10 @@ public class AuthoringWindow {
 
 	public static Object getCurrentlySelected() {
 		return currentlySelected;
+	}
+
+	public WindowPane getPane(String name) {
+		return myPanes.get(name);
 	}
 
 	public static void setControlOn() {
@@ -221,5 +228,9 @@ public class AuthoringWindow {
 
 	public CenterPane getMyCenterPane() {
 		return myCenterPane;
+	}
+
+	public BottomPane getMyBottomPane() {
+		return myBottomPane;
 	}
 }

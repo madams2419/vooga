@@ -1,16 +1,20 @@
 package authoring.rightPane;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import authoring.InteractionManager;
 import authoring.Sprite;
 import authoring.userInterface.AuthoringWindow;
 import authoring.userInterface.ControlsDialog;
+import authoring.userInterface.WindowPane;
 
 /**
  * This class represents the right pane on the screen. It will allow the user to
@@ -20,134 +24,126 @@ import authoring.userInterface.ControlsDialog;
  * @author Natalie Chanfreau, Daniel Luker, hojeannie Chung
  *
  */
-public class RightPane extends VBox {
+public class RightPane extends WindowPane {
 
-    private Scene myScene;
-    private EditingPane myCurrentContent;
+	private EditingPane myCurrentContent;
 
-    private final static int SPACING = 20;
-    private final static int PADDING = 10;
-    private final static String CSS = "styles/right_pane.css";
+	private final static int SPACING = 20;
+	private final static int PADDING = 10;
+	private final static String CSS = "styles/right_pane.css";
 
-    private static RightPane mInstance;
+	public RightPane(Scene scene, AuthoringWindow window) {
+		super(scene, new VBox(SPACING), window);
+		System.out.printf("Instantiated %s%n", this.getClass().getName());
+		myContainer.getStylesheets().add(CSS);
+		myContainer.setPadding(new Insets(PADDING));
+		((VBox) myContainer).setAlignment(Pos.TOP_CENTER);
+		// switchToPane(new CharacterCreationPane(scene, this));
+		// initializeCurrentContent(new DefaultEditingPane(scene));
+		// initializeCurrentContent(new CharacterEditingPane(scene, null));
+	}
 
-    public static RightPane getInstance () {
-        if (mInstance == null)
-            mInstance = new RightPane();
-        return mInstance;
-    }
+	public void switchToCharacterEditingPane(Sprite sprite) {
+		switchToPane(new CharacterEditingPane(myScene, this, sprite));
+	}
 
-    private RightPane () {
-        super(SPACING);
+	public void switchToCharacterCreationPane() {
+		switchToPane(new CharacterCreationPane(myScene, this));
+	}
 
-        getStylesheets().add(CSS);
-        setPadding(new Insets(PADDING));
-        setAlignment(Pos.TOP_CENTER);
+	public void switchToInteractionEditingPane(Sprite sprite1, Sprite sprite2) {
+		switchToPane(new InteractionEditingPane(myScene, this, sprite1,
+				sprite2, getListOfInteractions()));
+		printOutInteractions();
+	}
 
-        // initializeCurrentContent(new DefaultEditingPane(scene));
-        // initializeCurrentContent(new CharacterEditingPane(scene, null));
-    }
+	private void printOutInteractions() {
+		InteractionManager.getInstance().printOut();
+	}
 
-    public void switchToCharacterEditingPane (Sprite sprite) {
-        switchToPane(new CharacterEditingPane(myScene, sprite));
-    }
+	public void InteractionCreate() {
+	}
 
-    public void switchToCharacterCreationPane () {
-        switchToPane(new CharacterCreationPane(myScene));
-        System.out.println("Character Creation Pane");
-    }
+	public void switchToBlockCreationPane() {
+	}
 
-    public void switchToInteractionEditingPane (Sprite sprite1, Sprite sprite2) {
-        switchToPane(new InteractionEditingPane(myScene, sprite1, sprite2, getListOfInteractions()));
-        printOutInteractions();
-    }
+	public void DecorationCreate() {
+	}
 
-    private void printOutInteractions () {
-        InteractionManager.getInstance().printOut();
-    }
+	public void switchtoGlobalSettingPane() {
+	}
 
-    public void InteractionCreate () {
-        System.out.println("Interaction Create");
-    }
+	public void UIControlCreate() {
+		new ControlsDialog();
+	}
 
-    public void switchToBlockCreationPane () {
-        System.out.println("Block Created");
-    }
-
-    public void DecorationCreate () {
-        System.out.println("Decoration Create");
-    }
-
-    public void switchtoGlobalSettingPane () {
-        System.out.println("Global Create");
-    }
-
-    public void UIControlCreate () {
-        new ControlsDialog();
-    }
-
-    public void switchToDefaultPane () {
-        switchToPane(new DefaultEditingPane(myScene));
-    }
+	public void switchToDefaultPane() {
+		switchToPane(new DefaultEditingPane(myScene, this));
+	}
 
 	public void switchPane(Sprite s) {
-	    System.out.println(AuthoringWindow.getCurrentlySelected());
-	if (AuthoringWindow.getControl())
-		switchToInteractionEditingPane(
-				(Sprite) AuthoringWindow.getCurrentlySelected(), s);
-	else {
-	    AuthoringWindow.setCurrentlySelected(s);
-		switchToCharacterEditingPane(s);
+		if (AuthoringWindow.getControl())
+			switchToInteractionEditingPane(
+					(Sprite) AuthoringWindow.getCurrentlySelected(), s);
+		else {
+			AuthoringWindow.setCurrentlySelected(s);
+			switchToCharacterEditingPane(s);
+		}
 	}
-}
-    private void switchToPane (EditingPane newPane) {
-        clearChildren();
-        myCurrentContent = newPane;
-        addFromCurrentContent();
-    }
 
-    public void switchToGlobalSettingPane () {
-        // switchToPane(new CharacterEditingPane(myScene, new Sprite()));
-        switchToPane(new GlobalCreationPane(myScene));
-        System.out.println("Global Create");
-    }
+	private void switchToPane(EditingPane newPane) {
+		clearChildren();
+		myCurrentContent = newPane;
+		addFromCurrentContent();
+	}
 
-    public void switchToMapSettingPane () {
-        switchToPane(new MapSettingPane(myScene));
-        System.out.println("Map Created");
-    }
+	public void switchToGlobalSettingPane() {
+		// switchToPane(new CharacterEditingPane(myScene, new Sprite()));
+		switchToPane(new GlobalCreationPane(myScene, this));
+	}
 
-    public void setScene (Scene scene) {
-        myScene = scene;
-        initializeCurrentContent(new CharacterCreationPane(scene));
+	public void switchToMapSettingPane() {
+		switchToPane(new MapSettingPane(myScene, this));
+	}
 
-        // temporary
-        // initializeCurrentContent(new InteractionEditingPane(scene, null,
-        // null,
-        // getListOfInteractions()));
+	public void setScene(Scene scene) {
+		myScene = scene;
+		initializeCurrentContent(new CharacterCreationPane(scene, this));
+	}
 
-    }
+	private void clearChildren() {
+		((VBox) myContainer).getChildren().clear();
+	}
 
-    private void clearChildren () {
-        getChildren().clear();
-    }
+	private void addFromCurrentContent() {
+		((VBox) myContainer).getChildren().addAll(
+				myCurrentContent.getChildren());
+	}
 
-    private void addFromCurrentContent () {
-        getChildren().addAll(myCurrentContent.getChildren());
-    }
+	public void addContent(EditingPane p) {
+		myCurrentContent = p;
+		addFromCurrentContent();
+	}
 
-    public void addContent(EditingPane p) {
-    	myCurrentContent = p;
-    	addFromCurrentContent();
-    }
-    
-    private void initializeCurrentContent (EditingPane content) {
-        myCurrentContent = content;
-        this.getChildren().addAll(myCurrentContent.getChildren());
-    }
+	private void initializeCurrentContent(EditingPane content) {
+		myCurrentContent = content;
+		((VBox) myContainer).getChildren().addAll(
+				myCurrentContent.getChildren());
+	}
 
-    // TEMPORARY!!
-    private List<String> getListOfInteractions () {
-        return Arrays.asList(new String[] { "jump", "die", "go to new level" });
-    }
+	// TEMPORARY!!
+	private List<String> getListOfInteractions() {
+		return Arrays.asList(new String[] { "jump", "die", "go to new level" });
+	}
+
+	@Override
+	public Group generateComponents(
+			ArrayList<Map<String, Map<String, String>>> values) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public AuthoringWindow getParent() {
+		return myParent;
+	}
 }

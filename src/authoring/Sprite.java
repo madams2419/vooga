@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import authoring.rightPane.RightPane;
+import authoring.userInterface.CenterPane;
 import authoring.userInterface.ClickHandler;
 import authoring.util.FrontEndUtils;
 import authoring.util.ImageEditor;
@@ -48,10 +49,19 @@ public class Sprite extends ImageView {
 	public final static String POSITION = "position";
 	public final static String SCALE = "scale";
 
-	private final double initialScale = 1.0;
+//	private final double initialScale = 1.0;
 
-	public Sprite(int ID, String imageURI) {
-		this();
+	private CenterPane myParent;
+
+	/***
+	 * 
+	 * @param ID
+	 * @param imageURI
+	 * @param parent
+	 *            container, instance of the CenterPane.
+	 */
+	public Sprite(int ID, String imageURI, CenterPane parent) {
+		this(parent);
 		this.myID = ID;
 		myCharacteristics.put("imageURI", imageURI);
 		myCharacteristics.put("ID", String.valueOf(ID));
@@ -59,7 +69,8 @@ public class Sprite extends ImageView {
 		changeImage(new Image(getClass().getResourceAsStream(imageURI)));
 	}
 
-	public Sprite() {
+	public Sprite(CenterPane parent) {
+		myParent = parent;
 		myInteractions = new HashMap<>();
 		myPosition = new HashMap<>();
 		myVelocity = new HashMap<>();
@@ -71,8 +82,8 @@ public class Sprite extends ImageView {
 		onMouseClicked();
 	}
 
-	public Sprite(Sprite sprite, int ID) {
-		this(ID, sprite.getImageURI());
+	public Sprite(Sprite sprite, int ID, CenterPane parent) {
+		this(ID, sprite.getImageURI(), parent);
 	}
 
 	public void addDefaultCharacteristics(List<String> characteristics) {
@@ -109,7 +120,8 @@ public class Sprite extends ImageView {
 	private void onMouseClicked() {
 		try {
 			setOnMouseClicked(new ClickHandler(RightPane.class.getMethod(
-					"switchPane", Sprite.class), RightPane.getInstance(), this));
+					"switchPane", Sprite.class), myParent.getParent()
+					.getMyRightPane(), this));
 		} catch (NoSuchMethodException | SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -142,8 +154,8 @@ public class Sprite extends ImageView {
 
 	public void setScale(String scale) {
 		myCharacteristics.put(SCALE, scale);
-		double newScale = Double.parseDouble(scale);
 
+		// double newScale = Double.parseDouble(scale);
 		// this.setFitWidth(mySize.get(X_STRING));
 		// this.setFitHeight(mySize.get(Y_STRING));
 	}
@@ -179,9 +191,9 @@ public class Sprite extends ImageView {
 	}
 
 	public void setCharacteristic(String characteristic, String value) {
-		if (characteristic.equals(this.POSITION))
+		if (characteristic.equals(POSITION))
 			setPosition(FrontEndUtils.stringToMap(value));
-		else if (characteristic.equals(this.VELOCITY))
+		else if (characteristic.equals(VELOCITY))
 			setVelocity(FrontEndUtils.stringToMap(value));
 		else
 			myCharacteristics.put(characteristic, value);

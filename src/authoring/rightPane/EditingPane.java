@@ -1,11 +1,9 @@
 package authoring.rightPane;
 
-import authoring.userInterface.ClickHandler;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import authoring.userInterface.ClickHandler;
 
 
 /**
@@ -18,22 +16,24 @@ public class EditingPane extends VBox {
 
     private static final String returnToCreationMethod = "switchToCharacterCreationPane";
     private Scene myScene;
+    protected RightPane myParent;
 
-    public EditingPane (Scene scene) {
+    public EditingPane (Scene scene, RightPane parent) {
         assert (scene != null);
         myScene = scene;
+        myParent = parent;
     }
 
     public Scene getMyScene () {
         return myScene;
     }
 
-    void addButtonToReturnToCreationPane (String label) {
+    @SuppressWarnings("unchecked")
+	void addButtonToReturnToCreationPane (String label) {
         Button b = new Button(label);
         try {
             b.setOnAction(new ClickHandler(RightPane.class
-                    .getMethod(returnToCreationMethod), RightPane
-                    .getInstance(), null));
+                    .getMethod(returnToCreationMethod), myParent));
         }
         catch (NoSuchMethodException | SecurityException e) {
             // TODO

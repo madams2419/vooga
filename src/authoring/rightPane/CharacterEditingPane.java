@@ -35,8 +35,8 @@ class CharacterEditingPane extends EditingPane {
 
 	private List<HBox> myFields = new LinkedList<>();
 
-	CharacterEditingPane(Scene scene, Sprite sprite) {
-		super(scene);
+	CharacterEditingPane(Scene scene, RightPane parent, Sprite sprite) {
+		super(scene, parent);
 		// ======================== New design in here ===================== //
 		setFields(this.getChildren(), sprite.getCharacteristics());
 		Button c = new Button("Update");
@@ -49,7 +49,6 @@ class CharacterEditingPane extends EditingPane {
 	}
 
 	private void updateSprite(Sprite sprite) {
-		System.out.println(sprite.getCharacteristics().toString());
 		myFields.forEach(hbox -> {
 			String s, t;
 			sprite.setCharacteristic(
@@ -68,7 +67,6 @@ class CharacterEditingPane extends EditingPane {
 			}
 
 		});
-		System.out.println(sprite.getCharacteristics().toString());
 	}
 
 	private void addSpriteIcon(Sprite sprite) {

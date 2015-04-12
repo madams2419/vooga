@@ -13,9 +13,8 @@ import XML.LayoutXMLParser;
  * 
  */
 @SuppressWarnings("rawtypes")
-
 public class UIElementDistributer extends AuthoringGUITester {
-	
+
 	static Reflection reflection = new Reflection();
 	private static Map<String, Object> ClassConstructors = new HashMap<String, Object>();
 	public static ArrayList<Map> MapofValues = new ArrayList<Map>();
@@ -27,13 +26,13 @@ public class UIElementDistributer extends AuthoringGUITester {
 
 		for (Entry<String, ArrayList> Entry : LayoutXMLParser.myElementMap
 				.entrySet()) {
-			String Panes = Entry.getKey();
+			String panes = Entry.getKey();
+			System.out.println(panes);
 			ArrayList<Map> values = Entry.getValue();
-			String Classname = String.format("authoring.userInterface.%s",
-					Panes);
-			ClassConstructors.put(Classname,
-					Reflection.createInstance(Classname, scene, window));
-			MethodInvoker(ClassConstructors.get(Classname), "Components",
+			String classname = String.format("authoring.userInterface.%s",
+					panes);
+			ClassConstructors.put(classname, window.getPane(classname));
+			MethodInvoker(ClassConstructors.get(classname), "Components",
 					values);
 		}
 	}

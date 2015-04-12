@@ -65,15 +65,14 @@ public class InteractionManager {
     }
 
     public void printOut () {
-        System.out.println("\n\n\n");
-        
-        for (Sprite sprite1 : myInteractions.keySet()) {
-            System.out.print(sprite1.getName() + " ");
-            for (Sprite sprite2 : myInteractions.get(sprite1).keySet()) {
-                System.out.print(myInteractions.get(sprite1).get(sprite2).getAction1() + " ");
-                System.out.print(sprite2.getName() + " ");
-                System.out.println(myInteractions.get(sprite1).get(sprite2).getAction2());
-            }
-        }
+//        System.out.println("\n\n\n");
+//        for (Sprite sprite1 : myInteractions.keySet()) {
+//            System.out.print(sprite1.getName() + " ");
+//            for (Sprite sprite2 : myInteractions.get(sprite1).keySet()) {
+//                System.out.print(myInteractions.get(sprite1).get(sprite2).getAction1() + " ");
+//                System.out.print(sprite2.getName() + " ");
+//                System.out.println(myInteractions.get(sprite1).get(sprite2).getAction2());
+//            }
+//        }
     }
 }
