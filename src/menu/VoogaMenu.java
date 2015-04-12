@@ -96,9 +96,9 @@ public class VoogaMenu {
 	
 	background = new HBox(2 * PADDING);
 	Rectangle left = new Rectangle(width, height);
-	left.setFill(Color.DARKGRAY.darker().darker().darker());
+	left.setFill(Color.DARKRED.darker());
 	Rectangle right = new Rectangle(width, height);
-	right.setFill(Color.LIMEGREEN);
+	right.setFill(Color.DARKBLUE.darker());
 	background.getChildren().addAll(left, right);
 	background.setOpacity(INVISIBLE);
 	
