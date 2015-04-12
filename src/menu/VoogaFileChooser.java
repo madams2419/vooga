@@ -98,7 +98,7 @@ public class VoogaFileChooser {
 	row.getChildren().add(newContentOption());
 	int first = 1;
 	
-	while (!matchingFiles.isEmpty()) {
+	while (!matchingFiles.isEmpty() || first == 1) {
 	    List<File> temp = new ArrayList<File>();
 	    
 	    int size = matchingFiles.size();
