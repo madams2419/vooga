@@ -69,11 +69,11 @@ public class VoogaFileChooser {
      * @return
      *         a StackPane holding the layout of choices.
      */
-    public StackPane getContent() {
+    public StackPane getContent(double height) {
 	StackPane content = new StackPane();
 	content.setAlignment(Pos.CENTER);
 	content.getChildren().add(layout);
-	content.setTranslateY(layout.getTranslateY());
+	content.setTranslateY(height / 2);
 	content.setOpacity(INVISIBLE);
 	return content;
     }
@@ -93,28 +93,6 @@ public class VoogaFileChooser {
      */
     private VBox createLayout(List<File> matchingFiles, double height) {
 	VBox options = new VBox(verticalPadding);
-	
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
-	matchingFiles.add(new File("f"));
 	
 	HBox row = new HBox();
 	row.getChildren().add(newContentOption());

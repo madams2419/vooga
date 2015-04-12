@@ -376,7 +376,7 @@ public class VoogaMenu {
      */
     private void addChoiceMenu(String fileType, StackPane button, int sign) {
 	chooser = new VoogaFileChooser(width, height, fileType);
-	choiceMenu = chooser.getContent();
+	choiceMenu = chooser.getContent(height);
 	
 	disableButtons();
 	
