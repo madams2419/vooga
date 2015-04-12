@@ -3,10 +3,12 @@ package game_engine.sprite;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
+
 import javafx.scene.image.ImageView;
 import game_engine.IBehavior;
 import game_engine.collision.HitBox;
 import game_engine.physics.PhysicsObject;
+import game_engine.physics.RigidBody;
 import game_engine.physics.Vector;
 import game_player.Animation;
 
@@ -142,6 +144,10 @@ public abstract class Sprite extends Observable{
 	
 	public HitBox getHitBox(){
 	    return myAnimation.getHitBox();
+	}
+	
+	public RigidBody getRigidBody(){
+		return getHitBox().getRigidBody();
 	}
 	
 	public void setPhysicsObject(PhysicsObject physicsObject){

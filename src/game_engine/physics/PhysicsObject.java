@@ -20,9 +20,9 @@ public class PhysicsObject extends Observable {
 
 	private RigidBody myRigidBody;
 
-	public PhysicsObject(PhysicsEngine physics, RigidBody shape, Material material, int xPosPixels, int yPosPixels) {
+	public PhysicsObject(PhysicsEngine physics, RigidBody rigidBody, Material material, int xPosPixels, int yPosPixels) {
 		myPhysics = physics;
-		myRigidBody = shape;
+		myRigidBody = rigidBody;
 		myMaterial = material;
 
 		myPosition = PhysicsEngine.vectorPixelsToMeters(xPosPixels, yPosPixels);
@@ -171,13 +171,13 @@ public class PhysicsObject extends Observable {
 		myInvMass = computeInvMass();
 	}
 
-	public RigidBody getRigidBody() {
-		return myRigidBody;
+	public void setRigidBody(RigidBody rigidBody) {
+		myRigidBody = rigidBody;
+		myInvMass = computeInvMass();
 	}
 
-	public void setShape(RigidBody shape) {
-		myRigidBody = shape;
-		myInvMass = computeInvMass();
+	public RigidBody getRigidBody() {
+		return myRigidBody;
 	}
 
 }

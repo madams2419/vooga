@@ -1,6 +1,8 @@
 package game_engine.physics;
 
 import game_engine.Layer;
+import game_engine.collision.Collision;
+import game_engine.collision.CollisionEngine;
 import game_engine.sprite.Enemy;
 import game_engine.sprite.Player;
 import game_engine.sprite.Sprite;
@@ -48,6 +50,7 @@ public class PhysicsTester extends Application {
 
 	private Layer layer;
 	private PhysicsEngine globalPhysics;
+	private CollisionEngine cEngine;
 	private Sprite playerSprite;
 	private HashMap<Sprite, Node> displayMap;
 
@@ -76,7 +79,7 @@ public class PhysicsTester extends Application {
 		stg.setScene(myScene);
 
 		initBackend();
-		initAndDrawNodes();
+		//initAndDrawNodes();
 
 		stg.show();
 		gameLoop.play();
@@ -89,7 +92,7 @@ public class PhysicsTester extends Application {
 	private void handleKeyFrame() {
 		applyKeyPressBehavior();
 		applyKeyReleaseBehavior();
-		globalPhysics.update(layer);
+		globalPhysics.update(layer.getSprites());
 		updateNodes();
 	}
 
@@ -172,15 +175,8 @@ public class PhysicsTester extends Application {
 		/* create global physics engine */
 		globalPhysics = new PhysicsEngine(0, 1 / (double) fps);
 
-		/* create player sprite physics object */
-		int playerRadius = 15;
-		RigidBody playerShape = new CircleBody(playerRadius);
-		Material playerMaterial = Material.SUPER_BALL;
-		PhysicsObject playerPhysics = new PhysicsObject(globalPhysics,
-				playerShape, playerMaterial, 400, 400);
-
 		/* create player sprite */
-		playerSprite = new Player(playerPhysics);
+		playerSprite = new Player(null);
 
 		/* set image behavior */
 		playerSprite.addImage("walking", "/Resources/images/standingMario.png");
@@ -188,30 +184,52 @@ public class PhysicsTester extends Application {
 		playerSprite.getImageView().setFitHeight(50);
 		playerSprite.getImageView().setFitWidth(50);
 		myGroup.getChildren().add(playerSprite.getImageView());
+		
+		/* create player sprite physics object */
+		Material playerMaterial = Material.SUPER_BALL;
+		PhysicsObject playerPhysics = new PhysicsObject(playerSprite, globalPhysics, playerMaterial, 400, 400);
+		playerSprite.setPhysicsObject(playerPhysics);
 
 		/* add player to layer */
 		layer.addSprite(playerSprite);
 
 		/* create and add enemy sprites */
-		createAndAddEnemy(300, 700, 50, Material.BOUNCY_BALL);
-		createAndAddEnemy(500, 700, 30, Material.BOUNCY_BALL);
-		createAndAddEnemy(700, 200, 200, Material.BOUNCY_BALL);
+		Sprite e1 = createAndAddEnemy(300, 700, 50, Material.BOUNCY_BALL);
+		//createAndAddEnemy(500, 700, 30, Material.BOUNCY_BALL);
+		//createAndAddEnemy(700, 200, 200, Material.BOUNCY_BALL);
+		
+		/* create collisions list */
+		Collision c1 = new Collision(playerSprite, e1, null, null, true, globalPhysics);
+		
+		ArrayList<Collision> cList = new ArrayList<>();
+		cList.add(c1);
+		
+		/* create collision engine */
+		cEngine = new CollisionEngine(cList);
 	}
 
-	public void createAndAddEnemy(int x, int y, double radius, Material material) {
+	public Sprite createAndAddEnemy(int x, int y, double radius, Material material) {
+		
+		/* create player sprite */
+		Sprite enemySprite = new Enemy(null);
 
-		/* create enemy sprite physics object */
-		RigidBody enemyShape = new CircleBody(radius);
-		PhysicsObject enemyPhysics = new PhysicsObject(globalPhysics,
-				enemyShape, material, x, y);
+		/* set image behavior */
+		enemySprite.addImage("existing", "/Resources/images/bouncy_ball.jpg");
+		enemySprite.setState("existing");
+		enemySprite.getImageView().setFitHeight(radius);
+		enemySprite.getImageView().setFitWidth(radius);
+		myGroup.getChildren().add(enemySprite.getImageView());
+		
+		/* create player sprite physics object */
+		Material enemyMaterial = Material.BOUNCY_BALL;
+		PhysicsObject enemyPhysics = new PhysicsObject(playerSprite, globalPhysics, enemyMaterial, x, y);
+		playerSprite.setPhysicsObject(enemyPhysics);
 
-		/* create enemy sprite */
-		Sprite enemySprite = new Enemy(enemyPhysics);
-		/* set player physics */
-		enemySprite.setPhysicsObject(enemyPhysics);
-
-		/* add to layer */
-		layer.addSprite(enemySprite);
+		/* add player to layer */
+		layer.addSprite(playerSprite);
+		
+		return enemySprite;
+		
 	}
 
 	public void initAndDrawNodes() {
@@ -227,7 +245,7 @@ public class PhysicsTester extends Application {
 	/* create a node representation of a sprite */
 	public Node createNodeFromSprite(Sprite sprite) {
 		PhysicsObject sPhysics = sprite.getPhysicsObject();
-		double radius = sPhysics.getRigidBody().getRadiusPixels();
+		double radius = sPhysics.getRigidBody().getRadius();
 
 		// just to make things prettier...
 		Color sColor = Color.BLACK;

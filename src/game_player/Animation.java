@@ -2,6 +2,7 @@ package game_player;
 
 import game_engine.collision.HitBox;
 import game_engine.physics.PhysicsObject;
+import game_engine.physics.RigidBody.RBodyType;
 import game_engine.physics.Vector;
 import game_engine.sprite.Sprite;
 
@@ -24,7 +25,6 @@ public class Animation implements Observer {
 
 	private ImageView myImageView;
 	private String myCurrentImage;
-	private HitBox myHitBox;
 	Map<String, String> myPathMap;
 
 	public Animation(Observable sprite, PhysicsObject physics) {
@@ -32,7 +32,6 @@ public class Animation implements Observer {
 		linkToSprite(physics);
 		myPathMap = new HashMap<>();
 		myImageView = new ImageView();
-		myHitBox = null; //DEBUG
 	}
 
 	public void setImage(String state, String ImagePath) {
@@ -61,10 +60,6 @@ public class Animation implements Observer {
 
 	public ImageView getImageView() {
 		return myImageView;
-	}
-
-	public HitBox getHitBox() {
-		return myHitBox;
 	}
 
 	public void update(Observable o, Object arg) {

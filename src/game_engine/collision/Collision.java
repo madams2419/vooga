@@ -3,6 +3,7 @@ package game_engine.collision;
 import game_engine.Behavior;
 import game_engine.IBehavior;
 import game_engine.physics.PhysicsCollision;
+import game_engine.physics.PhysicsCollisionFactory;
 import game_engine.physics.PhysicsEngine;
 import game_engine.sprite.Sprite;
 
@@ -65,7 +66,8 @@ public class Collision {
 	}
 	
 	private boolean collidingHitBox(){
-		return spriteA.getHitBox().intersects(spriteB.getHitBox());
+		pCollision = PhysicsCollisionFactory.getCollision(spriteA, spriteB);
+		return pCollision.collide();
 	}
 
 	private boolean collide() {
