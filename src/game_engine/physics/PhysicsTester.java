@@ -188,7 +188,7 @@ public class PhysicsTester extends Application {
 		playerSprite.getImageView().setFitHeight(50);
 		playerSprite.getImageView().setFitWidth(50);
 		myGroup.getChildren().add(playerSprite.getImageView());
-		
+
 		/* add player to layer */
 		layer.addSprite(playerSprite);
 

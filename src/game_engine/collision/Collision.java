@@ -1,33 +1,28 @@
 package game_engine.collision;
 
-import game_engine.Behavior;
 import game_engine.IBehavior;
 import game_engine.physics.PhysicsEngine;
 import game_engine.sprite.Sprite;
 
-import java.util.List;
-import java.util.Map;
-
 import javafx.scene.image.ImageView;
 
 /**
- * 
- * 
+ *
+ *
  * @author Michael Lee
  *
  */
 
 public class Collision {
-	private Sprite spriteA;
-	private Sprite spriteB;
-//	private Map<Sprite, Map<IBehavior, String[]>> behaviorList;
-	private IBehavior behavior;
-	private CollisionDirection direction;
-	private boolean isRealistic;
-	private PhysicsEngine physics;
+	private Sprite mySpriteA;
+	private Sprite mySpriteB;
+	private IBehavior myBehavior;
+	private CollisionDirection myDirection;
+	private boolean myRealism;
+	private PhysicsEngine myPhysics;
 
 	/**
-	 * 
+	 *
 	 * @param a
 	 * @param b
 	 * @param behave
@@ -35,47 +30,45 @@ public class Collision {
 	 * @param real
 	 * @param p
 	 */
-	public Collision(Sprite a, Sprite b, IBehavior behave, CollisionDirection d, boolean real, PhysicsEngine p) {
-		spriteA = a;
-		spriteB = b;
-		behavior = behave;
-		direction = d;
-		isRealistic = real;
-		physics = p;
+	public Collision(Sprite spriteA, Sprite spriteB, IBehavior behavior, CollisionDirection direction, boolean realism, PhysicsEngine physics) {
+		mySpriteA = spriteA;
+		mySpriteB = spriteB;
+		myBehavior = behavior;
+		myDirection = direction;
+		myRealism = realism;
+		myPhysics = physics;
 	}
 
 	public void getColliding() {
-//		spriteList.stream().filter(sprite -> collidingHitBox(sprite, spriteA)).filter(sprite->collide(sprite,spriteA))
-//				.forEach(this::execute);
-		if(collidingHitBox() && collide()){
+		if(collidingHitBox() && collide()) {
 			execute();
 		}
-		
-		if(isRealistic){
-			physics.resolveCollision(spriteA, spriteB);
+
+		if(myRealism){
+			myPhysics.resolveCollision(mySpriteA, mySpriteB);
 		}
 	}
 
 	private void execute() {
-//		behavior.perform();
+		myBehavior.perform();
 	}
-	
+
 	private boolean collidingHitBox(){
-		return spriteA.getHitBox().intersects(spriteB.getHitBox());
+		return mySpriteA.getHitBox().intersects(mySpriteB.getHitBox());
 	}
 
 	private boolean collide() {
 
-		boolean[][] bitMapA = spriteA.getHitBox().getBitMap();
-		boolean[][] bitMapB = spriteB.getHitBox().getBitMap();
+		boolean[][] bitMapA = mySpriteA.getHitBox().getBitMap();
+		boolean[][] bitMapB = mySpriteB.getHitBox().getBitMap();
 
-		ImageView s1 = spriteA.getImageView();
+		ImageView s1 = mySpriteA.getImageView();
 		double aLeft = s1.getX();
 		double aTop = s1.getY();
 		double aRight = s1.getX() + s1.getImage().getWidth();
 		double aBot = s1.getY() + s1.getImage().getHeight();
 
-		ImageView s2 = spriteB.getImageView();
+		ImageView s2 = mySpriteB.getImageView();
 		double bLeft = s2.getX();
 		double bTop = s2.getY();
 		double bRight = s2.getX() + s2.getImage().getWidth();
@@ -85,20 +78,20 @@ public class Collision {
 		double highTop = Math.max(aLeft, bLeft);
 		double lowRight = Math.min(aRight, bRight);
 		double lowBot = Math.min(aBot, bBot);
-		
+
 
 		int startY = (int) (highTop - aTop);
 		int endY = (int) (lowBot - aTop);
 		int startX = (int) (highLeft - aLeft);
 		int endX = (int) (lowRight - aLeft);
-		
+
 		boolean[][] mapA = spliceBitMap(bitMapA, startY, endY, startX, endX);
-		
+
 		int startY2 = (int) (highTop - bTop);
 		int endY2 = (int) (lowBot - bTop);
 		int startX2 = (int) (highLeft - bLeft);
 		int endX2 = (int) (lowRight - bLeft);
-		
+
 		boolean[][] mapB = spliceBitMap(bitMapB, startY2, endY2, startX2, endX2);
 
 		boolean[][] collisionMap = isColliding(mapA, mapB);
@@ -126,7 +119,7 @@ public class Collision {
 		return bitSplice;
 	}
 
-	
+
 	private boolean[][] isColliding(boolean[][] mapA, boolean[][] mapB) {
 		boolean[][] bitMap = new boolean[mapA.length][mapA[0].length];
 		for (int i = 0; i < mapA.length; i++)
