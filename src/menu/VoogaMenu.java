@@ -1,6 +1,8 @@
 package menu;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import game_player.VoogaGame;
 import game_player.VoogaGameBuilder;
@@ -8,11 +10,16 @@ import game_player.XMLParser;
 import authoring.userInterface.*;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -28,7 +35,7 @@ import javafx.util.Duration;
  * to either play an existing game or design a new one.
  * 
  * @author Brian Lavallee
- * @since 10 April 2015
+ * @since 11 April 2015
  */
 public class VoogaMenu {
     private static final double PADDING = 10;
@@ -39,8 +46,11 @@ public class VoogaMenu {
     
     private static final int BUTTON_RADIUS = 250;
     
-    private static final int TRANSITION_TIME = 2000;
-    private static final int TRANSITION_DELAY = 500;
+    private static final Duration TRANSITION_TIME = Duration.millis(2500);
+    private static final Duration DELAY = Duration.millis(500);
+    private static final Duration IMMEDIATE = Duration.ZERO;
+    
+    private static final EventHandler<ActionEvent> DO_NOTHING = (event) -> {};
     
     private static final int SMALL_TEXT = 30;
     private static final int LARGE_TEXT = 40;
@@ -99,8 +109,8 @@ public class VoogaMenu {
 	
 	textHolder = setUpText();
 	
-	playButton = makeButton("Play", -width/2 - 2 * BUTTON_RADIUS);
-	designButton = makeButton("Design", width/2 + 2 * BUTTON_RADIUS);
+	playButton = makeButton("Play", -width/2);
+	designButton = makeButton("Design", width/2);
 	
 	root.setOnMouseClicked((clicked) -> displayMenu());
 	
@@ -150,20 +160,10 @@ public class VoogaMenu {
 	textHolder.getChildren().addAll(title, subHolder);
 	textHolder.setAlignment(Pos.CENTER);
 	
-	FadeTransition fadeTitleIn = new FadeTransition(Duration.millis(TRANSITION_TIME), title);
-	fadeTitleIn.setToValue(OPAQUE);
-	fadeTitleIn.setDelay(Duration.millis(TRANSITION_DELAY));
-	
-	FadeTransition fadeNameIn = new FadeTransition(Duration.millis(TRANSITION_TIME), subHolder);
-	fadeNameIn.setToValue(OPAQUE);
-	fadeNameIn.setDelay(Duration.millis(TRANSITION_DELAY));
-	
-	fadeTitleIn.setOnFinished((finished) -> {
+	doFade(title, DELAY, OPAQUE, (finished) -> {
 	    displayMenu();
-	    fadeNameIn.play();
+	    doFade(subHolder, DELAY, OPAQUE, DO_NOTHING);
 	});
-	
-	fadeTitleIn.play();
 	
 	return textHolder;
     }
@@ -175,20 +175,15 @@ public class VoogaMenu {
      */
     private void displayMenu() {
 	if (root.getOnMouseClicked() != null) {
-	    TranslateTransition moveText = new TranslateTransition(Duration.millis(TRANSITION_TIME), textHolder);
-	    moveText.setToY(-height / 3);
-	    moveText.play();
-
-	    FadeTransition fadeBackgroundIn = new FadeTransition(Duration.millis(TRANSITION_TIME), background);
-	    fadeBackgroundIn.setToValue(OPAQUE);
-	    fadeBackgroundIn.play();
-
-	    TranslateTransition movePlay = moveButton(playButton, -width / 4);
-	    moveButton(designButton, width / 4);
-
-	    movePlay.setOnFinished((finished) -> {
-		enableButtons();
-	    });
+	    doTranslate(textHolder, IMMEDIATE, textHolder.getTranslateX(), -height/3, DO_NOTHING);
+	    
+	    doFade(background, IMMEDIATE, OPAQUE, DO_NOTHING);
+	    
+	    doTranslate(playButton, IMMEDIATE, -width/4, playButton.getTranslateY(), (finished) -> enableButtons());
+	    doTranslate(designButton, IMMEDIATE, width/4, designButton.getTranslateY(), DO_NOTHING);
+	    
+	    doFade(playButton, DELAY, OPAQUE, DO_NOTHING);
+	    doFade(designButton, DELAY, OPAQUE, DO_NOTHING);
 
 	    root.setOnMouseClicked(null);
 	}
@@ -226,6 +221,8 @@ public class VoogaMenu {
     private StackPane makeButton(String description, double location) {
 	StackPane button = new StackPane();
 	
+	button.setOpacity(INVISIBLE);
+	
 	DropShadow shadow = createShadow(15, 10, 10);
 	
 	Circle buttonContent = new Circle(BUTTON_RADIUS);
@@ -246,16 +243,6 @@ public class VoogaMenu {
     }
     
     /*
-     * Moves the buttons onto the Screen on the first mouse click.
-     */
-    private TranslateTransition moveButton(StackPane button, double location) {
-	TranslateTransition moveButton = new TranslateTransition(Duration.millis(TRANSITION_TIME), button);
-	moveButton.setToX(location);
-	moveButton.play();
-	return moveButton;
-    }
-    
-    /*
      * Gets the internal Circles from the StackPane buttons and uses those Circles
      * to set up mouse listeners.  Specifies where to move each element of the root
      * for each case.
@@ -265,16 +252,16 @@ public class VoogaMenu {
 	Circle design = (Circle) designButton.getChildren().get(1);
 	
 	play.setOnMouseEntered((event) -> 
-	    buttonSelectedAction(width/2 + PADDING, -2*height/3, OPAQUE, INVISIBLE, INVISIBLE));
+	    buttonSelectedAction(width/2 + PADDING, 31*width/40, INVISIBLE, playButton.getTranslateX(), OPAQUE, width/2, INVISIBLE, INVISIBLE));
 	
 	design.setOnMouseEntered((event) -> 
-	    buttonSelectedAction(-width/2 - PADDING, -2*height/3, INVISIBLE, OPAQUE, INVISIBLE));
+	    buttonSelectedAction(-width/2 - PADDING, -31*width/40, INVISIBLE, -width/2, INVISIBLE, designButton.getTranslateX(), OPAQUE, INVISIBLE));
 	
 	play.setOnMouseExited((event) -> 
-	    buttonSelectedAction(0, -height/3, OPAQUE, OPAQUE, TRANSPARENT));
+	    buttonSelectedAction(0, 0, OPAQUE, playButton.getTranslateX(), OPAQUE, width/4, OPAQUE, TRANSPARENT));
 	
 	design.setOnMouseExited((event) -> 
-	    buttonSelectedAction(0, -height/3, OPAQUE, OPAQUE, TRANSPARENT));
+	    buttonSelectedAction(0, 0, OPAQUE, -width/4, OPAQUE, designButton.getTranslateX(), OPAQUE, TRANSPARENT));
     }
     
     /*
@@ -286,6 +273,7 @@ public class VoogaMenu {
 	
 	play.setOnMouseClicked((event) -> {
 	    addChoiceMenu(GAME);
+	    root.getChildren().add(createBackButton(Pos.TOP_RIGHT));
 	    choiceMenu.setOnMouseClicked((clicked) -> {
 		launchGame(chooser.getChosenFile());
 	    });
@@ -293,6 +281,7 @@ public class VoogaMenu {
 	
 	design.setOnMouseClicked((event) -> {
 	    addChoiceMenu(DESIGN);
+	    choiceMenu.getChildren().add(0, createBackButton(Pos.CENTER_LEFT));
 	    choiceMenu.setOnMouseClicked((clicked) -> {
 		root.getChildren().removeAll(choiceMenu, background);
 		scene = new AuthoringWindow().GameCreateUI();
@@ -300,6 +289,35 @@ public class VoogaMenu {
 	});
     }
     
+    private Group createBackButton(Pos position) {
+	Rectangle backButton = new Rectangle(100, height);
+	backButton.setTranslateX(100);
+	backButton.setOpacity(INVISIBLE);
+	backButton.setOnMouseClicked((clicked) -> {
+	    System.out.println("back");
+	});
+	backButton.setOnMouseExited((exited) -> {
+	    doTranslate(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, 100, backButton.getTranslateY(), DO_NOTHING);
+	    doFade(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, INVISIBLE, DO_NOTHING);
+	});
+	
+	Rectangle buttonOutline = new Rectangle(100, height);
+	buttonOutline.setFill(Color.TRANSPARENT);
+	buttonOutline.setOnMouseEntered((entered) -> {
+	    doTranslate(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, 0, backButton.getTranslateY(), DO_NOTHING);
+	    doFade(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, OPAQUE, DO_NOTHING);
+	});
+	
+	Group button = new Group();
+	button.getChildren().addAll(buttonOutline, backButton);
+	button.setTranslateX(width/2 - 50);
+	
+	return button;
+    }
+    
+    /*
+     * Launches the game specified by the XMLParser input.
+     */
     private void launchGame(XMLParser file) {
 	VoogaGameBuilder gameBuilder = new VoogaGameBuilder(file);
 	VoogaGame game = gameBuilder.build();
@@ -309,7 +327,7 @@ public class VoogaMenu {
     
     /*
      * Removes the functionality set up by enableButtons so that when the choice menu is loaded
-     * the events aren't triggered
+     * the events aren't triggered.
      */
     private void disableButtons() {
 	Circle play = (Circle) playButton.getChildren().get(1);
@@ -333,16 +351,13 @@ public class VoogaMenu {
 	
 	disableButtons();
 	
-	FadeTransition fadeMainOut = new FadeTransition(Duration.millis(TRANSITION_TIME), mainMenu);
-	fadeMainOut.setToValue(INVISIBLE);
-	fadeMainOut.play();
-	fadeMainOut.setOnFinished((finished) -> root.getChildren().remove(mainMenu));
+	doTranslate(playButton, IMMEDIATE, -width/2 - 50, playButton.getTranslateY(), (finished) -> root.getChildren().remove(mainMenu));
+	doFade(playButton, IMMEDIATE, INVISIBLE, DO_NOTHING);
 	
 	root.getChildren().add(choiceMenu);
-	FadeTransition fadeChoiceIn = new FadeTransition(Duration.millis(TRANSITION_TIME), choiceMenu);
-	fadeChoiceIn.setDelay(Duration.millis(TRANSITION_DELAY));
-	fadeChoiceIn.setToValue(OPAQUE);
-	fadeChoiceIn.play();
+	
+	doTranslate(choiceMenu, DELAY.multiply(2), choiceMenu.getTranslateX(), 0, DO_NOTHING);
+	doFade(choiceMenu, DELAY.multiply(3), OPAQUE, DO_NOTHING);
 	
 	GaussianBlur blur = new GaussianBlur();
 	background.setEffect(blur);
@@ -351,28 +366,57 @@ public class VoogaMenu {
     /*
      * Moves all of the elements in the root to the desired location with a pleasant transition.
      */
-    private void buttonSelectedAction(double backgroundTo, double textTo, double playTo, double designTo, double overlayTo) {
-	TranslateTransition moveBackground = new TranslateTransition(Duration.millis(TRANSITION_TIME), background);
-	TranslateTransition moveText = new TranslateTransition(Duration.millis(TRANSITION_TIME), textHolder);
-	FadeTransition fadePlay = new FadeTransition(Duration.millis(TRANSITION_TIME), playButton);
-	FadeTransition fadeDesign = new FadeTransition(Duration.millis(TRANSITION_TIME), designButton);
-	FadeTransition fadeOverlay = new FadeTransition(Duration.millis(TRANSITION_TIME), overlay);
+    private void buttonSelectedAction(double backgroundLoc, double textLoc, double textVis, double playLoc, double playVis, double designLoc, double designVis, double overlayVis) {
+	doTranslate(background, IMMEDIATE, backgroundLoc, background.getTranslateY(), DO_NOTHING);
 	
-	moveBackground.setToX(backgroundTo);
-	moveBackground.play();
+	doTranslate(textHolder, IMMEDIATE, textLoc, textHolder.getTranslateY(), DO_NOTHING);
+	doFade(textHolder, IMMEDIATE, textVis, DO_NOTHING);
 	
-	moveText.setToY(textTo);
-	moveText.play();
+	doTranslate(playButton, IMMEDIATE, playLoc, playButton.getTranslateY(), DO_NOTHING);
+	doFade(playButton, IMMEDIATE, playVis, DO_NOTHING);
 	
-	fadePlay.setToValue(playTo);
-	fadePlay.play();
+	doTranslate(designButton, IMMEDIATE, designLoc, designButton.getTranslateY(), DO_NOTHING);
+	doFade(designButton, IMMEDIATE, designVis, DO_NOTHING);
 	
-	fadeDesign.setToValue(designTo);
-	fadeDesign.play();
-	
-	fadeOverlay.setToValue(overlayTo);
-	fadeOverlay.play();
+	doFade(overlay, IMMEDIATE, overlayVis, DO_NOTHING);
 	
 	enableClicking();
+    }
+    
+    /*
+     * Performs a TranslateTransition.
+     */
+    private void doTranslate(Node source, Duration delay, double toX, double toY, EventHandler<ActionEvent> onFinished) {
+	doTranslate(source, TRANSITION_TIME, delay, toX, toY, onFinished);
+    }
+    
+    /*
+     * Performs a TranslateTransition.
+     */
+    private void doTranslate(Node source, Duration time, Duration delay, double toX, double toY, EventHandler<ActionEvent> onFinished) {
+	TranslateTransition translate = new TranslateTransition(time, source);
+	translate.setToX(toX);
+	translate.setToY(toY);
+	translate.setDelay(delay);
+	translate.setOnFinished(onFinished);
+	translate.play();
+    }
+    
+    /*
+     * Performs a FadeTransition.
+     */
+    private void doFade(Node source, Duration delay, double toValue, EventHandler<ActionEvent> onFinished) {
+	doFade(source, TRANSITION_TIME, delay, toValue, onFinished);
+    }
+    
+    /*
+     * Performs a FadeTransition.
+     */
+    private void doFade(Node source, Duration time, Duration delay, double toValue, EventHandler<ActionEvent> onFinished) {
+	FadeTransition fade = new FadeTransition(time, source);
+	fade.setDelay(delay);
+	fade.setToValue(toValue);
+	fade.setOnFinished(onFinished);
+	fade.play();
     }
 }

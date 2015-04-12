@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.geometry.Pos;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -22,7 +24,7 @@ import javafx.scene.text.Text;
  * the play mode and .dev for the design mode.
  * 
  * @author Brian Lavallee
- * @since 10 April 2015
+ * @since 11 April 2015
  */
 public class VoogaFileChooser {
     
@@ -30,8 +32,8 @@ public class VoogaFileChooser {
     
     private static final double INVISIBLE = 0.0;
     
-    private static final double OPTION_RATIO = .7;
-    private static final int OPTIONS_PER_ROW = 5;
+    private static final double OPTION_RATIO = .65;
+    private static final int OPTIONS_PER_ROW = 4;
     
     private VBox layout;
     
@@ -69,7 +71,9 @@ public class VoogaFileChooser {
      */
     public StackPane getContent() {
 	StackPane content = new StackPane();
+	content.setAlignment(Pos.CENTER);
 	content.getChildren().add(layout);
+	content.setTranslateY(layout.getTranslateY());
 	content.setOpacity(INVISIBLE);
 	return content;
     }
@@ -90,26 +94,44 @@ public class VoogaFileChooser {
     private VBox createLayout(List<File> matchingFiles, double height) {
 	VBox options = new VBox(verticalPadding);
 	
-	HBox lastRow = createRow(new ArrayList<File>());
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	matchingFiles.add(new File("f"));
+	
+	HBox row = new HBox();
+	row.getChildren().add(newContentOption());
+	int first = 1;
+	
 	while (!matchingFiles.isEmpty()) {
 	    List<File> temp = new ArrayList<File>();
 	    
 	    int size = matchingFiles.size();
-	    for (int i = 0; i < OPTIONS_PER_ROW && i < size; i++) {
+	    for (int i = 0; i < OPTIONS_PER_ROW - first && i < size; i++) {
 		temp.add(matchingFiles.remove(0));
 	    }
 	    
-	    lastRow = createRow(temp);
-	    options.getChildren().add(lastRow);
-	}
-	
-	if (lastRow.getChildren().size() != 5) {
-	    lastRow.getChildren().add(newContentOption());
-	}
-	else {
-	    HBox newRow = createRow(new ArrayList<File>());
-	    newRow.getChildren().add(newContentOption());
-	    options.getChildren().add(newRow);
+	    first = 0;
+	    
+	    options.getChildren().add(createRow(temp, row));
+	    row = new HBox();
 	}
 	
 	options.setAlignment(Pos.CENTER);
@@ -135,12 +157,11 @@ public class VoogaFileChooser {
      * Creates a single row using an HBox, a group of these are added to the VBox to
      * create the full layout.
      */
-    private HBox createRow(List<File> group) {
-	HBox row = new HBox(horizontalPadding);
+    private HBox createRow(List<File> group, HBox row) {
+	row.setSpacing(horizontalPadding);
 	
 	for (File f : group) {
-	    // TODO: Replace rectangles with imageviews
-	    Rectangle content = createButtonContent(Color.BLACK, Color.BLACK, 0);
+	    Rectangle content = createButtonContent(Color.BLACK, Color.BLACK, 3, .4);
 	    
 	    XMLParser parser = new XMLParser(f);
 	    
@@ -150,6 +171,7 @@ public class VoogaFileChooser {
 	    Text name = new Text(fileName);
 	    name.setFill(Color.WHITE);
 	    name.setFont(new Font(20));
+	    name.setEffect(createShadow(15, 5, 5));
 	    
 	    StackPane option = new StackPane();
 	    option.getChildren().addAll(content, name);
@@ -169,10 +191,12 @@ public class VoogaFileChooser {
      * or designing an existing one.
      */
     private StackPane newContentOption() {
-	Rectangle background = createButtonContent(Color.TRANSPARENT, Color.WHITE, 5);
+	Rectangle background = createButtonContent(Color.TRANSPARENT, Color.WHITE, 5, 1);
+	background.setEffect(createShadow(15, 10, 10));
 	Text description = new Text("Create New Game");
 	description.setFont(new Font(20));
 	description.setFill(Color.WHITE);
+	description.setEffect(createShadow(15, 10, 10));
 	
 	StackPane content = new StackPane();
 	content.getChildren().addAll(background, description);
@@ -183,14 +207,28 @@ public class VoogaFileChooser {
      * Creates the buttons contained in the layout.  Both the fill and stroke
      * colors can be specified as well as the stroke width.
      */
-    private Rectangle createButtonContent(Color fill, Color stroke, int width) {
+    private Rectangle createButtonContent(Color fill, Color stroke, int width, double opacity) {
 	Rectangle content = new Rectangle(optionSize, optionSize);
 	content.setArcHeight(verticalPadding);
 	content.setArcWidth(horizontalPadding);
 	content.setFill(fill);
 	content.setStroke(stroke);
 	content.setStrokeWidth(width);
+	content.setEffect(createShadow(15, 10, 10));
+	content.setOpacity(opacity);
 	return content;
+    }
+    
+    /*
+     * Creates a shadow to enhance the appearance of a Text object or Button.
+     */
+    private DropShadow createShadow(int blurAmount, int offsetX, int offsetY) {
+	DropShadow shadow = new DropShadow();
+	shadow.setRadius(blurAmount);
+	shadow.setOffsetX(offsetX);
+	shadow.setOffsetY(offsetY);
+	shadow.setBlurType(BlurType.GAUSSIAN);
+	return shadow;
     }
     
     /*
