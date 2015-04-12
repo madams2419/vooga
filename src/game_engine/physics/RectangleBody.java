@@ -5,24 +5,24 @@ public class RectangleBody extends RigidBody {
 	private Vector myUpperRight;
 	private Vector myLowerLeft;
 
-	public RectangleBody(double depth, Vector upperLeft, double height, double width) {
-		this(depth, upperLeft.incrementX(width), upperLeft.incrementY(-height));
+	public RectangleBody(Vector upperLeft, double height, double width) {
+		this(upperLeft.incrementX(width), upperLeft.incrementY(-height));
 	}
 
-	public RectangleBody(double depth, Vector upperRight, Vector lowerLeft) {
-		super(depth);
+	public RectangleBody(Vector upperRight, Vector lowerLeft) {
+		super();
 		myUpperRight = upperRight;
 		myLowerLeft = lowerLeft;
 	}
 
-	public static RectangleBody getRectBodyULLR(double depth, Vector upperLeft, Vector lowerRight) {
+	public static RectangleBody getRectBodyULLR(Vector upperLeft, Vector lowerRight) {
 		Vector upperRight = upperLeft.setX(lowerRight.getX());
 		Vector lowerLeft = lowerRight.setX(upperLeft.getX());
-		return new RectangleBody(depth, upperRight, lowerLeft);
+		return new RectangleBody(upperRight, lowerLeft);
 	}
 
-	public static RectangleBody getRectBodyURLL(double depth, Vector upperRight, Vector lowerLeft) {
-		return new RectangleBody(depth, upperRight, lowerLeft);
+	public static RectangleBody getRectBodyURLL(Vector upperRight, Vector lowerLeft) {
+		return new RectangleBody(upperRight, lowerLeft);
 	}
 
 	public double getArea() {

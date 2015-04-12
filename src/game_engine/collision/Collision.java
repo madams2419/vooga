@@ -2,6 +2,7 @@ package game_engine.collision;
 
 import game_engine.Behavior;
 import game_engine.IBehavior;
+import game_engine.physics.PhysicsCollision;
 import game_engine.physics.PhysicsEngine;
 import game_engine.sprite.Sprite;
 
@@ -25,6 +26,7 @@ public class Collision {
 	private CollisionDirection direction;
 	private boolean isRealistic;
 	private PhysicsEngine physics;
+	private PhysicsCollision pCollision;
 
 	/**
 	 * 
@@ -42,6 +44,7 @@ public class Collision {
 		direction = d;
 		isRealistic = real;
 		physics = p;
+		pCollision = null;
 	}
 
 	public void getColliding() {
@@ -51,7 +54,7 @@ public class Collision {
 			execute();
 			
 			if(isRealistic){
-				physics.resolveCollision(spriteA, spriteB);
+				pCollision.resolve();
 			}
 		}
 		

@@ -26,7 +26,7 @@ public abstract class PhysicsCollision {
 
 	protected abstract double computePenetrationDepth();
 	
-	protected void resolve() {
+	public void resolve() {
 		// return if objects are moving apart
 		if(rvProjOnNorm() > 0) {
 			return;

@@ -5,8 +5,8 @@ public class CircleBody extends RigidBody {
 	private double myRadius;
 	private Vector myCenter;
 
-	public CircleBody(double depth, double radius, Vector center) {
-		super(depth);
+	public CircleBody(double radius, Vector center) {
+		super();
 		myRadius = radius;
 		myCenter = center;
 	}
