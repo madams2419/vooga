@@ -3,10 +3,14 @@ package game_engine.physics;
 import java.util.List;
 import java.util.Observable;
 
+// TODO
+// - move position into RigidBody
+
 public class PhysicsObject extends Observable {
 
 	private double myInvMass;
 	private Material myMaterial;
+	private Vector myPosition;
 	private Vector myVelocity;
 	private Vector myAccel;
 	private Vector myNetInternalForce;

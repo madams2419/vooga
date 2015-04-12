@@ -4,8 +4,8 @@ public class CircleBody extends RigidBody {
 
 	private double myRadius;
 
-	public CircleBody(Vector center, double radius) {
-		super(center);
+	public CircleBody(double radius) {
+		super();
 		myRadius = radius;
 	}
 
@@ -21,17 +21,12 @@ public class CircleBody extends RigidBody {
 		return myRadius;
 	}
 
-	public boolean containsPoint(Vector point) {
-		Vector centerToPoint = point.minus(myCenter);
-		return centerToPoint.getMagnitude() <= myRadius;
+	protected boolean containsPoint(Vector point) {
+		return point.getMagnitude() <= myRadius;
 	}
 
 	protected void setType() {
 		myType = RBodyType.CIRCLE;
-	}
-
-	protected void handleCenterChange() {
-		// nothing to be done for circle bodies
 	}
 
 }

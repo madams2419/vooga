@@ -5,7 +5,6 @@ public abstract class RigidBody {
 	//TODO move somewhere else...constants or properties file
 	private static final double DEFAULT_DEPTH = 5;
 
-	protected Vector myCenter;
 	protected RBodyType myType;
 	protected double myDepth;
 
@@ -13,12 +12,11 @@ public abstract class RigidBody {
 		CIRCLE, RECTANGLE
 	}
 
-	public RigidBody(Vector center) {
-		this(center, DEFAULT_DEPTH);
+	public RigidBody() {
+		this(DEFAULT_DEPTH);
 	}
 
-	public RigidBody(Vector center, double depth) {
-		myCenter = center;
+	public RigidBody(double depth) {
 		myDepth = depth;
 		setType();
 	}
@@ -31,13 +29,11 @@ public abstract class RigidBody {
 
 	protected abstract void setType();
 
-	public abstract boolean containsPoint(Vector point);
+	protected abstract boolean containsPoint(Vector point);
 
-	protected abstract void handleCenterChange();
-
-	public void setCenter(Vector center) {
-		myCenter = center;
-		handleCenterChange();
+	public boolean containsPoint(Vector center, Vector point) {
+		Vector normalizedPoint = point.minus(center);
+		return containsPoint(normalizedPoint);
 	}
 
 	public RBodyType getType() {

@@ -5,19 +5,17 @@ public class RectangleBody extends RigidBody {
 	private Vector myUpperRight;
 	private Vector myLowerLeft;
 
-	public RectangleBody(Vector center, double height, double width) {
-		super(center);
-		Vector cTranslate = new Vector(height/2, width/2);
-		myUpperRight = center.plus(cTranslate);
-		myLowerLeft = center.minus(cTranslate);
+	public RectangleBody(double height, double width) {
+		super();
+		myUpperRight = new Vector(height/2, width/2);
+		myLowerLeft = myLowerLeft.negate();
 	}
 
 	public static RectangleBody rBodyFromCorners(Vector corner1, Vector corner2) {
-		Vector translate = corner1.minus(corner2).times(0.5);
-		Vector center = corner2.plus(translate);
-		double height = Math.abs(corner1.getY() - corner2.getY());
-		double width = Math.abs(corner1.getX() - corner2.getX());
-		return new RectangleBody(center, height, width);
+		Vector diagonal = corner1.minus(corner2);
+		double height = diagonal.getY();
+		double width = diagonal.getX();
+		return new RectangleBody(height, width);
 	}
 
 	public double getArea() {
@@ -32,7 +30,7 @@ public class RectangleBody extends RigidBody {
 		return Math.sqrt(getHeight() * getHeight() + getWidth() * getWidth());
 	}
 
-	public boolean containsPoint(Vector point) {
+	protected boolean containsPoint(Vector point) {
 		return inXRange(point) && inYRange(point);
 	}
 
@@ -68,6 +66,10 @@ public class RectangleBody extends RigidBody {
 
 	public Vector getLowerRight() {
 		return myLowerLeft.setX(myUpperRight.getX());
+	}
+
+	protected void setType() {
+		myType = RBodyType.RECTANGLE;
 	}
 
 }
