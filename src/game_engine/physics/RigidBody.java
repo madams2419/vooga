@@ -5,18 +5,20 @@ public abstract class RigidBody {
 	//TODO move somewhere else...constants or properties file
 	private static final double DEFAULT_DEPTH = 5;
 
-	protected double myDepth;
+	protected Vector myCenter;
 	protected RBodyType myType;
+	protected double myDepth;
 
 	public enum RBodyType {
 		CIRCLE, RECTANGLE
 	}
 
-	public RigidBody() {
-		this(DEFAULT_DEPTH);
+	public RigidBody(Vector center) {
+		this(center, DEFAULT_DEPTH);
 	}
 
-	public RigidBody(double depth) {
+	public RigidBody(Vector center, double depth) {
+		myCenter = center;
 		myDepth = depth;
 		setType();
 	}
@@ -30,6 +32,13 @@ public abstract class RigidBody {
 	protected abstract void setType();
 
 	public abstract boolean containsPoint(Vector point);
+
+	protected abstract void handleCenterChange();
+
+	public void setCenter(Vector center) {
+		myCenter = center;
+		handleCenterChange();
+	}
 
 	public RBodyType getType() {
 		return myType;

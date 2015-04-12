@@ -1,8 +1,6 @@
 package game_player;
 
-import game_engine.collision.HitBox;
 import game_engine.physics.PhysicsObject;
-import game_engine.physics.RigidBody.RBodyType;
 import game_engine.physics.Vector;
 import game_engine.sprite.Sprite;
 
@@ -11,7 +9,6 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
-import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 

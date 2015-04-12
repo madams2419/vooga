@@ -3,12 +3,10 @@ package game_engine.physics;
 public class CircleBody extends RigidBody {
 
 	private double myRadius;
-	private Vector myCenter;
 
-	public CircleBody(double radius, Vector center) {
-		super();
+	public CircleBody(Vector center, double radius) {
+		super(center);
 		myRadius = radius;
-		myCenter = center;
 	}
 
 	public double getArea() {
@@ -30,6 +28,10 @@ public class CircleBody extends RigidBody {
 
 	protected void setType() {
 		myType = RBodyType.CIRCLE;
+	}
+
+	protected void handleCenterChange() {
+		// nothing to be done for circle bodies
 	}
 
 }

@@ -3,14 +3,10 @@ package game_engine.physics;
 import java.util.List;
 import java.util.Observable;
 
-// TODO
-// - ability to run back time...some mechanism to do that
-
 public class PhysicsObject extends Observable {
 
 	private double myInvMass;
 	private Material myMaterial;
-	private Vector myPosition;
 	private Vector myVelocity;
 	private Vector myAccel;
 	private Vector myNetInternalForce;

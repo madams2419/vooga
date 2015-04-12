@@ -21,13 +21,12 @@ public class HitBox {
     private boolean[][] bitMap;
     private ImageView node;
     private Image image;
-    private RigidBody rigidBody;
 	
 	public HitBox(ImageView n, RBodyType rbType) {
 		node = n;
 		image = node.getImage();
 		boolean[][] bitMap = createBitMap(image);
-		rigidBody = createRigidBody(rbType);
+
 	}
 	
 	public Bounds getBounds(){
@@ -58,29 +57,6 @@ public class HitBox {
 				bitMap[y][x] = reader.getArgb(x, y) != 0;
 			}
 		return bitMap;
-	}
-	
-	public RigidBody getRigidBody() {
-		return rigidBody;
-	}
-	
-	private RigidBody createRigidBody(RBodyType rbType) {
-		RigidBody rBody;
-		// TODO move to factory class
-		switch (rbType) {
-		case CIRCLE:
-			Vector center = new Vector(node.getX() + node.getFitWidth() / 2,
-					node.getTranslateY() + node.getFitHeight() / 2);
-			double radius = Math.max(node.getFitHeight(), node.getFitWidth());
-			rBody = new CircleBody(radius, center);
-			break;
-		default:
-			Vector upperLeft = new Vector(node.getX(), node.getY());
-			rBody = new RectangleBody(upperLeft, node.getFitHeight(),
-					node.getFitWidth());
-			break;
-		}
-		return rBody;
 	}
 
 }

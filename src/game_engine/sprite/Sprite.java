@@ -26,7 +26,15 @@ public abstract class Sprite extends Observable{
 	private Animation myAnimation;
 	protected PhysicsObject myPhysicsObject;
 	private Map<String, IBehavior> myBehaviorMap = new HashMap<>();
-
+	private HitBox myHitBox;
+	
+	
+	/**
+	 * Testing constructor
+	 */
+	public Sprite(String defaultState, String defaultImage, int width, int height) {
+		
+	}
 	
 	/**
 	 * Blank Constructor
@@ -143,7 +151,7 @@ public abstract class Sprite extends Observable{
 	}
 	
 	public HitBox getHitBox(){
-	    return myAnimation.getHitBox();
+	    return myHitBox;
 	}
 	
 	public RigidBody getRigidBody(){
