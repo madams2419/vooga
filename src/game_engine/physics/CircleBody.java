@@ -3,10 +3,12 @@ package game_engine.physics;
 public class CircleBody extends RigidBody {
 
 	private double myRadius;
+	private Vector myCenter;
 
-	public CircleBody(double depth, double radius) {
+	public CircleBody(double depth, double radius, Vector center) {
 		super(depth);
 		myRadius = radius;
+		myCenter = center;
 	}
 
 	public double getArea() {
@@ -19,6 +21,11 @@ public class CircleBody extends RigidBody {
 
 	public double getRadius() {
 		return myRadius;
+	}
+
+	public boolean containsPoint(Vector point) {
+		Vector centerToPoint = point.minus(myCenter);
+		return centerToPoint.getMagnitude() <= myRadius;
 	}
 
 }

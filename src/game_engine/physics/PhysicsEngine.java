@@ -85,16 +85,6 @@ public class PhysicsEngine {
 		}
 	}
 
-	private boolean checkCollision(PhysicsObject a, PhysicsObject b) {
-		return getCollisionDepth(a, b) >= 0;
-	}
-
-	private double getCollisionDepth(PhysicsObject a, PhysicsObject b) {
-		double sepDistance = b.getPositionMeters().minus(a.getPositionMeters()).getMagnitude();
-		double radiiSum = b.getRigidBody().getRadiusMeters() + a.getRigidBody().getRadiusMeters();
-		return radiiSum - sepDistance;
-	}
-
 	public void resolveCollision(PhysicsCollision collision) {
 		PhysicsObject poA = collision.getPhysicsObjectA();
 		PhysicsObject poB = collision.getPhysicsObjectB();
@@ -132,18 +122,13 @@ public class PhysicsEngine {
 		applySinkCorrection(a, b, normal, pDepth);
 	}
 
-	private Vector getCollisionNormal(PhysicsObject a, PhysicsObject b) {
-		Vector delta = b.getPositionMeters().minus(a.getPositionMeters());
-		return delta.normalize();
-	}
-
 	private void applySinkCorrection(PhysicsObject a, PhysicsObject b, Vector normal, double pDepth) {
 		System.out.println(pDepth);
 		// return if penetration depth is less than threshold
 		if(pDepth < SC_SLOP) {
 			return;
 		}
-		
+
 		double correctionCoef = SC_PERCENT * pDepth / (a.getInvMass() + b.getInvMass());
 		System.out.println(correctionCoef);
 		Vector correction = normal.times(correctionCoef);

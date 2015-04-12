@@ -14,6 +14,8 @@ public abstract class RigidBody {
 
 	public abstract double getRadius();
 
+	public abstract boolean containsPoint(Vector point);
+
 	public double getVolume() {
 		return myDepth * getArea();
 	}
