@@ -6,10 +6,11 @@ public class CircleRectCollision extends PhysicsCollision {
 	private RectangleBody myRectangle;
 	private RectangleBody collisionRegion;
 
-	public CircleRectCollision(PhysicsObject poA, PhysicsObject poB) {
+	public CircleRectCollision(PhysicsObject poA, PhysicsObject poB,
+			CircleBody circle, RectangleBody rectangle) {
 		super(poA, poB);
-		myCircle = (CircleBody) poA.getRigidBody();
-		myRectangle = (RectangleBody) poA.getRigidBody();
+		myCircle = circle;
+		myRectangle = rectangle;
 	}
 
 	protected Vector computeNormal() {
