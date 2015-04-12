@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import authoring.rightPane.RightPane;
 import authoring.userInterface.CenterPane;
 import authoring.userInterface.ClickHandler;
+import authoring.userInterface.ControlsDialog;
 import authoring.util.FrontEndUtils;
 import authoring.util.ImageEditor;
 
@@ -37,6 +38,7 @@ public class Sprite extends ImageView {
 	private String myName;
 	private int myID;
 	private ImageView myIcon;
+	private ControlsDialog myControls;
 
 	private Map<Sprite, Interaction> myInteractions;
 
@@ -48,6 +50,8 @@ public class Sprite extends ImageView {
 	public final static String VELOCITY = "velocity";
 	public final static String POSITION = "position";
 	public final static String SCALE = "scale";
+	
+	private Boolean isPlayable = false;
 
 //	private final double initialScale = 1.0;
 
@@ -218,5 +222,20 @@ public class Sprite extends ImageView {
 						myVelocity.toString().length() - 1));
 		return this.myCharacteristics;
 	}
+	
+	public void setControls(ControlsDialog c){
+		myControls = c;
+	}
 
+	public ControlsDialog getControls(){
+		return myControls;
+	}
+	
+	public Boolean getPlayable(){
+		return isPlayable;
+	}
+	
+	public void setPlayable(Boolean b){
+		isPlayable = b;
+	}
 }

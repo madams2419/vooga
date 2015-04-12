@@ -73,7 +73,7 @@ public class CenterPane extends WindowPane {
 			gp = new GlobalCreationPane(myScene, myParent.getMyRightPane());
 			this.setContent(myGroup);
 
-			myGroup.setOnMouseClicked(e -> canvasClicked(e));
+			//myGroup.setOnMouseClicked(e -> canvasClicked(e));
 
 			myListOfSprites = FXCollections.observableArrayList();
 			myEnvironmentList = new ArrayList<>();
