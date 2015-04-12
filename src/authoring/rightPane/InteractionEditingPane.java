@@ -59,6 +59,7 @@ public class InteractionEditingPane extends EditingPane {
 	}
 
 	private void setInteraction(String action1, String action2) {
+	    System.out.println("action 1 is : "+action1+", action 2 is : "+action2);
 		myInteraction = new Interaction(mySprite1, mySprite2, action1, action2);
 		InteractionManager.getInstance().setInteraction(mySprite1, mySprite2,
 				myInteraction);

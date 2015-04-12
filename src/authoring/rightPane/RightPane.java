@@ -133,7 +133,7 @@ public class RightPane extends WindowPane {
 
 	// TEMPORARY!!
 	private List<String> getListOfInteractions() {
-		return Arrays.asList(new String[] { "jump", "die", "go to new level" });
+		return Arrays.asList(new String[] { "jump", "die", "go to new level", "hit box" });
 	}
 
 	@Override

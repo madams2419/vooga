@@ -33,15 +33,15 @@ public class SpriteManager implements Observer{
 	
 	// testing
 	public static void main(String[] args){
-		Sprite tester = new Collectible();
-		Sprite tester2 = new Collectible();
-	
-		SpriteManager manager = new SpriteManager();
-		manager.addSprite(tester);
-		manager.addSprite(tester2);
-//		tester.addObserver(manager);
-		
-		tester.setID(10);
+//		Sprite tester = new Collectible();
+//		Sprite tester2 = new Collectible();
+//	
+//		SpriteManager manager = new SpriteManager();
+//		manager.addSprite(tester);
+//		manager.addSprite(tester2);
+////		tester.addObserver(manager);
+//		
+//		tester.setID(10);
 
 	}
 	

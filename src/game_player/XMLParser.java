@@ -271,4 +271,11 @@ public class XMLParser {
 	    }
 	}
     }
+    
+    public static void main(String[] args) {
+	File f = new File("src/gamedata/Simple.game");
+	XMLParser p = new XMLParser(f);
+	p.moveDown("game/level");
+	System.out.println(p.getActivePath() + " " + p.getValidLabels());
+    }
 }

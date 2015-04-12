@@ -28,13 +28,13 @@ import authoring.util.FrontEndUtils;
  */
 public class CenterPane extends WindowPane {
 
-	private Group myGroup;
 
 	CenterPane(Scene s, AuthoringWindow w) {
 		super(s, new TabPane(), w);
 		System.out.printf("Instantiated %s%n", this.getClass().getName());
 		((TabPane) myContainer).setSide(Side.BOTTOM);
 		addTab();
+		FrontEndUtils.setKeyActions(this.myContainer);
 	}
 
 	public void addTab() {
@@ -43,10 +43,19 @@ public class CenterPane extends WindowPane {
 	}
 
 	public CenterCanvas getActiveTab() {
+		System.out.printf("Changing tabs to tab %d%n", ((TabPane) myContainer)
+				.getSelectionModel().getSelectedIndex());
 		return (CenterCanvas) ((TabPane) myContainer)
 				.getTabs()
 				.get(((TabPane) myContainer).getSelectionModel()
 						.getSelectedIndex()).getContent();
+	}
+
+	@Override
+	public Group generateComponents(
+			ArrayList<Map<String, Map<String, String>>> values) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	class CenterCanvas extends ScrollPane {
@@ -54,7 +63,8 @@ public class CenterPane extends WindowPane {
 		private List<Map<String, String>> myEnvironmentList;
 		private ObservableList<Sprite> myListOfSprites;
 		private Rectangle myCurrentRectangle;
-		public GlobalCreationPane gp;
+		private GlobalCreationPane gp;
+		private Group myGroup;
 
 		CenterCanvas(Scene scene) {
 			assert (scene != null);
@@ -112,16 +122,5 @@ public class CenterPane extends WindowPane {
 			myCurrentRectangle.setOnMouseClicked(e -> canvasClicked(e));
 			myGroup.getChildren().add(myCurrentRectangle);
 		}
-	}
-
-	@Override
-	public Group generateComponents(
-			ArrayList<Map<String, Map<String, String>>> values) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public AuthoringWindow getParent() {
-		return myParent;
 	}
 }

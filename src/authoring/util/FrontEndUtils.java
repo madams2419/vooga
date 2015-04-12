@@ -6,8 +6,9 @@ import java.util.Map;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyCode;
 import authoring.userInterface.AuthoringWindow;
 
@@ -35,7 +36,8 @@ public class FrontEndUtils {
 		return result;
 	}
 	
-	public static void setKeyActions(Node n) {
+	public static void setKeyActions(Parent n) {
+		System.out.printf("Setting key actions on %s%n",n.getClass().getName());
 		n.setOnKeyPressed(e -> {
 			if (e.getCode() == KeyCode.CONTROL)
 				AuthoringWindow.setControlOn();
@@ -46,5 +48,9 @@ public class FrontEndUtils {
 				AuthoringWindow.setControlOff();
 			System.out.println("detected key release");
 		});
+	}
+	
+	public static void setKeyActions(TabPane t) {
+		setKeyActions((Parent)t);
 	}
 }
