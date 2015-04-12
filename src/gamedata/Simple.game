@@ -20,7 +20,7 @@
 					<onFailed>
 						<behaviors></behaviors>
 					</onFailed>
-				</objective_0>
+				</objective>
 				
 				<objective_1>
 					<prereqs></prereqs>

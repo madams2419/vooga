@@ -33,7 +33,7 @@ import javafx.util.Duration;
  * to either play an existing game or design a new one.
  * 
  * @author Brian Lavallee
- * @since 11 April 2015
+ * @since 12 April 2015
  */
 public class VoogaMenu {
     private static final double PADDING = 10;
@@ -302,7 +302,7 @@ public class VoogaMenu {
 	
 	Rectangle buttonOutline = new Rectangle(200, height);
 	buttonOutline.setFill(Color.TRANSPARENT);
-	//buttonOutline.setTranslateX(100 * sign);
+	buttonOutline.setTranslateX(100 * sign);
 	buttonOutline.setOnMouseEntered((entered) -> {
 	    doTranslate(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, 0, backButton.getTranslateY(), DO_NOTHING);
 	    doFade(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, OPAQUE, DO_NOTHING);
