@@ -24,10 +24,18 @@ public class TopPane extends HBox {
 	//TODO fill out this badboy
 	static ArrayList<Node> mButtonList=new ArrayList<Node>();
 	public static Group root=new Group();
-
+	private static TopPane mInstance;
+	
 
 	TopPane() {
 		this.getStylesheets().add("styles/top_pane.css");
+		mInstance = this;
+	}
+	
+	public static TopPane getInstance() {
+		if (mInstance == null)
+			mInstance = new TopPane();
+		return mInstance;
 	}
 
 	public Group generateComponents(ArrayList<Map> values){
@@ -35,17 +43,19 @@ public class TopPane extends HBox {
 			Map<String, Map> m=values.get(i);
 			for(String key: m.keySet()){
 				if(key.equals("Button")){	
-					mButtonList.add(ButtonFactory.generateButton(m.get(key)));
-
+					Button b;
+					mButtonList.add(b = ButtonFactory.generateButton(m.get(key)));
+					root.getChildren().add(b);
 				}
 				if(key.equals("Dropdown")){
-					DropdownFactory dFactory=new DropdownFactory();
-					mButtonList.add(dFactory.generateDropdown(m.get(key)));
+//					DropdownFactory dFactory=new DropdownFactory();
+//					mButtonList.add(dFactory.generateDropdown(m.get(key)));
 				}
 			}
 		}	
 		root.getChildren().addAll(mButtonList);
 		System.out.println("TopPane Drops: " + mButtonList);
+		this.getChildren().addAll(mButtonList);
 		return root;
 	}
 

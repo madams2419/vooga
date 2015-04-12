@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import org.w3c.dom.Element;
 import authoring.rightPane.RightPane;
 import authoring.userInterface.ClickHandler;
 import authoring.util.FrontEndUtils;
@@ -22,189 +22,189 @@ import authoring.util.ImageEditor;
  */
 public class Sprite extends ImageView {
 
-        public static final double OPACITY_REDUCTION_RATIO = 0.5;
+	public static final double OPACITY_REDUCTION_RATIO = 0.5;
 
-        private final String X_STRING = "x";
-        private final String Y_STRING = "y";
-        // private boolean selected;
+	private final String X_STRING = "x";
+	private final String Y_STRING = "y";
+	// private boolean selected;
 
-        private Map<String, Double> myPosition;
-        private Map<String, Double> myVelocity;
-        private Map<String, String> myKeyActions;
-        private Map<String, String> myCharacteristics;
+	private Map<String, Double> myPosition;
+	private Map<String, Double> myVelocity;
+	private Map<String, String> myKeyActions;
+	private Map<String, String> myCharacteristics;
 
-        private String myName;
-        private String myImageURI;
-        private int myID;
-        private ImageView myIcon;
+	private String myName;
+	private int myID;
+	private ImageView myIcon;
 
-        private Map<Sprite, Interaction> myInteractions;
+	private Map<Sprite, Interaction> myInteractions;
 
-        private Consumer<Sprite> myOnMouseClickedAction;
+	private Consumer<Sprite> myOnMouseClickedAction;
 
-        private final static int MAX_ICON_WIDTH = 100;
-        private final static int MAX_ICON_HEIGHT = 100;
-        public final static String VELOCITY = "velocity";
-        public final static String POSITION = "position";
-        public final static String SCALE = "scale";
-        private final double initialScale = 1.0;
-        
-        public Sprite(int ID, String imageURI) {
-                this();
-                this.myID = ID;
-                myImageURI = imageURI;
-                myCharacteristics.put("imageURI", myImageURI);
-                myCharacteristics.put("ID", String.valueOf(ID));
-                myCharacteristics.put(SCALE, String.valueOf(initialScale));
-                myIcon = new ImageView();
-                changeImage(new Image(getClass().getResourceAsStream(myImageURI)));
-        }
+	private final static int MAX_ICON_WIDTH = 100;
+	private final static int MAX_ICON_HEIGHT = 100;
 
-        public Sprite() {
-                myInteractions = new HashMap<>();
-                myPosition = new HashMap<>();
-                myVelocity = new HashMap<>();
-                myVelocity.put(X_STRING, 0.0);
-                myVelocity.put(Y_STRING, 0.0);
-                myKeyActions = new HashMap<>();
-                myCharacteristics = new HashMap<>();
-                addDefaultCharacteristics(Arrays.asList(new String[] { "Name" }));
-                onMouseClicked();
-        }
+	public final static String VELOCITY = "velocity";
+	public final static String POSITION = "position";
+	public final static String SCALE = "scale";
 
-        public Sprite(Sprite sprite, int ID) {
-                this(ID, sprite.getImageURI());
-        }
+	private final double initialScale = 1.0;
 
-        public void addDefaultCharacteristics(List<String> characteristics) {
-                characteristics.forEach(characteristic -> myCharacteristics.put(
-                                characteristic, ""));
-        }
+	public Sprite(int ID, String imageURI) {
+		this();
+		this.myID = ID;
+		myCharacteristics.put("imageURI", imageURI);
+		myCharacteristics.put("ID", String.valueOf(ID));
+		myIcon = new ImageView();
+		changeImage(new Image(getClass().getResourceAsStream(imageURI)));
+	}
 
-        public void setName(String name) {
-                this.myName = name;
-        }
+	public Sprite() {
+		myInteractions = new HashMap<>();
+		myPosition = new HashMap<>();
+		myVelocity = new HashMap<>();
+		myVelocity.put(X_STRING, 0.0);
+		myVelocity.put(Y_STRING, 0.0);
+		myKeyActions = new HashMap<>();
+		myCharacteristics = new HashMap<>();
+		addDefaultCharacteristics(Arrays.asList(new String[] { "Name" }));
+		onMouseClicked();
+	}
 
-        public String getName() {
-                return this.myName;
-        }
+	public Sprite(Sprite sprite, int ID) {
+		this(ID, sprite.getImageURI());
+	}
 
-        public Consumer<Sprite> getConsumer() {
-                return myOnMouseClickedAction;
-        }
+	public void addDefaultCharacteristics(List<String> characteristics) {
+		characteristics.forEach(characteristic -> myCharacteristics.put(
+				characteristic, ""));
+	}
 
-        public int getID() {
-                return myID;
-        }
+	public void setName(String name) {
+		this.myName = name;
+	}
 
-        public ImageView getIcon() {
-                return myIcon;
-        }
+	public String getName() {
+		return this.myName;
+	}
 
-        public void changeImage(Image image) {
-                setImage(image);
-                setImageIcon(image);
-        }
+	public Consumer<Sprite> getConsumer() {
+		return myOnMouseClickedAction;
+	}
 
-        private void onMouseClicked() {
-                try {
-                        setOnMouseClicked(new ClickHandler(RightPane.class.getMethod(
-                                        "switchPane", Sprite.class), RightPane.getInstance(), this));
-                } catch (NoSuchMethodException | SecurityException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                }
-        }
+	public int getID() {
+		return myID;
+	}
 
-        private void setImageIcon(Image image) {
-                myIcon.setImage(image);
-                ImageEditor.setToAppropriateWidthAndHeight(myIcon, MAX_ICON_WIDTH,
-                                MAX_ICON_HEIGHT);
-        }
+	public ImageView getIcon() {
+		return myIcon;
+	}
 
-        public void setXPosition(double value) {
-                this.setX(value);
-                myPosition.put(X_STRING, value);
-        }
+	public void changeImage(Image image) {
+		setImage(image);
+		setImageIcon(image);
+	}
 
-        public void setYPosition(double value) {
-                this.setY(value);
-                myPosition.put(Y_STRING, value);
-        }
+	@SuppressWarnings("unchecked")
+	private void onMouseClicked() {
+		try {
+			setOnMouseClicked(new ClickHandler(RightPane.class.getMethod(
+					"switchPane", Sprite.class), RightPane.getInstance(), this));
+		} catch (NoSuchMethodException | SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
-        public void setPosition(Map<String, String> newPosition) {
-                myPosition = new HashMap<>();
-                newPosition.forEach((s1, s2) -> myPosition.put(s1,
-                                Double.parseDouble(s2)));
-                setXPosition(myPosition.get(X_STRING));
-                setYPosition(myPosition.get(Y_STRING));
-        }
-        
-        public void setScale(String scale) {
-            myCharacteristics.put(SCALE, scale);
-            double newScale = Double.parseDouble(scale);
-            
-//            this.setFitWidth(mySize.get(X_STRING));
-//            this.setFitHeight(mySize.get(Y_STRING));
-    }
+	private void setImageIcon(Image image) {
+		myIcon.setImage(image);
+		ImageEditor.setToAppropriateWidthAndHeight(myIcon, MAX_ICON_WIDTH,
+				MAX_ICON_HEIGHT);
+	}
 
-        public double getXPosition() {
-                return myPosition.get(X_STRING);
-        }
+	public void setXPosition(double value) {
+		this.setX(value);
+		myPosition.put(X_STRING, value);
+	}
 
-        public double getYPosition() {
-                return myPosition.get(Y_STRING);
-        }
+	public void setYPosition(double value) {
+		this.setY(value);
+		myPosition.put(Y_STRING, value);
+	}
 
-        public void setVelocity(Map<String, String> newVelocity) {
-                myVelocity = new HashMap<>();
-                newVelocity.forEach((s1, s2) -> myVelocity.put(s1,
-                                Double.parseDouble(s2)));
-        }
+	public void setPosition(Map<String, String> newPosition) {
+		myPosition = new HashMap<>();
+		newPosition.forEach((s1, s2) -> myPosition.put(s1,
+				Double.parseDouble(s2)));
+		setXPosition(myPosition.get(X_STRING));
+		setYPosition(myPosition.get(Y_STRING));
+	}
 
-        public void setXVelocity(double value) {
-                myVelocity.put(X_STRING, value);
-        }
+	public void setScale(String scale) {
+		myCharacteristics.put(SCALE, scale);
+		double newScale = Double.parseDouble(scale);
 
-        public void setYVelocity(double value) {
-                myVelocity.put(Y_STRING, value);
-        }
+		// this.setFitWidth(mySize.get(X_STRING));
+		// this.setFitHeight(mySize.get(Y_STRING));
+	}
 
-        public void setKeyControl(String action, String result) {
-                myKeyActions.put(action, result);
-        }
+	public double getXPosition() {
+		return myPosition.get(X_STRING);
+	}
 
-        public String getImageURI() {
-                return myImageURI;
-        }
+	public double getYPosition() {
+		return myPosition.get(Y_STRING);
+	}
 
-        public void setCharacteristic(String characteristic, String value) {
-                if (characteristic.equals(this.POSITION))
-                        setPosition(FrontEndUtils.stringToMap(value));
-                else if (characteristic.equals(this.VELOCITY))
-                        setVelocity(FrontEndUtils.stringToMap(value));
-                else
-                        myCharacteristics.put(characteristic, value);
-        }
+	public void setVelocity(Map<String, String> newVelocity) {
+		myVelocity = new HashMap<>();
+		newVelocity.forEach((s1, s2) -> myVelocity.put(s1,
+				Double.parseDouble(s2)));
+	}
 
-        public String getCharacteristic(String characteristic) {
-                return myCharacteristics.get(characteristic);
-        }
+	public void setXVelocity(double value) {
+		myVelocity.put(X_STRING, value);
+	}
 
-        public void setInteraction(Sprite otherSprite, Interaction interaction) {
-                myInteractions.put(otherSprite, interaction);
-        }
+	public void setYVelocity(double value) {
+		myVelocity.put(Y_STRING, value);
+	}
 
-        public Map<String, String> getCharacteristics() {
-                myCharacteristics.put(
-                                POSITION,
-                                myPosition.toString().substring(1,
-                                                myPosition.toString().length() - 1));
-                myCharacteristics.put(
-                                VELOCITY,
-                                myVelocity.toString().substring(1,
-                                                myVelocity.toString().length() - 1));
-                return this.myCharacteristics;
-        }
+	public void setKeyControl(String action, String result) {
+		myKeyActions.put(action, result);
+	}
+
+	public String getImageURI() {
+		return myCharacteristics.get("imageURI");
+	}
+
+	public void setCharacteristic(String characteristic, String value) {
+		if (characteristic.equals(this.POSITION))
+			setPosition(FrontEndUtils.stringToMap(value));
+		else if (characteristic.equals(this.VELOCITY))
+			setVelocity(FrontEndUtils.stringToMap(value));
+		else
+			myCharacteristics.put(characteristic, value);
+	}
+
+	public String getCharacteristic(String characteristic) {
+		return myCharacteristics.get(characteristic);
+	}
+
+	public void setInteraction(Sprite otherSprite, Interaction interaction) {
+		myInteractions.put(otherSprite, interaction);
+	}
+
+	public Map<String, String> getCharacteristics() {
+		myCharacteristics.put(
+				POSITION,
+				myPosition.toString().substring(1,
+						myPosition.toString().length() - 1));
+		myCharacteristics.put(
+				VELOCITY,
+				myVelocity.toString().substring(1,
+						myVelocity.toString().length() - 1));
+		return this.myCharacteristics;
+	}
 
 }

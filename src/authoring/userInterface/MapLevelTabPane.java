@@ -15,17 +15,7 @@ public class MapLevelTabPane extends AnchorPane {
 	private CenterPane myCenterPane;
 	
 	public MapLevelTabPane(CenterPane c){
-//		myCenterPane = c;
-//		HBox h = new HBox();
-//		Tab plusTab = new Tab("+");
-//		plusTab.setContent(h);
-//		this.getTabs().add(plusTab);
-//		this.getTabs().add(0, new Tab("testing"));
-//		plusTab.setOnSelectionChanged(e -> {
-//			System.out.println("changed");
-//		});
-//		
-//		
+
 		    final TabPane tabs = new TabPane();
 		    final Button addButton = new Button("+");
 

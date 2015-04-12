@@ -66,11 +66,12 @@ public class AuthoringWindow {
 
 		// Setting up borderPane
 		// canvas.setBottom(setupBottomPane(myScene.getWidth()));
+		canvas.setCenter(setupCenterPane());
 		canvas.setTop(setupTopPane(myScene.getWidth()));
 		canvas.setLeft(setupLeftPane());
 		canvas.setRight(setupRightPane());
-		canvas.setCenter(setupCenterPane());
-		canvas.setBottom(setupBottomPane(myCenterPane));
+
+		canvas.setBottom(setupBottomPane(myCenterPane, myScene));
 
 		root.getChildren().add(menuBar());
 		root.getChildren().add(canvas);
@@ -97,10 +98,11 @@ public class AuthoringWindow {
 					mBar.getMenus().add(m);
 				});
 
-		mBar.getMenus().get(FILE_MENU).getItems().get(NEW_FILE).setOnAction(e -> {
-			new NewRegionDialog(myCenterPane);
-		});
-		
+		mBar.getMenus().get(FILE_MENU).getItems().get(NEW_FILE)
+				.setOnAction(e -> {
+					new NewRegionDialog(myCenterPane);
+				});
+
 		mBar.getMenus()
 				.get(0)
 				.getItems()
@@ -161,38 +163,23 @@ public class AuthoringWindow {
 		return mBar;
 	}
 
-	private HBox setupBottomPane(double width, CenterPane centerPane) {
-		HBox buttonBox = new HBox();
-		// UIElementDistributer ud = new UIElementDistributer();
-		// ud.ElementDistributer();
-		//BottomPane b = new BottomPane(myCenterPane);
-		buttonBox.getChildren().addAll(BottomPane.mButtonList);
-		System.out.println("Button Pane is: "
-				+ BottomPane.mButtonList.toString());
-
-		Button c = new Button("Output xml");
-		c.setOnAction(e -> {
-			XMLBuilder.getInstance("game").addAll(
-					CenterPane.getInstance(null).getSprites());
-			XMLBuilder.getInstance("game").streamFile("lib/test.xml",
-					XMLBuilder.getInstance("game").getRoot());
-		});
-		buttonBox.getChildren().add(c);
-		//buttonBox.getChildren().add(new MapLevelTabPane(myCenterPane));
-		return buttonBox;
-	}
-	
-	private Node setupBottomPane(CenterPane centerPane){
-		return new MapLevelTabPane(myCenterPane);
+	private BottomPane setupBottomPane(double width, CenterPane centerPane) {
+		return new BottomPane();
 	}
 
-	private HBox setupTopPane(double width) {
-		HBox buttonBox = new HBox();
+	private Node setupBottomPane(CenterPane centerPane, Scene s) {
+		return BottomPane.getInstance();
+		// return new MapLevelTabPane(myCenterPane);
+	}
+
+	private TopPane setupTopPane(double width) {
+		// HBox buttonBox = new HBox();
 		// UIElementDistributer ud = new UIElementDistributer();
 		// ud.ElementDistributer();
-		buttonBox.getChildren().addAll(TopPane.mButtonList);
-		System.out.println(TopPane.mButtonList.toString());
-		return buttonBox;
+		// buttonBox.getChildren().addAll(TopPane.mButtonList);
+		// System.out.println(TopPane.mButtonList.toString());
+		
+		return TopPane.getInstance();
 	}
 
 	private VBox setupRightPane() {
