@@ -1,7 +1,7 @@
 package game_engine.physics;
 
 
-public class CircleBody implements Shape {
+public class CircleBody implements PhysicsBody {
 
 	private double myRadius;
 

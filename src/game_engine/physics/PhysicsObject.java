@@ -18,9 +18,9 @@ public class PhysicsObject extends Observable {
 	private List<Joint> myJoints;
 	private PhysicsEngine myPhysics;
 
-	private Shape myShape;
+	private PhysicsBody myShape;
 
-	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material, int xPosPixels, int yPosPixels) {
+	public PhysicsObject(PhysicsEngine physics, PhysicsBody shape, Material material, int xPosPixels, int yPosPixels) {
 		myPhysics = physics;
 		myShape = shape;
 		myMaterial = material;
@@ -171,11 +171,11 @@ public class PhysicsObject extends Observable {
 		myInvMass = computeInvMass();
 	}
 
-	public Shape getShape() {
+	public PhysicsBody getShape() {
 		return myShape;
 	}
 
-	public void setShape(Shape shape) {
+	public void setShape(PhysicsBody shape) {
 		myShape = shape;
 		myInvMass = computeInvMass();
 	}

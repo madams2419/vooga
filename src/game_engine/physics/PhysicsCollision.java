@@ -1,13 +1,40 @@
 package game_engine.physics;
 
-public interface PhysicsCollision {
+public abstract class PhysicsCollision {
 
-	public PhysicsObject getPhysicsObjectA();
+	private PhysicsObject myPOA;
+	private PhysicsObject myPOB;
+	private Vector myNormal;
+	private double myPenetrationDepth;
 
-	public PhysicsObject getPhysicsObjectB();
+	public PhysicsCollision(PhysicsObject poA, PhysicsObject poB) {
+		myPOA = poA;
+		myPOB = poB;
+	}
 
-	public Vector getNormal();
+	public boolean collide() {
+		analyzeCollision();
+		return (myPenetrationDepth >= 0);
+	}
 
-	public double getPenetrationDepth();
+	protected abstract Vector computeNormal();
+
+	protected abstract double getPenetrationDepth();
+
+	public PhysicsObject getPhysicsObjectA() {
+		return myPOA;
+	}
+
+	public PhysicsObject getPhysicsObjectB() {
+		return myPOB;
+	}
+
+	public Vector getNormal() {
+		return myNormal;
+	}
+
+	public double getPenetrationDepth() {
+		return myPenetrationDepth;
+	}
 
 }

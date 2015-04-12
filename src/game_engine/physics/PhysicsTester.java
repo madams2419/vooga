@@ -174,7 +174,7 @@ public class PhysicsTester extends Application {
 
 		/* create player sprite physics object */
 		int playerRadius = 15;
-		Shape playerShape = new CircleBody(playerRadius);
+		PhysicsBody playerShape = new CircleBody(playerRadius);
 		Material playerMaterial = Material.SUPER_BALL;
 		PhysicsObject playerPhysics = new PhysicsObject(globalPhysics,
 				playerShape, playerMaterial, 400, 400);
@@ -201,7 +201,7 @@ public class PhysicsTester extends Application {
 	public void createAndAddEnemy(int x, int y, double radius, Material material) {
 
 		/* create enemy sprite physics object */
-		Shape enemyShape = new CircleBody(radius);
+		PhysicsBody enemyShape = new CircleBody(radius);
 		PhysicsObject enemyPhysics = new PhysicsObject(globalPhysics,
 				enemyShape, material, x, y);
 
