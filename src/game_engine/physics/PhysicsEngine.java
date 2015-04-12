@@ -9,7 +9,7 @@ import game_engine.Layer;
 import game_engine.sprite.Sprite;
 
 // TODO
-// - todo implement IBehavior
+// - refactor with special controller for retreiving values in pixel form
 // - implement regions (regions are sprites)
 // - optimize net force computation
 

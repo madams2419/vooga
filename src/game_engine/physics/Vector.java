@@ -2,6 +2,8 @@ package game_engine.physics;
 
 import java.util.List;
 
+// Immutable 2d vector for physics computations
+
 public class Vector {
 
 	private double myX;
@@ -66,12 +68,12 @@ public class Vector {
 		}
 	}
 
-	public void setX(double x) {
-		myX = x;
+	public Vector setXCopy(double x) {
+		return new Vector(x, myY);
 	}
 
-	public void setY(double y) {
-		myY = y;
+	public Vector setYCopy(double y) {
+		return new Vector(myX, y);
 	}
 
 	public double getX() {

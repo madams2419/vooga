@@ -42,9 +42,9 @@ public class PhysicsObject extends Observable {
 		myPosition = myPosition.plus(myVelocity.times(dt));
 
 		// temporary ground handling
-		if(myPosition.getY() <= myPhysics.getGround() + myRigidBody.getRadiusMeters()) {
-			myPosition.setY(myPhysics.getGround() + myRigidBody.getRadiusMeters());
-			myVelocity.setY(0);
+		if(myPosition.getY() <= myPhysics.getGround() + myRigidBody.getRadius()) {
+			myPosition = myPosition.setYCopy(myPhysics.getGround() + myRigidBody.getRadius());
+			myVelocity = myVelocity.setYCopy(0);
 		}
 
 		setChanged();
@@ -115,7 +115,7 @@ public class PhysicsObject extends Observable {
 	}
 
 	public void setXMeters(double xMeters) {
-		myPosition.setX(xMeters);
+		myPosition = myPosition.setXCopy(xMeters);
 	}
 
 	public double getYMeters() {
@@ -123,7 +123,7 @@ public class PhysicsObject extends Observable {
 	}
 
 	public void setYMeters(double yMeters) {
-		myPosition.setY(yMeters);
+		myPosition = myPosition.setYCopy(yMeters);
 	}
 
 	public double getXPixels() {
@@ -131,7 +131,7 @@ public class PhysicsObject extends Observable {
 	}
 
 	public void setXPixels(double xPixels) {
-		myPosition.setX(PhysicsEngine.pixelsToMeters(xPixels));
+		myPosition = myPosition.setXCopy(PhysicsEngine.pixelsToMeters(xPixels));
 	}
 
 	public double getYPixels() {
@@ -139,7 +139,7 @@ public class PhysicsObject extends Observable {
 	}
 
 	public void setYPixels(double yPixels) {
-		myPosition.setY(PhysicsEngine.pixelsToMeters(yPixels));
+		myPosition = myPosition.setYCopy(PhysicsEngine.pixelsToMeters(yPixels));
 	}
 
 	public Vector getVelocity() {
