@@ -276,13 +276,4 @@ public class XMLParser {
 	    }*/
 	}
     }
-    
-    
-    public static void main(String[] args) {
-	File f = new File("src/game_player/testing.xml");
-	XMLParser p = new XMLParser(f);
-	System.out.println(p.getValidSubDirectories());
-	p.moveDown("game");
-	System.out.println(p.getValidSubDirectories());
-    }
 }

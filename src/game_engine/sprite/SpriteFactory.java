@@ -11,7 +11,6 @@ public class SpriteFactory {
     public Sprite createSprite(String spriteType) throws InstantiationException, IllegalAccessException{
        Class<?> runClass = null;
        Sprite classInstance = null;
-       System.out.println(spriteType);
        String className =  "game_engine.sprite." + spriteType;
        try {
         runClass = Class.forName(className);
