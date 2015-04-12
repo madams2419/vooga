@@ -1,6 +1,10 @@
 package game_engine.physics;
 
 public abstract class PhysicsCollision {
+	
+	//TODO move these to properties file
+	private static double SC_PERCENT = 0.5;
+	private static double SC_SLOP = 0.01;
 
 	protected PhysicsObject myObjectA;
 	protected PhysicsObject myObjectB;
@@ -21,6 +25,52 @@ public abstract class PhysicsCollision {
 	protected abstract Vector computeNormal();
 
 	protected abstract double computePenetrationDepth();
+	
+	protected void resolve() {
+		// return if objects are moving apart
+		if(rvProjOnNorm() > 0) {
+			return;
+		}
+		
+		// apply impulse
+		Vector impulse = computeImpulse();
+		myObjectA.applyImpulse(impulse.negate());
+		myObjectB.applyImpulse(impulse);
+		
+		// apply sink correction
+		applySinkCorrection();
+	}
+	
+	private void applySinkCorrection() {
+		//TODO this doesnt' work yet...
+		// return if penetration depth is less than threshold
+		if(myPenetrationDepth < SC_SLOP) {
+			return;
+		}
+
+		double correctionCoef = SC_PERCENT * myPenetrationDepth / (myObjectA.getInvMass() + myObjectB.getInvMass());
+		Vector correction = myNormal.times(correctionCoef);
+		myObjectA.applyVelocity(correction.negate());
+		myObjectB.applyVelocity(correction);
+	}
+	
+	protected double colRestitution() {
+		return Math.min(myObjectA.getRestitution(), myObjectB.getRestitution());
+	}
+	
+	protected Vector computeImpulse() {
+		double implsMag = -(1 + colRestitution()) * rvProjOnNorm();
+		implsMag /= myObjectA.getInvMass() + myObjectB.getInvMass();
+		return myNormal.times(implsMag);
+	}
+	
+	protected double rvProjOnNorm() {
+		return getRelativeVelocity().dot(myNormal);
+	}
+	
+	protected Vector getRelativeVelocity() {
+		return myObjectB.getVelocity().minus(myObjectA.getVelocity());
+	}
 
 	protected double getSeparationDistance() {
 		return getSeparationVector().getMagnitude();

@@ -20,8 +20,6 @@ public class PhysicsEngine {
 	private static String GRAV_STRING = "gravity";
 	private static double GRAV_MAGNITUDE = 9.8;
 	private static double DRAG_COEF = 0.05;
-	private static double SC_PERCENT = 0.5;
-	private static double SC_SLOP = 0.01;
 
 	private double myGround;
 	private double myTimeStep;
@@ -94,48 +92,6 @@ public class PhysicsEngine {
 		resolveCollision(poA, poB, normal, pDepth);
 	}
 
-	private void resolveCollision(PhysicsObject a, PhysicsObject b, Vector normal, double pDepth) {
-		// compute relative velocity
-		Vector relVel = b.getVelocity().minus(a.getVelocity());
-
-		// project relative velocity along collision normal
-		double projOnNorm = relVel.dot(normal);
-
-		// return if objects are moving apart
-		if(projOnNorm > 0) {
-			return;
-		}
-
-		// get minimum restitution
-		double restitution = Math.min(a.getRestitution(), b.getRestitution());
-
-		// calculate impulse
-		double implsMag = -(1 + restitution) * projOnNorm;
-		implsMag /= a.getInvMass() + b.getInvMass();
-		Vector impulse = normal.times(implsMag);
-
-		// apply impulse
-		a.applyImpulse(impulse.negate());
-		b.applyImpulse(impulse);
-
-		// apply sink correction
-		applySinkCorrection(a, b, normal, pDepth);
-	}
-
-	private void applySinkCorrection(PhysicsObject a, PhysicsObject b, Vector normal, double pDepth) {
-		System.out.println(pDepth);
-		// return if penetration depth is less than threshold
-		if(pDepth < SC_SLOP) {
-			return;
-		}
-
-		double correctionCoef = SC_PERCENT * pDepth / (a.getInvMass() + b.getInvMass());
-		System.out.println(correctionCoef);
-		Vector correction = normal.times(correctionCoef);
-		a.applyVelocity(correction.negate());
-		b.applyVelocity(correction);
-	}
-
 	private Vector computeNetGlobalForce() {
 		myNetGlobalForce = Vector.sum(getGlobalForces());
 		return myNetGlobalForce;
@@ -195,6 +151,7 @@ public class PhysicsEngine {
 	}
 
 	/* Scaling utility functions */
+	//TODO move these elsewhere
 
 	public static double pixelsToMeters(double pixels) {
 		return pixels * SCALE_FACTOR;
