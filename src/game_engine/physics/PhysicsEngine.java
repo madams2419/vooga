@@ -47,7 +47,7 @@ public class PhysicsEngine {
 	}
 
 	public Vector getDragForce(PhysicsObject physObj) {
-		double dragCoef = - myDrag * physObj.getShape().getCxArea();
+		double dragCoef = - myDrag * physObj.getRigidBody().getCxArea();
 		return physObj.getVelocity().times(dragCoef);
 	}
 
@@ -91,7 +91,7 @@ public class PhysicsEngine {
 
 	private double getCollisionDepth(PhysicsObject a, PhysicsObject b) {
 		double sepDistance = b.getPositionMeters().minus(a.getPositionMeters()).getMagnitude();
-		double radiiSum = b.getShape().getRadiusMeters() + a.getShape().getRadiusMeters();
+		double radiiSum = b.getRigidBody().getRadiusMeters() + a.getRigidBody().getRadiusMeters();
 		return radiiSum - sepDistance;
 	}
 

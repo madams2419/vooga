@@ -1,6 +1,6 @@
 package game_engine.physics;
 
-public class CircleBody extends PhysicsBody {
+public class CircleBody extends RigidBody {
 
 	private double myRadius;
 

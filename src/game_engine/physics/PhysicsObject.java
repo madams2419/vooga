@@ -18,11 +18,11 @@ public class PhysicsObject extends Observable {
 	private List<Joint> myJoints;
 	private PhysicsEngine myPhysics;
 
-	private PhysicsBody myShape;
+	private RigidBody myRigidBody;
 
-	public PhysicsObject(PhysicsEngine physics, PhysicsBody shape, Material material, int xPosPixels, int yPosPixels) {
+	public PhysicsObject(PhysicsEngine physics, RigidBody shape, Material material, int xPosPixels, int yPosPixels) {
 		myPhysics = physics;
-		myShape = shape;
+		myRigidBody = shape;
 		myMaterial = material;
 
 		myPosition = PhysicsEngine.vectorPixelsToMeters(xPosPixels, yPosPixels);
@@ -42,8 +42,8 @@ public class PhysicsObject extends Observable {
 		myPosition = myPosition.plus(myVelocity.times(dt));
 
 		// temporary ground handling
-		if(myPosition.getY() <= myPhysics.getGround() + myShape.getRadiusMeters()) {
-			myPosition.setY(myPhysics.getGround() + myShape.getRadiusMeters());
+		if(myPosition.getY() <= myPhysics.getGround() + myRigidBody.getRadiusMeters()) {
+			myPosition.setY(myPhysics.getGround() + myRigidBody.getRadiusMeters());
 			myVelocity.setY(0);
 		}
 
@@ -52,7 +52,7 @@ public class PhysicsObject extends Observable {
 	}
 
 	private double computeInvMass() {
-		double mass = myMaterial.getDensity() * myShape.getVolume();
+		double mass = myMaterial.getDensity() * myRigidBody.getVolume();
 		return 1/mass;
 	}
 
@@ -171,12 +171,12 @@ public class PhysicsObject extends Observable {
 		myInvMass = computeInvMass();
 	}
 
-	public PhysicsBody getShape() {
-		return myShape;
+	public RigidBody getRigidBody() {
+		return myRigidBody;
 	}
 
-	public void setShape(PhysicsBody shape) {
-		myShape = shape;
+	public void setShape(RigidBody shape) {
+		myRigidBody = shape;
 		myInvMass = computeInvMass();
 	}
 

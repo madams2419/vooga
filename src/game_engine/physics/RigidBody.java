@@ -1,10 +1,10 @@
 package game_engine.physics;
 
-public abstract class PhysicsBody {
+public abstract class RigidBody {
 
 	protected double myDepth;
 
-	public PhysicsBody(double depth) {
+	public RigidBody(double depth) {
 		myDepth = depth;
 	}
 

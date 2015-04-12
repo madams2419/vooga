@@ -10,12 +10,15 @@ public abstract class PhysicsCollision {
 	public PhysicsCollision(PhysicsObject poA, PhysicsObject poB) {
 		myPOA = poA;
 		myPOB = poB;
+		myNormal = computeNormal
 	}
 
 	public boolean collide() {
 		analyzeCollision();
 		return (myPenetrationDepth >= 0);
 	}
+
+	private void analyzeCollision
 
 	protected abstract Vector computeNormal();
 

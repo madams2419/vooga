@@ -56,4 +56,10 @@ public class HitBox {
 		return bitMap;
 	}
 
+	private PhysicsBody getPhysicsBodyFromImage() {
+		//TODO
+	}
+
+	public 
+
 }
