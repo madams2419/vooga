@@ -22,8 +22,8 @@ public class ControlsManager {
 	myActiveControl = myInputControls.get(index);
     }
 
-    public Behavior getSetActiveControlBehavior() {
-	Behavior setActiveControl = (params) -> {
+    public IAction getSetActiveControlBehavior() {
+	IAction setActiveControl = (params) -> {
 	    setActiveControl(Integer.parseInt(params[0]));
 	};
 	return setActiveControl;

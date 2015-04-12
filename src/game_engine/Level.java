@@ -1,5 +1,6 @@
 package game_engine;
 
+import game_engine.collision.CollisionEngine;
 import game_engine.objective.Objective;
 import game_engine.sprite.Sprite;
 
@@ -16,6 +17,7 @@ public class Level {
 	
 	List<Objective> myObjectives;
 	List<Sprite> mySprites;
+	private CollisionEngine myCollisionEngine;
 	
 	public Level() {
 		// TODO
@@ -32,6 +34,11 @@ public class Level {
             //Potentially different method
             myObjectives.forEach(objective -> objective.update(now));
             mySprites.forEach(sprite -> sprite.update());
+            myCollisionEngine.checkCollisions();
+        }
+        
+        public void setCollisionEngine (CollisionEngine collisionEngine) {
+            myCollisionEngine = collisionEngine;
         }
         
 	/**

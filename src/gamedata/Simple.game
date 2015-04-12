@@ -17,13 +17,19 @@
 							</behavior_0>
 						</behaviors>
 					</onComplete>
-					<onFailed></onFailed>
+					<onFailed>
+						<behaviors></behaviors>
+					</onFailed>
 				</objective_0>
 				
 				<objective_1>
 					<prereqs></prereqs>
-					<onComplete></onComplete>
-					<onFailed></onFailed>
+					<onComplete>
+						<behaviors></behaviors>
+					</onComplete>
+					<onFailed>
+						<behaviors></behaviors>
+					</onFailed>
 				</objective_1>
 				
 				<objective_2>
@@ -38,7 +44,9 @@
 							</behavior_0>
 						</behaviors>
 					</onComplete>
-					<onFailed></onFailed>
+					<onFailed>
+						<behaviors></behaviors>
+					</onFailed>
 				</objective_2>
 			</objective>
 			

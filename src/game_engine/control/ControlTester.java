@@ -1,13 +1,13 @@
 package game_engine.control;
 
+import game_engine.IAction;
+import game_engine.IBehavior;
+import game_engine.MultipleBehaviors;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
-
-import game_engine.*;
 import javafx.application.Application;
-import javafx.scene.*;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -16,7 +16,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class ControlTester extends Application{
-	static Map<String, IBehavior> behaviorPool = new HashMap<>();
+	static Map<String, IAction> behaviorPool = new HashMap<>();
 	static int track1 = 10;
 	static String printout = "Tracking Number is: ";
 	static ControlManager cManager = new ControlManager();
@@ -45,7 +45,7 @@ public class ControlTester extends Application{
 		System.out.println("div " + printout + track1);
 	}
 
-	public static IBehavior selectBehavior(String key){
+	public static IAction selectBehavior(String key){
 		if(behaviorPool.containsKey(key)){
 			return behaviorPool.get(key);
 		} else {
@@ -73,17 +73,28 @@ public class ControlTester extends Application{
 	}
 	
 	private void keyManipulation(){
-		IBehavior add = new AddBehavior();
-		IBehavior sub = new SubtractBehavior();
-		IBehavior mul = new MulBehavior();
-		IBehavior div = new DivBehavior();
+		IAction add = new AddBehavior();
+		IAction sub = new SubtractBehavior();
+		IAction mul = new MulBehavior();
+		IAction div = new DivBehavior();
 		behaviorPool.put("Add", add);
 		behaviorPool.put("Sub", sub);
+		MultipleBehaviors map1 = new MultipleBehaviors();
+		map1.addBehavior(() -> add.execute(new String[3]));
+		map1.addBehavior(() -> mul.execute(new String[3]));
+		MultipleBehaviors map2 = new MultipleBehaviors();
+		map2.addBehavior(() -> sub.execute(new String[3]));
+		map2.addBehavior(() -> div.execute(new String[3]));
+		Map<KeyCode, IBehavior> pressMap = new HashMap<>();
+		pressMap.put(KeyCode.UP, map1);
+		pressMap.put(KeyCode.DOWN, map2);
+		Map<KeyCode, IBehavior> releaseMap = new HashMap<>();
+                pressMap.put(KeyCode.UP, map2);
+                pressMap.put(KeyCode.DOWN, map2);
 		
-		Map<IBehavior, String[]> map1 = new LinkedHashMap<IBehavior, String[]>(){{put(add, new String[3]); put(mul, new String[3]);}};
-		Map<IBehavior, String[]> map2 = new LinkedHashMap<IBehavior, String[]>(){{put(sub, new String[3]); put(div, new String[3]);}};
-		Map<KeyCode, Map<IBehavior, String[]>> pressMap = new HashMap<KeyCode, Map<IBehavior, String[]>>(){{  put(KeyCode.UP, map1); put(KeyCode.DOWN, map2);}};
-		Map<KeyCode, Map<IBehavior, String[]>> releaseMap = new HashMap<KeyCode, Map<IBehavior, String[]>>(){{  put(KeyCode.DOWN, map2); put(KeyCode.UP, map2);}};
+		//Map<IAction, String[]> map2 = new LinkedHashMap<IAction, String[]>(){{put(sub, new String[3]); put(div, new String[3]);}};
+		//Map<KeyCode, Map<IAction, String[]>> pressMap = new HashMap<KeyCode, Map<IAction, String[]>>(){{  put(KeyCode.UP, map1); put(KeyCode.DOWN, map2);}};
+		//Map<KeyCode, Map<IAction, String[]>> releaseMap = new HashMap<KeyCode, Map<IAction, String[]>>(){{  put(KeyCode.DOWN, map2); put(KeyCode.UP, map2);}};
 		cManager.addControl(pressMap, releaseMap);
 		
 //		myControl.addBehavior("UP", "Add");

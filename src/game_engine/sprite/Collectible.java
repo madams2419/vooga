@@ -2,6 +2,8 @@ package game_engine.sprite;
 
 import game_engine.physics.PhysicsObject;
 
+
+
 public class Collectible extends Sprite{
     
     private int myCount;
@@ -9,17 +11,19 @@ public class Collectible extends Sprite{
     
     public Collectible(PhysicsObject physics) {
         super(physics);
+        myCount =0;
        
       }
 
    
       public Collectible(PhysicsObject physics, String name){
           super(physics,name);
-          
+          myCount =0;
       }
     
       public Collectible(PhysicsObject physics,String name, int id){
           super(physics,name,id);
+          myCount = 0;
       }
       
       public void collect(int amount){

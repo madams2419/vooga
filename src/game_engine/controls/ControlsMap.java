@@ -1,6 +1,6 @@
 package game_engine.controls;
 
-import game_engine.Behavior;
+import game_engine.IBehavior;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +10,7 @@ import javafx.scene.input.KeyCode;
 
 public class ControlsMap {
 
-    private Map<KeyCode, Map<Behavior, String[]>> controls;
+    private Map<KeyCode, IBehavior> controls;
     
     public ControlsMap() {
 	controls = new HashMap<>();
@@ -18,21 +18,11 @@ public class ControlsMap {
     
     public void executeBehaviors(KeyCode code) {
 	if (controls.containsKey(code)) {
-	    controls.get(code).forEach((behavior, params) -> behavior.execute(params));
+	    controls.get(code).perform();
 	}
     }
     
-    public void addBehavior(KeyCode code, Behavior behavior, String[] params) {
-	Map<Behavior, String[]> keyBehaviors;
-	
-	if (controls.containsKey(code)) {
-	    keyBehaviors = controls.get(code);
-	}
-	else {
-	    keyBehaviors = new HashMap<>();
-	}
-	
-	keyBehaviors.put(behavior, params);
+    public void addBehavior(KeyCode code, IBehavior behavior) {controls.put(code, behavior);
     }
     
     public void handleInput(KeyCode input, List<KeyCode> pressedKeys) {

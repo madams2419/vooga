@@ -1,5 +1,7 @@
 package game_engine.objective;
 
+import game_engine.IAction;
+import game_engine.IActor;
 import game_engine.IBehavior;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +19,7 @@ import java.util.function.Predicate;
  * @author Tony
  *
  */
-public class Objective {
+public class Objective implements IActor{
     private Map<Predicate<Long>, Status> myConditions;
     private Map<Status, IBehavior> myBehaviors;
     /**
@@ -57,8 +59,8 @@ public class Objective {
         myPreReqs = preReqs;
     }
     
-    public void setBehavior (String status, IBehavior behavior, String[] params){
-        myBehaviors.put(Status.valueOf(status), (parameters) -> behavior.execute(params));
+    public void setBehavior (String status, IBehavior behavior){
+        myBehaviors.put(Status.valueOf(status.toUpperCase()), behavior);
     }
     
     public void addCondition (Predicate<Long> condition, String status) {
@@ -91,6 +93,7 @@ public class Objective {
         updateActive(now);
         if (isActive()) {
             updateStatus (now);
+            executeStatus();
         }
     }
     
@@ -100,9 +103,10 @@ public class Objective {
                 myStatus = myConditions.get(condition);
             }
         }
-        if (myBehaviors.containsKey(myStatus)){
-            myBehaviors.get(myStatus).execute();
-        }
+    }    
+    
+    private void executeStatus () {
+        myBehaviors.getOrDefault(myStatus,() -> {}).perform();
     }
 
     private void updateActive(long now) {
@@ -134,6 +138,7 @@ public class Objective {
         return myStatus == Status.FAILED;
     }
     
+    
     public boolean isFinished() {
         return isComplete() || isFailed();
     }
@@ -143,5 +148,15 @@ public class Objective {
         if (isActive()){
             myTimer.ifPresent(timer -> timer.start(now));
         }
+    }
+
+    @Override
+    public IAction getAction (String name) {
+        if (name == "setStatus"){
+            return (params) -> {
+                myStatus = Status.valueOf(params[0].toUpperCase());
+            };
+        }
+        return (params) -> {};
     }
 }

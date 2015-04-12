@@ -1,7 +1,7 @@
 package game_engine.sprite;
 
+
 import game_engine.physics.PhysicsObject;
-import game_player.Animation;
 
 public class Enemy extends Character {
     public Enemy(PhysicsObject physics) {

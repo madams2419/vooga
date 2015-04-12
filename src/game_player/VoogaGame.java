@@ -1,12 +1,10 @@
 package game_player;
 
-import game_engine.IBehavior;
+import game_engine.IAction;
 import game_engine.Level;
 import game_engine.sprite.Sprite;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 
@@ -23,8 +21,8 @@ public class VoogaGame extends AnimationTimer {
 	levels.add(l);
     }
     
-    public IBehavior getSetActiveLevelBehavior() {
-	IBehavior setActiveLevel = (params) -> {
+    public IAction getSetActiveLevelBehavior() {
+	IAction setActiveLevel = (params) -> {
 	    int index = Integer.parseInt(params[0]);
 	    activeLevel = levels.get(index);
 	};

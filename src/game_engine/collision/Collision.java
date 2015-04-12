@@ -2,10 +2,6 @@ package game_engine.collision;
 
 import game_engine.IBehavior;
 import game_engine.sprite.Sprite;
-
-import java.util.List;
-import java.util.Map;
-
 import javafx.scene.image.ImageView;
 
 /**
@@ -17,32 +13,24 @@ import javafx.scene.image.ImageView;
 
 public class Collision {
     private Sprite spriteA;
-    private List<Sprite> spriteList;
-    private Map<Sprite, Map<IBehavior, String[]>> behaviorList;
-    private List<CollisionDirection> directions;
+    private Sprite spriteB;
+    private IBehavior behaviorList;
+    private CollisionDirection direction;
 
-    public Collision(Sprite a, List<Sprite> list, Map<Sprite, Map<IBehavior, String[]>> b, List<CollisionDirection> d) {
+    public Collision(Sprite a, Sprite b, IBehavior behaviors,
+	    CollisionDirection d) {
 	spriteA = a;
-	spriteList = list;
-	behaviorList = b;
-	directions = d;
+	spriteB = b;
+	behaviorList = behaviors;
+	direction = d;
     }
 
     public void getColliding() {
-	spriteList.stream().filter(sprite -> collidingHitBox(sprite, spriteA))
-		.filter(sprite -> collide(sprite, spriteA))
-		.forEach(this::execute);
-    }
-
-    private void execute(Sprite sprite) {
-	behaviorList.get(sprite).forEach(
-		(behavior, params) -> behavior.execute(params));
+	behaviorList.perform();
     }
 
     private boolean collidingHitBox(Sprite spriteA, Sprite spriteB) {
-	boolean intersecting = spriteA.getHitBox().intersects(spriteB.getHitBox());
-	// boolean correctDirection = ...;
-	return intersecting;
+	return spriteA.getHitBox().intersects(spriteB.getHitBox());
     }
 
     private boolean collide(Sprite spriteA, Sprite spriteB) {

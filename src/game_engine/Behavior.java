@@ -5,8 +5,18 @@ package game_engine;
  * @author 
  *
  */
-public interface Behavior {
+public class Behavior implements IBehavior{
+	private IAction myBehavior;
+	private String[] myParams;
+    
+    
+	public Behavior (IAction behavior, String[] params) {
+	    myBehavior = behavior;
+	    myParams = params;
+	}
 	
-	public void execute(String ... params);
+	public void perform () {
+	    myBehavior.execute(myParams);
+	}
 	
 }

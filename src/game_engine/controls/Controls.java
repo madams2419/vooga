@@ -1,6 +1,6 @@
 package game_engine.controls;
 
-import game_engine.Behavior;
+import game_engine.IBehavior;
 
 import java.util.*;
 
@@ -39,10 +39,8 @@ public class Controls {
 	whilePressedControls.update(time, pressedKeys);
     }
     
-    public void addControl(KeyCode code, EventType<KeyEvent> type, List<Behavior> behaviors, List<String[]> params) {
+    public void addControl(KeyCode code, EventType<KeyEvent> type, IBehavior behavior) {
 	ControlsMap controls = eventType.get(type);
-	for (int i = 0; i < behaviors.size(); i++) {
-	    controls.addBehavior(code, behaviors.get(i), params.get(i));
-	}
+	controls.addBehavior(code, behavior);
     }
 }

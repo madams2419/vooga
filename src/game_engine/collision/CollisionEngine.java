@@ -1,7 +1,7 @@
 package game_engine.collision;
 
 import java.util.List;
-
+import java.util.ArrayList;
 /**
  * Class checks for collision occurrences between sprites
  * @author Michael Lee
@@ -11,6 +11,9 @@ import java.util.List;
 public class CollisionEngine {
 	List<Collision> collisionList;
 	
+	public CollisionEngine() {
+	    this(new ArrayList<>());
+	}
 	
 	public CollisionEngine(List<Collision> list){
 		collisionList = list;
