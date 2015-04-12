@@ -203,10 +203,12 @@ public class AuthoringWindow {
 	}
 
 	public static void setControlOn() {
+		System.out.println("Control on");
 		control = true;
 	}
 
 	public static void setControlOff() {
+		System.out.println("Control off");
 		control = false;
 	}
 

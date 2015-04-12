@@ -35,6 +35,7 @@ public class CenterPane extends WindowPane {
 		System.out.printf("Instantiated %s%n", this.getClass().getName());
 		((TabPane) myContainer).setSide(Side.BOTTOM);
 		addTab();
+		FrontEndUtils.setKeyActions(this.myContainer);
 	}
 
 	public void addTab() {
@@ -47,6 +48,13 @@ public class CenterPane extends WindowPane {
 				.getTabs()
 				.get(((TabPane) myContainer).getSelectionModel()
 						.getSelectedIndex()).getContent();
+	}
+	
+	@Override
+	public Group generateComponents(
+			ArrayList<Map<String, Map<String, String>>> values) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	class CenterCanvas extends ScrollPane {
@@ -68,6 +76,7 @@ public class CenterPane extends WindowPane {
 			myListOfSprites = FXCollections.observableArrayList();
 			myEnvironmentList = new ArrayList<>();
 
+			
 			FrontEndUtils.setKeyActions(this);
 			addMaptoEnvironment(gp.fields);
 
@@ -112,16 +121,5 @@ public class CenterPane extends WindowPane {
 			myCurrentRectangle.setOnMouseClicked(e -> canvasClicked(e));
 			myGroup.getChildren().add(myCurrentRectangle);
 		}
-	}
-
-	@Override
-	public Group generateComponents(
-			ArrayList<Map<String, Map<String, String>>> values) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public AuthoringWindow getParent() {
-		return myParent;
 	}
 }

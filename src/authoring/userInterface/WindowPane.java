@@ -35,6 +35,10 @@ public abstract class WindowPane {
 		return (Control[]) myControlsList.toArray();
 	}
 	
+	public AuthoringWindow getParent() {
+		return myParent;
+	}
+	
 	public abstract Group generateComponents(
 			ArrayList<Map<String, Map<String, String>>> values);
 
