@@ -1,9 +1,10 @@
 package game_engine.collision;
 
 import game_engine.IBehavior;
+import game_engine.physics.PhysicsCollision;
 import game_engine.physics.PhysicsEngine;
+import game_engine.physics.Vector;
 import game_engine.sprite.Sprite;
-
 import javafx.scene.image.ImageView;
 
 /**
@@ -13,23 +14,16 @@ import javafx.scene.image.ImageView;
  *
  */
 
-public class Collision {
+public class Collision implements PhysicsCollision {
+
 	private Sprite mySpriteA;
 	private Sprite mySpriteB;
+	private Vector myCollisionNormal;
 	private IBehavior myBehavior;
 	private CollisionDirection myDirection;
 	private boolean myRealism;
 	private PhysicsEngine myPhysics;
 
-	/**
-	 *
-	 * @param a
-	 * @param b
-	 * @param behave
-	 * @param d
-	 * @param real
-	 * @param p
-	 */
 	public Collision(Sprite spriteA, Sprite spriteB, IBehavior behavior, CollisionDirection direction, boolean realism, PhysicsEngine physics) {
 		mySpriteA = spriteA;
 		mySpriteB = spriteB;
@@ -127,5 +121,17 @@ public class Collision {
 				bitMap[i][j] = mapA[i][j] && mapB[i][j];
 
 		return bitMap;
+	}
+
+	public Sprite getSpriteA() {
+		return mySpriteA;
+	}
+
+	public Sprite getSpriteB() {
+		return mySpriteB;
+	}
+
+	public Vector getCollisionNormal() {
+		return myCollisionNormal;
 	}
 }
