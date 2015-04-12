@@ -26,46 +26,41 @@ import authoring.util.FrontEndUtils;
  * @author Andrew Sun & Daniel "the fresh code machine of bel-duke" Luker
  *
  */
-public class CenterPane extends TabPane {
+public class CenterPane extends WindowPane {
 
-
-	private Scene myScene;
 	private Group myGroup;
-	
-	public static CenterPane mInstance;
-	
-	public static CenterPane getInstance(Scene scene) {
-		if (mInstance == null)
-			mInstance = new CenterPane(scene);
-		return mInstance;
-	}
-	
-	private CenterPane(Scene s) {
-		myScene = s;
-		this.setSide(Side.BOTTOM);
+
+	CenterPane(Scene s, AuthoringWindow w) {
+		super(s, new TabPane(), w);
+		System.out.printf("Instantiated %s%n", this.getClass().getName());
+		((TabPane) myContainer).setSide(Side.BOTTOM);
 		addTab();
 	}
-	
+
 	public void addTab() {
-		this.getTabs().add(new Tab("", new CenterCanvas(myScene)));
+		((TabPane) myContainer).getTabs().add(
+				new Tab("Map", new CenterCanvas(myScene)));
 	}
-	
+
 	public CenterCanvas getActiveTab() {
-		return (CenterCanvas) this.getTabs().get(this.getSelectionModel().getSelectedIndex()).getContent();
+		return (CenterCanvas) ((TabPane) myContainer)
+				.getTabs()
+				.get(((TabPane) myContainer).getSelectionModel()
+						.getSelectedIndex()).getContent();
 	}
-	
-	
+
 	class CenterCanvas extends ScrollPane {
 
 		private List<Map<String, String>> myEnvironmentList;
 		private ObservableList<Sprite> myListOfSprites;
 		private Rectangle myCurrentRectangle;
 		public GlobalCreationPane gp;
-		
+
 		CenterCanvas(Scene scene) {
-			assert(scene!=null);
+			assert (scene != null);
 			myScene = scene;
 			myGroup = new Group();
+			gp = new GlobalCreationPane(myScene, myParent.getMyRightPane());
 			this.setContent(myGroup);
 
 			//myGroup.setOnMouseClicked(e -> canvasClicked(e));
@@ -74,35 +69,27 @@ public class CenterPane extends TabPane {
 			myEnvironmentList = new ArrayList<>();
 
 			FrontEndUtils.setKeyActions(this);
-			addMaptoEnvironment(gp.getInstance(scene).fields);
+			addMaptoEnvironment(gp.fields);
 
 		}
-
 
 		public void addMaptoEnvironment(Map<String, String> m) {
 			myEnvironmentList.add(m);
-			System.out.println(m.toString());
 		}
 
 		private void canvasClicked(MouseEvent e) {
-			//try {
+			try {
 				Sprite s = ((SpriteCursor) myScene.getCursor())
 						.getCurrentSprite();
 
 				s.setXPosition(e.getX() - s.getImage().getWidth() / 2);
 				s.setYPosition(e.getY() - s.getImage().getHeight() / 2);
 				myGroup.getChildren().add(s);
-
-				System.out.println(s.getID());
 				this.myListOfSprites.add(s);
 				myScene.setCursor(ImageCursor.DEFAULT);
-
-//			} catch (ClassCastException a) {
-//				System.out.println("class cast error");
-//			} catch (NullPointerException b) {
-//				System.out.println("null pointer error");
-//			}
-
+			} catch (ClassCastException a) {
+			} catch (NullPointerException b) {
+			}
 		}
 
 		public Object[] getData() {
@@ -120,11 +107,21 @@ public class CenterPane extends TabPane {
 		public void createRegion(double x, double y) {
 			if (myCurrentRectangle != null) {
 				myGroup.getChildren().remove(myCurrentRectangle);
-				System.out.println("removing rectangle");
 			}
 			myCurrentRectangle = new Rectangle(x, y, Color.WHITE);
 			myCurrentRectangle.setOnMouseClicked(e -> canvasClicked(e));
 			myGroup.getChildren().add(myCurrentRectangle);
 		}
+	}
+
+	@Override
+	public Group generateComponents(
+			ArrayList<Map<String, Map<String, String>>> values) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public AuthoringWindow getParent() {
+		return myParent;
 	}
 }

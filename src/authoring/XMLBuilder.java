@@ -4,18 +4,15 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -95,7 +92,6 @@ public class XMLBuilder {
 		} catch (TransformerException e) {
 			e.printStackTrace();
 		}
-		System.out.println("streamed file");
 	}
 
 	/***
@@ -123,7 +119,6 @@ public class XMLBuilder {
 				StringBuilder s = new StringBuilder();
 				Arrays.asList(tagname.split("\\s")).forEach(s1 -> s.append(s1));
 				tagname = s.toString();
-				System.out.println("updated tagname to " + tagname);
 			}
 			newElement = mDocument.createElement(tagname);
 			if (attributes_values != null && !attributes_values.isEmpty())
@@ -286,46 +281,11 @@ public class XMLBuilder {
 	public void addAllEnvironment(Collection<Map<String, String>> environments) {
 		Element mapElement = addToRoot("map");
 		assert (mapElement != null);
-		System.err.println(environments.toString());
 		environments.forEach(map -> {
-			System.out.println(map.toString());
 			map.forEach((s1, s2) -> {
 				Element newel = add(mapElement, (String) s1);
 				newel.setTextContent((String) s2);
 			});
 		});
 	}
-
-	// private void addEnvironment(Element parent, Map value) {
-	// add
-	// }
-
-	public static void main(String[] args) {
-		Map<String, String> m = new HashMap<>();
-		Map<String, String> n = new HashMap<>();
-		Map<String, String> o = new HashMap<>();
-
-		m.put("scroll speed", "10");
-		m.put("frame rate", "60");
-		m.put("background image", "res/images/image1.png");
-
-		n.put("a", "1");
-		n.put("b", "2");
-		n.put("c", "3");
-
-		o.put("i", "1");
-		o.put("ii", "2");
-		o.put("iii", "3");
-
-		Collection<Map<String, String>> coll = new LinkedList<>();
-		coll.add(m);
-		coll.add(n);
-		coll.add(o);
-
-		XMLBuilder.getInstance("game").addAllEnvironment(coll);
-
-		XMLBuilder.getInstance("map").streamFile("settings/test.xml");
-
-	}
-
 }

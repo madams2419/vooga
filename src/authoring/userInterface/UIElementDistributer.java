@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javafx.scene.Scene;
 import XML.LayoutXMLParser;
 
 /**
@@ -13,24 +14,25 @@ import XML.LayoutXMLParser;
  */
 @SuppressWarnings("rawtypes")
 public class UIElementDistributer extends AuthoringGUITester {
+
 	static Reflection reflection = new Reflection();
 	private static Map<String, Object> ClassConstructors = new HashMap<String, Object>();
 	public static ArrayList<Map> MapofValues = new ArrayList<Map>();
 
 	@SuppressWarnings("unchecked")
-	public static void ElementDistributer() {
+	public static void ElementDistributer(Scene scene, AuthoringWindow window) {
 		String f = "settings/layout.xml";
 		LayoutXMLParser.parse(f);
 
 		for (Entry<String, ArrayList> Entry : LayoutXMLParser.myElementMap
 				.entrySet()) {
-			String Panes = Entry.getKey();
+			String panes = Entry.getKey();
+			System.out.println(panes);
 			ArrayList<Map> values = Entry.getValue();
-			String Classname = String.format("authoring.userInterface.%s",
-					Panes);
-			ClassConstructors.put(Classname,
-					Reflection.createInstance(Classname));
-			MethodInvoker(ClassConstructors.get(Classname), "Components",
+			String classname = String.format("authoring.userInterface.%s",
+					panes);
+			ClassConstructors.put(classname, window.getPane(classname));
+			MethodInvoker(ClassConstructors.get(classname), "Components",
 					values);
 		}
 	}
