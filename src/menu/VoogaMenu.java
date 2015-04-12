@@ -297,7 +297,7 @@ public class VoogaMenu {
 	
 	Rectangle buttonOutline = new Rectangle(200, height);
 	buttonOutline.setFill(Color.TRANSPARENT);
-	buttonOutline.setTranslateX(100 * sign);
+	//buttonOutline.setTranslateX(100 * sign);
 	buttonOutline.setOnMouseEntered((entered) -> {
 	    doTranslate(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, 0, backButton.getTranslateY(), DO_NOTHING);
 	    doFade(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, OPAQUE, DO_NOTHING);
@@ -307,14 +307,39 @@ public class VoogaMenu {
 	    doFade(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, INVISIBLE, DO_NOTHING);
 	});
 	buttonOutline.setOnMouseClicked((clicked) -> {
-	    System.out.println("click");
+	    doTranslate(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, 50 * sign, backButton.getTranslateY(), DO_NOTHING);
+	    doFade(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, INVISIBLE, DO_NOTHING);
+	    buttonOutline.setOnMouseClicked(null);
+	    buttonOutline.setOnMouseEntered(null);
+	    buttonOutline.setOnMouseExited(null);
+	    doTranslate(choiceMenu, DELAY, choiceMenu.getTranslateX(), height, DO_NOTHING);
+	    doFade(choiceMenu, IMMEDIATE, INVISIBLE, (finished) -> resetMenu());
 	});
 	
 	StackPane button = new StackPane();
+	button.setMaxWidth(200);
+	button.setTranslateX(width * sign / 2 - 100 * sign);
 	button.getChildren().addAll(backButton, buttonOutline);
 	button.setAlignment(position);
 	
 	return button;
+    }
+    
+    private void resetMenu() {
+	root.getChildren().clear();
+	root.getChildren().addAll(background, mainMenu);
+	
+	background.setEffect(null);
+	
+	doTranslate(background, IMMEDIATE, 0, background.getTranslateY(), DO_NOTHING);
+	doTranslate(textHolder, IMMEDIATE, 0, textHolder.getTranslateY(), DO_NOTHING);
+	doTranslate(playButton, IMMEDIATE, -width/4, playButton.getTranslateY(), DO_NOTHING);
+	doTranslate(designButton, IMMEDIATE, width/4, designButton.getTranslateY(), DO_NOTHING);
+	
+	doFade(textHolder, IMMEDIATE, OPAQUE, DO_NOTHING);
+	doFade(playButton, IMMEDIATE, OPAQUE, DO_NOTHING);
+	doFade(designButton, IMMEDIATE, OPAQUE, DO_NOTHING);
+	doFade(overlay, IMMEDIATE, TRANSPARENT, (finished) -> enableButtons());
     }
     
     /*
