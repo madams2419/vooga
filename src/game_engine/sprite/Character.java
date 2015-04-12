@@ -1,6 +1,6 @@
 package game_engine.sprite;
 
-import game_engine.IAction;
+import game_engine.behaviors.IAction;
 import game_engine.physics.PhysicsObject;
 import game_engine.physics.Vector;
 import java.util.HashMap;
@@ -20,6 +20,7 @@ public abstract class Character extends Sprite {
     // TODO check design on feeding 2 constructors into themselves
     public Character(PhysicsObject physics){
             super(physics);
+            myPosition = myPhysicsObject.getPositionPixels();
     }
     
     public Character(PhysicsObject physics, String name){

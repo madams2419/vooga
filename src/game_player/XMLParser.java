@@ -103,7 +103,7 @@ public class XMLParser {
 	    Document doc = docBuilder.parse(data);
 	    
 	    if (doc.hasChildNodes()) {
-		read(doc.getChildNodes(), "", root);
+		read(doc.getFirstChild(), "", root);
 	    }
 	}
 	catch (Exception e) {
@@ -203,6 +203,7 @@ public class XMLParser {
 	    pathName += component + "/";
 	}
 	setActivePath(getActivePath() + pathName);
+	System.out.println(activePath);
     }
     
     /**
@@ -258,28 +259,27 @@ public class XMLParser {
     /*
      * Recursively builds the Directory tree and populates the map.
      */
-    private void read(NodeList nodes, String path, Directory parent) {
-	for (int i = 0; i < nodes.getLength(); i++) {
-	    Node node = nodes.item(i);
-	    if (node.getChildNodes().getLength() <= 1) {
-		xml.put(path + "/" + node.getNodeName(), node.getTextContent());
+    private void read(Node node, String path, Directory parent) {
+	if (node.getChildNodes().getLength() == 1) {
+	    xml.put(path + "/" + node.getNodeName(), node.getTextContent());
+	}
+	else if (node.getChildNodes().getLength() == 0 && !node.getNodeName().equals("#text")){
+	    xml.put(path + "/" + node.getNodeName(), "");
+	    Directory child = new Directory(node.getNodeName());
+	    parent.addSubDirectory(child);
+	}
+	else if (!node.getNodeName().equals("#text")) {
+	    Directory child = new Directory (node.getNodeName());
+	    parent.addSubDirectory(child);
+	    for (int i =0; i < node.getChildNodes().getLength(); i ++) {
+	        read(node.getChildNodes().item(i), path + "/" + node.getNodeName(), child);
 	    }
-	    if (node.getNodeType() == Node.ELEMENT_NODE && node.getChildNodes().getLength() != 1) {
-	        Directory child = new Directory(node.getNodeName());
-                parent.addSubDirectory(child);
-                read(node.getChildNodes(), path + "/" + node.getNodeName(), child);
-	    }
-	    /*if (node.getChildNodes().getLength() > 1){
-		Directory child = new Directory(node.getNodeName());
-		parent.addSubDirectory(child);
-		read(node.getChildNodes(), path + "/" + node.getNodeName(), child);
-	    }*/
 	}
     }
     
     
     public static void main(String[] args) {
-	File f = new File("src/game_player/testing.xml");
+	File f = new File("src/gamedata/Simple.game");
 	XMLParser p = new XMLParser(f);
 	System.out.println(p.getValidSubDirectories());
 	p.moveDown("game");

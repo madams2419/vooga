@@ -1,18 +1,22 @@
 package game_player;
 
-
-import game_engine.Behavior;
-import game_engine.IAction;
-import game_engine.IActor;
-import game_engine.IBehavior;
 import game_engine.Layer;
 import game_engine.Level;
-import game_engine.MultipleBehaviors;
+import game_engine.behaviors.Behavior;
+import game_engine.behaviors.IAction;
+import game_engine.behaviors.IActor;
+import game_engine.behaviors.IBehavior;
+import game_engine.behaviors.MultipleBehaviors;
 import game_engine.collision.Collision;
 import game_engine.collision.CollisionEngine;
 import game_engine.control.ControlManager;
 import game_engine.control.KeyControl;
 import game_engine.objective.Objective;
+import game_engine.physics.CircleBody;
+import game_engine.physics.Material;
+import game_engine.physics.PhysicsEngine;
+import game_engine.physics.PhysicsObject;
+import game_engine.physics.Shape;
 import game_engine.sprite.Sprite;
 import game_engine.sprite.SpriteFactory;
 import java.util.ArrayList;
@@ -29,6 +33,7 @@ public class VoogaGameBuilder {
     private XMLParser parser;
     private Map<String, Sprite> mySpriteMap;
     private Map<String, Objective> myObjectiveMap;
+    private PhysicsEngine engine;
 
     public VoogaGameBuilder (XMLParser p) {
         parser = p;
@@ -44,16 +49,17 @@ public class VoogaGameBuilder {
             game.addLevel(level);
         }
         game.setActiveLevel(Integer.parseInt(parser.getValue("start")));
-
+        
         return game;
     }
 
     private Level buildLevel (String levelID) {
+        engine = buildPhysicsEngine(10);
         parser.moveDown(levelID);
         Level level = new Level();
         Layer sprites = new Layer();
         level.addLayer(sprites);
-
+        
         parser.moveDown("sprite");
         for (String directory : parser.getValidSubDirectories()) {
             Sprite sprite = buildSprite(directory);
@@ -63,6 +69,7 @@ public class VoogaGameBuilder {
 
         level.setObjectives(buildObjectives());
         level.setCollisionEngine(buildCollisionEngine());
+        level.setControlManager(buildControl());
 
         parser.moveUp();
         return level;
@@ -72,28 +79,41 @@ public class VoogaGameBuilder {
         parser.moveDown(spriteID);
         String spriteType = parser.getValue("type");
         SpriteFactory factory = new SpriteFactory();
-        try {
-            Sprite sprite = factory.createSprite(spriteType);
-            parser.moveDown("animation");
-            for (String directory : parser.getValidSubDirectories()) {
-                parser.moveDown(directory);
-                String name = parser.getValue("name");
-                String image = parser.getValue("image");
-                sprite.addImage(name, image);
-                parser.moveUp();
-            }
-            parser.moveUp();
 
-            String state = parser.getValue("initialState");
-            sprite.setState(state);
-            sprite.setPhysicsObject(buildPhysicsObject(engine));
+        Sprite sprite = factory.createSprite(spriteType, buildPhysicsObject(engine));
+        parser.moveDown("animation");
+        for (String directory : parser.getValidSubDirectories()) {
+            parser.moveDown(directory);
+            String name = parser.getValue("name");
+            String image = parser.getValue("image");
+            sprite.addImage(name, image);
             parser.moveUp();
-            mySpriteMap.put(spriteID, sprite);
-            return sprite;
         }
-        catch (Exception e) {
-            return null;
-        }
+        parser.moveUp();
+
+        String state = parser.getValue("initialState");
+        sprite.setState(state);
+        parser.moveUp();
+        mySpriteMap.put(spriteID, sprite);
+        return sprite;
+
+    }
+
+    private PhysicsEngine buildPhysicsEngine (double fps) {
+        // TODO first param will be removed
+        PhysicsEngine globalEngine = new PhysicsEngine(0, fps);
+        return globalEngine;
+    }
+
+    private PhysicsObject buildPhysicsObject (PhysicsEngine engine) {
+        parser.moveDown("physics");
+        Shape tempShape = new CircleBody(15); // change this later
+        Material material = Material.valueOf(parser.getValue("material").toUpperCase());
+        double startX = Double.parseDouble(parser.getValue("x"));
+        double startY = Double.parseDouble(parser.getValue("y"));
+        parser.moveUp();
+        PhysicsObject physics = new PhysicsObject(engine, tempShape, material, startX, startY);
+        return physics;
     }
 
     private Sprite getSprite (String id) {
@@ -153,7 +173,6 @@ public class VoogaGameBuilder {
 
         for (String directory : parser.getValidSubDirectories()) {
             parser.moveDown(directory);
-
             String[] preReqsID = parser.getValue("prereqs").split("\\s+");
             List<Objective> preReqs =
                     Arrays.asList(preReqsID)
@@ -194,44 +213,44 @@ public class VoogaGameBuilder {
             return myObjectiveMap.get(id);
         }
     }
-	
-	private ControlManager buildControl(){
-		parser.moveDown("control");
-		ControlManager controlManager = new ControlManager();
-		for(String controlDirectory: parser.getValidSubDirectories()){
-			parser.moveDown(controlDirectory);
-			KeyControl newControl = buildKeyControl();
-			controlManager.addControl(buildKeyControl());
-		}
-		parser.moveUp();
-		return controlManager;
-	}
-	
-	private KeyControl buildKeyControl(){
-		Map<KeyCode, IBehavior> pressedKeyMap = new HashMap<>();
-		Map<KeyCode, IBehavior> releasedKeyMap = new HashMap<>();
-		Map<KeyCode, IBehavior> heldKeyMap = new HashMap<>();
-		
-			for(String keyDirectory: parser.getValidSubDirectories()){
-				parser.moveDown(keyDirectory);
-				String keyName = parser.getValue("key");
-				KeyCode keyCode = KeyCode.valueOf(keyName);
-				
-				parser.moveDown("onPressed");
-				pressedKeyMap.put(keyCode, buildBehaviorList());
-				parser.moveUp();
-				
-				parser.moveDown("onReleased");
-                                releasedKeyMap.put(keyCode, buildBehaviorList());
-                                parser.moveUp();
-                                
-                                parser.moveDown("whilePressed");
-                                heldKeyMap.put(keyCode, buildBehaviorList());
-                                parser.moveUp();
-				
-				parser.moveUp();
-			}
-		parser.moveUp();
-		return new KeyControl(pressedKeyMap, releasedKeyMap, heldKeyMap);
-	}
+
+    private ControlManager buildControl () {
+        parser.moveDown("control");
+        ControlManager controlManager = new ControlManager();
+        for (String controlDirectory : parser.getValidSubDirectories()) {
+            KeyControl newControl = buildKeyControl(controlDirectory);
+            controlManager.addControl(newControl);
+        }
+        parser.moveUp();
+        return controlManager;
+    }
+    
+
+
+    private KeyControl buildKeyControl (String controlID) {
+        parser.moveDown(controlID);
+        Map<KeyCode, IBehavior> pressedKeyMap = new HashMap<>();
+        Map<KeyCode, IBehavior> releasedKeyMap = new HashMap<>();
+        Map<KeyCode, IBehavior> heldKeyMap = new HashMap<>();
+
+        for (String keyDirectory : parser.getValidSubDirectories()) {
+            parser.moveDown(keyDirectory);
+            String keyName = parser.getValue("key");
+            KeyCode keyCode = KeyCode.valueOf(keyName);
+
+            parser.moveDown("onPressed");
+            pressedKeyMap.put(keyCode, buildBehaviorList());
+            parser.moveUp();
+
+            parser.moveDown("onReleased");
+            releasedKeyMap.put(keyCode, buildBehaviorList());
+            parser.moveUp();
+
+
+
+            parser.moveUp();
+        }
+        parser.moveUp();
+        return new KeyControl(pressedKeyMap, releasedKeyMap, heldKeyMap);
+    }
 }

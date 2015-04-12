@@ -71,7 +71,7 @@
 						</state_2>
 					</animation>
 					<physics>
-						<material>0</material>
+						<material>bouncy_ball</material>
 						<x>50</x>
 						<y>100</y>
 						<xVel>0</xVel>
@@ -89,7 +89,7 @@
 						</state_0>
 					</animation>
 					<physics>
-						<material>0</material>
+						<material>wood</material>
 						<x>0</x>
 						<y>50</y>
 						<xVel>0</xVel>
@@ -107,7 +107,7 @@
 						</state_0>
 					</animation>
 					<physics>
-						<material>0</material>
+						<material>wood</material>
 						<x>300</x>
 						<y>200</y>
 						<xVel>0</xVel>
@@ -125,7 +125,7 @@
 						</state_0>
 					</animation>
 					<physics>
-						<material>0</material>
+						<material>bouncy_ball</material>
 						<x>250</x>
 						<y>100</y>
 						<xVel>0</xVel>
@@ -143,7 +143,7 @@
 						</state_0>
 					</animation>
 					<physics>
-						<material>0</material>
+						<material>static</material>
 						<x>300</x>
 						<y>300</y>
 						<xVel>0</xVel>
@@ -161,7 +161,7 @@
 						</state_0>
 					</animation>
 					<physics>
-						<material>0</material>
+						<material>static</material>
 						<x>500</x>
 						<y>100</y>
 						<xVel>0</xVel>
@@ -173,13 +173,6 @@
 			<physics>
 				<gravity>10</gravity>
 			</physics>
-			
-			<material>
-				<material_0>
-					<density>1</density>
-					<restitution>1</restitution>
-				</material_0>
-			</material>
 			
 			<control>
 				<control_0>
@@ -195,7 +188,9 @@
 								</behavior_0>
 							</behaviors>
 						</onPressed>
-						<whilePressed><behaviors></behaviors></whilePressed>
+						<whilePressed>
+							<behaviors></behaviors>
+						</whilePressed>
 						<onReleased>
 							<behaviors>
 								<behavior_0>
@@ -245,8 +240,12 @@
 								</behavior_0>
 							</behaviors>
 						</onPressed>
-						<whilePressed><behaviors></behaviors></whilePressed>
-						<onReleased><behaviors></behaviors></onReleased>
+						<whilePressed>
+							<behaviors></behaviors>
+						</whilePressed>
+						<onReleased>
+							<behaviors></behaviors>
+						</onReleased>
 					</key_2>
 				</control_0>
 			</control>
@@ -276,7 +275,7 @@
 				
 				<collision_1>
 					<sprite_1>0</sprite_1>
-					<sprite_2>1 2</sprite_2>
+					<sprite_2>1</sprite_2>
 					<direction>0 1 2</direction>
 					<realistic>true</realistic>
 					<behaviors></behaviors>
@@ -311,6 +310,15 @@
 						</behavior_0>
 					</behaviors>
 				</collision_3>
+				
+				<collision_4>
+					<sprite_1>0</sprite_1>
+					<sprite_2>2</sprite_2>
+					<direction>0 1 2</direction>
+					<realistic>true</realistic>
+					<behaviors></behaviors>
+				</collision_4>
+				
 			</collision>
 		</level_0>
 	</level>

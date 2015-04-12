@@ -1,8 +1,8 @@
 package game_engine.control;
 
 
-import game_engine.IAction;
-import game_engine.IBehavior;
+import game_engine.behaviors.IAction;
+import game_engine.behaviors.IBehavior;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

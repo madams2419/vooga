@@ -1,7 +1,7 @@
 package game_engine.collision;
 
-import game_engine.Behavior;
-import game_engine.IBehavior;
+import game_engine.behaviors.Behavior;
+import game_engine.behaviors.IBehavior;
 import game_engine.sprite.Sprite;
 import javafx.scene.image.ImageView;
 
@@ -28,7 +28,9 @@ public class Collision {
 	}
 
 	public void getColliding() {
-		behaviorList.perform();
+		if (collidingHitBox (spriteA, spriteB)) {
+		    behaviorList.perform();
+		}
 	}
 	
 	private boolean collidingHitBox(Sprite spriteA, Sprite spriteB){
@@ -36,7 +38,6 @@ public class Collision {
 	}
 
 	private boolean collide(Sprite spriteA, Sprite spriteB) {
-
 		boolean[][] bitMapA = spriteA.getHitBox().getBitMap();
 		boolean[][] bitMapB = spriteB.getHitBox().getBitMap();
 

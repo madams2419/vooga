@@ -273,6 +273,7 @@ public class VoogaMenu {
 		VoogaGameBuilder builder = new VoogaGameBuilder(chooser.getChosenFile());
 		VoogaGame gameLoop = builder.build();
 		scene.setRoot(gameLoop.getRoot());
+		gameLoop.getRoot().requestFocus();
 		gameLoop.start();
 	    });
 	});
