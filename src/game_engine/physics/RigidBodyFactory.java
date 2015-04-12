@@ -4,17 +4,15 @@ import game_engine.physics.RigidBody.RBodyType;
 
 public class RigidBodyFactory {
 	
-	private static RigidBody createRigidBody(String imgPath, int imgHeight, int imgWidth, RBodyType rbType, Vector center) {
+	public static RigidBody createRigidBody(int imgHeight, int imgWidth, RBodyType rbType) {
 		RigidBody rBody;
 		switch (rbType) {
 		case CIRCLE:
-			double radius = Math.max(node.getFitHeight(), node.getFitWidth());
-			rBody = new CircleBody(radius, center);
+			double radius = Math.max(imgHeight, imgWidth);
+			rBody = new CircleBody(radius);
 			break;
 		default:
-			Vector upperLeft = new Vector(node.getX(), node.getY());
-			rBody = new RectangleBody(upperLeft, node.getFitHeight(),
-					node.getFitWidth());
+			rBody = new RectangleBody(imgHeight, imgWidth);
 			break;
 		}
 		return rBody;

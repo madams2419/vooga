@@ -2,9 +2,13 @@ package game_engine.sprite;
 
 import java.util.HashMap;
 import java.util.ResourceBundle;
+
 import game_engine.IBehavior;
+import game_engine.physics.Material;
+import game_engine.physics.PhysicsEngine;
 import game_engine.physics.PhysicsObject;
 import game_engine.physics.Vector;
+import game_engine.physics.RigidBody.RBodyType;
 
 /**
  * class that implements behaviors for movable sprites
@@ -17,6 +21,11 @@ public abstract class Character extends Sprite {
 //	private ResourceBundle myStateNames = ResourceBundle 
 //			.getBundle("resources.engineutilities/movements");
 	private HashMap<String,String> myStateNameMap = new HashMap<>(); // TODO implement this 	
+	
+	public Character(String defaultState, String defaultImage, int height, int width, RBodyType rbType,
+			PhysicsEngine globalPhysics, Material material, int startX, int startY) {
+		super(defaultState, defaultImage, height, width, rbType, globalPhysics, material, startX, startY);
+	}
 	
 	// TODO check design on feeding 2 constructors into themselves
 	public Character(PhysicsObject physics){

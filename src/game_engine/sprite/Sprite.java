@@ -7,8 +7,12 @@ import java.util.Observable;
 import javafx.scene.image.ImageView;
 import game_engine.IBehavior;
 import game_engine.collision.HitBox;
+import game_engine.physics.Material;
+import game_engine.physics.PhysicsEngine;
 import game_engine.physics.PhysicsObject;
 import game_engine.physics.RigidBody;
+import game_engine.physics.RigidBody.RBodyType;
+import game_engine.physics.RigidBodyFactory;
 import game_engine.physics.Vector;
 import game_player.Animation;
 
@@ -32,7 +36,15 @@ public abstract class Sprite extends Observable{
 	/**
 	 * Testing constructor
 	 */
-	public Sprite(String defaultState, String defaultImage, int width, int height) {
+	public Sprite(String defaultState, String defaultImage, int height, int width, RBodyType rbType,
+			PhysicsEngine globalPhysics, Material material, int startX, int startY) {
+		myId = 0;
+		myPhysicsObject = new PhysicsObject(globalPhysics, rbType, height, width, material, startX, startY);
+		myAnimation = new Animation(this, myPhysicsObject);
+		addImage(defaultState, defaultImage);
+		setState(defaultState);
+		getImageView().setFitHeight(height);
+		getImageView().setFitWidth(width);
 		
 	}
 	
@@ -152,10 +164,6 @@ public abstract class Sprite extends Observable{
 	
 	public HitBox getHitBox(){
 	    return myHitBox;
-	}
-	
-	public RigidBody getRigidBody(){
-		return getHitBox().getRigidBody();
 	}
 	
 	public void setPhysicsObject(PhysicsObject physicsObject){

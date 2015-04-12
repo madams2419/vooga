@@ -1,5 +1,7 @@
 package game_engine.physics;
 
+import game_engine.physics.RigidBody.RBodyType;
+
 import java.util.List;
 import java.util.Observable;
 
@@ -19,6 +21,10 @@ public class PhysicsObject extends Observable {
 	private PhysicsEngine myPhysics;
 
 	private RigidBody myRigidBody;
+	
+	public PhysicsObject(PhysicsEngine physics, RBodyType rbType, int width, int height, Material material, int xPosPixels, int yPosPixels) {
+		this(physics, RigidBodyFactory.createRigidBody(height, width, rbType), material, xPosPixels, yPosPixels);
+	}
 
 	public PhysicsObject(PhysicsEngine physics, RigidBody rigidBody, Material material, int xPosPixels, int yPosPixels) {
 		myPhysics = physics;

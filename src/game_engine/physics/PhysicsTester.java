@@ -3,6 +3,7 @@ package game_engine.physics;
 import game_engine.Layer;
 import game_engine.collision.Collision;
 import game_engine.collision.CollisionEngine;
+import game_engine.physics.RigidBody.RBodyType;
 import game_engine.sprite.Enemy;
 import game_engine.sprite.Player;
 import game_engine.sprite.Sprite;
@@ -176,21 +177,17 @@ public class PhysicsTester extends Application {
 		globalPhysics = new PhysicsEngine(0, 1 / (double) fps);
 
 		/* create player sprite */
-		playerSprite = new Player(null);
-
-		/* set image behavior */
-		playerSprite.addImage("walking", "/Resources/images/standingMario.png");
-		playerSprite.setState("walking");
-		playerSprite.getImageView().setFitHeight(50);
-		playerSprite.getImageView().setFitWidth(50);
-		myGroup.getChildren().add(playerSprite.getImageView());
+		String defaultState = "walking";
+		String defaultImage = "/Resources/images/standingMario.png";
+		int height = 50;
+		int width = 50;
+		RBodyType rType = RBodyType.CIRCLE;
+		Material material = Material.SUPER_BALL;
+		int startX = 400;
+		int startY = 400;
+		playerSprite = new Player(defaultState, defaultImage, height, width, rType, globalPhysics, material, startX, startY);
 		
-		/* create player sprite physics object */
-		Material playerMaterial = Material.SUPER_BALL;
-		PhysicsObject playerPhysics = new PhysicsObject(playerSprite, globalPhysics, playerMaterial, 400, 400);
-		playerSprite.setPhysicsObject(playerPhysics);
-
-		/* add player to layer */
+		myGroup.getChildren().add(playerSprite.getImageView());
 		layer.addSprite(playerSprite);
 
 		/* create and add enemy sprites */
