@@ -91,7 +91,7 @@ class CharacterEditingPane extends EditingPane {
 				sprite.setName(t);
 				break;
 			case Sprite.SCALE:
-				sprite.setScale(t);
+				sprite.setScale(Double.parseDouble(t));
 				break;
 			}
 

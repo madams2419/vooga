@@ -37,6 +37,7 @@ public class Sprite extends ImageView {
 
 	private String myName;
 	private int myID;
+	private double myScale;
 	private ImageView myIcon;
 	private ControlsDialog myControls;
 
@@ -49,7 +50,7 @@ public class Sprite extends ImageView {
 
 	public final static String VELOCITY = "velocity";
 	public final static String POSITION = "position";
-	public final static String SCALE = "scale";
+	public final static String SCALE = "Scale";
 	
 	private Boolean isPlayable = false;
 
@@ -67,8 +68,10 @@ public class Sprite extends ImageView {
 	public Sprite(int ID, String imageURI, CenterPane parent) {
 		this(parent);
 		this.myID = ID;
+		myScale = 1.0;
 		myCharacteristics.put("imageURI", imageURI);
 		myCharacteristics.put("ID", String.valueOf(ID));
+		myCharacteristics.put(SCALE, String.valueOf(myScale));
 		myIcon = new ImageView();
 		changeImage(new Image(getClass().getResourceAsStream(imageURI)));
 	}
@@ -156,12 +159,11 @@ public class Sprite extends ImageView {
 		setYPosition(myPosition.get(Y_STRING));
 	}
 
-	public void setScale(String scale) {
-		myCharacteristics.put(SCALE, scale);
-
+	public void setScale(double scale) {
+		this.setScaleX(scale);
+		this.setScaleY(scale);
+		// myCharacteristics.put(SCALE, scale);
 		// double newScale = Double.parseDouble(scale);
-		// this.setFitWidth(mySize.get(X_STRING));
-		// this.setFitHeight(mySize.get(Y_STRING));
 	}
 
 	public double getXPosition() {
