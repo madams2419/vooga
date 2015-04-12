@@ -3,7 +3,7 @@ package game_engine.sprite;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import game_engine.IBehavior;
+import game_engine.IAction;
 import game_engine.physics.Vector;
 
 /**
@@ -21,6 +21,7 @@ public abstract class Character extends Sprite {
 	// TODO check design on feeding 2 constructors into themselves
 	public Character(){
 		super();
+		myPosition = myPhysicsObject.getPositionPixels();
 	}
 	
 	public Character(String name){
@@ -38,58 +39,71 @@ public abstract class Character extends Sprite {
 	 * @TODO add state changes (going to do this from utilities file)
 	 */
 	// params[0] is pixels to move forward
-	private IBehavior moveForward = (params) -> { // movement
+	private IAction moveForward = (params) -> { // movement
 		myPosition.setX(myPosition.getX()+Double.parseDouble(params[0]));
 		setStateName("forward");
 	};
 	
-	public IBehavior getMoveForward(){
+	public IAction getMoveForward(){
 	    return this.moveForward;
 	}
 
 	// params[0] is upward scaling factor
-	private IBehavior jump = (params) -> { // movement
+	private IAction jump = (params) -> { // movement
 		Vector myVector = new Vector(0,1*Double.parseDouble(params[0]));
 		myPhysicsObject.applyImpulse(myVector);
 		setStateName("jump");
 	};
 	
-	public IBehavior getJump(){
+	public IAction getJump(){
 	    return this.jump;
 	}
 	
 	// params[0] is sideways scaling fire
-	private IBehavior sprint = (params) -> { // movement
+	private IAction sprint = (params) -> { // movement
 		Vector myVector = new Vector(1*Double.parseDouble(params[0]),0);
 		myPhysicsObject.applyImpulse(myVector);
 		setStateName("sprint");
 	};
 	
-	public IBehavior getSprint(){
+	public IAction getSprint(){
 	    return this.sprint;
 	}
 	
 	// TODO physics change here?
-	private IBehavior slide = (params) -> { // movement
+	private IAction slide = (params) -> { // movement
 		Vector myVector = new Vector(0,1*Double.parseDouble(params[0]));
 		myPhysicsObject.applyImpulse(myVector);
 		setStateName("slide");
 	};
 	
-	public IBehavior getSlide(){
+	public IAction getSlide(){
 	    return this.slide;
 	}
 	
-	private IBehavior bounce = (params) -> { // movement 
+	private IAction bounce = (params) -> { // movement 
 		setStateName("bounce");
 		
 	};
 	
-	public IBehavior getBounce(){
+	public IAction getBounce(){
 	    return this.bounce;
 	}
 	
 	public void setStateName(String movementName){
 	//	setState(myStateNames.getString(movementName));
+	}
+	
+	public IAction getAction(String name) {
+	    switch (name) {
+	        case "bounce":
+	            return bounce;
+	        case "moveForward":
+	            return moveForward;
+	        case "sprint":
+	            return sprint;
+	    }
+	    return super.getAction(name);
+	        
 	}
 }

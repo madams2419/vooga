@@ -1,6 +1,6 @@
 package game_engine.sprite;
 
-import game_engine.IBehavior;
+import game_engine.IAction;
 
 public class Region extends Sprite implements IRegion{
 
@@ -16,19 +16,19 @@ public class Region extends Sprite implements IRegion{
           super(name,id);
       }
       
-      private IBehavior changePhysics = (params) ->{
+      private IAction changePhysics = (params) ->{
           //Change corresponding physics params
       };
       
-      public IBehavior getChangePhysics(){
+      public IAction getChangePhysics(){
           return this.changePhysics;
       }
       
-      private IBehavior negatePhysics = (params) ->{
+      private IAction negatePhysics = (params) ->{
           
       };
       
-      public IBehavior getNegatePhysics(){
+      public IAction getNegatePhysics(){
           return this.negatePhysics;
       }
       

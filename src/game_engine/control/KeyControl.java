@@ -1,7 +1,7 @@
 package game_engine.control;
 
 
-import game_engine.IBehavior;
+import game_engine.IAction;
 
 import java.util.*;
 
@@ -14,15 +14,15 @@ import javafx.scene.input.KeyCode;
  */
 public class KeyControl {
 
-	Map<String, IBehavior> myControlMap;
+	Map<String, IAction> myControlMap;
 	Map<String, String> myDesignerMap;
 	Map<KeyCode, String> myVirtualKeyboard;
 
-	Map<KeyCode, Map<IBehavior, String[]>> myKeyPressedMap;
-	Map<KeyCode, Map<IBehavior, String[]>> myKeyReleasedMap;
+	Map<KeyCode, Map<IAction, String[]>> myKeyPressedMap;
+	Map<KeyCode, Map<IAction, String[]>> myKeyReleasedMap;
 	List<KeyCode> myWhilePressedKey;
 
-	public KeyControl(Map<KeyCode, Map<IBehavior, String[]>> keyPressMap, Map<KeyCode, Map<IBehavior, String[]>> keyReleaseMap) {
+	public KeyControl(Map<KeyCode, Map<IAction, String[]>> keyPressMap, Map<KeyCode, Map<IAction, String[]>> keyReleaseMap) {
 		myControlMap = new HashMap<>();
 		myDesignerMap = new HashMap<>();
 		myVirtualKeyboard = new HashMap<>();
@@ -88,7 +88,7 @@ public class KeyControl {
 		}
 	}
 
-	private void addEntryControlMap(String key, IBehavior behavior){
+	private void addEntryControlMap(String key, IAction behavior){
 		myControlMap.put(key, behavior);
 	}
 

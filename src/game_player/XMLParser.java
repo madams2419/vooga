@@ -261,21 +261,28 @@ public class XMLParser {
     private void read(NodeList nodes, String path, Directory parent) {
 	for (int i = 0; i < nodes.getLength(); i++) {
 	    Node node = nodes.item(i);
-	    if (node.getChildNodes().getLength() == 1) {
+	    if (node.getChildNodes().getLength() <= 1) {
 		xml.put(path + "/" + node.getNodeName(), node.getTextContent());
 	    }
-	    else if (node.getChildNodes().getLength() > 1){
+	    if (node.getNodeType() == Node.ELEMENT_NODE && node.getChildNodes().getLength() != 1) {
+	        Directory child = new Directory(node.getNodeName());
+                parent.addSubDirectory(child);
+                read(node.getChildNodes(), path + "/" + node.getNodeName(), child);
+	    }
+	    /*if (node.getChildNodes().getLength() > 1){
 		Directory child = new Directory(node.getNodeName());
 		parent.addSubDirectory(child);
 		read(node.getChildNodes(), path + "/" + node.getNodeName(), child);
-	    }
+	    }*/
 	}
     }
     
+    
     public static void main(String[] args) {
-	File f = new File("src/gamedata/Simple.game");
+	File f = new File("src/game_player/testing.xml");
 	XMLParser p = new XMLParser(f);
-	p.moveDown("game/level");
-	System.out.println(p.getActivePath() + " " + p.getValidLabels());
+	System.out.println(p.getValidSubDirectories());
+	p.moveDown("game");
+	System.out.println(p.getValidSubDirectories());
     }
 }

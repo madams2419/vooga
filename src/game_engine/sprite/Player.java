@@ -1,6 +1,6 @@
 package game_engine.sprite;
 
-import game_engine.IBehavior;
+import game_engine.IAction;
 import game_engine.physics.Vector;
 import java.util.HashMap;
 import java.util.Map;

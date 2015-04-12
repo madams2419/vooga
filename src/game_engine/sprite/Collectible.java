@@ -1,5 +1,7 @@
 package game_engine.sprite;
 
+import game_engine.IAction;
+
 public class Collectible extends Sprite{
     
     private int myCount;

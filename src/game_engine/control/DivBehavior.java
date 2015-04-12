@@ -1,8 +1,8 @@
 package game_engine.control;
 
-import game_engine.IBehavior;
+import game_engine.IAction;
 
-public class DivBehavior implements IBehavior{
+public class DivBehavior implements IAction{
 
 	@Override
 	public void execute(String... params) {

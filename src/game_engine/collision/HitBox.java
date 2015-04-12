@@ -43,15 +43,17 @@ public class HitBox {
 	}
 	
 	private boolean[][] createBitMap(Image src) {
-		PixelReader reader = src.getPixelReader();
-		int width = (int) src.getWidth();
-		int height = (int) src.getHeight();
-		boolean[][] bitMap = new boolean[height][width];
-		for (int y = 0; y < height; y++)
-			for (int x = 0; x < width; x++) {
-				bitMap[y][x] = reader.getArgb(x, y) != 0;
-			}
-		return bitMap;
+	        return null;
+//		PixelReader reader = src.getPixelReader();
+//		int width = (int) src.getWidth();
+//		int height = (int) src.getHeight();
+//		boolean[][] bitMap = new boolean[height][width];
+//		for (int y = 0; y < height; y++)
+//			for (int x = 0; x < width; x++) {
+//				bitMap[y][x] = reader.getArgb(x, y) != 0;
+//			}
+//		return null;
+		//return bitMap;
 	}
 
 }

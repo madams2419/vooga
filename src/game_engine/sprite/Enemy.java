@@ -1,5 +1,6 @@
 package game_engine.sprite;
 
+import game_engine.IAction;
 import game_player.Animation;
 
 public class Enemy extends Character {

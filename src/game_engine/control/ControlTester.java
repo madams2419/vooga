@@ -16,7 +16,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class ControlTester extends Application{
-	static Map<String, IBehavior> behaviorPool = new HashMap<>();
+	static Map<String, IAction> behaviorPool = new HashMap<>();
 	static int track1 = 10;
 	static String printout = "Tracking Number is: ";
 	static ControlManager cManager = new ControlManager();
@@ -43,7 +43,7 @@ public class ControlTester extends Application{
 		System.out.println("div " + printout + track1);
 	}
 
-	public static IBehavior selectBehavior(String key){
+	public static IAction selectBehavior(String key){
 		if(behaviorPool.containsKey(key)){
 			return behaviorPool.get(key);
 		} else {
@@ -71,17 +71,17 @@ public class ControlTester extends Application{
 	}
 	
 	private void keyManipulation(){
-		IBehavior add = new AddBehavior();
-		IBehavior sub = new SubtractBehavior();
-		IBehavior mul = new MulBehavior();
-		IBehavior div = new DivBehavior();
+		IAction add = new AddBehavior();
+		IAction sub = new SubtractBehavior();
+		IAction mul = new MulBehavior();
+		IAction div = new DivBehavior();
 		behaviorPool.put("Add", add);
 		behaviorPool.put("Sub", sub);
 		
-		Map<IBehavior, String[]> map1 = new LinkedHashMap<IBehavior, String[]>(){{put(add, new String[3]); put(mul, new String[3]);}};
-		Map<IBehavior, String[]> map2 = new LinkedHashMap<IBehavior, String[]>(){{put(sub, new String[3]); put(div, new String[3]);}};
-		Map<KeyCode, Map<IBehavior, String[]>> pressMap = new HashMap<KeyCode, Map<IBehavior, String[]>>(){{  put(KeyCode.UP, map1); put(KeyCode.DOWN, map2);}};
-		Map<KeyCode, Map<IBehavior, String[]>> releaseMap = new HashMap<KeyCode, Map<IBehavior, String[]>>(){{  put(KeyCode.DOWN, map2); put(KeyCode.UP, map2);}};
+		Map<IAction, String[]> map1 = new LinkedHashMap<IAction, String[]>(){{put(add, new String[3]); put(mul, new String[3]);}};
+		Map<IAction, String[]> map2 = new LinkedHashMap<IAction, String[]>(){{put(sub, new String[3]); put(div, new String[3]);}};
+		Map<KeyCode, Map<IAction, String[]>> pressMap = new HashMap<KeyCode, Map<IAction, String[]>>(){{  put(KeyCode.UP, map1); put(KeyCode.DOWN, map2);}};
+		Map<KeyCode, Map<IAction, String[]>> releaseMap = new HashMap<KeyCode, Map<IAction, String[]>>(){{  put(KeyCode.DOWN, map2); put(KeyCode.UP, map2);}};
 		cManager.addControl(pressMap, releaseMap);
 		
 //		myControl.addBehavior("UP", "Add");
