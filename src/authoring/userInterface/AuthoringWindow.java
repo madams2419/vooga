@@ -45,7 +45,7 @@ public class AuthoringWindow {
 	private static final int OPEN_FILE = 1;
 	private static final int CLOSE_GAME = 2;
 	private static final int SCENE_WIDTH = 1200;
-	private static final int SCENE_HEIGHT = 600;
+	private static final int SCENE_HEIGHT = 700;
 
 	private static Sprite currentlySelected;
 	private static boolean control;
