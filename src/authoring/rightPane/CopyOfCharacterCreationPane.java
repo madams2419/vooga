@@ -22,12 +22,12 @@ import authoring.util.ImageEditor;
  *
  */
 
-public class CharacterCreationPane extends EditingPane {
+public class CopyOfCharacterCreationPane extends EditingPane {
     
 //    private ScrollPane myScrollPane;
 //    private Group myScrollPaneContent;
 
-    CharacterCreationPane (Scene scene, RightPane parent, List<String> availableCharacterTypeURIs) {
+    CopyOfCharacterCreationPane (Scene scene, RightPane parent, List<String> availableCharacterTypeURIs) {
         super(scene, parent);
         this.getChildren().add(
                                new TextArea(String
@@ -41,8 +41,6 @@ public class CharacterCreationPane extends EditingPane {
 //        initializeScrollPane();
         addSpritesToPane(availableCharacterTypeURIs);
     }
-    
-    
     
 //    private void initializeScrollPane() {
 //        myScrollPaneContent = new Group();

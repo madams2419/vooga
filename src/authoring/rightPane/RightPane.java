@@ -116,10 +116,10 @@ public class RightPane extends WindowPane {
     }
 
     // TODO is this method never called?
-    public void setScene (Scene scene, List<String> availableSpriteURIs) {
-        myScene = scene;
-        initializeCurrentContent(new CharacterCreationPane(scene, this, availableSpriteURIs));
-    }
+//    public void setScene (Scene scene, List<String> availableSpriteURIs) {
+//        myScene = scene;
+//        initializeCurrentContent(new CharacterCreationPane(scene, this, availableSpriteURIs));
+//    }
 
     private void clearChildren () {
         ((VBox) myContainer).getChildren().clear();
@@ -135,11 +135,11 @@ public class RightPane extends WindowPane {
         addFromCurrentContent();
     }
 
-    private void initializeCurrentContent (EditingPane content) {
-        myCurrentContent = content;
-        ((VBox) myContainer).getChildren().addAll(
-                                                  myCurrentContent.getChildren());
-    }
+//    private void initializeCurrentContent (EditingPane content) {
+//        myCurrentContent = content;
+//        ((VBox) myContainer).getChildren().addAll(
+//                                                  myCurrentContent.getChildren());
+//    }
 
     // TEMPORARY!!
     private List<String> getListOfInteractions () {
