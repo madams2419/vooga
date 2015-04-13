@@ -13,7 +13,7 @@ import javafx.scene.layout.Region;
 public abstract class WindowPane {
 
 	private List<Control> myControlsList;
-	protected Region myContainer;
+	public Region myContainer;
 	protected Scene myScene;
 	protected AuthoringWindow myParent;
 
