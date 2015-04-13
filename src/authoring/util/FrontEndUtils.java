@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -67,6 +69,7 @@ public class FrontEndUtils {
         RadioButton button2 = new RadioButton("Hit Box");
         button2.setToggleGroup(toggleGroup);
         hbox.getChildren().addAll(button1,button2);
+//        toggleGroup.selectedToggleProperty().addListener(); edit this line to add listener
         return hbox;
 	}
 }
