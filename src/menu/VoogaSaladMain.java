@@ -12,13 +12,12 @@ import javafx.stage.Stage;
  * @since 2 April 2015
  */
 public class VoogaSaladMain extends Application {
-
+    
     /**
      * Initializes the stage, creates the first scene, and displays the
      * application to the use.
      */
-    public void start(Stage stage) throws Exception {
-
+    public void start(Stage stage) throws Exception{
 	stage.setTitle("VoogaSalad");
 
 	Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();

@@ -3,16 +3,15 @@ package game_player;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * XMLParser allows the user to easily and recursively read values in from an XML file.
@@ -25,7 +24,7 @@ import org.w3c.dom.NodeList;
  * file.
  * 
  * @author Brian Lavallee
- * @since 8 April 2015
+ * @since 12 April 2015
  */
 public class XMLParser {
     
@@ -94,7 +93,7 @@ public class XMLParser {
      *             is the XML file that the user wants to parse.
      */
     public XMLParser(File data) {
-	xml = new HashMap<String, String>();
+	xml = new TreeMap<String, String>();
 	activePath = new ArrayList<Directory>();
 	activePath.add(root);
 
@@ -103,7 +102,9 @@ public class XMLParser {
 	    Document doc = docBuilder.parse(data);
 	    
 	    if (doc.hasChildNodes()) {
-		read(doc.getChildNodes(), "", root);
+		for (int i = 0; i < doc.getChildNodes().getLength(); i++) {
+		    read(doc.getChildNodes().item(i), "", root);
+		}
 	    }
 	}
 	catch (Exception e) {
@@ -258,16 +259,20 @@ public class XMLParser {
     /*
      * Recursively builds the Directory tree and populates the map.
      */
-    private void read(NodeList nodes, String path, Directory parent) {
-	for (int i = 0; i < nodes.getLength(); i++) {
-	    Node node = nodes.item(i);
-	    if (node.getChildNodes().getLength() == 1) {
-		xml.put(path + "/" + node.getNodeName(), node.getTextContent());
-	    }
-	    else if (node.getChildNodes().getLength() > 1){
-		Directory child = new Directory(node.getNodeName());
-		parent.addSubDirectory(child);
-		read(node.getChildNodes(), path + "/" + node.getNodeName(), child);
+    private void read(Node node, String path, Directory parent) {
+	if (node.getChildNodes().getLength() == 1) {
+	    xml.put(path + "/" + node.getNodeName(), node.getTextContent());
+	}
+	else if (node.getChildNodes().getLength() == 0 && !node.getNodeName().equals("#text")) {
+	    Directory child = new Directory(node.getNodeName());
+	    parent.addSubDirectory(child);
+	    xml.put(path + "/" + node.getNodeName(), "");
+	}
+	else if (!node.getNodeName().equals("#text")){
+	    Directory child = new Directory(node.getNodeName());
+	    parent.addSubDirectory(child);
+	    for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+		read(node.getChildNodes().item(i), path + "/" + node.getNodeName(), child);
 	    }
 	}
     }
@@ -275,7 +280,10 @@ public class XMLParser {
     public static void main(String[] args) {
 	File f = new File("src/gamedata/Simple.game");
 	XMLParser p = new XMLParser(f);
-	p.moveDown("game/level");
-	System.out.println(p.getActivePath() + " " + p.getValidLabels());
+	p.moveDown("game");
+	System.out.println(p.getValidSubDirectories());
+	for (String key : xml.keySet()) {
+	    System.out.println(key + " " + xml.get(key));
+	}
     }
 }

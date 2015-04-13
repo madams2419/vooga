@@ -74,7 +74,7 @@ public class Sprite extends ImageView {
 		myCharacteristics.put("ID", String.valueOf(ID));
 		myCharacteristics.put(SCALE, String.valueOf(myScale));
 		myIcon = new ImageView();
-		changeImage(new Image(getClass().getResourceAsStream(imageURI)));
+		changeImage(new Image(imageURI));
 	}
 
 	public Sprite(CenterPane parent) {
@@ -238,7 +238,7 @@ public class Sprite extends ImageView {
 	 */
 	public Map<String, String> getCharacteristics() {
 		Object[] mapCharacteristics = { POSITION, myPosition, VELOCITY,
-				myVelocity, KEY_ACTIONS, myKeyActions };
+				myVelocity };
 		for (int i = 0; i < mapCharacteristics.length; i += 2) {
 			myCharacteristics.put(
 					(String) mapCharacteristics[i],
@@ -247,6 +247,7 @@ public class Sprite extends ImageView {
 		}
 		return this.myCharacteristics;
 	}
+	
 
 	public void setControls(ControlsDialog c) {
 		myControls = c;

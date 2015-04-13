@@ -1,10 +1,14 @@
 package authoring.rightPane;
 
 import java.util.List;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import authoring.Sprite;
 import authoring.userInterface.SpriteCursor;
 import authoring.util.ImageEditor;
@@ -19,7 +23,7 @@ import authoring.util.ImageEditor;
  */
 
 public class CharacterCreationPane extends EditingPane {
-
+    
     CharacterCreationPane (Scene scene, RightPane parent, List<String> availableCharacterTypeURIs) {
         super(scene, parent);
         this.getChildren().add(
@@ -33,16 +37,18 @@ public class CharacterCreationPane extends EditingPane {
 
         addSpritesToPane(availableCharacterTypeURIs);
     }
-
+    
+    
     private void addSpritesToPane (List<String> availableCharacterTypeURIs) {
+        VBox v = new VBox(20);
+        ScrollPane s = new ScrollPane(v);
+        this.getChildren().add(s);
         for (int i = 0; i < availableCharacterTypeURIs.size(); i++) {
-            addSpriteToPane(i, availableCharacterTypeURIs.get(i));
+            addSpriteToPane(i, availableCharacterTypeURIs.get(i), v);
         }
-//            addSpriteToPane(100, "/images/block.png");
-//        addSpriteToPane(101, "/images/luigi.png");
     }
 
-    private void addSpriteToPane (int id, String imageURI) {
+    private void addSpriteToPane (int id, String imageURI, VBox v) {
         Sprite sampleImage = new Sprite(id, imageURI, myParent.getParent()
                 .getMyCenterPane());
 
@@ -55,7 +61,7 @@ public class CharacterCreationPane extends EditingPane {
         // sampleImage.setOnMouseExited(i ->
         // ImageEditor.restoreOpacity(sampleImage,
         // Sprite.OPACITY_REDUCTION_RATIO));
-
+        
         int ID = 100; // for now, it doesn't change, but this should eventually
                       // be unique for each sprite
 
@@ -67,9 +73,8 @@ public class CharacterCreationPane extends EditingPane {
                                sampleImageIcon, Sprite.OPACITY_REDUCTION_RATIO));
         sampleImageIcon.setOnMouseExited(i -> ImageEditor
                 .restoreOpacity(sampleImageIcon));
-
-        this.getChildren().add(sampleImageIcon);
-
+        v.getChildren().add(sampleImageIcon);
+//        myScrollPaneContent.getChildren().add(sampleImageIcon);
     }
 
     private void imageDragged (MouseEvent e) {

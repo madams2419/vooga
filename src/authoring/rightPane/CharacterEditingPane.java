@@ -69,10 +69,10 @@ class CharacterEditingPane extends EditingPane {
 
 	private void controlsClicked(Sprite s) {
 		if (s.getControls() != null){
-			s.getControls().showBox();
+			s.getControls().showBox(s);
 		}
 		else{
-			ControlsDialog c = new ControlsDialog();
+			ControlsDialog c = new ControlsDialog(s);
 			s.setControls(c);
 		}
 	}

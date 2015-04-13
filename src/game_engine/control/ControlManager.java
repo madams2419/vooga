@@ -1,9 +1,9 @@
 package game_engine.control;
 
 import game_engine.*;
-
+import game_engine.behaviors.IAction;
+import game_engine.behaviors.IBehavior;
 import java.util.*;
-
 import javafx.scene.input.*;
 
 public class ControlManager {
@@ -15,7 +15,7 @@ public class ControlManager {
 		myKeyControls = new ArrayList<>();
 	}
 
-	public void addControl(Map<KeyCode, Map<IBehavior, String[]>> keyPressMap, Map<KeyCode, Map<IBehavior, String[]>> keyReleaseMap){
+	public void addControl(Map<KeyCode, IBehavior> keyPressMap, Map<KeyCode, IBehavior> keyReleaseMap){
 		//KeyControl newControl = new KeyControl(keyPressMap, keyReleaseMap, null);
 		//myKeyControls.add(newControl);
 		myActiveControl++;
@@ -26,14 +26,14 @@ public class ControlManager {
 		myActiveControl++;
 	}
 
-	public IBehavior setActiveControl(String... indexArray){
+	public IAction setActiveControl(String... indexArray){
 		int index = Integer.parseInt(indexArray[0]);
 		//needs to replace this error checking with something else
 		if(myActiveControl < 0 || index > myKeyControls.size()){
 			System.out.println("Invalid Active Control Index");
 			return null;
 		} else {
-			IBehavior activeControl = (params) -> {
+			IAction activeControl = (params) -> {
 				int activeIndex = Integer.parseInt(params[0]);
 				myActiveControl = activeIndex;
 			};
