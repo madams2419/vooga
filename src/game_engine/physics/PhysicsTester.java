@@ -216,5 +216,6 @@ public class PhysicsTester extends Application {
 	private void printLoc() {
 		PhysicsObject sPhysics = playerSprite.getPhysicsObject();
 		System.out.printf("(%d, %d)\n", (int)sPhysics.getXPixels(), (int)sPhysics.getYPixels());
+		
 	}
 }
