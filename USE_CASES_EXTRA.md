@@ -5,6 +5,7 @@ Additional Use Cases
 * fill out the map settings pane
 * fill out the level settings pane
 * fill out the global settings pane
+
 Allow the game designer to...
 * make a new character type
 * create a splash screen
