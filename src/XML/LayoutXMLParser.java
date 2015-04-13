@@ -13,6 +13,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class LayoutXMLParser {
+	
 	public static File mFile;
 	public static ArrayList<Map> myElements;
 	public static Map<String, ArrayList> myElementMap = new HashMap<String, ArrayList>();

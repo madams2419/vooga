@@ -30,8 +30,8 @@ public class Sprite extends ImageView {
 	private final String Y_STRING = "y";
 	// private boolean selected;
 
-	private Map<String, Double> myPosition;
-	private Map<String, Double> myVelocity;
+	private Map<String, String> myPosition;
+	private Map<String, String> myVelocity;
 	private Map<String, String> myKeyActions;
 	private Map<String, String> myCharacteristics;
 
@@ -50,11 +50,12 @@ public class Sprite extends ImageView {
 
 	public final static String VELOCITY = "velocity";
 	public final static String POSITION = "position";
+	public static final String KEY_ACTIONS = "key_actions";
 	public final static String SCALE = "Scale";
-	
+
 	private Boolean isPlayable = false;
 
-//	private final double initialScale = 1.0;
+	// private final double initialScale = 1.0;
 
 	private CenterPane myParent;
 
@@ -81,8 +82,8 @@ public class Sprite extends ImageView {
 		myInteractions = new HashMap<>();
 		myPosition = new HashMap<>();
 		myVelocity = new HashMap<>();
-		myVelocity.put(X_STRING, 0.0);
-		myVelocity.put(Y_STRING, 0.0);
+		myVelocity.put(X_STRING, "0.0");
+		myVelocity.put(Y_STRING, "0.0");
 		myKeyActions = new HashMap<>();
 		myCharacteristics = new HashMap<>();
 		addDefaultCharacteristics(Arrays.asList(new String[] { "Name" }));
@@ -143,23 +144,31 @@ public class Sprite extends ImageView {
 
 	public void setXPosition(double value) {
 		this.setX(value);
-		myPosition.put(X_STRING, value);
+		myPosition.put(X_STRING, Double.toString(value));
+	}
+
+	public void setXPosition(String value) {
+		setXPosition(Double.parseDouble(value));
 	}
 
 	public void setYPosition(double value) {
 		this.setY(value);
-		myPosition.put(Y_STRING, value);
+		myPosition.put(Y_STRING, Double.toString(value));
+	}
+
+	public void setYPosition(String value) {
+		setYPosition(Double.parseDouble(value));
 	}
 
 	public void setPosition(Map<String, String> newPosition) {
 		myPosition = new HashMap<>();
-		newPosition.forEach((s1, s2) -> myPosition.put(s1,
-				Double.parseDouble(s2)));
+		newPosition.forEach((s1, s2) -> myPosition.put(s1, s2));
 		setXPosition(myPosition.get(X_STRING));
 		setYPosition(myPosition.get(Y_STRING));
 	}
 
 	public void setScale(double scale) {
+		
 		this.setScaleX(scale);
 		this.setScaleY(scale);
 		// myCharacteristics.put(SCALE, scale);
@@ -167,29 +176,36 @@ public class Sprite extends ImageView {
 	}
 
 	public double getXPosition() {
-		return myPosition.get(X_STRING);
+		return Double.parseDouble(myPosition.get(X_STRING));
 	}
 
 	public double getYPosition() {
-		return myPosition.get(Y_STRING);
+		return Double.parseDouble(myPosition.get(Y_STRING));
 	}
 
 	public void setVelocity(Map<String, String> newVelocity) {
 		myVelocity = new HashMap<>();
-		newVelocity.forEach((s1, s2) -> myVelocity.put(s1,
-				Double.parseDouble(s2)));
+		newVelocity.forEach((s1, s2) -> myVelocity.put(s1, s2));
 	}
 
 	public void setXVelocity(double value) {
+		setXVelocity(Double.toString(value));
+	}
+
+	public void setXVelocity(String value) {
 		myVelocity.put(X_STRING, value);
 	}
 
 	public void setYVelocity(double value) {
+		setYVelocity(Double.toString(value));
+	}
+
+	public void setYVelocity(String value) {
 		myVelocity.put(Y_STRING, value);
 	}
 
-	public void setKeyControl(String action, String result) {
-		myKeyActions.put(action, result);
+	public void setKeyActions(Map<String, String> keyActions) {
+		myKeyActions = keyActions;
 	}
 
 	public String getImageURI() {
@@ -201,6 +217,8 @@ public class Sprite extends ImageView {
 			setPosition(FrontEndUtils.stringToMap(value));
 		else if (characteristic.equals(VELOCITY))
 			setVelocity(FrontEndUtils.stringToMap(value));
+		else if (characteristic.equals(KEY_ACTIONS))
+			setKeyActions(FrontEndUtils.stringToMap(value));
 		else
 			myCharacteristics.put(characteristic, value);
 	}
@@ -213,31 +231,36 @@ public class Sprite extends ImageView {
 		myInteractions.put(otherSprite, interaction);
 	}
 
+	@SuppressWarnings("unchecked")
+	/***
+	 * pls make sure all instance variables are string,string maps
+	 * @return
+	 */
 	public Map<String, String> getCharacteristics() {
-		myCharacteristics.put(
-				POSITION,
-				myPosition.toString().substring(1,
-						myPosition.toString().length() - 1));
-		myCharacteristics.put(
-				VELOCITY,
-				myVelocity.toString().substring(1,
-						myVelocity.toString().length() - 1));
+		Object[] mapCharacteristics = { POSITION, myPosition, VELOCITY,
+				myVelocity, KEY_ACTIONS, myKeyActions };
+		for (int i = 0; i < mapCharacteristics.length; i += 2) {
+			myCharacteristics.put(
+					(String) mapCharacteristics[i],
+					((Map<String,String>) mapCharacteristics[i + 1]).toString().substring(1,
+							((Map<String,String>) mapCharacteristics[i + 1]).toString().length() - 1));
+		}
 		return this.myCharacteristics;
 	}
-	
-	public void setControls(ControlsDialog c){
+
+	public void setControls(ControlsDialog c) {
 		myControls = c;
 	}
 
-	public ControlsDialog getControls(){
+	public ControlsDialog getControls() {
 		return myControls;
 	}
-	
-	public Boolean getPlayable(){
+
+	public Boolean getPlayable() {
 		return isPlayable;
 	}
-	
-	public void setPlayable(Boolean b){
+
+	public void setPlayable(Boolean b) {
 		isPlayable = b;
 	}
 }
