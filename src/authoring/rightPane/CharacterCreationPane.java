@@ -1,10 +1,14 @@
 package authoring.rightPane;
 
 import java.util.List;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import authoring.Sprite;
 import authoring.userInterface.SpriteCursor;
 import authoring.util.ImageEditor;
@@ -19,6 +23,9 @@ import authoring.util.ImageEditor;
  */
 
 public class CharacterCreationPane extends EditingPane {
+    
+//    private ScrollPane myScrollPane;
+//    private Group myScrollPaneContent;
 
     CharacterCreationPane (Scene scene, RightPane parent, List<String> availableCharacterTypeURIs) {
         super(scene, parent);
@@ -31,15 +38,23 @@ public class CharacterCreationPane extends EditingPane {
                                                + "selections), its (their)%n"
                                                + "information will be%n" + "shown here.")));
 
+//        initializeScrollPane();
         addSpritesToPane(availableCharacterTypeURIs);
     }
+    
+    
+    
+//    private void initializeScrollPane() {
+//        myScrollPaneContent = new Group();
+//        myScrollPane = new ScrollPane();
+//        myScrollPane.setContent(myScrollPaneContent);
+//        getChildren().add(myScrollPane);
+//    }
 
     private void addSpritesToPane (List<String> availableCharacterTypeURIs) {
         for (int i = 0; i < availableCharacterTypeURIs.size(); i++) {
             addSpriteToPane(i, availableCharacterTypeURIs.get(i));
         }
-//            addSpriteToPane(100, "/images/block.png");
-//        addSpriteToPane(101, "/images/luigi.png");
     }
 
     private void addSpriteToPane (int id, String imageURI) {
@@ -55,7 +70,7 @@ public class CharacterCreationPane extends EditingPane {
         // sampleImage.setOnMouseExited(i ->
         // ImageEditor.restoreOpacity(sampleImage,
         // Sprite.OPACITY_REDUCTION_RATIO));
-
+        
         int ID = 100; // for now, it doesn't change, but this should eventually
                       // be unique for each sprite
 
@@ -69,7 +84,7 @@ public class CharacterCreationPane extends EditingPane {
                 .restoreOpacity(sampleImageIcon));
 
         this.getChildren().add(sampleImageIcon);
-
+//        myScrollPaneContent.getChildren().add(sampleImageIcon);
     }
 
     private void imageDragged (MouseEvent e) {
