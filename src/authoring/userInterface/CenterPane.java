@@ -17,6 +17,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -109,9 +111,10 @@ public class CenterPane extends WindowPane {
 				    Image image = new Image("file:///" + imagePath.getPath());
 				    myCurrentRectangle.setBackgroundImage(image);
 				}
+
 				Sprite s = ((SpriteCursor) myScene.getCursor())
 						.getCurrentSprite();
-
+				//s.setOnMouseClicked((a -> keyPressed(a, s));
 				s.setXPosition(e.getX() - s.getImage().getWidth() / 2);
 				s.setYPosition(e.getY() - s.getImage().getHeight() / 2);
 				myGroup.getChildren().add(s);
@@ -147,9 +150,18 @@ public class CenterPane extends WindowPane {
 			}
 			myCurrentRectangle = new Region(x, y, Color.WHITE);
 			myCurrentRectangle.setOnMouseClicked(e -> canvasClicked(e));
+			//myCurrentRectangle.setOnKeyPressed(e -> keyPressed(e));
 			myGroup.getChildren().add(myCurrentRectangle);
 		}
 		
+		private void keyPressed(KeyEvent e, Sprite s) {
+			if (e.getCode() == KeyCode.DELETE){
+				System.out.println("deleting");
+				myGroup.getChildren().remove(s);
+			}
+			System.out.println("keypressed");
+		}
+
 		public Region getRegion(){
 			return myCurrentRectangle;
 		}
