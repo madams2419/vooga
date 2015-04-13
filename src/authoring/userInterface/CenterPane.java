@@ -18,7 +18,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import authoring.Sprite;
 import authoring.rightPane.GlobalCreationPane;
 import authoring.util.FrontEndUtils;
@@ -124,7 +123,7 @@ public class CenterPane extends WindowPane {
 			return new Object[] { myCurrentRectangle, myListOfSprites };
 		}
 
-		public Collection<Sprite> getSprites() {
+		public List<Sprite> getSprites() {
 			return myListOfSprites;
 		}
 
