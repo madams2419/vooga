@@ -1,6 +1,5 @@
 package game_engine.collision;
 
-import game_engine.behaviors.Behavior;
 import game_engine.behaviors.IBehavior;
 import game_engine.sprite.Sprite;
 import javafx.scene.image.ImageView;

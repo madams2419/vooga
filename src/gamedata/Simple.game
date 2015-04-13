@@ -24,9 +24,15 @@
 				
 				<objective_1>
 					<prereqs></prereqs>
-					<timer>5</timer>
 					<onComplete>
-						<behaviors></behaviors>
+						<behaviors>
+							<behavior_0>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>setState</name>
+								<parameters>key</parameters>
+							</behavior_0>
+						</behaviors>
 					</onComplete>
 					<onFailed>
 						<behaviors>
@@ -47,9 +53,15 @@
 							<behavior_0>
 								<targetType>sprite</targetType>
 								<targetIndex>0</targetIndex>
-								<name>setState</name>
-								<parameters>standing</parameters>
+								<name>jump</name>
+								<parameters>.03</parameters>
 							</behavior_0>
+							<behavior_1>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>setState</name>
+								<parameters>dead</parameters>
+							</behavior_1>
 						</behaviors>
 					</onComplete>
 					<onFailed>
@@ -70,13 +82,19 @@
 						
 						<state_1>
 							<name>dead</name>
-							<image>/Resources/images/walkingMario.png</image>
+							<image>/images/surprisedMario.png</image>
 						</state_1>
 						
 						<state_2>
 							<name>win</name>
-							<image>/Resources/images/walkingMario.png</image>
+							<image>/images/happymario.png</image>
 						</state_2>
+						
+						<state_3>
+							<name>key</name>
+							<image>/images/keyMario.png</image>
+						</state_3>
+
 					</animation>
 					<physics>
 						<material>bouncy_ball</material>
@@ -93,7 +111,7 @@
 					<animation>
 						<state_0>
 							<name>immobile</name>
-							<image>/images/luigi.png</image>
+							<image>/images/ground.png</image>
 						</state_0>
 					</animation>
 					<physics>
@@ -111,12 +129,12 @@
 					<animation>
 						<state_0>
 							<name>immobile</name>
-							<image>/images/luigi.png</image>
+							<image>/images/brick.png</image>
 						</state_0>
 					</animation>
 					<physics>
 						<material>wood</material>
-						<x>300</x>
+						<x>600</x>
 						<y>200</y>
 						<xVel>0</xVel>
 						<yVel>0</yVel>
@@ -129,14 +147,14 @@
 					<animation>
 						<state_0>
 							<name>immobile</name>
-							<image>/images/sidewaysLuigi.png</image>
+							<image>/images/bowser.png</image>
 						</state_0>
 					</animation>
 					<physics>
 						<material>bouncy_ball</material>
-						<x>250</x>
-						<y>100</y>
-						<xVel>0</xVel>
+						<x>300</x>
+						<y>0</y>
+						<xVel>.001</xVel>
 						<yVel>0</yVel>
 					</physics>
 				</sprite_3>
@@ -147,12 +165,12 @@
 					<animation>
 						<state_0>
 							<name>immobile</name>
-							<image>/images/smallLuigi.png</image>
+							<image>/images/key.png</image>
 						</state_0>
 					</animation>
 					<physics>
 						<material>static</material>
-						<x>300</x>
+						<x>1000</x>
 						<y>300</y>
 						<xVel>0</xVel>
 						<yVel>0</yVel>
@@ -165,12 +183,12 @@
 					<animation>
 						<state_0>
 							<name>immobile</name>
-							<image>/images/smallerLuigi.png</image>
+							<image>/images/goal.png</image>
 						</state_0>
 					</animation>
 					<physics>
 						<material>static</material>
-						<x>500</x>
+						<x>1500</x>
 						<y>100</y>
 						<xVel>0</xVel>
 						<yVel>0</yVel>
@@ -244,7 +262,7 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>jump</name>
-									<parameters>.002</parameters>
+									<parameters>.05</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
@@ -264,14 +282,7 @@
 					<sprite_2>3</sprite_2>
 					<direction>0 1 2 3</direction>
 					<realistic>false</realistic>
-					<behaviors>
-						<behavior_0>
-							<targetType>sprite</targetType>
-							<targetIndex>0</targetIndex>
-							<name>setState</name>
-							<parameters>dead</parameters>
-						</behavior_0>
-						
+					<behaviors>						
 						<behavior_1>
 							<targetType>objective</targetType>
 							<targetIndex>2</targetIndex>
@@ -329,5 +340,7 @@
 				
 			</collision>
 		</level_0>
+		
+		
 	</level>
 </game>

@@ -53,6 +53,7 @@ public abstract class Character extends Sprite {
 		Vector myVector = new Vector(0,1*Double.parseDouble(params[0]));
 		myPhysicsObject.applyImpulse(myVector);
 		setStateName("jump");
+		
 	};
 	
 	public IAction getJump(){
