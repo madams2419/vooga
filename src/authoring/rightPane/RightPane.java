@@ -44,16 +44,19 @@ public class RightPane extends WindowPane {
 	}
 
 	public void switchToCharacterEditingPane(Sprite sprite) {
+		// if (!(myCurrentContent instanceof CharacterEditingPane))
 		switchToPane(new CharacterEditingPane(myScene, this, sprite));
 	}
 
 	public void switchToCharacterCreationPane() {
-		switchToPane(new CharacterCreationPane(myScene, this));
+		if (!(myCurrentContent instanceof CharacterCreationPane))
+			switchToPane(new CharacterCreationPane(myScene, this));
 	}
 
 	public void switchToInteractionEditingPane(Sprite sprite1, Sprite sprite2) {
-		switchToPane(new InteractionEditingPane(myScene, this, sprite1,
-				sprite2, getListOfInteractions()));
+		if (!(myCurrentContent instanceof InteractionEditingPane) && (sprite1 != sprite2)) // checking memory address
+			switchToPane(new InteractionEditingPane(myScene, this, sprite1,
+					sprite2, getListOfInteractions()));
 		printOutInteractions();
 	}
 
@@ -133,7 +136,8 @@ public class RightPane extends WindowPane {
 
 	// TEMPORARY!!
 	private List<String> getListOfInteractions() {
-		return Arrays.asList(new String[] { "jump", "die", "go to new level", "hit box" });
+		return Arrays.asList(new String[] { "jump", "die", "go to new level",
+				"hit box" });
 	}
 
 	@Override
