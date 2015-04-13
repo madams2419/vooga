@@ -79,7 +79,6 @@ public class Animation implements Observer {
             changeImage(sprite.getState());
         }
         catch (Exception e) {
-            System.out.println("agggggg");
             PhysicsObject physics;
             physics = (PhysicsObject) o;
             Vector jfxPosition = Utilities.normalToJFXCoords(physics

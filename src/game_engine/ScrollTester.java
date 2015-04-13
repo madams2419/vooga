@@ -12,9 +12,11 @@ public class ScrollTester extends Application{
     @Override
     public void start (Stage stage) throws Exception {
         Group group = new Group();
-        IScroller s = new BasicScroller(group);
-        DragScrollTracker d = new DragScrollTracker(s, group);
-        group.getChildren().addAll(new Rectangle(500, 500), new Rectangle(100, 100, Color.WHITE));
+        Rectangle r = new Rectangle(500, 500);
+        group.getChildren().addAll(r, new Rectangle(100, 100, Color.WHITE));
+        r.setTranslateX(50);
+        group.setTranslateX(-100);
+        System.out.println(r.getTranslateX());
         stage.setScene(new Scene(group, 300, 300));
         stage.show();
     }

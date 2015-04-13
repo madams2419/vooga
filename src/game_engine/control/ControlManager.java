@@ -45,7 +45,6 @@ public class ControlManager {
 		if(myActiveControl < 0){
 			System.out.println("No Control has been added yet!");
 		} else{
-		    System.out.println("here2");
 			myKeyControls.get(myActiveControl).executeKeyEvent(keycode, pressed);
 		}
 	}
