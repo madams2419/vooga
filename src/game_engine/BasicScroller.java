@@ -6,8 +6,11 @@ public class BasicScroller extends Scroller{
     private double myX;
     private double myY;
     
-    public BasicScroller (Group group) {
+    public BasicScroller (Group group, double x, double y) {
         super(group);
+        myX = x;
+        myY = y;
+        System.out.println("Initial:" +myX +" " + myY);
     }
 
     public void scrollX (double amount) {
@@ -22,13 +25,13 @@ public class BasicScroller extends Scroller{
     
     @Override
     public double getNewFocusX (double x) {
-        double change = myX - x;
+        double change = x - myX;
         return change;
     }
 
     @Override
     public double getNewFocusY (double y) {
-        double change = myY - y;
+        double change = y - myY;
         return change;
     }
 

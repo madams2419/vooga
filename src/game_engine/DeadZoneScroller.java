@@ -8,8 +8,8 @@ public class DeadZoneScroller extends BasicScroller{
     private DeadZoneCalculator myTop;
     private DeadZoneCalculator myBottom;
     
-    public DeadZoneScroller (Group group, double right, double left, double top, double bottom) {
-        super(group);
+    public DeadZoneScroller (Group group, double x, double y, double right, double left, double top, double bottom) {
+        super(group, x, y);
         myRight = new DeadZoneCalculator (Math.abs(right));
         myLeft = new DeadZoneCalculator (- Math.abs(left));
         myTop = new DeadZoneCalculator (Math.abs(top));

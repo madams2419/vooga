@@ -56,6 +56,7 @@ public class VoogaGameBuilder {
 
     private Level buildLevel (String levelID) {
         engine = buildPhysicsEngine(.005);
+        engine = buildPhysicsEngine(1.0/60);
         parser.moveDown(levelID);
         Level level = new Level();
         

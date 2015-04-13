@@ -15,19 +15,36 @@ public class ScrollTracker {
         myListener = makeListener();
     }
     
+    public ScrollTracker(IScroller scroller, ObservableDoubleValue x, ObservableDoubleValue y){
+        myScroller = scroller;
+        myX = x;
+        myY = y;
+        myListener = makeListener();
+        
+    }
+    
     private void setTracker (ObservableDoubleValue original, ObservableDoubleValue newValue) {
         Optional.ofNullable(original).ifPresent(this::disableTracking);
+        
         newValue.addListener(myListener);
     }
     
     public void setXTracker (ObservableDoubleValue observableX ) {
-        setTracker(myX, observableX);
+        Optional.ofNullable(myX).ifPresent(obs -> obs.removeListener(myListener));
+        Optional.ofNullable(myY).ifPresent(obs -> obs.removeListener(myListener));
         myX = observableX;
+        myListener = makeListener();
+        Optional.ofNullable(myX).ifPresent(obs -> obs.addListener(myListener));
+        Optional.ofNullable(myY).ifPresent(obs -> obs.addListener(myListener));
     }
     
     public void setYTracker (ObservableDoubleValue observableY) {
-        setTracker(myY, observableY);
+        Optional.ofNullable(myX).ifPresent(obs -> obs.removeListener(myListener));
+        Optional.ofNullable(myY).ifPresent(obs -> obs.removeListener(myListener));
         myY = observableY;
+        myListener = makeListener();
+        Optional.ofNullable(myX).ifPresent(obs -> obs.addListener(myListener));
+        Optional.ofNullable(myY).ifPresent(obs -> obs.addListener(myListener));
     }
     
     public void disableTracking (ObservableDoubleValue observable) {
@@ -41,6 +58,12 @@ public class ScrollTracker {
     }
     
     private InvalidationListener makeListener () {
-        return (change) -> myScroller.focus(myX.get(), myY.get());
+        if (myX != null && myY != null) {
+            return (change) -> {
+                myScroller.focus(myX.get(), myY.get());
+            };
+        }
+        
+        return (change) -> {System.out.println("fail");};
     }
 }

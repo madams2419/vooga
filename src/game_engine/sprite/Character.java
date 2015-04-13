@@ -3,6 +3,7 @@ package game_engine.sprite;
 import game_engine.behaviors.IAction;
 import game_engine.physics.PhysicsObject;
 import game_engine.physics.Vector;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -39,7 +40,7 @@ public abstract class Character extends Sprite {
 	 */
 	// params[0] is pixels to move forward
 	private IAction moveForward = (params) -> { // movement
-		myPosition.setX(myPosition.getX()+Double.parseDouble(params[0]));
+	        myPhysicsObject.applyImpulse(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
 		setStateName("forward");
 	};
 	
@@ -93,7 +94,9 @@ public abstract class Character extends Sprite {
 	//	setState(myStateNames.getString(movementName));
 	}
 	
+	//TODO: Replace with reflection or map?
 	public IAction getAction(String name) {
+	    System.out.println(name);
 	    switch (name) {
 	        case "bounce":
 	            return bounce;
@@ -101,6 +104,8 @@ public abstract class Character extends Sprite {
 	            return moveForward;
 	        case "sprint":
 	            return sprint;
+	        case "jump":
+	            return jump;
 	    }
 	    return super.getAction(name);
 	        
