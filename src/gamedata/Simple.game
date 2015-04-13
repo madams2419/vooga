@@ -20,7 +20,7 @@
 					<onFailed>
 						<behaviors></behaviors>
 					</onFailed>
-				</objective>
+				</objective_0>
 				
 				<objective_1>
 					<prereqs></prereqs>
@@ -317,20 +317,7 @@
 							<parameters>complete</parameters>
 						</behavior_0>
 					</behaviors>
-<<<<<<< HEAD
 				</collision_4>
-=======
-				</collision_3>
-				
-				<collision_4>
-					<sprite_1>0</sprite_1>
-					<sprite_2>2</sprite_2>
-					<direction>0 1 2</direction>
-					<realistic>true</realistic>
-					<behaviors></behaviors>
-				</collision_4>
-				
->>>>>>> b4fbd3520b4a497326282f76592b3ef3a71488b1
 			</collision>
 		</level_0>
 	</level>

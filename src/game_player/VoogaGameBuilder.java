@@ -49,7 +49,7 @@ public class VoogaGameBuilder {
             Level level = buildLevel(directory);
             game.addLevel(level);
         }
-        game.setActiveLevel(Integer.parseInt(parser.getValue("start")));
+       game.setActiveLevel(0);
         
         return game;
     }
