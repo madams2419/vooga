@@ -17,32 +17,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 public class LevelSettingPane extends EditingPane {
-//    private CenterPane cp;
-//    public Map<String, String> fields;
-//    private static Scene mScene;
-//    
-//    public LevelSettingPane (Scene myScene, RightPane parent) {
-//        super(myScene, parent);
-//        // TODO Auto-generated constructor stub
-//        mScene = myScene;
-//        /* Default Map */       
-
-//    }
-//
-//    private List<HBox> setFields() {
-//        List<HBox> myFields = new LinkedList<>();
-        //levels.forEach((label, value) -> { edit this line to add levels
-//            HBox h = new HBox(5);
-//            h.getChildren().addAll(new Text(label),
-//                    new javafx.scene.control.TextField(value));
-//            parent.add(h);
-//            myFields.add(h);
-//        });
-
-//        myFields.add(h);
-//        return myFields;
-//
-//    }
     private List<HBox> myFields = new LinkedList<>();
     private CenterPane cp;
     public Map<String, String> fields;
