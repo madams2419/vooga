@@ -4,12 +4,18 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
 import authoring.userInterface.AuthoringWindow;
 
 /***
@@ -52,5 +58,18 @@ public class FrontEndUtils {
 	
 	public static void setKeyActions(TabPane t) {
 		setKeyActions((Parent)t);
+	}
+	
+	public static HBox makeToggleGroup(){
+	    HBox hbox = new HBox(10);
+    	ToggleGroup toggleGroup = new ToggleGroup();
+        RadioButton button1 = new RadioButton("Sprite");
+        button1.setToggleGroup(toggleGroup);
+        button1.setSelected(true);
+        RadioButton button2 = new RadioButton("Hit Box");
+        button2.setToggleGroup(toggleGroup);
+        hbox.getChildren().addAll(button1,button2);
+//        toggleGroup.selectedToggleProperty().addListener(); edit this line to add listener
+        return hbox;
 	}
 }
