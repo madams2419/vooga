@@ -4,6 +4,7 @@ import game_engine.BasicScroller;
 import game_engine.Level;
 import game_engine.ScrollTracker;
 import game_engine.behaviors.IAction;
+import game_engine.behaviors.IActor;
 import game_engine.control.ControlManager;
 import game_engine.sprite.Sprite;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import javafx.animation.AnimationTimer;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 
-public class VoogaGame extends AnimationTimer {
+public class VoogaGame extends AnimationTimer implements IActor{
     
     private List<Level> levels;
     private Level activeLevel;
@@ -36,6 +37,7 @@ public class VoogaGame extends AnimationTimer {
     }
     
     public void setActiveLevel(int index) {
+        root.getChildren().clear();
 	activeLevel = levels.get(index);
 	activeLevel.getLayers().get(0).getSprites().forEach(sprite -> {
 	    root.getChildren().add(sprite.getImageView());
@@ -44,12 +46,14 @@ public class VoogaGame extends AnimationTimer {
 	ControlManager controlManager = activeLevel.getControlManager();
 	root.setOnKeyPressed(e -> controlManager.handleKeyEvent(e.getCode(), true));
         root.setOnKeyReleased(e -> controlManager.handleKeyEvent(e.getCode(), false));
-        
-        Sprite sprite = activeLevel.getLayers().get(0).getSprites().get(0);
-        BasicScroller scroller = new BasicScroller (root, sprite.getImageView().getTranslateX(), sprite.getImageView().getTranslateY());
-        ScrollTracker tracker = new ScrollTracker(scroller);
-        tracker.setXTracker(sprite.getImageView().translateXProperty());
-        tracker.setYTracker(new SimpleDoubleProperty(sprite.getImageView().getTranslateY()));
+        if (!activeLevel.getLayers().get(0).getSprites().isEmpty()){
+            Sprite sprite = activeLevel.getLayers().get(0).getSprites().get(0);
+            sprite.getImageView().toFront();
+            BasicScroller scroller = new BasicScroller (root, sprite.getImageView().getTranslateX(), sprite.getImageView().getTranslateY());
+            ScrollTracker tracker = new ScrollTracker(scroller);
+            tracker.setXTracker(sprite.getImageView().translateXProperty());
+            tracker.setYTracker(new SimpleDoubleProperty(sprite.getImageView().getTranslateY()));
+        }
     }
     
     
@@ -60,5 +64,13 @@ public class VoogaGame extends AnimationTimer {
     
     public Group getRoot() {
 	return root;
+    }
+
+    @Override
+    public IAction getAction (String name) {
+        if (name.equals("activeLevel")){
+            return getSetActiveLevelBehavior();
+        }
+        return (params) -> {};
     }
 }
