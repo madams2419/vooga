@@ -54,12 +54,12 @@ public abstract class PhysicsCollision {
 		myObjectB.applyVelocity(correction);
 	}
 
-	protected double colRestitution() {
+	protected double collisionRestitution() {
 		return Math.min(myObjectA.getRestitution(), myObjectB.getRestitution());
 	}
 
 	protected Vector computeImpulse() {
-		double implsMag = -(1 + colRestitution()) * rvProjOnNorm();
+		double implsMag = -(1 + collisionRestitution()) * rvProjOnNorm();
 		implsMag /= myObjectA.getInvMass() + myObjectB.getInvMass();
 		return myNormal.times(implsMag);
 	}

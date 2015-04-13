@@ -43,8 +43,7 @@ public abstract class Sprite extends Observable{
 		myAnimation = new Animation(this, myPhysicsObject);
 		addImage(defaultState, defaultImage);
 		setState(defaultState);
-		getImageView().setFitHeight(height);
-		getImageView().setFitWidth(width);
+		setImageSize(height, width);
 		
 	}
 	

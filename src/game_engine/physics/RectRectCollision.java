@@ -5,6 +5,7 @@ public class RectRectCollision extends PhysicsCollision {
 	private RectangleBody rectA;
 	private RectangleBody rectB;
 	private RectangleBody collisionRegion;
+	private CollisionType cType;
 
 	private enum CollisionType {
 		B_UPPER_LEFT, B_UPPER_RIGHT, B_LOWER_LEFT, B_LOWER_RIGHT, NONE
@@ -17,33 +18,37 @@ public class RectRectCollision extends PhysicsCollision {
 	}
 
 	protected Vector computeNormal() {
-		//TODO
+		//TODO refactor this shit
+		computeCollisionRegion();
+		
+		switch(cType) {
+		case B_UPPER_LEFT :
+			if(collisionRegion.getHeight())
+		}
 	}
 
 	protected double computePenetrationDepth() {
 		return Math.max(collisionRegion.getHeight(), collisionRegion.getWidth());
 	}
 
-	private RectangleBody computeCollisionRegion() {
-		double cRegionDepth = 0;
-
+	private void computeCollisionRegion() {
 		//TODO refactor and also deal with case where rectangle is completely contained in other
 		if(rectA.containsPoint(rectB.getUpperLeft())) {
-			return RectangleBody.getRectBodyULLR(cRegionDepth, rectB.getUpperLeft(), rectA.getLowerRight());
+			cType = CollisionType.B_UPPER_LEFT;
+			collisionRegion = RectangleBody.rBodyFromCorners(rectB.getUpperLeft(), rectA.getLowerRight());
 		}
 		else if(rectA.containsPoint(rectB.getUpperRight())) {
-			return RectangleBody.getRectBodyURLL(cRegionDepth, rectB.getUpperRight(), rectA.getLowerLeft());
+			cType = CollisionType.B_UPPER_RIGHT;
+			collisionRegion = RectangleBody.rBodyFromCorners(rectB.getUpperRight(), rectA.getLowerLeft());
 		}
 		else if(rectA.containsPoint(rectB.getLowerLeft())) {
-			return RectangleBody.getRectBodyURLL(cRegionDepth, rectA.getUpperRight(), rectB.getLowerLeft());
+			cType = CollisionType.B_LOWER_LEFT;
+			collisionRegion = RectangleBody.rBodyFromCorners(rectA.getUpperRight(), rectB.getLowerLeft());
 		}
 		else if(rectA.containsPoint(rectB.getLowerRight())) {
-			return RectangleBody.getRectBodyULLR(cRegionDepth, rectA.getUpperLeft(), rectB.getLowerRight());
+			cType = CollisionType.B_LOWER_RIGHT;
+			collisionRegion = RectangleBody.rBodyFromCorners(rectA.getUpperLeft(), rectB.getLowerRight());
 		}
-		else {
-			return null;
-		}
-
 	}
 
 }

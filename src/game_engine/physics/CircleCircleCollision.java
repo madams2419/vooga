@@ -5,11 +5,10 @@ public class CircleCircleCollision extends PhysicsCollision {
 	private CircleBody myCircleA;
 	private CircleBody myCircleB;
 
-	public CircleCircleCollision(PhysicsObject poA, PhysicsObject poB,
-			CircleBody circleA, CircleBody circleB) {
+	public CircleCircleCollision(PhysicsObject poA, PhysicsObject poB) {
 		super(poA, poB);
-		myCircleA = circleA;
-		myCircleB = circleB;
+		myCircleA = (CircleBody) poA.getRigidBody();
+		myCircleB = (CircleBody) poB.getRigidBody();
 	}
 
 	protected Vector computeNormal() {
@@ -18,7 +17,9 @@ public class CircleCircleCollision extends PhysicsCollision {
 
 	protected double computePenetrationDepth() {
 		double radiiSum = myCircleA.getRadius() + myCircleB.getRadius();
-		return radiiSum - getSeparationDistance();
+		double test =  radiiSum - getSeparationDistance();
+		getSeparationDistance();
+		return test;
 	}
 
 }

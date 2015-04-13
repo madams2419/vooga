@@ -12,14 +12,14 @@ public class PhysicsCollisionFactory {
 		RigidBody rbB = poB.getRigidBody();
 
 		if(rbA.getType() == RBodyType.CIRCLE) {
-			CircleBody circleA = (CircleBody) rbA;
-
 			if(rbB.getType() == RBodyType.CIRCLE) {
-				return new CircleCircleCollision(poA, poB, circleA, (CircleBody) rbB);
+				return new CircleCircleCollision(poA, poB);
 
 			} else {
-				return new CircleRectCollision(poA, poB, circleA, (RectangleBody) rbB);
+				return new CircleRectCollision(poA, poB);
 			}
+		} else if(rbA.getType() == RBodyType.RECTANGLE && rbB.getType() == RBodyType.RECTANGLE) {
+				return new RectRectCollision(poA, poB);
 		} else {
 			return getCollision(b, a);
 		}
