@@ -1,10 +1,15 @@
 package game_engine.sprite;
 
+import java.util.HashMap;
+import java.util.ResourceBundle;
+
+import game_engine.IBehavior;
 import game_engine.behaviors.IAction;
+import game_engine.physics.Material;
+import game_engine.physics.PhysicsEngine;
 import game_engine.physics.PhysicsObject;
 import game_engine.physics.Vector;
-import java.util.Arrays;
-import java.util.HashMap;
+import game_engine.physics.RigidBody.RBodyType;
 
 /**
  * class that implements behaviors for movable sprites
@@ -13,21 +18,26 @@ import java.util.HashMap;
  */
 
 public abstract class Character extends Sprite {
-    private Vector myPosition;
-//  private ResourceBundle myStateNames = ResourceBundle 
-//                  .getBundle("resources.engineutilities/movements");
-    private HashMap<String,String> myStateNameMap = new HashMap<>(); // TODO implement this         
-    
-    // TODO check design on feeding 2 constructors into themselves
-    public Character(PhysicsObject physics){
-            super(physics);
-            myPosition = myPhysicsObject.getPositionPixels();
-    }
-    
-    public Character(PhysicsObject physics, String name){
-            super(physics, name);
-            myPosition = myPhysicsObject.getPositionPixels();
-    }
+
+	private Vector myPosition;
+//	private ResourceBundle myStateNames = ResourceBundle 
+//			.getBundle("resources.engineutilities/movements");
+	private HashMap<String,String> myStateNameMap = new HashMap<>(); // TODO implement this 	
+	
+	public Character(String defaultState, String defaultImage, int height, int width, RBodyType rbType,
+			PhysicsEngine globalPhysics, Material material, int startX, int startY) {
+		super(defaultState, defaultImage, height, width, rbType, globalPhysics, material, startX, startY);
+	}
+	
+	// TODO check design on feeding 2 constructors into themselves
+	public Character(PhysicsObject physics){
+		super(physics);
+	}
+	
+	public Character(PhysicsObject physics, String name){
+		super(physics, name);
+		myPosition = myPhysicsObject.getPositionPixels();
+	}
 
     public Character(PhysicsObject physics, String name, int id){
             super(physics, name,id);

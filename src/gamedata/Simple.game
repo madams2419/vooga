@@ -124,6 +124,8 @@
 				<sprite_3>
 					<type>Enemy</type>
 					<initialState>immobile</initialState>
+					<width>100</width>
+					<height>200</height>
 					<animation>
 						<state_0>
 							<name>immobile</name>

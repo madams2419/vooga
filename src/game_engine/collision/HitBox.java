@@ -1,5 +1,10 @@
 package game_engine.collision;
 
+import game_engine.physics.CircleBody;
+import game_engine.physics.RectangleBody;
+import game_engine.physics.RigidBody;
+import game_engine.physics.RigidBody.RBodyType;
+import game_engine.physics.Vector;
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,11 +21,11 @@ public class HitBox {
     private ImageView node;
     private Image image;
 	
-	public HitBox(ImageView n) {
-	        node = n;
-		image = n.getImage();
+	public HitBox(ImageView n, RBodyType rbType) {
+		node = n;
+		image = node.getImage();
 		boolean[][] bitMap = createBitMap(image);
-		
+
 	}
 	
 	public Bounds getBounds(){

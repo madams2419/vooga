@@ -8,7 +8,7 @@ import java.util.HashMap;
 import game_engine.sprite.Sprite;
 
 // TODO
-// - todo implement IBehavior
+// - refactor with special controller for retreiving values in pixel form
 // - implement regions (regions are sprites)
 // - optimize net force computation
 
@@ -18,9 +18,7 @@ public class PhysicsEngine {
 	private static double SCALE_FACTOR = 0.01; // pixel to meter scaling
 	private static String GRAV_STRING = "gravity";
 	private static double GRAV_MAGNITUDE = 9.8;
-	private static double DRAG_COEF = 0.05;
-	private static double SC_PERCENT = 0.5;
-	private static double SC_SLOP = 0.01;
+	private static double DRAG_COEF = 0.2;
 
 	private double myGround;
 	private double myTimeStep;
@@ -46,7 +44,7 @@ public class PhysicsEngine {
 	}
 
 	public Vector getDragForce(PhysicsObject physObj) {
-		double dragCoef = - myDrag * physObj.getShape().getCxArea();
+		double dragCoef = - myDrag * physObj.getRigidBody().getCxArea();
 		return physObj.getVelocity().times(dragCoef);
 	}
 
@@ -56,8 +54,6 @@ public class PhysicsEngine {
 	}
 
 	public void update(List<Sprite> sprites) {
-		handleCollisions(sprites);
-
 		updatePhysicsObjects(sprites);
 	}
 
@@ -65,90 +61,6 @@ public class PhysicsEngine {
 		for(Sprite sprite : sprites) {
 			sprite.getPhysicsObject().update();
 		}
-	}
-
-	private void handleCollisions(List<Sprite> sprites) {
-		/* check for collisions on unique sprite pairs */
-		for(int i = 0; i < sprites.size(); ++i) {
-			PhysicsObject a = sprites.get(i).getPhysicsObject();
-
-			for(int j = i + 1; j < sprites.size(); ++j) {
-				PhysicsObject b = sprites.get(j).getPhysicsObject();
-
-				if(checkCollision(a, b)) {
-					resolveCollision(a, b);
-				}
-			}
-		}
-	}
-
-	private boolean checkCollision(PhysicsObject a, PhysicsObject b) {
-		return getCollisionDepth(a, b) >= 0;
-	}
-
-	private double getCollisionDepth(PhysicsObject a, PhysicsObject b) {
-		double sepDistance = b.getPositionMeters().minus(a.getPositionMeters()).getMagnitude();
-		double radiiSum = b.getShape().getRadiusMeters() + a.getShape().getRadiusMeters();
-		return radiiSum - sepDistance;
-	}
-
-	public void resolveCollision(Sprite a, Sprite b) {
-		resolveCollision(a.getPhysicsObject(), b.getPhysicsObject());
-	}
-
-	public void resolveCollision(Sprite a, Sprite b, Vector normal, double pDepth) {
-		resolveCollision(a.getPhysicsObject(), b.getPhysicsObject(), normal, pDepth);
-	}
-
-	public void resolveCollision(PhysicsObject a, PhysicsObject b) {
-		resolveCollision(a, b, getCollisionNormal(a, b), getCollisionDepth(a, b));
-	}
-
-	public void resolveCollision(PhysicsObject a, PhysicsObject b, Vector normal, double pDepth) {
-		// compute relative velocity
-		Vector relVel = b.getVelocity().minus(a.getVelocity());
-
-		// project relative velocity along collision normal
-		double projOnNorm = relVel.dot(normal);
-
-		// return if objects are moving apart
-		if(projOnNorm > 0) {
-			return;
-		}
-
-		// get minimum restitution
-		double restitution = Math.min(a.getRestitution(), b.getRestitution());
-
-		// calculate impulse
-		double implsMag = -(1 + restitution) * projOnNorm;
-		implsMag /= a.getInvMass() + b.getInvMass();
-		Vector impulse = normal.times(implsMag);
-
-		// apply impulse
-		a.applyImpulse(impulse.negate());
-		b.applyImpulse(impulse);
-
-		// apply sink correction
-		applySinkCorrection(a, b, normal, pDepth);
-	}
-
-	private Vector getCollisionNormal(PhysicsObject a, PhysicsObject b) {
-		Vector delta = b.getPositionMeters().minus(a.getPositionMeters());
-		return delta.normalize();
-	}
-
-	private void applySinkCorrection(PhysicsObject a, PhysicsObject b, Vector normal, double pDepth) {
-		System.out.println(pDepth);
-		// return if penetration depth is less than threshold
-		if(pDepth < SC_SLOP) {
-			return;
-		}
-		
-		double correctionCoef = SC_PERCENT * pDepth / (a.getInvMass() + b.getInvMass());
-		System.out.println(correctionCoef);
-		Vector correction = normal.times(correctionCoef);
-		a.applyVelocity(correction.negate());
-		b.applyVelocity(correction);
 	}
 
 	private Vector computeNetGlobalForce() {
@@ -210,6 +122,7 @@ public class PhysicsEngine {
 	}
 
 	/* Scaling utility functions */
+	//TODO move these elsewhere
 
 	public static double pixelsToMeters(double pixels) {
 		return pixels * SCALE_FACTOR;

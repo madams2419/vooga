@@ -1,6 +1,5 @@
 package game_player;
 
-import game_engine.collision.HitBox;
 import game_engine.physics.PhysicsObject;
 import game_engine.physics.Vector;
 import game_engine.sprite.Sprite;
@@ -8,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -21,22 +19,17 @@ import javafx.scene.image.ImageView;
  */
 public class Animation implements Observer {
 
-    private ImageView myImageView;
-    private String myCurrentImage;
-    private HitBox myHitBox;
-    Map<String, String> myPathMap;
+	private ImageView myImageView;
+	private String myCurrentImage;
+	Map<String, String> myPathMap;
 
-    public Animation (Observable sprite, PhysicsObject physics) {
-        linkToSprite(sprite);
-        linkToSprite(physics);
-        myPathMap = new HashMap<>();
-        myImageView = new ImageView();
-        Vector jfxPosition = Utilities.normalToJFXCoords(physics
-                .getPositionPixels());
-        myImageView.setTranslateX(jfxPosition.getX());
-        myImageView.setTranslateY(jfxPosition.getY());
-
-    }
+	public Animation(Observable sprite, PhysicsObject physics) {
+		linkToSprite(sprite);
+		linkToSprite(physics);
+		myPathMap = new HashMap<>();
+		myImageView = new ImageView();
+		updatePosition(physics);
+	}
 
     public void setImage (String state, String ImagePath) {
         myPathMap.put(state, ImagePath);
@@ -60,32 +53,29 @@ public class Animation implements Observer {
             myImageView.setImage(new Image(getClass().getResourceAsStream(
                                                                           myCurrentImage)));
         }
-        myHitBox = new HitBox(myImageView);
     }
 
     public ImageView getImageView () {
         return myImageView;
     }
 
-    public HitBox getHitBox () {
-        return myHitBox;
-    }
-
-    public void update (Observable o, Object arg) {
-        // TODO Auto-generated method stub
-        try {
-            Sprite sprite;
-            sprite = (Sprite) o;
-            changeImage(sprite.getState());
-        }
-        catch (Exception e) {
-            PhysicsObject physics;
-            physics = (PhysicsObject) o;
-            Vector jfxPosition = Utilities.normalToJFXCoords(physics
-                    .getPositionPixels());
-            myImageView.setTranslateX(jfxPosition.getX());
-            myImageView.setTranslateY(jfxPosition.getY());
-        }
-    }
+	public void update(Observable o, Object arg) {
+		try {
+			Sprite sprite;
+			sprite = (Sprite) o;
+			changeImage(sprite.getState());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			PhysicsObject physics;
+			physics = (PhysicsObject) o;
+			updatePosition(physics);
+		}
+	}
+	
+	public void updatePosition(PhysicsObject physics) {
+		Vector jfxPosition = Utilities.physicsCenterToUpperLeft(physics);
+		myImageView.setTranslateX(jfxPosition.getX());
+		myImageView.setTranslateY(jfxPosition.getY());
+	}
 
 }
