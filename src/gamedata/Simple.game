@@ -24,11 +24,19 @@
 				
 				<objective_1>
 					<prereqs></prereqs>
+					<timer>5</timer>
 					<onComplete>
 						<behaviors></behaviors>
 					</onComplete>
 					<onFailed>
-						<behaviors></behaviors>
+						<behaviors>
+							<behavior_0>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>setState</name>
+								<parameters>dead</parameters>
+							</behavior_0>
+						</behaviors>
 					</onFailed>
 				</objective_1>
 				

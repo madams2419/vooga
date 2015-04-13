@@ -10,6 +10,7 @@ import game_engine.collision.Collision;
 import game_engine.collision.CollisionEngine;
 import game_engine.control.ControlManager;
 import game_engine.control.KeyControl;
+import game_engine.objective.GameTimer;
 import game_engine.objective.Objective;
 import game_engine.physics.CircleBody;
 import game_engine.physics.Material;
@@ -24,6 +25,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javafx.scene.input.KeyCode;
@@ -55,7 +57,6 @@ public class VoogaGameBuilder {
     }
 
     private Level buildLevel (String levelID) {
-        engine = buildPhysicsEngine(.005);
         engine = buildPhysicsEngine(1.0/60);
         parser.moveDown(levelID);
         Level level = new Level();
@@ -163,8 +164,8 @@ public class VoogaGameBuilder {
         parser.moveDown(behaviorID);
         String id = parser.getValue("targetType") + "_" + parser.getValue("targetIndex") + "/";
         String name = parser.getValue("name");
-        IActor sprite = getActor(id);
-        IAction behavior = sprite.getAction(name);
+        IActor actor = getActor(id);
+        IAction behavior = actor.getAction(name);
         String[] params = parser.getValue("parameters").split(" ");
         parser.moveUp();
         return new Behavior(behavior, params);
@@ -208,7 +209,9 @@ public class VoogaGameBuilder {
                 parser.moveUp();
             }
         }
-
+        String timer = parser.getValue("timer");
+        Optional.ofNullable(timer).ifPresent(string -> objective.setTimer(new GameTimer(Long
+                                                     .parseLong(string))));
         parser.moveUp();
         return objective;
     }
@@ -232,8 +235,6 @@ public class VoogaGameBuilder {
         parser.moveUp();
         return controlManager;
     }
-    
-
 
     private KeyControl buildKeyControl (String controlID) {
         parser.moveDown(controlID);
@@ -253,8 +254,6 @@ public class VoogaGameBuilder {
             parser.moveDown("onReleased");
             releasedKeyMap.put(keyCode, buildBehaviorList());
             parser.moveUp();
-
-
 
             parser.moveUp();
         }

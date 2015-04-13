@@ -106,7 +106,6 @@ public abstract class Character extends Sprite {
 	
 	//TODO: Replace with reflection or map?
 	public IAction getAction(String name) {
-	    System.out.println(name);
 	    switch (name) {
 	        case "bounce":
 	            return bounce;

@@ -198,9 +198,7 @@ public abstract class Sprite extends Observable implements IActor{
 	}
 	
 	public IAction getAction(String name) {
-	    System.out.println(name);
 	    if (name.equals("setState")){
-	        System.out.println("should be changing state");
 	        return setState;
 	    }
 	    return (params) -> {};
