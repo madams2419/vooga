@@ -182,9 +182,8 @@ public class Objective implements IActor {
 
     @Override
     public IAction getAction (String name) {
-        if (name == "setStatus") {
+        if (name.equals("setStatus")){
             return (params) -> {
-                System.out.println(params[0]);
                 myStatus = Status.get(params[0]);
                 executeStatus();
             };

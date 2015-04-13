@@ -5,6 +5,7 @@ package game_engine.objective;
  *
  */
 public class GameTimer {
+    private static final long SECOND = 1000000000;
     private long myDuration;
     private long myStart;
     
@@ -13,7 +14,7 @@ public class GameTimer {
      * @param duration Duration of the timer, measured in nanoseconds.
      */
     public GameTimer(long duration){
-        myDuration = duration;
+        myDuration = duration * SECOND;
         myStart = Long.MAX_VALUE;
     }
     
