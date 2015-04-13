@@ -24,9 +24,6 @@ import authoring.util.ImageEditor;
 
 public class CharacterCreationPane extends EditingPane {
     
-//    private ScrollPane myScrollPane;
-//    private Group myScrollPaneContent;
-
     CharacterCreationPane (Scene scene, RightPane parent, List<String> availableCharacterTypeURIs) {
         super(scene, parent);
         this.getChildren().add(
@@ -38,19 +35,10 @@ public class CharacterCreationPane extends EditingPane {
                                                + "selections), its (their)%n"
                                                + "information will be%n" + "shown here.")));
 
-//        initializeScrollPane();
         addSpritesToPane(availableCharacterTypeURIs);
     }
     
     
-    
-//    private void initializeScrollPane() {
-//        myScrollPaneContent = new Group();
-//        myScrollPane = new ScrollPane();
-//        myScrollPane.setContent(myScrollPaneContent);
-//        getChildren().add(myScrollPane);
-//    }
-
     private void addSpritesToPane (List<String> availableCharacterTypeURIs) {
         VBox v = new VBox(20);
         ScrollPane s = new ScrollPane(v);
