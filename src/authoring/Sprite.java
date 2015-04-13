@@ -243,7 +243,7 @@ public class Sprite extends ImageView {
 			myCharacteristics.put(
 					(String) mapCharacteristics[i],
 					((Map<String,String>) mapCharacteristics[i + 1]).toString().substring(1,
-							myPosition.toString().length() - 1));
+							((Map<String,String>) mapCharacteristics[i + 1]).toString().length() - 1));
 		}
 		return this.myCharacteristics;
 	}
