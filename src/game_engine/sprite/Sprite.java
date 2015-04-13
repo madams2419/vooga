@@ -1,14 +1,18 @@
 package game_engine.sprite;
 
+import game_engine.behaviors.IAction;
+import game_engine.behaviors.IActor;
+import game_engine.collision.HitBox;
+import game_engine.physics.PhysicsEngine;
+import game_engine.physics.PhysicsObject;
+import game_player.Animation;
+import groovy.util.Eval;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import javafx.scene.image.ImageView;
-import game_engine.IBehavior;
-import game_engine.collision.HitBox;
-import game_engine.physics.PhysicsObject;
-import game_engine.physics.Vector;
-import game_player.Animation;
 
 /**
  * Abstract class for the creation of multiple sprite types
@@ -16,14 +20,14 @@ import game_player.Animation;
  * @author 
  *
  */
-public abstract class Sprite extends Observable{
+public abstract class Sprite extends Observable implements IActor{
 	
 	private int myId;
 	private String myName;	
 	private String myState;
 	private Animation myAnimation;
 	protected PhysicsObject myPhysicsObject;
-	private Map<String, IBehavior> myBehaviorMap = new HashMap<>();
+	private Map<String, IAction> myBehaviorMap = new HashMap<>();
 
 	
 	/**
@@ -67,12 +71,12 @@ public abstract class Sprite extends Observable{
 	 */
 	public abstract void update();
 	
-	public IBehavior createBehavior(String behavior) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
+	public IAction createBehavior(String behavior) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
 	    Class<?> runClass = null;
-	    IBehavior classInstance = null;
+	    IAction classInstance = null;
 	    String className = "game_engine." + behavior;
 	    runClass = Class.forName(className);
-	    return classInstance = (IBehavior) runClass.newInstance();
+	    return classInstance = (IAction) runClass.newInstance();
 	    
 	}
 	
@@ -111,12 +115,14 @@ public abstract class Sprite extends Observable{
 		notifyObservers();
 	}
 	
-	private IBehavior setState = (params) -> { // stateChanging
+	private IAction setState = (params) -> { // stateChanging
             String state = params[0];
             setState(state);
 	};
 	
-	public IBehavior getStateBehavior(){
+
+	public IAction setStateBehavior(){
+
 	    return setState;
 	}
 	
@@ -166,6 +172,15 @@ public abstract class Sprite extends Observable{
 		setChanged();
                 notifyObservers();
 	}
+	
+	public IAction getAction(String name) {
+	    if (name.equals("setState")){
+	        return setState;
+	    }
+	    return (params) -> {};
+	}
+	
+	
 	
 	
 //	public static void main(String[] args){

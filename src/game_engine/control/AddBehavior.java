@@ -1,8 +1,9 @@
 package game_engine.control;
 
 import game_engine.*;
+import game_engine.behaviors.IAction;
 
-public class AddBehavior implements IBehavior{
+public class AddBehavior implements IAction{
 	
 	@Override
 

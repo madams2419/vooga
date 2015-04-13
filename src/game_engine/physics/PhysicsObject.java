@@ -20,12 +20,12 @@ public class PhysicsObject extends Observable {
 
 	private Shape myShape;
 
-	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material, int xPosPixels, int yPosPixels) {
+	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material, double startX, double startY) {
 		myPhysics = physics;
 		myShape = shape;
 		myMaterial = material;
 
-		myPosition = PhysicsEngine.vectorPixelsToMeters(xPosPixels, yPosPixels);
+		myPosition = PhysicsEngine.vectorPixelsToMeters(startX, startY);
 		myVelocity = new Vector();
 		myNetInternalForce = new Vector();
 		myDirForceMagnitude = 0;

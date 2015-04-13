@@ -1,12 +1,8 @@
 package game_engine.collision;
 
-import game_engine.IBehavior;
-import game_engine.physics.PhysicsEngine;
+import game_engine.behaviors.Behavior;
+import game_engine.behaviors.IBehavior;
 import game_engine.sprite.Sprite;
-
-import java.util.List;
-import java.util.Map;
-
 import javafx.scene.image.ImageView;
 
 /**
@@ -18,26 +14,23 @@ import javafx.scene.image.ImageView;
 
 public class Collision {
 	private Sprite spriteA;
-	private List<Sprite> spriteList;
-	private Map<Sprite, Map<IBehavior, String[]>> behaviorList;
+	private Sprite spriteB;
+	private IBehavior behaviorList;
 	private CollisionDirection direction;
 
 	
-	public Collision(Sprite a, List<Sprite> list,
-			Map<Sprite, Map<IBehavior, String[]>> b, CollisionDirection d) {
+	public Collision(Sprite a, Sprite b,
+			IBehavior behaviors, CollisionDirection d) {
 		spriteA = a;
-		spriteList = list;
-		behaviorList = b;
+		spriteB = b;
+		behaviorList = behaviors;
 		direction = d;
 	}
 
 	public void getColliding() {
-		spriteList.stream().filter(sprite -> collidingHitBox(sprite, spriteA)).filter(sprite->collide(sprite,spriteA))
-				.forEach(this::execute);
-	}
-
-	private void execute(Sprite sprite) {
-		behaviorList.get(sprite).forEach((behavior, params) -> behavior.execute(params) );
+		if (collidingHitBox (spriteA, spriteB)) {
+		    behaviorList.perform();
+		}
 	}
 	
 	private boolean collidingHitBox(Sprite spriteA, Sprite spriteB){
@@ -45,7 +38,6 @@ public class Collision {
 	}
 
 	private boolean collide(Sprite spriteA, Sprite spriteB) {
-
 		boolean[][] bitMapA = spriteA.getHitBox().getBitMap();
 		boolean[][] bitMapB = spriteB.getHitBox().getBitMap();
 

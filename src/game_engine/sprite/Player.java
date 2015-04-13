@@ -1,11 +1,9 @@
 package game_engine.sprite;
 
-import game_engine.IBehavior;
+
 import game_engine.physics.PhysicsObject;
-import game_engine.physics.Vector;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observable;
 
 public class Player extends Character {
         private Map<Collectible, Integer> myCollectibleMap;
@@ -56,6 +54,8 @@ public class Player extends Character {
 	    this.getPhysicsObject().update();
 	    setChanged();
             notifyObservers();
-	}	
+	}
+	
+
 	
 }

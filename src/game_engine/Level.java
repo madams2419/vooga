@@ -1,5 +1,7 @@
 package game_engine;
 
+import game_engine.collision.CollisionEngine;
+import game_engine.control.ControlManager;
 import game_engine.objective.Objective;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +14,10 @@ import java.util.List;
  */
 public class Level {
 	
-	List<Objective> myObjectives;
-	List<Layer> myLayers;
+	private List<Objective> myObjectives;
+	private List<Layer> myLayers;
+	private CollisionEngine myCollisionEngine;
+	private ControlManager myControlManager;
 	
 	public Level() {
 		// TODO
@@ -30,6 +34,19 @@ public class Level {
             //Potentially different method
             myObjectives.forEach(objective -> objective.update(now));
             myLayers.forEach(layer -> layer.update());
+            myCollisionEngine.checkCollisions();
+        }
+        
+        public void setControlManager( ControlManager controlManager) {
+            myControlManager = controlManager;
+        }
+        
+        public ControlManager getControlManager() {
+            return myControlManager;
+        }
+        
+        public void setCollisionEngine (CollisionEngine collisionEngine) {
+            myCollisionEngine = collisionEngine;
         }
         
         public void scrollX(int x){
