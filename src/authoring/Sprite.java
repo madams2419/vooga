@@ -168,6 +168,7 @@ public class Sprite extends ImageView {
 	}
 
 	public void setScale(double scale) {
+		
 		this.setScaleX(scale);
 		this.setScaleY(scale);
 		// myCharacteristics.put(SCALE, scale);

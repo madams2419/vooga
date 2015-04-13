@@ -1,5 +1,6 @@
 package authoring.rightPane;
 
+import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
@@ -7,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import authoring.Sprite;
 import authoring.userInterface.SpriteCursor;
 import authoring.util.ImageEditor;
+
 
 /**
  * This will allow the user to select from a number of images (or insert his/her
@@ -18,60 +20,70 @@ import authoring.util.ImageEditor;
 
 public class CharacterCreationPane extends EditingPane {
 
-	CharacterCreationPane(Scene scene, RightPane parent) {
-		super(scene, parent);
-		this.getChildren().add(
-				new TextArea(String.format("Information%n"
-						+ "when a drop down%n" + "item is selected, or%n"
-						+ "a current element on%n" + "the scroll pane is%n"
-						+ "selected (up to two%n"
-						+ "selections), its (their)%n"
-						+ "information will be%n" + "shown here.")));
-		addSpriteToPane(100, "/images/block.png");
-		addSpriteToPane(101, "/images/luigi.png");
-	}
+    CharacterCreationPane (Scene scene, RightPane parent, List<String> availableCharacterTypeURIs) {
+        super(scene, parent);
+        this.getChildren().add(
+                               new TextArea(String
+                                       .format("Information%n"
+                                               + "when a drop down%n" + "item is selected, or%n"
+                                               + "a current element on%n" + "the scroll pane is%n"
+                                               + "selected (up to two%n"
+                                               + "selections), its (their)%n"
+                                               + "information will be%n" + "shown here.")));
 
-	private void addSpriteToPane(int id, String imageURI) {
-		Sprite sampleImage = new Sprite(id, imageURI, myParent.getParent()
-				.getMyCenterPane());
+        addSpritesToPane(availableCharacterTypeURIs);
+    }
 
-		// these two aren't working for now when the copy is made in
-		// imageClicked (Consumer<Sprite> spriteClicked, Sprite sampleImage, int
-		// ID):
-		// sampleImage.setOnMouseEntered(i ->
-		// ImageEditor.reduceOpacity(sampleImage,
-		// Sprite.OPACITY_REDUCTION_RATIO));
-		// sampleImage.setOnMouseExited(i ->
-		// ImageEditor.restoreOpacity(sampleImage,
-		// Sprite.OPACITY_REDUCTION_RATIO));
+    private void addSpritesToPane (List<String> availableCharacterTypeURIs) {
+        for (int i = 0; i < availableCharacterTypeURIs.size(); i++) {
+            addSpriteToPane(i, availableCharacterTypeURIs.get(i));
+        }
+//            addSpriteToPane(100, "/images/block.png");
+//        addSpriteToPane(101, "/images/luigi.png");
+    }
 
-		int ID = 100; // for now, it doesn't change, but this should eventually
-						// be unique for each sprite
+    private void addSpriteToPane (int id, String imageURI) {
+        Sprite sampleImage = new Sprite(id, imageURI, myParent.getParent()
+                .getMyCenterPane());
 
-		ImageView sampleImageIcon = sampleImage.getIcon();
-		sampleImageIcon.setOnMouseClicked(e -> imageClicked(sampleImage, ID));
-		sampleImageIcon.setOnMouseDragged(e -> imageDragged(e));
-		sampleImageIcon.setOnMouseEntered(i -> ImageEditor.reduceOpacity(
-				sampleImageIcon, Sprite.OPACITY_REDUCTION_RATIO));
-		sampleImageIcon.setOnMouseExited(i -> ImageEditor
-				.restoreOpacity(sampleImageIcon));
+        // these two aren't working for now when the copy is made in
+        // imageClicked (Consumer<Sprite> spriteClicked, Sprite sampleImage, int
+        // ID):
+        // sampleImage.setOnMouseEntered(i ->
+        // ImageEditor.reduceOpacity(sampleImage,
+        // Sprite.OPACITY_REDUCTION_RATIO));
+        // sampleImage.setOnMouseExited(i ->
+        // ImageEditor.restoreOpacity(sampleImage,
+        // Sprite.OPACITY_REDUCTION_RATIO));
 
-		this.getChildren().add(sampleImageIcon);
+        int ID = 100; // for now, it doesn't change, but this should eventually
+                      // be unique for each sprite
 
-	}
+        ImageView sampleImageIcon = sampleImage.getIcon();
+        sampleImageIcon.setOnMouseClicked(e -> imageClicked(sampleImage, ID));
+        sampleImageIcon.setOnMouseDragged(e -> imageDragged(e));
+        sampleImageIcon.setOnMouseEntered(i -> ImageEditor
+                .reduceOpacity(
+                               sampleImageIcon, Sprite.OPACITY_REDUCTION_RATIO));
+        sampleImageIcon.setOnMouseExited(i -> ImageEditor
+                .restoreOpacity(sampleImageIcon));
 
-	private void imageDragged(MouseEvent e) {
+        this.getChildren().add(sampleImageIcon);
 
-	}
+    }
 
-	// an image in the right pane is clicked to be moved to the center pane
-	private void imageClicked(Sprite sampleImage, int ID) {
-		// need to now set mouse cursor to the sprite image
-		// getMyScene().setCursor(new SpriteCursor(new Sprite(sampleImage, ID,
-		// spriteClicked)));
-		getMyScene().setCursor(
-				new SpriteCursor(new Sprite(sampleImage, ID, myParent
-						.getParent().getMyCenterPane())));
+    private void imageDragged (MouseEvent e) {
 
-	}
+    }
+
+    // an image in the right pane is clicked to be moved to the center pane
+    private void imageClicked (Sprite sampleImage, int ID) {
+        // need to now set mouse cursor to the sprite image
+        // getMyScene().setCursor(new SpriteCursor(new Sprite(sampleImage, ID,
+        // spriteClicked)));
+        getMyScene().setCursor(
+                               new SpriteCursor(new Sprite(sampleImage, ID, myParent
+                                       .getParent().getMyCenterPane())));
+
+    }
 }
