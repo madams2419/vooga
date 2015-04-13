@@ -77,7 +77,7 @@ public class RightPane extends WindowPane {
 	}
 
 	public void UIControlCreate() {
-		new ControlsDialog();
+		
 	}
 
 	public void switchToDefaultPane() {

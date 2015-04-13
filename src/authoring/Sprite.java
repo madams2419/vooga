@@ -189,8 +189,8 @@ public class Sprite extends ImageView {
 		myVelocity.put(Y_STRING, value);
 	}
 
-	public void setKeyControl(String action, String result) {
-		myKeyActions.put(action, result);
+	public void setKeyControl(Map<String, String> keyControls) {
+		myKeyActions = keyControls;
 	}
 
 	public String getImageURI() {

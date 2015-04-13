@@ -1,8 +1,11 @@
 package authoring.userInterface;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import authoring.Sprite;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -21,11 +24,12 @@ public class ControlsDialog extends Dialog<ButtonType>{
 	
 	private List<ComboBox<String>> myComboBoxes;
 	private List<TextField> myTextFields;
+	private Map<String, String> myKeyActions;
 	
 	private static final int BOTTOM_SPACING = 25;
 	
 	// TODO: refactoring
-	public ControlsDialog(){
+	public ControlsDialog(Sprite s){
 		
 		myComboBoxes = new ArrayList<>();
 		myTextFields = new ArrayList<>();
@@ -45,21 +49,26 @@ public class ControlsDialog extends Dialog<ButtonType>{
 			 event.consume();
 		 });
 		 
-		 showBox();
+		 showBox(s);
 			
 	}
 	
-	public void showBox(){
+	public void showBox(Sprite s){
 		this.showAndWait().filter(response -> response == ButtonType.OK)
 		.ifPresent(response -> {
-			// TODO: save responses
-			// TODO: output controls to xml
+			myKeyActions = new HashMap<>();
+			for (int i = 0; i < myTextFields.size(); i++){
+				myKeyActions.put(myTextFields.get(i).getText(), myComboBoxes.get(i).getValue());
+			}
+			s.setKeyControl(myKeyActions);
+			System.out.println(myKeyActions);
 		});
 	}
 	
 	public ComboBox<String> addComboBox(){
 		// TODO: Add String list of interactions
 		ComboBox<String> result = new ComboBox<>();
+		result.getItems().addAll("jump", "forward", "backward");
 		myComboBoxes.add(result);
 		return result;
 	}
@@ -67,7 +76,7 @@ public class ControlsDialog extends Dialog<ButtonType>{
 	public TextField addTextField(){
 		TextField result = new TextField();
 		result.setEditable(false);
-		result.setOnKeyPressed(e -> result.setText(e.getText()));
+		result.setOnKeyPressed(e -> result.setText(e.getCode().toString()));
 		myTextFields.add(result);
 		return result;
 	}
@@ -79,6 +88,10 @@ public class ControlsDialog extends Dialog<ButtonType>{
 	
 	public void PopulateComboBox(List<String> controlsList, List<KeyCode> keycodeList){
 		
+	}
+	
+	public Map<String, String> getKeyActions(){
+		return myKeyActions;
 	}
 	
 }

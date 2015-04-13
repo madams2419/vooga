@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -62,7 +63,7 @@ public class CenterPane extends WindowPane {
 
 		private List<Map<String, String>> myEnvironmentList;
 		private ObservableList<Sprite> myListOfSprites;
-		private Rectangle myCurrentRectangle;
+		private Region myCurrentRectangle;
 		private GlobalCreationPane gp;
 		private Group myGroup;
 
@@ -89,6 +90,9 @@ public class CenterPane extends WindowPane {
 
 		private void canvasClicked(MouseEvent e) {
 			try {
+				if (e.getButton() == MouseButton.SECONDARY){
+					
+				}
 				Sprite s = ((SpriteCursor) myScene.getCursor())
 						.getCurrentSprite();
 
@@ -98,6 +102,7 @@ public class CenterPane extends WindowPane {
 				this.myListOfSprites.add(s);
 				myScene.setCursor(ImageCursor.DEFAULT);
 				s.setOnMouseDragged(a -> imageDragged(a, s));
+
 			} catch (ClassCastException a) {
 			} catch (NullPointerException b) {
 			}
@@ -124,9 +129,13 @@ public class CenterPane extends WindowPane {
 			if (myCurrentRectangle != null) {
 				myGroup.getChildren().remove(myCurrentRectangle);
 			}
-			myCurrentRectangle = new Rectangle(x, y, Color.WHITE);
+			myCurrentRectangle = new Region(x, y, Color.WHITE);
 			myCurrentRectangle.setOnMouseClicked(e -> canvasClicked(e));
 			myGroup.getChildren().add(myCurrentRectangle);
+		}
+		
+		public Region getRegion(){
+			return myCurrentRectangle;
 		}
 	}
 }
