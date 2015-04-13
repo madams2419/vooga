@@ -2,6 +2,7 @@ package authoring.userInterface;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -28,18 +29,22 @@ import authoring.util.FrontEndUtils;
  */
 public class CenterPane extends WindowPane {
 
+	private List<CenterCanvas> myMaps; 
 
 	CenterPane(Scene s, AuthoringWindow w) {
 		super(s, new TabPane(), w);
-		System.out.printf("Instantiated %s%n", this.getClass().getName());
+		myMaps = new ArrayList<>();
 		((TabPane) myContainer).setSide(Side.BOTTOM);
 		addTab();
 		FrontEndUtils.setKeyActions(this.myContainer);
+		System.out.printf("Instantiated %s%n", this.getClass().getName());
 	}
 
 	public void addTab() {
+		CenterCanvas c;
 		((TabPane) myContainer).getTabs().add(
-				new Tab("Map", new CenterCanvas(myScene)));
+				new Tab("Map", c = new CenterCanvas(myScene)));
+		myMaps.add(c);
 	}
 
 	public CenterCanvas getActiveTab() {
@@ -57,8 +62,12 @@ public class CenterPane extends WindowPane {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public Iterator<CenterCanvas> getMaps() {
+		return myMaps.iterator();
+	}
 
-	class CenterCanvas extends ScrollPane {
+	public class CenterCanvas extends ScrollPane {
 
 		private List<Map<String, String>> myEnvironmentList;
 		private ObservableList<Sprite> myListOfSprites;
@@ -97,9 +106,15 @@ public class CenterPane extends WindowPane {
 				myGroup.getChildren().add(s);
 				this.myListOfSprites.add(s);
 				myScene.setCursor(ImageCursor.DEFAULT);
+				s.setOnMouseDragged(a -> imageDragged(a, s));
 			} catch (ClassCastException a) {
 			} catch (NullPointerException b) {
 			}
+		}
+
+		private void imageDragged(MouseEvent a, Sprite s) {
+			s.setXPosition(a.getSceneX() - (s.getImage().getWidth()/2));
+			s.setYPosition(a.getSceneY() - (s.getImage().getHeight()/2));
 		}
 
 		public Object[] getData() {

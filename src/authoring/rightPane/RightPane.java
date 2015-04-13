@@ -56,9 +56,7 @@ public class RightPane extends WindowPane {
     }
 
     public void switchToInteractionEditingPane (Sprite sprite1, Sprite sprite2) {
-        if (!(myCurrentContent instanceof InteractionEditingPane) && (sprite1 != sprite2)) // checking
-                                                                                           // memory
-                                                                                           // address
+        if (!(myCurrentContent instanceof InteractionEditingPane) && (sprite1 != sprite2)) // checking memory address
             switchToPane(new InteractionEditingPane(myScene, this, sprite1,
                                                     sprite2, getListOfInteractions()));
         printOutInteractions();
@@ -111,6 +109,10 @@ public class RightPane extends WindowPane {
 
     public void switchToMapSettingPane () {
         switchToPane(new MapSettingPane(myScene, this));
+    }
+
+    public void switchToLevelSettingPane () {
+        switchToPane(new LevelSettingPane(myScene, this));
     }
 
     // TODO is this method never called?
