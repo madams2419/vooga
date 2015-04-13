@@ -111,10 +111,6 @@ public class RightPane extends WindowPane {
 		switchToPane(new MapSettingPane(myScene, this));
 	}
 
-	public void switchToLevelSettingPane() {
-		switchToPane(new LevelSettingPane(myScene, this));
-	}
-
 	// TODO is this method never called?
 	public void setScene(Scene scene, List<String> availableSpriteURIs) {
 		myScene = scene;
