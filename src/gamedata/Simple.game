@@ -54,20 +54,22 @@
 				<sprite_0>
 					<type>Player</type>
 					<initialState>standing</initialState>
+					<width>100</width>
+					<height>200</height>
 					<animation>
 						<state_0>
 							<name>standing</name>
-							<image>/Resources/images/standingMario.png</image>
+							<image>/images/mario.png</image>
 						</state_0>
 						
 						<state_1>
 							<name>dead</name>
-							<image>/Resources/images/walkingMario.png</image>
+							<image>/images/mario.png</image>
 						</state_1>
 						
 						<state_2>
 							<name>win</name>
-							<image>/Resources/images/walkingMario.png</image>
+							<image>/images/mario.png</image>
 						</state_2>
 					</animation>
 					<physics>
@@ -82,16 +84,18 @@
 				<sprite_1>
 					<type>Platform</type>
 					<initialState>immobile</initialState>
+					<width>2000</width>
+					<height>200</height>
 					<animation>
 						<state_0>
 							<name>immobile</name>
-							<image>/Resources/images/standingMario.png</image>
+							<image>/images/ground.png</image>
 						</state_0>
 					</animation>
 					<physics>
 						<material>wood</material>
 						<x>0</x>
-						<y>50</y>
+						<y>0</y>
 						<xVel>0</xVel>
 						<yVel>0</yVel>
 					</physics>
@@ -100,16 +104,18 @@
 				<sprite_2>
 					<type>Platform</type>
 					<initialState>immobile</initialState>
+					<width>300</width>
+					<height>50</height>
 					<animation>
 						<state_0>
 							<name>immobile</name>
-							<image>/Resources/images/standingMario.png</image>
+							<image>/images/ground.png</image>
 						</state_0>
 					</animation>
 					<physics>
 						<material>wood</material>
-						<x>300</x>
-						<y>200</y>
+						<x>1000</x>
+						<y>300</y>
 						<xVel>0</xVel>
 						<yVel>0</yVel>
 					</physics>
@@ -121,12 +127,12 @@
 					<animation>
 						<state_0>
 							<name>immobile</name>
-							<image>/Resources/images/standingMario.png</image>
+							<image>/images/bowser.png</image>
 						</state_0>
 					</animation>
 					<physics>
 						<material>bouncy_ball</material>
-						<x>250</x>
+						<x>600</x>
 						<y>100</y>
 						<xVel>0</xVel>
 						<yVel>0</yVel>
@@ -136,16 +142,18 @@
 				<sprite_4>
 					<type>Collectible</type>
 					<initialState>immobile</initialState>
+					<width>50</width>
+					<height>50</height>
 					<animation>
 						<state_0>
 							<name>immobile</name>
-							<image>/Resources/images/standingMario.png</image>
+							<image>/images/key.png</image>
 						</state_0>
 					</animation>
 					<physics>
 						<material>static</material>
-						<x>300</x>
-						<y>300</y>
+						<x>1100</x>
+						<y>350</y>
 						<xVel>0</xVel>
 						<yVel>0</yVel>
 					</physics>
@@ -154,15 +162,17 @@
 				<sprite_5>
 					<type>Region</type>
 					<initialState>immobile</initialState>
+					<height>500</height>
+					<width>100</width>
 					<animation>
 						<state_0>
 							<name>immobile</name>
-							<image>/Resources/images/standingMario.png</image>
+							<image>/images/goal.png</image>
 						</state_0>
 					</animation>
 					<physics>
 						<material>static</material>
-						<x>500</x>
+						<x>1800</x>
 						<y>100</y>
 						<xVel>0</xVel>
 						<yVel>0</yVel>

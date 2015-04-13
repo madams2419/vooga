@@ -49,13 +49,13 @@ public class VoogaGameBuilder {
             Level level = buildLevel(directory);
             game.addLevel(level);
         }
-       game.setActiveLevel(0);
+       game.setActiveLevel(Integer.parseInt(parser.getValue("start")));
         
         return game;
     }
 
     private Level buildLevel (String levelID) {
-        engine = buildPhysicsEngine(10);
+        engine = buildPhysicsEngine(.005);
         parser.moveDown(levelID);
         Level level = new Level();
         
