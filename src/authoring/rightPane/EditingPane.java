@@ -1,7 +1,10 @@
 package authoring.rightPane;
 
+import java.util.List;
+import javafx.beans.property.ObjectProperty;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 import authoring.userInterface.ClickHandler;
 
@@ -29,7 +32,7 @@ public class EditingPane extends VBox {
     }
 
     @SuppressWarnings("unchecked")
-	void addButtonToReturnToCreationPane (String label) {
+    void addButtonToReturnToCreationPane (String label) {
         Button b = new Button(label);
         try {
             b.setOnAction(new ClickHandler(RightPane.class
@@ -39,6 +42,23 @@ public class EditingPane extends VBox {
             // TODO
         }
         this.getChildren().add(b);
+    }
+
+    protected ObjectProperty<String> addComboBoxToPane (
+                                                        List<String> actionPossibilities,
+                                                        String action) {
+        final ComboBox<String> actionComboBox = new ComboBox<>();
+        actionComboBox.getItems().addAll(actionPossibilities);
+        getChildren().add(actionComboBox);
+        setInitialComboBoxValue(actionComboBox, action);
+        return actionComboBox.valueProperty();
+    }
+
+    private void setInitialComboBoxValue (ComboBox<String> actionComboBox,
+                                          String action) {
+        if (action != null) {
+            actionComboBox.setValue(action);
+        }
     }
 
 }

@@ -9,6 +9,12 @@
 				<listener>switchToMapSettingPane</listener>
 			</Button>
 			<Button>
+			 	<X>1</X>
+			 	<Y>0</Y>
+				<label>Level Settings</label>
+				<listener>switchToLevelSettingPane</listener>
+			</Button>
+			<Button>
 				<X>0</X>
 			 	<Y>0</Y>
 				<label>Global Settings</label>
