@@ -1,6 +1,12 @@
 package game_engine.physics;
 
 public class RectRectCollision extends PhysicsCollision {
+	
+	//TODO refactor these
+	private final static Vector NORTH_NORMAL = new Vector(0, 1);
+	private final static Vector WEST_NORMAL = new Vector(-1, 0);
+	private final static Vector EAST_NORMAL = new Vector(1, 0);
+	private final static Vector SOUTH_NORMAL = new Vector(-1, 0);
 
 	private RectangleBody rectA;
 	private RectangleBody rectB;
@@ -16,14 +22,27 @@ public class RectRectCollision extends PhysicsCollision {
 		rectA = (RectangleBody) poA.getRigidBody();
 		rectB = (RectangleBody) poA.getRigidBody();
 	}
-
+	
+	//TODO refactor this shit
 	protected Vector computeNormal() {
-		//TODO refactor this shit
 		computeCollisionRegion();
+		boolean cHeightGreaterThanWidth = collisionRegion.getHeight() > collisionRegion.getWidth();
 		
 		switch(cType) {
 		case B_UPPER_LEFT :
-			if(collisionRegion.getHeight())
+			return (cHeightGreaterThanWidth) ? WEST_NORMAL : SOUTH_NORMAL;
+			
+		case B_UPPER_RIGHT :
+			return (cHeightGreaterThanWidth) ? EAST_NORMAL : SOUTH_NORMAL;
+
+		case B_LOWER_LEFT :
+			return (cHeightGreaterThanWidth) ? WEST_NORMAL : NORTH_NORMAL;
+
+		case B_LOWER_RIGHT :
+			return (cHeightGreaterThanWidth) ? EAST_NORMAL : SOUTH_NORMAL;
+			
+		default :
+			return new Vector(0, 0);
 		}
 	}
 
@@ -31,8 +50,8 @@ public class RectRectCollision extends PhysicsCollision {
 		return Math.max(collisionRegion.getHeight(), collisionRegion.getWidth());
 	}
 
+	//TODO refactor and also deal with case where rectangle is completely contained in other
 	private void computeCollisionRegion() {
-		//TODO refactor and also deal with case where rectangle is completely contained in other
 		if(rectA.containsPoint(rectB.getUpperLeft())) {
 			cType = CollisionType.B_UPPER_LEFT;
 			collisionRegion = RectangleBody.rBodyFromCorners(rectB.getUpperLeft(), rectA.getLowerRight());
@@ -48,6 +67,8 @@ public class RectRectCollision extends PhysicsCollision {
 		else if(rectA.containsPoint(rectB.getLowerRight())) {
 			cType = CollisionType.B_LOWER_RIGHT;
 			collisionRegion = RectangleBody.rBodyFromCorners(rectA.getUpperLeft(), rectB.getLowerRight());
+		} else {
+			cType = CollisionType.NONE;
 		}
 	}
 

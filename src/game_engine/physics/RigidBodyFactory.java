@@ -8,6 +8,7 @@ public class RigidBodyFactory {
 		double height = PhysicsEngine.pixelsToMeters(heightPixels);
 		double width = PhysicsEngine.pixelsToMeters(widthPixels);
 		RigidBody rBody;
+		
 		switch (rbType) {
 		case CIRCLE:
 			double radius = Math.max(height, width) / 2;

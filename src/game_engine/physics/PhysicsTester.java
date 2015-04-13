@@ -192,14 +192,19 @@ public class PhysicsTester extends Application {
 
 		/* create and add enemy sprites */
 		Sprite e1 = createAndAddEnemy(300, 700, 200, Material.BOUNCY_BALL);
+		Sprite e2 = createAndAddEnemy(500, 700, 100, 50, Material.BOUNCY_BALL);
 		//createAndAddEnemy(500, 700, 30, Material.BOUNCY_BALL);
 		//createAndAddEnemy(700, 200, 200, Material.BOUNCY_BALL);
 		
 		/* create collisions list */
 		Collision c1 = new Collision(playerSprite, e1, null, null, true, globalPhysics);
+		Collision c2 = new Collision(playerSprite, e2, null, null, true, globalPhysics);
+		//Collision c3 = new Collision(e1, e2, null, null, true, globalPhysics);
 		
 		ArrayList<Collision> cList = new ArrayList<>();
 		cList.add(c1);
+		cList.add(c2);
+		//cList.add(c3);
 		
 		/* create collision engine */
 		cEngine = new CollisionEngine(cList);
@@ -219,7 +224,20 @@ public class PhysicsTester extends Application {
 		layer.addSprite(enemySprite);
 		
 		return enemySprite;
+	}
+	
+	public Sprite createAndAddEnemy(int x, int y, int height, int width, Material material) {
+		String defaultState = "existing";
+		String defaultImage = "/Resources/images/bouncy_ball.jpg";
+		RBodyType rType = RBodyType.RECTANGLE;
+		int startX = x;
+		int startY = y;
 		
+		Sprite enemySprite = new Player(defaultState, defaultImage, height, width, rType, globalPhysics, material, startX, startY);
+		myGroup.getChildren().add(enemySprite.getImageView());
+		layer.addSprite(enemySprite);
+		
+		return enemySprite;
 	}
 
 	public void initAndDrawNodes() {
