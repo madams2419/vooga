@@ -1,10 +1,15 @@
 package authoring.rightPane;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import authoring.InteractionManager;
+import authoring.LevelManager;
 import authoring.userInterface.CenterPane;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -26,54 +31,28 @@ public class LevelSettingPane extends EditingPane {
         // TODO Auto-generated constructor stub
         super(myScene, parent);
         mScene = myScene;
+        updateLevels(parent);
+    }
+
+    public void updateLevels(RightPane parent){
+        this.getChildren().clear();
+        Map<Integer, ArrayList<Integer>> levels = LevelManager.getInstance().getLevels();
         /* Default Map */
-        createDefaultMap();
+        Iterator<Entry<Integer, ArrayList<Integer>>> it = levels.entrySet().iterator();
         HBox h = new HBox(5);
-        ComboBox<String> levelBox = new ComboBox<String>();
-        levelBox.setPromptText("Select level");
-        levelBox.getItems().addAll("Level 1");
-        levelBox.setEditable(true);
-        ComboBox<String> mapBox = new ComboBox<String>();
-        mapBox.setPromptText("Select Map");
-        mapBox.getItems().addAll("Map 1");
-        mapBox.setEditable(true);  
-        h.getChildren().addAll(levelBox,mapBox);
-        h.setMaxWidth(parent.myContainer.getWidth());
-        this.getChildren().add(h);
-    }
-
-    private Map<String, String> createDefaultMap() {
-        String[] key = { "Scrolling Speed", "Frame Rate", "Scrolling Size" };
-        String[] value = { "Default", "Default", "Default" };
-        fields = new HashMap<String, String>();
-        for (int i = 0; i < key.length; i++) {
-            fields.put(key[i], value[i]);
+        while(it.hasNext()){
+            Entry<Integer, ArrayList<Integer>> thisLevel = it.next();
+            Label levelLabel = new Label("Level "+thisLevel.getKey());
+            ComboBox<String> mapBox = new ComboBox<String>();
+            mapBox.setPromptText("Select Map");
+            ArrayList<Integer> maps = thisLevel.getValue();
+            for(Integer map:maps){
+                mapBox.getItems().add("Map "+map);
+                mapBox.setEditable(true);
+            }
+            h.getChildren().addAll(levelLabel,mapBox);
+            h.setMaxWidth(parent.myContainer.getWidth());
+            this.getChildren().add(h);
         }
-        return fields;
     }
-
-    private void setFields(ObservableList<Node> parent,
-            Map<String, String> fields) {
-        fields.forEach((label, value) -> {
-            HBox h = new HBox(5);
-            h.getChildren().addAll(new Text(label),
-                    new javafx.scene.control.TextField(value));
-            parent.add(h);
-            myFields.add(h);
-        });
-
-    }
-
-    private Map<String, String> updateMap() {
-        // System.out.println();
-
-        myFields.forEach(hbox -> {
-            String s, t;
-            fields.put((s = ((Text) hbox.getChildren().get(0)).getText()),
-                    (t = ((TextField) hbox.getChildren().get(1)).getText()));
-        });
-        return fields;
-        // System.out.println(sprite.getCharacteristics().toString());
-    }
-
 }

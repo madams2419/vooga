@@ -1,10 +1,12 @@
 package game_engine.physics;
 
+import game_engine.physics.RigidBody.RBodyType;
+
 import java.util.List;
 import java.util.Observable;
 
 // TODO
-// - ability to run back time...some mechanism to do that
+// - move position into RigidBody
 
 public class PhysicsObject extends Observable {
 
@@ -18,11 +20,15 @@ public class PhysicsObject extends Observable {
 	private List<Joint> myJoints;
 	private PhysicsEngine myPhysics;
 
-	private Shape myShape;
+	private RigidBody myRigidBody;
 
-	public PhysicsObject(PhysicsEngine physics, Shape shape, Material material, int xPosPixels, int yPosPixels) {
+	public PhysicsObject(PhysicsEngine physics, RBodyType rbType, int widthPixels, int heightPixels, Material material, int xPosPixels, int yPosPixels) {
+		this(physics, RigidBodyFactory.createRigidBody(heightPixels, widthPixels, rbType), material, xPosPixels, yPosPixels);
+	}
+
+	public PhysicsObject(PhysicsEngine physics, RigidBody rigidBody, Material material, int xPosPixels, int yPosPixels) {
 		myPhysics = physics;
-		myShape = shape;
+		myRigidBody = rigidBody;
 		myMaterial = material;
 
 		myPosition = PhysicsEngine.vectorPixelsToMeters(xPosPixels, yPosPixels);
@@ -42,9 +48,9 @@ public class PhysicsObject extends Observable {
 		myPosition = myPosition.plus(myVelocity.times(dt));
 
 		// temporary ground handling
-		if(myPosition.getY() <= myPhysics.getGround() + myShape.getRadiusMeters()) {
-			myPosition.setY(myPhysics.getGround() + myShape.getRadiusMeters());
-			myVelocity.setY(0);
+		if(myPosition.getY() <= myPhysics.getGround() + myRigidBody.getRadius()) {
+			myPosition = myPosition.setY(myPhysics.getGround() + myRigidBody.getRadius());
+			myVelocity = myVelocity.setY(0);
 		}
 
 		setChanged();
@@ -52,7 +58,7 @@ public class PhysicsObject extends Observable {
 	}
 
 	private double computeInvMass() {
-		double mass = myMaterial.getDensity() * myShape.getVolume();
+		double mass = myMaterial.getDensity() * myRigidBody.getVolume();
 		return 1/mass;
 	}
 
@@ -115,7 +121,7 @@ public class PhysicsObject extends Observable {
 	}
 
 	public void setXMeters(double xMeters) {
-		myPosition.setX(xMeters);
+		myPosition = myPosition.setX(xMeters);
 	}
 
 	public double getYMeters() {
@@ -123,7 +129,7 @@ public class PhysicsObject extends Observable {
 	}
 
 	public void setYMeters(double yMeters) {
-		myPosition.setY(yMeters);
+		myPosition = myPosition.setY(yMeters);
 	}
 
 	public double getXPixels() {
@@ -131,7 +137,7 @@ public class PhysicsObject extends Observable {
 	}
 
 	public void setXPixels(double xPixels) {
-		myPosition.setX(PhysicsEngine.pixelsToMeters(xPixels));
+		myPosition = myPosition.setX(PhysicsEngine.pixelsToMeters(xPixels));
 	}
 
 	public double getYPixels() {
@@ -139,7 +145,11 @@ public class PhysicsObject extends Observable {
 	}
 
 	public void setYPixels(double yPixels) {
-		myPosition.setY(PhysicsEngine.pixelsToMeters(yPixels));
+		myPosition = myPosition.setY(PhysicsEngine.pixelsToMeters(yPixels));
+	}
+
+	public double getRadiusPixels() {
+		return PhysicsEngine.metersToPixels(myRigidBody.getRadius());
 	}
 
 	public Vector getVelocity() {
@@ -171,13 +181,8 @@ public class PhysicsObject extends Observable {
 		myInvMass = computeInvMass();
 	}
 
-	public Shape getShape() {
-		return myShape;
-	}
-
-	public void setShape(Shape shape) {
-		myShape = shape;
-		myInvMass = computeInvMass();
+	public RigidBody getRigidBody() {
+		return myRigidBody;
 	}
 
 }

@@ -1,17 +1,7 @@
 package game_engine.collision;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.Arrays;
 import java.util.List;
-
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
-import javafx.scene.paint.Color;
-import game_engine.sprite.Player;
-import game_engine.sprite.Sprite;
+import java.util.ArrayList;
 /**
  * Class checks for collision occurrences between sprites
  * @author Michael Lee
@@ -21,6 +11,9 @@ import game_engine.sprite.Sprite;
 public class CollisionEngine {
 	List<Collision> collisionList;
 	
+	public CollisionEngine() {
+	    this(new ArrayList<>());
+	}
 	
 	public CollisionEngine(List<Collision> list){
 		collisionList = list;

@@ -5,12 +5,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import authoring.XMLBuilder;
-import authoring.util.FrontEndUtils;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import authoring.util.FrontEndUtils;
 
 /***
  * 

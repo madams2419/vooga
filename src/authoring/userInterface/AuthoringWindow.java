@@ -15,7 +15,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import authoring.Sprite;
@@ -44,8 +43,6 @@ public class AuthoringWindow {
 	private static final int NEW_FILE = 0;
 	private static final int OPEN_FILE = 1;
 	private static final int CLOSE_GAME = 2;
-	private static final int SCENE_WIDTH = 1200;
-	private static final int SCENE_HEIGHT = 700;
 
 	private static Sprite currentlySelected;
 	private static boolean control;
@@ -55,13 +52,15 @@ public class AuthoringWindow {
 		System.out.println("Instantiated AuthoringWindow");
 	}
 
-	public Scene GameCreateUI() {
+	public Scene GameCreateUI(Scene parentScene) {
 
 		VBox root = new VBox();
 
 		BorderPane rootContainer = new BorderPane();
 
-		myScene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, Color.WHITE);
+		parentScene.setRoot(root);
+		
+		myScene = parentScene;
 
 		rootContainer.setPrefHeight(myScene.getHeight());
 		rootContainer.setPrefWidth(myScene.getWidth());

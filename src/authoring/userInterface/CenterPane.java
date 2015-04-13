@@ -48,8 +48,6 @@ public class CenterPane extends WindowPane {
 	}
 
 	public CenterCanvas getActiveTab() {
-		System.out.printf("Changing tabs to tab %d%n", ((TabPane) myContainer)
-				.getSelectionModel().getSelectedIndex());
 		return (CenterCanvas) ((TabPane) myContainer)
 				.getTabs()
 				.get(((TabPane) myContainer).getSelectionModel()
