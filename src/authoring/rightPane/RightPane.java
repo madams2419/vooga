@@ -108,6 +108,10 @@ public class RightPane extends WindowPane {
 	public void switchToMapSettingPane() {
 		switchToPane(new MapSettingPane(myScene, this));
 	}
+	
+    public void switchToLevelSettingPane() {
+        switchToPane(new LevelSettingPane(myScene, this));
+    }
 
 	public void setScene(Scene scene) {
 		myScene = scene;
