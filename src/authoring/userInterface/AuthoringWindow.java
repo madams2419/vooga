@@ -55,13 +55,15 @@ public class AuthoringWindow {
 		System.out.println("Instantiated AuthoringWindow");
 	}
 
-	public Scene GameCreateUI() {
+	public Scene GameCreateUI(Scene parentScene) {
 
 		VBox root = new VBox();
 
 		BorderPane rootContainer = new BorderPane();
 
-		myScene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, Color.WHITE);
+		parentScene.setRoot(root);
+		
+		myScene = parentScene;
 
 		rootContainer.setPrefHeight(myScene.getHeight());
 		rootContainer.setPrefWidth(myScene.getWidth());

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Simple_Game>
+<game>
 	<title>Simple Game</title>
 	<level>
 		<start>0</start>
