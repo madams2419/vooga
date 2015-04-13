@@ -74,8 +74,7 @@ public class Animation implements Observer {
 	}
 	
 	public void updatePosition(PhysicsObject physics) {
-		Vector jfxPosition = Utilities.normalToJFXCoords(physics
-				.getPositionPixels());
+		Vector jfxPosition = Utilities.physicsCenterToUpperLeft(physics);
 		myImageView.setTranslateX(jfxPosition.getX());
 		myImageView.setTranslateY(jfxPosition.getY());
 	}

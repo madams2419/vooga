@@ -36,10 +36,10 @@ public class PhysicsTester extends Application {
 	private static Vector leftImpulse = new Vector(-0.01, 0);
 	private static Vector downImpulse = new Vector(0, -0.02);
 
-	private static Vector upForce = new Vector(0, 30);
-	private static Vector rightForce = new Vector(30, 0);
-	private static Vector leftForce = new Vector(-30, 0);
-	private static Vector downForce = new Vector(0, 30);
+	private static Vector upForce = new Vector(0, 10);
+	private static Vector rightForce = new Vector(10, 0);
+	private static Vector leftForce = new Vector(-10, 0);
+	private static Vector downForce = new Vector(0, 10);
 
 	private Timeline gameLoop;
 	private Scene myScene;
@@ -191,7 +191,7 @@ public class PhysicsTester extends Application {
 		layer.addSprite(playerSprite);
 
 		/* create and add enemy sprites */
-		Sprite e1 = createAndAddEnemy(300, 700, 50, Material.BOUNCY_BALL);
+		Sprite e1 = createAndAddEnemy(300, 700, 200, Material.BOUNCY_BALL);
 		//createAndAddEnemy(500, 700, 30, Material.BOUNCY_BALL);
 		//createAndAddEnemy(700, 200, 200, Material.BOUNCY_BALL);
 		

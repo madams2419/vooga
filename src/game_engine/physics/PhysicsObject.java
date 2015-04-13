@@ -21,7 +21,7 @@ public class PhysicsObject extends Observable {
 	private PhysicsEngine myPhysics;
 
 	private RigidBody myRigidBody;
-	
+
 	public PhysicsObject(PhysicsEngine physics, RBodyType rbType, int widthPixels, int heightPixels, Material material, int xPosPixels, int yPosPixels) {
 		this(physics, RigidBodyFactory.createRigidBody(heightPixels, widthPixels, rbType), material, xPosPixels, yPosPixels);
 	}
@@ -146,6 +146,10 @@ public class PhysicsObject extends Observable {
 
 	public void setYPixels(double yPixels) {
 		myPosition = myPosition.setY(PhysicsEngine.pixelsToMeters(yPixels));
+	}
+
+	public double getRadiusPixels() {
+		return PhysicsEngine.metersToPixels(myRigidBody.getRadius());
 	}
 
 	public Vector getVelocity() {
