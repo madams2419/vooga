@@ -31,6 +31,7 @@ public class RightPane extends WindowPane {
 	private final static int SPACING = 20;
 	private final static int PADDING = 10;
 	private final static String CSS = "styles/right_pane.css";
+	private List<String> availableCharacterTypeURIs;
 
 	public RightPane(Scene scene, AuthoringWindow window) {
 		super(scene, new VBox(SPACING), window);
@@ -38,6 +39,7 @@ public class RightPane extends WindowPane {
 		myContainer.getStylesheets().add(CSS);
 		myContainer.setPadding(new Insets(PADDING));
 		((VBox) myContainer).setAlignment(Pos.TOP_CENTER);
+		initializeAvailableCharacterTypes();
 		// switchToPane(new CharacterCreationPane(scene, this));
 		// initializeCurrentContent(new DefaultEditingPane(scene));
 		// initializeCurrentContent(new CharacterEditingPane(scene, null));
@@ -50,11 +52,13 @@ public class RightPane extends WindowPane {
 
 	public void switchToCharacterCreationPane() {
 		if (!(myCurrentContent instanceof CharacterCreationPane))
-			switchToPane(new CharacterCreationPane(myScene, this));
+			switchToPane(new CharacterCreationPane(myScene, this,
+					availableCharacterTypeURIs));
 	}
 
 	public void switchToInteractionEditingPane(Sprite sprite1, Sprite sprite2) {
-		if (!(myCurrentContent instanceof InteractionEditingPane) && (sprite1 != sprite2)) // checking memory address
+		if (!(myCurrentContent instanceof InteractionEditingPane)
+				&& (sprite1 != sprite2)) // checking memory address
 			switchToPane(new InteractionEditingPane(myScene, this, sprite1,
 					sprite2, getListOfInteractions()));
 		printOutInteractions();
@@ -108,14 +112,9 @@ public class RightPane extends WindowPane {
 	public void switchToMapSettingPane() {
 		switchToPane(new MapSettingPane(myScene, this));
 	}
-	
-    public void switchToLevelSettingPane() {
-        switchToPane(new LevelSettingPane(myScene, this));
-    }
 
-	public void setScene(Scene scene) {
-		myScene = scene;
-		initializeCurrentContent(new CharacterCreationPane(scene, this));
+	public void switchToLevelSettingPane() {
+		switchToPane(new LevelSettingPane(myScene, this));
 	}
 
 	private void clearChildren() {
@@ -132,12 +131,6 @@ public class RightPane extends WindowPane {
 		addFromCurrentContent();
 	}
 
-	private void initializeCurrentContent(EditingPane content) {
-		myCurrentContent = content;
-		((VBox) myContainer).getChildren().addAll(
-				myCurrentContent.getChildren());
-	}
-
 	// TEMPORARY!!
 	private List<String> getListOfInteractions() {
 		return Arrays.asList(new String[] { "jump", "die", "go to new level",
@@ -147,11 +140,20 @@ public class RightPane extends WindowPane {
 	@Override
 	public Group generateComponents(
 			ArrayList<Map<String, Map<String, String>>> values) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public AuthoringWindow getParent() {
 		return myParent;
+	}
+
+	private void initializeAvailableCharacterTypes() {
+		availableCharacterTypeURIs = new ArrayList<>();
+
+		// TODO this should come from a resource file whenever we decide what
+		// will be the initial
+		// available character types will be
+		availableCharacterTypeURIs.add("/images/luigi.png");
+		availableCharacterTypeURIs.add("/images/block.png");
 	}
 }

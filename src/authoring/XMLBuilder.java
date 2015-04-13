@@ -267,19 +267,19 @@ public class XMLBuilder {
 		return root;
 	}
 
-	public void addAllSprites(Collection<Sprite> sprites) {
-		sprites.forEach(sprite -> addSprite(sprite));
+	public void addAllSprites(Element parent, Collection<Sprite> sprites) {
+		sprites.forEach(sprite -> addSprite(parent, sprite));
 	}
 
-	private void addSprite(Sprite sprite) {
-		Element s = add(root, "sprite");
+	private void addSprite(Element parent, Sprite sprite) {
+		Element s = add(parent, "sprite");
 		s.setAttribute("name", sprite.getName());
 		sprite.getCharacteristics().forEach(
 				(key, value) -> addChildWithValue(s, key, value));
 	}
 
-	public void addAllEnvironment(Collection<Map<String, String>> environments) {
-		Element mapElement = addToRoot("map");
+	public void addAllEnvironment(Element parent, Collection<Map<String, String>> environments) {
+		Element mapElement = add(parent, "map_environment");
 		assert (mapElement != null);
 		environments.forEach(map -> {
 			map.forEach((s1, s2) -> {

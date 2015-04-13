@@ -5,11 +5,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import authoring.XMLBuilder;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import authoring.util.FrontEndUtils;
 
 /***
  * 
@@ -19,6 +19,7 @@ import javafx.scene.layout.HBox;
 public class BottomPane extends WindowPane {
 
 	private List<Button> mButtonList = new ArrayList<>();
+	public static final String XML_FILE_OUTPUT = "res/game.xml";
 
 	// BottomPane() {
 	// this(myScene,myContainer);
@@ -58,11 +59,7 @@ public class BottomPane extends WindowPane {
 		}
 		Button c = new Button("Output xml");
 		c.setOnAction(e -> {
-			XMLBuilder.getInstance("game").addAllSprites(
-					myParent.getMyCenterPane().getActiveTab().getSprites());
-			XMLBuilder.getInstance("game").addAllEnvironment(
-					myParent.getMyCenterPane().getActiveTab().getEnvironment());
-			XMLBuilder.getInstance("game").streamFile("lib/test.xml");
+			FrontEndUtils.buildXMLFile(myParent, XML_FILE_OUTPUT);
 		});
 		mButtonList.add(b);
 		mButtonList.add(c);

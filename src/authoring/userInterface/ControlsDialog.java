@@ -60,7 +60,7 @@ public class ControlsDialog extends Dialog<ButtonType>{
 			for (int i = 0; i < myTextFields.size(); i++){
 				myKeyActions.put(myTextFields.get(i).getText(), myComboBoxes.get(i).getValue());
 			}
-			s.setKeyControl(myKeyActions);
+			s.setKeyActions(myKeyActions);
 			System.out.println(myKeyActions);
 		});
 	}
