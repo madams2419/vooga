@@ -17,13 +17,27 @@
 							</behavior_0>
 						</behaviors>
 					</onComplete>
-					<onFailed></onFailed>
+					<onFailed>
+						<behaviors></behaviors>
+					</onFailed>
 				</objective_0>
 				
 				<objective_1>
 					<prereqs></prereqs>
-					<onComplete></onComplete>
-					<onFailed></onFailed>
+					<timer>5</timer>
+					<onComplete>
+						<behaviors></behaviors>
+					</onComplete>
+					<onFailed>
+						<behaviors>
+							<behavior_0>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>setState</name>
+								<parameters>dead</parameters>
+							</behavior_0>
+						</behaviors>
+					</onFailed>
 				</objective_1>
 				
 				<objective_2>
@@ -34,11 +48,13 @@
 								<targetType>sprite</targetType>
 								<targetIndex>0</targetIndex>
 								<name>setState</name>
-								<parameters>dead</parameters>
+								<parameters>standing</parameters>
 							</behavior_0>
 						</behaviors>
 					</onComplete>
-					<onFailed></onFailed>
+					<onFailed>
+						<behaviors></behaviors>
+					</onFailed>
 				</objective_2>
 			</objective>
 			
@@ -46,24 +62,26 @@
 				<sprite_0>
 					<type>Player</type>
 					<initialState>standing</initialState>
+					<width>100</width>
+					<height>200</height>
 					<animation>
 						<state_0>
 							<name>standing</name>
-							<image>/Resources/images/standingMario.png</image>
+							<image>/images/mario.png</image>
 						</state_0>
 						
 						<state_1>
 							<name>dead</name>
-							<image>/Resources/images/walkingMario.png</image>
+							<image>/images/mario.png</image>
 						</state_1>
 						
 						<state_2>
 							<name>win</name>
-							<image>/Resources/images/walkingMario.png</image>
+							<image>/images/mario.png</image>
 						</state_2>
 					</animation>
 					<physics>
-						<material>0</material>
+						<material>bouncy_ball</material>
 						<x>50</x>
 						<y>100</y>
 						<xVel>0</xVel>
@@ -74,16 +92,18 @@
 				<sprite_1>
 					<type>Platform</type>
 					<initialState>immobile</initialState>
+					<width>2000</width>
+					<height>200</height>
 					<animation>
 						<state_0>
 							<name>immobile</name>
-							<image>/Resources/images/standingMario.png</image>
+							<image>/images/ground.png</image>
 						</state_0>
 					</animation>
 					<physics>
-						<material>0</material>
+						<material>wood</material>
 						<x>0</x>
-						<y>50</y>
+						<y>0</y>
 						<xVel>0</xVel>
 						<yVel>0</yVel>
 					</physics>
@@ -92,16 +112,18 @@
 				<sprite_2>
 					<type>Platform</type>
 					<initialState>immobile</initialState>
+					<width>300</width>
+					<height>50</height>
 					<animation>
 						<state_0>
 							<name>immobile</name>
-							<image>/Resources/images/standingMario.png</image>
+							<image>/images/ground.png</image>
 						</state_0>
 					</animation>
 					<physics>
-						<material>0</material>
-						<x>300</x>
-						<y>200</y>
+						<material>wood</material>
+						<x>1000</x>
+						<y>300</y>
 						<xVel>0</xVel>
 						<yVel>0</yVel>
 					</physics>
@@ -110,15 +132,17 @@
 				<sprite_3>
 					<type>Enemy</type>
 					<initialState>immobile</initialState>
+					<width>100</width>
+					<height>200</height>
 					<animation>
 						<state_0>
 							<name>immobile</name>
-							<image>/Resources/images/standingMario.png</image>
+							<image>/images/bowser.png</image>
 						</state_0>
 					</animation>
 					<physics>
-						<material>0</material>
-						<x>250</x>
+						<material>bouncy_ball</material>
+						<x>600</x>
 						<y>100</y>
 						<xVel>0</xVel>
 						<yVel>0</yVel>
@@ -128,16 +152,18 @@
 				<sprite_4>
 					<type>Collectible</type>
 					<initialState>immobile</initialState>
+					<width>50</width>
+					<height>50</height>
 					<animation>
 						<state_0>
 							<name>immobile</name>
-							<image>/Resources/images/standingMario.png</image>
+							<image>/images/key.png</image>
 						</state_0>
 					</animation>
 					<physics>
-						<material>0</material>
-						<x>300</x>
-						<y>300</y>
+						<material>static</material>
+						<x>1100</x>
+						<y>350</y>
 						<xVel>0</xVel>
 						<yVel>0</yVel>
 					</physics>
@@ -146,15 +172,17 @@
 				<sprite_5>
 					<type>Region</type>
 					<initialState>immobile</initialState>
+					<height>500</height>
+					<width>100</width>
 					<animation>
 						<state_0>
 							<name>immobile</name>
-							<image>/Resources/images/standingMario.png</image>
+							<image>/images/goal.png</image>
 						</state_0>
 					</animation>
 					<physics>
-						<material>0</material>
-						<x>500</x>
+						<material>static</material>
+						<x>1800</x>
 						<y>100</y>
 						<xVel>0</xVel>
 						<yVel>0</yVel>
@@ -166,13 +194,6 @@
 				<gravity>10</gravity>
 			</physics>
 			
-			<material>
-				<material_0>
-					<density>1</density>
-					<restitution>1</restitution>
-				</material_0>
-			</material>
-			
 			<control>
 				<control_0>
 					<key_0>
@@ -183,11 +204,13 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>moveForward</name>
-									<parameters>5 0</parameters>
+									<parameters>.005 0</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
-						<whilePressed><behaviors></behaviors></whilePressed>
+						<whilePressed>
+							<behaviors></behaviors>
+						</whilePressed>
 						<onReleased>
 							<behaviors>
 								<behavior_0>
@@ -208,7 +231,7 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>moveForward</name>
-									<parameters>-5 0</parameters>
+									<parameters>-.005 0</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
@@ -233,12 +256,16 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>jump</name>
-									<parameters>5</parameters>
+									<parameters>.002</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
-						<whilePressed><behaviors></behaviors></whilePressed>
-						<onReleased><behaviors></behaviors></onReleased>
+						<whilePressed>
+							<behaviors></behaviors>
+						</whilePressed>
+						<onReleased>
+							<behaviors></behaviors>
+						</onReleased>
 					</key_2>
 				</control_0>
 			</control>
@@ -268,13 +295,21 @@
 				
 				<collision_1>
 					<sprite_1>0</sprite_1>
-					<sprite_2>1 2</sprite_2>
+					<sprite_2>1</sprite_2>
 					<direction>0 1 2</direction>
 					<realistic>true</realistic>
 					<behaviors></behaviors>
 				</collision_1>
 				
 				<collision_2>
+					<sprite_1>0</sprite_1>
+					<sprite_2>2</sprite_2>
+					<direction>0 1 2</direction>
+					<realistic>true</realistic>
+					<behaviors></behaviors>
+				</collision_2>
+				
+				<collision_3>
 					<sprite_1>0</sprite_1>
 					<sprite_2>4</sprite_2>
 					<direction>0 1 2 3</direction>
@@ -287,9 +322,9 @@
 							<parameters>complete</parameters>
 						</behavior_0>
 					</behaviors>
-				</collision_2>
+				</collision_3>
 				
-				<collision_3>
+				<collision_4>
 					<sprite_1>0</sprite_1>
 					<sprite_2>5</sprite_2>
 					<direction>0 1 2 3</direction>
@@ -302,7 +337,7 @@
 							<parameters>complete</parameters>
 						</behavior_0>
 					</behaviors>
-				</collision_3>
+				</collision_4>
 			</collision>
 		</level_0>
 	</level>
