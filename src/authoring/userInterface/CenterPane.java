@@ -1,5 +1,6 @@
 package authoring.userInterface;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -15,10 +16,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
 import authoring.Sprite;
 import authoring.rightPane.GlobalCreationPane;
 import authoring.util.FrontEndUtils;
@@ -98,7 +101,13 @@ public class CenterPane extends WindowPane {
 		private void canvasClicked(MouseEvent e) {
 			try {
 				if (e.getButton() == MouseButton.SECONDARY){
-					
+					FileChooser fileChooser = new FileChooser();
+			        FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+			        FileChooser.ExtensionFilter pngFilter = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+			        fileChooser.getExtensionFilters().addAll(jpgFilter, pngFilter);
+					File imagePath = fileChooser.showOpenDialog(null);
+				    Image image = new Image("file:///" + imagePath.getPath());
+				    myCurrentRectangle.setBackgroundImage(image);
 				}
 				Sprite s = ((SpriteCursor) myScene.getCursor())
 						.getCurrentSprite();
