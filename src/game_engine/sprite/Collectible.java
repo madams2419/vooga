@@ -1,43 +1,38 @@
 package game_engine.sprite;
 
+import game_engine.physics.Material;
+import game_engine.physics.PhysicsEngine;
 import game_engine.physics.PhysicsObject;
+import game_engine.physics.RigidBody.RBodyType;
+
+
 
 public class Collectible extends Sprite{
     
     private int myCount;
     private boolean canCollect;
-<<<<<<< HEAD
     
-    public Collectible(PhysicsObject physics) {
-        super(physics);
-       
-      }
-
-   
-      public Collectible(PhysicsObject physics, String name){
-          super(physics,name);
-          
-      }
+    public Collectible(String defaultState, String defaultImage, int height, int width, RBodyType rbType,
+		PhysicsEngine globalPhysics, Material material, int startX, int startY) {
+	super(defaultState, defaultImage, height, width, rbType, globalPhysics, material, startX, startY);
+}
     
-      public Collectible(PhysicsObject physics,String name, int id){
-          super(physics,name,id);
-=======
-
-    public Collectible() {
-        super();
-        myCount = 0;
-    }
-
-   
-      public Collectible(String name){
-          super(name);
-          myCount = 0;
-      }
-    
-      public Collectible(String name, int id){
-          super(name,id);
-          myCount = 0;
-      }
+//    public Collectible(PhysicsObject physics) {
+//        super(physics);
+//        myCount =0;
+//       
+//      }
+//
+//   
+//      public Collectible(PhysicsObject physics, String name){
+//          super(physics,name);
+//          myCount =0;
+//      }
+//    
+//      public Collectible(PhysicsObject physics,String name, int id){
+//          super(physics,name,id);
+//          myCount = 0;
+//      }
       
       public void collect(int amount){
           myCount+=amount;
@@ -53,7 +48,6 @@ public class Collectible extends Sprite{
       
       public void resetCount(){
           myCount = 0;
->>>>>>> 7d5e946f9ea3ce34ddf23ca286c9b20436d7254d
          
       }
       

@@ -1,11 +1,12 @@
 package game_engine.control;
 
 
-import game_engine.Behavior;
-import game_engine.IBehavior;
-
-import java.util.*;
-
+import game_engine.behaviors.IAction;
+import game_engine.behaviors.IBehavior;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javafx.scene.input.KeyCode;
 
 /**
@@ -15,16 +16,16 @@ import javafx.scene.input.KeyCode;
  */
 public class KeyControl {
 
-	Map<String, IBehavior> myControlMap;
+	Map<String, IAction> myControlMap;
 	Map<String, String> myDesignerMap;
 	Map<KeyCode, String> myVirtualKeyboard;
 
-	Map<KeyCode, List<Behavior>> myKeyPressedMap;
-	Map<KeyCode, List<Behavior>> myKeyReleasedMap;
-	Map<KeyCode, List<Behavior>> myKeyHeldMap;
+	Map<KeyCode, IBehavior> myKeyPressedMap;
+	Map<KeyCode, IBehavior> myKeyReleasedMap;
+	Map<KeyCode, IBehavior> myKeyHeldMap;
 	List<KeyCode> myWhilePressedKey;
 
-	public KeyControl(Map<KeyCode, List<Behavior>> keyPressMap, Map<KeyCode, List<Behavior>> keyReleaseMap, Map<KeyCode, List<Behavior>> keyHeldMap) {
+	public KeyControl(Map<KeyCode, IBehavior> keyPressMap, Map<KeyCode, IBehavior> keyReleaseMap, Map<KeyCode, IBehavior> keyHeldMap) {
 		myControlMap = new HashMap<>();
 		myDesignerMap = new HashMap<>();
 		myVirtualKeyboard = new HashMap<>();
@@ -40,10 +41,10 @@ public class KeyControl {
 		if(myKeyPressedMap.containsKey(keycode)){
 			if(pressed){
 				//add error checking later
-				myKeyPressedMap.get(keycode).forEach((behavior) -> behavior.execute());
+				myKeyPressedMap.get(keycode).perform();
 				myWhilePressedKey.add(keycode);
 			} else {
-				myKeyReleasedMap.get(keycode).forEach((behavior) -> behavior.execute());
+				myKeyReleasedMap.get(keycode).perform();
 				myWhilePressedKey.remove(keycode);
 			}
 		}
@@ -91,7 +92,7 @@ public class KeyControl {
 		}
 	}
 
-	private void addEntryControlMap(String key, IBehavior behavior){
+	private void addEntryControlMap(String key, IAction behavior){
 		myControlMap.put(key, behavior);
 	}
 
@@ -105,7 +106,8 @@ public class KeyControl {
 
 	//TODO: throw exception if keycode not defined
 	private KeyCode kcTranslation(String index){
-		return KeycodeFactory.generateKeyCode(index);
+	    return null;
+		//return KeycodeFactory.generateKeyCode(index);
 	}
 
 }
