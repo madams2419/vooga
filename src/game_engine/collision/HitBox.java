@@ -17,8 +17,8 @@ public class HitBox {
     private Image image;
 	
 	public HitBox(ImageView n) {
-		node = n;
-		image = node.getImage();
+	        node = n;
+		image = n.getImage();
 		boolean[][] bitMap = createBitMap(image);
 		
 	}

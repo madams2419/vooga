@@ -1,6 +1,6 @@
 package game_engine.sprite;
 
-import game_engine.IAction;
+import game_engine.behaviors.IAction;
 import game_engine.physics.PhysicsObject;
 
 

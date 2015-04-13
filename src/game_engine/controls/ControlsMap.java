@@ -1,6 +1,6 @@
 package game_engine.controls;
 
-import game_engine.IBehavior;
+import game_engine.behaviors.IBehavior;
 
 import java.util.HashMap;
 import java.util.List;

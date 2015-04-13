@@ -1,8 +1,8 @@
 package game_engine.objective;
 
-import game_engine.IAction;
-import game_engine.IActor;
-import game_engine.IBehavior;
+import game_engine.behaviors.IAction;
+import game_engine.behaviors.IActor;
+import game_engine.behaviors.IBehavior;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,14 +12,15 @@ import java.util.function.Predicate;
 
 
 /**
- * Class that represents goals or winning/losing conditions of the game.
- * Each objective has a condition and a behavior. When the condition is true, the behavior will be
- * executed.
+ * Class that represents goals or winning/losing conditions of the game. Each objective has four
+ * different statuses (inactive, active, complete, and failed). Conditions can be added that can
+ * cause the objective to change status. A behavior can also be associated with each status such
+ * that when the objective is changed to that status, that behavior is performed.
  * 
  * @author Tony
  *
  */
-public class Objective implements IActor{
+public class Objective implements IActor {
     private Map<Predicate<Long>, Status> myConditions;
     private Map<Status, IBehavior> myBehaviors;
     /**
@@ -28,11 +29,16 @@ public class Objective implements IActor{
     private List<Objective> myPreReqs;
     private Optional<GameTimer> myTimer;
     private Status myStatus;
+
     protected enum Status {
         INACTIVE,
         ACTIVE,
         COMPLETE,
         FAILED;
+
+        public static Status get (String status) {
+            return Status.valueOf(status.toUpperCase());
+        }
     }
 
     /**
@@ -58,26 +64,44 @@ public class Objective implements IActor{
     public void setPreReqs (List<Objective> preReqs) {
         myPreReqs = preReqs;
     }
-    
-    public void setBehavior (String status, IBehavior behavior){
-        myBehaviors.put(Status.valueOf(status.toUpperCase()), behavior);
+
+    /**
+     * Sets the behavior performed when the objective's status is changed to a certain value.
+     * 
+     * @param status
+     * @param behavior
+     */
+    public void setBehavior (String status, IBehavior behavior) {
+        myBehaviors.put(Status.get(status), behavior);
     }
-    
+
+    /**
+     * Adds a condition that leads to a given status.
+     * 
+     * @param condition
+     * @param status
+     */
     public void addCondition (Predicate<Long> condition, String status) {
-        addCondition(condition, Status.valueOf(status.toUpperCase()));
+        addCondition(condition, Status.get(status));
     }
-     
-    public void addCondition (Predicate<Long> condition, Status status) {
+
+    protected void addCondition (Predicate<Long> condition, Status status) {
         myConditions.put(condition, status);
     }
-    
-    public void setTimer (GameTimer timer){
+
+    /**
+     * Sets a timer for the objective. Status is FAILED if the timer expires.
+     * 
+     * @param timer
+     */
+    public void setTimer (GameTimer timer) {
         myTimer = Optional.ofNullable(timer);
         addCondition(this::checkTimer, Status.FAILED);
     }
-    
+
     /**
      * Returns true if and only if the timer has expired.
+     * 
      * @param now
      * @return
      */
@@ -87,35 +111,37 @@ public class Objective implements IActor{
 
     /**
      * Updates active and completion status. Completes if objective is complete.
-     * @param now 
+     * 
+     * @param now
      */
     public void update (long now) {
         updateActive(now);
         if (isActive()) {
-            updateStatus (now);
+            updateStatus(now);
             executeStatus();
         }
     }
-    
+
     private void updateStatus (long now) {
-        for (Predicate<Long> condition: myConditions.keySet()) {
+        for (Predicate<Long> condition : myConditions.keySet()) {
             if (condition.test(now)) {
                 myStatus = myConditions.get(condition);
             }
         }
-    }    
-    
-    private void executeStatus () {
-        myBehaviors.getOrDefault(myStatus,() -> {}).perform();
     }
 
-    private void updateActive(long now) {
-        if (isActive() || isFinished()){
+    private void executeStatus () {
+        myBehaviors.getOrDefault(myStatus, () -> {
+        }).perform();
+    }
+
+    private void updateActive (long now) {
+        if (isActive() || isFinished()) {
             return;
         }
         setActive(arePreReqsFinished(), now);
     }
-    
+
     /**
      * Updates the active status and returns the status. An objective's completion status only if it
      * is active.
@@ -133,30 +159,35 @@ public class Objective implements IActor{
     public boolean isComplete () {
         return myStatus == Status.COMPLETE;
     }
-    
-    public boolean isFailed() {
+
+    public boolean isFailed () {
         return myStatus == Status.FAILED;
     }
-    
-    
-    public boolean isFinished() {
+
+    public boolean isFinished () {
         return isComplete() || isFailed();
     }
 
+    /**
+     * 
+     * @param active
+     * @param now
+     */
     public void setActive (boolean active, long now) {
-        myStatus = Status.ACTIVE;
-        if (isActive()){
+        myStatus = active ? Status.ACTIVE : Status.INACTIVE;
+        if (isActive()) {
             myTimer.ifPresent(timer -> timer.start(now));
         }
     }
 
     @Override
     public IAction getAction (String name) {
-        if (name == "setStatus"){
+        if (name == "setStatus") {
             return (params) -> {
-                myStatus = Status.valueOf(params[0].toUpperCase());
+                addCondition( (now) -> true, params[0]);
             };
         }
-        return (params) -> {};
+        return (params) -> {
+        };
     }
 }

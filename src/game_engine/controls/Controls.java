@@ -1,8 +1,11 @@
 package game_engine.controls;
 
-import game_engine.IBehavior;
+import game_engine.behaviors.IBehavior;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javafx.event.EventType;
 import javafx.scene.input.KeyCode;

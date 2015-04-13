@@ -1,8 +1,8 @@
 package game_player;
 
-import game_engine.IAction;
 import game_engine.Level;
-import game_engine.sprite.Sprite;
+import game_engine.behaviors.IAction;
+import game_engine.control.ControlManager;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.AnimationTimer;
@@ -12,9 +12,11 @@ public class VoogaGame extends AnimationTimer {
     
     private List<Level> levels;
     private Level activeLevel;
+    private Group root;
     
     public VoogaGame() {
 	levels = new ArrayList<Level>();
+	root = new Group();
     }
     
     public void addLevel(Level l) {
@@ -31,17 +33,22 @@ public class VoogaGame extends AnimationTimer {
     
     public void setActiveLevel(int index) {
 	activeLevel = levels.get(index);
+	activeLevel.getSprites().forEach(sprite -> {
+	    root.getChildren().add(sprite.getImageView());
+	});
+	root.requestFocus();
+	ControlManager controlManager = activeLevel.getControlManager();
+	root.setOnKeyPressed(e -> {controlManager.handleKeyEvent(e.getCode(), true); System.out.println("pressed");});
+        root.setOnKeyReleased(e -> controlManager.handleKeyEvent(e.getCode(), false));
     }
+    
+    
 
     public void handle(long now) {
 	activeLevel.update(now);
     }
     
     public Group getRoot() {
-	Group root = new Group();
-	for (Sprite sprite : activeLevel.getSprites()) {
-	    root.getChildren().add(sprite.getImageView());
-	}
 	return root;
     }
 }

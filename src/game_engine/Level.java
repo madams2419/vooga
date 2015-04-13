@@ -1,6 +1,7 @@
 package game_engine;
 
 import game_engine.collision.CollisionEngine;
+import game_engine.control.ControlManager;
 import game_engine.objective.Objective;
 import game_engine.sprite.Sprite;
 
@@ -18,6 +19,7 @@ public class Level {
 	List<Objective> myObjectives;
 	List<Sprite> mySprites;
 	private CollisionEngine myCollisionEngine;
+	private ControlManager myControlManager;
 	
 	public Level() {
 		// TODO
@@ -35,6 +37,14 @@ public class Level {
             myObjectives.forEach(objective -> objective.update(now));
             mySprites.forEach(sprite -> sprite.update());
             myCollisionEngine.checkCollisions();
+        }
+        
+        public void setControlManager( ControlManager controlManager) {
+            myControlManager = controlManager;
+        }
+        
+        public ControlManager getControlManager() {
+            return myControlManager;
         }
         
         public void setCollisionEngine (CollisionEngine collisionEngine) {

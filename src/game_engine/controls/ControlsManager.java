@@ -1,6 +1,6 @@
 package game_engine.controls;
 
-import game_engine.*;
+import game_engine.behaviors.IAction;
 
 import java.util.*;
 

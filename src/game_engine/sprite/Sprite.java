@@ -1,12 +1,15 @@
 package game_engine.sprite;
 
-import game_engine.IAction;
-import game_engine.IActor;
-import game_engine.IBehavior;
+import game_engine.behaviors.IAction;
+import game_engine.behaviors.IActor;
 import game_engine.collision.HitBox;
+import game_engine.physics.PhysicsEngine;
 import game_engine.physics.PhysicsObject;
 import game_player.Animation;
+import groovy.util.Eval;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import javafx.scene.image.ImageView;
@@ -174,6 +177,8 @@ public abstract class Sprite extends Observable implements IActor{
 	    }
 	    return (params) -> {};
 	}
+	
+	
 	
 	
 //	public static void main(String[] args){

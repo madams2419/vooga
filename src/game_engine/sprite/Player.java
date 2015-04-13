@@ -2,6 +2,7 @@ package game_engine.sprite;
 
 
 import game_engine.physics.PhysicsObject;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,6 +55,8 @@ public class Player extends Character {
 	    this.getPhysicsObject().update();
 	    setChanged();
             notifyObservers();
-	}	
+	}
+	
+
 	
 }

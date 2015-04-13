@@ -1,9 +1,9 @@
 package game_engine.control;
 
 import game_engine.*;
-
+import game_engine.behaviors.IAction;
+import game_engine.behaviors.IBehavior;
 import java.util.*;
-
 import javafx.scene.input.*;
 
 public class ControlManager {
@@ -45,6 +45,7 @@ public class ControlManager {
 		if(myActiveControl < 0){
 			System.out.println("No Control has been added yet!");
 		} else{
+		    System.out.println("here2");
 			myKeyControls.get(myActiveControl).executeKeyEvent(keycode, pressed);
 		}
 	}

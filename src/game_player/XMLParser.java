@@ -204,6 +204,7 @@ public class XMLParser {
 	    pathName += component + "/";
 	}
 	setActivePath(getActivePath() + pathName);
+	System.out.println(activePath);
     }
     
     /**
