@@ -97,9 +97,15 @@ public class CenterPane extends WindowPane {
 				myGroup.getChildren().add(s);
 				this.myListOfSprites.add(s);
 				myScene.setCursor(ImageCursor.DEFAULT);
+				s.setOnMouseDragged(a -> imageDragged(a, s));
 			} catch (ClassCastException a) {
 			} catch (NullPointerException b) {
 			}
+		}
+
+		private void imageDragged(MouseEvent a, Sprite s) {
+			s.setXPosition(a.getSceneX() - (s.getImage().getWidth()/2));
+			s.setYPosition(a.getSceneY() - (s.getImage().getHeight()/2));
 		}
 
 		public Object[] getData() {
