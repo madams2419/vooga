@@ -74,7 +74,7 @@ public class Sprite extends ImageView {
 		myCharacteristics.put("ID", String.valueOf(ID));
 		myCharacteristics.put(SCALE, String.valueOf(myScale));
 		myIcon = new ImageView();
-		changeImage(new Image(getClass().getResourceAsStream(imageURI)));
+		changeImage(new Image(imageURI));
 	}
 
 	public Sprite(CenterPane parent) {

@@ -1,5 +1,7 @@
 package authoring.rightPane;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,10 +21,6 @@ import authoring.userInterface.WindowPane;
 /**
  * This class represents the right pane on the screen. It will allow the user to
  * edit a particular character, to edit the interactions between characters, and
- * to create new characters.
- * 
- * @author Natalie Chanfreau, Daniel Luker, hojeannie Chung
- *
  */
 public class RightPane extends WindowPane {
 
@@ -117,6 +115,13 @@ public class RightPane extends WindowPane {
 		switchToPane(new LevelSettingPane(myScene, this));
 	}
 
+	// TODO is this method never called?
+	public void setScene(Scene scene, List<String> availableSpriteURIs) {
+		myScene = scene;
+		initializeCurrentContent(new CharacterCreationPane(scene, this,
+				availableSpriteURIs));
+	}
+
 	private void clearChildren() {
 		((VBox) myContainer).getChildren().clear();
 	}
@@ -131,6 +136,12 @@ public class RightPane extends WindowPane {
 		addFromCurrentContent();
 	}
 
+	private void initializeCurrentContent(EditingPane content) {
+		myCurrentContent = content;
+		((VBox) myContainer).getChildren().addAll(
+				myCurrentContent.getChildren());
+	}
+
 	// TEMPORARY!!
 	private List<String> getListOfInteractions() {
 		return Arrays.asList(new String[] { "jump", "die", "go to new level",
@@ -140,6 +151,7 @@ public class RightPane extends WindowPane {
 	@Override
 	public Group generateComponents(
 			ArrayList<Map<String, Map<String, String>>> values) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -150,11 +162,30 @@ public class RightPane extends WindowPane {
 	private void initializeAvailableCharacterTypes() {
 		availableCharacterTypeURIs = new ArrayList<>();
 
-		// TODO this should come from a resource file whenever we decide what
-		// will be the initial
-		// available character types will be
-		availableCharacterTypeURIs.add("/images/luigi.png");
-		availableCharacterTypeURIs.add("/images/block.png");
+		availableCharacterTypeURIs.addAll(getImages());
+
+	}
+
+	/***
+	 * Finds every file in the directory where images are stored and adds
+	 * them to a list.
+	 */
+	private List<String> getImages() {
+		File rootDirectory = new File("res");
+		List<String> matchingFiles = new ArrayList<String>();
+
+		for (File possible : rootDirectory.listFiles()) {
+//			if (getGameType(possible).equals(type)) {
+				try {
+					matchingFiles.add(possible.toURI().toURL().toString());
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+//			}
+		}
+
+		return matchingFiles;
 	}
 
 }
