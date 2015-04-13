@@ -15,6 +15,13 @@
 								<name>setState</name>
 								<parameters>win</parameters>
 							</behavior_0>
+							
+							<behavior_1>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>jump</name>
+								<parameters>.05</parameters>							
+							</behavior_1>
 						</behaviors>
 					</onComplete>
 					<onFailed>
@@ -170,7 +177,7 @@
 					</animation>
 					<physics>
 						<material>static</material>
-						<x>1000</x>
+						<x>1500</x>
 						<y>300</y>
 						<xVel>0</xVel>
 						<yVel>0</yVel>
@@ -188,7 +195,7 @@
 					</animation>
 					<physics>
 						<material>static</material>
-						<x>1500</x>
+						<x>2500</x>
 						<y>100</y>
 						<xVel>0</xVel>
 						<yVel>0</yVel>
@@ -262,7 +269,7 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>jump</name>
-									<parameters>.05</parameters>
+									<parameters>.055</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>

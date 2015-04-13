@@ -186,7 +186,9 @@ public class Objective implements IActor {
     public IAction getAction (String name) {
         if (name.equals("setStatus")){
             return (params) -> {
-                addCondition((now) -> true, params[0]);
+                if (isActive()){
+                    addCondition((now) -> true, params[0]);
+                }
             };
         }
         return (params) -> {
