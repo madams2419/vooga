@@ -1,6 +1,7 @@
 package authoring.rightPane;
 
 import java.util.List;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,6 +11,7 @@ import javafx.scene.image.ImageView;
 import authoring.Interaction;
 import authoring.InteractionManager;
 import authoring.Sprite;
+import authoring.util.FrontEndUtils;
 
 /**
  * This will allow the user to edit the interaction between two characters.
@@ -92,6 +94,7 @@ public class InteractionEditingPane extends EditingPane {
 	private void addSpriteToPane(Sprite sprite) {
 		ImageView spriteIcon = sprite.getIcon();
 		this.getChildren().add(spriteIcon);
+        this.getChildren().add(FrontEndUtils.makeToggleGroup());
 	}
 
 }
