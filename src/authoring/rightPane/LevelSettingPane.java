@@ -31,6 +31,11 @@ public class LevelSettingPane extends EditingPane {
         // TODO Auto-generated constructor stub
         super(myScene, parent);
         mScene = myScene;
+        updateLevels(parent);
+    }
+
+    public void updateLevels(RightPane parent){
+        this.getChildren().clear();
         Map<Integer, ArrayList<Integer>> levels = LevelManager.getInstance().getLevels();
         /* Default Map */
         Iterator<Entry<Integer, ArrayList<Integer>>> it = levels.entrySet().iterator();
@@ -50,5 +55,4 @@ public class LevelSettingPane extends EditingPane {
             this.getChildren().add(h);
         }
     }
-
 }
