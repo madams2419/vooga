@@ -39,15 +39,16 @@ public class VoogaGame extends AnimationTimer implements IActor{
     public void setActiveLevel(int index) {
         root.getChildren().clear();
 	activeLevel = levels.get(index);
-	activeLevel.getLayers().get(0).getSprites().forEach(sprite -> {
+	activeLevel.getSprites().forEach(sprite -> {
 	    root.getChildren().add(sprite.getImageView());
 	});
 	root.requestFocus();
 	ControlManager controlManager = activeLevel.getControlManager();
 	root.setOnKeyPressed(e -> controlManager.handleKeyEvent(e.getCode(), true));
         root.setOnKeyReleased(e -> controlManager.handleKeyEvent(e.getCode(), false));
-        if (!activeLevel.getLayers().get(0).getSprites().isEmpty()){
-            Sprite sprite = activeLevel.getLayers().get(0).getSprites().get(0);
+
+        if (!activeLevel.getSprites().isEmpty()){
+            Sprite sprite = activeLevel.getSprites().get(0);
             sprite.getImageView().toFront();
             BasicScroller scroller = new BasicScroller (root, sprite.getImageView().getTranslateX(), sprite.getImageView().getTranslateY());
             ScrollTracker tracker = new ScrollTracker(scroller);

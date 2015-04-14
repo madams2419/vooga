@@ -81,10 +81,12 @@
 				<sprite_0>
 					<type>Player</type>
 					<initialState>standing</initialState>
+					<width>100</width>
+					<height>200</height>
 					<animation>
 						<state_0>
 							<name>standing</name>
-							<image>/Resources/images/standingMario.png</image>
+							<image>/images/mario.png</image>
 						</state_0>
 						
 						<state_1>
@@ -115,6 +117,8 @@
 				<sprite_1>
 					<type>Platform</type>
 					<initialState>immobile</initialState>
+					<width>2000</width>
+					<height>200</height>
 					<animation>
 						<state_0>
 							<name>immobile</name>
@@ -124,7 +128,7 @@
 					<physics>
 						<material>wood</material>
 						<x>0</x>
-						<y>50</y>
+						<y>0</y>
 						<xVel>0</xVel>
 						<yVel>0</yVel>
 					</physics>
@@ -133,6 +137,8 @@
 				<sprite_2>
 					<type>Platform</type>
 					<initialState>immobile</initialState>
+					<width>300</width>
+					<height>50</height>
 					<animation>
 						<state_0>
 							<name>immobile</name>
@@ -141,8 +147,8 @@
 					</animation>
 					<physics>
 						<material>wood</material>
-						<x>600</x>
-						<y>200</y>
+						<x>1000</x>
+						<y>300</y>
 						<xVel>0</xVel>
 						<yVel>0</yVel>
 					</physics>
@@ -151,6 +157,8 @@
 				<sprite_3>
 					<type>Enemy</type>
 					<initialState>immobile</initialState>
+					<width>100</width>
+					<height>200</height>
 					<animation>
 						<state_0>
 							<name>immobile</name>
@@ -159,9 +167,9 @@
 					</animation>
 					<physics>
 						<material>bouncy_ball</material>
-						<x>300</x>
-						<y>0</y>
-						<xVel>.001</xVel>
+						<x>600</x>
+						<y>100</y>
+						<xVel>0</xVel>
 						<yVel>0</yVel>
 					</physics>
 				</sprite_3>
@@ -169,6 +177,8 @@
 				<sprite_4>
 					<type>Collectible</type>
 					<initialState>immobile</initialState>
+					<width>50</width>
+					<height>50</height>
 					<animation>
 						<state_0>
 							<name>immobile</name>
@@ -177,8 +187,8 @@
 					</animation>
 					<physics>
 						<material>static</material>
-						<x>1500</x>
-						<y>300</y>
+						<x>1100</x>
+						<y>350</y>
 						<xVel>0</xVel>
 						<yVel>0</yVel>
 					</physics>
@@ -187,6 +197,8 @@
 				<sprite_5>
 					<type>Region</type>
 					<initialState>immobile</initialState>
+					<height>500</height>
+					<width>100</width>
 					<animation>
 						<state_0>
 							<name>immobile</name>
@@ -195,7 +207,7 @@
 					</animation>
 					<physics>
 						<material>static</material>
-						<x>2500</x>
+						<x>1800</x>
 						<y>100</y>
 						<xVel>0</xVel>
 						<yVel>0</yVel>
@@ -309,6 +321,14 @@
 				
 				<collision_2>
 					<sprite_1>0</sprite_1>
+					<sprite_2>2</sprite_2>
+					<direction>0 1 2</direction>
+					<realistic>true</realistic>
+					<behaviors></behaviors>
+				</collision_2>
+				
+				<collision_3>
+					<sprite_1>0</sprite_1>
 					<sprite_2>4</sprite_2>
 					<direction>0 1 2 3</direction>
 					<realistic>false</realistic>
@@ -320,9 +340,9 @@
 							<parameters>complete</parameters>
 						</behavior_0>
 					</behaviors>
-				</collision_2>
+				</collision_3>
 				
-				<collision_3>
+				<collision_4>
 					<sprite_1>0</sprite_1>
 					<sprite_2>5</sprite_2>
 					<direction>0 1 2 3</direction>
@@ -335,16 +355,7 @@
 							<parameters>complete</parameters>
 						</behavior_0>
 					</behaviors>
-				</collision_3>
-				
-				<collision_4>
-					<sprite_1>0</sprite_1>
-					<sprite_2>2</sprite_2>
-					<direction>0 1 2</direction>
-					<realistic>true</realistic>
-					<behaviors></behaviors>
 				</collision_4>
-				
 			</collision>
 		</level_0>
 		

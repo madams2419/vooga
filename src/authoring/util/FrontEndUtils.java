@@ -6,7 +6,10 @@ import java.util.Map;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import authoring.userInterface.AuthoringWindow;
 
 /***
  * Class which contains methods that are reusable across front-end development
@@ -30,5 +33,18 @@ public class FrontEndUtils {
 		Arrays.asList(s.split(", ")).forEach(
 				entry -> result.put(entry.split("=")[0], entry.split("=")[1]));
 		return result;
+	}
+	
+	public static void setKeyActions(Node n) {
+		n.setOnKeyPressed(e -> {
+			if (e.getCode() == KeyCode.CONTROL)
+				AuthoringWindow.setControlOn();
+			System.out.println("detected key press");
+		});
+		n.setOnKeyReleased(e -> {
+			if (e.getCode() == KeyCode.CONTROL)
+				AuthoringWindow.setControlOff();
+			System.out.println("detected key release");
+		});
 	}
 }

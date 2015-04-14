@@ -1,6 +1,9 @@
 package game_engine.sprite;
 
+import game_engine.physics.Material;
+import game_engine.physics.PhysicsEngine;
 import game_engine.physics.PhysicsObject;
+import game_engine.physics.RigidBody.RBodyType;
 
 
 
@@ -9,22 +12,27 @@ public class Collectible extends Sprite{
     private int myCount;
     private boolean canCollect;
     
-    public Collectible(PhysicsObject physics) {
-        super(physics);
-        myCount =0;
-       
-      }
-
-   
-      public Collectible(PhysicsObject physics, String name){
-          super(physics,name);
-          myCount =0;
-      }
+    public Collectible(String defaultState, String defaultImage, int height, int width, RBodyType rbType,
+		PhysicsEngine globalPhysics, Material material, int startX, int startY) {
+	super(defaultState, defaultImage, height, width, rbType, globalPhysics, material, startX, startY);
+}
     
-      public Collectible(PhysicsObject physics,String name, int id){
-          super(physics,name,id);
-          myCount = 0;
-      }
+//    public Collectible(PhysicsObject physics) {
+//        super(physics);
+//        myCount =0;
+//       
+//      }
+//
+//   
+//      public Collectible(PhysicsObject physics, String name){
+//          super(physics,name);
+//          myCount =0;
+//      }
+//    
+//      public Collectible(PhysicsObject physics,String name, int id){
+//          super(physics,name,id);
+//          myCount = 0;
+//      }
       
       public void collect(int amount){
           myCount+=amount;

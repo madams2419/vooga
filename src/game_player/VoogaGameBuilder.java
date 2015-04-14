@@ -1,6 +1,5 @@
 package game_player;
 
-import game_engine.Layer;
 import game_engine.Level;
 import game_engine.behaviors.Behavior;
 import game_engine.behaviors.IAction;
@@ -17,9 +16,10 @@ import game_engine.physics.CircleBody;
 import game_engine.physics.Material;
 import game_engine.physics.PhysicsEngine;
 import game_engine.physics.PhysicsObject;
-import game_engine.physics.Shape;
+import game_engine.physics.RigidBody.RBodyType;
 import game_engine.sprite.Sprite;
 import game_engine.sprite.SpriteFactory;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import javafx.scene.input.KeyCode;
 
 
@@ -50,22 +51,20 @@ public class VoogaGameBuilder {
             Level level = buildLevel(directory);
             game.addLevel(level);
         }
-        game.setActiveLevel(Integer.parseInt(parser.getValue("start")));
-
+       game.setActiveLevel(Integer.parseInt(parser.getValue("start")));
+        
         return game;
     }
 
     private Level buildLevel (String levelID) {
-        engine = buildPhysicsEngine(1.0 / 60);
+        engine = buildPhysicsEngine(1.0/60);
         parser.moveDown(levelID);
         Level level = new Level();
-        Layer sprites = new Layer();
-        level.addLayer(sprites);
-
+        
         parser.moveDown("sprite");
         for (String directory : parser.getValidSubDirectories()) {
             Sprite sprite = buildSprite(directory);
-            sprites.addSprite(sprite);
+            level.addSprite(sprite);
         }
         parser.moveUp();
 
@@ -82,19 +81,37 @@ public class VoogaGameBuilder {
         String spriteType = parser.getValue("type");
         SpriteFactory factory = new SpriteFactory();
 
-        Sprite sprite = factory.createSprite(spriteType, buildPhysicsObject(engine));
+
+        parser.moveDown("physics");
+        Material material = Material.valueOf(parser.getValue("material").toUpperCase());
+        int startX = Integer.parseInt(parser.getValue("x"));
+        int startY = Integer.parseInt(parser.getValue("y"));
+        parser.moveUp();
         parser.moveDown("animation");
-        for (String directory : parser.getValidSubDirectories()) {
+        parser.moveDown(parser.getValidSubDirectories().get(0));
+        String image = parser.getValue("image");
+        String name = parser.getValue("name");
+        parser.moveUp(2);
+        
+        int height = Integer.parseInt(parser.getValue("height"));
+        int width = Integer.parseInt(parser.getValue("width"));
+        
+        
+        Sprite sprite = factory.createSprite(spriteType, name, image, height, width, RBodyType.CIRCLE, engine, material, startX, startY);
+        parser.moveDown("animation");
+        for (int i = 1; i < parser.getValidSubDirectories().size(); i++) {
+            String directory = parser.getValidSubDirectories().get(i);
             parser.moveDown(directory);
-            String name = parser.getValue("name");
-            String image = parser.getValue("image");
+            name = parser.getValue("name");
+            image = parser.getValue("image");
             sprite.addImage(name, image);
             parser.moveUp();
         }
         parser.moveUp();
-
+        
         String state = parser.getValue("initialState");
         sprite.setState(state);
+
         parser.moveUp();
         mySpriteMap.put(spriteID, sprite);
         return sprite;
@@ -105,17 +122,6 @@ public class VoogaGameBuilder {
         // TODO first param will be removed
         PhysicsEngine globalEngine = new PhysicsEngine(0, fps);
         return globalEngine;
-    }
-
-    private PhysicsObject buildPhysicsObject (PhysicsEngine engine) {
-        parser.moveDown("physics");
-        Shape tempShape = new CircleBody(15); // change this later
-        Material material = Material.valueOf(parser.getValue("material").toUpperCase());
-        double startX = Double.parseDouble(parser.getValue("x"));
-        double startY = Double.parseDouble(parser.getValue("y"));
-        parser.moveUp();
-        PhysicsObject physics = new PhysicsObject(engine, tempShape, material, startX, startY);
-        return physics;
     }
 
     private Sprite getSprite (String id) {
@@ -138,7 +144,8 @@ public class VoogaGameBuilder {
         Sprite spriteA = getSprite(parser.getValue("sprite_1"));
         Sprite spriteB = getSprite(parser.getValue("sprite_2"));
         IBehavior behaviorList = buildBehaviorList();
-        Collision collision = new Collision(spriteA, spriteB, behaviorList, null);
+        boolean realistic = Boolean.getBoolean(parser.getValue("realistic"));
+        Collision collision = new Collision(spriteA, spriteB, behaviorList, null, realistic);
         parser.moveUp();
         return collision;
     }
