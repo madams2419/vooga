@@ -1,4 +1,4 @@
-package game_engine;
+package game_engine.scrolling;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;

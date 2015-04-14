@@ -1,15 +1,12 @@
 package game_engine.sprite;
 
-import java.util.HashMap;
-import java.util.ResourceBundle;
-
-import game_engine.IBehavior;
 import game_engine.behaviors.IAction;
 import game_engine.physics.Material;
 import game_engine.physics.PhysicsEngine;
 import game_engine.physics.PhysicsObject;
-import game_engine.physics.Vector;
 import game_engine.physics.RigidBody.RBodyType;
+import game_engine.physics.Vector;
+import java.util.HashMap;
 
 /**
  * class that implements behaviors for movable sprites

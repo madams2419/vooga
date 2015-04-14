@@ -2,28 +2,17 @@ package game_engine.sprite;
 
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
-import game_engine.collision.HitBox;
-import game_engine.physics.PhysicsEngine;
-import game_engine.physics.PhysicsObject;
-import game_player.Animation;
-import groovy.util.Eval;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Observable;
-
-import javafx.scene.image.ImageView;
-import game_engine.IBehavior;
+import game_engine.behaviors.IBehavior;
 import game_engine.collision.HitBox;
 import game_engine.physics.Material;
 import game_engine.physics.PhysicsEngine;
 import game_engine.physics.PhysicsObject;
-import game_engine.physics.RigidBody;
 import game_engine.physics.RigidBody.RBodyType;
-import game_engine.physics.RigidBodyFactory;
-import game_engine.physics.Vector;
 import game_player.Animation;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Observable;
+import javafx.scene.image.ImageView;
 
 /**
  * Abstract class for the creation of multiple sprite types
@@ -114,8 +103,8 @@ public abstract class Sprite extends Observable implements IActor{
 	    myBehaviorMap.remove(behavior);
 	}
 	
-	public void runBehavior(String behavior, String... params){
-	    myBehaviorMap.get(behavior).perform(params);
+	public void runBehavior(String behavior){
+	    myBehaviorMap.get(behavior).perform();
 	}
 	
 	public void addImage(String state,String ImagePath){

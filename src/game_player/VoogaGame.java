@@ -1,11 +1,11 @@
 package game_player;
 
-import game_engine.BasicScroller;
 import game_engine.Level;
-import game_engine.ScrollTracker;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.control.ControlManager;
+import game_engine.scrolling.BasicScroller;
+import game_engine.scrolling.ScrollTracker;
 import game_engine.sprite.Sprite;
 import java.util.ArrayList;
 import java.util.List;

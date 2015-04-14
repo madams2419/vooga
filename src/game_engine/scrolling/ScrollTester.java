@@ -1,4 +1,4 @@
-package game_engine;
+package game_engine.scrolling;
 
 import javafx.application.Application;
 import javafx.scene.Group;
