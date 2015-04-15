@@ -51,7 +51,7 @@ public class NewRegionDialog {
 	private void okPressed(CenterPane c) {
 		if (Pattern.matches("^\\d+(\\.\\d+)?$", xField.getText())
 			&& Pattern.matches("^\\d+(\\.\\d+)?$", yField.getText())) {
-				c.createRegion(Double.parseDouble(xField.getText()),
+				c.getActiveTab().createRegion(Double.parseDouble(xField.getText()),
 					Double.parseDouble(yField.getText()));
 		} else {
 			System.out.println("error");
