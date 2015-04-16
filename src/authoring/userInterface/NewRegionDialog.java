@@ -1,6 +1,9 @@
 package authoring.userInterface;
 
 import java.util.regex.Pattern;
+
+import authoring.centerPane.CenterCanvas;
+import authoring.centerPane.CenterPane;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -51,7 +54,9 @@ public class NewRegionDialog {
 	private void okPressed(CenterPane c) {
 		if (Pattern.matches("^\\d+(\\.\\d+)?$", xField.getText())
 			&& Pattern.matches("^\\d+(\\.\\d+)?$", yField.getText())) {
-				c.getActiveTab().createRegion(Double.parseDouble(xField.getText()),
+			CenterCanvas d = c.getActiveTab();
+			
+				d.createRegion(Double.parseDouble(xField.getText()),
 					Double.parseDouble(yField.getText()));
 		} else {
 			System.out.println("error");
