@@ -3,6 +3,7 @@ package game_player;
 import game_engine.physics.PhysicsObject;
 import game_engine.physics.Vector;
 import game_engine.sprite.Sprite;
+import game_player.Utilities;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -20,19 +21,46 @@ import javafx.scene.image.ImageView;
 public class Animation implements Observer {
 
 	private ImageView myImageView;
+	private Node myCurrentNode;
 	private String myCurrentImage;
-	Map<String, String> myPathMap;
+	private Sprite mySprite;
+	Map<String, Node> myPathMap;
 
-	public Animation(Observable sprite, PhysicsObject physics) {
+	public Animation(Sprite sprite, PhysicsObject physics) {
+	        myCurrentNode = new Node();
 		linkToSprite(sprite);
 		linkToSprite(physics);
+		mySprite = sprite;
 		myPathMap = new HashMap<>();
 		myImageView = new ImageView();
 		updatePosition(physics);
 	}
-
+	
+	public class Node{
+	    String image;
+	    Node next;
+	    
+	    public Node(){
+	        image = "";
+	        next = null;
+	    }
+	    
+	    public Node(String image, Node next){
+	        this.image = image;
+	        this.next = next;
+	    }
+	    
+	}
+//TODO implement linked list image transition
     public void setImage (String state, String ImagePath) {
-        myPathMap.put(state, ImagePath);
+        Node currImage = new Node(ImagePath,null);
+        
+        try {
+            myPathMap.get(state).next = currImage;
+        }
+        catch (Exception e) {
+            myPathMap.put(state, currImage);
+        }
     }
 
     public void removeImage (String state) {
@@ -48,11 +76,24 @@ public class Animation implements Observer {
     }
 
     private void changeImage (String state) {
-        if (myPathMap.containsKey(state)) {
-            myCurrentImage = myPathMap.get(state);
+       
+            try {
+                myCurrentNode = myCurrentNode.next;
+            }
+            catch (Exception e) {
+                 try {
+                    myCurrentNode = myPathMap.get(state);
+                }
+                catch (Exception e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+            }
+
+            myCurrentImage = myCurrentNode.image;
             myImageView.setImage(new Image(getClass().getResourceAsStream(
                                                                           myCurrentImage)));
-        }
+        
     }
 
     public ImageView getImageView () {
