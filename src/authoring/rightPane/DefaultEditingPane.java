@@ -14,8 +14,8 @@ import javafx.scene.control.TextArea;
  */
 public class DefaultEditingPane extends EditingPane {
 
-    DefaultEditingPane (Scene scene) {
-        super(scene);
+    DefaultEditingPane (Scene scene, RightPane parent) {
+        super(scene, parent);
         this.getChildren().add(
                                new TextArea(String
                                        .format("Default pane")));

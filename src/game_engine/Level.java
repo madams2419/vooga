@@ -3,6 +3,8 @@ package game_engine;
 import game_engine.collision.CollisionEngine;
 import game_engine.control.ControlManager;
 import game_engine.objective.Objective;
+import game_engine.sprite.Sprite;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +16,15 @@ import java.util.List;
  */
 public class Level {
 	
-	private List<Objective> myObjectives;
-	private List<Layer> myLayers;
+	List<Objective> myObjectives;
+	List<Sprite> mySprites;
 	private CollisionEngine myCollisionEngine;
 	private ControlManager myControlManager;
 	
 	public Level() {
 		// TODO
 	    myObjectives = new ArrayList<>();
-	    myLayers = new ArrayList<>();
+	    mySprites = new ArrayList<>();
 	}
 	
 	/**
@@ -33,7 +35,7 @@ public class Level {
                 // TODO
             //Potentially different method
             myObjectives.forEach(objective -> objective.update(now));
-            myLayers.forEach(layer -> layer.update());
+            mySprites.forEach(sprite -> sprite.update());
             myCollisionEngine.checkCollisions();
         }
         
@@ -47,14 +49,6 @@ public class Level {
         
         public void setCollisionEngine (CollisionEngine collisionEngine) {
             myCollisionEngine = collisionEngine;
-        }
-        
-        public void scrollX(int x){
-            myLayers.forEach(layer -> layer.scrollX(x));
-        }
-        
-        public void scrollY(int y){
-            myLayers.forEach(layer -> layer.scrollY(y));
         }
         
 	/**
@@ -92,8 +86,8 @@ public class Level {
 	 * adds a layer into a specific level
 	 * @param layer the layer to be added
 	 */
-	public void addLayer(Layer layer){
-	    myLayers.add(layer);
+	public void addSprite(Sprite layer){
+	    mySprites.add(layer);
 	}
 	
 	/**
@@ -101,15 +95,15 @@ public class Level {
 	 * removes a layer from a specific layer
 	 * @param layer the layer to be removed
 	 */
-	public void removeLayer(Layer layer){
-	    myLayers.remove(layer);
+	public void removeSprite(Sprite layer){
+	    mySprites.remove(layer);
 	}
 	
 	/**
 	 * method getLayers
 	 * @return list of layers for the current level
 	 */
-	public List<Layer> getLayers(){
-	    return myLayers;
+	public List<Sprite> getSprites(){
+	    return mySprites;
 	}
 }

@@ -1,54 +1,93 @@
 package authoring.userInterface;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
-
-import com.sun.prism.paint.Color;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
+import authoring.util.FrontEndUtils;
 
 /***
  * 
- * @author daniel and Jeannie
+ * @author Daniel Luker and Jeannie
  *
  */
+public class BottomPane extends WindowPane {
 
-import authoring.userInterface.UIElementDistributer;
+    private List<Button> mButtonList = new ArrayList<>();
+    public static final String XML_FILE_OUTPUT = "res/game.xml";
 
-public class BottomPane extends HBox {
-	//TODO fill out this badboy
-	static ArrayList<Button> mButtonList=new ArrayList<Button>();
-	public static Group root=new Group();
+    // BottomPane() {
+    // this(myScene,myContainer);
+    // }
 
+    BottomPane(Scene s, AuthoringWindow parent) {
+        super(s, new HBox(), parent);
+        System.out.printf("Instantiated %s%n", this.getClass().getName());
+        myScene = s;
+        myContainer.getStylesheets().add("styles/top_pane.css");
+    }
 
-	BottomPane() {
-		this.getStylesheets().add("styles/top_pane.css");
-	}
+    @Override
+    @SuppressWarnings("unchecked")
+    public Group generateComponents(
+            ArrayList<Map<String, Map<String, String>>> values) {
+        for (int i = 0; i < values.size(); i++) {
+            Map<String, Map<String, String>> m = values.get(i);
+            for (String key : m.keySet()) {
+                if (key.equals("Button")) {
+                    mButtonList.add(ButtonFactory.generateButton(
+                            myParent.getMyRightPane(), m.get(key)));
+                }
+                if (key.equals("Dropdown")) {
+                    DropdownFactory dFactory = new DropdownFactory();
+                    dFactory.generateDropdown(m.get(key));
+                }
+            }
+        }
+        MenuBar menuBar = new MenuBar();
+        Menu b = new Menu("+");
+        MenuItem nLevel = new MenuItem("New Level");
+        MenuItem nMap = new MenuItem("New Map");
+        b.getItems().addAll(nLevel,nMap);
+        menuBar.getMenus().add(b);
+        try {
+            nLevel.setOnAction(new ClickHandler(
+                    CenterPane.class.getMethod("addLevel"), myParent
+                    .getMyCenterPane()));
+        } catch (NoSuchMethodException | SecurityException e) {
+            e.printStackTrace();
+        }
+        try {
+            nMap.setOnAction(new ClickHandler(
+                    CenterPane.class.getMethod("addMap"), myParent
+                .getMyCenterPane()));
+        } catch (NoSuchMethodException | SecurityException e) {
+            e.printStackTrace();
+        }
+                Button c = new Button("Output xml");
+        c.setOnAction(e -> {
+            FrontEndUtils.buildXMLFile(myParent, XML_FILE_OUTPUT);
+        });
+        mButtonList.add(c);
+        ((HBox) myContainer).getChildren().addAll(mButtonList);
+        ((HBox) myContainer).getChildren().add(menuBar);
+        return null;
+    }
 
-	public Group generateComponents(ArrayList<Map> values){
-		for(int i=0; i<values.size(); i++){
-			Map<String, Map> m=values.get(i);
-			System.out.println(m);
-			for(String key: m.keySet()){
-				if(key.equals("Button")){	
-					mButtonList.add(ButtonFactory.generateButton(m.get(key)));
+    public Iterator<Button> getButtons() {
+        return mButtonList.iterator();
+    }
 
-				}
-				if(key.equals("Dropdown")){
-					DropdownFactory dFactory=new DropdownFactory();
-					dFactory.generateDropdown(m.get(key));
-				}
-			}
-		}	
-		root.getChildren().addAll(mButtonList);
-		System.out.println("BottomPane Buttons: " + mButtonList);
-		return root;
-
-	}
-
+    public Button[] getButtonArray() {
+        return (Button[]) mButtonList.toArray();
+    }
 
 }

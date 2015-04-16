@@ -1,17 +1,19 @@
 package game_engine.sprite;
 
+import game_engine.IBehavior;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.collision.HitBox;
+import game_engine.physics.Material;
 import game_engine.physics.PhysicsEngine;
 import game_engine.physics.PhysicsObject;
+import game_engine.physics.RigidBody.RBodyType;
 import game_player.Animation;
-import groovy.util.Eval;
-import java.util.ArrayList;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Observable;
+
 import javafx.scene.image.ImageView;
 
 /**
@@ -27,8 +29,23 @@ public abstract class Sprite extends Observable implements IActor{
 	private String myState;
 	private Animation myAnimation;
 	protected PhysicsObject myPhysicsObject;
-	private Map<String, IAction> myBehaviorMap = new HashMap<>();
-
+	private Map<String, IBehavior> myBehaviorMap = new HashMap<>();
+	private HitBox myHitBox;
+	
+	
+	/**
+	 * Testing constructor
+	 */
+	public Sprite(String defaultState, String defaultImage, int height, int width, RBodyType rbType,
+			PhysicsEngine globalPhysics, Material material, int startX, int startY) {
+		myId = 0;
+		myPhysicsObject = new PhysicsObject(globalPhysics, rbType, height, width, material, startX, startY);
+		myAnimation = new Animation(this, myPhysicsObject);
+		addImage(defaultState, defaultImage);
+		setState(defaultState);
+		setImageSize(height, width);
+		
+	}
 	
 	/**
 	 * Blank Constructor
@@ -81,7 +98,7 @@ public abstract class Sprite extends Observable implements IActor{
 	}
 	
 	public void addBehavior(String behavior) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
-	    myBehaviorMap.put(behavior, createBehavior(behavior));
+	   // myBehaviorMap.put(behavior, createBehavior(behavior));
 	}
 	
 	public void removeBehavior(String behavior){
@@ -89,7 +106,7 @@ public abstract class Sprite extends Observable implements IActor{
 	}
 	
 	public void runBehavior(String behavior, String... params){
-	    myBehaviorMap.get(behavior).execute(params);
+	    myBehaviorMap.get(behavior).perform(params);
 	}
 	
 	public void addImage(String state,String ImagePath){
@@ -147,7 +164,7 @@ public abstract class Sprite extends Observable implements IActor{
 	}
 	
 	public HitBox getHitBox(){
-	    return myAnimation.getHitBox();
+	    return myHitBox;
 	}
 	
 	public void setPhysicsObject(PhysicsObject physicsObject){

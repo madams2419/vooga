@@ -21,7 +21,6 @@ public abstract class AbstractSprite extends ImageView {
 
     final static String X_STRING = "x";
     final static String Y_STRING = "y";
-    private boolean selected;
 
     private int myID;
     private Consumer<AbstractSprite> myOnMouseClickedAction;

@@ -106,7 +106,8 @@ public class KeyControl {
 
 	//TODO: throw exception if keycode not defined
 	private KeyCode kcTranslation(String index){
-		return KeycodeFactory.generateKeyCode(index);
+	    return null;
+		//return KeycodeFactory.generateKeyCode(index);
 	}
 
 }

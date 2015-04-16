@@ -1,101 +1,191 @@
 package authoring.userInterface;
 
-import java.util.Stack;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Side;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.KeyCode;
+import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
+import authoring.LevelManager;
 import authoring.Sprite;
+import authoring.rightPane.GlobalCreationPane;
+import authoring.util.FrontEndUtils;
 
 /**
  * 
- * @author Andrew Sun
+ * @author Andrew Sun & Daniel "the fresh code machine of bel-duke" Luker
  *
  */
-public class CenterPane extends ScrollPane {
+public class CenterPane extends WindowPane {
 
-	private Stack<Sprite> myStack;
-	private Scene myScene;
-	private Canvas myCanvas;
-	private Group myGroup;
+    private List<CenterCanvas> myMaps;
+    private static SingleSelectionModel<Tab> levelSelectionModel;
 
-	private static final int TOP_PANE_HEIGHT = 50;
-	private static final int RIGHT_PANE_WIDTH = 300;
+    CenterPane(Scene s, AuthoringWindow w) {
+        super(s, new TabPane(), w);
+        myMaps = new ArrayList<>();
+        ((TabPane) myContainer).setSide(Side.BOTTOM);
+        addTab();
+        FrontEndUtils.setKeyActions(this.myContainer);
+        System.out.printf("Instantiated %s%n", this.getClass().getName());
+    }
 
-	private int width;
-	private int height;
+    private void addTab() {
+        ((TabPane) myContainer).getTabs().clear();
+        CenterCanvas c;
+        Map<Integer, ArrayList<Integer>> levels = LevelManager.getInstance().getLevels();
+        /* Default Map */
+        Iterator<Entry<Integer, ArrayList<Integer>>> it = levels.entrySet().iterator();
+        levelSelectionModel = ((TabPane) myContainer).getSelectionModel();
+        while(it.hasNext()){
+            Entry<Integer, ArrayList<Integer>> thisLevel = it.next();
+            Tab levelTab = new Tab("Level "+thisLevel.getKey());
+            ArrayList<Integer> maps = thisLevel.getValue();
+            TabPane mapTabs = new TabPane();
+            SingleSelectionModel<Tab> mapSelectionModel = mapTabs.getSelectionModel();
+            for(Integer map:maps){
+                c = new CenterCanvas(myScene);
+                myMaps.add(c);
+                Tab mapTab = new Tab("Map "+map);
+                mapTab.setContent(c);
+                mapTabs.getTabs().add(mapTab);
+            }
+            levelTab.setContent(mapTabs);
+            ((TabPane) myContainer).getTabs().add(levelTab);
+            levelSelectionModel.selectLast();
+            mapSelectionModel.selectLast();
+        }
+    }
+    
+    public void addLevel(){
+        LevelManager.getInstance().makeNewLevel();
+        addTab();
+    }
+    
+    public void addMap(){
+        int activeLevel = levelSelectionModel.getSelectedIndex();
+        LevelManager.getInstance().addMap(activeLevel+1);
+        addTab();
+    }
+    
+    public CenterCanvas getActiveTab() {
+        return (CenterCanvas) ((TabPane) myContainer)
+                .getTabs()
+                .get(((TabPane) myContainer).getSelectionModel()
+                        .getSelectedIndex()).getContent();
+    }
 
-	CenterPane(Scene scene) {
-		myScene = scene;
-		myGroup = new Group();
-		myCanvas = new Canvas(
-				(width = (int) (scene.getWidth() - this.RIGHT_PANE_WIDTH)),
-				(height = (int) (scene.getHeight() - this.TOP_PANE_HEIGHT)));
-		myCanvas.getGraphicsContext2D().setStroke(Color.BLACK);
-		// myCanvas.getGraphicsContext2D().strokeLine(0, 0, 400, 400);
+    @Override
+    public Group generateComponents(
+            ArrayList<Map<String, Map<String, String>>> values) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
+    public Iterator<CenterCanvas> getMaps() {
+        return myMaps.iterator();
+    }
 
-		this.setContent(myGroup);
-		myGroup.getChildren().add(new Rectangle(width, height, Color.WHITE));
-		myGroup.setOnMouseClicked(e -> canvasClicked(e));
+    public class CenterCanvas extends ScrollPane {
 
-		// Use stack, or just a group?
-		myStack = new Stack<>();
+        private List<Map<String, String>> myEnvironmentList;
+        private ObservableList<Sprite> myListOfSprites;
+        private Region myCurrentRectangle;
+        private GlobalCreationPane gp;
+        private Group myGroup;
 
-		this.setOnKeyPressed(e -> {
-			if (e.getCode() == KeyCode.CONTROL)
-				AuthoringWindow.setControlOn();
-		});
-		this.setOnKeyReleased(e -> {
-			if (e.getCode() == KeyCode.SHIFT)
-				AuthoringWindow.setControlOff();
-		});
+        CenterCanvas(Scene scene) {
+            assert (scene != null);
+            myScene = scene;
+            myGroup = new Group();
+            gp = new GlobalCreationPane(myScene, myParent.getMyRightPane());
+            this.setContent(myGroup);
 
-	}
+            //myGroup.setOnMouseClicked(e -> canvasClicked(e));
 
-	private void canvasClicked(MouseEvent e) {
+            myListOfSprites = FXCollections.observableArrayList();
+            myEnvironmentList = new ArrayList<>();
 
-		try {
-			Sprite s = ((SpriteCursor) myScene.getCursor()).getCurrentSprite();
+            FrontEndUtils.setKeyActions(this);
+            addMaptoEnvironment(gp.fields);
 
-			// Hey Andrew! I commented this next line out because I decided to
-			// pass in
-			// a Consumer in the creation of the Sprite (in
-			// CharacterCreationPane), and
-			// this line was resetting the setOnMouseClicked method that I had
-			// used in
-			// order to switch between panes (although in the end it should
-			// probably be
-			// sent to some intermediate class rather than directly switch panes
-			// so that
-			// the logic of how many sprites are currently clicked is done
-			// before
-			// deciding what will happen).
+        }
 
-			// s.setOnMouseClicked(p -> spriteClicked(p, s));
+        public void addMaptoEnvironment(Map<String, String> m) {
+            myEnvironmentList.add(m);
+        }
 
-			s.setXPosition(e.getX() - s.getImage().getWidth() / 2);
-			s.setYPosition(e.getY() - s.getImage().getHeight() / 2);
-			myGroup.getChildren().add(s);
+        private void canvasClicked(MouseEvent e) {
+            try {
+                if (e.getButton() == MouseButton.SECONDARY){
+                    FileChooser fileChooser = new FileChooser();
+                    FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+                    FileChooser.ExtensionFilter pngFilter = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+                    fileChooser.getExtensionFilters().addAll(jpgFilter, pngFilter);
+                    File imagePath = fileChooser.showOpenDialog(null);
+                    Image image = new Image("file:///" + imagePath.getPath());
+                    myCurrentRectangle.setBackgroundImage(image);
+                }
+                Sprite s = ((SpriteCursor) myScene.getCursor())
+                        .getCurrentSprite();
 
-			System.out.println(s.getID());
-			myStack.add(s);
-			myScene.setCursor(ImageCursor.DEFAULT);
-		} catch (ClassCastException a) {
+                s.setXPosition(e.getX() - s.getImage().getWidth() / 2);
+                s.setYPosition(e.getY() - s.getImage().getHeight() / 2);
+                myGroup.getChildren().add(s);
+                this.myListOfSprites.add(s);
+                myScene.setCursor(ImageCursor.DEFAULT);
+                s.setOnMouseDragged(a -> imageDragged(a, s));
 
-		} catch (NullPointerException b) {
-			// wth?? why catch npe this no good!
-		}
-	}
+            } catch (ClassCastException a) {
+            } catch (NullPointerException b) {
+            }
+        }
 
-	private void spriteClicked(MouseEvent p, Sprite s) {
-		myGroup.getChildren().remove(s);
-		System.out.println("Removing");
-	}
+        private void imageDragged(MouseEvent a, Sprite s) {
+            s.setXPosition(a.getSceneX() - (s.getImage().getWidth()/2));
+            s.setYPosition(a.getSceneY() - (s.getImage().getHeight()/2));
+        }
 
+        public Object[] getData() {
+            return new Object[] { myCurrentRectangle, myListOfSprites };
+        }
+
+        public List<Sprite> getSprites() {
+            return myListOfSprites;
+        }
+
+        public Collection<Map<String, String>> getEnvironment() {
+            return myEnvironmentList;
+        }
+
+        public void createRegion(double x, double y) {
+            if (myCurrentRectangle != null) {
+                myGroup.getChildren().remove(myCurrentRectangle);
+            }
+            myCurrentRectangle = new Region(x, y, Color.WHITE);
+            myCurrentRectangle.setOnMouseClicked(e -> canvasClicked(e));
+            myGroup.getChildren().add(myCurrentRectangle);
+        }
+        
+        public Region getRegion(){
+            return myCurrentRectangle;
+        }
+    }
 }
