@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-<<<<<<< HEAD
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/groovy-all-2.4.1-indy.jar" sourcepath="lib/groovy-src.jar">
 		<attributes>
@@ -19,22 +18,5 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/Java SE 8 [1.8.0_25]"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
-=======
-        <classpathentry kind="src" path="src"/>
-        <classpathentry kind="lib" path="lib/groovy-all-2.4.1-indy.jar" sourcepath="lib/groovy-src.jar">
-          <attributes>
-            <attribute name="javadoc_location" value="jar:platform:/resource/experiment_voogasalad/lib/groovy-doc.jar!/"/>
-            </attributes>
-          </classpathentry>
-        <classpathentry kind="lib" path="lib/xstream-1.4.8.jar" sourcepath="lib/xstream-src.jar">
-          <attributes>
-            <attribute name="javadoc_location" value="jar:platform:/resource/experiment_voogasalad/lib/xstream-doc.jar!/doc"/>
-            </attributes>
-          </classpathentry>
-        <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-        <classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
-        <classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-        <classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
-        <classpathentry kind="output" path="bin"/>
-</classpath>
->>>>>>> 3104e8083b494c7d4539204f926284b9d67116a4
+
+          
