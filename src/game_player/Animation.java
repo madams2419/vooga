@@ -27,13 +27,13 @@ public class Animation implements Observer {
 	Map<String, Node> myPathMap;
 
 	public Animation(Sprite sprite, PhysicsObject physics) {
-	        myCurrentNode = new Node();
+	     
 		linkToSprite(sprite);
-		linkToSprite(physics);
+//		linkToSprite(physics);
 		mySprite = sprite;
 		myPathMap = new HashMap<>();
 		myImageView = new ImageView();
-		updatePosition(physics);
+//		updatePosition(physics);
 	}
 	
 	public class Node{
@@ -54,13 +54,16 @@ public class Animation implements Observer {
 //TODO implement linked list image transition
     public void setImage (String state, String ImagePath) {
         Node currImage = new Node(ImagePath,null);
-        
+        System.out.println(ImagePath);
         try {
             myPathMap.get(state).next = currImage;
+            System.out.println("added");
         }
         catch (Exception e) {
             myPathMap.put(state, currImage);
+            System.out.println("added");
         }
+        System.out.println(myPathMap.size());
     }
 
     public void removeImage (String state) {
@@ -81,8 +84,9 @@ public class Animation implements Observer {
                 myCurrentNode = myCurrentNode.next;
             }
             catch (Exception e) {
-                 try {
+                 try { 
                     myCurrentNode = myPathMap.get(state);
+                   
                 }
                 catch (Exception e1) {
                     // TODO Auto-generated catch block
@@ -106,17 +110,18 @@ public class Animation implements Observer {
 			sprite = (Sprite) o;
 			changeImage(sprite.getState());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+//			 TODO Auto-generated catch block
 			PhysicsObject physics;
 			physics = (PhysicsObject) o;
-			updatePosition(physics);
+//			updatePosition(physics);
+		    e.printStackTrace();
 		}
 	}
 	
-	public void updatePosition(PhysicsObject physics) {
-		Vector jfxPosition = Utilities.physicsCenterToUpperLeft(physics);
-		myImageView.setTranslateX(jfxPosition.getX());
-		myImageView.setTranslateY(jfxPosition.getY());
-	}
+//	public void updatePosition(PhysicsObject physics) {
+//		Vector jfxPosition = Utilities.physicsCenterToUpperLeft(physics);
+//		myImageView.setTranslateX(jfxPosition.getX());
+//		myImageView.setTranslateY(jfxPosition.getY());
+//	}
 
 }

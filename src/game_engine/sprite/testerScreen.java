@@ -25,6 +25,7 @@ public class testerScreen{
         
         myPlayer.addImage("idle", "/Resources/images/standingMario.png");
         myPlayer.addImage("walking", "/Resources/images/walkingMario.png");
+        myPlayer.addImage("walking","/Resources/images/standingMario.png");
         myPlayer.addImage("jumping", "/Resources/images/jumpingMario.png");
         myPlayer.setState("idle");
         
@@ -39,10 +40,6 @@ public class testerScreen{
         System.out.println(myPlayer.getState());
         KeyCode keyCode = e.getCode();
         if(keyCode == KeyCode.LEFT){
-        if(!myPlayer.getState().equals("idle")){
-       myPlayer.setState("idle");
-        }
-        else if(!myPlayer.getState().equals("walking"))
         myPlayer.setState("walking");
         }
         else if(keyCode ==KeyCode.UP)

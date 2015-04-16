@@ -107,6 +107,8 @@ public abstract class Sprite extends Observable implements IActor{
 	
 	public void runBehavior(String behavior, String... params){
 	    myBehaviorMap.get(behavior).perform(params);
+	    setChanged();
+            notifyObservers();
 	}
 	
 	public void addImage(String state,String ImagePath){
