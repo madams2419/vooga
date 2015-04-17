@@ -1,5 +1,6 @@
 package game_engine.sprite;
 
+import game_engine.sprite.Player;
 import javafx.animation.KeyFrame;
 import javafx.scene.Node;
 import javafx.scene.Scene;
