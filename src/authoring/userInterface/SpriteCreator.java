@@ -32,12 +32,12 @@ public class SpriteCreator extends JFrame {
 		BufferedImageLoader loader = new BufferedImageLoader();
 		BufferedImage spriteSheet = null;  
 		try {   
-			spriteSheet = loader.loadImage("/Users/hojeanniechung/Documents/workspace_308/voogasalad_HighScrollers/res/testSpritesheet.png"); 
+			spriteSheet = loader.loadImage("/Resources/images/Test.Spritesheet.png"); 
 		} catch (IOException e) { 
 			e.printStackTrace(); 
 		} 
 		SpriteSheet ss = new SpriteSheet(spriteSheet);  
-		sprite = ss.grabSprite(0, 0, 20, 20);
+		sprite = ss.grabSprite(0, 0, 60, 60);
 	}
 
 	@Override
