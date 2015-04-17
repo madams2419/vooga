@@ -1,14 +1,8 @@
 package authoring.util;
 
-import game_engine.objective.Objective;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -19,12 +13,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
-
-import org.w3c.dom.Element;
-
-import authoring.XMLBuilder;
 import authoring.userInterface.AuthoringWindow;
-import authoring.userInterface.CenterPane.CenterCanvas;
 
 /***
  * Class which contains methods that are reusable across front-end development
@@ -84,45 +73,45 @@ public class FrontEndUtils {
 	}
 
 	public static void buildXMLFile(AuthoringWindow parent, String filename) {
-		// Adding the root element
-		XMLBuilder xml = XMLBuilder.getInstance("game");
-		
-		// Adding title to root
-		xml.addChildWithValue(xml.getRoot(), "title", "Simple_Game");
-		
-		// Adding the level tag
-		Element level = xml.addToRoot("level");
-		
-		// Adding the properties of objective
-		Element objective = xml.add(level, "objective");
-	
-		List<Objective> objectives = new ArrayList<>();
-		Objective test = new Objective();
-		Objective test1 = new Objective();
-		objectives.add(test);
-		objectives.add(test1);
-		int a = 0;
-		for(Objective o : objectives)
-			xml.add(objective, String.format("objective_%d",a++));
-		// more stuff here... perhaps modify xmlbuilder to have an addObjective method
-		
-		// Adding sprites
-		Element sprite = xml.add(level, "sprite");
-		Iterator<CenterCanvas> iter = parent.getMyCenterPane().getMaps();
-		CenterCanvas c = iter.next();
-		xml.addAllSprites(sprite, c.getSprites());
-		
-		// Adding physics
-		xml.add(level, "physics");
-		
-		// Adding controls
-		xml.add(level, "control");
-
-		
-		// Adding collision
-		xml.add(level, "collision");
-		
-		// Streaming result
-		xml.streamFile("output/test.xml");
+//		// Adding the root element
+//		XMLBuilder xml = XMLBuilder.getInstance("game");
+//		
+//		// Adding title to root
+//		xml.addChildWithValue(xml.getRoot(), "title", "Simple_Game");
+//		
+//		// Adding the level tag
+//		Element level = xml.addToRoot("level");
+//		
+//		// Adding the properties of objective
+//		Element objective = xml.add(level, "objective");
+//	
+//		List<Objective> objectives = new ArrayList<>();
+//		Objective test = new Objective();
+//		Objective test1 = new Objective();
+//		objectives.add(test);
+//		objectives.add(test1);
+//		int a = 0;
+//		for(Objective o : objectives)
+//			xml.add(objective, String.format("objective_%d",a++));
+//		// more stuff here... perhaps modify xmlbuilder to have an addObjective method
+//		
+//		// Adding sprites
+//		Element sprite = xml.add(level, "sprite");
+//		Iterator<CenterCanvas> iter = parent.getMyCenterPane().getMaps();
+//		CenterCanvas c = iter.next();
+//		xml.addAllSprites(sprite, c.getSprites());
+//		
+//		// Adding physics
+//		xml.add(level, "physics");
+//		
+//		// Adding controls
+//		xml.add(level, "control");
+//
+//		
+//		// Adding collision
+//		xml.add(level, "collision");
+//		
+//		// Streaming result
+//		xml.streamFile("output/test.xml");
 	}
 }

@@ -115,8 +115,10 @@ public class Objective implements IActor {
      * @param now
      */
     public void update (long now) {
+        
         updateActive(now);
         if (isActive()) {
+            
             updateStatus(now);
             executeStatus();
         }
@@ -131,8 +133,8 @@ public class Objective implements IActor {
     }
 
     private void executeStatus () {
-        myBehaviors.getOrDefault(myStatus, () -> {
-        }).perform();
+        System.out.println(myStatus);
+        myBehaviors.getOrDefault(myStatus, () -> {}).perform();
     }
 
     private void updateActive (long now) {
@@ -184,8 +186,9 @@ public class Objective implements IActor {
     public IAction getAction (String name) {
         if (name.equals("setStatus")){
             return (params) -> {
-                myStatus = Status.get(params[0]);
-                executeStatus();
+                if (isActive()){
+                    addCondition((now) -> true, params[0]);
+                }
             };
         }
         return (params) -> {
