@@ -15,6 +15,13 @@
 								<name>setState</name>
 								<parameters>win</parameters>
 							</behavior_0>
+							
+							<behavior_1>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>jump</name>
+								<parameters>.05</parameters>							
+							</behavior_1>
 						</behaviors>
 					</onComplete>
 					<onFailed>
@@ -24,9 +31,15 @@
 				
 				<objective_1>
 					<prereqs></prereqs>
-					<timer>5</timer>
 					<onComplete>
-						<behaviors></behaviors>
+						<behaviors>
+							<behavior_0>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>setState</name>
+								<parameters>key</parameters>
+							</behavior_0>
+						</behaviors>
 					</onComplete>
 					<onFailed>
 						<behaviors>
@@ -47,9 +60,15 @@
 							<behavior_0>
 								<targetType>sprite</targetType>
 								<targetIndex>0</targetIndex>
-								<name>setState</name>
-								<parameters>standing</parameters>
+								<name>jump</name>
+								<parameters>.03</parameters>
 							</behavior_0>
+							<behavior_1>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>setState</name>
+								<parameters>dead</parameters>
+							</behavior_1>
 						</behaviors>
 					</onComplete>
 					<onFailed>
@@ -72,13 +91,19 @@
 						
 						<state_1>
 							<name>dead</name>
-							<image>/images/mario.png</image>
+							<image>/images/surprisedMario.png</image>
 						</state_1>
 						
 						<state_2>
 							<name>win</name>
-							<image>/images/mario.png</image>
+							<image>/images/happymario.png</image>
 						</state_2>
+						
+						<state_3>
+							<name>key</name>
+							<image>/images/keyMario.png</image>
+						</state_3>
+
 					</animation>
 					<physics>
 						<material>bouncy_ball</material>
@@ -117,7 +142,7 @@
 					<animation>
 						<state_0>
 							<name>immobile</name>
-							<image>/images/ground.png</image>
+							<image>/images/brick.png</image>
 						</state_0>
 					</animation>
 					<physics>
@@ -256,7 +281,7 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>jump</name>
-									<parameters>.002</parameters>
+									<parameters>.055</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
@@ -276,14 +301,7 @@
 					<sprite_2>3</sprite_2>
 					<direction>0 1 2 3</direction>
 					<realistic>false</realistic>
-					<behaviors>
-						<behavior_0>
-							<targetType>sprite</targetType>
-							<targetIndex>0</targetIndex>
-							<name>setState</name>
-							<parameters>dead</parameters>
-						</behavior_0>
-						
+					<behaviors>						
 						<behavior_1>
 							<targetType>objective</targetType>
 							<targetIndex>2</targetIndex>
@@ -340,5 +358,7 @@
 				</collision_4>
 			</collision>
 		</level_0>
+		
+		
 	</level>
 </game>

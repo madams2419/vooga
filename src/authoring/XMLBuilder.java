@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -267,15 +268,22 @@ public class XMLBuilder {
 		return root;
 	}
 
-	public void addAllSprites(Element parent, Collection<Sprite> sprites) {
-		sprites.forEach(sprite -> addSprite(parent, sprite));
+	public void addAllSprites(Element parent, List<Sprite> sprites) {
+		for(int i = 0; i < sprites.size(); i++)
+			addSprite(parent, sprites.get(i), i);
 	}
 
-	private void addSprite(Element parent, Sprite sprite) {
-		Element s = add(parent, "sprite");
-		s.setAttribute("name", sprite.getName());
-		sprite.getCharacteristics().forEach(
-				(key, value) -> addChildWithValue(s, key, value));
+	private void addSprite(Element parent, Sprite sprite, int index) {
+		Element s = add(parent, String.format("sprite_%d",index));
+//		s.setAttribute("name", sprite.getName());
+		add(s, "type");
+		add(s, "inital_state");
+		addChildWithValue(s, "width", Double.toString(sprite.getFitWidth()));
+		addChildWithValue(s, "height", Double.toString(sprite.getFitHeight()));
+		addChildWithValue(s, "animation", "null");
+//		sprite.getCharacteristics().forEach(
+//				(key, value) -> addChildWithValue(s, key, value));
+		addChildWithValue(s, "physics", "null");
 	}
 
 	public void addAllEnvironment(Element parent, Collection<Map<String, String>> environments) {

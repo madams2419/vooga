@@ -25,6 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import authoring.Sprite;
+import authoring.centerPane.Region;
 import authoring.rightPane.GlobalCreationPane;
 import authoring.util.FrontEndUtils;
 
