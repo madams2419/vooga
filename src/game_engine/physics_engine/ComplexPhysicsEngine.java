@@ -8,6 +8,10 @@ import java.util.HashMap;
 import game_engine.physics_engine.physics_object.IPhysicsObject;
 import game_engine.sprite.Sprite;
 
+/**
+ * complex physics engine implementation
+ *
+ */
 public class ComplexPhysicsEngine extends PhysicsEngine{
 	
 	PhysicsCollisionFactory collisionFactory;
