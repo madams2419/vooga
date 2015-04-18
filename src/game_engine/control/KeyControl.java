@@ -41,11 +41,15 @@ public class KeyControl {
 		if(myKeyPressedMap.containsKey(keycode)){
 			if(pressed){
 				//add error checking later
-				myKeyPressedMap.get(keycode).perform();
-				myWhilePressedKey.add(keycode);
+				if(myKeyPressedMap.get(keycode) != null){
+					myKeyPressedMap.get(keycode).perform();
+					myWhilePressedKey.add(keycode);
+				}
 			} else {
-				myKeyReleasedMap.get(keycode).perform();
-				myWhilePressedKey.remove(keycode);
+				if(myKeyReleasedMap.get(keycode) != null){
+					myKeyReleasedMap.get(keycode).perform();
+					myWhilePressedKey.remove(keycode);
+				}
 			}
 		}
 	}
@@ -106,7 +110,7 @@ public class KeyControl {
 
 	//TODO: throw exception if keycode not defined
 	private KeyCode kcTranslation(String index){
-	    return null;
+		return null;
 		//return KeycodeFactory.generateKeyCode(index);
 	}
 

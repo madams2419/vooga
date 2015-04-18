@@ -15,9 +15,9 @@ public class ControlManager {
 		myKeyControls = new ArrayList<>();
 	}
 
-	public void addControl(Map<KeyCode, IBehavior> keyPressMap, Map<KeyCode, IBehavior> keyReleaseMap){
-		//KeyControl newControl = new KeyControl(keyPressMap, keyReleaseMap, null);
-		//myKeyControls.add(newControl);
+	public void addControl(Map<KeyCode, IBehavior> keyPressedMap, Map<KeyCode, IBehavior> keyReleasedMap, Map<KeyCode, IBehavior> keyHeldMap){
+		KeyControl newControl = new KeyControl(keyPressedMap, keyReleasedMap, keyHeldMap);
+		myKeyControls.add(newControl);
 		myActiveControl++;
 	}
 	
@@ -45,6 +45,7 @@ public class ControlManager {
 		if(myActiveControl < 0){
 			System.out.println("No Control has been added yet!");
 		} else{
+			System.out.println("myActiveC is "+myActiveControl);
 			myKeyControls.get(myActiveControl).executeKeyEvent(keycode, pressed);
 		}
 	}
