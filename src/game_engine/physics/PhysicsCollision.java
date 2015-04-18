@@ -51,8 +51,8 @@ public abstract class PhysicsCollision {
 		Vector correction = myNormal.times(correctionCoef);
 		Vector aCorrection = correction.times(myObjectA.getInvMass()).negate();
 		Vector bCorrection = correction.times(myObjectB.getInvMass());
-		myObjectA.applyVelocity(correction.negate());
-		myObjectB.applyVelocity(correction);
+		myObjectA.addPosition(aCorrection);
+		myObjectB.addPosition(bCorrection);
 	}
 
 	protected double computeRestitution() {

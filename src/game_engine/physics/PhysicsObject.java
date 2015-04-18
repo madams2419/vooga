@@ -100,10 +100,10 @@ public class PhysicsObject extends Observable {
 	}
 
 	public void applyImpulse(Vector impulse) {
-		applyVelocity(impulse.times(myInvMass));
+		addVelocity(impulse.times(myInvMass));
 	}
 
-	public void applyVelocity(Vector velocity) {
+	public void addVelocity(Vector velocity) {
 		Vector newVelocity = myVelocity.plus(velocity);
 		setVelocity(newVelocity);
 	}
