@@ -42,10 +42,13 @@ public class RectangleBody extends RigidBody {
 		double clampedY = Utilities.clamp(-halfHeight, halfHeight, point.getY());
 		Vector clampedPoint = new Vector(clampedX, clampedY);
 
-		// hanlde case where point is completely inside rectangle
+		// handle case where point is completely inside rectangle
 		if(clampedPoint.equals(point)) {
-			// clamp to closest axis
-			if(Math.abs(clampedX) > Math.abs(clampedY)) {
+			double distToX = halfWidth - Math.abs(clampedX);
+			double distToY = halfHeight - Math.abs(clampedY);
+
+			// clamp to closest edge
+			if(distToX < distToY) {
 				clampedX = (clampedX > 0) ? halfWidth : -halfWidth;
 			} else {
 				clampedY = (clampedY > 0) ? halfHeight : -halfHeight;
