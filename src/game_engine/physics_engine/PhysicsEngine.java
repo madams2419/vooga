@@ -1,4 +1,6 @@
-package physics_engine;
+package game_engine.physics_engine;
+
+import game_engine.physics_engine.physics_object.IPhysicsObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
