@@ -17,14 +17,14 @@ public abstract class PhysicsCollision {
 	}
 
 	public boolean collide() {
-		myNormal = computeNormal();
-		myPenetrationDepth = computePenetrationDepth();
+		solve();
 		return (myPenetrationDepth >= 0);
 	}
 
-	protected abstract Vector computeNormal();
-
-	protected abstract double computePenetrationDepth();
+	/**
+	 * Compute collision normal and penetration depth
+	 */
+	protected abstract void solve();
 
 	public void resolve() {
 		// return if objects are moving apart

@@ -11,15 +11,11 @@ public class CircleCircleCollision extends PhysicsCollision {
 		myCircleB = (CircleBody) poB.getRigidBody();
 	}
 
-	protected Vector computeNormal() {
-		return getSeparationVector().normalize();
-	}
+	protected void solve() {
+		myNormal = getSeparationVector().normalize();
 
-	protected double computePenetrationDepth() {
 		double radiiSum = myCircleA.getRadius() + myCircleB.getRadius();
-		double test =  radiiSum - getSeparationDistance();
-		getSeparationDistance();
-		return test;
+		myPenetrationDepth = radiiSum - getSeparationDistance();
 	}
 
 }

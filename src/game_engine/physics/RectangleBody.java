@@ -30,8 +30,14 @@ public class RectangleBody extends RigidBody {
 		return Math.sqrt(getHeight() * getHeight() + getWidth() * getWidth());
 	}
 
-	protected boolean containsPoint(Vector point) {
+	public boolean containsPoint(Vector point) {
 		return inXRange(point) && inYRange(point);
+	}
+
+	public Vector clampPointToEdge(Vector point) {
+		double clampedX = Utilities.clamp(-getWidth()/2, getWidth()/2, point.getX());
+		double clampedY = Utilities.clamp(-getHeight()/2, getHeight()/2, point.getY());
+		return new Vector(clampedX, clampedY);
 	}
 
 	private boolean inXRange(Vector point) {
