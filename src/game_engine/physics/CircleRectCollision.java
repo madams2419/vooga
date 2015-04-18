@@ -2,20 +2,8 @@ package game_engine.physics;
 
 public class CircleRectCollision extends PhysicsCollision {
 
-	private final static Vector NORTH_NORMAL = new Vector(0, 1);
-	private final static Vector WEST_NORMAL = new Vector(-1, 0);
-	private final static Vector EAST_NORMAL = new Vector(1, 0);
-	private final static Vector SOUTH_NORMAL = new Vector(-1, 0);
-
 	private CircleBody myCircle;
 	private RectangleBody myRectangle;
-	private double cWidth;
-	private double cHeight;
-	private CollisionType cType;
-
-	private enum CollisionType {
-		B_UPPER_LEFT, B_UPPER_RIGHT, B_LOWER_LEFT, B_LOWER_RIGHT, NONE
-	}
 
 	public CircleRectCollision(PhysicsObject poA, PhysicsObject poB) {
 		super(poA, poB);
@@ -23,20 +11,27 @@ public class CircleRectCollision extends PhysicsCollision {
 		myRectangle = (RectangleBody) poB.getRigidBody();
 	}
 
+	//TODO handle with strategy pattern instead of if statement
 	protected void solve() {
 		Vector sepVector = getSeparationVector();
 
 		// compute closest point on circle to rectangle
 		Vector closestPoint = myRectangle.clampPointToEdge(sepVector);
 
-		// handle case when circule center is inside of rectangle
-		if(closestPoint.equals(sepVector)) {
-			//TODO
-		}
+		// check if circle center is insie rectangle
+		boolean circleInsideRect = myRectangle.containsPoint(myObjectA.getPositionMeters());
 
+		// compute raw normal vector
 		Vector rawNormal = sepVector.minus(closestPoint);
-		myNormal = rawNormal.normalize();
-		myPenetrationDepth = rawNormal.getMagnitude() - myCircle.getRadius();
+
+		// compute penetration depth and unit normal depending on collision type
+		if(circleInsideRect) {
+			myNormal = myNormal.normalize().negate();
+			myPenetrationDepth = myCircle.getRadius() + rawNormal.getMagnitude();
+		} else {
+			myNormal = myNormal.normalize();
+			myPenetrationDepth = myCircle.getRadius() - rawNormal.getMagnitude();
+		}
 
 	}
 
