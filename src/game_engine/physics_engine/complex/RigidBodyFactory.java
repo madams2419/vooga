@@ -1,6 +1,7 @@
-package game_engine.physics;
+package game_engine.physics_engine.complex;
 
-import game_engine.physics.RigidBody.RBodyType;
+import game_engine.physics.PhysicsEngine;
+import game_engine.physics_engine.complex.RigidBody.RBodyType;
 
 public class RigidBodyFactory {
 	

@@ -1,11 +1,11 @@
 package game_engine.sprite;
 
 import game_engine.IBehavior;
-import game_engine.physics.Material;
 import game_engine.physics.PhysicsEngine;
 import game_engine.physics.PhysicsObject;
-import game_engine.physics.Vector;
-import game_engine.physics.RigidBody.RBodyType;
+import game_engine.physics_engine.complex.Material;
+import game_engine.physics_engine.complex.Vector;
+import game_engine.physics_engine.complex.RigidBody.RBodyType;
 
 import java.util.HashMap;
 import java.util.Map;

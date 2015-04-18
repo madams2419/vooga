@@ -4,10 +4,10 @@ import game_engine.IBehavior;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.collision.HitBox;
-import game_engine.physics.Material;
 import game_engine.physics.PhysicsEngine;
 import game_engine.physics.PhysicsObject;
-import game_engine.physics.RigidBody.RBodyType;
+import game_engine.physics_engine.complex.Material;
+import game_engine.physics_engine.complex.RigidBody.RBodyType;
 import game_player.Animation;
 
 import java.util.HashMap;

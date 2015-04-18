@@ -1,4 +1,6 @@
-package game_engine.physics;
+package game_engine.physics_engine.complex;
+
+import game_engine.physics_engine.physics_object.complex_physics_object.ComplexPhysicsObject;
 
 public abstract class PhysicsCollision {
 
@@ -6,12 +8,12 @@ public abstract class PhysicsCollision {
 	private static double SC_PERCENT = 0.5;
 	private static double SC_SLOP = 0.01;
 
-	protected PhysicsObject myObjectA;
-	protected PhysicsObject myObjectB;
+	protected ComplexPhysicsObject myObjectA;
+	protected ComplexPhysicsObject myObjectB;
 	protected Vector myNormal;
 	protected double myPenetrationDepth;
 
-	public PhysicsCollision(PhysicsObject objectA, PhysicsObject objectB) {
+	public PhysicsCollision(ComplexPhysicsObject objectA, ComplexPhysicsObject objectB) {
 		myObjectA = objectA;
 		myObjectB = objectB;
 	}
@@ -80,11 +82,11 @@ public abstract class PhysicsCollision {
 		return myObjectB.getPositionMeters().minus(myObjectA.getPositionMeters());
 	}
 
-	public PhysicsObject getPhysicsObjectA() {
+	public ComplexPhysicsObject getPhysicsObjectA() {
 		return myObjectA;
 	}
 
-	public PhysicsObject getPhysicsObjectB() {
+	public ComplexPhysicsObject getPhysicsObjectB() {
 		return myObjectB;
 	}
 

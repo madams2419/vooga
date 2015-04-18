@@ -1,7 +1,7 @@
 package game_player;
 
 import game_engine.physics.PhysicsObject;
-import game_engine.physics.Vector;
+import game_engine.physics_engine.complex.Vector;
 
 public class Utilities {
 	

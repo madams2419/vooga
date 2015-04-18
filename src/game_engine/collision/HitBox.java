@@ -1,10 +1,10 @@
 package game_engine.collision;
 
-import game_engine.physics.CircleBody;
-import game_engine.physics.RectangleBody;
-import game_engine.physics.RigidBody;
-import game_engine.physics.RigidBody.RBodyType;
-import game_engine.physics.Vector;
+import game_engine.physics_engine.complex.CircleBody;
+import game_engine.physics_engine.complex.RectangleBody;
+import game_engine.physics_engine.complex.RigidBody;
+import game_engine.physics_engine.complex.Vector;
+import game_engine.physics_engine.complex.RigidBody.RBodyType;
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

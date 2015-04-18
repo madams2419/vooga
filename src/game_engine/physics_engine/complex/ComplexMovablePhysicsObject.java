@@ -1,10 +1,9 @@
-package game_engine.physics_engine.physics_object.complex_physics_object;
+package game_engine.physics_engine.complex;
 
 import game_engine.physics.PhysicsEngine;
 //import game_engine.physics.RigidBodyFactory;
-import game_engine.physics_engine.complex.Material;
-import game_engine.physics_engine.complex.RigidBody;
 import game_engine.physics_engine.complex.RigidBody.RBodyType;
+import game_engine.physics_engine.physics_object.complex_physics_object.ComplexPhysicsObject;
 
 public class ComplexMovablePhysicsObject extends ComplexPhysicsObject {
 

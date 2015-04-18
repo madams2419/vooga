@@ -1,4 +1,4 @@
-package game_engine.physics_engine;
+package game_engine.physics_engine.complex;
 
 import game_engine.physics_engine.physics_object.IPhysicsObject;
 

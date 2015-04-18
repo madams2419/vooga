@@ -1,12 +1,14 @@
 package game_player;
 
 import game_engine.physics.PhysicsObject;
-import game_engine.physics.Vector;
+import game_engine.physics_engine.complex.Vector;
 import game_engine.sprite.Sprite;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
