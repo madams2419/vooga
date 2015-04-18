@@ -1,19 +1,19 @@
 package authoring;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -42,15 +42,15 @@ public class XMLBuilder {
 	private Document mDocument;
 
 	private static XMLBuilder mInstance;
-	
+
 	// ====== Constructors =====================================================
 
 	public static XMLBuilder getInstance(String rootElement) {
-		if(mInstance==null)
+		if (mInstance == null)
 			mInstance = new XMLBuilder(rootElement);
 		return mInstance;
 	}
-	
+
 	private XMLBuilder(String rootElement, String... attributes_values) {
 		this(rootElement, arrayToMap(attributes_values));
 	}
@@ -80,7 +80,7 @@ public class XMLBuilder {
 	 * Method which will collect all the information stored in the parent node
 	 * into the specified file
 	 */
-	public void streamFile(String filename, Element root) {
+	public void streamFile(String filename) {
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory
 				.newInstance();
@@ -93,7 +93,6 @@ public class XMLBuilder {
 		} catch (TransformerException e) {
 			e.printStackTrace();
 		}
-		System.out.println("streamed file");
 	}
 
 	/***
@@ -116,11 +115,18 @@ public class XMLBuilder {
 			mDocument = mDocument == null ? DocumentBuilderFactory
 					.newInstance().newDocumentBuilder().newDocument()
 					: mDocument;
+			if (tagname.contains(" ")) {
+				tagname = tagname.trim();
+				StringBuilder s = new StringBuilder();
+				Arrays.asList(tagname.split("\\s")).forEach(s1 -> s.append(s1));
+				tagname = s.toString();
+			}
 			newElement = mDocument.createElement(tagname);
 			if (attributes_values != null && !attributes_values.isEmpty())
 				addAttributes(newElement, attributes_values);
-		} catch (DOMException | ParserConfigurationException e) {
+		} catch (Exception e) {
 			// TODO define error reaction
+			e.printStackTrace();
 		}
 		return newElement;
 	}
@@ -219,6 +225,7 @@ public class XMLBuilder {
 	 * @return Instance of Element which is the newly created tag
 	 */
 	public Element add(Element parent, String tagname) {
+		assert (parent != null);
 		return add(parent, tagname, null);
 	}
 
@@ -226,13 +233,18 @@ public class XMLBuilder {
 	 * Method for adding a child with a specified tag and the specified text
 	 * field, with no attributes.
 	 * 
-	 * @param element
+	 * @param parent
+	 *            of the new element to be created
 	 * @param property
 	 * @param textContent
+	 *            value of the property
+	 * @return new element which was created
 	 */
-	public void addChildWithValue(Element element, String property,
+	public Element addChildWithValue(Element parent, String property,
 			String textContent) {
-		add(element, property).setTextContent(textContent);
+		Element newElement = add(parent, property);
+		newElement.setTextContent(textContent);
+		return newElement;
 	}
 
 	/***
@@ -256,57 +268,32 @@ public class XMLBuilder {
 		return root;
 	}
 
-	public void addAll(Collection<Sprite> sprites) {
-		sprites.forEach(sprite -> addSprite(sprite));
+	public void addAllSprites(Element parent, List<Sprite> sprites) {
+		for(int i = 0; i < sprites.size(); i++)
+			addSprite(parent, sprites.get(i), i);
 	}
-	
-	private void addSprite(Sprite sprite) {
-		Element s = add(root, "sprite");
-		s.setAttribute("name", sprite.getName());
-		sprite.getCharacteristics().forEach((key, value) -> {
-			addChildWithValue(s,key,value);
+
+	private void addSprite(Element parent, Sprite sprite, int index) {
+		Element s = add(parent, String.format("sprite_%d",index));
+//		s.setAttribute("name", sprite.getName());
+		add(s, "type");
+		add(s, "inital_state");
+		addChildWithValue(s, "width", Double.toString(sprite.getFitWidth()));
+		addChildWithValue(s, "height", Double.toString(sprite.getFitHeight()));
+		addChildWithValue(s, "animation", "null");
+//		sprite.getCharacteristics().forEach(
+//				(key, value) -> addChildWithValue(s, key, value));
+		addChildWithValue(s, "physics", "null");
+	}
+
+	public void addAllEnvironment(Element parent, Collection<Map<String, String>> environments) {
+		Element mapElement = add(parent, "map_environment");
+		assert (mapElement != null);
+		environments.forEach(map -> {
+			map.forEach((s1, s2) -> {
+				Element newel = add(mapElement, (String) s1);
+				newel.setTextContent((String) s2);
+			});
 		});
 	}
-	
-	// ====== Testing Main Method ==============================================
-
-	public static void main(String[] args) {
-
-		/***
-		 * This will generate a sample xml file in src/sample.xml
-		 */
-		XMLBuilder b = new XMLBuilder("sample", "name", "sample", "author",
-				"daniel");
-
-		/*
-		 * Generate the map with attributes. This is meant to be called by
-		 * either an engine or a gui.
-		 */
-		Map<String, String> mAttributes = new HashMap<>();
-		mAttributes.put("name", "first");
-		Element el1 = b.addToRoot("element", mAttributes);
-
-		// Adding propertyN with valueN as child of el1
-		b.add(el1, "property1").setTextContent("value1");
-		b.add(el1, "property2").setTextContent("value2");
-		b.add(el1, "property3").setTextContent("value3");
-		mAttributes.clear();
-
-		// We want to add a subtree with tagname position to the root
-		Element el2 = b.add(el1, "position");
-		b.add(el2, "X").setTextContent("xpos");
-		b.add(el2, "Y").setTextContent("ypos");
-
-		// Adding another subtree
-		Element el3 = b.add(el1, "key-actions");
-		b.add(el3, "prop1").setTextContent("1");
-		b.add(el3, "prop2").setTextContent("2");
-		b.add(el3, "prop3").setTextContent("3");
-		b.add(el3, "prop4").setTextContent("4");
-
-		// Once we are done adding elements to the tree structure, we stream it
-		// to generate the xml file
-		b.streamFile("swap/game.xml", b.root);
-	}
-
 }

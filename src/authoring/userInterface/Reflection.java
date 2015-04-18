@@ -5,12 +5,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Type;
-import java.util.Locale;
-
-import static java.lang.System.out;
-import static java.lang.System.err;
 
 
 
@@ -68,8 +62,9 @@ public class Reflection {
 	public static Object callMethod (Object target, String name) throws ReflectionException {
 		try {
 			Method toCall = target.getClass().getDeclaredMethod(name, new Class[0]);
-			return toCall.invoke(target, new Object[0]);
+			return toCall.invoke(target);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new ReflectionException("No matching public method %s for %s", name, target.getClass().getName());
 		}
 	}

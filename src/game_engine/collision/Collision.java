@@ -55,7 +55,7 @@ public class Collision {
 	}
 
 	private void execute() {
-//		behavior.perform();
+		behavior.perform();
 	}
 	
 	private boolean collidingHitBox(){
