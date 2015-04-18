@@ -11,7 +11,6 @@ public class BehaviorResolver implements ICollisionResolver{
 		behavior = b;
 	}
 
-	@Override
 	public void execute() {
 		behavior.perform();
 		
