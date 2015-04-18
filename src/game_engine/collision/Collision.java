@@ -18,7 +18,6 @@ public class Collision {
 	private Sprite spriteB;
 //	private Map<Sprite, Map<IBehavior, String[]>> behaviorList;
 	private IBehavior behavior;
-	private CollisionDirection direction;
 	private boolean isRealistic;
 	private PhysicsCollision pCollision;
 
@@ -31,11 +30,10 @@ public class Collision {
 	 * @param real
 	 * @param p
 	 */
-	public Collision(Sprite a, Sprite b, IBehavior behave, CollisionDirection d, boolean real) {
+	public Collision(Sprite a, Sprite b, IBehavior behave, boolean real) {
 		spriteA = a;
 		spriteB = b;
 		behavior = behave;
-		direction = d;
 		isRealistic = real;
 		pCollision = null;
 	}
