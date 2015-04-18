@@ -1,6 +1,6 @@
 package game_engine.physics_engine.physics_object.complex_physics_object;
 
-import game_engine.physics.PhysicsEngine;
+import game_engine.physics_engine.complex.ComplexPhysicsEngine;
 //import game_engine.physics.RigidBodyFactory;
 import game_engine.physics_engine.complex.Material;
 import game_engine.physics_engine.complex.RigidBody;
@@ -8,14 +8,14 @@ import game_engine.physics_engine.complex.RigidBody.RBodyType;
 
 public class ComplexMovablePhysicsObject extends ComplexPhysicsObject {
 
-	public ComplexMovablePhysicsObject(PhysicsEngine physics,
+	public ComplexMovablePhysicsObject(ComplexPhysicsEngine physics,
 			RigidBody rigidBody, Material material, int xPosPixels,
 			int yPosPixels) {
 		super(physics, rigidBody, material, xPosPixels, yPosPixels);
 		// TODO Auto-generated constructor stub
 	}
 
-	public ComplexMovablePhysicsObject(PhysicsEngine physics, RBodyType rbType, int widthPixels, int heightPixels, Material material, int xPosPixels, int yPosPixels) {
+	public ComplexMovablePhysicsObject(ComplexPhysicsEngine physics, RBodyType rbType, int widthPixels, int heightPixels, Material material, int xPosPixels, int yPosPixels) {
 		super(physics, rbType,widthPixels,heightPixels,material,xPosPixels,yPosPixels);
 	}
 

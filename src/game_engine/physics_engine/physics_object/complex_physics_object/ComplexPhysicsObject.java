@@ -1,6 +1,6 @@
 package game_engine.physics_engine.physics_object.complex_physics_object;
 
-import game_engine.physics.PhysicsEngine;
+import game_engine.physics_engine.complex.ComplexPhysicsEngine;
 import game_engine.physics_engine.complex.Joint;
 import game_engine.physics_engine.complex.Material;
 import game_engine.physics_engine.complex.RigidBody;
@@ -21,20 +21,20 @@ public abstract class ComplexPhysicsObject implements IPhysicsObject{
 	protected Vector myNetInternalForce;
 	protected double myDirForceMagnitude;
 	protected List<Joint> myJoints;
-	protected PhysicsEngine myPhysics;
+	protected ComplexPhysicsEngine myPhysics;
 
 	protected RigidBody myRigidBody;
 
-	public ComplexPhysicsObject(PhysicsEngine physics, RBodyType rbType, int widthPixels, int heightPixels, Material material, int xPosPixels, int yPosPixels) {
+	public ComplexPhysicsObject(ComplexPhysicsEngine physics, RBodyType rbType, int widthPixels, int heightPixels, Material material, int xPosPixels, int yPosPixels) {
 		this(physics, RigidBodyFactory.createRigidBody(heightPixels, widthPixels, rbType), material, xPosPixels, yPosPixels);
 	}
 
-	public ComplexPhysicsObject(PhysicsEngine physics, RigidBody rigidBody, Material material, int xPosPixels, int yPosPixels) {
+	public ComplexPhysicsObject(ComplexPhysicsEngine physics, RigidBody rigidBody, Material material, int xPosPixels, int yPosPixels) {
 		myPhysics = physics;
 		myRigidBody = rigidBody;
 		myMaterial = material;
 
-		myPosition = PhysicsEngine.vectorPixelsToMeters(xPosPixels, yPosPixels);
+		myPosition = ComplexPhysicsEngine.vectorPixelsToMeters(xPosPixels, yPosPixels);
 		myVelocity = new Vector();
 		myNetInternalForce = new Vector();
 		myDirForceMagnitude = 0;
