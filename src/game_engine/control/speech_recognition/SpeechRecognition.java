@@ -55,7 +55,6 @@ public class SpeechRecognition {
 						ControlTester.subTrack();
 						ControlTester.updateText();
 					}
-					System.out.println("The queue size is " + game_engine.control.speech_recognition.voce.SpeechInterface.getRecognizerQueueSize());
 					System.out.println("You said something: " + s);
 					//voce.SpeechInterface.synthesize(s);
 				}
