@@ -1,7 +1,7 @@
 package game_engine.physics;
 
 public class Utilities {
-	
+
 	/**
 	 * Clamp value within range specified by [min, max]
 	 * @param min

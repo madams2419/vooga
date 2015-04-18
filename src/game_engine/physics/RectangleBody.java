@@ -35,9 +35,25 @@ public class RectangleBody extends RigidBody {
 	}
 
 	public Vector clampPointToEdge(Vector point) {
-		double clampedX = Utilities.clamp(-getWidth()/2, getWidth()/2, point.getX());
-		double clampedY = Utilities.clamp(-getHeight()/2, getHeight()/2, point.getY());
-		return new Vector(clampedX, clampedY);
+		double halfWidth = getWidth()/2;
+		double halfHeight = getHeight()/2;
+
+		double clampedX = Utilities.clamp(-halfWidth, halfWidth, point.getX());
+		double clampedY = Utilities.clamp(-halfHeight, halfHeight, point.getY());
+		Vector clampedPoint = new Vector(clampedX, clampedY);
+
+		// hanlde case where point is completely inside rectangle
+		if(clampedPoint.equals(point)) {
+			// clamp to closest axis
+			if(Math.abs(clampedX) > Math.abs(clampedY)) {
+				clampedX = (clampedX > 0) ? halfWidth : -halfWidth;
+			} else {
+				clampedY = (clampedY > 0) ? halfHeight : -halfHeight;
+			}
+			clampedPoint = new Vector(clampedX, clampedY);
+		}
+
+		return clampedPoint;
 	}
 
 	private boolean inXRange(Vector point) {

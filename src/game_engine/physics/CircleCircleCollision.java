@@ -12,8 +12,10 @@ public class CircleCircleCollision extends PhysicsCollision {
 	}
 
 	protected void solve() {
+		// compute normal
 		myNormal = getSeparationVector().normalize();
 
+		// compute penetration depth
 		double radiiSum = myCircleA.getRadius() + myCircleB.getRadius();
 		myPenetrationDepth = radiiSum - getSeparationDistance();
 	}
