@@ -91,7 +91,6 @@ public class PhysicsTester extends Application {
 	}
 
 	private void handleKeyFrame() {
-		globalPhysics.update(sprites);
 		applyKeyPressBehavior();
 		applyKeyReleaseBehavior();
 		cEngine.checkCollisions();
@@ -190,11 +189,9 @@ public class PhysicsTester extends Application {
 		
 		/* add player to layer */
 		sprites.add(playerSprite);
-		
-		myGroup.getChildren().add(playerSprite.getImageView());
 
 		/* create and add enemy sprites */
-		Sprite e1 = createAndAddEnemy(300, 700, 200, Material.BOUNCY_BALL);
+		Sprite e1 = createAndAddEnemy(300, 700, 400, Material.METAL);
 		Sprite e2 = createAndAddEnemy(500, 700, 100, 50, Material.BOUNCY_BALL);
 		//createAndAddEnemy(500, 700, 30, Material.BOUNCY_BALL);
 		//createAndAddEnemy(700, 200, 200, Material.BOUNCY_BALL);
@@ -208,6 +205,8 @@ public class PhysicsTester extends Application {
 		cList.add(c1);
 		cList.add(c2);
 		//cList.add(c3);
+		
+		myGroup.getChildren().add(playerSprite.getImageView());
 		
 		/* create collision engine */
 		cEngine = new CollisionEngine(cList);

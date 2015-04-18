@@ -42,7 +42,6 @@ public abstract class PhysicsCollision {
 	}
 
 	private void applySinkCorrection() {
-		//TODO this doesnt' work yet...
 		// return if penetration depth is less than threshold
 		if(myPenetrationDepth < SC_SLOP) {
 			return;
@@ -50,16 +49,18 @@ public abstract class PhysicsCollision {
 
 		double correctionCoef = SC_PERCENT * myPenetrationDepth / (myObjectA.getInvMass() + myObjectB.getInvMass());
 		Vector correction = myNormal.times(correctionCoef);
+		Vector aCorrection = correction.times(myObjectA.getInvMass()).negate();
+		Vector bCorrection = correction.times(myObjectB.getInvMass());
 		myObjectA.applyVelocity(correction.negate());
 		myObjectB.applyVelocity(correction);
 	}
 
-	protected double collisionRestitution() {
+	protected double computeRestitution() {
 		return Math.min(myObjectA.getRestitution(), myObjectB.getRestitution());
 	}
 
 	protected Vector computeImpulse() {
-		double implsMag = -(1 + collisionRestitution()) * rvProjOnNorm();
+		double implsMag = -(1 + computeRestitution()) * rvProjOnNorm();
 		implsMag /= myObjectA.getInvMass() + myObjectB.getInvMass();
 		return myNormal.times(implsMag);
 	}

@@ -108,6 +108,15 @@ public class PhysicsObject extends Observable {
 		setVelocity(newVelocity);
 	}
 
+	public void addPosition(Vector position) {
+		Vector newPosition = myPosition.plus(position);
+		setPosition(newPosition);
+	}
+
+	public void setPosition(Vector newPosition) {
+		myPosition = newPosition;
+	}
+
 	public Vector getPositionMeters() {
 		return myPosition;
 	}
