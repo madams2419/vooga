@@ -1,11 +1,12 @@
 package authoring.rightPane;
 
-import authoring.userInterface.ClickHandler;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
+import java.util.List;
+import javafx.beans.property.ObjectProperty;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
+import authoring.userInterface.ClickHandler;
 
 
 /**
@@ -18,27 +19,46 @@ public class EditingPane extends VBox {
 
     private static final String returnToCreationMethod = "switchToCharacterCreationPane";
     private Scene myScene;
+    protected RightPane myParent;
 
-    public EditingPane (Scene scene) {
+    public EditingPane (Scene scene, RightPane parent) {
         assert (scene != null);
         myScene = scene;
+        myParent = parent;
     }
 
     public Scene getMyScene () {
         return myScene;
     }
 
+    @SuppressWarnings("unchecked")
     void addButtonToReturnToCreationPane (String label) {
         Button b = new Button(label);
         try {
             b.setOnAction(new ClickHandler(RightPane.class
-                    .getMethod(returnToCreationMethod), RightPane
-                    .getInstance(), null));
+                    .getMethod(returnToCreationMethod), myParent));
         }
         catch (NoSuchMethodException | SecurityException e) {
             // TODO
         }
         this.getChildren().add(b);
+    }
+
+    protected ObjectProperty<String> addComboBoxToPane (
+                                                        List<String> actionPossibilities,
+                                                        String action) {
+        final ComboBox<String> actionComboBox = new ComboBox<>();
+        actionComboBox.getItems().addAll(actionPossibilities);
+        getChildren().add(actionComboBox);
+        setInitialComboBoxValue(actionComboBox, action);
+        return actionComboBox.valueProperty();
+    }
+
+    private void setInitialComboBoxValue (ComboBox<String> actionComboBox,
+                                          String action) {
+        if (action != null) {
+            actionComboBox.setValue(action);
+        }
     }
 
 }
