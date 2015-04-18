@@ -10,7 +10,7 @@ import game_engine.sprite.Sprite;
  */
 public class ShapeDetector implements ICollisionDetector{
 
-	public ShapeDetector() {
+	public ShapeDetector(Sprite a, Sprite b) {
 		// TODO Auto-generated constructor stub
 	}
 
