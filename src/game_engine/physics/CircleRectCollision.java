@@ -24,16 +24,17 @@ public class CircleRectCollision extends PhysicsCollision {
 	}
 
 	protected void solve() {
-		Vector sep = getSeperationVector();
-		Vector rHalf = myRectangle.getUpperRight();
+		Vector delta = getSeparationVector();
 
-		Vector closest = computeClosest();
+		// compute closest point on circle to rectangle
+		Vector closestPoint = myRectangle.clampPointToEdge(delta);
+
+		// handle case when circule center is inside of rectangle
+		if(closestPoint.equals(sepVector)) {
+			handleCircleInside();
+		}
 
 	}
-
-	private Vector computeClosest() {
-		Vector sep = getSeperationVector();
-
 
 }
 

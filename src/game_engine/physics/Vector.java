@@ -35,6 +35,10 @@ public class Vector {
 		return sum;
 	}
 
+	public boolean equals(Vector other) {
+		return myX == other.getX() && myY == other.getY();
+	}
+
 	public Vector copy() {
 		return new Vector(myX, myY);
 	}
