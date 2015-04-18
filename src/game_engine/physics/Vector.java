@@ -108,4 +108,8 @@ public class Vector {
 		return Math.sqrt(myX * myX + myY * myY);
 	}
 
+	public String toString() {
+		return String.format("Vector (%f, %f)\n", myX, myY);
+	}
+
 }
