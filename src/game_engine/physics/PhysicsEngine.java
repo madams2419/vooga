@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+import game_engine.physics_engine.physics_object.complex_physics_object.ComplexPhysicsObject;
 import game_engine.sprite.Sprite;
 
 // TODO
@@ -43,7 +44,7 @@ public class PhysicsEngine {
 		this(groundPixels, timeStep, GRAV_MAGNITUDE, DRAG_COEF);
 	}
 
-	public Vector getDragForce(PhysicsObject physObj) {
+	public Vector getDragForce(ComplexPhysicsObject physObj) {
 		double dragCoef = - myDrag * physObj.getRigidBody().getCxArea();
 		return physObj.getVelocity().times(dragCoef);
 	}
