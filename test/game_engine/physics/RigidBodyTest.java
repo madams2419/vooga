@@ -12,14 +12,17 @@ public class RigidBodyTest {
 	public void testClampOutside() {
 		Vector pointOutside = new Vector(30, 30);
 		Vector clampedPoint = rb.clampPointToEdge(pointOutside);
+		Vector expected = new Vector(25, 30);
 		
-		assertEquals(clampedPoint, new Vector(25, 30));
+		assertEquals(clampedPoint, expected);
 	}
 	
 	@Test
 	public void testClampInside() {
 		Vector pointInside = new Vector(10, 15);
 		Vector clampedPoint = rb.clampPointToEdge(pointInside);
+		
+		//System.out.println(clampedPoint);
 		
 		assertEquals(clampedPoint, new Vector(25, 15));
 	}

@@ -35,8 +35,19 @@ public class Vector {
 		return sum;
 	}
 
-	public boolean equals(Vector other) {
-		return myX == other.getX() && myY == other.getY();
+	@Override
+	public boolean equals(Object other) {
+		if(other == this) {
+			return true;
+		}
+
+		if(!(other instanceof Vector)) {
+			return false;
+		}
+
+		Vector otherVector = (Vector) other;
+
+		return myX == otherVector.getX() && myY == otherVector.getY();
 	}
 
 	public Vector copy() {
