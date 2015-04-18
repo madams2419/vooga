@@ -16,9 +16,8 @@ import javafx.scene.image.ImageView;
 
 /**
  * new sprite class
- * TODO (emre) observer-observable on imageView in Animation to PhysicsObject
- * @author emresonmez
- *
+ * TODO observer-observable on imageView in Animation to PhysicsObject (EMRE)
+ * TODO implement health, movement, projectiles, etc.
  */
 public class Sprite {
 	private int myId;
