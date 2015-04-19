@@ -95,7 +95,7 @@ public class PhysicsTester extends Application {
 		applyKeyReleaseBehavior();
 		cEngine.checkCollisions();
 		globalPhysics.update(sprites);
-		updateNodes();
+		//updateNodes();
 	}
 
 	/* update node positioning to reflect sprite positioning */
@@ -198,7 +198,7 @@ public class PhysicsTester extends Application {
 
 		/* create and add enemy sprites */
 		Sprite e1 = createCircleEnemy(300, 700, 200, Material.METAL);
-		Sprite e2 = createRectangleEnemy(500, 700, 50, 100, Material.BOUNCY_BALL);
+		Sprite e2 = createRectangleEnemy(500, 500, 50, 100, Material.BOUNCY_BALL);
 		//createAndAddEnemy(500, 700, 30, Material.BOUNCY_BALL);
 		//createAndAddEnemy(700, 200, 200, Material.BOUNCY_BALL);
 		
@@ -244,11 +244,11 @@ public class PhysicsTester extends Application {
 		
 		Sprite enemySprite = new Player(defaultState, defaultImage, height, width, rType, globalPhysics, material, startX, startY);
 		
-		// debug
-		Node rect = new Rectangle(width, height, Color.RED);
-		displayMap.put(enemySprite, rect);
-		setNodePosition(rect, enemySprite.getPhysicsObject().getPositionPixels());
-		myGroup.getChildren().add(rect);
+//		// debug
+//		Node rect = new Rectangle(width, height, Color.RED);
+//		displayMap.put(enemySprite, rect);
+//		setNodePosition(rect, enemySprite.getPhysicsObject().getPositionPixels());
+//		myGroup.getChildren().add(rect);
 		
 		myGroup.getChildren().add(enemySprite.getImageView());
 		sprites.add(enemySprite);
