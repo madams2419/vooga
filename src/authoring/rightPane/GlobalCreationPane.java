@@ -9,9 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import authoring.Sprite;
-import authoring.userInterface.CenterPane;
+import authoring.centerPane.CenterPane;
 import authoring.util.FrontEndUtils;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;

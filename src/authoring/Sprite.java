@@ -8,8 +8,8 @@ import java.util.function.Consumer;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import authoring.centerPane.CenterPane;
 import authoring.rightPane.RightPane;
-import authoring.userInterface.CenterPane;
 import authoring.userInterface.ClickHandler;
 import authoring.userInterface.ControlsDialog;
 import authoring.util.FrontEndUtils;

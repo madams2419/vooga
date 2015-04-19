@@ -52,6 +52,7 @@ public class RightPane extends WindowPane {
 		if (!(myCurrentContent instanceof CharacterCreationPane))
 			switchToPane(new CharacterCreationPane(myScene, this,
 					availableCharacterTypeURIs));
+		System.out.println(availableCharacterTypeURIs.toString());
 	}
 
 	public void switchToInteractionEditingPane(Sprite sprite1, Sprite sprite2) {

@@ -1,18 +1,16 @@
 package authoring.rightPane;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import authoring.LevelManager;
-import authoring.userInterface.CenterPane;
+import authoring.centerPane.CenterCanvas;
+import authoring.centerPane.CenterPane;
 
 public class LevelSettingPane extends EditingPane {
     private List<HBox> myFields = new LinkedList<>();
@@ -29,18 +27,17 @@ public class LevelSettingPane extends EditingPane {
 
     public void updateLevels(RightPane parent){
         this.getChildren().clear();
-        Map<Integer, ArrayList<Integer>> levels = LevelManager.getInstance().getLevels();
         /* Default Map */
-        Iterator<Entry<Integer, ArrayList<Integer>>> it = levels.entrySet().iterator();
+        Iterator<List<CenterCanvas>> it = myParent.getParent().getMyCenterPane().getMaps();
+        int levelIndex = 0, mapIndex = 0;
         HBox h = new HBox(5);
         while(it.hasNext()){
-            Entry<Integer, ArrayList<Integer>> thisLevel = it.next();
-            Label levelLabel = new Label("Level "+thisLevel.getKey());
+            List<CenterCanvas> maps = it.next();
+            Label levelLabel = new Label("Level "+ levelIndex++);
             ComboBox<String> mapBox = new ComboBox<String>();
             mapBox.setPromptText("Select Map");
-            ArrayList<Integer> maps = thisLevel.getValue();
-            for(Integer map:maps){
-                mapBox.getItems().add("Map "+map);
+            for(CenterCanvas c : maps){
+                mapBox.getItems().add("Map "+mapIndex++);
                 mapBox.setEditable(true);
             }
             h.getChildren().addAll(levelLabel,mapBox);
