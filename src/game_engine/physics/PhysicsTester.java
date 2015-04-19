@@ -199,6 +199,7 @@ public class PhysicsTester extends Application {
 		/* create and add enemy sprites */
 		Sprite e1 = createCircleEnemy(300, 700, 200, Material.METAL);
 		Sprite e2 = createRectangleEnemy(500, 500, 50, 100, Material.STATIC);
+		Sprite ground = createRectangleEnemy(400, 0, 50, 800, Material.STATIC);
 		//createAndAddEnemy(500, 700, 30, Material.BOUNCY_BALL);
 		//createAndAddEnemy(700, 200, 200, Material.BOUNCY_BALL);
 		
@@ -206,11 +207,15 @@ public class PhysicsTester extends Application {
 		Collision c1 = new Collision(playerSprite, e1, null, null, true);
 		Collision c2 = new Collision(playerSprite, e2, null, null, true);
 		Collision c3 = new Collision(e1, e2, null, null, true);
+		Collision c4 = new Collision(playerSprite, ground, null, null, true);
+		Collision c5 = new Collision(e1, ground, null, null, true);
 		
 		ArrayList<Collision> cList = new ArrayList<>();
 		cList.add(c1);
 		cList.add(c2);
 		cList.add(c3);
+		cList.add(c4);
+		cList.add(c5);
 		
 		myGroup.getChildren().add(playerSprite.getImageView());
 		

@@ -47,12 +47,6 @@ public class PhysicsObject extends Observable {
 		myVelocity = myVelocity.plus(myAccel.times(dt));
 		myPosition = myPosition.plus(myVelocity.times(dt));
 
-		// temporary ground handling
-		if(myPosition.getY() <= myPhysics.getGround() + myRigidBody.getRadius()) {
-			myPosition = myPosition.setY(myPhysics.getGround() + myRigidBody.getRadius());
-			myVelocity = myVelocity.setY(0);
-		}
-
 		setChanged();
 		notifyObservers();
 	}
@@ -71,6 +65,9 @@ public class PhysicsObject extends Observable {
 	}
 
 	private Vector computeAccel() {
+		if(myInvMass == 0) {
+			return new Vector(0,0);
+		}
 		Vector intNetAccel = computeNetForce().times(myInvMass);
 		Vector extNetAccel = myPhysics.getNetGlobalAccel();
 		return intNetAccel.plus(extNetAccel);
