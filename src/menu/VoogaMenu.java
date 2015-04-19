@@ -297,11 +297,7 @@ public class VoogaMenu {
 	    setUpBackButtons();
 	    choiceMenu.setOnMouseClicked((clicked) -> {
 		root.getChildren().removeAll(choiceMenu, background);
-<<<<<<< HEAD
-		scene = new AuthoringWindow().GameCreateUI(scene);
-=======
 		scene = new AuthoringWindow().GameCreateUI(new Scene(choiceMenu));
->>>>>>> 22c1f5e5f0d9d58f364352d3e8a2a3fb75b02d75
 	    });
 	});
     }
@@ -313,7 +309,7 @@ public class VoogaMenu {
 
     private StackPane createBackButton(Pos position, double rotate, double sign) {
 	ImageView backButton = new ImageView(new Image(
-		"menu/images/backButton.png"));
+		"menu/images/backArrow.png"));
 	backButton.setFitWidth(100);
 	backButton.setFitHeight(100);
 	backButton.setTranslateX(50 * sign);
