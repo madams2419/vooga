@@ -18,6 +18,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import authoring.Sprite;
+import authoring.centerPane.CenterPane;
 import authoring.rightPane.RightPane;
 
 /**

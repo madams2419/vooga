@@ -2,6 +2,7 @@ package authoring.rightPane;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.Group;
@@ -28,10 +29,6 @@ import authoring.util.ImageEditor;
  */
 
 public class CharacterCreationPane extends EditingPane {
-	private static final int WIDTH = 320;
-    private static final int HEIGHT=WIDTH/12*9;
-	private BufferedImage image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
-	private BufferedImage spriteSheet=null;
 	
     CharacterCreationPane (Scene scene, RightPane parent, List<String> availableCharacterTypeURIs) {
         super(scene, parent);
@@ -45,20 +42,6 @@ public class CharacterCreationPane extends EditingPane {
                                                + "information will be%n" + "shown here.")));
 
         addSpritesToPane(availableCharacterTypeURIs);
-    }
-    //temp
-    private BufferedImage player;
-    
-    private void init(){
-    	BufferedImageLoader loader=new BufferedImageLoader();
-    	try{
-    		spriteSheet=loader.loadImage("/sprite_sheet.png");
-    	}catch(IOException e){
-    		e.printStackTrace();
-    	}
-    	SpriteSheet ss = new SpriteSheet(spriteSheet);
-    	player=ss.grabImage(1,1,32, 32); 
-    
     }
     
     private void addSpritesToPane (List<String> availableCharacterTypeURIs) {
