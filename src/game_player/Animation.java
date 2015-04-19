@@ -1,13 +1,13 @@
 package game_player;
 
-import game_engine.physics.PhysicsObject;
-import game_engine.physics.Vector;
+import game_engine.physics_engine.physics_object.IPhysicsObject;
 import game_engine.sprite.Sprite;
-import game_player.Utilities;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -26,7 +26,7 @@ public class Animation implements Observer {
 	private Sprite mySprite;
 	Map<String, Node> myPathMap;
 
-	public Animation(Sprite sprite, PhysicsObject physics) {
+	public Animation(Sprite sprite, IPhysicsObject physics) {
 	     
 		linkToSprite(sprite);
 //		linkToSprite(physics);
@@ -111,8 +111,8 @@ public class Animation implements Observer {
 			changeImage(sprite.getState());
 		} catch (Exception e) {
 //			 TODO Auto-generated catch block
-			PhysicsObject physics;
-			physics = (PhysicsObject) o;
+			IPhysicsObject physics;
+			physics = (IPhysicsObject) o;
 //			updatePosition(physics);
 		    e.printStackTrace();
 		}

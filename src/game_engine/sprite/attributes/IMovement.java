@@ -1,8 +1,5 @@
 package game_engine.sprite.attributes;
 
-import game_engine.physics.PhysicsEngine;
-
-
 public interface IMovement {
 
     public abstract void setVelocity (double vel);
@@ -25,13 +22,13 @@ public interface IMovement {
      * method definePhysics
      * @param physics the corresponding physics engine to set to the sprite
      */
-    public abstract void definePhysics (PhysicsEngine physics);
-
-    /**
-     * method getPhysics
-     * @return the PhysicsEngine of the current sprite
-     */
-    public abstract PhysicsEngine getPhysics ();
+//    public abstract void definePhysics (PhysicsEngine physics);
+//
+//    /**
+//     * method getPhysics
+//     * @return the PhysicsEngine of the current sprite
+//     */
+//    public abstract PhysicsEngine getPhysics ();
 
     public abstract void setX (double x);
 

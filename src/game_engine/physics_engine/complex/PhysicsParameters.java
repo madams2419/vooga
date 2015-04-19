@@ -1,4 +1,4 @@
-package game_engine.physics;
+package game_engine.physics_engine.complex;
 
 public class PhysicsParameters {
 	private double myX;

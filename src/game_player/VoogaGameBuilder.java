@@ -12,9 +12,9 @@ import game_engine.control.ControlManager;
 import game_engine.control.KeyControl;
 import game_engine.objective.GameTimer;
 import game_engine.objective.Objective;
-import game_engine.physics.Material;
 import game_engine.physics.PhysicsEngine;
-import game_engine.physics.RigidBody.RBodyType;
+import game_engine.physics_engine.complex.Material;
+import game_engine.physics_engine.complex.RigidBody.RBodyType;
 import game_engine.sprite.Sprite;
 import game_engine.sprite.SpriteFactory;
 

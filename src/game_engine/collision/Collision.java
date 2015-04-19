@@ -1,8 +1,8 @@
 package game_engine.collision;
 
 import game_engine.behaviors.IBehavior;
-import game_engine.physics.PhysicsCollision;
-import game_engine.physics.PhysicsCollisionFactory;
+import game_engine.physics_engine.complex.PhysicsCollision;
+import game_engine.physics_engine.complex.PhysicsCollisionFactory;
 import game_engine.sprite.Sprite;
 import javafx.scene.image.ImageView;
 
