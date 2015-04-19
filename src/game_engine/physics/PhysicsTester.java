@@ -95,14 +95,17 @@ public class PhysicsTester extends Application {
 		applyKeyReleaseBehavior();
 		cEngine.checkCollisions();
 		globalPhysics.update(sprites);
+		updateNodes();
 	}
 
 	/* update node positioning to reflect sprite positioning */
 	public void updateNodes() {
 		for(Sprite sprite : sprites) {
 			PhysicsObject sPhysics = sprite.getPhysicsObject();
-			Node sNode = displayMap.get(sprite);
-			setNodePosition(sNode, sPhysics.getPositionPixels());
+			if(displayMap.containsKey(sprite)) {
+				Node sNode = displayMap.get(sprite);
+				setNodePosition(sNode, sPhysics.getPositionPixels());
+			}
 		}
 	}
 
@@ -173,6 +176,9 @@ public class PhysicsTester extends Application {
 		/* init layer */
 		sprites = new ArrayList<Sprite>();
 		
+		/* init display map */
+		displayMap = new HashMap<>();
+		
 		/* create global physics engine */
 		globalPhysics = new PhysicsEngine(0, 1 / (double) fps);
 
@@ -199,12 +205,12 @@ public class PhysicsTester extends Application {
 		/* create collisions list */
 		Collision c1 = new Collision(playerSprite, e1, null, null, true);
 		Collision c2 = new Collision(playerSprite, e2, null, null, true);
-		//Collision c3 = new Collision(e1, e2, null, null, true, globalPhysics);
+		Collision c3 = new Collision(e1, e2, null, null, true);
 		
 		ArrayList<Collision> cList = new ArrayList<>();
 		cList.add(c1);
 		cList.add(c2);
-		//cList.add(c3);
+		cList.add(c3);
 		
 		myGroup.getChildren().add(playerSprite.getImageView());
 		
@@ -237,7 +243,13 @@ public class PhysicsTester extends Application {
 		int startY = y;
 		
 		Sprite enemySprite = new Player(defaultState, defaultImage, height, width, rType, globalPhysics, material, startX, startY);
-		//Rectangle r = new Rectangle(width, height);
+		
+		// debug
+		Node rect = new Rectangle(width, height, Color.RED);
+		displayMap.put(enemySprite, rect);
+		setNodePosition(rect, enemySprite.getPhysicsObject().getPositionPixels());
+		myGroup.getChildren().add(rect);
+		
 		myGroup.getChildren().add(enemySprite.getImageView());
 		sprites.add(enemySprite);
 		

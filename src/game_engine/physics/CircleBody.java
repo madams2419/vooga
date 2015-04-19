@@ -20,6 +20,14 @@ public class CircleBody extends RigidBody {
 	public double getRadius() {
 		return myRadius;
 	}
+	
+	public double getHeight() {
+		return getRadius();
+	}
+	
+	public double getWidth() {
+		return getRadius();
+	}
 
 	protected boolean containsPoint(Vector point) {
 		return point.getMagnitude() <= myRadius;

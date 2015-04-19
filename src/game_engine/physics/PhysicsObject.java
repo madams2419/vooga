@@ -160,6 +160,14 @@ public class PhysicsObject extends Observable {
 	public double getRadiusPixels() {
 		return PhysicsEngine.metersToPixels(myRigidBody.getRadius());
 	}
+	
+	public double getWidthPixels() {
+		return PhysicsEngine.metersToPixels(myRigidBody.getWidth());
+	}
+	
+	public double getHeightPixels() {
+		return PhysicsEngine.metersToPixels(myRigidBody.getHeight());
+	}
 
 	public Vector getVelocity() {
 		return myVelocity;
