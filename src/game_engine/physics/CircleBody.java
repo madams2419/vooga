@@ -21,12 +21,16 @@ public class CircleBody extends RigidBody {
 		return myRadius;
 	}
 	
+	public double getDiameter() {
+		return myRadius*2;
+	}
+	
 	public double getHeight() {
-		return getRadius();
+		return getDiameter();
 	}
 	
 	public double getWidth() {
-		return getRadius();
+		return getDiameter();
 	}
 
 	protected boolean containsPoint(Vector point) {
