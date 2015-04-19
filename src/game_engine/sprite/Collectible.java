@@ -9,8 +9,10 @@ import game_engine.physics.RigidBody.RBodyType;
 
 public class Collectible extends Sprite{
     
+
     private int myCount;
     private boolean canCollect;
+
     
     public Collectible(String defaultState, String defaultImage, int height, int width, RBodyType rbType,
 		PhysicsEngine globalPhysics, Material material, int startX, int startY) {
@@ -48,7 +50,7 @@ public class Collectible extends Sprite{
       
       public void resetCount(){
           myCount = 0;
-         
+
       }
       
       public void setCollectible(boolean canCollect){
@@ -64,4 +66,7 @@ public class Collectible extends Sprite{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
+
 }

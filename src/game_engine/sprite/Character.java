@@ -49,6 +49,7 @@ public abstract class Character extends Sprite {
 	 * @TODO add state changes (going to do this from utilities file)
 	 */
 	// params[0] is pixels to move forward
+
 	private IAction moveForward = (params) -> { // movement
 	        myPhysicsObject.applyImpulse(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
 		setStateName("forward");

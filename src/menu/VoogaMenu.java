@@ -297,7 +297,11 @@ public class VoogaMenu {
 	    setUpBackButtons();
 	    choiceMenu.setOnMouseClicked((clicked) -> {
 		root.getChildren().removeAll(choiceMenu, background);
+<<<<<<< HEAD
 		scene = new AuthoringWindow().GameCreateUI(scene);
+=======
+		scene = new AuthoringWindow().GameCreateUI(new Scene(choiceMenu));
+>>>>>>> 22c1f5e5f0d9d58f364352d3e8a2a3fb75b02d75
 	    });
 	});
     }
