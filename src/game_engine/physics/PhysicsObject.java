@@ -58,8 +58,16 @@ public class PhysicsObject extends Observable {
 	}
 
 	private double computeInvMass() {
-		double mass = myMaterial.getDensity() * myRigidBody.getVolume();
-		return 1/mass;
+		double mass = computeMass();
+		if(mass == 0) {
+			return 0;
+		} else {
+			return 1/mass;
+		}
+	}
+	
+	private double computeMass() {
+		return myMaterial.getDensity() * myRigidBody.getVolume();
 	}
 
 	private Vector computeAccel() {

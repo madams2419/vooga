@@ -198,7 +198,7 @@ public class PhysicsTester extends Application {
 
 		/* create and add enemy sprites */
 		Sprite e1 = createCircleEnemy(300, 700, 200, Material.METAL);
-		Sprite e2 = createRectangleEnemy(500, 500, 50, 100, Material.BOUNCY_BALL);
+		Sprite e2 = createRectangleEnemy(500, 500, 50, 100, Material.STATIC);
 		//createAndAddEnemy(500, 700, 30, Material.BOUNCY_BALL);
 		//createAndAddEnemy(700, 200, 200, Material.BOUNCY_BALL);
 		
