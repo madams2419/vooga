@@ -28,7 +28,11 @@ public class testerScreen{
         myPlayer.addImage("walking", "/Resources/images/walkingMario.png");
         myPlayer.addImage("walking","/Resources/images/standingMario.png");
         myPlayer.addImage("jumping", "/Resources/images/jumpingMario.png");
+        myPlayer.addImage("hammer", "/Resources/images/hammerMario.png");
+        myPlayer.addImage("hammer", "/Resources/images/hammerMario2.png");
         myPlayer.setState("idle");
+        myPlayer.getImageView().setFitHeight(200);
+        myPlayer.getImageView().setFitWidth(100);
         
         myRoot.getChildren().add(myPlayer.getImageView());
         Scene scene = new Scene(myRoot, myWidth, myHeight);
@@ -45,6 +49,8 @@ public class testerScreen{
         }
         else if(keyCode ==KeyCode.UP)
             myPlayer.setState("jumping");
+        else if( keyCode == KeyCode.DOWN)
+            myPlayer.setState("hammer");
         
     }
     
