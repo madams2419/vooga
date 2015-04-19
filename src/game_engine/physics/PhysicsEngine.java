@@ -8,6 +8,7 @@ import java.util.HashMap;
 import game_engine.sprite.Sprite;
 
 // TODO
+// - have physics engine contain list of physics objects
 // - refactor with special controller for retreiving values in pixel form
 // - implement regions (regions are sprites)
 // - optimize net force computation

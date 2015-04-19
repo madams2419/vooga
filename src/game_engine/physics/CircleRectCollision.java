@@ -26,10 +26,10 @@ public class CircleRectCollision extends PhysicsCollision {
 
 		// compute penetration depth and unit normal depending on collision type
 		if(circleInsideRect) {
-			myNormal = myNormal.normalize().negate();
+			myNormal = rawNormal.normalize().negate();
 			myPenetrationDepth = myCircle.getRadius() + rawNormal.getMagnitude();
 		} else {
-			myNormal = myNormal.normalize();
+			myNormal = rawNormal.normalize();
 			myPenetrationDepth = myCircle.getRadius() - rawNormal.getMagnitude();
 		}
 

@@ -191,8 +191,8 @@ public class PhysicsTester extends Application {
 		sprites.add(playerSprite);
 
 		/* create and add enemy sprites */
-		Sprite e1 = createAndAddEnemy(300, 700, 400, Material.METAL);
-		Sprite e2 = createAndAddEnemy(500, 700, 100, 50, Material.BOUNCY_BALL);
+		Sprite e1 = createCircleEnemy(300, 700, 200, Material.METAL);
+		Sprite e2 = createRectangleEnemy(500, 700, 50, 100, Material.BOUNCY_BALL);
 		//createAndAddEnemy(500, 700, 30, Material.BOUNCY_BALL);
 		//createAndAddEnemy(700, 200, 200, Material.BOUNCY_BALL);
 		
@@ -213,7 +213,7 @@ public class PhysicsTester extends Application {
 	}
 
 
-	public Sprite createAndAddEnemy(int x, int y, double radius, Material material) {
+	public Sprite createCircleEnemy(int x, int y, double radius, Material material) {
 		String defaultState = "existing";
 		String defaultImage = "/Resources/images/bouncy_ball.jpg";
 		int height = (int) radius;
@@ -229,14 +229,15 @@ public class PhysicsTester extends Application {
 		return enemySprite;
 	}
 	
-	public Sprite createAndAddEnemy(int x, int y, int height, int width, Material material) {
+	public Sprite createRectangleEnemy(int x, int y, int height, int width, Material material) {
 		String defaultState = "existing";
-		String defaultImage = "/Resources/images/bouncy_ball.jpg";
+		String defaultImage = "/Resources/images/brick.jpg";
 		RBodyType rType = RBodyType.RECTANGLE;
 		int startX = x;
 		int startY = y;
 		
 		Sprite enemySprite = new Player(defaultState, defaultImage, height, width, rType, globalPhysics, material, startX, startY);
+		//Rectangle r = new Rectangle(width, height);
 		myGroup.getChildren().add(enemySprite.getImageView());
 		sprites.add(enemySprite);
 		
