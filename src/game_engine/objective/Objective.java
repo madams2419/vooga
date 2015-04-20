@@ -3,6 +3,7 @@ package game_engine.objective;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.behaviors.IBehavior;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -182,7 +183,6 @@ public class Objective implements IActor {
         }
     }
 
-    @Override
     public IAction getAction (String name) {
         if (name.equals("setStatus")){
             return (params) -> {

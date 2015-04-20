@@ -12,11 +12,11 @@ import game_engine.control.ControlManager;
 import game_engine.control.KeyControl;
 import game_engine.objective.GameTimer;
 import game_engine.objective.Objective;
-import game_engine.physics.PhysicsEngine;
+import game_engine.physics_engine.complex.ComplexPhysicsEngine;
 import game_engine.physics_engine.complex.Material;
+import game_engine.physics_engine.complex.PhysicsEngine;
 import game_engine.physics_engine.complex.RigidBody.RBodyType;
 import game_engine.sprite.Sprite;
-import game_engine.sprite.SpriteFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,7 +77,6 @@ public class VoogaGameBuilder {
     private Sprite buildSprite (String spriteID) {
         parser.moveDown(spriteID);
         String spriteType = parser.getValue("type");
-        SpriteFactory factory = new SpriteFactory();
 
 
         parser.moveDown("physics");
@@ -118,7 +117,7 @@ public class VoogaGameBuilder {
 
     private PhysicsEngine buildPhysicsEngine (double fps) {
         // TODO first param will be removed
-        PhysicsEngine globalEngine = new PhysicsEngine(0, fps);
+        PhysicsEngine globalEngine = new ComplexPhysicsEngine(0, fps);
         return globalEngine;
     }
 
@@ -143,7 +142,7 @@ public class VoogaGameBuilder {
         Sprite spriteB = getSprite(parser.getValue("sprite_2"));
         IBehavior behaviorList = buildBehaviorList();
         boolean realistic = Boolean.getBoolean(parser.getValue("realistic"));
-        Collision collision = new Collision(spriteA, spriteB, behaviorList, null, realistic);
+        Collision collision = new Collision(spriteA, spriteB, behaviorList, realistic);
         parser.moveUp();
         return collision;
     }

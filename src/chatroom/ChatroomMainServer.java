@@ -1,7 +1,5 @@
 package chatroom;
 
-import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.stage.*;
 
@@ -14,12 +12,8 @@ public class ChatroomMainServer extends Application {
 		View view = new View();
 		
 		int port = Integer.parseInt("6059");
-		try{
-			Thread t = new ChatroomServer(port,view);
-			t.start();
-		}catch(IOException e){
-			e.printStackTrace();
-		}
+		Thread t = new ChatroomServer(port,view);
+		t.start();
 		stage.setResizable(false);
         stage.setTitle("Chat Room");
         stage.setScene(view.getScene());

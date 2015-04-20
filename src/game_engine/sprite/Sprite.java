@@ -2,6 +2,7 @@ package game_engine.sprite;
 
 import game_engine.IBehavior;
 import game_engine.behaviors.IAction;
+import game_engine.behaviors.IActor;
 import game_engine.collision.HitBox;
 import game_engine.physics_engine.complex.Material;
 import game_engine.physics_engine.complex.Vector;
@@ -19,9 +20,9 @@ import javafx.scene.image.ImageView;
  * TODO observer-observable on imageView in Animation to PhysicsObject (EMRE)
  * TODO implement health, movement, projectiles, etc.
  */
-public class Sprite {
+public class Sprite implements IActor {
 	private int myId;
-	private String myName;	
+	private String myName;
 	private String myState;
 	private Animation myAnimation;
 	protected IPhysicsObject myPhysicsObject;
@@ -51,35 +52,13 @@ public class Sprite {
 	/**
 	 * updates Sprites (TODO remove after observer/observable implemented by Emre)
 	 */
-<<<<<<< HEAD
-	public abstract void update();
-	
-	public IAction createBehavior(String behavior) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
-	    Class<?> runClass = null;
-	    IAction classInstance = null;
-	    String className = "game_engine." + behavior;
-	    runClass = Class.forName(className);
-	    return classInstance = (IAction) runClass.newInstance();
-	    
-	}
-	
-	public void addBehavior(String behavior) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
-	   // myBehaviorMap.put(behavior, createBehavior(behavior));
-	}
-	
-	public void removeBehavior(String behavior){
-	    myBehaviorMap.remove(behavior);
-	}
-	
-	public void runBehavior(String behavior, String... params){
-	    myBehaviorMap.get(behavior).perform(params);
-	    setChanged();
-            notifyObservers();
-=======
 	public void update(){ // TODO eventually won't be necessary after observer/observable
 		xPosition = myPhysicsObject.getXPosition();
 		yPosition = myPhysicsObject.getYPosition();
->>>>>>> 6f3bf5132f96b2f35b97cbd3940a121461a0e073
+	}
+	
+	public IPhysicsObject getPhysicsObject() {
+	    return myPhysicsObject;
 	}
 	
 	public void addImage(String state,String ImagePath){
@@ -208,22 +187,4 @@ public class Sprite {
 	public int getCount(Sprite collectible){
 	    return myCollectibleMap.get(collectible);
 	}
-	
-<<<<<<< HEAD
-//	public static void main(String[] args){
-//	    Sprite player = new Enemy();
-//	    player.addImage("idle", "idle");
-//	    player.addImage("walk", "walk");
-//	    player.addImage("jump", "jump");
-//	    player.addImage("float", "float");
-//	    player.addImage("move", "move");
-//	    player.addImage("bounce", "bounce");
-//	    
-//	    player.setState("idle");
-//	    player.setState("jump");
-//	    
-//	}
-
-=======
->>>>>>> 6f3bf5132f96b2f35b97cbd3940a121461a0e073
 }

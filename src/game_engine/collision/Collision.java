@@ -57,7 +57,7 @@ public class Collision {
 	}
 	
 	private boolean collidingHitBox(){
-		pCollision = PhysicsCollisionFactory.getCollision(spriteA, spriteB);
+		pCollision = PhysicsCollisionFactory.getCollision(spriteA.getPhysicsObject(), spriteB.getPhysicsObject());
 		return pCollision.collide();
 	}
 

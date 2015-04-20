@@ -34,6 +34,9 @@ public class ChatroomServer extends Thread {
 		//		System.out.println(InetAddress.getLocalHost());
 		//		serverSocket.setSoTimeout(10000);
 	}
+	public ChatroomServer(int port, View view) {
+	    // TODO Auto-generated constructor stub
+	}
 	public void runServer(){
 		while(myThread != null){
 			try{

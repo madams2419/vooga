@@ -18,7 +18,7 @@ import javafx.scene.image.ImageView;
  * @author
  *
  */
-public class Animation implements Observer {
+public class Animation {
 
 	private ImageView myImageView;
 	private Node myCurrentNode;
@@ -28,12 +28,9 @@ public class Animation implements Observer {
 
 	public Animation(Sprite sprite, IPhysicsObject physics) {
 	     
-		linkToSprite(sprite);
-//		linkToSprite(physics);
 		mySprite = sprite;
 		myPathMap = new HashMap<>();
 		myImageView = new ImageView();
-//		updatePosition(physics);
 	}
 	
 	public class Node{
@@ -74,10 +71,6 @@ public class Animation implements Observer {
         return myCurrentImage;
     }
 
-    private void linkToSprite (Observable sprite) {
-        sprite.addObserver(this);
-    }
-
     private void changeImage (String state) {
        
             try {
@@ -103,25 +96,5 @@ public class Animation implements Observer {
     public ImageView getImageView () {
         return myImageView;
     }
-
-	public void update(Observable o, Object arg) {
-		try {
-			Sprite sprite;
-			sprite = (Sprite) o;
-			changeImage(sprite.getState());
-		} catch (Exception e) {
-//			 TODO Auto-generated catch block
-			IPhysicsObject physics;
-			physics = (IPhysicsObject) o;
-//			updatePosition(physics);
-		    e.printStackTrace();
-		}
-	}
-	
-//	public void updatePosition(PhysicsObject physics) {
-//		Vector jfxPosition = Utilities.physicsCenterToUpperLeft(physics);
-//		myImageView.setTranslateX(jfxPosition.getX());
-//		myImageView.setTranslateY(jfxPosition.getY());
-//	}
 
 }
