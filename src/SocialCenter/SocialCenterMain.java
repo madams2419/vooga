@@ -26,6 +26,7 @@ public class SocialCenterMain extends Application {
 
 	}
 
+	
 	/**
 	 * Launches the application.
 	 * 
