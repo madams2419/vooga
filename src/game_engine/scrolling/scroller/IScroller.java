@@ -2,6 +2,7 @@ package game_engine.scrolling.scroller;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 
 
 /**
@@ -29,10 +30,19 @@ public interface IScroller {
     public default void scroll (Point2D point) {
         scroll(point.getX(), point.getY());
     }
-
+    
+    /**
+     * Adds parallax scrolling.
+     * @param node Background Image
+     * @param ratio Ratio of speed of the background image to the normal group.
+     */
+    public void addBackgroundImage (Node node, double ratio);
+    
     /**
      * 
      * @return Group that is the target of the scrolling.
      */
     public Group getGroup ();
+    
+    
 }

@@ -37,6 +37,7 @@ public interface IScrollFocus {
      */
     public double focusY (double y);
 
+    public Point2D computeChange (double x, double y) ;
     /**
      * Setting up a boundary checker prevents you from scrolling past the boundary of the map.
      * @param mapWidth

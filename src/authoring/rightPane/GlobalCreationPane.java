@@ -8,11 +8,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-
 import authoring.Sprite;
-import authoring.userInterface.CenterPane;
+import authoring.centerPane.CenterPane;
 import authoring.util.FrontEndUtils;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -25,40 +23,37 @@ import javafx.scene.text.Text;
  * @author hojeanniechung
  *
  */
-public class GlobalCreationPane extends EditingPane
-{
+public class GlobalCreationPane extends EditingPane {
+
 	private List<HBox> myFields = new LinkedList<>();
 	private CenterPane cp;
-	private static GlobalCreationPane mInstance;
-	public Map<String,String> fields;
+	public Map<String, String> fields;
 	private static Scene mScene;
 
-
-	GlobalCreationPane(Scene myScene) {
+	public GlobalCreationPane(Scene myScene, RightPane parent) {
 		// TODO Auto-generated constructor stub
-		super(myScene);
-		mScene=myScene;
-		/*Default Map*/
+		super(myScene, parent);
+		mScene = myScene;
+		/* Default Map */
 		createDefaultMap();
-		setFields(this.getChildren(),updateMap());
-		Button c = new Button("Update");	
+		setFields(this.getChildren(), updateMap());
+		Button c = new Button("Update");
 		c.setOnAction(e -> updateMap());
 		this.getChildren().add(c);
-		System.out.println("blah is " + myFields.toString());
-	}	
+	}
 
-	private Map<String,String> createDefaultMap(){
-		String[] key={"Scrolling Speed","Frame Rate","Scrolling Size"};
-		String[] value={"Default","Default","Default"};
-		fields=new HashMap<String,String>();
-		for(int i=0; i<key.length; i++){
-			fields.put(key[i],value[i]);
+	private Map<String, String> createDefaultMap() {
+		String[] key = { "Scrolling Speed", "Frame Rate", "Scrolling Size" };
+		String[] value = { "Default", "Default", "Default" };
+		fields = new HashMap<String, String>();
+		for (int i = 0; i < key.length; i++) {
+			fields.put(key[i], value[i]);
 		}
 		return fields;
 	}
 
 	private void setFields(ObservableList<Node> parent,
-			Map<String, String> fields){
+			Map<String, String> fields) {
 		fields.forEach((label, value) -> {
 			HBox h = new HBox(5);
 			h.getChildren().addAll(new Text(label),
@@ -70,22 +65,20 @@ public class GlobalCreationPane extends EditingPane
 	}
 
 	private Map<String, String> updateMap() {
-		//		System.out.println();
+		// System.out.println();
 
 		myFields.forEach(hbox -> {
 			String s, t;
-			fields.put((s=((Text)hbox.getChildren().get(0)).getText()), (t=((TextField)hbox.getChildren().get(1)).getText()));
+			fields.put((s = ((Text) hbox.getChildren().get(0)).getText()),
+					(t = ((TextField) hbox.getChildren().get(1)).getText()));
 		});
-		System.out.println(fields.toString());
 		return fields;
-		//		System.out.println(sprite.getCharacteristics().toString());
+		// System.out.println(sprite.getCharacteristics().toString());
 	}
 
-	public static GlobalCreationPane getInstance(){
-		if (mInstance == null)
-			mInstance = new GlobalCreationPane(mScene);
-		return mInstance;
-	}
+//	public static GlobalCreationPane getInstance(Scene scene) {
+//		if (mInstance == null)
+//			mInstance = new GlobalCreationPane(scene);
+//		return mInstance;
+//	}
 }
-
-

@@ -1,6 +1,7 @@
 package game_engine.scrolling.scroller;
 
 import javafx.scene.Group;
+import javafx.scene.Node;
 
 
 /**
@@ -32,5 +33,12 @@ public class BasicScroller implements IScroller {
     public Group getGroup () {
         return myGroup;
     }
+
+    @Override
+    public void addBackgroundImage (Node node, double ratio) {
+        node.translateXProperty().bind(myGroup.translateXProperty().multiply(ratio));
+        node.translateYProperty().bind(myGroup.translateYProperty().multiply(ratio));
+    }
+
 
 }

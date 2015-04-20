@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 public class SpecificSprite extends AbstractSprite {
 
     private Map<String, Double> myPosition;
-    private String myType;
+//    private String myType;
 
     public SpecificSprite () {
         myPosition = new HashMap<>();

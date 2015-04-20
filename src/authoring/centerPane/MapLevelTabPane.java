@@ -1,4 +1,4 @@
-package authoring.userInterface;
+package authoring.centerPane;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -8,24 +8,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 
 public class MapLevelTabPane extends AnchorPane {
 
-	private CenterPane myCenterPane;
+//	private CenterPane myCenterPane;
 	
 	public MapLevelTabPane(CenterPane c){
-//		myCenterPane = c;
-//		HBox h = new HBox();
-//		Tab plusTab = new Tab("+");
-//		plusTab.setContent(h);
-//		this.getTabs().add(plusTab);
-//		this.getTabs().add(0, new Tab("testing"));
-//		plusTab.setOnSelectionChanged(e -> {
-//			System.out.println("changed");
-//		});
-//		
-//		
+
 		    final TabPane tabs = new TabPane();
 		    final Button addButton = new Button("+");
 

@@ -2,6 +2,7 @@ package game_engine.scrolling.scrollfocus;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ObservableDoubleValue;
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 
 /**
@@ -43,21 +44,35 @@ public class BasicFocus implements IScrollFocus {
     @Override
     public double focusX (double x) {
         double change = getChangeX(x);
-        if (myBoundaryChecker != null) {
-            double adjust = myBoundaryChecker.adjustX(myX.get() + change);
-            change += adjust;
-        }
-        return change;
+        return inBoundsX(change);
     }
 
     @Override
     public double focusY (double y) {
         double change = getChangeY(y);
+        return inBoundsY(change);
+    }
+    
+    private double inBoundsX (double changeX) {
         if (myBoundaryChecker != null) {
-            double adjust = myBoundaryChecker.adjustY(myY.get() + change);
-            change += adjust;
+            double adjust = myBoundaryChecker.adjustX(myX.get() + changeX);
+            changeX += adjust;
         }
-        return change;
+        return changeX;
+    }
+    
+    private double inBoundsY (double changeY) {
+        if (myBoundaryChecker != null) {
+            double adjust = myBoundaryChecker.adjustY(myY.get() + changeY);
+            changeY += adjust;
+        }
+        return changeY;
+    }
+    
+    public Point2D computeChange (double changeX, double changeY) {
+        double adjustX = inBoundsX (changeX);
+        double adjustY = inBoundsY (changeY);
+        return new Point2D (adjustX, adjustY);
     }
     
     /**

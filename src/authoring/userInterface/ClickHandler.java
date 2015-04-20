@@ -4,10 +4,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.function.Function;
 
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 
+@SuppressWarnings("rawtypes")
 public class ClickHandler implements EventHandler {
 	
 	private Object reactor;
@@ -24,6 +24,7 @@ public class ClickHandler implements EventHandler {
 		this.reactor = reactor;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void handle(Event event) {
 		if(reactor instanceof Method){

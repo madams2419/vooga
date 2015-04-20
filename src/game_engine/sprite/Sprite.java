@@ -3,7 +3,6 @@ package game_engine.sprite;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.behaviors.IBehavior;
-import game_engine.collision.HitBox;
 import game_engine.physics.Material;
 import game_engine.physics.PhysicsEngine;
 import game_engine.physics.PhysicsObject;
@@ -28,7 +27,6 @@ public abstract class Sprite extends Observable implements IActor{
 	private Animation myAnimation;
 	protected PhysicsObject myPhysicsObject;
 	private Map<String, IBehavior> myBehaviorMap = new HashMap<>();
-	private HitBox myHitBox;
 	
 	
 	/**
@@ -157,10 +155,6 @@ public abstract class Sprite extends Observable implements IActor{
 	
 	public String getName(){
 	    return this.myName;
-	}
-	
-	public HitBox getHitBox(){
-	    return myHitBox;
 	}
 	
 	public void setPhysicsObject(PhysicsObject physicsObject){

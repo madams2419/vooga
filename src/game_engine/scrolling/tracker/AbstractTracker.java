@@ -74,10 +74,8 @@ public abstract class AbstractTracker {
      * @param changeY
      */
     public void tellChange (double changeX, double changeY) {
-        myScroller.scroll(changeX, changeY);
+        myScroller.scroll(myFocuser.computeChange(changeX, changeY));
     }
-    
-    
 
     /**
      * Enables this tracker.

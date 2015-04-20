@@ -3,6 +3,7 @@ package game_engine.scrolling.scroller;
 import java.awt.Point;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.util.Duration;
 
 /**
@@ -10,9 +11,8 @@ import javafx.util.Duration;
  * @author Tony
  *
  */
-public class AnimatedScroller implements IScroller{
+public class AnimatedScroller extends BasicScroller{
     private static final Duration DEFAULT_DURATION = Duration.millis(10);
-    private Group myGroup;
     private Duration myDuration;
     private TranslateTransition myTranslate;
     /**
@@ -21,7 +21,7 @@ public class AnimatedScroller implements IScroller{
      * @param duration Time it takes to scroll one pixel.
      */
     public AnimatedScroller(Group group, Duration duration) {
-        myGroup = group;
+        super(group);
         setDuration(duration);
     }
     
@@ -55,14 +55,8 @@ public class AnimatedScroller implements IScroller{
     
     private TranslateTransition animate (double duration) {
         TranslateTransition translate = new TranslateTransition();
-        translate.setNode(myGroup);
+        translate.setNode(getGroup());
         translate.setDuration(myDuration.multiply(duration)); 
         return translate;
     }
-
-    @Override
-    public Group getGroup () {
-        return myGroup;
-    }
-
 }

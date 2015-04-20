@@ -1,12 +1,18 @@
 package game_engine.scrolling;
 
 import game_engine.scrolling.scroller.AnimatedScroller;
+import game_engine.scrolling.scroller.BasicScroller;
+import game_engine.scrolling.scroller.IScroller;
 import game_engine.scrolling.scrollfocus.DeadZoneFocus;
 import game_engine.scrolling.scrollfocus.IScrollFocus;
+import game_engine.scrolling.tracker.ButtonTracker;
 import game_engine.scrolling.tracker.MiniMapTracker;
+import game_engine.scrolling.tracker.MouseDragTracker;
+import game_engine.scrolling.tracker.ObservableTracker;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -27,6 +33,7 @@ public class AnotherTester extends Application {
 
         IScrollFocus focus = new DeadZoneFocus(300, 300, .2);
         focus.setBoundaryChecker(1000, 1000);
+        
 
         Rectangle r7 = new Rectangle(-25, -25, 50, 50);
         r7.setFill(Color.GREEN);
@@ -45,12 +52,34 @@ public class AnotherTester extends Application {
         r5.setFill(Color.TRANSPARENT);
         r5.setStroke(Color.BLUE);
         r4.setFill(Color.RED);
-        
+        ImageView image = new ImageView("Resources/images/brick.png");
         scene.setOnKeyPressed(e -> handleKeyPressed(e, r7));
-        group.getChildren().addAll(r6, r, r2, r3, r4, r7);
-        MiniMapTracker t = new MiniMapTracker(focus, new AnimatedScroller(group), 0.8);
+        group.getChildren().addAll(r, r2, r3, r4, r7);
+        IScroller scroller = new AnimatedScroller(group);
+        
+        MiniMapTracker t = new MiniMapTracker(focus, scroller, 0.07);
         t.enable();
-        group2.getChildren().addAll(group, r5, t.getMiniMap());
+        
+        MouseDragTracker t2 = new MouseDragTracker(focus, new BasicScroller(group));
+        t2.enable();
+        Group group3 = new Group();
+        ButtonTracker t3 = new ButtonTracker (focus, scroller, group3);
+        t3.enable();
+        
+        ObservableTracker t4 = new ObservableTracker (focus, new BasicScroller(group));
+        t4.enable();
+        t4.enableTracking(r7.translateXProperty(), r7.translateYProperty());
+        t4.setXSupplier(() -> r7.getTranslateX());
+        t4.setYSupplier(() -> r7.getTranslateY());
+        
+        Rectangle r10 = new Rectangle(50, 50, Color.WHEAT);
+        Rectangle r11 = new Rectangle(50, 50, Color.WHEAT);
+        r10.setTranslateX(250);
+        r10.setTranslateY(250);
+        t3.addNode(r10, 200, 0);
+        t3.addNode(r11, -200, 0);
+        r11.setTranslateY(250);
+        group2.getChildren().addAll(group, t.getMiniMap(), r5, group3);
     }
 
     private void handleKeyPressed (KeyEvent e, Rectangle r7) {

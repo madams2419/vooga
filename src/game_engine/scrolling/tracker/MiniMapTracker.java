@@ -28,9 +28,13 @@ public class MiniMapTracker extends AbstractTracker {
      * @param ratio Ratio of size of the mini-map to the full size map.
      */
     public MiniMapTracker (IScrollFocus focuser, IScroller scroller, double ratio) {
+        this(focuser, scroller, scroller.getGroup(), ratio);
+    }
+    
+    public MiniMapTracker (IScrollFocus focuser, IScroller scroller, Node node, double ratio) {
         super(focuser, scroller);
         myRatio = ratio;
-        myMiniMap = makeMiniMap(scroller.getGroup(), ratio);
+        myMiniMap = makeMiniMap(node, ratio);
     }
     
     private Node makeMiniMap (Node node, double ratio) {
