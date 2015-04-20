@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+import game_engine.physics_engine.PhysicsEngine;
 import game_engine.physics_engine.complex.PhysicsCollisionFactory;
-import game_engine.physics_engine.complex.PhysicsEngine;
 import game_engine.physics_engine.physics_object.IPhysicsObject;
 import game_engine.sprite.Sprite;
 

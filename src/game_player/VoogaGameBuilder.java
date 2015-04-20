@@ -12,9 +12,9 @@ import game_engine.control.ControlManager;
 import game_engine.control.KeyControl;
 import game_engine.objective.GameTimer;
 import game_engine.objective.Objective;
+import game_engine.physics_engine.PhysicsEngine;
 import game_engine.physics_engine.complex.ComplexPhysicsEngine;
 import game_engine.physics_engine.complex.Material;
-import game_engine.physics_engine.complex.PhysicsEngine;
 import game_engine.physics_engine.complex.RigidBody.RBodyType;
 import game_engine.sprite.Sprite;
 
@@ -94,7 +94,8 @@ public class VoogaGameBuilder {
         int width = Integer.parseInt(parser.getValue("width"));
         
         
-        Sprite sprite = factory.createSprite(spriteType, name, image, height, width, RBodyType.CIRCLE, engine, material, startX, startY);
+        Sprite sprite = 
+        	//factory.createSprite(spriteType, name, image, height, width, RBodyType.CIRCLE, engine, material, startX, startY);
         parser.moveDown("animation");
         for (int i = 1; i < parser.getValidSubDirectories().size(); i++) {
             String directory = parser.getValidSubDirectories().get(i);
