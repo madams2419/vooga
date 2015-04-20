@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class LoginScreen {
-	private static final int TEMPWIDTH = 800;
+	private static final int TEMPWIDTH = 1000;
 	private static final int TEMPHEIGHT = 600;
 
 	private Scene loginScreen;
@@ -32,18 +32,18 @@ public class LoginScreen {
 		
 		StackPane background = new StackPane();
 		background.setId("pane");
-		Rectangle r = makeSmoke(loginScreen);
-		background.setEffect(new GaussianBlur(6));
-		background.getChildren().add(r);
+//		Rectangle r = makeSmoke(loginScreen);
+		background.setEffect(new GaussianBlur(10));
+//		background.getChildren().add(r);
 		root.getChildren().add(background);
 
 	}
-
+	
 	private void createForm() {
 		VBox form = new VBox(5);
 		TextField loginBox = new TextField();
 		TextField password = new TextField();
-		Button submit = new Button("SUBMIT");
+		Button submit = new Button("Sign In");
 		loginBox.getStyleClass().add("login");
 		password.getStyleClass().add("login");
 		submit.getStyleClass().add("submit");
@@ -51,7 +51,7 @@ public class LoginScreen {
 		loginBox.setText("Login");
 		password.setText("Password");
 		form.getChildren().addAll(loginBox, password, submit);
-		form.setTranslateX(150);
+		form.setTranslateX(200);
 		form.setLayoutY(loginScreen.getHeight() / 2);
 		form.setMaxSize(300, 20);
 		submit.setOnMouseClicked(e->checkValid(loginBox.getText(), password.getText()));
@@ -62,13 +62,13 @@ public class LoginScreen {
 
 	private void createTitle() {
 		VBox TitleBox = new VBox();
-		Label Title = new Label("High $crollers");
+		Label Title = new Label("High $croller$");
 		Title.getStyleClass().add("title");
 		TitleBox.getChildren().add(Title);
-		TitleBox.setTranslateX(-100
+		TitleBox.setTranslateX(-150
 				);
 		TitleBox.setLayoutY(loginScreen.getHeight() / 2);
-		TitleBox.setMaxSize(300, 20);
+		TitleBox.setMaxSize(350, 30);
 		root.getChildren().add(TitleBox);
 	}
 

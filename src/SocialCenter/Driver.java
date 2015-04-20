@@ -6,12 +6,12 @@ import java.util.Scanner;
 
 public class Driver {
 
-/*	public static void main(String[] args) throws Exception {
-		getConnection();
-		createTable();
-		//post();
-		get();
-	}*/
+//	public static void main(String[] args) throws Exception {
+//		getConnection();
+////		createTable();
+////		//post();
+////		get();
+//	}
 	public static ArrayList<String> get(String ID, String Pass) throws Exception{
 		try{
 			Connection con=getConnection();
@@ -66,11 +66,13 @@ public class Driver {
 	}
 	public static Connection getConnection() throws Exception{
 		try{
+			
 			String driver="com.mysql.jdbc.Driver";
-			String url="jdbc:mysql://localhost:3306/LoginInfo";
+//			String url="jdbc:mysql://localhost:3306/LoginInfo";
+			String url="jdbc:mysql://10.190.3.194:3306/LoginInfo";
 			//no local host
-			String username="root";
-			String password="Tkfkdgo<3";
+			String username="guest";
+			String password="password";
 			Class.forName(driver);
 
 			Connection conn=DriverManager.getConnection(url,username,password);
