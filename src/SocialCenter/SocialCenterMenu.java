@@ -35,6 +35,7 @@ public class SocialCenterMenu {
 		ArrayList<Polygon> polyList = new ArrayList<>();
 		for (HexTile h: hexList){
 			polyList.add(h.getHexagon());
+			h.getHexagon();
 		}
 		root.getChildren().addAll(polyList);
 //		root.getChildren().add(hex2.getHexagon());

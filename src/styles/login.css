@@ -12,15 +12,22 @@
     -fx-background-radius: 5.0;
     -fx-text-fill: white;
     -fx-font-size: 13pt;
+    -fx-font-family: "Exo";
 }
 .title {
-    -fx-font: 30px Times;
+    -fx-font: 30px "Exo";
     -fx-stroke: black;
     -fx-stroke-width: 3;
 }
 .submit {
     -fx-background-color: white;
     -fx-text-fill: #BFBF69;
-    -fx-font-family: "Gafata";
+    -fx-font-family: "Exo";
     -fx-background-radius: 0;
+}
+
+
+@font-face {
+    font-family: 'Exo';
+    src: url('http://fonts.googleapis.com/css?family=Exo:100,200,400');
 }

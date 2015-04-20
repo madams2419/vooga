@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 public class SocialCenterMain extends Application {
 
 	@Override
+	
 	public void start(Stage stage) throws Exception {
 		
 		//idk if we want to initialize the size itself

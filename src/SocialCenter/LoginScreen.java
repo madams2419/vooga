@@ -1,6 +1,7 @@
 package SocialCenter;
 
 import javafx.scene.Scene;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -26,6 +27,8 @@ public class LoginScreen {
 	private void initialize() {
 		loginScreen = new Scene(root, TEMPWIDTH, TEMPHEIGHT);
 		loginScreen.getStylesheets().add("styles/login.css");
+		loginScreen.getStylesheets().add("http://fonts.googleapis.com/css?family=Exo:100,200,400");
+		
 		StackPane background = new StackPane();
 		background.setId("pane");
 		Rectangle r = makeSmoke(loginScreen);
@@ -43,13 +46,13 @@ public class LoginScreen {
 		loginBox.getStyleClass().add("login");
 		password.getStyleClass().add("login");
 		submit.getStyleClass().add("submit");
-		submit.setMinWidth(125);
+		submit.setMinWidth(300);
 		loginBox.setText("Login");
 		password.setText("Password");
 		form.getChildren().addAll(loginBox, password, submit);
-		form.setTranslateX(50);
+		form.setTranslateX(150);
 		form.setLayoutY(loginScreen.getHeight() / 2);
-		form.setMaxSize(125, 15);
+		form.setMaxSize(300, 20);
 
 		root.getChildren().add(form);
 
@@ -60,9 +63,10 @@ public class LoginScreen {
 		Label Title = new Label("High $crollers");
 		Title.getStyleClass().add("title");
 		TitleBox.getChildren().add(Title);
-		TitleBox.setTranslateX(-125);
+		TitleBox.setTranslateX(-100
+				);
 		TitleBox.setLayoutY(loginScreen.getHeight() / 2);
-		TitleBox.setMaxSize(200, 30);
+		TitleBox.setMaxSize(300, 20);
 		root.getChildren().add(TitleBox);
 	}
 
