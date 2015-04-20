@@ -16,8 +16,10 @@ import game_engine.physics_engine.PhysicsEngine;
 import game_engine.physics_engine.complex.ComplexPhysicsEngine;
 import game_engine.physics_engine.complex.Material;
 import game_engine.physics_engine.complex.RigidBody.RBodyType;
+import game_engine.physics_engine.physics_object.IPhysicsObject;
 import game_engine.sprite.Sprite;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -34,7 +36,7 @@ public class VoogaGameBuilder {
     private XMLParser parser;
     private Map<String, Sprite> mySpriteMap;
     private Map<String, Objective> myObjectiveMap;
-    private PhysicsEngine engine;
+    private ComplexPhysicsEngine engine;
 
     public VoogaGameBuilder (XMLParser p) {
         parser = p;
@@ -75,50 +77,49 @@ public class VoogaGameBuilder {
     }
 
     private Sprite buildSprite (String spriteID) {
-        parser.moveDown(spriteID);
-        String spriteType = parser.getValue("type");
-
-
-        parser.moveDown("physics");
-        Material material = Material.valueOf(parser.getValue("material").toUpperCase());
-        int startX = Integer.parseInt(parser.getValue("x"));
-        int startY = Integer.parseInt(parser.getValue("y"));
-        parser.moveUp();
-        parser.moveDown("animation");
-        parser.moveDown(parser.getValidSubDirectories().get(0));
-        String image = parser.getValue("image");
-        String name = parser.getValue("name");
-        parser.moveUp(2);
-        
-        int height = Integer.parseInt(parser.getValue("height"));
-        int width = Integer.parseInt(parser.getValue("width"));
-        
-        
-        Sprite sprite = 
-        	//factory.createSprite(spriteType, name, image, height, width, RBodyType.CIRCLE, engine, material, startX, startY);
-        parser.moveDown("animation");
+	parser.moveDown(spriteID);
+	
+	Animation spriteImage = new Animation();
+	parser.moveDown("animation");
         for (int i = 1; i < parser.getValidSubDirectories().size(); i++) {
             String directory = parser.getValidSubDirectories().get(i);
             parser.moveDown(directory);
-            name = parser.getValue("name");
-            image = parser.getValue("image");
-            sprite.addImage(name, image);
+            String name = parser.getValue("name");
+            String image = parser.getValue("image");
+            spriteImage.setImage(name, image);
             parser.moveUp();
         }
         parser.moveUp();
         
-        String state = parser.getValue("initialState");
-        sprite.setState(state);
-
+        IPhysicsObject physObj = buildPhysicsObject(spriteImage);
+        
+        return new Sprite(parser.getValue("initialState"), spriteImage, physObj);
+    }
+    
+    private IPhysicsObject buildPhysicsObject(Animation a) {
+	parser.moveDown("physics");
+        Material material = Material.valueOf(parser.getValue("material").toUpperCase());
+        int startX = Integer.parseInt(parser.getValue("x"));
+        int startY = Integer.parseInt(parser.getValue("y"));
+        String type = parser.getValue("type");
         parser.moveUp();
-        mySpriteMap.put(spriteID, sprite);
-        return sprite;
-
+        int height = Integer.parseInt(parser.getValue("height"));
+        int width = Integer.parseInt(parser.getValue("width"));
+        
+        
+	try {
+	    Class physObj = Class.forName(type + ".java");
+	    Constructor c = physObj.getConstructor(ComplexPhysicsEngine.class, Integer.class, Integer.class, Material.class, Integer.class, Integer.class, Animation.class);
+	    return (IPhysicsObject) c.newInstance(engine, width, height, material, startX, startY, a);
+	}
+	catch (Exception e) {
+	    e.printStackTrace();
+	    return null;
+	}
     }
 
-    private PhysicsEngine buildPhysicsEngine (double fps) {
-        // TODO first param will be removed
-        PhysicsEngine globalEngine = new ComplexPhysicsEngine(0, fps);
+    private ComplexPhysicsEngine buildPhysicsEngine (double fps) {
+        ComplexPhysicsEngine globalEngine = new ComplexPhysicsEngine(0, fps);
         return globalEngine;
     }
 

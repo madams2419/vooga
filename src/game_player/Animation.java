@@ -1,16 +1,17 @@
 package game_player;
 
+import game_engine.physics_engine.Vector;
 import game_engine.physics_engine.physics_object.IPhysicsObject;
 import game_engine.sprite.Sprite;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-import java.util.Observer;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.Observer;
 
 /**
  * Defines the animations for each sprite
@@ -18,83 +19,96 @@ import javafx.scene.image.ImageView;
  * @author
  *
  */
-public class Animation {
+public class Animation implements Observer {
 
-	private ImageView myImageView;
-	private Node myCurrentNode;
-	private String myCurrentImage;
-	private Sprite mySprite;
-	Map<String, Node> myPathMap;
+    private ImageView myImageView;
+    private Node myCurrentNode;
+    private String myCurrentImage;
+    Map<String, Node> myPathMap;
 
-	public Animation(Sprite sprite, IPhysicsObject physics) {
-	     
-		mySprite = sprite;
-		myPathMap = new HashMap<>();
-		myImageView = new ImageView();
+    public Animation() {
+	myPathMap = new HashMap<>();
+	myImageView = new ImageView();
+    }
+
+    public class Node {
+	String image;
+	Node next;
+
+	public Node() {
+	    image = "";
+	    next = null;
 	}
-	
-	public class Node{
-	    String image;
-	    Node next;
-	    
-	    public Node(){
-	        image = "";
-	        next = null;
-	    }
-	    
-	    public Node(String image, Node next){
-	        this.image = image;
-	        this.next = next;
-	    }
-	    
+
+	public Node(String image, Node next) {
+	    this.image = image;
+	    this.next = next;
 	}
-//TODO implement linked list image transition
-    public void setImage (String state, String ImagePath) {
-        Node currImage = new Node(ImagePath,null);
-        System.out.println(ImagePath);
-        try {
-            myPathMap.get(state).next = currImage;
-            System.out.println("added");
-        }
-        catch (Exception e) {
-            myPathMap.put(state, currImage);
-            System.out.println("added");
-        }
-        System.out.println(myPathMap.size());
+
     }
 
-    public void removeImage (String state) {
-        myPathMap.remove(state);
+    public void setImage(String state, String ImagePath) {
+	Node currImage = new Node(ImagePath, null);
+	System.out.println(ImagePath);
+	try {
+	    myPathMap.get(state).next = currImage;
+	    System.out.println("added");
+	} catch (Exception e) {
+	    myPathMap.put(state, currImage);
+	    System.out.println("added");
+	}
+	System.out.println(myPathMap.size());
     }
 
-    public String getImage () {
-        return myCurrentImage;
+    public void removeImage(String state) {
+	myPathMap.remove(state);
     }
 
-    private void changeImage (String state) {
-       
-            try {
-                myCurrentNode = myCurrentNode.next;
-            }
-            catch (Exception e) {
-                 try { 
-                    myCurrentNode = myPathMap.get(state);
-                   
-                }
-                catch (Exception e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-            }
-
-            myCurrentImage = myCurrentNode.image;
-            myImageView.setImage(new Image(getClass().getResourceAsStream(
-                                                                          myCurrentImage)));
-        
+    public String getImage() {
+	return myCurrentImage;
     }
 
-    public ImageView getImageView () {
-        return myImageView;
+    private void changeImage(String state) {
+
+	try {
+	    myCurrentNode = myCurrentNode.next;
+	} catch (Exception e) {
+	    try {
+		myCurrentNode = myPathMap.get(state);
+
+	    } catch (Exception e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	    }
+	}
+
+	myCurrentImage = myCurrentNode.image;
+	myImageView.setImage(new Image(getClass().getResourceAsStream(
+		myCurrentImage)));
+
+    }
+
+    public ImageView getImageView() {
+	return myImageView;
+    }
+
+    public void update(Observable o, Object arg) {
+	try {
+	    Sprite sprite = (Sprite) o;
+	    String state = (String) arg;
+	    changeImage(state);
+	}
+	catch (Exception e) {
+	    try {
+		IPhysicsObject physObj = (IPhysicsObject) o;
+		Vector position = (Vector) arg;
+		myImageView.setTranslateX(position.getX());
+		myImageView.setTranslateY(position.getY());
+	    }
+	    catch (Exception e2) {
+		e2.printStackTrace();
+	    }
+	}
     }
 
 }

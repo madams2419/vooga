@@ -79,7 +79,6 @@
 			
 			<sprite>
 				<sprite_0>
-					<type>Player</type>
 					<initialState>standing</initialState>
 					<width>100</width>
 					<height>200</height>
@@ -106,6 +105,7 @@
 
 					</animation>
 					<physics>
+						<type>ComplexMovablePhysicsObject</type>
 						<material>bouncy_ball</material>
 						<x>50</x>
 						<y>100</y>
@@ -115,7 +115,6 @@
 				</sprite_0>
 				
 				<sprite_1>
-					<type>Platform</type>
 					<initialState>immobile</initialState>
 					<width>2000</width>
 					<height>200</height>
@@ -126,6 +125,7 @@
 						</state_0>
 					</animation>
 					<physics>
+						<type>ComplexUnovablePhysicsObject</type>
 						<material>wood</material>
 						<x>0</x>
 						<y>0</y>
@@ -135,7 +135,6 @@
 				</sprite_1>
 				
 				<sprite_2>
-					<type>Platform</type>
 					<initialState>immobile</initialState>
 					<width>300</width>
 					<height>50</height>
@@ -146,6 +145,7 @@
 						</state_0>
 					</animation>
 					<physics>
+						<type>ComplexUnovablePhysicsObject</type>
 						<material>wood</material>
 						<x>1000</x>
 						<y>300</y>
@@ -155,7 +155,6 @@
 				</sprite_2>
 				
 				<sprite_3>
-					<type>Enemy</type>
 					<initialState>immobile</initialState>
 					<width>100</width>
 					<height>200</height>
@@ -166,6 +165,7 @@
 						</state_0>
 					</animation>
 					<physics>
+						<type>ComplexUnovablePhysicsObject</type>
 						<material>bouncy_ball</material>
 						<x>600</x>
 						<y>100</y>
@@ -175,7 +175,6 @@
 				</sprite_3>
 				
 				<sprite_4>
-					<type>Collectible</type>
 					<initialState>immobile</initialState>
 					<width>50</width>
 					<height>50</height>
@@ -186,6 +185,7 @@
 						</state_0>
 					</animation>
 					<physics>
+						<type>ComplexUnovablePhysicsObject</type>
 						<material>static</material>
 						<x>1100</x>
 						<y>350</y>
@@ -195,7 +195,6 @@
 				</sprite_4>
 				
 				<sprite_5>
-					<type>Region</type>
 					<initialState>immobile</initialState>
 					<height>500</height>
 					<width>100</width>
@@ -206,6 +205,7 @@
 						</state_0>
 					</animation>
 					<physics>
+						<type>ComplexUnovablePhysicsObject</type>
 						<material>static</material>
 						<x>1800</x>
 						<y>100</y>

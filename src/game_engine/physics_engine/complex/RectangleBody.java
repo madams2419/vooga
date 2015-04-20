@@ -1,5 +1,7 @@
 package game_engine.physics_engine.complex;
 
+import game_engine.physics_engine.Vector;
+
 public class RectangleBody extends RigidBody {
 
 	private Vector myUpperRight;
