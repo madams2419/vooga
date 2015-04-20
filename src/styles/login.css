@@ -30,6 +30,26 @@
     -fx-background-size: cover;
     -fx-background-position: center center;
 }
+.login {
+    -fx-background-color: transparent;
+    -fx-padding: 5 10 5 10;
+    -fx-border-color: black;
+    -fx-background-radius: 5.0;
+}
+.Title {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Tahoma";
+    -fx-base: #DFB951;
+    -fx-background: #A78732;
+    -fx-focus-color: #B6A678;
+}
+/*
+    -fx-position: absolute;
+    -fx-top: calc(50% - 75px);
+    -fx-left: calc(50% - 50px);
+    -fx-z-index: 2;
+*/
+
 /*
 .grad {
     position: absolute;
