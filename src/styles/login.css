@@ -14,13 +14,13 @@
     -fx-font-size: 13pt;
 }
 .title {
-    -fx-font-size: 20pt;
-    -fx-font-family: "Tahoma";
-    -fx-text-fill: white;
+    -fx-font: 30px Times;
+    -fx-stroke: black;
+    -fx-stroke-width: 3;
 }
 .submit {
     -fx-background-color: white;
     -fx-text-fill: #BFBF69;
-    -fx-font-family: "Tahoma";
+    -fx-font-family: "Gafata";
     -fx-background-radius: 0;
 }
