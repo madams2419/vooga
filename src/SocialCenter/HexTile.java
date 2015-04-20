@@ -31,7 +31,7 @@ public class HexTile {
 			connectionPoints[i + 1] = newY;
 			startAngle += HEX;
 		}
-		System.out.println(Arrays.toString(connectionPoints));
+//		System.out.println(Arrays.toString(connectionPoints));
 		hexagon = new Polygon(points);
 		hexagon.setFill(Color.WHITE);
 		hexagon.setStroke(Color.BLACK);

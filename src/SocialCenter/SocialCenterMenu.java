@@ -25,11 +25,12 @@ public class SocialCenterMenu {
 //		    20.0, 10.0,
 //		    10.0, 20.0 });
 		ArrayList<HexTile> hexList = new ArrayList<>();
-		HexTile hex = new HexTile(500,300,50);
+		HexTile hex = new HexTile(500,300,75);
+		hexList.add(hex);
 //		HexTile hex2 = new HexTile(75.98076211353317, 105.0, 30);
 
 		for(int i = 0; i < 12; i +=2){
-			hexList.add(new HexTile(hex.getConnections()[i],hex.getConnections()[i+1], 50));
+			hexList.add(new HexTile(hex.getConnections()[i],hex.getConnections()[i+1], 75));
 		}
 		ArrayList<Polygon> polyList = new ArrayList<>();
 		for (HexTile h: hexList){
