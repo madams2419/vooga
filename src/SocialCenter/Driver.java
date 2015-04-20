@@ -72,11 +72,11 @@ public class Driver {
 	public static Connection getConnection() throws Exception{
 		try{
 			String driver="com.mysql.jdbc.Driver";
-			String url="jdbc:mysql://localhost:3306/LoginInfo";
+//			String url="jdbc:mysql://localhost:3306/LoginInfo";
 			//no local host
-			//String url="jdbc:mysql://10.190.208.163:3306/LoginInfo";
-			String username="root";
-			String password="Tkfkdgo<3";
+			String url="jdbc:mysql://10.190.208.163:3306/LoginInfo";
+			String username="guest";
+			String password="password";
 			Class.forName(driver);
 
 			Connection conn=DriverManager.getConnection(url,username,password);
