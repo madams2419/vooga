@@ -17,7 +17,8 @@ public class LoginScreen {
 
 	private Scene loginScreen;
 	private StackPane root = new StackPane();
-
+	private Driver db=new Driver();
+	
 	public LoginScreen() {
 		initialize();
 		createForm();
@@ -53,6 +54,7 @@ public class LoginScreen {
 		form.setTranslateX(150);
 		form.setLayoutY(loginScreen.getHeight() / 2);
 		form.setMaxSize(300, 20);
+		submit.setOnMouseClicked(e->checkValid(loginBox.getText(), password.getText()));
 
 		root.getChildren().add(form);
 
@@ -73,6 +75,15 @@ public class LoginScreen {
 	private Rectangle makeSmoke(Scene s) {
 		return new javafx.scene.shape.Rectangle(s.getWidth(), s.getHeight(),
 				Color.WHITESMOKE.deriveColor(0, 1, 1, 0.20));
+	}
+	
+	private void checkValid(String id, String password){
+		try {
+			db.get(id,password);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public Scene getLoginScreen() {
