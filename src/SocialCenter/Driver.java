@@ -6,37 +6,32 @@ import java.util.Scanner;
 
 public class Driver {
 
-	public static void main(String[] args) throws Exception {
+/*	public static void main(String[] args) throws Exception {
 		getConnection();
 		createTable();
 		//post();
 		get();
-	}
-	public static ArrayList<String> get() throws Exception{
-		Scanner s=new Scanner(System.in);
-		System.out.println("Enter ID");
-		String ID=s.next();
-		System.out.println("Enter Password");
-		String Pass=s.next();
+	}*/
+	public static ArrayList<String> get(String ID, String Pass) throws Exception{
 		try{
 			Connection con=getConnection();
 			PreparedStatement statement=con.prepareStatement("SELECT Login_id,Login_pass FROM Login WHERE Login_id = '"+ID+"' AND Login_pass='"+Pass+"'");
-			ResultSet result=statement.executeQuery();
+			ResultSet result=statement.executeQuery();	
 			ArrayList<String> array=new ArrayList<String>();
 			while(result.next()){
 				System.out.println("ID: "+result.getString("Login_id"));
 				System.out.println("Pass: "+result.getString("Login_pass"));
-				
 				array.add(result.getString("Login_pass"));
+			}
+			if(result.first()==false){
+				System.out.println("Invalid UserName or Password");
 			}
 			return array;
 		}catch(Exception e){
 			System.out.println("Invalid UserName or Password");
 			return null;
-		}finally{
-			System.out.println("get complete");
-			return null;
 		}
+		
 	}
 	
 	public static void post() throws Exception{
@@ -72,11 +67,10 @@ public class Driver {
 	public static Connection getConnection() throws Exception{
 		try{
 			String driver="com.mysql.jdbc.Driver";
-//			String url="jdbc:mysql://localhost:3306/LoginInfo";
+			String url="jdbc:mysql://localhost:3306/LoginInfo";
 			//no local host
-			String url="jdbc:mysql://10.190.208.163:3306/LoginInfo";
-			String username="guest";
-			String password="password";
+			String username="root";
+			String password="Tkfkdgo<3";
 			Class.forName(driver);
 
 			Connection conn=DriverManager.getConnection(url,username,password);
