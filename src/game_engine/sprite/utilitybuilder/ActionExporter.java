@@ -1,8 +1,5 @@
 package game_engine.sprite.utilitybuilder;
 
-import game_engine.sprite.Sprite;
-import groovy.ui.SystemOutputInterceptor;
-
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -64,10 +61,10 @@ public class ActionExporter {
 	private void writeToFile(String fileName) throws IOException{
 		WriteProperties propertiesWriter = new WriteProperties(fileName);
 		for(int i = 0; i < methodNames.size(); i++){
-			String propertyName = propertyRoot;
-			if(i!=0) propertyName += i;
-			String descriptionName = propertyName+ "Description";
-			String paramCountName = propertyName+ "ParamCount";
+			String propertyName = i+"_"+propertyRoot;
+			String descriptionName = propertyName+ "_Description";
+			String paramCountName = propertyName+ "_ParamCount";
+			propertyName += "_Name";
 			propertiesWriter.addProperty(propertyName,
 					methodNames.get(i));
 			propertiesWriter.addProperty(descriptionName,

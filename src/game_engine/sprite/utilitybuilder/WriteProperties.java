@@ -9,7 +9,6 @@ import java.util.Properties;
  * class to create/write to properties file
  * adapted from www.avajava.com
  */
-
 public class WriteProperties {
 	private Properties properties;
 	private File file;
@@ -28,23 +27,5 @@ public class WriteProperties {
 		properties.store(fileOut, "Parameters");
 		fileOut.close();
 	}
-//	
-//	public static void main(String[] args) {
-//		try {
-//			Properties properties = new Properties();
-//			properties.setProperty("favoriteAnimal", "marmot");
-//			properties.setProperty("favoriteContinent", "Antarctica");
-//			properties.setProperty("favoritePerson", "Nicole");
-//
-//			File file = new File("test2.properties");
-//			FileOutputStream fileOut = new FileOutputStream(file);
-//			properties.store(fileOut, "Favorite Things");
-//			fileOut.close();
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
 
-//	}
 }
