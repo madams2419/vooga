@@ -1,4 +1,4 @@
-package authoring.commentedOutClasses;
+package authoring.unusedClasses;
 // I commented this class out because there is another class with the same name and everything seems
 // to work with this class commented out.
 

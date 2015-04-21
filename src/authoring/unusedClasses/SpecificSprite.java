@@ -1,4 +1,4 @@
-package authoring.commentedOutClasses;
+package authoring.unusedClasses;
 //package authoring;
 //
 //import java.util.HashMap;
