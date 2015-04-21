@@ -28,7 +28,7 @@ public class LeftPane extends WindowPane {
 			for (String key : m.keySet()) {
 				if (key.equals("Button")) {
 					mButtonList.add(ButtonFactory.generateButton(
-							myParent.getMyRightPane(), m.get(key)));
+							myParent.getRightPane(), m.get(key)));
 				}
 				if (key.equals("Dropdown")) {
 					// DropdownFactory dFactory=new DropdownFactory();

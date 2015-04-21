@@ -38,7 +38,7 @@ public class CenterCanvas extends ScrollPane {
         myScene = scene;
         myParent = parent;
         myGroup = new Group();
-        gp = new GlobalCreationPane(myScene, myParent.getMyRightPane());
+        gp = new GlobalCreationPane(myScene, myParent.getRightPane());
         this.setContent(myGroup);
 
         //myGroup.setOnMouseClicked(e -> canvasClicked(e));

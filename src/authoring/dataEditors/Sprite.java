@@ -128,7 +128,7 @@ public class Sprite extends ImageView {
 		try {
 			setOnMouseClicked(new ClickHandler(RightPane.class.getMethod(
 					"switchPane", Sprite.class), myParent.getParent()
-					.getMyRightPane(), this));
+					.getRightPane(), this));
 		} catch (NoSuchMethodException | SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

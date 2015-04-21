@@ -143,23 +143,23 @@ public class AuthoringWindow {
 		return control;
 	}
 
-	public TopPane getMyTopPane() {
+	public TopPane getTopPane() {
 		return myTopPane;
 	}
 
-	public RightPane getMyRightPane() {
+	public RightPane getRightPane() {
 		return myRightPane;
 	}
 
-	public LeftPane getMyLeftPane() {
+	public LeftPane getLeftPane() {
 		return myLeftPane;
 	}
 
-	public CenterPane getMyCenterPane() {
+	public CenterPane getCenterPane() {
 		return myCenterPane;
 	}
 
-	public BottomPane getMyBottomPane() {
+	public BottomPane getBottomPane() {
 		return myBottomPane;
 	}
 }

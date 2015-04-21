@@ -48,7 +48,7 @@ public class BottomPane extends WindowPane {
             for (String key : m.keySet()) {
                 if (key.equals("Button")) {
                     mButtonList.add(ButtonFactory.generateButton(
-                            myParent.getMyRightPane(), m.get(key)));
+                            myParent.getRightPane(), m.get(key)));
                 }
                 if (key.equals("Dropdown")) {
                     DropdownFactory dFactory = new DropdownFactory();
@@ -65,14 +65,14 @@ public class BottomPane extends WindowPane {
         try {
             nLevel.setOnAction(new ClickHandler(
                     CenterPane.class.getMethod("addLevel"), myParent
-                    .getMyCenterPane()));
+                    .getCenterPane()));
         } catch (NoSuchMethodException | SecurityException e) {
             e.printStackTrace();
         }
         try {
             nMap.setOnAction(new ClickHandler(
                     CenterPane.class.getMethod("addMap"), myParent
-                .getMyCenterPane()));
+                .getCenterPane()));
         } catch (NoSuchMethodException | SecurityException e) {
             e.printStackTrace();
         }

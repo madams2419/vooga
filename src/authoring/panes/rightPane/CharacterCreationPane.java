@@ -47,7 +47,7 @@ public class CharacterCreationPane extends EditingPane {
 
     private void addSpriteToPane (int id, String imageURI, VBox v) {
         Sprite sampleImage = new Sprite(id, imageURI, myParent.getParent()
-                .getMyCenterPane());
+                .getCenterPane());
 
         // these two aren't working for now when the copy is made in
         // imageClicked (Consumer<Sprite> spriteClicked, Sprite sampleImage, int
@@ -85,7 +85,7 @@ public class CharacterCreationPane extends EditingPane {
         // spriteClicked)));
         getMyScene().setCursor(
                                new SpriteCursor(new Sprite(sampleImage, ID, myParent
-                                       .getParent().getMyCenterPane())));
+                                       .getParent().getCenterPane())));
 
     }
 }
