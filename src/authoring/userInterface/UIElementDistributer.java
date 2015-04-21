@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
+import authoring.testers.AuthoringGUITester;
 import javafx.scene.Scene;
 import XML.LayoutXMLParser;
 

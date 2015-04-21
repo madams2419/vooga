@@ -1,5 +1,6 @@
-package authoring.userInterface;
+package authoring.testers;
 
+import authoring.userInterface.AuthoringWindow;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
