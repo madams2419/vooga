@@ -1,5 +1,6 @@
 package game_player;
 
+import game_engine.Animation;
 import game_engine.Level;
 import game_engine.behaviors.Behavior;
 import game_engine.behaviors.IAction;

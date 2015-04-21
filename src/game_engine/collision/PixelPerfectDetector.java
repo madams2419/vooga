@@ -1,6 +1,6 @@
 package game_engine.collision;
 
-import game_player.Animation;
+import game_engine.Animation;
 
 import java.util.ArrayList;
 import java.util.Arrays;

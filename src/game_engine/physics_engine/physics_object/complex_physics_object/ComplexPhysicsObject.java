@@ -1,5 +1,6 @@
 package game_engine.physics_engine.physics_object.complex_physics_object;
 
+import game_engine.Animation;
 import game_engine.physics_engine.PhysicsEngine;
 import game_engine.physics_engine.Vector;
 import game_engine.physics_engine.complex.ComplexPhysicsEngine;
@@ -8,7 +9,6 @@ import game_engine.physics_engine.complex.Material;
 import game_engine.physics_engine.complex.RectangleBody;
 import game_engine.physics_engine.complex.RigidBody;
 import game_engine.physics_engine.physics_object.IPhysicsObject;
-import game_player.Animation;
 
 import java.util.List;
 

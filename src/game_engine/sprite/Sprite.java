@@ -1,10 +1,10 @@
 package game_engine.sprite;
 
+import game_engine.Animation;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.physics_engine.Vector;
 import game_engine.physics_engine.physics_object.IPhysicsObject;
-import game_player.Animation;
 
 import java.util.HashMap;
 import java.util.Map;

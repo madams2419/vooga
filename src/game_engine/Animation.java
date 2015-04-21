@@ -1,4 +1,4 @@
-package game_player;
+package game_engine;
 
 import game_engine.physics_engine.Vector;
 import game_engine.physics_engine.physics_object.IPhysicsObject;

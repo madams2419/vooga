@@ -1,9 +1,9 @@
 package game_engine.physics_engine.physics_object.complex_physics_object;
 
+import game_engine.Animation;
 import game_engine.physics_engine.complex.ComplexPhysicsEngine;
 import game_engine.physics_engine.complex.Material;
 import game_engine.physics_engine.complex.RigidBody;
-import game_player.Animation;
 
 public class ComplexMovablePhysicsObject extends ComplexPhysicsObject {
 
