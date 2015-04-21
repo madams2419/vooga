@@ -1,4 +1,4 @@
-package menu;
+package launcher;
 
 import java.io.File;
 
@@ -146,7 +146,7 @@ public class VoogaMenu {
 	VBox textHolder = new VBox(PADDING);
 
 	Text title = new Text("Welcome to VoogaSalad");
-	title.setEffect(createShadow(15, 10, 10));
+	title.setEffect(createShadow(15, 10));
 	title.setStroke(Color.WHITE);
 	title.setFont(new Font(TITLE_TEXT));
 	title.setOpacity(INVISIBLE);
@@ -202,7 +202,7 @@ public class VoogaMenu {
      */
     private Text makeText(int size, String message, Color color) {
 	Text text = new Text(message);
-	text.setEffect(createShadow(15, 5, 5));
+	text.setEffect(createShadow(15, 5));
 	text.setFill(color);
 	text.setFont(new Font(size));
 	text.setStroke(Color.BLACK);
@@ -212,11 +212,11 @@ public class VoogaMenu {
     /*
      * Creates the shadow for a Text object or a Circle.
      */
-    private DropShadow createShadow(int blurAmount, int offsetX, int offsetY) {
+    private DropShadow createShadow(int blurAmount, int offset) {
 	DropShadow shadow = new DropShadow();
 	shadow.setRadius(blurAmount);
-	shadow.setOffsetX(offsetX);
-	shadow.setOffsetY(offsetY);
+	shadow.setOffsetX(offset);
+	shadow.setOffsetY(offset);
 	shadow.setBlurType(BlurType.GAUSSIAN);
 	return shadow;
     }
@@ -230,7 +230,7 @@ public class VoogaMenu {
 
 	button.setOpacity(INVISIBLE);
 
-	DropShadow shadow = createShadow(15, 10, 10);
+	DropShadow shadow = createShadow(15, 10);
 
 	Circle buttonContent = new Circle(BUTTON_RADIUS);
 	buttonContent.setFill(Color.TRANSPARENT);
@@ -311,8 +311,7 @@ public class VoogaMenu {
     }
 
     private StackPane createBackButton(Pos position, double rotate, double sign) {
-	ImageView backButton = new ImageView(new Image(
-		"menu/images/backArrow.png"));
+	ImageView backButton = new ImageView(new Image("resources/images/backArrow.png"));
 	backButton.setFitWidth(100);
 	backButton.setFitHeight(100);
 	backButton.setTranslateX(50 * sign);

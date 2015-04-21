@@ -1,4 +1,4 @@
-package menu;
+package launcher;
 
 import game_player.XMLParser;
 
@@ -24,13 +24,15 @@ import javafx.scene.text.Text;
  * the play mode and .dev for the design mode.
  * 
  * @author Brian Lavallee
- * @since 12 April 2015
+ * @since 21 April 2015
  */
 public class VoogaFileChooser {
     
-    private static final String GAME_DATA_DIRECTORY = "src/gamedata/";
+    private static final String GAME_DATA_DIRECTORY = "resources/game_files/";
     
     private static final double INVISIBLE = 0.0;
+    private static final double TRANSPARENT = 0.6;
+    private static final double OPAQUE = 1.0;
     
     private static final double OPTION_RATIO = .65;
     private static final int OPTIONS_PER_ROW = 4;
@@ -139,7 +141,7 @@ public class VoogaFileChooser {
 	row.setSpacing(horizontalPadding);
 	
 	for (File f : group) {
-	    Rectangle content = createButtonContent(Color.BLACK, Color.BLACK, 3, .5);
+	    Rectangle content = createButtonContent(Color.BLACK, Color.BLACK, 3, TRANSPARENT);
 	    
 	    XMLParser parser = new XMLParser(f);
 	    
@@ -149,7 +151,7 @@ public class VoogaFileChooser {
 	    Text name = new Text(fileName);
 	    name.setFill(Color.WHITE);
 	    name.setFont(new Font(20));
-	    name.setEffect(createShadow(15, 5, 5));
+	    name.setEffect(createShadow(15, 5));
 	    
 	    StackPane option = new StackPane();
 	    option.getChildren().addAll(content, name);
@@ -169,12 +171,12 @@ public class VoogaFileChooser {
      * or designing an existing one.
      */
     private StackPane newContentOption() {
-	Rectangle background = createButtonContent(Color.TRANSPARENT, Color.WHITE, 5, 1);
-	background.setEffect(createShadow(15, 10, 10));
+	Rectangle background = createButtonContent(Color.TRANSPARENT, Color.WHITE, 5, OPAQUE);
+	background.setEffect(createShadow(15, 10));
 	Text description = new Text("Create New Game");
 	description.setFont(new Font(20));
 	description.setFill(Color.WHITE);
-	description.setEffect(createShadow(15, 10, 10));
+	description.setEffect(createShadow(15, 10));
 	
 	StackPane content = new StackPane();
 	content.getChildren().addAll(background, description);
@@ -192,7 +194,7 @@ public class VoogaFileChooser {
 	content.setFill(fill);
 	content.setStroke(stroke);
 	content.setStrokeWidth(width);
-	content.setEffect(createShadow(15, 10, 10));
+	content.setEffect(createShadow(15, 10));
 	content.setOpacity(opacity);
 	return content;
     }
@@ -200,11 +202,11 @@ public class VoogaFileChooser {
     /*
      * Creates a shadow to enhance the appearance of a Text object or Button.
      */
-    private DropShadow createShadow(int blurAmount, int offsetX, int offsetY) {
+    private DropShadow createShadow(int blurAmount, int offset) {
 	DropShadow shadow = new DropShadow();
 	shadow.setRadius(blurAmount);
-	shadow.setOffsetX(offsetX);
-	shadow.setOffsetY(offsetY);
+	shadow.setOffsetX(offset);
+	shadow.setOffsetY(offset);
 	shadow.setBlurType(BlurType.GAUSSIAN);
 	return shadow;
     }

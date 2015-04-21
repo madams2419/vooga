@@ -1,6 +1,6 @@
 package SocialCenter;
 
-import menu.VoogaMenu;
+import launcher.VoogaMenu;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
