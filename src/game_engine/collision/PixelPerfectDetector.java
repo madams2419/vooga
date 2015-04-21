@@ -21,13 +21,14 @@ import javafx.scene.image.PixelReader;
  *
  */
 public class PixelPerfectDetector {
-	private Map<String, boolean[][]> myImageMap = new HashMap<>();
+	// private Map<String, boolean[][]> myImageMap = new HashMap<>();
 	private ImageView mySpriteA;
 	private ImageView mySpriteB;
 	private Animation myAnimationA;
 	private Animation myAnimationB;
 	private List<int[]> coordinateA;// [y,x] coordinates
 	private List<int[]> coordinateB;
+	private Map<Image, boolean[][]> imageToBits = new HashMap<Image, boolean[][]>();
 
 	public PixelPerfectDetector(ImageView a, ImageView b) {
 		mySpriteA = a;
@@ -124,10 +125,7 @@ public class PixelPerfectDetector {
 
 			int y2 = arr2[0] - (int) mySpriteB.getTranslateY();
 			int x2 = arr2[1] - (int) mySpriteB.getTranslateX();
-			// int[] tuple = { arr[0], arr[1] };
-			// System.out.println(arr2[0]);
-			// System.out.println(10*arr2[0]+arr2[1]);
-			// System.out.println(10*arr2[0]+arr2[1]);
+
 			boolean k = bitMapB[y2][x2];
 			// // no put necessary
 			if (k) {
@@ -148,37 +146,14 @@ public class PixelPerfectDetector {
 
 	private boolean[][] getBitMap(ImageView animation) {
 		boolean[][] bitMap;
-		if (myImageMap.containsKey(animation.getImage())) {
-			bitMap = myImageMap.get(myAnimationA.getImage());
+		if (imageToBits.containsKey(animation.getImage())) {
+			bitMap = imageToBits.get(animation.getImage());
 		} else {
 			bitMap = createBitMap(animation.getImage());
-			// myImageMap.put(animation.getImage(), bitMap);
+			imageToBits.put(animation.getImage(), bitMap);
 		}
 		return bitMap;
 	}
-
-	// private boolean[][] spliceBitMap(boolean[][] bitMap, int startX, int
-	// endX,
-	// int startY, int endY) {
-	//
-	// boolean[][] bitSplice = new boolean[endY - startY][endX - startX];
-	// for (int i = 0; i < endY - startY; i++) {
-	// for (int j = 0; j < endX - startX; j++) {
-	// bitSplice[i][j] = bitMap[i + startY][j + startX];
-	//
-	// }
-	// }
-	// return bitSplice;
-	// }
-
-	// private boolean[][] isColliding(boolean[][] mapA, boolean[][] mapB) {
-	// boolean[][] bitMap = new boolean[mapA.length][mapA[0].length];
-	// for (int i = 0; i < mapA.length; i++)
-	// for (int j = 0; j < mapA[i].length; j++)
-	// bitMap[i][j] = mapA[i][j] && mapB[i][j];
-	//
-	// return bitMap;
-	// }
 
 	private boolean[][] createBitMap(Image src) {
 		PixelReader reader = src.getPixelReader();
@@ -191,64 +166,4 @@ public class PixelPerfectDetector {
 			}
 		return bitMap;
 	}
-
-	// @Override
-	// public boolean isColliding(Sprite a, Sprite b) {
-	// // TODO Auto-generated method stub
-	// return false;
-	// }
-
-	// public boolean isColliding() {
-	// // need test
-	// // boolean[][] bitMapA= getBitMap(myAnimationA);
-	// boolean[][] bitMapA = getBitMap(mySpriteA);
-	// // boolean[][] bitMapB = getBitMap(myAnimationB);
-	// boolean[][] bitMapB = getBitMap(mySpriteB);
-	//
-	// // ImageView s1 = myAnimationA.getImageView();
-	// ImageView s1 = mySpriteA;
-	// double aLeft = s1.getX();
-	// double aTop = s1.getY();
-	// double aRight = s1.getX() + s1.getImage().getWidth();
-	// double aBot = s1.getY() + s1.getImage().getHeight();
-	//
-	// // ImageView s2 = myAnimationB.getImageView();
-	// // ImageView s1 = myAnimationA.getImageView();
-	// ImageView s2 = mySpriteB;
-	// double bLeft = s2.getX();
-	// double bTop = s2.getY();
-	// double bRight = s2.getX() + s2.getImage().getWidth();
-	// double bBot = s2.getY() + s2.getImage().getHeight();
-	//
-	// double highLeft = Math.max(aLeft, bLeft);
-	// double highTop = Math.max(aLeft, bLeft);
-	// double lowRight = Math.min(aRight, bRight);
-	// double lowBot = Math.min(aBot, bBot);
-	//
-	// int startY = (int) (highTop - aTop);
-	// int endY = (int) (lowBot - aTop);
-	// int startX = (int) (highLeft - aLeft);
-	// int endX = (int) (lowRight - aLeft);
-	// System.out.println(mySpriteA.getTranslateY());
-	// // boolean[][] mapA = spliceBitMap(bitMapA, startY, endY, startX, endX);
-	// //
-	// // int startY2 = (int) (highTop - bTop);
-	// // int endY2 = (int) (lowBot - bTop);
-	// // int startX2 = (int) (highLeft - bLeft);
-	// // int endX2 = (int) (lowRight - bLeft);
-	// //
-	// // boolean[][] mapB = spliceBitMap(bitMapB, startY2, endY2, startX2,
-	// // endX2);
-	// //
-	// // boolean[][] collisionMap = isColliding(mapA, mapB);
-	// //
-	// // for(boolean[] boolList: collisionMap){
-	// // for(boolean bool: boolList){
-	// // if(bool){
-	// // return true;
-	// // }
-	// // }
-	// // }
-	// return false;
-	// }
 }
