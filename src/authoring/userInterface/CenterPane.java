@@ -93,7 +93,7 @@ public class CenterPane extends WindowPane {
 			myEnvironmentList = new ArrayList<>();
 
 			FrontEndUtils.setKeyActions(this);
-			addMaptoEnvironment(gp.fields);
+			addMaptoEnvironment(gp.getFields());
 
 		}
 

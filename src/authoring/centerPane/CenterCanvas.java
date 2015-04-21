@@ -48,7 +48,7 @@ public class CenterCanvas extends ScrollPane {
         myEnvironmentList = new ArrayList<>();
 
         FrontEndUtils.setKeyActions(this);
-        addMaptoEnvironment(gp.fields);
+        addMaptoEnvironment(gp.getFields());
 
     }
 
