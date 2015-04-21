@@ -4,10 +4,8 @@ import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.physics_engine.Vector;
 import game_engine.physics_engine.physics_object.IPhysicsObject;
-import game_engine.sprite.utilitybuilder.IActionAnnotation;
 import game_player.Animation;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -15,8 +13,7 @@ import java.util.Observable;
 import javafx.scene.image.ImageView;
 
 public class Sprite extends Observable implements IActor {
-	private int myId;
-	private String myName;
+    
 	private String myState;
 	private Animation myAnimation;
 	protected IPhysicsObject myPhysicsObject;
@@ -41,20 +38,12 @@ public class Sprite extends Observable implements IActor {
 	    myPhysicsObject.update();
 	}
 	
-	public IPhysicsObject getPhysicsObject() {
-	    return myPhysicsObject;
-	}
-	
-	public void addImage(String state,String ImagePath){
-	    myAnimation.setImage(state, ImagePath);
-	}
-	
-	public void removeImage(String state){
-	    myAnimation.removeImage(state);
-	}
-	
 	public ImageView getImageView(){
 	    return myAnimation.getImageView();
+	}
+	
+	public IPhysicsObject getPhysicsObject() {
+	    return myPhysicsObject;
 	}
 	
 	public void setImageSize(double xSize, double ySize){
@@ -62,69 +51,27 @@ public class Sprite extends Observable implements IActor {
 	    myAnimation.getImageView().setFitWidth(xSize);
 	}
 	
-	public void setState(String state){
-		myState = state;
-	}
-	
 	private IAction setState = (params) -> {
             String state = params[0];
-            setState(state);
-	};
-	
+            myState = state;
+            setChanged();
+            notifyObservers();
+        };
+        
+        public String getState() {
+            return myState;
+        }
+        
+        private IAction moveForward = (params) -> {
+                myPhysicsObject.move(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
+        };
 
-	public IAction setStateBehavior(){
+        private IAction jump = (params) -> {
+                Vector myVector = new Vector(0,1*Double.parseDouble(params[0]));
+                myPhysicsObject.move(myVector);
+        };
 
-	    return setState;
-	}
-	
-	public String getState(){
-		return myState;
-	}
-
-	public void setID(int id){
-	    myId = id;
-	}
-	
-	public double getID(){
-	    return myId;
-	}
-
-	public void setName(String name){
-	    this.myName = name;
-	}
-	
-	public String getName(){
-	    return this.myName;
-	}
-	
-	public void setStateName(String movementName){
-		myState = movementName;
-		notifyObservers(myState);
-	}
-	
-	@IActionAnnotation(numParams = 2, description = "moving forward/backward")
-	private IAction moveForward = (params) -> {
-	    myPhysicsObject.move(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
-		setStateName("forward");
-	};
-	
-	@IActionAnnotation(numParams = 1,description = "jumping movement")
-	private IAction jump = (params) -> {
-		Vector myVector = new Vector(0,1*Double.parseDouble(params[0]));
-		myPhysicsObject.move(myVector);
-		setStateName("jump");
-	};
-	
-	public IAction getAction(String name) {
-		return myActionMap.get(name);
-	}
-	
-	public static void main(String[] args) {
-		Field[] fields = Sprite.class.getDeclaredFields();
-		for (Field field: fields) {
-			if (field.isAnnotationPresent(IActionAnnotation.class)){
-				System.out.println(field.getName());
-			}
-		}
-	}
+        public IAction getAction(String name) {
+                return myActionMap.get(name);
+        }
 }

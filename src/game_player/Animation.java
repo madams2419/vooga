@@ -3,7 +3,6 @@ package game_player;
 import game_engine.physics_engine.Vector;
 import game_engine.physics_engine.physics_object.IPhysicsObject;
 import game_engine.sprite.Sprite;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -19,6 +18,7 @@ import java.util.Observer;
  * @author
  *
  */
+
 public class Animation implements Observer {
 
     private ImageView myImageView;
