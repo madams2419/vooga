@@ -34,12 +34,12 @@ public class CollisionTester extends Application {
 		scene = new Scene(root, 800, 600);
 		scene.setOnKeyPressed(event -> keyPress(event));
 
-		Image image = new Image("./images/star.gif");
+		Image image = new Image("./Resources/images/block.png");
 		spriteA = new ImageView(image);
 		spriteA.setTranslateX(400);
 		spriteA.setTranslateY(300);
 
-		Image image2 = new Image("./resources/images/bowser.png");
+		Image image2 = new Image("./resources/images/smallerLuigi.png");
 		spriteB = new ImageView(image2);
 		spriteB.setTranslateX(200);
 		spriteB.setTranslateY(0);
