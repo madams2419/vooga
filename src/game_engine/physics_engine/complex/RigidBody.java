@@ -1,5 +1,7 @@
 package game_engine.physics_engine.complex;
 
+import game_engine.physics_engine.Vector;
+
 public abstract class RigidBody {
 
 	//TODO move somewhere else...constants or properties file

@@ -1,18 +1,17 @@
 package game_engine.physics_engine.physics_object.complex_physics_object;
 
+import game_engine.physics_engine.Vector;
 import game_engine.physics_engine.complex.ComplexPhysicsEngine;
 import game_engine.physics_engine.complex.Joint;
 import game_engine.physics_engine.complex.Material;
+import game_engine.physics_engine.complex.RectangleBody;
 import game_engine.physics_engine.complex.RigidBody;
-import game_engine.physics_engine.complex.RigidBodyFactory;
-import game_engine.physics_engine.complex.Vector;
-import game_engine.physics_engine.complex.RigidBody.RBodyType;
 import game_engine.physics_engine.physics_object.IPhysicsObject;
+import game_player.Animation;
 
 import java.util.List;
 
-public abstract class ComplexPhysicsObject implements IPhysicsObject{
-	//TODO remove protected, add getters
+public abstract class ComplexPhysicsObject extends IPhysicsObject{
 	protected double myInvMass;
 	protected Material myMaterial;
 	protected Vector myPosition;
@@ -25,11 +24,11 @@ public abstract class ComplexPhysicsObject implements IPhysicsObject{
 
 	protected RigidBody myRigidBody;
 
-	public ComplexPhysicsObject(ComplexPhysicsEngine physics, RBodyType rbType, int widthPixels, int heightPixels, Material material, int xPosPixels, int yPosPixels) {
-		this(physics, RigidBodyFactory.createRigidBody(heightPixels, widthPixels, rbType), material, xPosPixels, yPosPixels);
+	public ComplexPhysicsObject(ComplexPhysicsEngine physics, int widthPixels, int heightPixels, Material material, int xPosPixels, int yPosPixels, Animation a) {
+		this(physics, new RectangleBody(heightPixels, widthPixels), material, xPosPixels, yPosPixels, a);
 	}
 
-	public ComplexPhysicsObject(ComplexPhysicsEngine physics, RigidBody rigidBody, Material material, int xPosPixels, int yPosPixels) {
+	public ComplexPhysicsObject(ComplexPhysicsEngine physics, RigidBody rigidBody, Material material, int xPosPixels, int yPosPixels, Animation a) {
 		myPhysics = physics;
 		myRigidBody = rigidBody;
 		myMaterial = material;
@@ -41,6 +40,8 @@ public abstract class ComplexPhysicsObject implements IPhysicsObject{
 
 		myInvMass = computeInvMass();
 		myAccel = computeAccel();
+		
+		addObserver(a);
 	}
 
 	public abstract void update();
@@ -147,6 +148,10 @@ public abstract class ComplexPhysicsObject implements IPhysicsObject{
 
 	public RigidBody getRigidBody() {
 		return myRigidBody;
+	}
+	
+	public void move(Vector v) {
+	    applyImpulse(v);
 	}
 
 }

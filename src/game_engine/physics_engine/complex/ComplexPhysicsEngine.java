@@ -5,9 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+import game_engine.physics_engine.PhysicsEngine;
+import game_engine.physics_engine.Vector;
 import game_engine.physics_engine.physics_object.IPhysicsObject;
 import game_engine.physics_engine.physics_object.complex_physics_object.ComplexPhysicsObject;
-import game_engine.sprite.Sprite;
 
 /**
  * complex physics engine implementation
@@ -16,8 +17,6 @@ import game_engine.sprite.Sprite;
  * TODO optimize net force computation
  */
 public class ComplexPhysicsEngine extends PhysicsEngine{
-	PhysicsCollisionFactory collisionFactory;
-	//TODO move these to properties file
 	private static double SCALE_FACTOR = 0.01; // pixel to meter scaling
 	private static String GRAV_STRING = "gravity";
 	private static double GRAV_MAGNITUDE = 9.8;

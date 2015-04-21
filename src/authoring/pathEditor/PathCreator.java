@@ -1,3 +1,4 @@
+package authoring.pathEditor;
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -41,8 +42,17 @@ public class PathCreator extends Application{
                      Path path = new Path();
                     ArrayList<Node> elements = path.createPathElements(startx, starty, endx, endy);
                      group.getChildren().addAll(elements);
+                     
+                     elements.remove(0);
+                     for(Node element:elements){
+                        for(Node checkEl:elements){
+                            if (checkEl.intersects(element.getBoundsInParent()))
+                                path.combineNode((Anchor) element, (Anchor) checkEl);
+                        }
+                     }
                  }
                });
+
          }
        });
      

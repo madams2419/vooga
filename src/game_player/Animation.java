@@ -1,20 +1,16 @@
 package game_player;
 
+import game_engine.physics_engine.Vector;
 import game_engine.physics_engine.physics_object.IPhysicsObject;
 import game_engine.sprite.Sprite;
-<<<<<<< HEAD
-import game_player.Utilities;
-=======
-
->>>>>>> 9c852e4bc302ce8db639244624c72d1f06fd0c41
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-import java.util.Observer;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.Observer;
 
 /**
  * Defines the animations for each sprite
@@ -22,108 +18,93 @@ import javafx.scene.image.ImageView;
  * @author
  *
  */
-public class Animation {
 
-	private ImageView myImageView;
-	private Node myCurrentNode;
-	private String myCurrentImage;
-	private Sprite mySprite;
-	Map<String, Node> myPathMap;
+public class Animation implements Observer {
 
+    private ImageView myImageView;
+    private Node myCurrentNode;
+    private String myCurrentImage;
+    Map<String, Node> myPathMap;
 
-	public Animation(Sprite sprite, IPhysicsObject physics) {
-	     
-//	         linkToSprite(sprite);
-//	         linkToSprite(physics);
-		mySprite = sprite;
-		myPathMap = new HashMap<>();
-		myImageView = new ImageView();
-//              updatePosition(physics);
+    public Animation() {
+	myPathMap = new HashMap<>();
+	myImageView = new ImageView();
+    }
+
+    public class Node {
+	String image;
+	Node next;
+
+	public Node() {
+	    image = "";
+	    next = null;
 	}
-	
-	public class Node{
-	    String image;
-	    Node next;
-	    
-	    public Node(){
-	        image = "";
-	        next = null;
+
+	public Node(String image, Node next) {
+	    this.image = image;
+	    this.next = next;
+	}
+
+    }
+
+    public void setImage(String state, String ImagePath) {
+	Node currImage = new Node(ImagePath, null);
+	try {
+	    myPathMap.get(state).next = currImage;
+	} catch (Exception e) {
+	    myPathMap.put(state, currImage);
+	}
+    }
+
+    public void removeImage(String state) {
+	myPathMap.remove(state);
+    }
+
+    public String getImage() {
+	return myCurrentImage;
+    }
+
+    private void changeImage(String state) {
+
+	try {
+	    myCurrentNode = myCurrentNode.next;
+	} catch (Exception e) {
+	    try {
+		myCurrentNode = myPathMap.get(state);
+
+	    } catch (Exception e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
 	    }
-	    
-	    public Node(String image, Node next){
-	        this.image = image;
-	        this.next = next;
+	}
+
+	myCurrentImage = myCurrentNode.image;
+	myImageView.setImage(new Image(getClass().getResourceAsStream(
+		myCurrentImage)));
+
+    }
+
+    public ImageView getImageView() {
+	return myImageView;
+    }
+
+    public void update(Observable o, Object arg) {
+	try {
+	    Sprite sprite = (Sprite) o;
+	    String state = (String) arg;
+	    changeImage(state);
+	}
+	catch (Exception e) {
+	    try {
+		IPhysicsObject physObj = (IPhysicsObject) o;
+		Vector position = (Vector) arg;
+		myImageView.setTranslateX(position.getX());
+		myImageView.setTranslateY(position.getY());
 	    }
-	    
+	    catch (Exception e2) {
+		e2.printStackTrace();
+	    }
 	}
-//TODO implement linked list image transition
-    public void setImage (String state, String ImagePath) {
-        Node currImage = new Node(ImagePath,null);
-        System.out.println(ImagePath);
-        try {
-            myPathMap.get(state).next = currImage;
-            System.out.println("added");
-        }
-        catch (Exception e) {
-            myPathMap.put(state, currImage);
-            System.out.println("added");
-        }
-        System.out.println(myPathMap.size());
     }
-
-    public void removeImage (String state) {
-        myPathMap.remove(state);
-    }
-
-    public String getImage () {
-        return myCurrentImage;
-    }
-
-    private void changeImage (String state) {
-       
-            try {
-                myCurrentNode = myCurrentNode.next;
-            }
-            catch (Exception e) {
-                 try { 
-                    myCurrentNode = myPathMap.get(state);
-                   
-                }
-                catch (Exception e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-            }
-
-            myCurrentImage = myCurrentNode.image;
-            myImageView.setImage(new Image(getClass().getResourceAsStream(
-                                                                          myCurrentImage)));
-        
-    }
-
-    public ImageView getImageView () {
-        return myImageView;
-    }
-
-
-	public void update(Observable o, Object arg) {
-		try {
-			Sprite sprite;
-			sprite = (Sprite) o;
-			changeImage(sprite.getState());
-		} catch (Exception e) {
-//			 TODO Auto-generated catch block
-			IPhysicsObject physics;
-			physics = (IPhysicsObject) o;
-//			updatePosition(physics);
-		    e.printStackTrace();
-		}
-	}
-	
-//	public void updatePosition(PhysicsObject physics) {
-//		Vector jfxPosition = Utilities.physicsCenterToUpperLeft(physics);
-//		myImageView.setTranslateX(jfxPosition.getX());
-//		myImageView.setTranslateY(jfxPosition.getY());
-//	}
 
 }
