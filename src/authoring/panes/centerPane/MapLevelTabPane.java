@@ -1,4 +1,4 @@
-package authoring.centerPane;
+package authoring.panes.centerPane;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

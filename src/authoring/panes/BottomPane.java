@@ -1,10 +1,9 @@
-package authoring.userInterface;
+package authoring.panes;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,7 +11,12 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
-import authoring.centerPane.CenterPane;
+import authoring.panes.centerPane.CenterPane;
+import authoring.userInterface.AuthoringWindow;
+import authoring.userInterface.ButtonFactory;
+import authoring.userInterface.ClickHandler;
+import authoring.userInterface.DropdownFactory;
+import authoring.userInterface.WindowPane;
 import authoring.util.FrontEndUtils;
 
 /***
@@ -29,7 +33,7 @@ public class BottomPane extends WindowPane {
     // this(myScene,myContainer);
     // }
 
-    BottomPane(Scene s, AuthoringWindow parent) {
+    public BottomPane(Scene s, AuthoringWindow parent) {
         super(s, new HBox(), parent);
         System.out.printf("Instantiated %s%n", this.getClass().getName());
         myScene = s;

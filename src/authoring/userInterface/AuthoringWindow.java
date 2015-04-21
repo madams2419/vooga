@@ -2,7 +2,6 @@ package authoring.userInterface;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -10,8 +9,10 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import authoring.Sprite;
-import authoring.centerPane.CenterPane;
-import authoring.rightPane.RightPane;
+import authoring.panes.BottomPane;
+import authoring.panes.TopPane;
+import authoring.panes.centerPane.CenterPane;
+import authoring.panes.rightPane.RightPane;
 
 /**
  * @author hojeanniechung & Daniel Luker & Andrew Sun

@@ -1,4 +1,4 @@
-package authoring.centerPane;
+package authoring.panes.centerPane;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

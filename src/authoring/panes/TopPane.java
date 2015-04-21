@@ -1,8 +1,9 @@
-package authoring.userInterface;
+package authoring.panes;
 
 import java.util.ArrayList;
 import java.util.Map;
-
+import authoring.userInterface.AuthoringWindow;
+import authoring.userInterface.WindowPane;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -17,7 +18,7 @@ public class TopPane extends WindowPane {
 	static ArrayList<Node> mButtonList = new ArrayList<Node>();
 	public static Group root = new Group();
 
-	TopPane(Scene s, AuthoringWindow w) {
+	public TopPane(Scene s, AuthoringWindow w) {
 		super(s, new HBox(), w);
 		// this.getStylesheets().add("styles/top_pane.css");
 		System.out.printf("Instantiated %s%n", this.getClass().getName());

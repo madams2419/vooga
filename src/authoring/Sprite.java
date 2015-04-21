@@ -5,11 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import authoring.centerPane.CenterPane;
-import authoring.rightPane.RightPane;
+import authoring.panes.centerPane.CenterPane;
+import authoring.panes.rightPane.RightPane;
 import authoring.userInterface.ClickHandler;
 import authoring.userInterface.ControlsDialog;
 import authoring.util.FrontEndUtils;

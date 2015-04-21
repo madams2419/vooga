@@ -29,9 +29,10 @@ public class UIElementDistributer extends AuthoringGUITester {
 			String panes = Entry.getKey();
 			System.out.println(panes);
 			ArrayList<Map> values = Entry.getValue();
-			String classname = String.format("authoring.userInterface.%s",
+			String classname = String.format("authoring.%s",
 					panes);
 			ClassConstructors.put(classname, window.getPane(classname));
+			System.out.println(classname);
 			MethodInvoker(ClassConstructors.get(classname), "Components",
 					values);
 		}

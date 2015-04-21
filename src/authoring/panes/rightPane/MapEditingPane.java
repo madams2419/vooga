@@ -1,11 +1,10 @@
-package authoring.rightPane;
+package authoring.panes.rightPane;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import authoring.centerPane.CenterPane;
+import authoring.panes.centerPane.CenterPane;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;

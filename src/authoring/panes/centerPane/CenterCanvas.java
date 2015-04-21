@@ -1,11 +1,10 @@
-package authoring.centerPane;
+package authoring.panes.centerPane;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -18,7 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import authoring.Sprite;
-import authoring.rightPane.GlobalCreationPane;
+import authoring.panes.rightPane.GlobalCreationPane;
 import authoring.userInterface.AuthoringWindow;
 import authoring.userInterface.SpriteCursor;
 import authoring.util.FrontEndUtils;

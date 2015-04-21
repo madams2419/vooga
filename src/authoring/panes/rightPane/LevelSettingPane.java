@@ -1,16 +1,15 @@
-package authoring.rightPane;
+package authoring.panes.rightPane;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import authoring.centerPane.CenterCanvas;
-import authoring.centerPane.CenterPane;
+import authoring.panes.centerPane.CenterCanvas;
+import authoring.panes.centerPane.CenterPane;
 
 public class LevelSettingPane extends EditingPane {
     private List<HBox> myFields = new LinkedList<>();

@@ -2,7 +2,6 @@ package authoring.userInterface;
 
 import java.util.ArrayList;
 import java.util.Map;
-
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,7 +12,7 @@ public class LeftPane extends WindowPane {
 	public static ArrayList<Button> mButtonList = new ArrayList<Button>();
 	public static Group root = new Group();
 
-	LeftPane(Scene scene, AuthoringWindow myParent) {
+	public LeftPane(Scene scene, AuthoringWindow myParent) {
 		super(scene, new VBox(), myParent);
 		System.out.printf("Instantiated %s%n", this.getClass().getName());
 	}

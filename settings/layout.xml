@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layout name="authoring_environment">
-	<BottomPane>
+	<panes.BottomPane>
 	<buttons>
 			<Button>
 			 	<X>1</X>
@@ -45,8 +45,8 @@
 				<listener>UIControlCreate</listener>
 			</Button>
 		</buttons>
-	</BottomPane>
-	<TopPane>
+	</panes.BottomPane>
+	<panes.TopPane>
 		<dropdowns>
 			<Dropdown>
 				<X>0</X>
@@ -91,5 +91,5 @@
 				<listener0>null</listener0>
 			</Dropdown>
 		</dropdowns>
-	</TopPane>
+	</panes.TopPane>
 </layout>

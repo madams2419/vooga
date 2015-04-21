@@ -1,4 +1,4 @@
-package authoring.centerPane;
+package authoring.panes.centerPane;
 
 import java.util.ArrayList;
 import java.util.HashMap;

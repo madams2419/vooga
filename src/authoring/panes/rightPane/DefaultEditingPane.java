@@ -1,4 +1,4 @@
-package authoring.rightPane;
+package authoring.panes.rightPane;
 
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;

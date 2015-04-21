@@ -1,4 +1,4 @@
-package authoring.rightPane;
+package authoring.panes.rightPane;
 
 import java.io.File;
 import java.net.MalformedURLException;

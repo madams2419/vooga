@@ -1,4 +1,4 @@
-package authoring.rightPane;
+package authoring.panes.rightPane;
 
 import java.util.List;
 import javafx.beans.property.ObjectProperty;

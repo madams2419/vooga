@@ -1,7 +1,7 @@
 /**
  * 
  */
-package authoring.rightPane;
+package authoring.panes.rightPane;
 
 import java.io.IOException;
 import java.util.HashMap;
