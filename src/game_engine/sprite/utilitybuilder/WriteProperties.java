@@ -28,23 +28,23 @@ public class WriteProperties {
 		properties.store(fileOut, "Favorite Things");
 		fileOut.close();
 	}
-	
-	public static void main(String[] args) {
-		try {
-			Properties properties = new Properties();
-			properties.setProperty("favoriteAnimal", "marmot");
-			properties.setProperty("favoriteContinent", "Antarctica");
-			properties.setProperty("favoritePerson", "Nicole");
+//	
+//	public static void main(String[] args) {
+//		try {
+//			Properties properties = new Properties();
+//			properties.setProperty("favoriteAnimal", "marmot");
+//			properties.setProperty("favoriteContinent", "Antarctica");
+//			properties.setProperty("favoritePerson", "Nicole");
+//
+//			File file = new File("test2.properties");
+//			FileOutputStream fileOut = new FileOutputStream(file);
+//			properties.store(fileOut, "Favorite Things");
+//			fileOut.close();
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
-			File file = new File("test2.properties");
-			FileOutputStream fileOut = new FileOutputStream(file);
-			properties.store(fileOut, "Favorite Things");
-			fileOut.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
+//	}
 }
