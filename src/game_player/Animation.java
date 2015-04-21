@@ -49,15 +49,11 @@ public class Animation implements Observer {
 
     public void setImage(String state, String ImagePath) {
 	Node currImage = new Node(ImagePath, null);
-	System.out.println(ImagePath);
 	try {
 	    myPathMap.get(state).next = currImage;
-	    System.out.println("added");
 	} catch (Exception e) {
 	    myPathMap.put(state, currImage);
-	    System.out.println("added");
 	}
-	System.out.println(myPathMap.size());
     }
 
     public void removeImage(String state) {

@@ -12,10 +12,8 @@ import game_engine.control.ControlManager;
 import game_engine.control.KeyControl;
 import game_engine.objective.GameTimer;
 import game_engine.objective.Objective;
-import game_engine.physics_engine.PhysicsEngine;
 import game_engine.physics_engine.complex.ComplexPhysicsEngine;
 import game_engine.physics_engine.complex.Material;
-import game_engine.physics_engine.complex.RigidBody.RBodyType;
 import game_engine.physics_engine.physics_object.IPhysicsObject;
 import game_engine.sprite.Sprite;
 
@@ -93,6 +91,8 @@ public class VoogaGameBuilder {
         
         IPhysicsObject physObj = buildPhysicsObject(spriteImage);
         
+        parser.moveUp();
+        
         return new Sprite(parser.getValue("initialState"), spriteImage, physObj);
     }
     
@@ -108,8 +108,8 @@ public class VoogaGameBuilder {
         
         
 	try {
-	    Class physObj = Class.forName(type + ".java");
-	    Constructor c = physObj.getConstructor(ComplexPhysicsEngine.class, Integer.class, Integer.class, Material.class, Integer.class, Integer.class, Animation.class);
+	    Class physObj = Class.forName("game_engine.physics_engine.physics_object.complex_physics_object." + type);
+	    Constructor c = physObj.getConstructor(ComplexPhysicsEngine.class, int.class, int.class, Material.class, int.class, int.class, Animation.class);
 	    return (IPhysicsObject) c.newInstance(engine, width, height, material, startX, startY, a);
 	}
 	catch (Exception e) {

@@ -125,7 +125,7 @@
 						</state_0>
 					</animation>
 					<physics>
-						<type>ComplexUnovablePhysicsObject</type>
+						<type>ComplexUnmovablePhysicsObject</type>
 						<material>wood</material>
 						<x>0</x>
 						<y>0</y>
@@ -145,7 +145,7 @@
 						</state_0>
 					</animation>
 					<physics>
-						<type>ComplexUnovablePhysicsObject</type>
+						<type>ComplexUnmovablePhysicsObject</type>
 						<material>wood</material>
 						<x>1000</x>
 						<y>300</y>
@@ -165,7 +165,7 @@
 						</state_0>
 					</animation>
 					<physics>
-						<type>ComplexUnovablePhysicsObject</type>
+						<type>ComplexUnmovablePhysicsObject</type>
 						<material>bouncy_ball</material>
 						<x>600</x>
 						<y>100</y>
@@ -185,7 +185,7 @@
 						</state_0>
 					</animation>
 					<physics>
-						<type>ComplexUnovablePhysicsObject</type>
+						<type>ComplexUnmovablePhysicsObject</type>
 						<material>static</material>
 						<x>1100</x>
 						<y>350</y>
@@ -205,7 +205,7 @@
 						</state_0>
 					</animation>
 					<physics>
-						<type>ComplexUnovablePhysicsObject</type>
+						<type>ComplexUnmovablePhysicsObject</type>
 						<material>static</material>
 						<x>1800</x>
 						<y>100</y>
@@ -260,7 +260,7 @@
 								</behavior_0>
 							</behaviors>
 						</onPressed>
-						<whilePressed><behaviors></behaviors></whilePressed>
+						<whilePressed><behaviors> </behaviors></whilePressed>
 						<onReleased>
 							<behaviors>
 								<behavior_0>
