@@ -91,23 +91,23 @@ public class AuthoringWindow {
 	}
 
 	private Node setupBottomPane() {
-		return (myBottomPane = new BottomPane(myScene, this)).myContainer;
+		return (myBottomPane = new BottomPane(myScene, this)).getContainer();
 	}
 
 	private Node setupTopPane() {
-		return (myTopPane = new TopPane(myScene, this)).myContainer;
+		return (myTopPane = new TopPane(myScene, this)).getContainer();
 	}
 
 	private Node setupRightPane() {
-		return (myRightPane = new RightPane(myScene, this)).myContainer;
+		return (myRightPane = new RightPane(myScene, this)).getContainer();
 	}
 
 	private Node setupLeftPane() {
-		return (myLeftPane = new LeftPane(myScene, this)).myContainer;
+		return (myLeftPane = new LeftPane(myScene, this)).getContainer();
 	}
 
 	private Node setupCenterPane() {
-		return (myCenterPane = new CenterPane(myScene, this)).myContainer;
+		return (myCenterPane = new CenterPane(myScene, this)).getContainer();
 	}
 
 	public static void setCurrentlySelected(Sprite s) {

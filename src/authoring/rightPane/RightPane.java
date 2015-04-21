@@ -34,9 +34,9 @@ public class RightPane extends WindowPane {
 	public RightPane(Scene scene, AuthoringWindow window) {
 		super(scene, new VBox(SPACING), window);
 		System.out.printf("Instantiated %s%n", this.getClass().getName());
-		myContainer.getStylesheets().add(CSS);
-		myContainer.setPadding(new Insets(PADDING));
-		((VBox) myContainer).setAlignment(Pos.TOP_CENTER);
+		getContainer().getStylesheets().add(CSS);
+		getContainer().setPadding(new Insets(PADDING));
+		((VBox) getContainer()).setAlignment(Pos.TOP_CENTER);
 		initializeAvailableCharacterTypes();
 		// switchToPane(new CharacterCreationPane(scene, this));
 		// initializeCurrentContent(new DefaultEditingPane(scene));
@@ -120,11 +120,11 @@ public class RightPane extends WindowPane {
 	}
 
 	private void clearChildren() {
-		((VBox) myContainer).getChildren().clear();
+		((VBox) getContainer()).getChildren().clear();
 	}
 
 	private void addFromCurrentContent() {
-		((VBox) myContainer).getChildren().addAll(
+		((VBox) getContainer()).getChildren().addAll(
 				myCurrentContent.getChildren());
 	}
 
@@ -135,7 +135,7 @@ public class RightPane extends WindowPane {
 
 	private void initializeCurrentContent(EditingPane content) {
 		myCurrentContent = content;
-		((VBox) myContainer).getChildren().addAll(
+		((VBox) getContainer()).getChildren().addAll(
 				myCurrentContent.getChildren());
 	}
 

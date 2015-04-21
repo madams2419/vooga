@@ -33,7 +33,7 @@ public class BottomPane extends WindowPane {
         super(s, new HBox(), parent);
         System.out.printf("Instantiated %s%n", this.getClass().getName());
         myScene = s;
-        myContainer.getStylesheets().add("styles/top_pane.css");
+        getContainer().getStylesheets().add("styles/top_pane.css");
     }
 
     @Override
@@ -78,8 +78,8 @@ public class BottomPane extends WindowPane {
             FrontEndUtils.buildXMLFile(myParent, XML_FILE_OUTPUT);
         });
         mButtonList.add(c);
-        ((HBox) myContainer).getChildren().addAll(mButtonList);
-        ((HBox) myContainer).getChildren().add(menuBar);
+        ((HBox) getContainer()).getChildren().addAll(mButtonList);
+        ((HBox) getContainer()).getChildren().add(menuBar);
         return null;
     }
 

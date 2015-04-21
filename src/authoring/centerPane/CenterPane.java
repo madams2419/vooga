@@ -33,9 +33,9 @@ public class CenterPane extends WindowPane {
 
 	public CenterPane(Scene s, AuthoringWindow w) {
 		super(s, new TabPane(), w);
-		FrontEndUtils.setKeyActions(this.myContainer);
-		((TabPane) myContainer).setSide(Side.BOTTOM);
-		levelSelectionModel = ((TabPane) myContainer).getSelectionModel();
+		FrontEndUtils.setKeyActions(this.getContainer());
+		((TabPane) getContainer()).setSide(Side.BOTTOM);
+		levelSelectionModel = ((TabPane) getContainer()).getSelectionModel();
 		myMaps = new HashMap<>();
 		initLevelsListener();
 		addLevel();
@@ -43,7 +43,7 @@ public class CenterPane extends WindowPane {
 	}
 
 	private void initLevelsListener() {
-		myLevels = ((TabPane) myContainer).getTabs();
+		myLevels = ((TabPane) getContainer()).getTabs();
 		myLevels.addListener((
 				javafx.collections.ListChangeListener.Change<? extends Tab> c) -> {
 			while (c.next()) {
@@ -59,7 +59,7 @@ public class CenterPane extends WindowPane {
 
 	private void addTab() {
 		TabPane t;
-		((TabPane) myContainer).getTabs().add(
+		((TabPane) getContainer()).getTabs().add(
 				new Tab(String.format("Level %d", myLevels.size()),
 						t = new TabPane()));
 		t.setSide(Side.BOTTOM);
@@ -81,7 +81,7 @@ public class CenterPane extends WindowPane {
 	}
 
 	public TabPane getActiveTabPane() {
-		return (TabPane) ((TabPane) myContainer).getTabs()
+		return (TabPane) ((TabPane) getContainer()).getTabs()
 				.get(levelSelectionModel.getSelectedIndex()).getContent();
 	}
 

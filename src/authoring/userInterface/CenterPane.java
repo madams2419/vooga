@@ -41,23 +41,23 @@ public class CenterPane extends WindowPane {
 	CenterPane(Scene s, AuthoringWindow w) {
 		super(s, new TabPane(), w);
 		myMaps = new ArrayList<>();
-		((TabPane) myContainer).setSide(Side.BOTTOM);
+		((TabPane) getContainer()).setSide(Side.BOTTOM);
 		addTab();
-		FrontEndUtils.setKeyActions(this.myContainer);
+		FrontEndUtils.setKeyActions(this.getContainer());
 		System.out.printf("Instantiated %s%n", this.getClass().getName());
 	}
 
 	public void addTab() {
 		CenterCanvas c;
-		((TabPane) myContainer).getTabs().add(
+		((TabPane) getContainer()).getTabs().add(
 				new Tab("Map", c = new CenterCanvas(myScene)));
 		myMaps.add(c);
 	}
 
 	public CenterCanvas getActiveTab() {
-		return (CenterCanvas) ((TabPane) myContainer)
+		return (CenterCanvas) ((TabPane) getContainer())
 				.getTabs()
-				.get(((TabPane) myContainer).getSelectionModel()
+				.get(((TabPane) getContainer()).getSelectionModel()
 						.getSelectedIndex()).getContent();
 	}
 

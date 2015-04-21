@@ -41,7 +41,7 @@ public class LevelSettingPane extends EditingPane {
                 mapBox.setEditable(true);
             }
             h.getChildren().addAll(levelLabel,mapBox);
-            h.setMaxWidth(parent.myContainer.getWidth());
+            h.setMaxWidth(parent.getContainer().getWidth());
             this.getChildren().add(h);
         }
     }
