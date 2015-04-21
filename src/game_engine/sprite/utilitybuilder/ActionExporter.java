@@ -64,10 +64,11 @@ public class ActionExporter {
 	private void writeToFile(String fileName) throws IOException{
 		WriteProperties propertiesWriter = new WriteProperties(fileName);
 		for(int i = 0; i < methodNames.size(); i++){
-			String propertyName = propertyRoot + i;
+			String propertyName = propertyRoot;
+			if(i!=0) propertyName += i;
 			String descriptionName = propertyName+ "Description";
 			String paramCountName = propertyName+ "ParamCount";
-			propertiesWriter.addProperty(descriptionName,
+			propertiesWriter.addProperty(propertyName,
 					methodNames.get(i));
 			propertiesWriter.addProperty(descriptionName,
 					descriptions.get(i));

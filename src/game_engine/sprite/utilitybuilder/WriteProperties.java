@@ -25,7 +25,7 @@ public class WriteProperties {
 	
 	public void writeToFile() throws IOException{
 		FileOutputStream fileOut = new FileOutputStream(file);
-		properties.store(fileOut, "Favorite Things");
+		properties.store(fileOut, "Parameters");
 		fileOut.close();
 	}
 //	
