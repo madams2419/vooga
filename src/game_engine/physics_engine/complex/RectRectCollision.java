@@ -1,4 +1,7 @@
-package game_engine.physics;
+package game_engine.physics_engine.complex;
+
+import game_engine.physics_engine.physics_object.complex_physics_object.ComplexPhysicsObject;
+
 
 public class RectRectCollision extends PhysicsCollision {
 	
@@ -17,7 +20,7 @@ public class RectRectCollision extends PhysicsCollision {
 		B_UPPER_LEFT, B_UPPER_RIGHT, B_LOWER_LEFT, B_LOWER_RIGHT, NONE
 	}
 
-	public RectRectCollision(PhysicsObject poA, PhysicsObject poB) {
+	public RectRectCollision(ComplexPhysicsObject poA, ComplexPhysicsObject poB) {
 		super(poA, poB);
 		rectA = (RectangleBody) poA.getRigidBody();
 		rectB = (RectangleBody) poA.getRigidBody();

@@ -1,19 +1,22 @@
-package game_engine.physics;
+package game_engine.physics_engine.complex;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+import game_engine.physics_engine.physics_object.IPhysicsObject;
+import game_engine.physics_engine.physics_object.complex_physics_object.ComplexPhysicsObject;
 import game_engine.sprite.Sprite;
 
-// TODO
-// - refactor with special controller for retreiving values in pixel form
-// - implement regions (regions are sprites)
-// - optimize net force computation
-
-public class PhysicsEngine {
-
+/**
+ * complex physics engine implementation
+ * TODO refactor with special controller for retrieving values in pixel form
+ * TODO implement regions (regions are sprites)
+ * TODO optimize net force computation
+ */
+public class ComplexPhysicsEngine extends PhysicsEngine{
+	PhysicsCollisionFactory collisionFactory;
 	//TODO move these to properties file
 	private static double SCALE_FACTOR = 0.01; // pixel to meter scaling
 	private static String GRAV_STRING = "gravity";
@@ -28,7 +31,8 @@ public class PhysicsEngine {
 	private Vector myNetGlobalAccel;
 	private Vector myNetGlobalForce;
 
-	public PhysicsEngine(double groundPixels, double timeStep, double gravity, double drag) {
+	public ComplexPhysicsEngine(double groundPixels, double timeStep, double gravity, double drag) {
+		super();
 		myGround = pixelsToMeters(groundPixels);
 		myTimeStep = timeStep;
 		myGlobalForces = new HashMap<>();
@@ -38,12 +42,12 @@ public class PhysicsEngine {
 		setGravity(gravity);
 		myDrag = drag;
 	}
-
-	public PhysicsEngine(double groundPixels, double timeStep) {
+	
+	public ComplexPhysicsEngine(double groundPixels, double timeStep) {
 		this(groundPixels, timeStep, GRAV_MAGNITUDE, DRAG_COEF);
 	}
-
-	public Vector getDragForce(PhysicsObject physObj) {
+	
+	public Vector getDragForce(ComplexPhysicsObject physObj) {
 		double dragCoef = - myDrag * physObj.getRigidBody().getCxArea();
 		return physObj.getVelocity().times(dragCoef);
 	}
@@ -52,17 +56,19 @@ public class PhysicsEngine {
 		myGlobalAccels.put(GRAV_STRING, new Vector(0, -GRAV_MAGNITUDE));
 		computeNetGlobalAccel();
 	}
-
-	public void update(List<Sprite> sprites) {
-		updatePhysicsObjects(sprites);
+	
+	@Override
+	public void update() {
+		getPhysicsObjects().forEach(physicsObject->physicsObject.update());
 	}
 
-	private void updatePhysicsObjects(List<Sprite> sprites) {
-		for(Sprite sprite : sprites) {
-			sprite.getPhysicsObject().update();
-		}
+	@Override
+	public void resolveCollision(IPhysicsObject physicsObject1,
+			IPhysicsObject physicsObject2) {
+		// TODO resolve collisions
 	}
-
+	
+	// TODO refactor below
 	private Vector computeNetGlobalForce() {
 		myNetGlobalForce = Vector.sum(getGlobalForces());
 		return myNetGlobalForce;
@@ -147,4 +153,5 @@ public class PhysicsEngine {
 	public static Vector vectorMetersToPixels(double xMeters, double yMeters) {
 		return new Vector(metersToPixels(xMeters), metersToPixels(yMeters));
 	}
+
 }

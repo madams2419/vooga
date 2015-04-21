@@ -1,13 +1,17 @@
 package game_player;
 
-import game_engine.physics.PhysicsObject;
-import game_engine.physics.Vector;
+import game_engine.physics_engine.physics_object.IPhysicsObject;
 import game_engine.sprite.Sprite;
+<<<<<<< HEAD
 import game_player.Utilities;
+=======
+
+>>>>>>> 9c852e4bc302ce8db639244624c72d1f06fd0c41
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -18,7 +22,7 @@ import javafx.scene.image.ImageView;
  * @author
  *
  */
-public class Animation implements Observer {
+public class Animation {
 
 	private ImageView myImageView;
 	private Node myCurrentNode;
@@ -26,14 +30,15 @@ public class Animation implements Observer {
 	private Sprite mySprite;
 	Map<String, Node> myPathMap;
 
-	public Animation(Sprite sprite, PhysicsObject physics) {
+
+	public Animation(Sprite sprite, IPhysicsObject physics) {
 	     
-		linkToSprite(sprite);
-//		linkToSprite(physics);
+//	         linkToSprite(sprite);
+//	         linkToSprite(physics);
 		mySprite = sprite;
 		myPathMap = new HashMap<>();
 		myImageView = new ImageView();
-//		updatePosition(physics);
+//              updatePosition(physics);
 	}
 	
 	public class Node{
@@ -74,10 +79,6 @@ public class Animation implements Observer {
         return myCurrentImage;
     }
 
-    private void linkToSprite (Observable sprite) {
-        sprite.addObserver(this);
-    }
-
     private void changeImage (String state) {
        
             try {
@@ -104,6 +105,7 @@ public class Animation implements Observer {
         return myImageView;
     }
 
+
 	public void update(Observable o, Object arg) {
 		try {
 			Sprite sprite;
@@ -111,8 +113,8 @@ public class Animation implements Observer {
 			changeImage(sprite.getState());
 		} catch (Exception e) {
 //			 TODO Auto-generated catch block
-			PhysicsObject physics;
-			physics = (PhysicsObject) o;
+			IPhysicsObject physics;
+			physics = (IPhysicsObject) o;
 //			updatePosition(physics);
 		    e.printStackTrace();
 		}

@@ -28,12 +28,7 @@ public class ViewServer implements Observer{
 		root.setBottom(commandLine.getCommandLine());
 		scene = new Scene(root);
 		setCommandLine(parse);
-		try {
-			myServer = new ChatroomServer(6060, new View());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		myServer = new ChatroomServer(6060, new View());
 	}
 
 	public CommandLine getCommandLine() {

@@ -48,6 +48,10 @@ public class ChatroomClient{
 		}
 	}
 	
+	public ChatroomClient(View view) {
+	    myView = view;
+	}
+
 	public void start() throws IOException{
 		in = new DataInputStream(System.in);
 		out = new DataOutputStream(socket.getOutputStream());
@@ -145,6 +149,11 @@ public class ChatroomClient{
 //	public void terminate(){
 //		terminate = true;
 //	}
+
+	public void run() {
+	    // TODO Auto-generated method stub
+	    
+	}
 	
 //	public static void main(String [] args){ // for future use 104.131.22.182
 //		ChatroomClient c = new ChatroomClient();

@@ -1,11 +1,13 @@
-package game_engine.physics;
+package game_engine.physics_engine.complex;
+
+import game_engine.physics_engine.physics_object.complex_physics_object.ComplexPhysicsObject;
 
 public class CircleCircleCollision extends PhysicsCollision {
 
 	private CircleBody myCircleA;
 	private CircleBody myCircleB;
 
-	public CircleCircleCollision(PhysicsObject poA, PhysicsObject poB) {
+	public CircleCircleCollision(ComplexPhysicsObject poA, ComplexPhysicsObject poB) {
 		super(poA, poB);
 		myCircleA = (CircleBody) poA.getRigidBody();
 		myCircleB = (CircleBody) poB.getRigidBody();

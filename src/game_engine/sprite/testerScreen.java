@@ -1,6 +1,6 @@
 package game_engine.sprite;
 
-import game_engine.sprite.Player;
+import game_engine.sprite.Sprite;
 import javafx.animation.KeyFrame;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -13,7 +13,7 @@ import javafx.util.Duration;
 public class testerScreen{
     private int myWidth, myHeight;
     private StackPane myRoot;
-    Player myPlayer = new Player(null);
+    Sprite myPlayer = new Sprite(null);
     
     public testerScreen(int h, int w){
         myHeight = h;

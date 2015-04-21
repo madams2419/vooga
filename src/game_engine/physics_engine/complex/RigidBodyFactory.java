@@ -1,12 +1,13 @@
-package game_engine.physics;
+package game_engine.physics_engine.complex;
 
-import game_engine.physics.RigidBody.RBodyType;
+import game_engine.physics_engine.complex.ComplexPhysicsEngine;
+import game_engine.physics_engine.complex.RigidBody.RBodyType;
 
 public class RigidBodyFactory {
 	
 	public static RigidBody createRigidBody(int heightPixels, int widthPixels, RBodyType rbType) {
-		double height = PhysicsEngine.pixelsToMeters(heightPixels);
-		double width = PhysicsEngine.pixelsToMeters(widthPixels);
+		double height = ComplexPhysicsEngine.pixelsToMeters(heightPixels);
+		double width = ComplexPhysicsEngine.pixelsToMeters(widthPixels);
 		RigidBody rBody;
 		
 		switch (rbType) {
