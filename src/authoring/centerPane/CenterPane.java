@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javafx.collections.ListChangeListener.*;
 import javafx.collections.ObservableList;
 import javafx.geometry.Side;
 import javafx.scene.Group;
@@ -52,7 +51,6 @@ public class CenterPane extends WindowPane {
 				c.getAddedSubList().forEach(
 						tab -> myMaps.put((TabPane) tab.getContent(),
 								((TabPane) tab.getContent()).getTabs()));
-				System.out.println(myMaps.toString());
 			}
 		});
 	}
@@ -64,7 +62,6 @@ public class CenterPane extends WindowPane {
 						t = new TabPane()));
 		t.setSide(Side.BOTTOM);
 		addMap(t);
-		// myMaps.put(t, t.getTabs());
 	}
 
 	public void addLevel() {
@@ -105,8 +102,15 @@ public class CenterPane extends WindowPane {
 	}
 
 	public Iterator<List<CenterCanvas>> getMaps() {
-		// return myLevels.iterator();
-		return null;
+		List<List<CenterCanvas>> myList = new ArrayList<>();
+		myMaps.values().forEach(l -> {
+			List<CenterCanvas> m = new ArrayList<>();
+			l.forEach(cp -> {
+				m.add((CenterCanvas) cp.getContent());
+			});
+			myList.add(m);
+		});
+		return myList.iterator();
 	}
 
 }
