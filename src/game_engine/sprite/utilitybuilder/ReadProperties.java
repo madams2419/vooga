@@ -12,7 +12,7 @@ import java.util.Properties;
 /**
  * class to read properties file
  * adapted from www.avajava.com
- * to be continued
+ * TODO finish writing implementing
  */
 public class ReadProperties {
 	private String fileName;
