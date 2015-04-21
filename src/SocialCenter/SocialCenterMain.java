@@ -18,6 +18,7 @@ public class SocialCenterMain extends Application {
 		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 //		stage.setX(primaryScreenBounds.getMinX());
 //		stage.setY(primaryScreenBounds.getMinY());
+		
 //		stage.setWidth(primaryScreenBounds.getWidth());
 //		stage.setHeight(primaryScreenBounds.getHeight());
 		stage.setResizable(false);
