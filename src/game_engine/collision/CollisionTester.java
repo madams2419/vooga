@@ -36,10 +36,10 @@ public class CollisionTester extends Application {
 
 		Image image = new Image("./images/star.gif");
 		spriteA = new ImageView(image);
-		spriteA.setTranslateX(100);
-		spriteA.setTranslateY(0);
+		spriteA.setTranslateX(400);
+		spriteA.setTranslateY(300);
 
-		Image image2 = new Image("./resources/images/smallerLuigi.png");
+		Image image2 = new Image("./resources/images/bowser.png");
 		spriteB = new ImageView(image2);
 		spriteB.setTranslateX(200);
 		spriteB.setTranslateY(0);

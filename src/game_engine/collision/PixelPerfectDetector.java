@@ -37,13 +37,15 @@ public class PixelPerfectDetector {
 		// myAnimationB = b.getAnimation();
 		coordinateA = createCoordinates(mySpriteA.getImage());
 		coordinateB = createCoordinates(mySpriteB.getImage());
+		
 
-		// ArrayList<int[]> t = overlapCoordinates(coordinateA, a, coordinateB,
-		// b);
-		// for (int[] x : t) {
-		// System.out.println(Arrays.toString(x));
-		// }
-
+	}
+	
+	public boolean isColliding(){
+		if(isImageColliding()){
+			return isPixelColliding();
+		}
+		return false;
 	}
 
 	private ArrayList<int[]> createCoordinates(Image src) {
@@ -61,7 +63,7 @@ public class PixelPerfectDetector {
 		return coordinate;
 	}
 
-	public ArrayList<int[]> overlapCoordinates(List<int[]> coordinateA,
+	private ArrayList<int[]> overlapCoordinates(List<int[]> coordinateA,
 			ImageView a, List<int[]> coordinateB, ImageView b) {
 		// overlapA correct
 		ArrayList<int[]> overlapA = new ArrayList<int[]>();
@@ -89,7 +91,13 @@ public class PixelPerfectDetector {
 		return s;
 	}
 
-	public boolean isColliding() {
+	private boolean isImageColliding(){
+		return mySpriteA.getBoundsInParent().intersects(mySpriteB.getBoundsInParent());
+
+	}
+	
+	private boolean isPixelColliding() {
+		
 		ArrayList<int[]> overlap = overlapCoordinates(coordinateA, mySpriteA,
 				coordinateB, mySpriteB);
 
