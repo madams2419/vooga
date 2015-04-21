@@ -102,12 +102,13 @@ public class Sprite extends Observable implements IActor {
 		notifyObservers(myState);
 	}
 	
-	@IActionAnnotation(numParams = 2)
+	@IActionAnnotation(numParams = 2, description = "moving forward/backward")
 	private IAction moveForward = (params) -> {
 	    myPhysicsObject.move(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
 		setStateName("forward");
 	};
-	@IActionAnnotation(numParams = 1)
+	
+	@IActionAnnotation(numParams = 1,description = "jumping movement")
 	private IAction jump = (params) -> {
 		Vector myVector = new Vector(0,1*Double.parseDouble(params[0]));
 		myPhysicsObject.move(myVector);

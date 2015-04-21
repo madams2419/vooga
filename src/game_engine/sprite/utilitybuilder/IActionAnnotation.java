@@ -8,4 +8,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface IActionAnnotation {
 	public int numParams();
+	public String description();
 }
