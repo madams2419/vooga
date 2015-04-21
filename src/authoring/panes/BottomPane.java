@@ -16,7 +16,6 @@ import authoring.userInterface.AuthoringWindow;
 import authoring.userInterface.ButtonFactory;
 import authoring.userInterface.ClickHandler;
 import authoring.userInterface.DropdownFactory;
-import authoring.userInterface.WindowPane;
 import authoring.util.FrontEndUtils;
 
 /***

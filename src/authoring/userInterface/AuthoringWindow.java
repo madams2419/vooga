@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import authoring.Sprite;
 import authoring.panes.BottomPane;
 import authoring.panes.TopPane;
+import authoring.panes.WindowPane;
 import authoring.panes.centerPane.CenterPane;
 import authoring.panes.rightPane.RightPane;
 

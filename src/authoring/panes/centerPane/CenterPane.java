@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import javafx.collections.ListChangeListener.*;
 import javafx.collections.ObservableList;
 import javafx.geometry.Side;
@@ -15,8 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import authoring.panes.WindowPane;
 import authoring.userInterface.AuthoringWindow;
-import authoring.userInterface.WindowPane;
 import authoring.util.FrontEndUtils;
 
 /**

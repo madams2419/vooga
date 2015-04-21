@@ -2,6 +2,7 @@ package authoring.userInterface;
 
 import java.util.ArrayList;
 import java.util.Map;
+import authoring.panes.WindowPane;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

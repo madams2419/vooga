@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -14,9 +13,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import authoring.InteractionManager;
 import authoring.Sprite;
+import authoring.panes.WindowPane;
 import authoring.userInterface.AuthoringWindow;
 import authoring.userInterface.ControlsDialog;
-import authoring.userInterface.WindowPane;
 
 /**
  * This class represents the right pane on the screen. It will allow the user to

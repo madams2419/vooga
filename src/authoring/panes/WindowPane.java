@@ -1,10 +1,10 @@
-package authoring.userInterface;
+package authoring.panes;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
+import authoring.userInterface.AuthoringWindow;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Control;

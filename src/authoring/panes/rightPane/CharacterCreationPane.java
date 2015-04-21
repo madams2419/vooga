@@ -1,22 +1,14 @@
 package authoring.panes.rightPane;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import authoring.Sprite;
-import authoring.userInterface.BufferedImageLoader;
 import authoring.userInterface.SpriteCursor;
-import authoring.userInterface.SpriteSheet;
 import authoring.util.ImageEditor;
 
 
