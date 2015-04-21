@@ -1,7 +1,7 @@
 package game_engine.physics;
 
 public class Material {
-	
+
 	public static final Material ROCK = new Material(0.6, 0.1);
 	public static final Material WOOD = new Material(0.3, 0.2);
 	public static final Material METAL = new Material(1.2, 0.05);

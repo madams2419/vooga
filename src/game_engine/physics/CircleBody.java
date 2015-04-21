@@ -20,15 +20,15 @@ public class CircleBody extends RigidBody {
 	public double getRadius() {
 		return myRadius;
 	}
-	
+
 	public double getDiameter() {
 		return myRadius*2;
 	}
-	
+
 	public double getHeight() {
 		return getDiameter();
 	}
-	
+
 	public double getWidth() {
 		return getDiameter();
 	}

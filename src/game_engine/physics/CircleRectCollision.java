@@ -11,18 +11,18 @@ public class CircleRectCollision extends PhysicsCollision {
 		myRectangle = (RectangleBody) poB.getRigidBody();
 	}
 
-	//TODO handle with strategy pattern instead of if statement
+	//TODO refactor if statements with strategy pattern
 	protected void solve() {
-		Vector sepVector = getSeparationVector();
+		Vector collisionDelta = getSeparationVector();
 
 		// compute closest point on circle to rectangle
-		Vector closestPoint = myRectangle.clampPointToEdge(sepVector);
+		Vector closestPoint = myRectangle.clampPointToEdge(collisionDelta);
 
 		// check if circle center is insie rectangle
 		boolean circleInsideRect = myRectangle.containsPoint(myObjectA.getPositionMeters());
 
 		// compute raw normal vector
-		Vector rawNormal = sepVector.minus(closestPoint);
+		Vector rawNormal = collisionDelta.minus(closestPoint);
 
 		// compute penetration depth and unit normal depending on collision type
 		if(circleInsideRect) {

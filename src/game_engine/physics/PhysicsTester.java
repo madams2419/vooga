@@ -187,10 +187,10 @@ public class PhysicsTester extends Application {
 		String defaultImage = "/Resources/images/standingMario.png";
 		int height = 50;
 		int width = 50;
-		RBodyType rType = RBodyType.CIRCLE;
+		RBodyType rType = RBodyType.RECTANGLE;
 		Material material = Material.SUPER_BALL;
-		int startX = 400;
-		int startY = 400;
+		int startX = 800;
+		int startY = 300;
 		playerSprite = new Player(defaultState, defaultImage, height, width, rType, globalPhysics, material, startX, startY);
 		
 		/* add player to layer */

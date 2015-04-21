@@ -1,5 +1,8 @@
 package game_engine.physics;
 
+// TODO
+// - remove generic helper methods up to RigidBody class (inXRange and inYRange to name two)
+
 public class RectangleBody extends RigidBody {
 
 	private Vector myUpperRight;
