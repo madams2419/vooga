@@ -9,11 +9,15 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import authoring.dataEditors.Sprite;
+import authoring.dialogs.FileChooserDialog;
+import authoring.dialogs.NewRegionDialog;
 import authoring.panes.BottomPane;
 import authoring.panes.LeftPane;
 import authoring.panes.TopPane;
 import authoring.panes.WindowPane;
 import authoring.panes.centerPane.CenterPane;
+import authoring.panes.menuBar.GameMenu;
+import authoring.panes.menuBar.HelpMediaPlayer;
 import authoring.panes.rightPane.RightPane;
 
 /**

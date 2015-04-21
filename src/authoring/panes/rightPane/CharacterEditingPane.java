@@ -19,7 +19,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import authoring.dataEditors.Sprite;
-import authoring.userInterface.ControlsDialog;
+import authoring.dialogs.ControlsDialog;
 import authoring.util.FrontEndUtils;
 import authoring.util.ImageEditor;
 

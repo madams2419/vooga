@@ -13,9 +13,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import authoring.dataEditors.InteractionManager;
 import authoring.dataEditors.Sprite;
+import authoring.dialogs.ControlsDialog;
 import authoring.panes.WindowPane;
 import authoring.userInterface.AuthoringWindow;
-import authoring.userInterface.ControlsDialog;
 
 /**
  * This class represents the right pane on the screen. It will allow the user to

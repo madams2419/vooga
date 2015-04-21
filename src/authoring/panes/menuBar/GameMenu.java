@@ -1,4 +1,4 @@
-package authoring.userInterface;
+package authoring.panes.menuBar;
 
 import java.util.ArrayList;
 import java.util.Collections;

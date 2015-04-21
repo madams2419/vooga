@@ -7,10 +7,10 @@ import java.util.Map;
 import java.util.function.Consumer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import authoring.dialogs.ControlsDialog;
 import authoring.panes.centerPane.CenterPane;
 import authoring.panes.rightPane.RightPane;
 import authoring.userInterface.ClickHandler;
-import authoring.userInterface.ControlsDialog;
 import authoring.util.FrontEndUtils;
 import authoring.util.ImageEditor;
 

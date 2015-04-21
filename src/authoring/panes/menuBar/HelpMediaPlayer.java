@@ -1,4 +1,4 @@
-package authoring.userInterface;
+package authoring.panes.menuBar;
 
 import java.nio.file.Paths;
 
