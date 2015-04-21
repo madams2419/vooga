@@ -62,7 +62,6 @@ public class GlobalCreationPane extends EditingPane {
         String[] values = new String[myFieldNames.length];
         for (int i = 0; i < myFieldNames.length; i++) {
             values[i] = myFieldNames[i] + _VALUE_STRING;
-            System.out.println("values[i]: " + values[i]);
         }
         
         try {

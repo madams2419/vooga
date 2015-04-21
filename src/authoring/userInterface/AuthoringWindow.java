@@ -73,7 +73,7 @@ public class AuthoringWindow {
 		myPanes.put(myLeftPane.getClass().getName(), myLeftPane);
 		myPanes.put(myRightPane.getClass().getName(), myRightPane);
 
-		UIElementDistributer.ElementDistributer(myScene, this);
+		UIElementDistributer.distributeElements(myScene, this);
 		
 		return myScene;
 	}
