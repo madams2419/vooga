@@ -1,5 +1,6 @@
 package game_engine.physics_engine.physics_object.complex_physics_object;
 
+import game_engine.physics_engine.PhysicsEngine;
 import game_engine.physics_engine.Vector;
 import game_engine.physics_engine.complex.ComplexPhysicsEngine;
 import game_engine.physics_engine.complex.Joint;
@@ -47,11 +48,22 @@ public abstract class ComplexPhysicsObject extends IPhysicsObject{
 	public abstract void update();
 
 	private double computeInvMass() {
-		double mass = myMaterial.getDensity() * myRigidBody.getVolume();
-		return 1/mass;
+		double mass = computeMass();
+		if(mass == 0) {
+			return 0;
+		} else {
+			return 1/mass;
+		}
+	}
+	
+	private double computeMass() {
+		return myMaterial.getDensity() * myRigidBody.getVolume();
 	}
 
 	protected Vector computeAccel() {
+		if(myInvMass == 0) {
+			return new Vector(0,0);
+		}
 		Vector intNetAccel = computeNetForce().times(myInvMass);
 		Vector extNetAccel = myPhysics.getNetGlobalAccel();
 		return intNetAccel.plus(extNetAccel);
@@ -89,12 +101,21 @@ public abstract class ComplexPhysicsObject extends IPhysicsObject{
 	}
 
 	public void applyImpulse(Vector impulse) {
-		applyVelocity(impulse.times(myInvMass));
+		addVelocity(impulse.times(myInvMass));
 	}
 
-	public void applyVelocity(Vector velocity) {
+	public void addVelocity(Vector velocity) {
 		Vector newVelocity = myVelocity.plus(velocity);
 		setVelocity(newVelocity);
+	}
+
+	public void addPosition(Vector position) {
+		Vector newPosition = myPosition.plus(position);
+		setPosition(newPosition);
+	}
+
+	public void setPosition(Vector newPosition) {
+		myPosition = newPosition;
 	}
 
 	public Vector getPositionMeters() {
@@ -115,6 +136,34 @@ public abstract class ComplexPhysicsObject extends IPhysicsObject{
 
 	public void setYPosition(double yMeters) {
 		myPosition = myPosition.setY(yMeters);
+	}
+
+	public double getXPixels() {
+		return PhysicsEngine.metersToPixels(getXMeters());
+	}
+
+	public void setXPixels(double xPixels) {
+		myPosition = myPosition.setX(PhysicsEngine.pixelsToMeters(xPixels));
+	}
+
+	public double getYPixels() {
+		return PhysicsEngine.metersToPixels(getYMeters());
+	}
+
+	public void setYPixels(double yPixels) {
+		myPosition = myPosition.setY(PhysicsEngine.pixelsToMeters(yPixels));
+	}
+
+	public double getRadiusPixels() {
+		return PhysicsEngine.metersToPixels(myRigidBody.getRadius());
+	}
+	
+	public double getWidthPixels() {
+		return PhysicsEngine.metersToPixels(myRigidBody.getWidth());
+	}
+	
+	public double getHeightPixels() {
+		return PhysicsEngine.metersToPixels(myRigidBody.getHeight());
 	}
 
 	public Vector getVelocity() {

@@ -28,6 +28,10 @@ public abstract class RigidBody {
 	public abstract double getCxLength();
 
 	public abstract double getRadius();
+	
+	public abstract double getHeight();
+	
+	public abstract double getWidth();
 
 	protected abstract void setType();
 

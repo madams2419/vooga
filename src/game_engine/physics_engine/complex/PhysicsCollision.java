@@ -21,14 +21,14 @@ public abstract class PhysicsCollision implements IPhysicsCollision {
 	}
 
 	public boolean collide() {
-		myNormal = computeNormal();
-		myPenetrationDepth = computePenetrationDepth();
+		solve();
 		return (myPenetrationDepth >= 0);
 	}
 
-	protected abstract Vector computeNormal();
-
-	protected abstract double computePenetrationDepth();
+	/**
+	 * Compute collision normal and penetration depth
+	 */
+	protected abstract void solve();
 
 	public void resolve() {
 		// return if objects are moving apart
@@ -46,7 +46,6 @@ public abstract class PhysicsCollision implements IPhysicsCollision {
 	}
 
 	private void applySinkCorrection() {
-		//TODO this doesnt' work yet...
 		// return if penetration depth is less than threshold
 		if(myPenetrationDepth < SC_SLOP) {
 			return;
@@ -54,16 +53,18 @@ public abstract class PhysicsCollision implements IPhysicsCollision {
 
 		double correctionCoef = SC_PERCENT * myPenetrationDepth / (myObjectA.getInvMass() + myObjectB.getInvMass());
 		Vector correction = myNormal.times(correctionCoef);
-		myObjectA.applyVelocity(correction.negate());
-		myObjectB.applyVelocity(correction);
+		Vector aCorrection = correction.times(myObjectA.getInvMass()).negate();
+		Vector bCorrection = correction.times(myObjectB.getInvMass());
+		myObjectA.addPosition(aCorrection);
+		myObjectB.addPosition(bCorrection);
 	}
 
-	protected double collisionRestitution() {
+	protected double computeRestitution() {
 		return Math.min(myObjectA.getRestitution(), myObjectB.getRestitution());
 	}
 
 	protected Vector computeImpulse() {
-		double implsMag = -(1 + collisionRestitution()) * rvProjOnNorm();
+		double implsMag = -(1 + computeRestitution()) * rvProjOnNorm();
 		implsMag /= myObjectA.getInvMass() + myObjectB.getInvMass();
 		return myNormal.times(implsMag);
 	}
