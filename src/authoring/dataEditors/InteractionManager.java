@@ -1,4 +1,4 @@
-package authoring;
+package authoring.dataEditors;
 
 import java.util.HashMap;
 import java.util.Map;

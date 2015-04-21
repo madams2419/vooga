@@ -6,9 +6,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
-import authoring.Interaction;
-import authoring.InteractionManager;
-import authoring.Sprite;
+import authoring.dataEditors.Interaction;
+import authoring.dataEditors.InteractionManager;
+import authoring.dataEditors.Sprite;
 import authoring.util.FrontEndUtils;
 
 

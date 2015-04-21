@@ -1,4 +1,4 @@
-package authoring;
+package authoring.fileBuilders;
 
 import java.io.File;
 import java.util.Arrays;
@@ -6,16 +6,15 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import authoring.dataEditors.Sprite;
 
 /***
  * This is a class that will contain information in a tree structure, and encode

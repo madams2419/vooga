@@ -1,8 +1,9 @@
-package authoring.userInterface;
+package authoring.panes;
 
 import java.util.ArrayList;
 import java.util.Map;
-import authoring.panes.WindowPane;
+import authoring.userInterface.AuthoringWindow;
+import authoring.userInterface.ButtonFactory;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

@@ -7,7 +7,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import authoring.Sprite;
+import authoring.dataEditors.Sprite;
 import authoring.userInterface.SpriteCursor;
 import authoring.util.ImageEditor;
 

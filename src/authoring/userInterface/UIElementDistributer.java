@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import authoring.testers.AuthoringGUITester;
+import authoring.util.Reflection;
 import javafx.scene.Scene;
 import XML.LayoutXMLParser;
 

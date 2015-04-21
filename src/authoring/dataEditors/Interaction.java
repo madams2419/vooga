@@ -1,4 +1,5 @@
-package authoring;
+package authoring.dataEditors;
+
 
 /**
  * A class to represent the interaction between two sprites.

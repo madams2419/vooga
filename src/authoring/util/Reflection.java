@@ -1,4 +1,4 @@
-package authoring.userInterface;
+package authoring.util;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;

@@ -16,7 +16,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import authoring.Sprite;
+import authoring.dataEditors.Sprite;
 import authoring.panes.rightPane.GlobalCreationPane;
 import authoring.userInterface.AuthoringWindow;
 import authoring.userInterface.SpriteCursor;
