@@ -93,7 +93,9 @@ public class VoogaGameBuilder {
         
         parser.moveUp();
         
-        return new Sprite(parser.getValue("initialState"), spriteImage, physObj);
+        Sprite sprite = new Sprite(parser.getValue("initialState"), spriteImage, physObj);
+        mySpriteMap.put(spriteID, sprite);
+        return sprite;
     }
     
     private IPhysicsObject buildPhysicsObject(Animation a) {

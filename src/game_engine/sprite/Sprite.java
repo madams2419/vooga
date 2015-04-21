@@ -31,6 +31,7 @@ public class Sprite extends Observable implements IActor {
 	private void buildActionMap(){ 
 		myActionMap.put("moveForward", moveForward);
 		myActionMap.put("jump", jump);
+		myActionMap.put("setState", setState);
 	}
 	
 	public void update() {
