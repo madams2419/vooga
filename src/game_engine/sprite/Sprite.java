@@ -2,9 +2,12 @@ package game_engine.sprite;
 
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
-import game_engine.physics_engine.physics_object.IPhysicsObject;
 import game_engine.physics_engine.Vector;
+import game_engine.physics_engine.physics_object.IPhysicsObject;
+import game_engine.sprite.utilitybuilder.IActionAnnotation;
 import game_player.Animation;
+
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -29,8 +32,9 @@ public class Sprite extends Observable implements IActor {
 	
 	private void buildActionMap(){ 
 		myActionMap.put("moveForward", moveForward);
-		myActionMap.put("jump", jump);
+		myActionMap.put(jump.toString(), jump);
 		myActionMap.put("setState", setState);
+		
 	}
 	
 	public void update() {
@@ -98,18 +102,28 @@ public class Sprite extends Observable implements IActor {
 		notifyObservers(myState);
 	}
 	
+	@IActionAnnotation(numParams = 2)
 	private IAction moveForward = (params) -> {
-	        myPhysicsObject.move(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
+	    myPhysicsObject.move(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
 		setStateName("forward");
 	};
-
+	@IActionAnnotation(numParams = 1)
 	private IAction jump = (params) -> {
 		Vector myVector = new Vector(0,1*Double.parseDouble(params[0]));
 		myPhysicsObject.move(myVector);
 		setStateName("jump");
 	};
-
+	
 	public IAction getAction(String name) {
 		return myActionMap.get(name);
+	}
+	
+	public static void main(String[] args) {
+		Field[] fields = Sprite.class.getDeclaredFields();
+		for (Field field: fields) {
+			if (field.isAnnotationPresent(IActionAnnotation.class)){
+				System.out.println(field.getName());
+			}
+		}
 	}
 }
