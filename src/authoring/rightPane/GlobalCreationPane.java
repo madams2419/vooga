@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import authoring.util.PropertiesFileParser;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -16,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import authoring.util.PropertiesFileParser;
 
 
 /**
@@ -24,16 +24,17 @@ import javafx.scene.text.Text;
  */
 public class GlobalCreationPane extends EditingPane {
     private static final String PROPERTIES_FILEPATH = "/Resources/GlobalSettingsPane.properties";
-    private static final String DEFAULT_STRING = "Default";
     private static final String UPDATE_STRING = "Update";
-    private List<HBox> myFields = new LinkedList<>();
-    private Map<String, String> fields;
+    private static final String _VALUE_STRING = "_VALUE";
+    private List<HBox> myFieldBoxes = new LinkedList<>();
+    private Map<String, String> myValueMap;
+    private String[] myFieldNames;
 
     public GlobalCreationPane (Scene myScene, RightPane parent) {
         // TODO Auto-generated constructor stub
         super(myScene, parent);
         /* Default Map */
-        createDefaultMap(getFieldNames());
+        createDefaultMap(getFieldNames(), getDefaultValues());
         setFields(this.getChildren(), updateMap());
         Button c = new Button(UPDATE_STRING);
         c.setOnAction(e -> updateMap());
@@ -41,14 +42,31 @@ public class GlobalCreationPane extends EditingPane {
     }
 
     private enum GlobalCreationPaneFieldNames {
-        GAME_NAME, SCROLLING_SPEED, FRAME_RATE, SCROLLING_SIZE
+        GAME_NAME, SCROLLING_SPEED, FRAME_RATE, SCROLLING_SIZE, INITIAL_LEVEL
     }
     
     private String[] getFieldNames () {
         GlobalCreationPaneFieldNames[] enums = GlobalCreationPaneFieldNames.values();
+        myFieldNames = PropertiesFileParser.convertEnumToStringArray(enums);
         
         try {
-            return PropertiesFileParser.loadProperties(enums, PROPERTIES_FILEPATH);
+            return PropertiesFileParser.alphabeticallyLoadProperties(enums, PROPERTIES_FILEPATH);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    private String[] getDefaultValues () {
+        String[] values = new String[myFieldNames.length];
+        for (int i = 0; i < myFieldNames.length; i++) {
+            values[i] = myFieldNames[i] + _VALUE_STRING;
+            System.out.println("values[i]: " + values[i]);
+        }
+        
+        try {
+            return PropertiesFileParser.alphabeticallyLoadProperties(values, PROPERTIES_FILEPATH);
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -56,13 +74,11 @@ public class GlobalCreationPane extends EditingPane {
         return null;
     }
 
-    private Map<String, String> createDefaultMap (String[] key) {
-        String[] value = { DEFAULT_STRING, DEFAULT_STRING, DEFAULT_STRING, DEFAULT_STRING };
-        fields = new HashMap<String, String>();
-        for (int i = 0; i < key.length; i++) {
-            fields.put(key[i], value[i]);
+    private void createDefaultMap (String[] keys, String[] values) {
+        myValueMap = new HashMap<String, String>();
+        for (int i = 0; i < keys.length; i++) {
+            myValueMap.put(keys[i], values[i]);
         }
-        return fields;
     }
 
     private void setFields (ObservableList<Node> parent,
@@ -72,7 +88,7 @@ public class GlobalCreationPane extends EditingPane {
             h.getChildren().addAll(new Text(label),
                                    new javafx.scene.control.TextField(value));
             parent.add(h);
-            myFields.add(h);
+            myFieldBoxes.add(h);
         });
 
     }
@@ -80,16 +96,16 @@ public class GlobalCreationPane extends EditingPane {
     private Map<String, String> updateMap () {
         // System.out.println();
 
-        myFields.forEach(hbox -> {
-            fields.put((((Text) hbox.getChildren().get(0)).getText()),
+        myFieldBoxes.forEach(hbox -> {
+            myValueMap.put((((Text) hbox.getChildren().get(0)).getText()),
                        (((TextField) hbox.getChildren().get(1)).getText()));
         });
-        return fields;
+        return myValueMap;
         // System.out.println(sprite.getCharacteristics().toString());
     }
 
     public Map<String, String> getFields () {
-        return fields;
+        return myValueMap;
     }
 
     // public static GlobalCreationPane getInstance(Scene scene) {

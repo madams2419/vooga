@@ -2,6 +2,7 @@ package authoring.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Properties;
 
 
@@ -28,10 +29,26 @@ public class PropertiesFileParser {
 
     @SuppressWarnings("rawtypes")
     public static String[] loadProperties (Enum[] properties, String filePath) throws IOException {
-        String[] stringProperties = new String[properties.length];
-        for (int i = 0; i < properties.length; i++) {
-            stringProperties[i] = properties[i].toString();
+        return loadProperties(convertEnumToStringArray(properties), filePath);
+    }
+    
+    public static String[] alphabeticallyLoadProperties (String[] properties, String filePath) throws IOException {
+        String[] sortedProperties = properties.clone();
+        Arrays.sort(sortedProperties);
+        return loadProperties(sortedProperties, filePath);
+    }
+
+    @SuppressWarnings("rawtypes")
+    public static String[] alphabeticallyLoadProperties (Enum[] properties, String filePath) throws IOException {
+        return alphabeticallyLoadProperties(convertEnumToStringArray(properties), filePath);
+    }
+    
+    @SuppressWarnings("rawtypes")
+    public static String[] convertEnumToStringArray(Enum[] enums) {
+        String[] ret = new String[enums.length];
+        for (int i = 0; i < enums.length; i++) {
+            ret[i] = enums[i].toString();
         }
-        return loadProperties(stringProperties, filePath);
+        return ret;
     }
 }
