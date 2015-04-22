@@ -28,6 +28,11 @@ import authoring.userInterface.AuthoringWindow;
 
 public class RightPane extends WindowPane {
 
+    private static final String OBJECT_IMAGE_PATH = "authoring_images/objects";
+    private static final String DECORATION_IMAGE_PATH = "authoring_images/decorations";
+    private static final String BLOCK_IMAGE_PATH = "authoring_images/blocks";
+    private static final String CHARACTER_IMAGE_PATH = "authoring_images/characters";
+
     private EditingPane myCurrentContent;
 
     private final static int SPACING = 20;
@@ -55,10 +60,10 @@ public class RightPane extends WindowPane {
         availableDecorationTypeURIs = new ArrayList<>();
         availableObjectTypeURIs = new ArrayList<>();
 
-        initializeAvailableTypes(availableCharacterTypeURIs, "authoring_images/characters");
-        initializeAvailableTypes(availableBlockTypeURIs, "authoring_images/blocks");
-        initializeAvailableTypes(availableDecorationTypeURIs, "authoring_images/decorations");
-        initializeAvailableTypes(availableObjectTypeURIs, "authoring_images/objects");
+        initializeAvailableTypes(availableCharacterTypeURIs, CHARACTER_IMAGE_PATH);
+        initializeAvailableTypes(availableBlockTypeURIs, BLOCK_IMAGE_PATH);
+        initializeAvailableTypes(availableDecorationTypeURIs, DECORATION_IMAGE_PATH);
+        initializeAvailableTypes(availableObjectTypeURIs, OBJECT_IMAGE_PATH);
     }
 
     public void switchToCharacterEditingPane (Sprite sprite) {
