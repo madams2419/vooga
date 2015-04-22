@@ -21,18 +21,13 @@ public class PixelPerfectDetector implements ICollisionDetector {
     private static Map<Image, boolean[][]> imageToBits = new HashMap<Image, boolean[][]>();
     
     private Sprite spriteA, spriteB;
-    private SimpleDetector optimization;
 
     public PixelPerfectDetector(Sprite a, Sprite b) {
         spriteA = a;
         spriteB = b;
-        optimization = new SimpleDetector(a, b);
     }
 
     public boolean detectCollision() {
-    	if (!optimization.detectCollision()) {
-    		return false;
-    	}
     	ImageView objectA = spriteA.getImageView();
     	ImageView objectB = spriteB.getImageView();
     	
@@ -47,8 +42,8 @@ public class PixelPerfectDetector implements ICollisionDetector {
         int translateXB = (int) objectB.getTranslateX();
         int translateYB = (int) objectB.getTranslateY();
         
-        for (int i = xBounds.x; i < xBounds.y; i++) {
-            for (int j = yBounds.x; j < yBounds.y; j++) {
+        for (int i = xBounds.x; i < xBounds.y && i >= translateXA && i >= translateXB; i++) {
+            for (int j = yBounds.x; j < yBounds.y && j >= translateYA && j >= translateYB; j++) {
                 boolean a= bitMapA[j - translateYA][i - translateXA];
                 boolean b = bitMapB[j - translateYB][i - translateXB];
                 if (a && b) {
