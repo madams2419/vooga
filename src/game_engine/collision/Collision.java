@@ -4,7 +4,8 @@ import game_engine.behaviors.IBehavior;
 import game_engine.physics.PhysicsCollision;
 import game_engine.physics.PhysicsCollisionFactory;
 import game_engine.sprite.Sprite;
-import javafx.scene.image.ImageView;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 /**
  * 
@@ -132,4 +133,6 @@ public class Collision {
 
 		return bitMap;
 	}
+	
+
 }

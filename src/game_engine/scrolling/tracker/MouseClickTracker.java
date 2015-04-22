@@ -13,6 +13,10 @@ import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
 public class MouseClickTracker extends MouseTracker{
+    private static final double INITIAL_CIRCLE_SIZE = 2;
+    private static final double CIRCLE_STROKE_WIDTH = 0.4;
+    private static final Duration TIME = Duration.seconds(0.5);
+    private static final double SCALE_FACTOR = 3;
     
     public MouseClickTracker (IScrollFocus focuser, IScroller scroller) {
         super(focuser, scroller);
@@ -21,18 +25,18 @@ public class MouseClickTracker extends MouseTracker{
 
     private void animateClick(double x, double y, Group group) {
         ScaleTransition scale = new ScaleTransition();
-        Circle circle = new Circle(x, y, 2);
+        Circle circle = new Circle(x, y, INITIAL_CIRCLE_SIZE);
         circle.setStroke(Color.GREEN);
-        circle.setStrokeWidth(.4);
+        circle.setStrokeWidth(CIRCLE_STROKE_WIDTH);
         circle.setFill(Color.TRANSPARENT);
         group.getChildren().add(circle);
         scale.setNode(circle);
-        scale.setDuration(Duration.seconds(0.5));
-        scale.setByX(3);
-        scale.setByY(3);
-        scale.setByZ(3);
+        scale.setDuration(TIME);
+        scale.setByX(SCALE_FACTOR);
+        scale.setByY(SCALE_FACTOR);
+        scale.setByZ(SCALE_FACTOR);
         
-        FadeTransition fade = new FadeTransition(Duration.seconds(0.5), circle);
+        FadeTransition fade = new FadeTransition(TIME, circle);
         fade.setOnFinished(e -> group.getChildren().remove(circle));
         fade.setFromValue(1);
         fade.setToValue(0);

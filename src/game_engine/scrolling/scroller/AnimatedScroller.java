@@ -3,7 +3,6 @@ package game_engine.scrolling.scroller;
 import java.awt.Point;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.util.Duration;
 
 /**
@@ -59,4 +58,5 @@ public class AnimatedScroller extends BasicScroller{
         translate.setDuration(myDuration.multiply(duration)); 
         return translate;
     }
+    
 }

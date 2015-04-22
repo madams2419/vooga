@@ -1,7 +1,5 @@
 package game_engine.behaviors;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 
 /**
  * Wraps an IAction with its parameters.

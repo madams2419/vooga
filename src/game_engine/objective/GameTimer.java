@@ -1,7 +1,5 @@
 package game_engine.objective;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 
 /**
  * 
@@ -15,7 +13,7 @@ public class GameTimer {
     
     /***
      * Constructs a timer with the given duration.
-     * @param duration Duration of the timer, measured in nanoseconds.
+     * @param duration Duration of the timer, measured in seconds.
      */
     public GameTimer(long duration){
         myDuration = duration * SECOND;

@@ -54,7 +54,7 @@ public class AnotherTester extends Application {
         r4.setFill(Color.RED);
         ImageView image = new ImageView("Resources/images/brick.png");
         scene.setOnKeyPressed(e -> handleKeyPressed(e, r7));
-        group.getChildren().addAll(r, r2, r3, r4, r7);
+        group.getChildren().addAll(image, r, r2, r3, r4, r7);
         IScroller scroller = new AnimatedScroller(group);
         
         MiniMapTracker t = new MiniMapTracker(focus, scroller, 0.07);
