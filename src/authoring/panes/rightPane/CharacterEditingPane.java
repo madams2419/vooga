@@ -54,7 +54,7 @@ class CharacterEditingPane extends EditingPane {
         addPlayableCheckBox(addControlsButton(sprite), sprite);
         addUpdateButton(sprite);
         addBackButton();
-        
+
         // ================================================================= //
         addSpriteIcon(sprite);
     }
@@ -142,12 +142,8 @@ class CharacterEditingPane extends EditingPane {
     }
 
     private void changeCharacterImage (Sprite sprite) {
-        FileChooser imageChooser = new FileChooser();
-        imageChooser.setTitle(imageChooserTitle);
-        imageChooser.getExtensionFilters().add(
-                                               new ExtensionFilter(imageChooserDescription,
-                                                                   imageChooserExtensions));
-        File selectedImageFile = imageChooser.showOpenDialog(null);
+        File selectedImageFile =
+                selectFile(imageChooserTitle, imageChooserDescription, imageChooserExtensions);
         if (selectedImageFile != null) {
             sprite.changeImage(new Image(selectedImageFile.toURI().toString()));
         }

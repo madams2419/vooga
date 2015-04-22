@@ -1,7 +1,9 @@
 package authoring.panes.rightPane;
 
+import java.io.File;
 import java.util.List;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
@@ -21,7 +23,14 @@ import authoring.util.ImageEditor;
  */
 
 public class CreationPane extends EditingPane {
-	
+    private List<String> myAvailableTypeURIs;
+    private VBox myVBox;
+    private static final String buttonLabel = "+";
+    private static final String imageChooserTitle = "Add New Image";
+    private static final String imageChooserDescription = "Image Files";
+    private static final String[] imageChooserExtensions = { "*.png", "*.jpg",
+                                                            "*.gif" };
+
     CreationPane (Scene scene, RightPane parent, List<String> availableTypeURIs) {
         super(scene, parent);
         this.getChildren().add(
@@ -32,16 +41,35 @@ public class CreationPane extends EditingPane {
                                                + "selected (up to two%n"
                                                + "selections), its (their)%n"
                                                + "information will be%n" + "shown here.")));
+        myAvailableTypeURIs = availableTypeURIs;
+        addSpritesToPane();
+        addButtonToPane(buttonLabel);
+    }
 
-        addSpritesToPane(availableTypeURIs);
+    private void addButtonToPane (String buttonLabel) {
+        Button b = new Button(buttonLabel);
+        b.setOnAction(i -> addNewCreatable());
+        getChildren().add(b);
     }
     
-    private void addSpritesToPane (List<String> availableCharacterTypeURIs) {
-        VBox v = new VBox(20);
-        ScrollPane s = new ScrollPane(v);
+    private void addNewCreatable() {
+        File selectedImageFile =
+                selectFile(imageChooserTitle, imageChooserDescription, imageChooserExtensions);
+        
+        if (selectedImageFile != null) {
+            // not sure if "file://" is the right beginning for all computers
+            String path = "file://" + selectedImageFile.getAbsolutePath();
+            myAvailableTypeURIs.add(path);
+            addSpriteToPane(myAvailableTypeURIs.size(), path, myVBox);
+        }
+    }
+    
+    private void addSpritesToPane () {
+        myVBox = new VBox(20);
+        ScrollPane s = new ScrollPane(myVBox);
         this.getChildren().add(s);
-        for (int i = 0; i < availableCharacterTypeURIs.size(); i++) {
-            addSpriteToPane(i, availableCharacterTypeURIs.get(i), v);
+        for (int i = 0; i < myAvailableTypeURIs.size(); i++) {
+            addSpriteToPane(i, myAvailableTypeURIs.get(i), myVBox);
         }
     }
 
@@ -49,16 +77,6 @@ public class CreationPane extends EditingPane {
         Sprite sampleImage = new Sprite(id, imageURI, myParent.getParent()
                 .getCenterPane());
 
-        // these two aren't working for now when the copy is made in
-        // imageClicked (Consumer<Sprite> spriteClicked, Sprite sampleImage, int
-        // ID):
-        // sampleImage.setOnMouseEntered(i ->
-        // ImageEditor.reduceOpacity(sampleImage,
-        // Sprite.OPACITY_REDUCTION_RATIO));
-        // sampleImage.setOnMouseExited(i ->
-        // ImageEditor.restoreOpacity(sampleImage,
-        // Sprite.OPACITY_REDUCTION_RATIO));
-        
         int ID = 100; // for now, it doesn't change, but this should eventually
                       // be unique for each sprite
 
@@ -66,12 +84,10 @@ public class CreationPane extends EditingPane {
         sampleImageIcon.setOnMouseClicked(e -> imageClicked(sampleImage, ID));
         sampleImageIcon.setOnMouseDragged(e -> imageDragged(e));
         sampleImageIcon.setOnMouseEntered(i -> ImageEditor
-                .reduceOpacity(
-                               sampleImageIcon, Sprite.OPACITY_REDUCTION_RATIO));
+                .reduceOpacity(sampleImageIcon, Sprite.OPACITY_REDUCTION_RATIO));
         sampleImageIcon.setOnMouseExited(i -> ImageEditor
                 .restoreOpacity(sampleImageIcon));
         v.getChildren().add(sampleImageIcon);
-//        myScrollPaneContent.getChildren().add(sampleImageIcon);
     }
 
     private void imageDragged (MouseEvent e) {

@@ -72,15 +72,15 @@ public class RightPane extends WindowPane {
     public void switchToBlockCreationPane () {
         switchToPane(new CreationPane(myScene, this, availableBlockTypeURIs));
     }
-    
+
     public void switchToDecorationCreationPane () {
         switchToPane(new CreationPane(myScene, this, availableDecorationTypeURIs));
     }
-    
+
     public void switchToObjectCreationPane () {
         switchToPane(new CreationPane(myScene, this, availableObjectTypeURIs));
     }
-    
+
     public void switchToInteractionEditingPane (Sprite sprite1, Sprite sprite2) {
         if (!(myCurrentContent instanceof InteractionEditingPane)
             && (sprite1 != sprite2)) // checking memory address
@@ -93,15 +93,6 @@ public class RightPane extends WindowPane {
         InteractionManager.getInstance().printOut();
     }
 
-    public void InteractionCreate () {
-    }
-
-    public void DecorationCreate () {
-    }
-
-    public void switchtoGlobalSettingPane () {
-    }
-
     public void UIControlCreate () {
 
     }
@@ -112,8 +103,7 @@ public class RightPane extends WindowPane {
 
     public void switchPane (Sprite s) {
         if (AuthoringWindow.getControl())
-            switchToInteractionEditingPane(
-                                           (Sprite) AuthoringWindow.getCurrentlySelected(), s);
+            switchToInteractionEditingPane((Sprite) AuthoringWindow.getCurrentlySelected(), s);
         else {
             AuthoringWindow.setCurrentlySelected(s);
             switchToCharacterEditingPane(s);
@@ -135,11 +125,10 @@ public class RightPane extends WindowPane {
         switchToPane(new MapSettingPane(myScene, this));
     }
 
-    // TODO is this method never called?
     public void setScene (Scene scene, List<String> availableSpriteURIs) {
         myScene = scene;
         initializeCurrentContent(new CreationPane(scene, this,
-                                                           availableSpriteURIs));
+                                                  availableSpriteURIs));
     }
 
     private void clearChildren () {
@@ -169,9 +158,7 @@ public class RightPane extends WindowPane {
     }
 
     @Override
-    public Group generateComponents (
-                                     ArrayList<Map<String, Map<String, String>>> values) {
-        // TODO Auto-generated method stub
+    public Group generateComponents (ArrayList<Map<String, Map<String, String>>> values) {
         return null;
     }
 
@@ -197,7 +184,6 @@ public class RightPane extends WindowPane {
                 matchingFiles.add(possible.toURI().toURL().toString());
             }
             catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             // }
