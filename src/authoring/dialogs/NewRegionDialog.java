@@ -12,7 +12,7 @@ import authoring.util.StringChecker;
 
 /**
  * 
- * @author Andrew
+ * @author Andrew, Natalie
  *
  */
 public class NewRegionDialog {
@@ -37,7 +37,7 @@ public class NewRegionDialog {
             initialize(response -> okPressed(c));
         }
 	
-	private void initialize(Consumer consumer) {
+	private void initialize(Consumer<ButtonType> consumer) {
 	 // Refactor this into new class/method
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setTitle("Create New Game Scene");
@@ -56,7 +56,6 @@ public class NewRegionDialog {
             
             dialog.getDialogPane().setContent(grid);
             dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-            
             dialog.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(consumer);
 	}
 	

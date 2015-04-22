@@ -34,6 +34,10 @@ public class EditingPane extends VBox {
     public Scene getMyScene () {
         return myScene;
     }
+    
+    public RightPane getMyParent() {
+        return myParent;
+    }
 
     @SuppressWarnings("unchecked")
     void addButtonToReturnToCreationPane (String label) {

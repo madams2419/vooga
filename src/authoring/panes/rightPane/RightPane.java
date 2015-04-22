@@ -64,6 +64,12 @@ public class RightPane extends WindowPane {
     public void switchToCharacterEditingPane (Sprite sprite) {
         switchToPane(new CharacterEditingPane(myScene, this, sprite));
     }
+    
+    void deleteSprite (Sprite sprite) {
+        getParent().getCenterPane().removeSprite(sprite);
+        InteractionManager.getInstance().removeSpriteInteractions(sprite);
+        switchToCharacterCreationPane();
+    }
 
     public void switchToCharacterCreationPane () {
         switchToPane(new CreationPane(myScene, this, availableCharacterTypeURIs));

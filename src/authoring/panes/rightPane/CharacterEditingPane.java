@@ -23,6 +23,7 @@ import authoring.util.FrontEndUtils;
 import authoring.util.ImageEditor;
 
 
+
 /**
  * This will be for when a character already on the screen is clicked on. It
  * will allow the designer to edit the character.
@@ -39,6 +40,7 @@ class CharacterEditingPane extends EditingPane {
     private static final String[] imageChooserExtensions = { "*.png", "*.jpg",
                                                             "*.gif" };
     private static final String UPDATE = "Update";
+    private static final String DELETE = "Delete";
     private static final String CONTROLS = "Controls";
     private static final String PLAYABLE = "Playable";
     private static final String BACK = "Back";
@@ -56,9 +58,16 @@ class CharacterEditingPane extends EditingPane {
 
         addPlayableCheckBox(addControlsButton(sprite), sprite);
         addUpdateButton(sprite);
+        addDeleteButton(sprite);
         addBackButton();
 
         // ================================================================= //
+    }
+
+    private void addDeleteButton (Sprite sprite) {
+        Button deleteButton = new Button(DELETE);
+        deleteButton.setOnAction(e -> getMyParent().deleteSprite(sprite));
+        this.getChildren().add(deleteButton);        
     }
 
     private void addLabel (String string) {

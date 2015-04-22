@@ -26,7 +26,7 @@ import authoring.util.FrontEndUtils;
 
 public class CenterCanvas extends ScrollPane {
 
-    private static final String INITIAL_LABEL_CONTENT = "\n\tClick the screen to add a canvas!";
+    private static final String INITIAL_LABEL_CONTENT = "\n\tClick on the screen to add a canvas!";
     private static final int INITIAL_REGION_Y = 600;
     private static final int INITIAL_REGION_X = 1000;
     private List<Map<String, String>> myEnvironmentList;
@@ -93,6 +93,11 @@ public class CenterCanvas extends ScrollPane {
         } catch (ClassCastException a) {
         } catch (NullPointerException b) {
         }
+    }
+    
+    public void removeSprite(Sprite s) {
+        myListOfSprites.remove(s);
+        myGroup.getChildren().remove(s);
     }
 
     private void imageDragged(MouseEvent a, Sprite s) {
