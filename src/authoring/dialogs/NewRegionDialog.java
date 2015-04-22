@@ -1,13 +1,14 @@
 package authoring.dialogs;
 
-import authoring.panes.centerPane.CenterCanvas;
-import authoring.panes.centerPane.CenterPane;
-import authoring.userInterface.DialogGridOrganizer;
-import authoring.util.StringChecker;
+import java.util.function.Consumer;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import authoring.panes.centerPane.CenterCanvas;
+import authoring.panes.centerPane.CenterPane;
+import authoring.userInterface.DialogGridOrganizer;
+import authoring.util.StringChecker;
 
 /**
  * 
@@ -29,37 +30,47 @@ public class NewRegionDialog {
 	private static final String Y_lABEL = "ySize";
 	
 	public NewRegionDialog(CenterPane c){
-		// Refactor this into new class/method
-		Dialog<ButtonType> dialog = new Dialog<>();
-		dialog.setTitle("Create New Game Scene");
-		
-		//GridPane grid = new GridPane();
-		DialogGridOrganizer grid = new DialogGridOrganizer(NUM_COLS);
-		grid.setHgap(GRID_HGAP);
-		grid.setVgap(GRID_VGAP);
-		
-		xField = new TextField(DEFAULT_SIZE_WIDTH);
-		yField = new TextField(DEFAULT_SIZE_HEIGHT);
-		
-		grid.addRowEnd(new Label(X_lABEL), new Label(Y_lABEL));
-		grid.addRowEnd(xField, yField);
-		
-		
-		dialog.getDialogPane().setContent(grid);
-		dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-		
-		dialog.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> okPressed(c));
+	    initialize(response -> okPressed(c));
+	}
+	
+	public NewRegionDialog(CenterCanvas c){
+            initialize(response -> okPressed(c));
+        }
+	
+	private void initialize(Consumer consumer) {
+	 // Refactor this into new class/method
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setTitle("Create New Game Scene");
+            
+            //GridPane grid = new GridPane();
+            DialogGridOrganizer grid = new DialogGridOrganizer(NUM_COLS);
+            grid.setHgap(GRID_HGAP);
+            grid.setVgap(GRID_VGAP);
+            
+            xField = new TextField(DEFAULT_SIZE_WIDTH);
+            yField = new TextField(DEFAULT_SIZE_HEIGHT);
+            
+            grid.addRowEnd(new Label(X_lABEL), new Label(Y_lABEL));
+            grid.addRowEnd(xField, yField);
+            
+            
+            dialog.getDialogPane().setContent(grid);
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+            
+            dialog.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(consumer);
 	}
 	
 	private void okPressed(CenterPane c) {
-	    if (StringChecker.areDoubles(xField.getText(), yField.getText()) && 
-	        !StringChecker.areNegative(xField.getText(), yField.getText())) {
-			CenterCanvas d = c.getActiveTab();
-			
-			d.createRegion(Double.parseDouble(xField.getText()),
-					Double.parseDouble(yField.getText()));
-		} else {
-			System.out.println("error");
-		}
+	    okPressed(c.getActiveTab());
 	}
+	
+	private void okPressed(CenterCanvas d) {
+            if (StringChecker.areDoubles(xField.getText(), yField.getText()) && 
+                !StringChecker.areNegative(xField.getText(), yField.getText())) {
+                        d.createRegion(Double.parseDouble(xField.getText()),
+                                        Double.parseDouble(yField.getText()));
+                } else {
+                        System.out.println("error");
+                }
+        }
 }

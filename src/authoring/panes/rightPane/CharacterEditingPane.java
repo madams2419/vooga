@@ -11,13 +11,12 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import authoring.dataEditors.Sprite;
 import authoring.dialogs.ControlsDialog;
 import authoring.util.FrontEndUtils;
@@ -43,12 +42,16 @@ class CharacterEditingPane extends EditingPane {
     private static final String CONTROLS = "Controls";
     private static final String PLAYABLE = "Playable";
     private static final String BACK = "Back";
+    
+    private static final String IMAGE_LABEL = "Click on the image to change it!";
 
     private List<HBox> myFields = new LinkedList<>();
 
     CharacterEditingPane (Scene scene, RightPane parent, Sprite sprite) {
         super(scene, parent);
         // ======================== New design in here ===================== //
+        addSpriteIcon(sprite);
+        addLabel(IMAGE_LABEL);
         setFields(this.getChildren(), sprite.getCharacteristics());
 
         addPlayableCheckBox(addControlsButton(sprite), sprite);
@@ -56,7 +59,11 @@ class CharacterEditingPane extends EditingPane {
         addBackButton();
 
         // ================================================================= //
-        addSpriteIcon(sprite);
+    }
+
+    private void addLabel (String string) {
+        Label label = new Label(string);
+        getChildren().add(label);
     }
 
     private void addBackButton () {
