@@ -3,8 +3,6 @@ package game_engine.collisions.detectors;
 import java.util.ArrayList;
 import java.util.List;
 
-import game_engine.sprite.Sprite;
-
 /**
  * This should be the most commonly used detector since it allows for the
  * accuracy of pixel perfect collisions but offers high levels of optimization
@@ -36,9 +34,9 @@ public class MultipleDetectors implements ICollisionDetector {
 		detectors = list;
 	}
 
-	public boolean detectCollision(Sprite spriteA, Sprite spriteB) {
+	public boolean detectCollision() {
 		for (ICollisionDetector detector : detectors) {
-			if (!detector.detectCollision(spriteA, spriteB)) {
+			if (!detector.detectCollision()) {
 				return false;
 			}
 		}

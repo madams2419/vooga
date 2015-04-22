@@ -16,4 +16,11 @@ public interface IBehavior {
 	 * Executes the IAction by passing the String[] params into the method.
 	 */
 	public void perform();
+    
+    public default IBehavior andThen (IBehavior behavior) {
+        return () -> {
+            this.perform();
+            behavior.perform();
+        };
+    }
 }

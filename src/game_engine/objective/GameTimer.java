@@ -1,4 +1,6 @@
 package game_engine.objective;
+
+
 /**
  * 
  * @author Tony
@@ -11,7 +13,7 @@ public class GameTimer {
     
     /***
      * Constructs a timer with the given duration.
-     * @param duration Duration of the timer, measured in nanoseconds.
+     * @param duration Duration of the timer, measured in seconds.
      */
     public GameTimer(long duration){
         myDuration = duration * SECOND;

@@ -1,5 +1,7 @@
 package game_engine.behaviors;
 
+import java.io.Serializable;
+
 /**
  * Interface for all actions (particular to a piece of the game engine that can
  * influence the state of the game) that can be executed by a separate component
@@ -9,7 +11,7 @@ package game_engine.behaviors;
  * @author Brian Lavallee
  * @since 21 April 2015
  */
-public interface IAction {
+public interface IAction extends Serializable {
 
 	/**
 	 * Does some action given some array of strings as parameters.

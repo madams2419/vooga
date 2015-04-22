@@ -1,15 +1,12 @@
 package game_player;
 
-import game_engine.BasicScroller;
 import game_engine.Level;
-import game_engine.ScrollTracker;
 import game_engine.behaviors.IAction;
 import game_engine.control.ControlManager;
 import game_engine.sprite.Sprite;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.AnimationTimer;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 
 public class VoogaGame extends AnimationTimer {
@@ -49,10 +46,10 @@ public class VoogaGame extends AnimationTimer {
         if (!activeLevel.getSprites().isEmpty()){
             Sprite sprite = activeLevel.getSprites().get(0);
             sprite.getImageView().toFront();
-            BasicScroller scroller = new BasicScroller (root, sprite.getImageView().getTranslateX(), sprite.getImageView().getTranslateY());
-            ScrollTracker tracker = new ScrollTracker(scroller);
-            tracker.setXTracker(sprite.getImageView().translateXProperty());
-            tracker.setYTracker(new SimpleDoubleProperty(sprite.getImageView().getTranslateY()));
+            //BasicScrollable scroller = new BasicScrollable (root, sprite.getImageView().getTranslateX(), sprite.getImageView().getTranslateY());
+            //ObservableTracker tracker = new ObservableTracker(scroller);
+            //tracker.setXTracker(sprite.getImageView().translateXProperty());
+            //tracker.setYTracker(new SimpleDoubleProperty(sprite.getImageView().getTranslateY()));
         }
     }
     

@@ -6,7 +6,7 @@ import game_engine.behaviors.Behavior;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.behaviors.IBehavior;
-import game_engine.behaviors.MultipleBehaviors;
+import game_engine.behaviors.MultipleBehavior;
 import game_engine.collisions.Collision;
 import game_engine.collisions.CollisionEngine;
 import game_engine.control.ControlManager;
@@ -154,7 +154,7 @@ public class VoogaGameBuilder {
 
     private IBehavior buildBehaviorList () {
         parser.moveDown("behaviors");
-        MultipleBehaviors behaviors = new MultipleBehaviors();
+        MultipleBehavior behaviors = new MultipleBehavior();
         for (String directory : parser.getValidSubDirectories()) {
             behaviors.addBehavior(buildBehavior(directory));
         }

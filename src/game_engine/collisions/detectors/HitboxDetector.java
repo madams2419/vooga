@@ -6,6 +6,8 @@ import game_engine.sprite.Sprite;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.scene.image.Image;
+
 /**
  * Detects collisions based on a series of HitBoxes.  For large images, this allows
  * the designer to be more accurate than the ImageView alone without having to use
@@ -16,16 +18,19 @@ import java.util.Map;
  */
 public class HitboxDetector implements ICollisionDetector {
 	
-	private Map<Sprite, Map<String, IHitbox>> optimization;
+	private static Map<Image, IHitbox> optimization = new HashMap<>();
+	
+	private Sprite spriteA, spriteB;
 	
 	/**
 	 * Creates a new HiboxDetector by setting up the optimization map.
 	 */
-	public HitboxDetector() {
-		optimization = new HashMap<>();
+	public HitboxDetector(Sprite a, Sprite b) {
+		spriteA = a;
+		spriteB = b;
 	}
 	
-	public boolean detectCollision(Sprite spriteA, Sprite spriteB) {
+	public boolean detectCollision() {
 		IHitbox objectA = getHitbox(spriteA);
 		IHitbox objectB = getHitbox(spriteB);
 		
@@ -36,12 +41,10 @@ public class HitboxDetector implements ICollisionDetector {
 	 * Retrieves the correct Hitbox from the map.
 	 */
 	private IHitbox getHitbox(Sprite sprite) {
-		if (!optimization.containsKey(sprite)) {
-			optimization.put(sprite, new HashMap<>());
+		Image key = sprite.getImageView().getImage();
+		if (!optimization.containsKey(key)) {
+			optimization.put(key, sprite.getHitbox());
 		}
-		if (!optimization.get(sprite).containsKey(sprite.getState())) {
-			optimization.get(sprite).put(sprite.getState(), sprite.getHitbox());
-		}
-		return optimization.get(sprite).get(sprite.getState());
+		return optimization.get(key);
 	}
 }

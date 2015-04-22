@@ -5,6 +5,7 @@ import game_engine.behaviors.IActor;
 import game_engine.behaviors.IBehavior;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +65,10 @@ public class Objective implements IActor {
      */
     public void setPreReqs (List<Objective> preReqs) {
         myPreReqs = preReqs;
+    }
+    
+    public Collection<Objective> getPreReqs() {
+        return myPreReqs;
     }
 
     /**

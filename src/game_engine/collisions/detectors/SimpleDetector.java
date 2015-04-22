@@ -1,10 +1,7 @@
 package game_engine.collisions.detectors;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javafx.scene.image.ImageView;
 import game_engine.sprite.Sprite;
+import javafx.scene.image.ImageView;
 
 /**
  * Detects a collision based solely on the ImageViews of the two Sprites.
@@ -14,29 +11,20 @@ import game_engine.sprite.Sprite;
  */
 public class SimpleDetector implements ICollisionDetector {
 	
-	private Map<Sprite, ImageView> optimization;
+	private Sprite spriteA, spriteB;
 	
 	/**
 	 * Creates a new SimpleDetector and initializes the optimization map.
 	 */
-	public SimpleDetector() {
-		optimization = new HashMap<>();
+	public SimpleDetector(Sprite a, Sprite b) {
+		spriteA = a;
+		spriteB = b;
 	}
 
-	public boolean detectCollision(Sprite spriteA, Sprite spriteB) {
-		ImageView objectA = getImageView(spriteA);
-		ImageView objectB = getImageView(spriteB);
+	public boolean detectCollision() {
+		ImageView objectA = spriteA.getImageView();
+		ImageView objectB = spriteB.getImageView();
 		
-		return objectA.intersects(objectB.getBoundsInParent());
-	}
-	
-	/*
-	 * Retrieves the correct ImageView from the map.
-	 */
-	private ImageView getImageView(Sprite sprite) {
-		if (!optimization.containsKey(sprite)) {
-			optimization.put(sprite, sprite.getImageView());
-		}
-		return optimization.get(sprite);
+		return objectA.getBoundsInParent().intersects(objectB.getBoundsInParent());
 	}
 }

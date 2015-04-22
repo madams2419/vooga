@@ -2,7 +2,7 @@ package game_engine.control;
 
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IBehavior;
-import game_engine.behaviors.MultipleBehaviors;
+import game_engine.behaviors.MultipleBehavior;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.application.Application;
@@ -79,10 +79,10 @@ public class ControlTester extends Application{
 		IAction div = new DivBehavior();
 		behaviorPool.put("Add", add);
 		behaviorPool.put("Sub", sub);
-		MultipleBehaviors map1 = new MultipleBehaviors();
+		MultipleBehavior map1 = new MultipleBehavior();
 		map1.addBehavior(() -> add.execute(new String[3]));
 		map1.addBehavior(() -> mul.execute(new String[3]));
-		MultipleBehaviors map2 = new MultipleBehaviors();
+		MultipleBehavior map2 = new MultipleBehavior();
 		map2.addBehavior(() -> sub.execute(new String[3]));
 		map2.addBehavior(() -> div.execute(new String[3]));
 		Map<KeyCode, IBehavior> pressMap = new HashMap<>();

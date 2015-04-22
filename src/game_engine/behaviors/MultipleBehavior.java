@@ -11,7 +11,7 @@ import java.util.List;
  * @author Brian Lavallee
  * @since 21 April 2015
  */
-public class MultipleBehaviors implements IBehavior {
+public class MultipleBehavior implements IBehavior {
 
 	private List<IBehavior> myBehaviors;
 
@@ -19,7 +19,7 @@ public class MultipleBehaviors implements IBehavior {
 	 * Constructor. Starts with an empty list of Behaviors which will be
 	 * populated one by one.
 	 */
-	public MultipleBehaviors() {
+	public MultipleBehavior() {
 		myBehaviors = new ArrayList<>();
 	}
 
@@ -30,7 +30,7 @@ public class MultipleBehaviors implements IBehavior {
 	 *            behaviors is the List of Behaviors constructed elsewhere in
 	 *            the code.
 	 */
-	public MultipleBehaviors(List<IBehavior> behaviors) {
+	public MultipleBehavior(List<IBehavior> behaviors) {
 		myBehaviors = behaviors;
 	}
 
