@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 
+import javafx.util.Pair;
 import game_engine.physics_engine.Vector;
 
 public class RectangularHitbox implements IHitbox {
@@ -62,5 +63,10 @@ public class RectangularHitbox implements IHitbox {
 
 	public Supplier<Vector> getPosition() {
 		return parentLocation;
+	}
+
+	public List<Pair<Integer, Integer>> getCollisionPairs() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
