@@ -1,6 +1,5 @@
-package game_engine.collision;
+package game_engine.collisions.detectors;
 
-import game_engine.Animation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,8 +23,6 @@ public class PixelPerfectDetector {
 	// private Map<String, boolean[][]> myImageMap = new HashMap<>();
 	private ImageView mySpriteA;
 	private ImageView mySpriteB;
-	private Animation myAnimationA;
-	private Animation myAnimationB;
 	private List<int[]> coordinateA;// [y,x] coordinates
 	private List<int[]> coordinateB;
 	private Map<Image, boolean[][]> imageToBits = new HashMap<Image, boolean[][]>();

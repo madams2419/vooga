@@ -1,4 +1,4 @@
-package game_engine.collision;
+package game_engine.collisions;
 
 import java.util.List;
 import java.util.ArrayList;

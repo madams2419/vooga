@@ -3,6 +3,7 @@ package game_engine.sprite;
 import game_engine.Animation;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
+import game_engine.hitboxes.IHitbox;
 import game_engine.physics_engine.Vector;
 import game_engine.physics_engine.physics_object.IPhysicsObject;
 
@@ -18,6 +19,7 @@ public class Sprite extends Observable implements IActor {
 	private Animation myAnimation;
 	protected IPhysicsObject myPhysicsObject;
 	private Map<String, IAction> myActionMap = new HashMap<>();
+	private Map<String, IHitbox> hitboxes;
 	
 	public Sprite(String state, Animation animation, IPhysicsObject physicsObject) {
 		myState = state;
@@ -32,6 +34,10 @@ public class Sprite extends Observable implements IActor {
 		myActionMap.put(jump.toString(), jump);
 		myActionMap.put("setState", setState);
 		
+	}
+	
+	public IHitbox getHitbox() {
+		return hitboxes.get(myState);
 	}
 	
 	public void update() {

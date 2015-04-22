@@ -1,4 +1,6 @@
-package game_engine.collision;
+package game_engine.collisions;
+
+import game_engine.collisions.detectors.ICollisionDetector;
 
 /**
  * 
@@ -6,8 +8,6 @@ package game_engine.collision;
  *
  */
 public interface ICollision {
-	
-	public void setResolver(ICollisionResolver resolver);
 	
 	public void setDetector(ICollisionDetector detector);
 	

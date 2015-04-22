@@ -1,7 +1,7 @@
 package game_engine.physics;
 
-import game_engine.collision.Collision;
-import game_engine.collision.CollisionEngine;
+import game_engine.collisions.Collision;
+import game_engine.collisions.CollisionEngine;
 import game_engine.physics.RigidBody.RBodyType;
 import game_engine.sprite.Enemy;
 import game_engine.sprite.Player;

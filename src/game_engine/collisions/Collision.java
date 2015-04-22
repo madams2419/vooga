@@ -1,4 +1,4 @@
-package game_engine.collision;
+package game_engine.collisions;
 
 import game_engine.behaviors.IBehavior;
 import game_engine.physics_engine.IPhysicsCollision;

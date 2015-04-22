@@ -1,5 +1,6 @@
-package game_engine.collision;
+package game_engine.collisions;
 
+import game_engine.collisions.detectors.PixelPerfectDetector;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -34,12 +35,12 @@ public class CollisionTester extends Application {
 		scene = new Scene(root, 800, 600);
 		scene.setOnKeyPressed(event -> keyPress(event));
 
-		Image image = new Image("./Resources/images/block.png");
+		Image image = new Image("resources/images/block.png");
 		spriteA = new ImageView(image);
 		spriteA.setTranslateX(400);
 		spriteA.setTranslateY(300);
 
-		Image image2 = new Image("./resources/images/smallerLuigi.png");
+		Image image2 = new Image("resources/images/key.png");
 		spriteB = new ImageView(image2);
 		spriteB.setTranslateX(200);
 		spriteB.setTranslateY(0);

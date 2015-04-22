@@ -1,6 +1,6 @@
 package game_engine;
 
-import game_engine.collision.CollisionEngine;
+import game_engine.collisions.CollisionEngine;
 import game_engine.control.ControlManager;
 import game_engine.objective.Objective;
 import game_engine.sprite.Sprite;

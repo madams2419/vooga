@@ -1,15 +1,15 @@
-package game_engine.collision;
+package game_engine.collisions;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+import game_engine.collisions.detectors.ICollisionDetector;
 import game_engine.sprite.Sprite;
 
 public class SimpleCollision implements ICollision{
 	private Sprite mySpriteA;
 	private Sprite mySpriteB;
 	private ICollisionDetector myDetector;
-	private ICollisionResolver myResolver;
 	
 
 	public SimpleCollision(Sprite a, Sprite b, String detector, String resolver) {
