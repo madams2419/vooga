@@ -67,22 +67,18 @@ public class RightPane extends WindowPane {
 
     public void switchToCharacterCreationPane () {
         switchToPane(new CreationPane(myScene, this, availableCharacterTypeURIs));
-        System.out.println(availableCharacterTypeURIs.toString());
     }
 
     public void switchToBlockCreationPane () {
         switchToPane(new CreationPane(myScene, this, availableBlockTypeURIs));
-        System.out.println(availableBlockTypeURIs.toString());
     }
     
     public void switchToDecorationCreationPane () {
         switchToPane(new CreationPane(myScene, this, availableDecorationTypeURIs));
-        System.out.println(availableDecorationTypeURIs.toString());
     }
     
     public void switchToObjectCreationPane () {
         switchToPane(new CreationPane(myScene, this, availableObjectTypeURIs));
-        System.out.println(availableObjectTypeURIs.toString());
     }
     
     public void switchToInteractionEditingPane (Sprite sprite1, Sprite sprite2) {
