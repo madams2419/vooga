@@ -8,8 +8,6 @@ import javafx.stage.Stage;
 
 public class Game_Main extends Application {
 
-	String backgroundName = "randombackground";
-
 	public static void main(String[] args) {
 		launch(args);
 	}

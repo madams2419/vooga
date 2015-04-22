@@ -14,15 +14,15 @@ import authoring.util.ImageEditor;
 
 /**
  * This will allow the user to select from a number of images (or insert his/her
- * own image) to create a character that can be placed on the canvas.
+ * own image) to create something that can be placed on the canvas.
  * 
  * @author Daniel Luker, Andrew Sun, Natalie Chanfreau
  *
  */
 
-public class CharacterCreationPane extends EditingPane {
+public class CreationPane extends EditingPane {
 	
-    CharacterCreationPane (Scene scene, RightPane parent, List<String> availableCharacterTypeURIs) {
+    CreationPane (Scene scene, RightPane parent, List<String> availableTypeURIs) {
         super(scene, parent);
         this.getChildren().add(
                                new TextArea(String
@@ -33,7 +33,7 @@ public class CharacterCreationPane extends EditingPane {
                                                + "selections), its (their)%n"
                                                + "information will be%n" + "shown here.")));
 
-        addSpritesToPane(availableCharacterTypeURIs);
+        addSpritesToPane(availableTypeURIs);
     }
     
     private void addSpritesToPane (List<String> availableCharacterTypeURIs) {

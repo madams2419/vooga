@@ -25,8 +25,8 @@ import authoring.userInterface.AuthoringWindow;
  * @author Natalie Chanfreau, Daniel Luker
  *
  */
-
-public class RightPane extends WindowPane {
+ 
+public class CopyOfRightPane extends WindowPane {
 
     private EditingPane myCurrentContent;
 
@@ -38,7 +38,7 @@ public class RightPane extends WindowPane {
     private List<String> availableDecorationTypeURIs;
     private List<String> availableObjectTypeURIs;
 
-    public RightPane (Scene scene, AuthoringWindow window) {
+    public CopyOfRightPane (Scene scene, AuthoringWindow window) {
         super(scene, new VBox(SPACING), window);
         System.out.printf("Instantiated %s%n", this.getClass().getName());
         getContainer().getStylesheets().add(CSS);
@@ -48,41 +48,22 @@ public class RightPane extends WindowPane {
     }
 
     private void initializeAvailableCreatables () {
-        // cannot make first line of initializeAvailableTypes(...) initialize the lists because that
-        // changes the reference :(
-        availableCharacterTypeURIs = new ArrayList<>();
-        availableBlockTypeURIs = new ArrayList<>();
-        availableDecorationTypeURIs = new ArrayList<>();
-        availableObjectTypeURIs = new ArrayList<>();
-
-        initializeAvailableTypes(availableCharacterTypeURIs, "authoring_images/characters");
-        initializeAvailableTypes(availableBlockTypeURIs, "authoring_images/blocks");
+        initializeAvailableTypes(availableCharacterTypeURIs, "authoring_images/blocks");
+        initializeAvailableTypes(availableBlockTypeURIs, "authoring_images/characters");
         initializeAvailableTypes(availableDecorationTypeURIs, "authoring_images/decorations");
         initializeAvailableTypes(availableObjectTypeURIs, "authoring_images/objects");
     }
 
     public void switchToCharacterEditingPane (Sprite sprite) {
+        // if (!(myCurrentContent instanceof CharacterEditingPane))
         switchToPane(new CharacterEditingPane(myScene, this, sprite));
     }
 
     public void switchToCharacterCreationPane () {
-        switchToPane(new CreationPane(myScene, this, availableCharacterTypeURIs));
+//        if (!(myCurrentContent instanceof CharacterCreationPane))
+            switchToPane(new CreationPane(myScene, this,
+                                                   availableCharacterTypeURIs));
         System.out.println(availableCharacterTypeURIs.toString());
-    }
-
-    public void switchToBlockCreationPane () {
-        switchToPane(new CreationPane(myScene, this, availableBlockTypeURIs));
-        System.out.println(availableBlockTypeURIs.toString());
-    }
-    
-    public void switchToDecorationCreationPane () {
-        switchToPane(new CreationPane(myScene, this, availableDecorationTypeURIs));
-        System.out.println(availableDecorationTypeURIs.toString());
-    }
-    
-    public void switchToObjectCreationPane () {
-        switchToPane(new CreationPane(myScene, this, availableObjectTypeURIs));
-        System.out.println(availableObjectTypeURIs.toString());
     }
     
     public void switchToInteractionEditingPane (Sprite sprite1, Sprite sprite2) {
@@ -184,6 +165,7 @@ public class RightPane extends WindowPane {
     }
 
     private void initializeAvailableTypes (List<String> list, String filePath) {
+        list = new ArrayList<>();
         list.addAll(getImages(filePath));
     }
 

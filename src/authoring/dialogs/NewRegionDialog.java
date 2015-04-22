@@ -1,6 +1,5 @@
 package authoring.dialogs;
 
-import java.util.regex.Pattern;
 import authoring.panes.centerPane.CenterCanvas;
 import authoring.panes.centerPane.CenterPane;
 import authoring.userInterface.DialogGridOrganizer;
