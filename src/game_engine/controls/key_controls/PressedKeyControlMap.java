@@ -4,12 +4,12 @@ import java.util.Set;
 
 import javafx.scene.input.KeyCode;
 
-public class ReleasedKeyControlsMap extends KeyControlsMap {
-	
+public class PressedKeyControlMap extends KeyControlMap {
+
 	public void perform(KeyCode key, Set<KeyCode> pressedKeys) {
-		if (pressedKeys.contains(key)) {
+		if (!pressedKeys.contains(key)) {
 			super.perform(key);
 		}
-		pressedKeys.remove(key);
+		pressedKeys.add(key);
 	}
 }

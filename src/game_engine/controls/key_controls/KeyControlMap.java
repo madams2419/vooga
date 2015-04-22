@@ -8,11 +8,11 @@ import java.util.Set;
 
 import javafx.scene.input.KeyCode;
 
-public class KeyControlsMap {
+public class KeyControlMap {
 	
 	private Map<KeyCode, IBehavior> behaviors;
 	
-	public KeyControlsMap() {
+	public KeyControlMap() {
 		behaviors = new HashMap<>();
 	}
 	

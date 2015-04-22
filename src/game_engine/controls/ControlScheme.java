@@ -1,10 +1,11 @@
 package game_engine.controls;
 
-import game_engine.controls.key_controls.KeyControlsMap;
-import game_engine.controls.key_controls.PressedKeyControlsMap;
-import game_engine.controls.key_controls.ReleasedKeyControlsMap;
+import game_engine.controls.key_controls.KeyControlMap;
+import game_engine.controls.key_controls.PressedKeyControlMap;
+import game_engine.controls.key_controls.ReleasedKeyControlMap;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,20 +17,30 @@ import javafx.scene.input.MouseEvent;
 
 public class ControlScheme {
 	
-	private KeyControlsMap onPressed, onReleased, whilePressed;
+	private KeyControlMap onPressed, onReleased, whilePressed;
 	
-	private Map<EventType<KeyEvent>, KeyControlsMap> controlsMaps;
+	private Map<EventType<KeyEvent>, KeyControlMap> controlsMaps;
 	
 	private Set<KeyCode> pressedKeys;
 	
-	public ControlScheme(PressedKeyControlsMap pressed, ReleasedKeyControlsMap released, KeyControlsMap frame) {
-		onPressed = pressed;
-		onReleased = released;
-		whilePressed = frame;
+	public ControlScheme() {
 		controlsMaps = new HashMap<>();
+		pressedKeys = new HashSet<>();
+	}
+	
+	public void addPressedControlMap(PressedKeyControlMap pressed) {
+		onPressed = pressed;
 		controlsMaps.put(KeyEvent.KEY_PRESSED, onPressed);
 		controlsMaps.put(KeyEvent.KEY_TYPED, onPressed);
+	}
+	
+	public void addReleasedControlMap(ReleasedKeyControlMap released) {
+		onReleased = released;
 		controlsMaps.put(KeyEvent.KEY_RELEASED, onReleased);
+	}
+	
+	public void addControlMap(KeyControlMap frame) {
+		whilePressed = frame;
 	}
 	
 	public void update() {
