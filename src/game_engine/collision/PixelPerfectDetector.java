@@ -1,128 +1,117 @@
 package game_engine.collision;
 
+import java.awt.Point;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
-import game_engine.sprite.Sprite;
-import game_player.Animation;
+
 
 /**
  * 
- * @author Michael Lee
- * Pixel Perfect Detector returns boolean to check if precise Image collisions
- * Occurred. Recommended for Player objects
+ * @author Michael Lee Pixel Perfect Detector returns boolean to check if
+ *         precise Image collisions Occurred. Recommended for Player objects
  *
  */
-public class PixelPerfectDetector implements ICollisionDetector {
-	private Map<String, boolean[][]> myImageMap = new HashMap<>();
-	private Sprite mySpriteA;
-	private Sprite mySpriteB;
-	private Animation myAnimationA;
-	private Animation myAnimationB;
+public class PixelPerfectDetector {
+    // private Map<String, boolean[][]> myImageMap = new HashMap<>();
+    private ImageView mySpriteA;
+    private ImageView mySpriteB;
+    private static Map<Image, boolean[][]> imageToBits = new HashMap<Image, boolean[][]>();
 
-	public PixelPerfectDetector(Sprite a, Sprite b) {
-		mySpriteA = a;
-		mySpriteB = b;
-		// myAnimationA = a.getAniamtion();
-		// myAnimationB = b.getAnimation();
-	}
+    public PixelPerfectDetector (ImageView a, ImageView b) {
+        mySpriteA = a;
+        mySpriteB = b;
+    }
 
-	public boolean isColliding(Sprite a, Sprite b) {
-		//need test
-		boolean[][] bitMapA= getBitMap(myAnimationA);
-		boolean[][] bitMapB = getBitMap(myAnimationB);
+    public boolean isColliding () {
+        if (isImageColliding()) {
+            return isPixelColliding();
+        }
+        return false;
+    }
 
-		ImageView s1 = myAnimationA.getImageView();
-		double aLeft = s1.getX();
-		double aTop = s1.getY();
-		double aRight = s1.getX() + s1.getImage().getWidth();
-		double aBot = s1.getY() + s1.getImage().getHeight();
 
-		ImageView s2 = myAnimationB.getImageView();
-		double bLeft = s2.getX();
-		double bTop = s2.getY();
-		double bRight = s2.getX() + s2.getImage().getWidth();
-		double bBot = s2.getY() + s2.getImage().getHeight();
+    private boolean isImageColliding () {
+        return mySpriteA.getBoundsInParent().intersects(mySpriteB.getBoundsInParent());
 
-		double highLeft = Math.max(aLeft, bLeft);
-		double highTop = Math.max(aLeft, bLeft);
-		double lowRight = Math.min(aRight, bRight);
-		double lowBot = Math.min(aBot, bBot);
-		
+    }
 
-		int startY = (int) (highTop - aTop);
-		int endY = (int) (lowBot - aTop);
-		int startX = (int) (highLeft - aLeft);
-		int endX = (int) (lowRight - aLeft);
-		
-		boolean[][] mapA = spliceBitMap(bitMapA, startY, endY, startX, endX);
-		
-		int startY2 = (int) (highTop - bTop);
-		int endY2 = (int) (lowBot - bTop);
-		int startX2 = (int) (highLeft - bLeft);
-		int endX2 = (int) (lowRight - bLeft);
-		
-		boolean[][] mapB = spliceBitMap(bitMapB, startY2, endY2, startX2, endX2);
+    private boolean isPixelColliding () {
+        Point xBounds = intersectX(mySpriteA, mySpriteB);
+        Point yBounds = intersectY(mySpriteA, mySpriteB);
+        
+        boolean[][] bitMapA = getBitMap(mySpriteA);
+        boolean[][] bitMapB = getBitMap(mySpriteB);
+        
+        int translateXA = (int) mySpriteA.getTranslateX();
+        int translateYA = (int) mySpriteA.getTranslateY();
+        int translateXB = (int) mySpriteB.getTranslateX();
+        int translateYB = (int) mySpriteB.getTranslateY();
+        
+        for (int i = xBounds.x; i < (int) xBounds.y; i++) {
+            for (int j = yBounds.x; j < yBounds.y; j++) {
+                boolean a= bitMapA[j - translateYA][i - translateXA];
+                boolean b = bitMapB[j - translateYB][i - translateXB];
+                if (a && b) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    private Point intersectX (ImageView viewA, ImageView viewB) {
+        Image imageA = viewA.getImage();
+        Image imageB = viewB.getImage();
+        
+        double startAX = viewA.getTranslateX();
+        double endAX = startAX + imageA.getWidth();
+        double startBX = viewB.getTranslateX();
+        double endBX = startBX + imageB.getWidth();
+        return getMiddle(startAX, endAX, startBX, endBX);
+    }
+    
+    private Point intersectY (ImageView viewA, ImageView viewB) {
+        Image imageA = viewA.getImage();
+        Image imageB = viewB.getImage();
+        
+        double startAY = viewA.getTranslateY();
+        double endAY = startAY + imageA.getHeight();
+        double startBY = viewB.getTranslateY();
+        double endBY = startBY + imageB.getHeight();
+        return getMiddle(startAY, endAY, startBY, endBY);
+    }
+    
+    private Point getMiddle (double x1, double x2, double x3, double x4) {
+        double[] array = {x1, x2, x3, x4};
+        Arrays.sort(array);
+        return new Point ((int) array[1], (int) array[2]);
+    }
 
-		boolean[][] collisionMap = isColliding(mapA, mapB);
+    private boolean[][] getBitMap (ImageView animation) {
+        boolean[][] bitMap;
+        if (imageToBits.containsKey(animation.getImage())) {
+            bitMap = imageToBits.get(animation.getImage());
+        }
+        else {
+            bitMap = createBitMap(animation.getImage());
+            imageToBits.put(animation.getImage(), bitMap);
+        }
+        return bitMap;
+    }
 
-		for(boolean[] boolList: collisionMap){
-			for(boolean bool: boolList){
-				if(bool){
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	private boolean[][] getBitMap(Animation animation) {
-		boolean[][] bitMap;
-		if(myImageMap.containsKey(animation.getImage())){
-			bitMap = myImageMap.get(myAnimationA.getImage());
-		}
-		else{
-			bitMap = createBitMap(myAnimationA.getImageView().getImage());
-			myImageMap.put(animation.getImage(), bitMap);
-		}
-		return bitMap;
-	}
-
-	private boolean[][] spliceBitMap(boolean[][] bitMap, int startX, int endX,
-			int startY, int endY) {
-
-		boolean[][] bitSplice = new boolean[endY - startY][endX - startX];
-		for (int i = 0; i < endY - startY; i++) {
-			for (int j = 0; j < endX - startX; j++) {
-				bitSplice[i][j] = bitMap[i + startY][j + startX];
-
-			}
-		}
-		return bitSplice;
-	}
-
-	private boolean[][] isColliding(boolean[][] mapA, boolean[][] mapB) {
-		boolean[][] bitMap = new boolean[mapA.length][mapA[0].length];
-		for (int i = 0; i < mapA.length; i++)
-			for (int j = 0; j < mapA[i].length; j++)
-				bitMap[i][j] = mapA[i][j] && mapB[i][j];
-
-		return bitMap;
-	}
-
-	private boolean[][] createBitMap(Image src) {
-		PixelReader reader = src.getPixelReader();
-		int width = (int) src.getWidth();
-		int height = (int) src.getHeight();
-		boolean[][] bitMap = new boolean[height][width];
-		for (int y = 0; y < height; y++)
-			for (int x = 0; x < width; x++) {
-				bitMap[y][x] = reader.getArgb(x, y) != 0;
-			}
-		return bitMap;
-	}
-
+    private boolean[][] createBitMap (Image src) {
+        PixelReader reader = src.getPixelReader();
+        int width = (int) src.getWidth();
+        int height = (int) src.getHeight();
+        boolean[][] bitMap = new boolean[height][width];
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++) {
+                bitMap[y][x] = reader.getArgb(x, y) != 0;
+            }
+        return bitMap;
+    }
 }
