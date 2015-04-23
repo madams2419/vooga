@@ -14,8 +14,6 @@ public class MultipleHitbox implements IHitbox {
 	private List<SingleHitbox> hitboxes;
 	
 	private List<Pair<Integer, Integer>> collisionPairs;
-	
-	private Supplier<Vector> parentPosition;
 
 	public boolean intersects(IHitbox other) {
 		collisionPairs = new ArrayList<>();
@@ -59,10 +57,16 @@ public class MultipleHitbox implements IHitbox {
 	}
 
 	public Vector getPosition() {
-		return parentPosition.get();
+		return hitboxes.get(0).getPosition();
 	}
 
 	public List<SingleHitbox> getComponents() {
 		return Collections.unmodifiableList(hitboxes);
+	}
+
+	public void addPositionSupplier(Supplier<Vector> position) {
+		for (SingleHitbox hitbox : hitboxes) {
+			hitbox.addPositionSupplier(position);
+		}
 	}
 }

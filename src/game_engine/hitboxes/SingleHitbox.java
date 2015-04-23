@@ -148,4 +148,8 @@ public class SingleHitbox implements IHitbox {
 		
 		return crossings % 2 == 1;
 	}
+
+	public void addPositionSupplier(Supplier<Vector> position) {
+		parentPosition = position;
+	}
 }

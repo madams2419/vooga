@@ -1,6 +1,7 @@
 package game_engine.hitboxes;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 import javafx.util.Pair;
 import game_engine.physics_engine.Vector;
@@ -87,4 +88,13 @@ public interface IHitbox {
 	 *         allowing for multiple multiples).
 	 */
 	public List<SingleHitbox> getComponents();
+	
+	/**
+	 * Adds a position supplier so that the hitbox can calculate actual as opposed
+	 * to relative positions.
+	 * 
+	 * @param position
+	 * 			a Supplier of Vector positions.
+	 */
+	public void addPositionSupplier(Supplier<Vector> position);
 }
