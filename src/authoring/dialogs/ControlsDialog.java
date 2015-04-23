@@ -1,10 +1,11 @@
-package authoring.userInterface;
+package authoring.dialogs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import authoring.dataEditors.Sprite;
+import authoring.userInterface.DialogGridOrganizer;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;

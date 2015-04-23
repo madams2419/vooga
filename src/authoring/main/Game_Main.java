@@ -8,8 +8,6 @@ import javafx.stage.Stage;
 
 public class Game_Main extends Application {
 
-	String backgroundName = "randombackground";
-
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -18,7 +16,7 @@ public class Game_Main extends Application {
 	public void start(Stage primaryStage) {
 		AuthoringWindow createScene = new AuthoringWindow();
 		Scene myScene = createScene.GameCreateUI(new Scene(new VBox(), 1200,
-				500));
+				1000));
 		primaryStage.setScene(myScene);
 		primaryStage.setResizable(true);
 		// primaryStage.setFullScreen(true);

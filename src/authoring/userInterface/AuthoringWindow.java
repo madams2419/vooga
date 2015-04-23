@@ -9,15 +9,19 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import authoring.dataEditors.Sprite;
+import authoring.dialogs.FileChooserDialog;
+import authoring.dialogs.NewRegionDialog;
 import authoring.panes.BottomPane;
 import authoring.panes.LeftPane;
 import authoring.panes.TopPane;
 import authoring.panes.WindowPane;
 import authoring.panes.centerPane.CenterPane;
+import authoring.panes.menuBar.GameMenu;
+import authoring.panes.menuBar.HelpMediaPlayer;
 import authoring.panes.rightPane.RightPane;
 
 /**
- * @author hojeanniechung & Daniel Luker & Andrew Sun
+ * @author hojeanniechung & Daniel Luker & Andrew Sun & Natalie
  *
  */
 public class AuthoringWindow {
@@ -47,13 +51,26 @@ public class AuthoringWindow {
 	public Scene GameCreateUI(Scene parentScene) {
 
 		VBox root = new VBox();
-
-		BorderPane rootContainer = new BorderPane();
-
 		parentScene.setRoot(root);
-		
 		myScene = parentScene;
+		BorderPane rootContainer = setupRootContainer();
+		root.getChildren().addAll(makeMenuBar(), rootContainer);
+		populatePaneMap();
+		UIElementDistributer.distributeElements(myScene, this);
+		
+		return myScene;
+	}
 
+	private void populatePaneMap () {
+		myPanes.put(myBottomPane.getClass().getName(), myBottomPane);
+		myPanes.put(myTopPane.getClass().getName(), myTopPane);
+		myPanes.put(myCenterPane.getClass().getName(), myCenterPane);
+		myPanes.put(myLeftPane.getClass().getName(), myLeftPane);
+		myPanes.put(myRightPane.getClass().getName(), myRightPane);
+	}
+
+	private BorderPane setupRootContainer () {
+		BorderPane rootContainer = new BorderPane();
 		rootContainer.setPrefHeight(myScene.getHeight());
 		rootContainer.setPrefWidth(myScene.getWidth());
 
@@ -66,21 +83,10 @@ public class AuthoringWindow {
 		rootContainer.setCenter(setupCenterPane());
 		rootContainer.setBottom(setupBottomPane());
 
-		root.getChildren().add(menuBar());
-		root.getChildren().add(rootContainer);
-
-		myPanes.put(myBottomPane.getClass().getName(), myBottomPane);
-		myPanes.put(myTopPane.getClass().getName(), myTopPane);
-		myPanes.put(myCenterPane.getClass().getName(), myCenterPane);
-		myPanes.put(myLeftPane.getClass().getName(), myLeftPane);
-		myPanes.put(myRightPane.getClass().getName(), myRightPane);
-
-		UIElementDistributer.distributeElements(myScene, this);
-		
-		return myScene;
+		return rootContainer;
 	}
 
-	private MenuBar menuBar() {		
+    private MenuBar makeMenuBar() {		
 		GameMenu menu = new GameMenu(new String[]{"File", "Edit", "View", "Help"});
 		menu.addItemToMenu(FILE_MENU, "New", e -> new NewRegionDialog(myCenterPane));
 		menu.addItemToMenu(FILE_MENU, "Load", e -> new FileChooserDialog());
@@ -139,23 +145,23 @@ public class AuthoringWindow {
 		return control;
 	}
 
-	public TopPane getMyTopPane() {
+	public TopPane getTopPane() {
 		return myTopPane;
 	}
 
-	public RightPane getMyRightPane() {
+	public RightPane getRightPane() {
 		return myRightPane;
 	}
 
-	public LeftPane getMyLeftPane() {
+	public LeftPane getLeftPane() {
 		return myLeftPane;
 	}
 
-	public CenterPane getMyCenterPane() {
+	public CenterPane getCenterPane() {
 		return myCenterPane;
 	}
 
-	public BottomPane getMyBottomPane() {
+	public BottomPane getBottomPane() {
 		return myBottomPane;
 	}
 }

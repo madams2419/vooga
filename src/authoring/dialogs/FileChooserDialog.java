@@ -1,4 +1,4 @@
-package authoring.userInterface;
+package authoring.dialogs;
 
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;

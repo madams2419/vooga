@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import authoring.dataEditors.Sprite;
 import authoring.panes.WindowPane;
 import authoring.userInterface.AuthoringWindow;
 import authoring.util.FrontEndUtils;
@@ -92,6 +93,10 @@ public class CenterPane extends WindowPane {
 
 	public CenterCanvas getActiveTab() {
 		return (CenterCanvas) getActiveTab(getActiveTabPane()).getContent();
+	}
+	
+	public void removeSprite (Sprite sprite) {
+	    getActiveTab().removeSprite(sprite);
 	}
 
 	@Override

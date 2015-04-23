@@ -75,4 +75,11 @@ public class InteractionManager {
 //            }
 //        }
     }
+
+    public void removeSpriteInteractions (Sprite sprite) {
+        myInteractions.remove(sprite);
+        for (Sprite s : myInteractions.keySet()) {
+            myInteractions.get(s).remove(sprite);
+        }
+    }
 }
