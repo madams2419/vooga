@@ -21,9 +21,9 @@ import javafx.scene.layout.HBox;
 
 import org.w3c.dom.Element;
 
-import authoring.XMLBuilder;
+import authoring.fileBuilders.XMLBuilder;
+import authoring.panes.centerPane.CenterCanvas;
 import authoring.userInterface.AuthoringWindow;
-import authoring.centerPane.CenterCanvas;
 
 /***
  * Class which contains methods that are reusable across front-end development
@@ -108,7 +108,7 @@ public class FrontEndUtils {
 
 		// Adding sprites
 		Element sprite = xml.add(level, "sprite");
-		Iterator<List<CenterCanvas>> iter = parent.getMyCenterPane().getMaps();
+		Iterator<List<CenterCanvas>> iter = parent.getCenterPane().getMaps();
 		while (iter.hasNext()) {
 			List<CenterCanvas> maps = iter.next();
 			maps.forEach(c -> xml.addAllSprites(sprite, c.getSprites()));
