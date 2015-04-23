@@ -88,7 +88,7 @@ public class AuthoringWindow {
     private MenuBar makeMenuBar() {		
 		GameMenu menu = new GameMenu(new String[]{"File", "Edit", "View", "Help"});
 		menu.addItemToMenu(FILE_MENU, "New", e -> new NewRegionDialog(myCenterPane));
-		menu.addItemToMenu(FILE_MENU, "Load", e -> new FileChooserDialog());
+		menu.addItemToMenu(FILE_MENU, "Load", e -> new FileChooserDialog().initialize());
 		menu.addItemToMenu(FILE_MENU, "Close", e -> Platform.exit());
 		
 		menu.addItemToMenu(EDIT_MENU, "Copy", e -> {});
