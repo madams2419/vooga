@@ -19,15 +19,8 @@ import game_engine.sprite.Sprite;
 public class PixelPerfectDetector implements ICollisionDetector {
 
     private static Map<Image, boolean[][]> imageToBits = new HashMap<Image, boolean[][]>();
-    
-    private Sprite spriteA, spriteB;
 
-    public PixelPerfectDetector(Sprite a, Sprite b) {
-        spriteA = a;
-        spriteB = b;
-    }
-
-    public boolean detectCollision() {
+    public boolean detectCollision(Sprite spriteA, Sprite spriteB) {
     	ImageView objectA = spriteA.getImageView();
     	ImageView objectB = spriteB.getImageView();
     	

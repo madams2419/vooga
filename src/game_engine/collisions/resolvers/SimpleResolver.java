@@ -1,6 +1,7 @@
 package game_engine.collisions.resolvers;
 
 import game_engine.behaviors.IBehavior;
+import game_engine.sprite.Sprite;
 
 /**
  * A SimpleResolver automatically triggers all of its IBehaviors when the
@@ -23,7 +24,7 @@ public class SimpleResolver implements ICollisionResolver {
 		behavior = b;
 	}
 
-	public void resolveCollision() {
+	public void resolveCollision(Sprite spriteA, Sprite spriteB) {
 		behavior.perform();
 	}
 }

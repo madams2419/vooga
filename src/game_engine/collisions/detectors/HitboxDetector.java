@@ -20,17 +20,7 @@ public class HitboxDetector implements ICollisionDetector {
 	
 	private static Map<Image, IHitbox> optimization = new HashMap<>();
 	
-	private Sprite spriteA, spriteB;
-	
-	/**
-	 * Creates a new HiboxDetector by setting up the optimization map.
-	 */
-	public HitboxDetector(Sprite a, Sprite b) {
-		spriteA = a;
-		spriteB = b;
-	}
-	
-	public boolean detectCollision() {
+	public boolean detectCollision(Sprite spriteA, Sprite spriteB) {
 		IHitbox objectA = getHitbox(spriteA);
 		IHitbox objectB = getHitbox(spriteB);
 		

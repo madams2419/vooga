@@ -1,5 +1,7 @@
 package game_engine.collisions.detectors;
 
+import game_engine.sprite.Sprite;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,14 +15,14 @@ import java.util.List;
  * @author Brian Lavallee
  * @since 21 April 2015
  */
-public class MultipleDetectors implements ICollisionDetector {
+public class MultipleDetector implements ICollisionDetector {
 
 	private List<ICollisionDetector> detectors;
 
 	/**
 	 * Creates a new MultipleDetectors, must add the detectors.
 	 */
-	public MultipleDetectors() {
+	public MultipleDetector() {
 		detectors = new ArrayList<>();
 	}
 
@@ -30,13 +32,13 @@ public class MultipleDetectors implements ICollisionDetector {
 	 * @param list
 	 *            list is a list of pre-determined detectors to be used.
 	 */
-	public MultipleDetectors(List<ICollisionDetector> list) {
+	public MultipleDetector(List<ICollisionDetector> list) {
 		detectors = list;
 	}
 
-	public boolean detectCollision() {
+	public boolean detectCollision(Sprite spriteA, Sprite spriteB) {
 		for (ICollisionDetector detector : detectors) {
-			if (!detector.detectCollision()) {
+			if (!detector.detectCollision(spriteA, spriteB)) {
 				return false;
 			}
 		}

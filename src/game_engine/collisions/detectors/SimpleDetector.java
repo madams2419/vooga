@@ -10,18 +10,8 @@ import javafx.scene.image.ImageView;
  * @since 21 April 2015
  */
 public class SimpleDetector implements ICollisionDetector {
-	
-	private Sprite spriteA, spriteB;
-	
-	/**
-	 * Creates a new SimpleDetector and initializes the optimization map.
-	 */
-	public SimpleDetector(Sprite a, Sprite b) {
-		spriteA = a;
-		spriteB = b;
-	}
 
-	public boolean detectCollision() {
+	public boolean detectCollision(Sprite spriteA, Sprite spriteB) {
 		ImageView objectA = spriteA.getImageView();
 		ImageView objectB = spriteB.getImageView();
 		

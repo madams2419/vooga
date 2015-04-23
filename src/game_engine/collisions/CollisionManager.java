@@ -3,14 +3,14 @@ package game_engine.collisions;
 import java.util.List;
 import java.util.ArrayList;
 
-public class CollisionEngine {
+public class CollisionManager {
 	List<Collision> collisionList;
 	
-	public CollisionEngine() {
+	public CollisionManager() {
 	    this(new ArrayList<>());
 	}
 	
-	public CollisionEngine(List<Collision> list){
+	public CollisionManager(List<Collision> list){
 		collisionList = list;
 	}
 

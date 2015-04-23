@@ -1,5 +1,7 @@
 package game_engine.collisions.resolvers;
 
+import game_engine.sprite.Sprite;
+
 /**
  * Resolves a collision when it occurs by executing an IBehavior.
  * 
@@ -9,7 +11,13 @@ package game_engine.collisions.resolvers;
 public interface ICollisionResolver {
 	
 	/**
-	 * Method which handles executing the IBehavior for the resolver.
+	 * Executes the behavior of a collision once it has been detected.
+	 * 
+	 * @param spriteA
+	 * 			The first sprite involved.
+	 * 
+	 * @param spriteB
+	 * 			The second sprite involved.
 	 */
-	public void resolveCollision();
+	public void resolveCollision(Sprite spriteA, Sprite spriteB);
 }
