@@ -1,11 +1,14 @@
 package authoring.panes.rightPane;
 
+import game_engine.objective.Objective;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -42,7 +45,7 @@ public class RightPane extends WindowPane {
     private List<String> availableBlockTypeURIs;
     private List<String> availableDecorationTypeURIs;
     private List<String> availableObjectTypeURIs;
-
+    
     public RightPane (Scene scene, AuthoringWindow window) {
         super(scene, new VBox(SPACING), window);
         System.out.printf("Instantiated %s%n", this.getClass().getName());
@@ -98,6 +101,10 @@ public class RightPane extends WindowPane {
             switchToPane(new InteractionEditingPane(myScene, this, sprite1,
                                                     sprite2, getListOfInteractions()));
         printOutInteractions();
+    }
+    
+    public void switchToObjectivePane() {
+    	switchToPane(new ObjectivePane(myScene, this));
     }
 
     private void printOutInteractions () {

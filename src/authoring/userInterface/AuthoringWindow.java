@@ -44,7 +44,6 @@ public class AuthoringWindow {
 	private static boolean control;
 
 	public AuthoringWindow() {
-		// TODO
 		System.out.println("Instantiated AuthoringWindow");
 	}
 

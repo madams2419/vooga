@@ -12,7 +12,7 @@ public class AuthoringGUITester extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		//BottomPane bp=new BottomPane();
 		AuthoringWindow w = new AuthoringWindow();
-		Scene s = w.GameCreateUI(new Scene(new VBox(),1200,800));
+		Scene s = w.GameCreateUI(new Scene(new VBox(),1000,700));
 		primaryStage.setScene(s);
 		primaryStage.show();
 	}

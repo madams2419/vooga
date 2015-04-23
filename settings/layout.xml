@@ -15,10 +15,10 @@
 				<listener>switchToGlobalSettingPane</listener>
 			</Button>
 			<Button>
-				<X>2</X>
+				<X>0</X>
 				<Y>0</Y>
-				<label>Interactions List</label>
-				<listener>InteractionCreate</listener>
+				<label>Objectives</label>
+				<listener>switchToObjectivePane</listener>
 			</Button>
 			<Button>
 				<X>0</X>
