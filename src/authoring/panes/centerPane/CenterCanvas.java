@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -18,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import authoring.dataEditors.Sprite;
+import authoring.dialogs.FileChooserDialog;
 import authoring.dialogs.NewRegionDialog;
 import authoring.panes.rightPane.GlobalCreationPane;
 import authoring.userInterface.AuthoringWindow;
@@ -71,14 +73,11 @@ public class CenterCanvas extends ScrollPane {
 
     private void canvasClicked(MouseEvent e) {
         try {
-            if (e.getButton() == MouseButton.SECONDARY){
-                FileChooser fileChooser = new FileChooser();
-                FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
-                FileChooser.ExtensionFilter pngFilter = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
-                fileChooser.getExtensionFilters().addAll(jpgFilter, pngFilter);
-                File imagePath = fileChooser.showOpenDialog(null);
-                Image image = new Image("file:///" + imagePath.getPath());
-                myCurrentRectangle.setBackgroundImage(image);
+            if (e.getButton() == MouseButton.SECONDARY){     	
+            	FileChooserDialog chooser = new FileChooserDialog(
+            			new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG"),
+            			new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG"));            	
+                myCurrentRectangle.setBackgroundImage(chooser.grabImage());
             }
             Sprite s = ((SpriteCursor) myScene.getCursor())
                     .getCurrentSprite();
