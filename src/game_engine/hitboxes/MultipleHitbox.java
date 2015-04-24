@@ -14,6 +14,10 @@ public class MultipleHitbox implements IHitbox {
 	private List<SingleHitbox> hitboxes;
 	
 	private List<Pair<Integer, Integer>> collisionPairs;
+	
+	public MultipleHitbox() {
+		hitboxes = new ArrayList<>();
+	}
 
 	public boolean intersects(IHitbox other) {
 		collisionPairs = new ArrayList<>();

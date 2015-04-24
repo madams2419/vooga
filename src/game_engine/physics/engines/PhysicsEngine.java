@@ -14,6 +14,11 @@ public class PhysicsEngine implements IActor {
 	private List<Vector> globalAcceleration, globalForce;
 	private double lastUpdateTime, timeLapse;
 	
+	public PhysicsEngine() {
+		globalAcceleration = new ArrayList<>();
+		globalForce = new ArrayList<>();
+	}
+	
 	public Vector getGlobalAccel() {
 		return Vector.sum(globalAcceleration);
 	}

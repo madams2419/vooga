@@ -58,7 +58,7 @@ public class VoogaMenu {
     private static final String GAME = "game";
     private static final String DESIGN = "dev";
 
-    private static final String SIMPLE_GAME = "src/gamedata/Simple.game";
+    private static final String SIMPLE_GAME = "resources/game_files/Simple.game.xml";
 
     private VoogaFileChooser chooser;
 

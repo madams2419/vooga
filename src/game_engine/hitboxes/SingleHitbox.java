@@ -17,6 +17,10 @@ public class SingleHitbox implements IHitbox {
 	
 	private List<Pair<Integer, Integer>> collisionPairs;
 	
+	public SingleHitbox() {
+		orderedPoints = new ArrayList<>();
+	}
+	
 	public List<SingleHitbox> getComponents() {
 		List<SingleHitbox> components = new ArrayList<>();
 		components.add(this);

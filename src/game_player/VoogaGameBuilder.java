@@ -222,7 +222,7 @@ public class VoogaGameBuilder {
             if (directory.toLowerCase().startsWith("on")) {
                 parser.moveDown(directory);
                 IBehavior behavior = buildBehaviorList();
-                objective.setBehavior(directory.substring(2, directory.length() - 1), behavior);
+                objective.setBehavior(directory.substring(2, directory.length()), behavior);
                 parser.moveUp();
             }
         }
@@ -335,6 +335,8 @@ public class VoogaGameBuilder {
     private ControlsManager buildControlsManager() {
     	parser.moveDown("controls");
     	
+    	int startIndex = Integer.parseInt(parser.getValue("active_scheme"));
+    	
     	ControlsManager manager = new ControlsManager();
     	
     	for (String directory : parser.getValidSubDirectories()) {
@@ -358,9 +360,9 @@ public class VoogaGameBuilder {
         		onPressed.addBehavior(keyCode, buildBehaviorList());
         		parser.moveUp();
 
-        		parser.moveDown("onReleased");
-        		onReleased.addBehavior(keyCode, buildBehaviorList());
-        		parser.moveUp();
+//        		parser.moveDown("onReleased");
+//        		onReleased.addBehavior(keyCode, buildBehaviorList());
+//        		parser.moveUp();
 
 //        		parser.moveDown("whilePressed");
 //        		whilePressed.addBehavior(keyCode, buildBehaviorList());
@@ -372,6 +374,8 @@ public class VoogaGameBuilder {
     		manager.addControlScheme(scheme);
     		parser.moveUp();
     	}
+    	
+    	manager.setActiveControlScheme(startIndex);
     	
     	parser.moveUp();
     	return manager;

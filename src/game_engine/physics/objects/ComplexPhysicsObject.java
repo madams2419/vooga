@@ -12,14 +12,11 @@ import game_engine.sprite.Animation;
 public class ComplexPhysicsObject extends AcceleratingPhysicsObject {
 	
 	private Material material;
-	private double mass, inverseMass;
 	private double xForce, yForce;
 	
 	public ComplexPhysicsObject(PhysicsEngine physEng, Map<String, List<IHitbox>> hitbox, Vector position, Animation animation, Material mat) {
 		super(physEng, hitbox, position, animation);
 		material = mat;
-		mass = computeMass();
-		inverseMass = computeInverseMass();
 		xForce = 0.0;
 		yForce = 0.0;
 	}
@@ -29,6 +26,7 @@ public class ComplexPhysicsObject extends AcceleratingPhysicsObject {
 	}
 	
 	private double computeInverseMass() {
+		double mass = computeMass();
 		return mass == 0 ? 0 : 1.0/mass;
 	}
 	
@@ -36,7 +34,7 @@ public class ComplexPhysicsObject extends AcceleratingPhysicsObject {
 		Vector totalForce = new Vector(xForce, yForce).plus(
 				getEngine().getGlobalForce()).plus(
 						getEngine().getDependentForces().apply(getHitbox().getArea(), getVelocity()));
-		super.increment(totalForce.times(inverseMass).times(getEngine().getTimeLapse()));
+		super.increment(totalForce.times(computeInverseMass()).times(getEngine().getTimeLapse()));
 		super.update();
 	}
 	
@@ -55,6 +53,6 @@ public class ComplexPhysicsObject extends AcceleratingPhysicsObject {
 	}
 	
 	public void applyImpulse(Vector impulse) {
-		super.set(impulse.times(inverseMass));
+		super.set(impulse.times(computeInverseMass()));
 	}
 }
