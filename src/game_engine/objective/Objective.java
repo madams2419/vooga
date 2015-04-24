@@ -30,6 +30,7 @@ public class Objective implements IActor {
     private List<Objective> myPreReqs;
     private Optional<GameTimer> myTimer;
     private Status myStatus;
+    private String myName;
 
     protected enum Status {
         INACTIVE,
@@ -138,7 +139,6 @@ public class Objective implements IActor {
     }
 
     private void executeStatus () {
-        System.out.println(myStatus);
         myBehaviors.getOrDefault(myStatus, () -> {}).perform();
     }
 
@@ -185,6 +185,15 @@ public class Objective implements IActor {
         if (isActive()) {
             myTimer.ifPresent(timer -> timer.start(now));
         }
+    }
+    
+    public void setName(String name) {
+        myName = name;
+    }
+    
+    @Override
+    public String toString() {
+        return myName;
     }
 
     @Override

@@ -1,9 +1,11 @@
 package game_engine.collision;
 
+import game_engine.scrolling.SceneUtil;
 import java.awt.Point;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
@@ -35,8 +37,9 @@ public class PixelPerfectDetector {
 
 
     private boolean isImageColliding () {
-        return mySpriteA.getBoundsInParent().intersects(mySpriteB.getBoundsInParent());
-
+        Bounds boundA = SceneUtil.getBoundsInScene(mySpriteA);
+        Bounds boundB = SceneUtil.getBoundsInScene(mySpriteB);
+        return boundA.intersects(boundB);
     }
 
     private boolean isPixelColliding () {
@@ -46,11 +49,10 @@ public class PixelPerfectDetector {
         boolean[][] bitMapA = getBitMap(mySpriteA);
         boolean[][] bitMapB = getBitMap(mySpriteB);
         
-        int translateXA = (int) mySpriteA.getTranslateX();
-        int translateYA = (int) mySpriteA.getTranslateY();
-        int translateXB = (int) mySpriteB.getTranslateX();
-        int translateYB = (int) mySpriteB.getTranslateY();
-        
+        int translateXA = (int) mySpriteA.getLocalToSceneTransform().getTx();
+        int translateYA = (int) mySpriteA.getLocalToSceneTransform().getTy();
+        int translateXB = (int) mySpriteB.getLocalToSceneTransform().getTx();
+        int translateYB = (int) mySpriteB.getLocalToSceneTransform().getTy();
         for (int i = xBounds.x; i < (int) xBounds.y; i++) {
             for (int j = yBounds.x; j < yBounds.y; j++) {
                 boolean a= bitMapA[j - translateYA][i - translateXA];
@@ -67,9 +69,9 @@ public class PixelPerfectDetector {
         Image imageA = viewA.getImage();
         Image imageB = viewB.getImage();
         
-        double startAX = viewA.getTranslateX();
+        double startAX = viewA.getLocalToSceneTransform().getTx();
         double endAX = startAX + imageA.getWidth();
-        double startBX = viewB.getTranslateX();
+        double startBX = viewB.getLocalToSceneTransform().getTx();
         double endBX = startBX + imageB.getWidth();
         return getMiddle(startAX, endAX, startBX, endBX);
     }
@@ -78,9 +80,9 @@ public class PixelPerfectDetector {
         Image imageA = viewA.getImage();
         Image imageB = viewB.getImage();
         
-        double startAY = viewA.getTranslateY();
+        double startAY = viewA.getLocalToSceneTransform().getTy();
         double endAY = startAY + imageA.getHeight();
-        double startBY = viewB.getTranslateY();
+        double startBY = viewB.getLocalToSceneTransform().getTy();
         double endBY = startBY + imageB.getHeight();
         return getMiddle(startAY, endAY, startBY, endBY);
     }
