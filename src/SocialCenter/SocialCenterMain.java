@@ -7,7 +7,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class SocialCenterMain extends Application {
-
+	private LoginScreen login;
 	@Override
 	
 	public void start(Stage stage) throws Exception {
@@ -20,9 +20,10 @@ public class SocialCenterMain extends Application {
 //		stage.setWidth(primaryScreenBounds.getWidth());
 //		stage.setHeight(primaryScreenBounds.getHeight());
 		stage.setResizable(false);
-		LoginScreen login = new LoginScreen();
+		login = new LoginScreen();
+		//ProfilePage profile=new ProfilePage();
 		SocialCenterMenu menu = new SocialCenterMenu();
-		stage.setScene(login.getLoginScreen());
+		login.getLoginScreen(stage);
 		stage.show();
 
 	}
