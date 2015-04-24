@@ -44,7 +44,7 @@ public class AnimationsDialog extends Dialog<ButtonType> {
                                                             "*.gif" };
     
     //TODO should really be refactored with a superclass because a lot of this is copied from ControlsDialog
-    public AnimationsDialog (Sprite s) {
+    public AnimationsDialog (Sprite s, ObservableList<String> states) {
 
         myComboBoxes = new ArrayList<>();
         myImageAdderButtons = new ArrayList<>();
@@ -53,7 +53,7 @@ public class AnimationsDialog extends Dialog<ButtonType> {
 
         DialogGridOrganizer grid = new DialogGridOrganizer(3);
         grid.addRowEnd(new Label(STATE), new Label(IMAGE), new Label(IMAGE_FILE_URL));
-        grid.addRowEnd(addComboBox(), addImageButton(ADD_IMAGE), addImageURL());
+        grid.addRowEnd(addComboBox(states), addImageButton(ADD_IMAGE), addImageURL());
         this.getDialogPane().setContent(grid);
         ButtonType b = new ButtonType(ADD);
         this.getDialogPane().getButtonTypes().addAll(b, ButtonType.OK, ButtonType.CANCEL);
@@ -61,7 +61,7 @@ public class AnimationsDialog extends Dialog<ButtonType> {
         final Button addButton = (Button) this.getDialogPane().lookupButton(b);
         addButton.addEventFilter(ActionEvent.ACTION, event -> {
             this.setHeight(this.getHeight() + BOTTOM_SPACING);
-            grid.addRowEnd(addComboBox(), addImageButton(ADD_IMAGE));
+            grid.addRowEnd(addComboBox(states), addImageButton(ADD_IMAGE));
             event.consume();
         });
 
@@ -82,12 +82,11 @@ public class AnimationsDialog extends Dialog<ButtonType> {
                 });
     }
 
-    public ComboBox<String> addComboBox () {
-        // TODO: Add String list of interactions
-        ComboBox<String> result = new ComboBox<>();
-        result.getItems().addAll("jump", "forward", "backward");
-        myComboBoxes.add(result);
-        return result;
+    public ComboBox<String> addComboBox (ObservableList<String> states) {
+        ComboBox<String> box = new ComboBox<>();
+        box.getItems().addAll(states);
+        myComboBoxes.add(box);
+        return box;
     }
 
     private Button addImageButton (String label) {
