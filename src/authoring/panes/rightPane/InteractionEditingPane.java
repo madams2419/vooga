@@ -67,12 +67,10 @@ public class InteractionEditingPane extends EditingPane {
                                                                 List<String> actionPossibilities,
                                                                 String action) {
         addSpriteToPane(sprite);
-        addToggleGroupToPane();
+//        addToggleGroupToPane();
         return addComboBoxToPane(actionPossibilities, action);
     }
 
-    // TODO
-    // TEMPORARILY partially copied code from CharacterCreationPane
     private void addSpriteToPane (Sprite sprite) {
         ImageView spriteIcon = sprite.getIcon();
         getChildren().add(spriteIcon);

@@ -69,15 +69,4 @@ public class EditingPane extends VBox {
         }
     }
 
-    protected File selectFile (String imageChooserTitle,
-                               String imageChooserDescription,
-                               String imageChooserExtensions[]) {
-        FileChooser imageChooser = new FileChooser();
-        imageChooser.setTitle(imageChooserTitle);
-        imageChooser.getExtensionFilters().add(
-                                               new ExtensionFilter(imageChooserDescription,
-                                                                   imageChooserExtensions));
-        return imageChooser.showOpenDialog(null);
-    }
-
 }
