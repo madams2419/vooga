@@ -15,7 +15,7 @@ import authoring.util.FrontEndUtils;
 /**
  * This will allow the user to edit the interaction between two characters.
  * 
- * @author Natalie Chanfreau
+ * @author Natalie Chanfreau and Andrew Sun
  *
  */
 
@@ -37,6 +37,7 @@ public class InteractionEditingPane extends EditingPane {
         mySprite2 = sprite2;
 
         myInteraction = getInteraction();
+        // TODO: somehow get the number of parameters that each interaction requires
         myActionProperty1 = addSpriteAndModifiersToPane(sprite1, actionPossibilities, 
                                                         myInteraction.getAction1());
         myActionProperty2 = addSpriteAndModifiersToPane(sprite2, actionPossibilities, 
@@ -65,7 +66,8 @@ public class InteractionEditingPane extends EditingPane {
 
     private ObjectProperty<String> addSpriteAndModifiersToPane (Sprite sprite,
                                                                 List<String> actionPossibilities,
-                                                                String action) {
+                                                                String action,
+                                                                int numParams) {
         addSpriteToPane(sprite);
         addToggleGroupToPane();
         return addComboBoxToPane(actionPossibilities, action);
