@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import authoring.panes.centerPane.CenterCanvas;
 import authoring.panes.centerPane.CenterPane;
 import authoring.userInterface.DialogGridOrganizer;
-import authoring.util.StringChecker;
+import authoring.util.UserInputChecker;
 
 /**
  * 
@@ -64,8 +64,8 @@ public class NewRegionDialog {
 	}
 	
 	private void okPressed(CenterCanvas d) {
-            if (StringChecker.areDoubles(xField.getText(), yField.getText()) && 
-                !StringChecker.areNegative(xField.getText(), yField.getText())) {
+            if (UserInputChecker.areDoubles(xField.getText(), yField.getText()) && 
+                !UserInputChecker.areNegative(xField.getText(), yField.getText())) {
                         d.createRegion(Double.parseDouble(xField.getText()),
                                         Double.parseDouble(yField.getText()));
                 } else {

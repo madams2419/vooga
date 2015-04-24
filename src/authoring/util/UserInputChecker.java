@@ -1,5 +1,8 @@
 package authoring.util;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
@@ -14,7 +17,7 @@ import java.util.regex.Pattern;
  * @author Natalie
  *
  */
-public class StringChecker {
+public class UserInputChecker {
 
     private enum Type {
         INTEGER("-?\\d+"),
@@ -189,6 +192,17 @@ public class StringChecker {
     public static boolean haveLengthsInRange (int minLength, int maxLength, String ... strings) {
         return areX(s -> hasLengthInRange(minLength, maxLength, s), strings);
     }
+    
+    public static boolean duplicatesExist(Collection<Object> list) {
+        Set<Object> set = new HashSet<>();
+        for (Object obj : list) {
+            if (set.contains(obj)) {
+                return true;
+            }
+            set.add(obj);
+        }
+        return false;
+    }
 
     /**
      * Gives examples on checking different types of inputs.
@@ -226,7 +240,7 @@ public class StringChecker {
         System.out.println("\tIs between 3 and 5 characters long: " + hasLengthInRange(3, 5, s));
         System.out.println("\tIs negative: " + isNegativeDouble(s));
     }
-
+    
     /**
      * Shows how to use the multiple-input methods.
      * 
@@ -246,4 +260,5 @@ public class StringChecker {
                            haveLengthsInRange(3, 5, strings));
         System.out.println("\tAre negative: " + areNegative(strings));
     }
+    
 }

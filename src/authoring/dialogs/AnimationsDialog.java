@@ -25,6 +25,7 @@ public class AnimationsDialog extends DataDialog {
 
     private static final String IMAGE_FILE_URL = "Image File URL";
     private List<Button> myImageAdderButtons;
+    private List<Label> myStateLabels;
     private List<Label> myShortImageURLs;
     private List<Label> myCompleteImageURLs;
     private ObservableList<String> myStates;
@@ -110,6 +111,7 @@ public class AnimationsDialog extends DataDialog {
     
     private Label addLabel (int index) {
         Label label = new Label(myStates.get(index));
+        myStateLabels.add(label);
         return label;
     }
     
@@ -126,6 +128,7 @@ public class AnimationsDialog extends DataDialog {
     @Override
     void initializeEverything (ObservableList<String> states) {
         myStates = states;
+        myStateLabels = new ArrayList<>();
         myImageAdderButtons = new ArrayList<>();
         myShortImageURLs = new ArrayList<>();
         myCompleteImageURLs = new ArrayList<>();
@@ -139,6 +142,10 @@ public class AnimationsDialog extends DataDialog {
             System.out.println("current size: " + myImageAdderButtons.size());
             int i = myImageAdderButtons.size();
             addRow(i);
+        }
+        
+        for (int i = 0; i < goalSize; i++) {
+            myStateLabels.get(i).setText(myStates.get(i));
         }
         
         return this;

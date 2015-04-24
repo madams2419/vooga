@@ -59,7 +59,7 @@ public abstract class DataDialog extends Dialog<ButtonType> {
     abstract Consumer<ButtonType> getTodoOnOK ();
 
     abstract List<ComboBox<String>> getComboBoxes ();
-
+    
     public void showBox (Sprite s) {
         Consumer<ButtonType> todoOnOK = getTodoOnOK();
         this.showAndWait()
