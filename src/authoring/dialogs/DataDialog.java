@@ -21,32 +21,30 @@ public abstract class DataDialog extends Dialog<ButtonType> {
     private static final String ADD = "Add";
     private static final int BOTTOM_SPACING = 25;
     private int myIndex;
+    private DialogGridOrganizer myGrid;
 
-    void initialize(Sprite s, int sizeOfGridOrganizer, Node[] titleLabelRow, ObservableList<String> comboBoxContent) {
-        DialogGridOrganizer grid = new DialogGridOrganizer(sizeOfGridOrganizer);
-        grid.addRowEnd(titleLabelRow);
+    void initialize (Sprite s, int sizeOfGridOrganizer, Node[] titleLabelRow) {
+        myGrid = new DialogGridOrganizer(sizeOfGridOrganizer);
+        myGrid.addRowEnd(titleLabelRow);
 
         for (int i = 0; i < getListContent().size(); i++) {
             this.setHeight(this.getHeight() + BOTTOM_SPACING);
-            addRow(grid, myIndex++);
+            addBlankRow(myGrid, myIndex++);
         }
-        
-        this.getDialogPane().setContent(grid);
 
-//        ButtonType b = addAddButton(grid);
-//        this.getDialogPane().getButtonTypes().addAll(b, ButtonType.OK, ButtonType.CANCEL);
+        this.getDialogPane().setContent(myGrid);
 
         this.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
         showBox(s);
-   
+
     }
-    
-    ButtonType addAddButton(DialogGridOrganizer grid) {
+
+    ButtonType addAddButton (DialogGridOrganizer grid) {
         ButtonType b = new ButtonType(ADD);
         final Button addButton = (Button) this.getDialogPane().lookupButton(b);
         addButton.addEventFilter(ActionEvent.ACTION, event -> {
             this.setHeight(this.getHeight() + BOTTOM_SPACING);
-            addRow(grid, myIndex++);
+            addBlankRow(grid, myIndex++);
             event.consume();
         });
         return b;
@@ -56,10 +54,10 @@ public abstract class DataDialog extends Dialog<ButtonType> {
 
     abstract ObservableList<String> getListContent ();
 
-    abstract void addRow (DialogGridOrganizer grid, int index);
+    abstract void addBlankRow (DialogGridOrganizer grid, int index);
 
-    abstract Consumer<ButtonType> getTodoOnOK();
-    
+    abstract Consumer<ButtonType> getTodoOnOK ();
+
     abstract List<ComboBox<String>> getComboBoxes ();
 
     public void showBox (Sprite s) {
@@ -68,7 +66,7 @@ public abstract class DataDialog extends Dialog<ButtonType> {
                 .filter(response -> response == ButtonType.OK)
                 .ifPresent(todoOnOK);
     }
-    
+
     ComboBox<String> addComboBox () {
         List<ComboBox<String>> myComboBoxes = getComboBoxes();
         ObservableList<String> toAdd = getListContent();
@@ -84,6 +82,10 @@ public abstract class DataDialog extends Dialog<ButtonType> {
         result.setOnKeyPressed(todoOnKeyPressed);
         myTextFields.add(result);
         return result;
+    }
+
+    void addRow (int index) {
+        addBlankRow(myGrid, index);
     }
 
 }

@@ -24,7 +24,6 @@ import authoring.userInterface.DialogGridOrganizer;
 public class AnimationsDialog extends DataDialog {
 
     private static final String IMAGE_FILE_URL = "Image File URL";
-    private List<ComboBox<String>> myComboBoxes;
     private List<Button> myImageAdderButtons;
     private List<Label> myShortImageURLs;
     private List<Label> myCompleteImageURLs;
@@ -46,7 +45,7 @@ public class AnimationsDialog extends DataDialog {
         mySprite = sprite;
         initializeEverything(states);
         initialize(sprite, 3,
-                 new Node[] { new Label(STATE), new Label(IMAGE), new Label(IMAGE_FILE_URL) }, states);
+                 new Node[] { new Label(STATE), new Label(IMAGE), new Label(IMAGE_FILE_URL) });
     }
 
     private Button addImageButton (String label, int index) {
@@ -93,7 +92,7 @@ public class AnimationsDialog extends DataDialog {
         return (response -> {
             myAnimations = new HashMap<>();
             for (int i = 0; i < myImageAdderButtons.size(); i++) {
-                myAnimations.put(myComboBoxes.get(i).getValue(),
+                myAnimations.put(myStates.get(i),
                                  myShortImageURLs.get(i).getText());
             }
             mySprite.setAnimations(myAnimations);
@@ -115,21 +114,36 @@ public class AnimationsDialog extends DataDialog {
     }
     
     @Override
-    void addRow (DialogGridOrganizer grid, int index) {
+    void addBlankRow (DialogGridOrganizer grid, int index) {
         grid.addRowEnd(addLabel(index), addImageButton(ADD_IMAGE, index), addImageURL());
     }
 
     @Override
     List<ComboBox<String>> getComboBoxes () {
-        return myComboBoxes;
+        return null;
     }
 
     @Override
     void initializeEverything (ObservableList<String> states) {
         myStates = states;
-        myComboBoxes = new ArrayList<>();
         myImageAdderButtons = new ArrayList<>();
         myShortImageURLs = new ArrayList<>();
         myCompleteImageURLs = new ArrayList<>();
+    }
+
+    public AnimationsDialog update (ObservableList<String> newStates) {
+        myStates = newStates;
+        int goalSize = myStates.size();
+        
+        System.out.println("updating!");
+        System.out.println("goal size: " + goalSize);
+        
+        while (myImageAdderButtons.size() < goalSize) {
+            System.out.println("current size: " + myImageAdderButtons.size());
+            int i = myImageAdderButtons.size();
+            addRow(i);
+        }
+        
+        return this;
     }
 }

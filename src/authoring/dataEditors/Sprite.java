@@ -283,6 +283,9 @@ public class Sprite extends ImageView {
     }
 
     public AnimationsDialog getAnimations () {
+        if (myAnimations != null) {
+            return myAnimations.update(getStates());
+        }
         return myAnimations;
     }
 
