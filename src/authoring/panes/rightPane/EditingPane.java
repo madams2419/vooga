@@ -1,15 +1,12 @@
 package authoring.panes.rightPane;
 
-import java.io.File;
 import java.util.List;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import authoring.userInterface.ClickHandler;
 
 
@@ -67,17 +64,6 @@ public class EditingPane extends VBox {
         if (action != null) {
             actionComboBox.setValue(action);
         }
-    }
-
-    protected File selectFile (String imageChooserTitle,
-                               String imageChooserDescription,
-                               String imageChooserExtensions[]) {
-        FileChooser imageChooser = new FileChooser();
-        imageChooser.setTitle(imageChooserTitle);
-        imageChooser.getExtensionFilters().add(
-                                               new ExtensionFilter(imageChooserDescription,
-                                                                   imageChooserExtensions));
-        return imageChooser.showOpenDialog(null);
     }
 
 }

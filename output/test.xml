@@ -1,1 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?><game><title>Simple_Game</title><level><objective><objective_0/><objective_1/></objective><sprite/><physics/><control/><collision/></level></game>
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+
+	<title>Simple_Game</title>
+	<level>
+		<objective>
+			<objective_0 />
+			<objective_1 />
+		</objective>
+		<sprite />
+		<physics />
+		<control />
+		<collision />
+	</level>
+	<level>
+		<objective>
+			<objective_0 />
+			<objective_1 />
+		</objective>
+		<sprite />
+		<physics />
+		<control />
+		<collision />
+	</level>
+</game>

@@ -1,11 +1,12 @@
 package authoring.panes.centerPane;
 
+import game_engine.objective.Objective;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -13,7 +14,6 @@ import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -31,8 +31,11 @@ public class CenterCanvas extends ScrollPane {
     private static final String INITIAL_LABEL_CONTENT = "\n\tClick on the screen to add a canvas!";
     private static final int INITIAL_REGION_Y = 600;
     private static final int INITIAL_REGION_X = 1000;
+    
     private List<Map<String, String>> myEnvironmentList;
     private ObservableList<Sprite> myListOfSprites;
+    private ObservableList<String> myListOfObjectives;
+    
     private Region myCurrentRectangle;
     private GlobalCreationPane gp;
     private Group myGroup;
@@ -52,6 +55,7 @@ public class CenterCanvas extends ScrollPane {
         //myGroup.setOnMouseClicked(e -> canvasClicked(e));
 
         myListOfSprites = FXCollections.observableArrayList();
+        myListOfObjectives = FXCollections.observableArrayList();
         myEnvironmentList = new ArrayList<>();
 
         FrontEndUtils.setKeyActions(this);
@@ -129,4 +133,9 @@ public class CenterCanvas extends ScrollPane {
     public Region getRegion(){
         return myCurrentRectangle;
     }
+    
+    public void addObjective(int index, Map<String,List<String>> params) {
+    	System.out.println(params.toString());
+    }
+    
 }

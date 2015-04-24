@@ -23,7 +23,7 @@ public class NewRegionDialog {
 	private static final int NUM_COLS = 2;
 	private static final int GRID_HGAP = 10;
 	private static final int GRID_VGAP = 10;
-	private static final String DEFAULT_SIZE_HEIGHT = "400";
+	private static final String DEFAULT_SIZE_HEIGHT = "600";
 	private static final String DEFAULT_SIZE_WIDTH = "1000";
 	
 	private static final String X_lABEL = "xSize";
