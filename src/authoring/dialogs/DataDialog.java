@@ -50,8 +50,6 @@ public abstract class DataDialog extends Dialog<ButtonType> {
         return b;
     }
 
-    abstract void initializeEverything (ObservableList<String> comboBoxContent);
-
     abstract ObservableList<String> getListContent ();
 
     abstract void addBlankRow (DialogGridOrganizer grid, int index);

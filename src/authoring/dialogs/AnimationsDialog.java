@@ -29,7 +29,6 @@ public class AnimationsDialog extends DataDialog {
     private List<Label> myShortImageURLs;
     private List<Label> myCompleteImageURLs;
     private ObservableList<String> myStates;
-    // private List<TextField> myTextFields;
     private Map<String, String> myAnimations;
     private Sprite mySprite;
 
@@ -42,9 +41,7 @@ public class AnimationsDialog extends DataDialog {
                                                             "*.gif" };
 
     public AnimationsDialog (Sprite sprite, ObservableList<String> states) {
-        myStates = states;
-        mySprite = sprite;
-        initializeEverything(states);
+        initializeEverything(states, sprite);
         initialize(sprite, 3,
                  new Node[] { new Label(STATE), new Label(IMAGE), new Label(IMAGE_FILE_URL) });
     }
@@ -125,9 +122,9 @@ public class AnimationsDialog extends DataDialog {
         return null;
     }
 
-    @Override
-    void initializeEverything (ObservableList<String> states) {
+    void initializeEverything (ObservableList<String> states, Sprite sprite) {
         myStates = states;
+        mySprite = sprite;
         myStateLabels = new ArrayList<>();
         myImageAdderButtons = new ArrayList<>();
         myShortImageURLs = new ArrayList<>();
