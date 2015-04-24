@@ -98,7 +98,7 @@ public class ActionExporter {
      * @throws IllegalArgumentException
      * @throws InvocationTargetException
      */
-    private void processAnnotations (Class<?> clazz) throws NoSuchMethodException,
+    public void processAnnotations (Class<?> clazz) throws NoSuchMethodException,
             SecurityException, IllegalAccessException, IllegalArgumentException,
             InvocationTargetException {
         processAnnotations(clazz.getDeclaredFields());

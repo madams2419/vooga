@@ -1,37 +1,38 @@
 package game_engine.scrolling;
 
-import game_engine.behaviors.IAction;
+import game_engine.behaviors.IBehavior;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import javafx.scene.image.Image;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
-public class ActionMethod implements IAction{
+public class ActionMethod implements IBehavior{
     private Method myMethod;
     private Object myObject;
+    private Object[] myArgs;
     
-    public ActionMethod (Method method, Object object) {
+    public ActionMethod (Method method, Object object, Object... args) {
         myMethod = method;
         myObject = object;
+        myArgs = args;
     }
+    
     
     @Override
-    public void execute (String ... params) {
-        if (myMethod.getParameterCount() != params.length) {
-            System.out.println("you screwed up");
-            return;
+    public void perform () {
+        try {
+            myMethod.invoke(myObject, myArgs);
         }
-        Object[] objects = new Object[myMethod.getParameterCount()];
-        for (int i = 0; i < myMethod.getParameterCount(); i ++ ){
-            
+        catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            e.printStackTrace();
         }
-
     }
-    
     
     public static void main (String[] args) {
         XStream x = new XStream(new DomDriver());
 
     }
+
+
 
 }
