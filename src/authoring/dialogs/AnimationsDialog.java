@@ -135,9 +135,6 @@ public class AnimationsDialog extends DataDialog {
         myStates = newStates;
         int goalSize = myStates.size();
         
-        System.out.println("updating!");
-        System.out.println("goal size: " + goalSize);
-        
         while (myImageAdderButtons.size() < goalSize) {
             System.out.println("current size: " + myImageAdderButtons.size());
             int i = myImageAdderButtons.size();
