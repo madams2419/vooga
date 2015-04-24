@@ -1,4 +1,4 @@
-package game_engine.sprite.utilitybuilder;
+package game_engine.annotation;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.InvocationTargetException;

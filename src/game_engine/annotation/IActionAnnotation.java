@@ -1,4 +1,4 @@
-package game_engine.sprite.utilitybuilder;
+package game_engine.annotation;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -1,4 +1,4 @@
-package game_engine.sprite.utilitybuilder;
+package game_engine.annotation;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -64,16 +64,16 @@ public class ReadProperties {
 		properties.put(id, propMap);
 	}
 	
-//	public static void main(String[] args) {
-//		ReadProperties rp = new ReadProperties();
-//		try {
-//			Map<Integer,Map<String,String>> p = rp.getPropertiesMap("Actions.properties");
-//			for(Integer i:p.keySet()){
-//				System.out.println(i + " " + p.get(i) + " " + p.get(p.get(i)));
-//			}
-//		} catch (IOException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//	}
+	public static void main(String[] args) {
+		ReadProperties rp = new ReadProperties();
+		try {
+			Map<Integer,Map<String,String>> p = rp.getPropertiesMap("Actions.properties");
+			for(Integer i:p.keySet()){
+				System.out.println(i + " " + p.get(i) + " " + p.get(p.get(i)));
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
 }

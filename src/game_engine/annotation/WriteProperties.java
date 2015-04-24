@@ -1,4 +1,4 @@
-package game_engine.sprite.utilitybuilder;
+package game_engine.annotation;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -24,7 +24,7 @@ public class WriteProperties {
 	}
 	
 	/**
-	 * writes 
+	 * writes properties to specified file 
 	 * @throws IOException
 	 */
 	public void writeToFile(String file) throws IOException{
