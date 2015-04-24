@@ -10,6 +10,7 @@ public class SocialCenterMain extends Application {
 	private LoginScreen login;
 	@Override
 	
+	
 	public void start(Stage stage) throws Exception {
 		
 		//idk if we want to initialize the size itself
@@ -17,11 +18,14 @@ public class SocialCenterMain extends Application {
 		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 //		stage.setX(primaryScreenBounds.getMinX());
 //		stage.setY(primaryScreenBounds.getMinY());
+		
 //		stage.setWidth(primaryScreenBounds.getWidth());
 //		stage.setHeight(primaryScreenBounds.getHeight());
 		stage.setResizable(false);
-		login = new LoginScreen();
 		//ProfilePage profile=new ProfilePage();
+
+		
+		LoginScreen login = new LoginScreen();
 		SocialCenterMenu menu = new SocialCenterMenu();
 		login.getLoginScreen(stage);
 		stage.show();

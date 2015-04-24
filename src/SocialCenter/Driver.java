@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Driver {
 
+
 	/*public static void main(String[] args) throws Exception {
 		getConnection();
 		createTable();
@@ -13,6 +14,7 @@ public class Driver {
 		//get();
 	}*/
 	
+
 	public static ArrayList<String> get(String statement) throws Exception{
 		try{
 			Connection con=getConnection();
@@ -66,8 +68,10 @@ public class Driver {
 	}
 	public static Connection getConnection() throws Exception{
 		try{
+			
 			String driver="com.mysql.jdbc.Driver";
 			String url="jdbc:mysql://localhost:3306/LoginInfo";
+//			String url="jdbc:mysql://10.190.3.194:3306/LoginInfo";
 			//no local host
 			String username="root";
 			String password="Tkfkdgo<3";

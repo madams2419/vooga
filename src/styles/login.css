@@ -12,16 +12,18 @@
     -fx-background-radius: 5.0;
     -fx-text-fill: white;
     -fx-font-size: 13pt;
+    -fx-font-weight: bold;
     -fx-font-family: "Exo";
 }
 .title {
-    -fx-font: 30px "Exo";
-    -fx-stroke: black;
+    -fx-font: 50px "Exo";
+    -fx-text-fill: white;
     -fx-stroke-width: 3;
 }
 .submit {
     -fx-background-color: white;
-    -fx-text-fill: #BFBF69;
+    -fx-font-weight: bold;
+    -fx-text-fill: #857510;
     -fx-font-family: "Exo";
     -fx-background-radius: 0;
 }

@@ -10,7 +10,7 @@ public class SocialCenterMenu {
 	
 	private Scene menu;
 	private Group root = new Group();
-	private static final int TEMPWIDTH = 800;
+	private static final int TEMPWIDTH = 1000;
 	private static final int TEMPHEIGHT = 600;
 
 	public SocialCenterMenu() {
