@@ -1,25 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game>
-
 	<title>Simple_Game</title>
 	<level>
-		<objective>
-			<objective_0 />
-			<objective_1 />
-		</objective>
-		<sprite />
-		<physics />
-		<control />
-		<collision />
+		<start>0</start>
+		<level_0>
+			<objective />
+			<sprite />
+			<physics />
+			<control />
+			<collision />
+		</level_0>
 	</level>
+	<title>Simple_Game</title>
 	<level>
-		<objective>
-			<objective_0 />
-			<objective_1 />
-		</objective>
-		<sprite />
-		<physics />
-		<control />
-		<collision />
+		<start>0</start>
+		<level_0>
+			<objective />
+			<sprite />
+			<physics />
+			<control />
+			<collision />
+		</level_0>
+		<level_1>
+			<objective />
+			<sprite />
+			<physics />
+			<control />
+			<collision />
+		</level_1>
+		<level_2>
+			<objective />
+			<sprite />
+			<physics />
+			<control />
+			<collision />
+		</level_2>
+		<level_3>
+			<objective />
+			<sprite />
+			<physics />
+			<control />
+			<collision />
+		</level_3>
+	</level>
+	<title>Simple_Game</title>
+	<level>
+		<start>0</start>
+		<level_0>
+			<objective />
+			<sprite />
+			<physics />
+			<control />
+			<collision />
+		</level_0>
 	</level>
 </game>
