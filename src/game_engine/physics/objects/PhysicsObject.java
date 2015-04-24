@@ -1,12 +1,15 @@
 package game_engine.physics.objects;
 
+import java.util.Map;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.function.Supplier;
 
 import game_engine.hitboxes.IHitbox;
 import game_engine.physics.Vector;
 import game_engine.physics.engines.PhysicsEngine;
 import game_engine.sprite.Animation;
+import game_engine.sprite.Sprite;
 
 /**
  * PhysicsObject represents the bare minimum traits that a designer may way to
@@ -19,19 +22,20 @@ import game_engine.sprite.Animation;
  * 
  * @since 23 April 2015
  */
-public abstract class PhysicsObject extends Observable {
+public abstract class PhysicsObject extends Observable implements Observer {
 
 	private double xPosition, yPosition;
-	private IHitbox hitbox;
+	private Map<String, IHitbox> hitboxes;
+	private IHitbox activeHitbox;
 	private PhysicsEngine engine;
 	private long lastUpdateTime;
 	
-	public PhysicsObject(PhysicsEngine physEng, IHitbox hb, Vector position, Animation animation) {
+	public PhysicsObject(PhysicsEngine physEng, Map<String, IHitbox> map, Vector position, Animation animation) {
 		engine = physEng;
-		hitbox = hb;
+		hitboxes = map;
 		xPosition = position.getX();
 		yPosition = position.getY();
-		hitbox.addPositionSupplier(getPositionSupplier());
+		hitboxes.keySet().forEach((name) -> hitboxes.get(name).addPositionSupplier(getPositionSupplier()));
 		addObserver(animation);
 	}
 	
@@ -63,7 +67,7 @@ public abstract class PhysicsObject extends Observable {
 	}
 	
 	public IHitbox getHitbox() {
-		return hitbox;
+		return activeHitbox;
 	}
 	
 	protected PhysicsEngine getEngine() {
@@ -98,4 +102,9 @@ public abstract class PhysicsObject extends Observable {
 	}
 	
 	public abstract void applyImpulse(Vector impulse);
+	
+	public void update(Observable arg0, Object arg1) {
+		Sprite sprite = (Sprite) arg0;
+		activeHitbox = hitboxes.get(sprite.getState());
+	}
 }

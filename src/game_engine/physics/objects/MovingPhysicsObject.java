@@ -1,5 +1,7 @@
 package game_engine.physics.objects;
 
+import java.util.Map;
+
 import game_engine.hitboxes.IHitbox;
 import game_engine.physics.Vector;
 import game_engine.physics.engines.PhysicsEngine;
@@ -9,7 +11,7 @@ public class MovingPhysicsObject extends PhysicsObject {
 	
 	private double xVelocity, yVelocity;
 	
-	public MovingPhysicsObject(PhysicsEngine physEng, IHitbox hb, Vector position, Animation animation) {
+	public MovingPhysicsObject(PhysicsEngine physEng, Map<String, IHitbox> hb, Vector position, Animation animation) {
 		super(physEng, hb, position, animation);
 		xVelocity = 0.0;
 		yVelocity = 0.0;
