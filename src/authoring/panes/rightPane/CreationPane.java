@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import authoring.dataEditors.Sprite;
 import authoring.userInterface.SpriteCursor;
+import authoring.util.FrontEndUtils;
 import authoring.util.ImageEditor;
 
 
@@ -61,7 +62,7 @@ public class CreationPane extends EditingPane {
     
     private void addNewCreatable() {
         File selectedImageFile =
-                selectFile(imageChooserTitle, imageChooserDescription, imageChooserExtensions);
+                FrontEndUtils.selectFile(imageChooserTitle, imageChooserDescription, imageChooserExtensions);
         
         if (selectedImageFile != null) {
             // not sure if "file://" is the right beginning for all computers

@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import authoring.dataEditors.Sprite;
+import authoring.dialogs.AnimationsDialog;
 import authoring.dialogs.ControlsDialog;
 import authoring.util.FrontEndUtils;
 import authoring.util.ImageEditor;
@@ -40,6 +41,7 @@ class CharacterEditingPane extends EditingPane {
     private static final String[] imageChooserExtensions = { "*.png", "*.jpg",
                                                             "*.gif" };
     private static final String UPDATE = "Update";
+    private static final String ADD_ANIMATIONS = "Add Animations";
     private static final String DELETE = "Delete";
     private static final String CONTROLS = "Controls";
     private static final String PLAYABLE = "Playable";
@@ -54,16 +56,33 @@ class CharacterEditingPane extends EditingPane {
         // ======================== New design in here ===================== //
         addSpriteIcon(sprite);
         addLabel(IMAGE_LABEL);
+        addAnimations(sprite);
         setFields(this.getChildren(), sprite.getCharacteristics());
 
         addPlayableCheckBox(addControlsButton(sprite), sprite);
         addUpdateButton(sprite);
         addDeleteButton(sprite);
-        addBackButton();
+//        addBackButton(); // I don't know if this is really necessary anymore...
 
         // ================================================================= //
     }
 
+    private void addAnimations (Sprite sprite) {
+        Button animationsButton = new Button(ADD_ANIMATIONS);
+        animationsButton.setOnAction(e -> addAnimation(sprite));
+        this.getChildren().add(animationsButton);
+    }
+
+    private void addAnimation (Sprite sprite) {
+        if (sprite.getAnimations() != null) {
+            sprite.getAnimations().showBox(sprite);
+        }
+        else {
+            AnimationsDialog animationsDialog = new AnimationsDialog(sprite);
+            sprite.setAnimations(animationsDialog);
+        }
+    }
+    
     private void addDeleteButton (Sprite sprite) {
         Button deleteButton = new Button(DELETE);
         deleteButton.setOnAction(e -> getMyParent().deleteSprite(sprite));
@@ -159,7 +178,7 @@ class CharacterEditingPane extends EditingPane {
 
     private void changeCharacterImage (Sprite sprite) {
         File selectedImageFile =
-                selectFile(imageChooserTitle, imageChooserDescription, imageChooserExtensions);
+                FrontEndUtils.selectFile(imageChooserTitle, imageChooserDescription, imageChooserExtensions);
         if (selectedImageFile != null) {
             sprite.changeImage(new Image(selectedImageFile.toURI().toString()));
         }
