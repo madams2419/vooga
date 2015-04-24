@@ -12,7 +12,7 @@ import authoring.userInterface.DialogGridOrganizer;
  */
 public class ErrorDialog {
 	
-	private static final String ERROR = "Error";
+	private static final String ERROR_TITLE = "Error";
 
     public ErrorDialog(String errorMessage){
 	    initialize(errorMessage);
@@ -20,7 +20,7 @@ public class ErrorDialog {
 	
 	private void initialize(String errorMessage) {
             Dialog<ButtonType> dialog = new Dialog<>();
-            dialog.setTitle(ERROR);
+            dialog.setTitle(ERROR_TITLE);
             
             //GridPane grid = new GridPane();
             DialogGridOrganizer grid = new DialogGridOrganizer(3);
