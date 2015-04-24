@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import authoring.dialogs.AnimationsDialog;
 import authoring.dialogs.ControlsDialog;
+import authoring.dialogs.StatesDialog;
 import authoring.panes.centerPane.CenterPane;
 import authoring.panes.rightPane.RightPane;
 import authoring.userInterface.ClickHandler;
@@ -44,6 +47,7 @@ public class Sprite extends ImageView {
     private ControlsDialog myControls;
     private AnimationsDialog myAnimations;
     private Map<String, String> myAnimationsMap;
+    private ObservableList<String> myStates;
 
     private Map<Sprite, Interaction> myInteractions;
 
@@ -62,6 +66,8 @@ public class Sprite extends ImageView {
     // private final double initialScale = 1.0;
 
     private CenterPane myParent;
+
+    private StatesDialog myStatesDialog;
 
     /***
      * 
@@ -88,6 +94,7 @@ public class Sprite extends ImageView {
         myVelocity = new HashMap<>();
         myVelocity.put(X_STRING, "0.0");
         myVelocity.put(Y_STRING, "0.0");
+        myStates = FXCollections.observableArrayList();
         myKeyActions = new HashMap<>();
         myCharacteristics = new HashMap<>();
         addDefaultCharacteristics(Arrays.asList(new String[] { "Name" }));
@@ -139,7 +146,6 @@ public class Sprite extends ImageView {
                                                        .getRightPane(), this));
         }
         catch (NoSuchMethodException | SecurityException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -286,9 +292,26 @@ public class Sprite extends ImageView {
     public void setPlayable (Boolean b) {
         isPlayable = b;
     }
+
+    public ObservableList<String> getStates () {
+        return myStates;
+    }
     
+    public StatesDialog getStatesDialog () {
+        return myStatesDialog;
+    }
+    
+    public void setStates (ObservableList<String> states) {
+        myStates = states;
+    }
+
+    public void setStates (StatesDialog states) {
+        myStatesDialog = states;
+    }
+
     @Override
     public String toString(){
     	return String.format("%s, %s, %s", this.myName, this.myID, this.getImageURI());
     }
+    
 }
