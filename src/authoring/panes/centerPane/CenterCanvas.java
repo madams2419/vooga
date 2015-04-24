@@ -134,8 +134,11 @@ public class CenterCanvas extends ScrollPane {
     }
     
     public void addObjective(int index, Map<String,List<String>> params) {
-    	System.out.println(params.toString());
     	myListOfObjectives.put(index, params);
+    }
+    
+    public Map<Integer, Map<String,List<String>>> getObjectives() {
+    	return myListOfObjectives;
     }
     
 }

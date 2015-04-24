@@ -53,11 +53,12 @@ public class ObjectiveDialog extends Dialog<ButtonType> {
 		final Button addButton = (Button) this.getDialogPane().lookupButton(b);
 		addButton.addEventFilter(ActionEvent.ACTION, event -> {
 			this.setHeight(this.getHeight() + BOTTOM_SPACING);
-			grid.addRowEnd(addStatesBox(), addSpritesBox(mSprites.size()), addActionsBox(),
-					addPrereqsBox());
+			grid.addRowEnd(addStatesBox(), addSpritesBox(mSprites.size()),
+					addActionsBox(), addPrereqsBox());
 			event.consume();
 		});
-		this.setTitle(String.format("Objective %d Behaviours", myIndex = objectiveNumber));
+		this.setTitle(String.format("Objective %d Behaviours",
+				myIndex = objectiveNumber));
 		showBox();
 	}
 
@@ -76,13 +77,15 @@ public class ObjectiveDialog extends Dialog<ButtonType> {
 		Map<String, List<String>> mResult = new HashMap<>();
 		mResult.put("onComplete", new ArrayList<String>());
 		mResult.put("onFailed", new ArrayList<String>());
+		mResult.put("prereqs", new ArrayList<String>());
 		for (int i = 0; i < mActions.size(); i++) {
-			String action = String.format("%s:%s:(prereq)%s", mSprites.get(i)
+			String action = String.format("%s:%s", mSprites.get(i)
 					.getSelectionModel().getSelectedItem(), mActions.get(i)
-					.getSelectionModel().getSelectedItem(), mPrereqs.get(i)
 					.getSelectionModel().getSelectedItem());
 			mResult.get(mStates.get(i).getSelectionModel().getSelectedItem())
 					.add(action);
+			mResult.get("prereqs").add(
+					mPrereqs.get(i).getSelectionModel().getSelectedItem());
 		}
 		return mResult;
 	}
@@ -97,7 +100,7 @@ public class ObjectiveDialog extends Dialog<ButtonType> {
 		ComboBox<String> b = addComboBox("Main player", "other");
 		mSprites.add(b);
 		b.valueProperty().addListener((ov, t, t1) -> {
-			if(t1.equals("other")){
+			if (t1.equals("other")) {
 				this.selected = index;
 				this.myParent.getMyParent().getParent().setSpriteWaiting(true);
 				this.close();
@@ -114,9 +117,10 @@ public class ObjectiveDialog extends Dialog<ButtonType> {
 	}
 
 	public ComboBox<String> addPrereqsBox() {
-		ComboBox<String> b = addComboBox(myParent.getObjectives().stream().map(e -> {
-			return e.getText();
-		}).collect(Collectors.toList()));
+		ComboBox<String> b = addComboBox(myParent.getObjectives().stream()
+				.map(e -> {
+					return e.getText();
+				}).collect(Collectors.toList()));
 		mPrereqs.add(b);
 		return b;
 	}
@@ -124,7 +128,7 @@ public class ObjectiveDialog extends Dialog<ButtonType> {
 	public void setSprite(Sprite s) {
 		mSprites.get(selected).getItems().add(s.toString());
 	}
-	
+
 	private ComboBox<String> addComboBox(Collection<String> elements) {
 		ComboBox<String> result = new ComboBox<>();
 		result.getItems().addAll(elements);
