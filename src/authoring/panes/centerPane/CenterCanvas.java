@@ -1,5 +1,8 @@
 package authoring.panes.centerPane;
 
+import game_engine.objective.Objective;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -28,8 +31,11 @@ public class CenterCanvas extends ScrollPane {
     private static final String INITIAL_LABEL_CONTENT = "\n\tClick on the screen to add a canvas!";
     private static final int INITIAL_REGION_Y = 600;
     private static final int INITIAL_REGION_X = 1000;
+    
     private List<Map<String, String>> myEnvironmentList;
     private ObservableList<Sprite> myListOfSprites;
+    private ObservableList<String> myListOfObjectives;
+    
     private Region myCurrentRectangle;
     private GlobalCreationPane gp;
     private Group myGroup;
@@ -49,6 +55,7 @@ public class CenterCanvas extends ScrollPane {
         //myGroup.setOnMouseClicked(e -> canvasClicked(e));
 
         myListOfSprites = FXCollections.observableArrayList();
+        myListOfObjectives = FXCollections.observableArrayList();
         myEnvironmentList = new ArrayList<>();
 
         FrontEndUtils.setKeyActions(this);
@@ -126,4 +133,9 @@ public class CenterCanvas extends ScrollPane {
     public Region getRegion(){
         return myCurrentRectangle;
     }
+    
+    public void addObjective(Map<String,String> params) {
+    	
+    }
+    
 }
