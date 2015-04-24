@@ -9,23 +9,26 @@ import game_engine.sprite.Sprite;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
+import javafx.util.Duration;
 
-public class VoogaGame extends AnimationTimer implements IActor {
+public class VoogaGame implements IActor {
 
 	private List<Level> levels;
 	private Level activeLevel;
 	private Group root;
-	private double frameRate;
+	private Timeline timeline;
 
-	public VoogaGame() {
+	public VoogaGame(double frameRate) {
 		levels = new ArrayList<Level>();
 		root = new Group();
+		timeline = new Timeline(getFrame(frameRate));
 	}
 	
-	public void setFrameRate(double fr) {
-		frameRate = fr;
+	private KeyFrame getFrame(double frameRate) {
+		return new KeyFrame(Duration.millis(frameRate), (frame) -> update(System.currentTimeMillis()));
 	}
 
 	public void addLevel(Level l) {
@@ -58,11 +61,16 @@ public class VoogaGame extends AnimationTimer implements IActor {
 		}
 	}
 
-	public void handle(long now) {
+	public void update(double now) {
 		activeLevel.update(now);
+	}
+	
+	public void start() {
+		timeline.play();
 	}
 
 	public Group getRoot() {
+		
 		return root;
 	}
 }

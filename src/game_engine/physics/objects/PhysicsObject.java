@@ -29,7 +29,7 @@ public abstract class PhysicsObject extends Observable implements Observer {
 	private Map<String, List<IHitbox>> hitboxes;
 	private IHitbox activeHitbox;
 	private PhysicsEngine engine;
-	private long lastUpdateTime;
+	private double lastUpdateTime;
 	private String currentState;
 	
 	public PhysicsObject(PhysicsEngine physEng, Map<String, List<IHitbox>> map, Vector position, Animation animation) {
@@ -46,17 +46,15 @@ public abstract class PhysicsObject extends Observable implements Observer {
 		return () -> new Vector(xPosition, yPosition);
 	}
 	
-	protected long getTimeLapse() {
-		long currentTime = System.currentTimeMillis();
-		long time = currentTime - lastUpdateTime;
-		lastUpdateTime = currentTime;
-		return time < 0 ? time : lastUpdateTime;
+	protected double getTimeLapse(double currentTime) {
+		return currentTime < lastUpdateTime ? currentTime : currentTime - lastUpdateTime;
 	}
 
 	/**
 	 * Allows for the PhysicsObject to be updated frame by frame.
 	 */
-	public void update() {
+	public void update(double currentTime) {
+		lastUpdateTime = currentTime;
 		setChanged();
 		notifyObservers();
 	}

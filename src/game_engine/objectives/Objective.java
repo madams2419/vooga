@@ -23,7 +23,7 @@ import java.util.function.Predicate;
  *
  */
 public class Objective implements IActor {
-    private Map<Predicate<Long>, Status> myConditions;
+    private Map<Predicate<Double>, Status> myConditions;
     private Map<Status, IBehavior> myBehaviors;
     /**
      * List of objectives that must be completed before this objective is active.
@@ -87,11 +87,11 @@ public class Objective implements IActor {
      * @param condition
      * @param status
      */
-    public void addCondition (Predicate<Long> condition, String status) {
+    public void addCondition (Predicate<Double> condition, String status) {
         addCondition(condition, Status.get(status));
     }
 
-    protected void addCondition (Predicate<Long> condition, Status status) {
+    protected void addCondition (Predicate<Double> condition, Status status) {
         myConditions.put(condition, status);
     }
 
@@ -111,7 +111,7 @@ public class Objective implements IActor {
      * @param now
      * @return
      */
-    private boolean checkTimer (long now) {
+    private boolean checkTimer (double now) {
         return myTimer.filter(timer -> timer.isFinished(now)).isPresent();
     }
 
@@ -120,7 +120,7 @@ public class Objective implements IActor {
      * 
      * @param now
      */
-    public void update (long now) {
+    public void update (double now) {
         
         updateActive(now);
         if (isActive()) {
@@ -130,8 +130,8 @@ public class Objective implements IActor {
         }
     }
 
-    private void updateStatus (long now) {
-        for (Predicate<Long> condition : myConditions.keySet()) {
+    private void updateStatus (double now) {
+        for (Predicate<Double> condition : myConditions.keySet()) {
             if (condition.test(now)) {
                 myStatus = myConditions.get(condition);
             }
@@ -139,11 +139,10 @@ public class Objective implements IActor {
     }
 
     private void executeStatus () {
-        System.out.println(myStatus);
         myBehaviors.getOrDefault(myStatus, () -> {}).perform();
     }
 
-    private void updateActive (long now) {
+    private void updateActive (double now) {
         if (isActive() || isFinished()) {
             return;
         }
@@ -181,7 +180,7 @@ public class Objective implements IActor {
      * @param active
      * @param now
      */
-    public void setActive (boolean active, long now) {
+    public void setActive (boolean active, double now) {
         myStatus = active ? Status.ACTIVE : Status.INACTIVE;
         if (isActive()) {
             myTimer.ifPresent(timer -> timer.start(now));

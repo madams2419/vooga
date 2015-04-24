@@ -12,7 +12,6 @@ import game_engine.physics.objects.PhysicsObject;
 public class PhysicsEngine implements IActor {
 	
 	private List<Vector> globalAcceleration, globalForce;
-	private double lastUpdateTime, timeLapse;
 	
 	public PhysicsEngine() {
 		globalAcceleration = new ArrayList<>();
@@ -37,17 +36,6 @@ public class PhysicsEngine implements IActor {
 	
 	public BiFunction<Double, Vector, Vector> getDependentForces() {
 		return (a, b) -> new Vector(0, 0);
-	}
-	
-	public void update() {
-		double currentTime = System.currentTimeMillis();
-		double timeLapse = currentTime - lastUpdateTime;
-		timeLapse = timeLapse < 0 ? currentTime : timeLapse;
-		lastUpdateTime = currentTime;
-	}
-	
-	public double getTimeLapse() {
-		return timeLapse;
 	}
 	
 	private IAction setGlobalAccel = (params) -> {

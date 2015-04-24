@@ -3,7 +3,6 @@ package game_engine;
 import game_engine.collisions.CollisionsManager;
 import game_engine.controls.ControlsManager;
 import game_engine.objectives.Objective;
-import game_engine.physics.engines.PhysicsEngine;
 import game_engine.sprite.Sprite;
 
 import java.util.ArrayList;
@@ -21,7 +20,6 @@ public class Level {
 	private List<Sprite> mySprites;
 	private CollisionsManager myCollisionEngine;
 	private ControlsManager myControlManager;
-	private PhysicsEngine engine;
 
 	public Level() {
 		myObjectives = new ArrayList<>();
@@ -31,12 +29,11 @@ public class Level {
 	/**
 	 * method update Update contents of a layer
 	 */
-	public void update(long now) {
+	public void update(double now) {
 		myObjectives.forEach(objective -> objective.update(now));
-		mySprites.forEach(sprite -> sprite.update());
+		mySprites.forEach(sprite -> sprite.update(now));
 		myControlManager.update();
 		myCollisionEngine.checkCollisions();
-		engine.update();
 	}
 
 	public void setControlManager(ControlsManager controlManager) {
@@ -49,10 +46,6 @@ public class Level {
 
 	public void setCollisionEngine(CollisionsManager collisionEngine) {
 		myCollisionEngine = collisionEngine;
-	}
-
-	public void setPhysicsEngine(PhysicsEngine e) {
-		engine = e;
 	}
 
 	/**

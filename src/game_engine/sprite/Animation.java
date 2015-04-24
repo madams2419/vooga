@@ -8,6 +8,7 @@ import java.util.Observable;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 import java.util.Observer;
 
@@ -16,28 +17,30 @@ public class Animation extends Observable implements Observer {
     private ImageView image;
     private Node current;
     Map<String, ImageLink> paths;
+    private double timeElapsed;
     private double lastUpdateTime;
 
     public Animation() {
     	image = new ImageView();
     	paths = new HashMap<>();
+    	timeElapsed = 0;
     }
     
     public void associateImage(String state, String imagePath, double delay, double height, double width) {
     	if (!paths.containsKey(state)) {
     		paths.put(state, new ImageLink());
     	}
-    	paths.get(state).add(new Image(imagePath, width, height, false, true), delay);
+    	paths.get(state).add(new Image(imagePath, width, height, false, true), Duration.seconds(delay));
     }
     
     protected class Node {
 		 
 		private Image image;
 		private Node next;
-		private double delay;
+		private Duration delay;
 		private int index;
 		
-		public Node(Image i, Node n, double d, int ind) {
+		public Node(Image i, Node n, Duration d, int ind) {
 			image = i;
 			next = n;
 			delay = d;
@@ -49,7 +52,7 @@ public class Animation extends Observable implements Observer {
     	
     	private Node first;
     	
-    	public void add(Image image, double delay) {
+    	public void add(Image image, Duration delay) {
     		
     		if (first == null) {
     			first = new Node(image, first, delay, 0);
@@ -63,11 +66,13 @@ public class Animation extends Observable implements Observer {
     	}
     }
     
-    public void update() {
-    	double currentTime = System.currentTimeMillis();
-    	if (current.delay == currentTime - lastUpdateTime) {
-    		rotateImage();
-    		lastUpdateTime = currentTime;
+    public void update(double currentTime) {
+    	double timeLapse = currentTime < lastUpdateTime ? currentTime : currentTime - lastUpdateTime;
+    	timeElapsed += timeLapse;
+    	lastUpdateTime = currentTime;
+    	if (current.delay.toMillis() < timeElapsed) {
+    		//rotateImage();
+    		timeElapsed = 0;
     	}
     }
     

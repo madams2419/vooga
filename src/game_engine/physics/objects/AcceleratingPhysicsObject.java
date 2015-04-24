@@ -18,10 +18,10 @@ public class AcceleratingPhysicsObject extends MovingPhysicsObject {
 		yAccel = 0.0;
 	}
 	
-	public void update() {
+	public void update(double currentTime) {
 		Vector totalAccel = new Vector(xAccel, yAccel).plus(getEngine().getGlobalAccel());
-		super.increment(totalAccel.times(getEngine().getTimeLapse()));
-		super.update();
+		super.increment(totalAccel.times(getTimeLapse(currentTime)));
+		super.update(currentTime);
 	}
 	
 	public void set(Vector amount) {

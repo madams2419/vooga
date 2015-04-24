@@ -59,8 +59,8 @@ public class VoogaGameBuilder {
 	public VoogaGame buildGame() {
 		parser.moveDown("game");
 		
-		VoogaGame game = new VoogaGame();
-		game.setFrameRate(Double.parseDouble(parser.getValue("frame_rate")));
+		double frameRate = Double.parseDouble(parser.getValue("frame_rate"));
+		VoogaGame game = new VoogaGame(frameRate);
 		
 		parser.moveDown("level");
 		for (String directory : parser.getValidSubDirectories()) {
@@ -82,11 +82,11 @@ public class VoogaGameBuilder {
 		objectives = new ArrayList<>();
 		
 		PhysicsEngine engine = buildPhysicsEngine();
-		level.setPhysicsEngine(engine);
 		
 		parser.moveDown("sprites");
 		for (String directory : parser.getValidSubDirectories()) {
 			Sprite sprite = buildSprite(directory, engine);
+			level.addSprite(sprite);
 			sprites.add(sprite);
 		}
 		parser.moveUp();
@@ -94,6 +94,7 @@ public class VoogaGameBuilder {
 		parser.moveDown("level_objectives");
 		for (String directory : parser.getValidSubDirectories()) {
 			Objective objective = buildObjective(directory);
+			level.addObjective(objective);
 			objectives.add(objective);
 		}
 		parser.moveUp();

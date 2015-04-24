@@ -22,9 +22,9 @@ public class MovingPhysicsObject extends PhysicsObject {
 		return new Vector(xVelocity, yVelocity);
 	}
 	
-	public void update() {
-		super.increment(new Vector(xVelocity, yVelocity).times(getEngine().getTimeLapse()));
-		super.update();
+	public void update(double currentTime) {
+		super.increment(new Vector(xVelocity, yVelocity).times(getTimeLapse(currentTime)));
+		super.update(currentTime);
 	}
 	
 	public void set(Vector amount) {

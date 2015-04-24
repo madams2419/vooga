@@ -2,7 +2,7 @@
 <game>
 	<title>Simple Game</title>
 
-	<frame_rate>.05</frame_rate>
+	<frame_rate>1000</frame_rate>
 
 	<level>
 		<first_level>0</first_level>
@@ -376,7 +376,7 @@
 				<type>ComplexPhysicsEngine</type>
 				<drag_coefficeint>0.2</drag_coefficeint>
 				<global_accelerations>
-					<accel_0>0 9.8</accel_0>
+					<accel_0>0 0</accel_0>
 				</global_accelerations>
 			</physics_engine>
 
@@ -384,7 +384,7 @@
 				<active_scheme>0</active_scheme>
 				<control_scheme_0>
 					<key_0>
-						<key>RIGHT</key>
+						<key>UP</key>
 
 						<onPressed>
 							<behaviors>

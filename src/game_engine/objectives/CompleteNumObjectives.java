@@ -29,7 +29,7 @@ public class CompleteNumObjectives extends DoRemainingObjective {
     }
 
     @Override
-    public void update (long now) {
+    public void update (double now) {
         // needed?
         mySubObjectives.forEach(obj -> obj.update(now));
         super.update(now);

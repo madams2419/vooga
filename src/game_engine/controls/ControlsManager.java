@@ -23,6 +23,7 @@ public class ControlsManager {
 	}
 	
 	public void handleInput(InputEvent input) {
+		System.out.println("received");
 		activeControlScheme.handleInput(input);
 	}
 	
