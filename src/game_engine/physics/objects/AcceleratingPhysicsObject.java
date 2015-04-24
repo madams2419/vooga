@@ -1,8 +1,8 @@
-package game_engine.physics_engine.physics_objects;
+package game_engine.physics.objects;
 
 import game_engine.hitboxes.IHitbox;
-import game_engine.physics_engine.PhysicsEngine;
-import game_engine.physics_engine.Vector;
+import game_engine.physics.Vector;
+import game_engine.physics.engines.PhysicsEngine;
 import game_engine.sprite.Animation;
 
 public class AcceleratingPhysicsObject extends MovingPhysicsObject {
@@ -16,11 +16,12 @@ public class AcceleratingPhysicsObject extends MovingPhysicsObject {
 	}
 	
 	public void update() {
-		super.increment(new Vector(xAccel, yAccel).times(getEngine().getFPS()));
+		Vector totalAccel = new Vector(xAccel, yAccel).plus(getEngine().getGlobalAccel());
+		super.increment(totalAccel.times(getEngine().getTimeLapse()));
 		super.update();
 	}
 	
-	public void move(Vector amount) {
+	public void set(Vector amount) {
 		 xAccel = amount.getX();
 		 yAccel = amount.getY();
 	}
@@ -28,5 +29,9 @@ public class AcceleratingPhysicsObject extends MovingPhysicsObject {
 	public void increment(Vector amount) {
 		 xAccel += amount.getX();
 		 yAccel += amount.getY();
+	}
+	
+	public void applyImpulse(Vector impulse) {
+		super.set(impulse);
 	}
 }

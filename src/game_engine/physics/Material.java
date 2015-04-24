@@ -1,4 +1,4 @@
-package game_engine.physics_engine.complex;
+package game_engine.physics;
 
 public class Material {
 

@@ -1,9 +1,9 @@
-package game_engine.physics_engine.physics_objects;
+package game_engine.physics.objects;
 
 import game_engine.hitboxes.IHitbox;
-import game_engine.physics_engine.PhysicsEngine;
-import game_engine.physics_engine.Vector;
-import game_engine.physics_engine.complex.Material;
+import game_engine.physics.Material;
+import game_engine.physics.Vector;
+import game_engine.physics.engines.PhysicsEngine;
 import game_engine.sprite.Animation;
 
 public class ComplexPhysicsObject extends AcceleratingPhysicsObject {
@@ -30,11 +30,14 @@ public class ComplexPhysicsObject extends AcceleratingPhysicsObject {
 	}
 	
 	public void update() {
-		super.increment(new Vector(xForce, yForce).times(inverseMass));
+		Vector totalForce = new Vector(xForce, yForce).plus(
+				getEngine().getGlobalForce()).plus(
+						getEngine().getDependentForces().apply(getHitbox().getArea(), getVelocity()));
+		super.increment(totalForce.times(inverseMass).times(getEngine().getTimeLapse()));
 		super.update();
 	}
 	
-	public void move(Vector amount) {
+	public void set(Vector amount) {
 		xForce = amount.getX();
 		yForce = amount.getY();
 	}
@@ -46,5 +49,9 @@ public class ComplexPhysicsObject extends AcceleratingPhysicsObject {
 	
 	public double getRestitution() {
 		return material.getRestitution();
+	}
+	
+	public void applyImpulse(Vector impulse) {
+		super.set(impulse.times(inverseMass));
 	}
 }

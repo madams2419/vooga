@@ -1,11 +1,11 @@
-package game_engine.physics_engine.physics_objects;
+package game_engine.physics.objects;
 
 import java.util.Observable;
 import java.util.function.Supplier;
 
 import game_engine.hitboxes.IHitbox;
-import game_engine.physics_engine.PhysicsEngine;
-import game_engine.physics_engine.Vector;
+import game_engine.physics.Vector;
+import game_engine.physics.engines.PhysicsEngine;
 import game_engine.sprite.Animation;
 
 /**
@@ -19,11 +19,12 @@ import game_engine.sprite.Animation;
  * 
  * @since 23 April 2015
  */
-public class PhysicsObject extends Observable {
+public abstract class PhysicsObject extends Observable {
 
 	private double xPosition, yPosition;
 	private IHitbox hitbox;
 	private PhysicsEngine engine;
+	private long lastUpdateTime;
 	
 	public PhysicsObject(PhysicsEngine physEng, IHitbox hb, Vector position, Animation animation) {
 		engine = physEng;
@@ -36,6 +37,13 @@ public class PhysicsObject extends Observable {
 	
 	protected Supplier<Vector> getPositionSupplier() {
 		return () -> new Vector(xPosition, yPosition);
+	}
+	
+	protected long getTimeLapse() {
+		long currentTime = System.currentTimeMillis();
+		long time = currentTime - lastUpdateTime;
+		lastUpdateTime = currentTime;
+		return time < 0 ? time : lastUpdateTime;
 	}
 
 	/**
@@ -70,7 +78,7 @@ public class PhysicsObject extends Observable {
 	 *            Potentially a displacement, but may also be implemented as a
 	 *            velocity, acceleration, force, etcetera.
 	 */
-	public void move(Vector amount) {
+	public void set(Vector amount) {
 		xPosition = amount.getX();
 		yPosition = amount.getY();
 	}
@@ -88,4 +96,6 @@ public class PhysicsObject extends Observable {
 		xPosition += amount.getX();
 		yPosition += amount.getY();
 	}
+	
+	public abstract void applyImpulse(Vector impulse);
 }

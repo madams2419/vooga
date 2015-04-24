@@ -1,4 +1,4 @@
-package game_engine.physics_engine;
+package game_engine.physics;
 
 import java.util.List;
 
