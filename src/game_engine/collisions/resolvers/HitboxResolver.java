@@ -24,7 +24,7 @@ public class HitboxResolver implements ICollisionResolver {
 	}
 	
 	public void resolveCollision(Sprite spriteA, Sprite spriteB) {
-		List<Pair<Integer, Integer>> collidedPairs = spriteA.getHitbox().getCollisionPairs();
+		List<Pair<Integer, Integer>> collidedPairs = spriteA.getPhysicsObject().getHitbox().getCollisionPairs();
 		for (int i = 0; i < pairPriorities.size(); i++) {
 			Pair<Integer, Integer> pair = pairPriorities.get(i);
 			if (collidedPairs.contains(pair)) {

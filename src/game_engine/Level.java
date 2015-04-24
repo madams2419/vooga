@@ -1,6 +1,6 @@
 package game_engine;
 
-import game_engine.collisions.CollisionEngine;
+import game_engine.collisions.CollisionManager;
 import game_engine.control.ControlManager;
 import game_engine.objective.Objective;
 import game_engine.sprite.Sprite;
@@ -18,7 +18,7 @@ public class Level {
 	
 	List<Objective> myObjectives;
 	List<Sprite> mySprites;
-	private CollisionEngine myCollisionEngine;
+	private CollisionManager myCollisionEngine;
 	private ControlManager myControlManager;
 	
 	public Level() {
@@ -47,7 +47,7 @@ public class Level {
             return myControlManager;
         }
         
-        public void setCollisionEngine (CollisionEngine collisionEngine) {
+        public void setCollisionEngine (CollisionManager collisionEngine) {
             myCollisionEngine = collisionEngine;
         }
         

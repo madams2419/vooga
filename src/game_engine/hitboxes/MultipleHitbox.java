@@ -1,6 +1,6 @@
 package game_engine.hitboxes;
 
-import game_engine.physics_engine.Vector;
+import game_engine.physics.Vector;
 
 import java.util.ArrayList;
 import java.util.Collections;

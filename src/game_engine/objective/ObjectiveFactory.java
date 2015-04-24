@@ -1,7 +1,5 @@
 package game_engine.objective;
 
-import game_engine.collisions.Collision;
-import game_engine.collisions.CollisionEngine;
 import game_engine.sprite.Sprite;
 
 import java.util.List;

@@ -33,7 +33,7 @@ public class HitboxDetector implements ICollisionDetector {
 	private IHitbox getHitbox(Sprite sprite) {
 		Image key = sprite.getImageView().getImage();
 		if (!optimization.containsKey(key)) {
-			optimization.put(key, sprite.getHitbox());
+			optimization.put(key, sprite.getPhysicsObject().getHitbox());
 		}
 		return optimization.get(key);
 	}

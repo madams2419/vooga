@@ -1,8 +1,7 @@
-package game_engine;
+package game_engine.sprite;
 
-import game_engine.physics_engine.Vector;
-import game_engine.physics_engine.physics_object.IPhysicsObject;
-import game_engine.sprite.Sprite;
+import game_engine.physics.objects.PhysicsObject;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -12,99 +11,102 @@ import javafx.scene.image.ImageView;
 
 import java.util.Observer;
 
-/**
- * Defines the animations for each sprite
- * 
- * @author
- *
- */
-
 public class Animation implements Observer {
 
-    private ImageView myImageView;
-    private Node myCurrentNode;
-    private String myCurrentImage;
-    Map<String, Node> myPathMap;
+    private ImageView image;
+    private Node current;
+    Map<String, ImageLink> paths;
+    private double lastUpdateTime;
 
     public Animation() {
-	myPathMap = new HashMap<>();
-	myImageView = new ImageView();
+    	image = new ImageView();
+    	paths = new HashMap<>();
+    	lastUpdateTime = System.currentTimeMillis();
     }
-
-    public class Node {
-	String image;
-	Node next;
-
-	public Node() {
-	    image = "";
-	    next = null;
+    
+    public void associateImage(String state, String imagePath, double delay) {
+    	if (!paths.containsKey(state)) {
+    		paths.put(state, new ImageLink());
+    	}
+    	paths.get(state).add(imagePath, delay);
+    }
+    
+    protected class Node {
+		 
+		private Image image;
+		private Node next;
+		private double delay;
+		
+		public Node(String imagePath, Node n, double d) {
+			image = new Image(imagePath);
+			next = n;
+			delay = d;
+		}
 	}
 
-	public Node(String image, Node next) {
-	    this.image = image;
-	    this.next = next;
-	}
-
+    private class ImageLink {
+    	
+    	private Node first;
+    	
+    	public void add(String imagePath, double delay) {
+    		
+    		if (first == null) {
+    			first = new Node(imagePath, first, delay);
+    			return;
+    		}
+    		Node current = first;
+    		while (current.next != first) {
+    			current = current.next;
+    		}
+    		current.next = new Node(imagePath, first, delay);
+    	}
     }
-
-    public void setImage(String state, String ImagePath) {
-	Node currImage = new Node(ImagePath, null);
-	try {
-	    myPathMap.get(state).next = currImage;
-	} catch (Exception e) {
-	    myPathMap.put(state, currImage);
-	}
+    
+    public void update() {
+    	double currentTime = System.currentTimeMillis();
+    	if (current.delay == currentTime - lastUpdateTime) {
+    		rotateImage();
+    		lastUpdateTime = currentTime;
+    	}
     }
-
-    public void removeImage(String state) {
-	myPathMap.remove(state);
+    
+    private void rotateImage() {
+    	current = current.next;
+    	image.setImage(current.image);
     }
-
-    public String getImage() {
-	return myCurrentImage;
-    }
-
-    private void changeImage(String state) {
-
-	try {
-	    myCurrentNode = myCurrentNode.next;
-	} catch (Exception e) {
-	    try {
-		myCurrentNode = myPathMap.get(state);
-
-	    } catch (Exception e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	    }
-	}
-
-	myCurrentImage = myCurrentNode.image;
-	myImageView.setImage(new Image(getClass().getResourceAsStream(
-		myCurrentImage)));
-
-    }
-
+    
     public ImageView getImageView() {
-	return myImageView;
+    	return image;
     }
-
-    public void update(Observable o, Object arg) {
-	try {
-	    Sprite sprite = (Sprite) o;
-	    String state = (String) arg;
-	    changeImage(state);
-	}
-	catch (Exception e) {
-	    try {
-		IPhysicsObject physObj = (IPhysicsObject) o;
-		Vector position = (Vector) arg;
-		myImageView.setTranslateX(position.getX());
-		myImageView.setTranslateY(position.getY());
-	    }
-	    catch (Exception e2) {
-		e2.printStackTrace();
-	    }
-	}
+    
+    public void update(Observable source, Object arg) {
+    	changeState(source);
+    	changePosition(source);
     }
-
+    
+    private void changeState(Observable source) {
+    	try {
+    		Sprite sprite = (Sprite) source;
+    		changeImage(sprite.getState());
+    	}
+    	catch (Exception e) {
+    		// do nothing
+    	}
+    }
+    
+    private void changePosition(Observable source) {
+    	try {
+    		PhysicsObject physicsObject = (PhysicsObject) source;
+    		image.setTranslateX(physicsObject.getXPosition());
+    		image.setTranslateY(physicsObject.getYPosition());
+    	}
+    	catch (Exception e) {
+    		// do nothing
+    	}
+    }
+    
+    private void changeImage(String state) {
+    	current = paths.get(state).first;
+    	image.setImage(current.image);
+    }
 }

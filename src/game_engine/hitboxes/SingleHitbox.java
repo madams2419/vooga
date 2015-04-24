@@ -1,6 +1,6 @@
 package game_engine.hitboxes;
 
-import game_engine.physics_engine.Vector;
+import game_engine.physics.Vector;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +32,7 @@ public class SingleHitbox implements IHitbox {
 	}
 	
 	public double getArea() {
-		return getArea(orderedPoints);
+		return Math.abs(getArea(orderedPoints));
 	}
 	
 	private double getArea(List<Vector> points) {
@@ -151,5 +151,19 @@ public class SingleHitbox implements IHitbox {
 
 	public void addPositionSupplier(Supplier<Vector> position) {
 		parentPosition = position;
+	}
+	
+	public List<Vector> convexHull() {
+		orderedPoints.add(orderedPoints.get(0));
+		orderedPoints.add(orderedPoints.get(1));
+		List<Vector> convexHull = new ArrayList<>();
+		for (int i = 0; i + 2 < orderedPoints.size(); i++) {
+			if (calculateArea(orderedPoints.get(i), orderedPoints.get(i + 1), orderedPoints.get(i + 2)) > 0) {
+				convexHull.add(orderedPoints.get(i + 1));
+			}
+		}
+		orderedPoints.remove(0);
+		orderedPoints.remove(1);
+		return convexHull;
 	}
 }

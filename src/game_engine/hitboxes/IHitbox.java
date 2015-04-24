@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import javafx.util.Pair;
-import game_engine.physics_engine.Vector;
+import game_engine.physics.Vector;
 
 /**
  * An IHitbox serves as the major bridge between collisions and the physics
