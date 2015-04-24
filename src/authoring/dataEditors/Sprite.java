@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -145,7 +146,6 @@ public class Sprite extends ImageView {
                                                        .getRightPane(), this));
         }
         catch (NoSuchMethodException | SecurityException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -310,5 +310,9 @@ public class Sprite extends ImageView {
         myStatesDialog = states;
     }
 
+    @Override
+    public String toString(){
+    	return String.format("%s, %s, %s", this.myName, this.myID, this.getImageURI());
+    }
     
 }

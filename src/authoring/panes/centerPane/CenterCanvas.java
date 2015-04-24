@@ -2,8 +2,10 @@ package authoring.panes.centerPane;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -29,9 +31,9 @@ public class CenterCanvas extends ScrollPane {
     private static final int INITIAL_REGION_Y = 600;
     private static final int INITIAL_REGION_X = 1000;
     
-    private List<Map<String, String>> myEnvironmentList;
-    private ObservableList<Sprite> myListOfSprites;
-    private ObservableList<String> myListOfObjectives;
+    private List<Map<String, String>> myEnvironmentList = new ArrayList<>();
+    private ObservableList<Sprite> myListOfSprites = FXCollections.observableArrayList();
+    private Map<Integer, Map<String,List<String>>> myListOfObjectives = new HashMap<>();
     
     private Region myCurrentRectangle;
     private GlobalCreationPane gp;
@@ -52,7 +54,7 @@ public class CenterCanvas extends ScrollPane {
         //myGroup.setOnMouseClicked(e -> canvasClicked(e));
 
         myListOfSprites = FXCollections.observableArrayList();
-        myListOfObjectives = FXCollections.observableArrayList();
+        myListOfObjectives = new HashMap<>();
         myEnvironmentList = new ArrayList<>();
 
         FrontEndUtils.setKeyActions(this);
@@ -133,6 +135,7 @@ public class CenterCanvas extends ScrollPane {
     
     public void addObjective(int index, Map<String,List<String>> params) {
     	System.out.println(params.toString());
+    	myListOfObjectives.put(index, params);
     }
     
 }

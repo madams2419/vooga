@@ -2,7 +2,6 @@ package authoring.panes.centerPane;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -59,7 +58,7 @@ public class CenterPane extends WindowPane {
 	private void addTab() {
 		TabPane t;
 		((TabPane) getContainer()).getTabs().add(
-				new Tab(String.format("Level %d", myLevels.size()),
+				new Tab(String.format("Level %d", myLevels.size()+1),
 						t = new TabPane()));
 		t.setSide(Side.BOTTOM);
 		addMap(t);
@@ -106,7 +105,7 @@ public class CenterPane extends WindowPane {
 		return null;
 	}
 
-	public Iterator<List<CenterCanvas>> getMaps() {
+	public List<List<CenterCanvas>> getMaps() {
 		List<List<CenterCanvas>> myList = new ArrayList<>();
 		myMaps.values().forEach(l -> {
 			List<CenterCanvas> m = new ArrayList<>();
@@ -115,7 +114,7 @@ public class CenterPane extends WindowPane {
 			});
 			myList.add(m);
 		});
-		return myList.iterator();
+		return myList;
 	}
 
 }
