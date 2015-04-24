@@ -4,7 +4,6 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -12,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * pulls annotations from specified root class and writes them to properties folder
+ */
 public class ActionExporter {
 	private Map<String, List<String>> myMap;
 	private Map<String, Function<AnnotatedElement, String>> myFunctions;
@@ -20,16 +22,16 @@ public class ActionExporter {
 	private int mySize;
 
 
-	public ActionExporter(Class<? extends Annotation> clazz, String name) {
-		myRootClass = clazz;
+	public ActionExporter(Class<? extends Annotation> rootClass, String name) {
+		myRootClass = rootClass;
 		myName = name;
 		myMap = new LinkedHashMap<>(); // preserve order of insertion
 		myFunctions = new HashMap<>();
 		mySize = 0;
 	}
 
-	public ActionExporter (Class<? extends Annotation> clazz) {
-		this(clazz, clazz.getSimpleName());
+	public ActionExporter (Class<? extends Annotation> rootClass) {
+		this(rootClass, rootClass.getSimpleName());
 	}
 
 	/**
@@ -45,7 +47,8 @@ public class ActionExporter {
 	 * @throws NoSuchMethodException 
 	 */
 	public void runExporter(String fullClassName, String fileName) 
-			throws SecurityException, ClassNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+			throws SecurityException, ClassNotFoundException, IOException, 
+			NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		processAnnotations(fullClassName);
 		writeToFile(fileName);
 	}
@@ -61,7 +64,8 @@ public class ActionExporter {
 	}
 
 	/**
-	 * See addAttribute(String, Function). This method uses a default function of calling the annotations attribute method.
+	 * See addAttribute(String, Function). 
+	 * This method uses a default function of calling the annotations attribute method.
 	 * @param attribute
 	 */
 	public void addAttribute (String attribute) {
@@ -71,7 +75,8 @@ public class ActionExporter {
 	/**
 	 * 
 	 * @param annotated Annotated element so can be a field or a method.
-	 * @param attribute Name of the attribute. The annotation for this exporter must have a method attribute for this already.
+	 * @param attribute Name of the attribute. The annotation for this exporter 
+	 * must have a method attribute for this already.
 	 * @return the value of this attribute
 	 */
 	private String getAnnotationAttribute (AnnotatedElement annotated, String attribute) {
@@ -85,7 +90,6 @@ public class ActionExporter {
 		}
 		catch (NoSuchMethodException | SecurityException | IllegalAccessException
 				| IllegalArgumentException | InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
@@ -102,19 +106,20 @@ public class ActionExporter {
 	}
 
 	/**
-	 * Processed the annotations of a class by finding the annotated elements (fields or methods) and processing those elements.
-	 * @param clazz
+	 * Processed the annotations of a class by finding the annotated elements (fields or methods) 
+	 * and processing those elements.
+	 * @param rootClass
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
 	 * @throws InvocationTargetException
 	 */
-	private void processAnnotations (Class<?> clazz) throws NoSuchMethodException,
+	private void processAnnotations (Class<?> rootClass) throws NoSuchMethodException,
 	SecurityException, IllegalAccessException, IllegalArgumentException,
 	InvocationTargetException {
-		processAnnotations(clazz.getDeclaredFields());
-		processAnnotations(clazz.getDeclaredMethods());
+		processAnnotations(rootClass.getDeclaredFields());
+		processAnnotations(rootClass.getDeclaredMethods());
 		System.out.println(myMap);
 	}
 
@@ -150,9 +155,13 @@ public class ActionExporter {
 		processAnnotations(Class.forName(fullClassName));
 	}
 
-
+	/**
+	 * uses WriteProperties to write annotations to file
+	 * @param fileName
+	 * @throws IOException
+	 */
 	private void writeToFile(String fileName) throws IOException{
-		WriteProperties propertiesWriter = new WriteProperties(fileName);
+		WriteProperties propertiesWriter = new WriteProperties();
 		for(int i = 0; i < mySize; i++){
 			String propertyRoot = i+"_"+ myName;
 
@@ -161,39 +170,24 @@ public class ActionExporter {
 				propertiesWriter.addProperty(propertyName, myMap.get(attribute).get(i));
 			}
 		}
-		propertiesWriter.writeToFile();
+		propertiesWriter.writeToFile(fileName);
 	}
 
-	public static void main (String[] args) {
-		ActionExporter e = new ActionExporter(IActionAnnotation.class);
-		e.addAttribute("name", e::getDefaultName);
-		e.addAttribute("description");
-		e.addAttribute("numParams");
-		System.out.println(e.myMap);
-		try {
-			e.runExporter("game_engine.sprite.Sprite", "Actions.properties");
-		} catch (SecurityException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (NoSuchMethodException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IllegalAccessException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IllegalArgumentException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (InvocationTargetException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-	}
+//	public static void main (String[] args) {
+//		ActionExporter e = new ActionExporter(IActionAnnotation.class);
+//		e.addAttribute("name", e::getDefaultName);
+//		e.addAttribute("description");
+//		e.addAttribute("numParams");
+//		System.out.println(e.myMap);
+//		
+//		try {
+//			e.runExporter("game_engine.sprite.Sprite", "Actions.properties");
+//		}catch (NoSuchMethodException | SecurityException | IllegalAccessException
+//				| IllegalArgumentException | InvocationTargetException | IOException 
+//				| ClassNotFoundException e1) {
+//			e1.printStackTrace();
+//			
+//		}
+//		
+//	}
 }

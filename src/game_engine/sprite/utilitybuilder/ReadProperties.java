@@ -9,23 +9,31 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * class to read properties file
+ * class to read properties file and return map of integer id to map of key, value pairs
  * adapted from www.avajava.com
  */
 public class ReadProperties {
-	private String fileName;
-	private Map<Integer,Map<String,String>> properties = new HashMap<>();
+	private Map<Integer,Map<String,String>> properties;
 	
-	public ReadProperties(String fileName){
-		this.fileName = fileName;
+	public ReadProperties(){
+		properties = new HashMap<>();
 	}
 	
-	public Map<Integer,Map<String,String>> getPropertiesMap() throws IOException{
-		processProperties();
+	/**
+	 * calls process properties and returns map of id to map of key/value pairs
+	 * @return
+	 * @throws IOException
+	 */
+	public Map<Integer,Map<String,String>> getPropertiesMap(String fileName) throws IOException{
+		processProperties(fileName);
 		return properties;
 	}
 	
-	private void processProperties() throws IOException{
+	/**
+	 * uses file name to parse properties file strings and populate map
+	 * @throws IOException
+	 */
+	private void processProperties(String fileName) throws IOException{
 		File file = new File(fileName);
 		FileInputStream fileInput = new FileInputStream(file);
 		Properties properties = new Properties();
@@ -44,22 +52,28 @@ public class ReadProperties {
 		}
 	}
 	
+	/**
+	 * helper method to populate properties map with (ID -> (tag,value))
+	 * @param id
+	 * @param key
+	 * @param value
+	 */
 	private void writeToMap(Integer id, String key, String value){
 		Map<String,String> propMap = properties.getOrDefault(id, new HashMap<String,String>());
 		propMap.put(key, value);
 		properties.put(id, propMap);
 	}
 	
-	public static void main(String[] args) {
-		ReadProperties rp = new ReadProperties("Actions.properties");
-		try {
-			Map<Integer,Map<String,String>> p = rp.getPropertiesMap();
-			for(Integer i:p.keySet()){
-				System.out.println(i + " " + p.get(i) + " " + p.get(p.get(i)));
-			}
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	}
+//	public static void main(String[] args) {
+//		ReadProperties rp = new ReadProperties();
+//		try {
+//			Map<Integer,Map<String,String>> p = rp.getPropertiesMap("Actions.properties");
+//			for(Integer i:p.keySet()){
+//				System.out.println(i + " " + p.get(i) + " " + p.get(p.get(i)));
+//			}
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//	}
 }

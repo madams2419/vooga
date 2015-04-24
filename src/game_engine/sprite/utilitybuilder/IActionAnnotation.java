@@ -6,6 +6,9 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
+/**
+ * interface defining action annotations
+ */
 public @interface IActionAnnotation {
 	public int numParams();
 	public String description();
