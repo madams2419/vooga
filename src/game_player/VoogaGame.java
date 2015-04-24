@@ -5,7 +5,7 @@ import game_engine.Level;
 import game_engine.ScrollTracker;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
-import game_engine.control.ControlManager;
+import game_engine.control.SceneControlManager;
 import game_engine.sprite.Sprite;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +43,7 @@ public class VoogaGame extends AnimationTimer implements IActor{
 	    root.getChildren().add(sprite.getImageView());
 	});
 	root.requestFocus();
-	ControlManager controlManager = activeLevel.getControlManager();
+	SceneControlManager controlManager = activeLevel.getControlManager();
 	root.setOnKeyPressed(e -> controlManager.handleKeyEvent(e.getCode(), true));
         root.setOnKeyReleased(e -> controlManager.handleKeyEvent(e.getCode(), false));
 

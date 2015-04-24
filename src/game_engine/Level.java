@@ -1,7 +1,7 @@
 package game_engine;
 
 import game_engine.collision.CollisionEngine;
-import game_engine.control.ControlManager;
+import game_engine.control.SceneControlManager;
 import game_engine.objective.Objective;
 import game_engine.sprite.Sprite;
 
@@ -19,7 +19,7 @@ public class Level {
 	List<Objective> myObjectives;
 	List<Sprite> mySprites;
 	private CollisionEngine myCollisionEngine;
-	private ControlManager myControlManager;
+	private SceneControlManager myControlManager;
 	
 	public Level() {
 		// TODO
@@ -39,11 +39,11 @@ public class Level {
             myCollisionEngine.checkCollisions();
         }
         
-        public void setControlManager( ControlManager controlManager) {
+        public void setControlManager( SceneControlManager controlManager) {
             myControlManager = controlManager;
         }
         
-        public ControlManager getControlManager() {
+        public SceneControlManager getControlManager() {
             return myControlManager;
         }
         

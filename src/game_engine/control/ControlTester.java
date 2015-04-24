@@ -23,7 +23,7 @@ public class ControlTester extends Application{
 	static int track1 = 10;
 	static String action = "do something";
 	static String printout = "Tracking Number is: ";
-	static ControlManager cManager = new ControlManager();
+	static SceneControlManager cManager = new SceneControlManager();
 	static Text text1 = new Text(100, 200, printout + track1);
 	static Text text2 = new Text(100, 280, "Let's "+action);
 	static private int activeControl = 0;
@@ -69,7 +69,6 @@ public class ControlTester extends Application{
 
 	@Override
 	public void start(Stage s) throws Exception {
-		SpeechRecognition speech = new SpeechRecognition();
 		s.setTitle("Control Demo");
 		Group myGroup = new Group();
 		Scene scene = new Scene(myGroup, 400, 400, Color.WHITE);
@@ -82,7 +81,15 @@ public class ControlTester extends Application{
 		scene.setOnKeyPressed(e -> handleKeyInput(e,PRESSED_KEY));
 		scene.setOnKeyReleased(e -> handleKeyInput(e,RELEASED_KEY));
 		s.show();
-		Thread myThread = new Thread(new SpeechRun(speech));
+	}
+	
+	private void launchVoiceControl(){
+		SpeechRecognition speech = new SpeechRecognition();
+		Thread myThread = new Thread(new Runnable(){
+			@Override
+			public void run() {
+				speech.activateSpeech();
+			}});
 		myThread.start();
 	}
 	
@@ -117,6 +124,7 @@ public class ControlTester extends Application{
 
 
 	private void handleKeyInput (KeyEvent e, boolean pressed) {
+		System.out.println("The event name is "+e.getClass());
 		KeyCode keyCode = e.getCode();
 		cManager.handleKeyEvent(keyCode, pressed);
 	}

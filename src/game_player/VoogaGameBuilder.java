@@ -8,7 +8,7 @@ import game_engine.behaviors.IBehavior;
 import game_engine.behaviors.MultipleBehaviors;
 import game_engine.collision.Collision;
 import game_engine.collision.CollisionEngine;
-import game_engine.control.ControlManager;
+import game_engine.control.SceneControlManager;
 import game_engine.control.KeyControl;
 import game_engine.objective.GameTimer;
 import game_engine.objective.Objective;
@@ -223,9 +223,9 @@ public class VoogaGameBuilder {
         }
     }
 
-    private ControlManager buildControl () {
+    private SceneControlManager buildControl () {
         parser.moveDown("control");
-        ControlManager controlManager = new ControlManager();
+        SceneControlManager controlManager = new SceneControlManager();
         for (String controlDirectory : parser.getValidSubDirectories()) {
             KeyControl newControl = buildKeyControl(controlDirectory);
             controlManager.addControl(newControl);

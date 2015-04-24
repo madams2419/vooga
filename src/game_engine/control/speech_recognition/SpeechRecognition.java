@@ -18,7 +18,7 @@ public class SpeechRecognition {
 				// here.  For this sample, we'll just sleep for a little bit.
 				try
 				{
-					Thread.sleep(200);
+					Thread.sleep(100);
 				}
 				catch (InterruptedException e)
 				{
@@ -36,22 +36,22 @@ public class SpeechRecognition {
 						quit = true;
 					}
 					
-					if(s.equals("walk") || s.equals("add")){
+					if(s.contains("add")){
 						ControlTester.addTrack();
 						ControlTester.updateText();
 					}
 					
-					if(s.equals("multiply")){
+					if(s.contains("multiply")){
 						ControlTester.mulTrack();
 						ControlTester.updateText();
 					}
 					
-					if(s.equals("divide")){
+					if(s.contains("divide")){
 						ControlTester.divTrack();
 						ControlTester.updateText();
 					}
 					
-					if(s.equals("jump") || s.equals("subtract")){
+					if(s.contains("subtract")){
 						ControlTester.subTrack();
 						ControlTester.updateText();
 					}
