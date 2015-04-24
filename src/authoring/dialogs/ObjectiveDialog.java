@@ -14,8 +14,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import authoring.panes.rightPane.ObjectivePane;
 import authoring.userInterface.DialogGridOrganizer;
 
@@ -31,16 +29,16 @@ public class ObjectiveDialog extends Dialog<ButtonType> {
 	private final String[] behaviours = { "targetType", "targetIndex", "name",
 			"parameters" };
 
-	private List<ComboBox<String>> myComboBoxes;
-	private List<TextField> myTextFields;
-	private Map<String, String> myKeyActions;
+	private List<ComboBox<String>> mActions = new ArrayList<>();
+	private List<ComboBox<String>> mSprites = new ArrayList<>();
+	private List<ComboBox<String>> mStates = new ArrayList<>();
+
 	private ObjectivePane myParent;
+	private int myIndex;
 
 	// TODO: refactoring
-	public ObjectiveDialog(ObjectivePane parent) {
+	public ObjectiveDialog(ObjectivePane parent, int objectiveNumber) {
 
-		myComboBoxes = new ArrayList<>();
-		myTextFields = new ArrayList<>();
 		myParent = parent;
 
 		DialogGridOrganizer grid = new DialogGridOrganizer(4);
@@ -61,9 +59,8 @@ public class ObjectiveDialog extends Dialog<ButtonType> {
 					addPrereqsBox());
 			event.consume();
 		});
-
+		this.setTitle(String.format("Objective %d Behaviours", myIndex = objectiveNumber));
 		showBox();
-
 	}
 
 	public void showBox() {
@@ -71,27 +68,42 @@ public class ObjectiveDialog extends Dialog<ButtonType> {
 				.filter(response -> response == ButtonType.OK)
 				.ifPresent(
 						response -> {
-							myKeyActions = new HashMap<>();
-							for (int i = 0; i < myTextFields.size(); i++) {
-								myKeyActions.put(myTextFields.get(i).getText(),
-										myComboBoxes.get(i).getValue());
-							}
-							// s.setKeyActions(myKeyActions);
-							System.out.println(myKeyActions);
+							myParent.getMyParent().getParent().getCenterPane()
+									.getActiveTab()
+									.addObjective(myIndex, collectBehaviours());
 						});
 	}
 
+	private Map<String, List<String>> collectBehaviours() {
+		Map<String, List<String>> mResult = new HashMap<>();
+		mResult.put("onComplete", new ArrayList<String>());
+		mResult.put("onFailed", new ArrayList<String>());
+		for (int i = 0; i < mActions.size(); i++) {
+			String action = String.format("%s:%s", mSprites.get(i)
+					.getSelectionModel().getSelectedItem(), mActions.get(i)
+					.getSelectionModel().getSelectedItem());
+			mResult.get(mStates.get(i).getSelectionModel().getSelectedItem())
+					.add(action);
+		}
+		return mResult;
+	}
+
 	public ComboBox<String> addActionsBox() {
-		return addComboBox("win", "lose", "die");
+		ComboBox<String> b = addComboBox("win", "lose", "die");
+		mActions.add(b);
+		return b;
 	}
 
 	public ComboBox<String> addSpritesBox() {
-		return addComboBox("Main player", "other");
+		ComboBox<String> b = addComboBox("Main player", "other");
+		mSprites.add(b);
+		return b;
 	}
 
 	public ComboBox<String> addStatesBox() {
-		ComboBox<String> b = addComboBox("On complete", "On failed");
+		ComboBox<String> b = addComboBox("onComplete", "onFailed");
 		b.getSelectionModel().select(0);
+		mStates.add(b);
 		return b;
 	}
 
@@ -104,24 +116,11 @@ public class ObjectiveDialog extends Dialog<ButtonType> {
 	private ComboBox<String> addComboBox(Collection<String> elements) {
 		ComboBox<String> result = new ComboBox<>();
 		result.getItems().addAll(elements);
-		myComboBoxes.add(result);
 		return result;
 	}
 
 	private ComboBox<String> addComboBox(String... elements) {
 		return addComboBox(Arrays.asList(elements));
-	}
-
-	public List<ComboBox<String>> getComboBoxes() {
-		return myComboBoxes;
-	}
-
-	public void PopulateComboBox(List<String> controlsList,
-			List<KeyCode> keycodeList) {
-	}
-
-	public Map<String, String> getKeyActions() {
-		return myKeyActions;
 	}
 
 }

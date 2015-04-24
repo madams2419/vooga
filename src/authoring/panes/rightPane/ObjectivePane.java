@@ -26,7 +26,7 @@ public class ObjectivePane extends EditingPane {
 	private void initButtons() {
 		ListView<Text> list = new ListView<>(mObjectives);
 		list.setOnMouseClicked(e -> {
-			new ObjectiveDialog(this);
+			new ObjectiveDialog(this, list.getSelectionModel().getSelectedIndex());
 		});
 		this.getChildren().add(list);
 		
@@ -38,17 +38,16 @@ public class ObjectivePane extends EditingPane {
 	}
 
 	public void createObjective(int index) {
-		
 		mObjectives.add(new Text("objective_" + index));
 	}
 
-	private HBox createLabelField(String label) {
-		HBox h = new HBox(5);
-		h.getChildren().add(new Text(label));
-		h.getChildren().add(new TextField());
-		h.setAlignment(Pos.CENTER);
-		return h;
-	}
+//	private HBox createLabelField(String label) {
+//		HBox h = new HBox(5);
+//		h.getChildren().add(new Text(label));
+//		h.getChildren().add(new TextField());
+//		h.setAlignment(Pos.CENTER);
+//		return h;
+//	}
 
 	public List<Text> getObjectives() {
 		return mObjectives;
