@@ -23,6 +23,9 @@ public class WriteProperties {
 	}
 	
 	public void writeToFile() throws IOException{
+		for(Object p:properties.keySet()){
+			System.out.println(p.toString());
+		}
 		FileOutputStream fileOut = new FileOutputStream(file);
 		properties.store(fileOut, "Parameters");
 		fileOut.close();

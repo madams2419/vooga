@@ -2,27 +2,30 @@ package game_engine.sprite.utilitybuilder;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
  * class to read properties file
  * adapted from www.avajava.com
- * TODO finish writing implementing
  */
 public class ReadProperties {
 	private String fileName;
-	private HashMap<Integer,String[]> properties = new HashMap<>();
+	private Map<Integer,Map<String,String>> properties = new HashMap<>();
 	
 	public ReadProperties(String fileName){
 		this.fileName = fileName;
 	}
 	
-	public ArrayList<String[]> getProperties() throws IOException{
+	public Map<Integer,Map<String,String>> getPropertiesMap() throws IOException{
+		processProperties();
+		return properties;
+	}
+	
+	private void processProperties() throws IOException{
 		File file = new File(fileName);
 		FileInputStream fileInput = new FileInputStream(file);
 		Properties properties = new Properties();
@@ -31,37 +34,32 @@ public class ReadProperties {
 		
 		Enumeration enuKeys = properties.keys();
 		while (enuKeys.hasMoreElements()) {
-			String[] parameters = new String[3];
 			String key = (String) enuKeys.nextElement();
-			int id = Integer.parseInt(key.split("_")[1]);
-			String type = key.split("_")[2];
-			// refactor this
-			
+			String[] splitString = key.split("_");
+			String id = splitString[0];
+			String keyName = splitString[2];
 			String value = properties.getProperty(key);
-			System.out.println(key + ": " + value);
+			System.out.println(id + ", " + keyName + ", " + value);
+			writeToMap(Integer.parseInt(id),keyName,value);
 		}
-		
-		return null;
-		
 	}
+	
+	private void writeToMap(Integer id, String key, String value){
+		Map<String,String> propMap = properties.getOrDefault(id, new HashMap<String,String>());
+		propMap.put(key, value);
+		properties.put(id, propMap);
+	}
+	
 	public static void main(String[] args) {
+		ReadProperties rp = new ReadProperties("Actions.properties");
 		try {
-			File file = new File("test.properties");
-			FileInputStream fileInput = new FileInputStream(file);
-			Properties properties = new Properties();
-			properties.load(fileInput);
-			fileInput.close();
-
-			Enumeration enuKeys = properties.keys();
-			while (enuKeys.hasMoreElements()) {
-				String key = (String) enuKeys.nextElement();
-				String value = properties.getProperty(key);
-				System.out.println(key + ": " + value);
+			Map<Integer,Map<String,String>> p = rp.getPropertiesMap();
+			for(Integer i:p.keySet()){
+				System.out.println(i + " " + p.get(i) + " " + p.get(p.get(i)));
 			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 }

@@ -1,19 +1,37 @@
 package game_engine.sprite.utilitybuilder;
-
+import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
 public class ActionExporter {
-	private ArrayList<String> methodNames = new ArrayList<>();
-	private ArrayList<String> descriptions = new ArrayList<>();
-	private ArrayList<Integer> paramCounts = new ArrayList<>();
-	private String propertyRoot;
-	
-	public ActionExporter(String propertyRootName){
-		this.propertyRoot = propertyRootName;
+	private Map<String, List<String>> myMap;
+	private Map<String, Function<AnnotatedElement, String>> myFunctions;
+	private Class<? extends Annotation> myRootClass;
+	private String myName;
+	private int mySize;
+
+
+	public ActionExporter(Class<? extends Annotation> clazz, String name) {
+		myRootClass = clazz;
+		myName = name;
+		myMap = new LinkedHashMap<>(); // preserve order of insertion
+		myFunctions = new HashMap<>();
+		mySize = 0;
 	}
-	
+
+	public ActionExporter (Class<? extends Annotation> clazz) {
+		this(clazz, clazz.getSimpleName());
+	}
+
 	/**
 	 * runs ActionExporter
 	 * @param fullClassName
@@ -21,74 +39,161 @@ public class ActionExporter {
 	 * @throws SecurityException
 	 * @throws ClassNotFoundException
 	 * @throws IOException
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
+	 * @throws NoSuchMethodException 
 	 */
 	public void runExporter(String fullClassName, String fileName) 
-			throws SecurityException, ClassNotFoundException, IOException{
+			throws SecurityException, ClassNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		processAnnotations(fullClassName);
 		writeToFile(fileName);
 	}
-	
+
 	/**
-	 * Retrieves IActionAnnotations from specified class and populates ArrayLists
-	 * @param fullClassName
-	 * @throws SecurityException
-	 * @throws ClassNotFoundException
+	 * Adds an attribute that will be printed to the properties file.
+	 * @param attribute Attribute
+	 * @param function Given an annotated element, defines how to get the value of this attribute.
 	 */
-	private void processAnnotations(String fullClassName) 
-			throws SecurityException, ClassNotFoundException{
-		Field[] fields = Class.forName(fullClassName).getDeclaredFields();
-		for (Field field: fields) {
-			if (field.isAnnotationPresent(IActionAnnotation.class)){
-				IActionAnnotation ia = (IActionAnnotation) field.getAnnotation(IActionAnnotation.class);
-				int paramCount = ia.numParams();
-				String description = ia.description();
-				String[] fieldString = field.toString().split("\\.");
-				methodNames.add(fieldString[fieldString.length-1]);
-				descriptions.add(description);
-				paramCounts.add(paramCount);
+	public void addAttribute (String attribute, Function<AnnotatedElement, String> function) {
+		myFunctions.put(attribute, function);
+		myMap.put(attribute, new ArrayList<>());
+	}
+
+	/**
+	 * See addAttribute(String, Function). This method uses a default function of calling the annotations attribute method.
+	 * @param attribute
+	 */
+	public void addAttribute (String attribute) {
+		addAttribute(attribute, annotated -> getAnnotationAttribute(annotated, attribute));
+	}
+
+	/**
+	 * 
+	 * @param annotated Annotated element so can be a field or a method.
+	 * @param attribute Name of the attribute. The annotation for this exporter must have a method attribute for this already.
+	 * @return the value of this attribute
+	 */
+	private String getAnnotationAttribute (AnnotatedElement annotated, String attribute) {
+		Annotation annotation = annotated.getAnnotation(myRootClass);
+		Method method;
+		Object object;
+		try {
+			method = myRootClass.getMethod(attribute);
+			object = method.invoke(annotation);
+			return object.toString();
+		}
+		catch (NoSuchMethodException | SecurityException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * Returns the name of the annotated element which is assumed to be the string after the last period.
+	 * @param annotated
+	 * @return The name of the annotated element.
+	 */
+	public String getDefaultName (AnnotatedElement annotated) {
+		String[] annotatedArray = annotated.toString().split("\\.");
+		return annotatedArray[annotatedArray.length - 1];
+	}
+
+	/**
+	 * Processed the annotations of a class by finding the annotated elements (fields or methods) and processing those elements.
+	 * @param clazz
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 */
+	private void processAnnotations (Class<?> clazz) throws NoSuchMethodException,
+	SecurityException, IllegalAccessException, IllegalArgumentException,
+	InvocationTargetException {
+		processAnnotations(clazz.getDeclaredFields());
+		processAnnotations(clazz.getDeclaredMethods());
+		System.out.println(myMap);
+	}
+
+	/**
+	 * Process the annotations for an array of annotated elements.
+	 * @param elements
+	 */
+	private void processAnnotations (AnnotatedElement[] elements) {
+		for (AnnotatedElement element : elements) {
+			if (element.isAnnotationPresent(myRootClass)) {
+				for (String attribute : myMap.keySet()) {
+					String value = myFunctions.get(attribute).apply(element);
+					myMap.get(attribute).add(value);
+				}
+				mySize ++ ;
 			}
 		}
 	}
-	
+
 	/**
-	 * accesses ArrayLists and writes properties to file
-	 * propertyRootName + number
-	 * propertyRootName + number + Description
-	 * propertyRootName + number + ParamCount
-	 * @param fileName
-	 * @throws IOException
+	 * Convenience method. Calls processAnnotations (Class.forName(fullClassName)). 
+	 * @param fullClassName
+	 * @throws SecurityException
+	 * @throws ClassNotFoundException
+	 * @throws NoSuchMethodException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
 	 */
+	private void processAnnotations (String fullClassName)
+			throws SecurityException, ClassNotFoundException, NoSuchMethodException,
+			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		processAnnotations(Class.forName(fullClassName));
+	}
+
+
 	private void writeToFile(String fileName) throws IOException{
 		WriteProperties propertiesWriter = new WriteProperties(fileName);
-		for(int i = 0; i < methodNames.size(); i++){
-			String propertyName = i+"_"+propertyRoot;
-			String descriptionName = propertyName+ "_Description";
-			String paramCountName = propertyName+ "_ParamCount";
-			propertyName += "_Name";
-			propertiesWriter.addProperty(propertyName,
-					methodNames.get(i));
-			propertiesWriter.addProperty(descriptionName,
-					descriptions.get(i));
-			propertiesWriter.addProperty(paramCountName,
-					paramCounts.get(i).toString());
-			
+		for(int i = 0; i < mySize; i++){
+			String propertyRoot = i+"_"+ myName;
+
+			for (String attribute: myMap.keySet()) {
+				String propertyName = propertyRoot + "_" + attribute;
+				propertiesWriter.addProperty(propertyName, myMap.get(attribute).get(i));
+			}
 		}
 		propertiesWriter.writeToFile();
 	}
-	
-	public static void main(String[] args) {
-		ActionExporter ae = new ActionExporter("Action");
+
+	public static void main (String[] args) {
+		ActionExporter e = new ActionExporter(IActionAnnotation.class);
+		e.addAttribute("name", e::getDefaultName);
+		e.addAttribute("description");
+		e.addAttribute("numParams");
+		System.out.println(e.myMap);
 		try {
-			ae.runExporter("game_engine.sprite.Sprite", "Actions.properties");
-		} catch (SecurityException e) {
+			e.runExporter("game_engine.sprite.Sprite", "Actions.properties");
+		} catch (SecurityException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+			e1.printStackTrace();
+		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
+		} catch (NoSuchMethodException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalArgumentException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InvocationTargetException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
+		
 	}
 }
