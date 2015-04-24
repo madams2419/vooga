@@ -42,9 +42,6 @@ public class AnimationsDialog extends DataDialog {
                                                             "*.gif" };
 
     public AnimationsDialog (Sprite sprite, ObservableList<String> states) {
-//        super(sprite, 3,
-//              new Node[] { new Label(STATE), new Label(IMAGE), new Label(IMAGE_FILE_URL) }, states);
-        super();
         myStates = states;
         mySprite = sprite;
         initializeEverything(states);
@@ -104,21 +101,22 @@ public class AnimationsDialog extends DataDialog {
     }
 
     @Override
-    ObservableList<String> getComboBoxContent () {
+    ObservableList<String> getListContent () {
         return myStates;
     }
     
-    public ObservableList<String> getStates () {
-        return myStates;
-    }
-
     public void setStates (ObservableList<String> states) {
         myStates = states;
     }
     
+    private Label addLabel (int index) {
+        Label label = new Label(myStates.get(index));
+        return label;
+    }
+    
     @Override
-    void addRow (DialogGridOrganizer grid, ObservableList<String> comboBoxContent, int index) {
-        grid.addRowEnd(addComboBox(), addImageButton(ADD_IMAGE, index), addImageURL());
+    void addRow (DialogGridOrganizer grid, int index) {
+        grid.addRowEnd(addLabel(index), addImageButton(ADD_IMAGE, index), addImageURL());
     }
 
     @Override

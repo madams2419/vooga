@@ -22,64 +22,41 @@ public abstract class DataDialog extends Dialog<ButtonType> {
     private static final int BOTTOM_SPACING = 25;
     private int myIndex;
 
-    public DataDialog() {
-        
-    }
-    
-    public DataDialog (Sprite s, int sizeOfGridOrganizer, Node[] titleLabelRow, ObservableList<String> comboBoxContent) {
-
-//        DialogGridOrganizer grid = new DialogGridOrganizer(sizeOfGridOrganizer);
-//        grid.addRowEnd(titleLabelRow);
-//
-////        grid.addRowEnd(addComboBox(), addTextField());
-////        grid.addRowEnd(nextRow);
-//        addRow(grid, getComboBoxContent());
-//        
-//        this.getDialogPane().setContent(grid);
-//        ButtonType b = new ButtonType(ADD);
-//        this.getDialogPane().getButtonTypes().addAll(b, ButtonType.OK, ButtonType.CANCEL);
-//
-//        final Button addButton = (Button) this.getDialogPane().lookupButton(b);
-//        addButton.addEventFilter(ActionEvent.ACTION, event -> {
-//            this.setHeight(this.getHeight() + BOTTOM_SPACING);
-////            grid.addRowEnd(addComboBox(), addTextField());
-//            addRow(grid, getComboBoxContent());
-//            event.consume();
-//        });
-//
-//        showBox(s);
-
-    }
-    
     void initialize(Sprite s, int sizeOfGridOrganizer, Node[] titleLabelRow, ObservableList<String> comboBoxContent) {
         DialogGridOrganizer grid = new DialogGridOrganizer(sizeOfGridOrganizer);
         grid.addRowEnd(titleLabelRow);
 
-//        grid.addRowEnd(addComboBox(), addTextField());
-//        grid.addRowEnd(nextRow);
-        addRow(grid, getComboBoxContent(), myIndex++);
+        for (int i = 0; i < getListContent().size(); i++) {
+            this.setHeight(this.getHeight() + BOTTOM_SPACING);
+            addRow(grid, myIndex++);
+        }
         
         this.getDialogPane().setContent(grid);
-        ButtonType b = new ButtonType(ADD);
-        this.getDialogPane().getButtonTypes().addAll(b, ButtonType.OK, ButtonType.CANCEL);
 
+//        ButtonType b = addAddButton(grid);
+//        this.getDialogPane().getButtonTypes().addAll(b, ButtonType.OK, ButtonType.CANCEL);
+
+        this.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        showBox(s);
+   
+    }
+    
+    ButtonType addAddButton(DialogGridOrganizer grid) {
+        ButtonType b = new ButtonType(ADD);
         final Button addButton = (Button) this.getDialogPane().lookupButton(b);
         addButton.addEventFilter(ActionEvent.ACTION, event -> {
             this.setHeight(this.getHeight() + BOTTOM_SPACING);
-//            grid.addRowEnd(addComboBox(), addTextField());
-            addRow(grid, getComboBoxContent(), myIndex++);
+            addRow(grid, myIndex++);
             event.consume();
         });
-
-        showBox(s);
-   
+        return b;
     }
 
     abstract void initializeEverything (ObservableList<String> comboBoxContent);
 
-    abstract ObservableList<String> getComboBoxContent ();
+    abstract ObservableList<String> getListContent ();
 
-    abstract void addRow (DialogGridOrganizer grid, ObservableList<String> comboBoxContent, int index);
+    abstract void addRow (DialogGridOrganizer grid, int index);
 
     abstract Consumer<ButtonType> getTodoOnOK();
     
@@ -94,7 +71,7 @@ public abstract class DataDialog extends Dialog<ButtonType> {
     
     ComboBox<String> addComboBox () {
         List<ComboBox<String>> myComboBoxes = getComboBoxes();
-        ObservableList<String> toAdd = getComboBoxContent();
+        ObservableList<String> toAdd = getListContent();
         ComboBox<String> box = new ComboBox<>();
         box.getItems().addAll(toAdd);
         myComboBoxes.add(box);
