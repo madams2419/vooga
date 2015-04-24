@@ -1,5 +1,6 @@
 package game_engine.physics.objects;
 
+import java.util.List;
 import java.util.Map;
 
 import game_engine.hitboxes.IHitbox;
@@ -14,7 +15,7 @@ public class ComplexPhysicsObject extends AcceleratingPhysicsObject {
 	private double mass, inverseMass;
 	private double xForce, yForce;
 	
-	public ComplexPhysicsObject(PhysicsEngine physEng, Map<String, IHitbox> hitbox, Vector position, Animation animation, Material mat) {
+	public ComplexPhysicsObject(PhysicsEngine physEng, Map<String, List<IHitbox>> hitbox, Vector position, Animation animation, Material mat) {
 		super(physEng, hitbox, position, animation);
 		material = mat;
 		mass = computeMass();

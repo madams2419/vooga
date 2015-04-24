@@ -1,6 +1,5 @@
 package game_engine.sprite;
 
-import game_engine.annotation.IActionAnnotation;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.physics.Vector;

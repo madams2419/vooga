@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
 
 import java.util.Observer;
 
-public class Animation implements Observer {
+public class Animation extends Observable implements Observer {
 
     private ImageView image;
     private Node current;
@@ -36,11 +36,13 @@ public class Animation implements Observer {
 		private Image image;
 		private Node next;
 		private double delay;
+		private int index;
 		
-		public Node(Image i, Node n, double d) {
+		public Node(Image i, Node n, double d, int ind) {
 			image = i;
 			next = n;
 			delay = d;
+			index = ind;
 		}
 	}
 
@@ -51,14 +53,14 @@ public class Animation implements Observer {
     	public void add(Image image, double delay) {
     		
     		if (first == null) {
-    			first = new Node(image, first, delay);
+    			first = new Node(image, first, delay, 0);
     			return;
     		}
     		Node current = first;
     		while (current.next != first) {
     			current = current.next;
     		}
-    		current.next = new Node(image, first, delay);
+    		current.next = new Node(image, first, delay, current.index + 1);
     	}
     }
     
@@ -70,9 +72,15 @@ public class Animation implements Observer {
     	}
     }
     
+    public int getIndex() {
+    	return current.index;
+    }
+    
     private void rotateImage() {
     	current = current.next;
     	image.setImage(current.image);
+    	setChanged();
+    	notifyObservers();
     }
     
     public ImageView getImageView() {

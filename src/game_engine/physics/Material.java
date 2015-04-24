@@ -9,6 +9,7 @@ public class Material {
 	public static final Material SUPER_BALL = new Material(0.3, 0.95);
 	public static final Material PILLOW = new Material(0.1, 0.2);
 	public static final Material STATIC = new Material(0.0, 0.0);
+	public static final Material FLOATING = new Material(0.0, 0.2);
 
 	private double myDensity;
 	private double myRestitution;

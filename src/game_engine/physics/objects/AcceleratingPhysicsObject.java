@@ -1,5 +1,6 @@
 package game_engine.physics.objects;
 
+import java.util.List;
 import java.util.Map;
 
 import game_engine.hitboxes.IHitbox;
@@ -11,7 +12,7 @@ public class AcceleratingPhysicsObject extends MovingPhysicsObject {
 	
 	private double xAccel, yAccel;
 	
-	public AcceleratingPhysicsObject(PhysicsEngine physEng, Map<String, IHitbox> hitbox, Vector position, Animation animation) {
+	public AcceleratingPhysicsObject(PhysicsEngine physEng, Map<String, List<IHitbox>> hitbox, Vector position, Animation animation) {
 		super(physEng, hitbox, position, animation);
 		xAccel = 0.0;
 		yAccel = 0.0;

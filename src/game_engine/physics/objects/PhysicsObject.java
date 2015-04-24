@@ -1,5 +1,6 @@
 package game_engine.physics.objects;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
@@ -25,18 +26,20 @@ import game_engine.sprite.Sprite;
 public abstract class PhysicsObject extends Observable implements Observer {
 
 	private double xPosition, yPosition;
-	private Map<String, IHitbox> hitboxes;
+	private Map<String, List<IHitbox>> hitboxes;
 	private IHitbox activeHitbox;
 	private PhysicsEngine engine;
 	private long lastUpdateTime;
+	private String currentState;
 	
-	public PhysicsObject(PhysicsEngine physEng, Map<String, IHitbox> map, Vector position, Animation animation) {
+	public PhysicsObject(PhysicsEngine physEng, Map<String, List<IHitbox>> map, Vector position, Animation animation) {
 		engine = physEng;
 		hitboxes = map;
 		xPosition = position.getX();
 		yPosition = position.getY();
-		hitboxes.keySet().forEach((name) -> hitboxes.get(name).addPositionSupplier(getPositionSupplier()));
+		hitboxes.keySet().forEach((name) -> hitboxes.get(name).forEach((hitbox) -> hitbox.addPositionSupplier(getPositionSupplier())));
 		addObserver(animation);
+		animation.addObserver(this);
 	}
 	
 	protected Supplier<Vector> getPositionSupplier() {
@@ -104,7 +107,28 @@ public abstract class PhysicsObject extends Observable implements Observer {
 	public abstract void applyImpulse(Vector impulse);
 	
 	public void update(Observable arg0, Object arg1) {
-		Sprite sprite = (Sprite) arg0;
-		activeHitbox = hitboxes.get(sprite.getState());
+		updateSprite(arg0);
+		updateAnimation(arg0);
+	}
+	
+	private void updateSprite(Observable source) {
+		try {
+			Sprite sprite = (Sprite) source;
+			currentState = sprite.getState();
+			activeHitbox = hitboxes.get(currentState).get(0);
+		}
+		catch (Exception e) {
+			// do nothing
+		}
+	}
+	
+	private void updateAnimation(Observable source) {
+		try {
+			Animation animation = (Animation) source;
+			activeHitbox = hitboxes.get(currentState).get(animation.getIndex());
+		}
+		catch (Exception e) {
+			// do nothing
+		}
 	}
 }
