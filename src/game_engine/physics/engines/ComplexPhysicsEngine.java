@@ -9,6 +9,10 @@ public class ComplexPhysicsEngine extends PhysicsEngine {
 	
 	private double dragCoefficient;
 	
+	public ComplexPhysicsEngine(double drag) {
+		dragCoefficient = drag;
+	}
+	
 	public void resolveCollision(PhysicsObject spriteA, PhysicsObject spriteB) {
 		
 	}

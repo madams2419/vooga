@@ -21,7 +21,6 @@ public class Animation extends Observable implements Observer {
     public Animation() {
     	image = new ImageView();
     	paths = new HashMap<>();
-    	lastUpdateTime = System.currentTimeMillis();
     }
     
     public void associateImage(String state, String imagePath, double delay, double height, double width) {

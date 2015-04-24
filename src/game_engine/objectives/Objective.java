@@ -1,4 +1,4 @@
-package game_engine.objective;
+package game_engine.objectives;
 
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;

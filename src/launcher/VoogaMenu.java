@@ -385,7 +385,7 @@ public class VoogaMenu {
     private void launchGame(XMLParser file) {
 	if (file != null) {
 	    VoogaGameBuilder gameBuilder = new VoogaGameBuilder(file);
-	    VoogaGame game = gameBuilder.build();
+	    VoogaGame game = gameBuilder.buildGame();
 	    scene.setRoot(game.getRoot());
 	    game.start();
 	}

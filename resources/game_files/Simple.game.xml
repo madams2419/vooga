@@ -3,582 +3,568 @@
 	<title>Simple Game</title>
 
 	<frame_rate>.05</frame_rate>
-
-	<game_objectives>
-		<objective_0>
-			<onComplete>
-				<description>Reach the flag</description>
-
-				<behaviors>
-					<behavior_0>
-						<targetType>VoogaGame</targetType>
-						<name>setActiveLevel</name>
-						<parameters>1</parameters>
-					</behavior_0>
-				</behaviors>
-			</onComplete>
-		</objective_0>
-	</game_objectives>
-
+	
 	<level>
 		<first_level>0</first_level>
-
-		<level_objectives>
-			<objective_0>
-				<description>Reach the flag</description>
-
-				<prereqs>1</prereqs>
-
-				<onComplete>
-					<behaviors>
-						<behavior_0>
-							<targetType>sprite</targetType>
-							<targetIndex>0</targetIndex>
-							<name>setState</name>
-							<parameters>win</parameters>
-						</behavior_0>
-
-						<behavior_1>
-							<targetType>sprite</targetType>
-							<targetIndex>0</targetIndex>
-							<name>jump</name>
-							<parameters>.05</parameters>
-						</behavior_1>
-					</behaviors>
-				</onComplete>
-			</objective_0>
-
-			<objective_1>
-				<description>Get the key</description>
-
-				<onComplete>
-					<behaviors>
-						<behavior_0>
-							<targetType>sprite</targetType>
-							<targetIndex>0</targetIndex>
-							<name>setState</name>
-							<parameters>key</parameters>
-						</behavior_0>
-					</behaviors>
-				</onComplete>
-
-				<onFailed>
-					<behaviors>
-						<behavior_0>
-							<targetType>sprite</targetType>
-							<targetIndex>0</targetIndex>
-							<name>setState</name>
-							<parameters>dead</parameters>
-						</behavior_0>
-					</behaviors>
-				</onFailed>
-			</objective_1>
-
-			<objective_2>
-				<description>Don't collide with bowser</description>
-
-				<onComplete>
-					<behaviors>
-						<behavior_0>
-							<targetType>sprite</targetType>
-							<targetIndex>0</targetIndex>
-							<name>jump</name>
-							<parameters>.03</parameters>
-						</behavior_0>
-
-						<behavior_1>
-							<targetType>sprite</targetType>
-							<targetIndex>0</targetIndex>
-							<name>setState</name>
-							<parameters>dead</parameters>
-						</behavior_1>
-					</behaviors>
-				</onComplete>
-			</objective_2>
-		</level_objectives>
-
-		<sprites>
-			<sprite_0>
-				<initial_state>standing</initial_state>
-
-				<animation>
-					<state_0>
-						<name>standing</name>
-
-						<images>
-							<image_0>
-								<source>/resources/images/mario.png</source>
-
-								<delay>1</delay>
-
-								<width>100</width>
-								<height>200</height>
-
-								<hitboxes>
-									<hitbox_0>
-										<point_0>0 0</point_0>
-										<point_1>100 0</point_1>
-										<point_2>100 200</point_2>
-										<point_3>0 200</point_3>
-									</hitbox_0>
-								</hitboxes>
-							</image_0>
-						</images>
-					</state_0>
-
-					<state_1>
-						<name>dead</name>
-
-						<images>
-							<source>/resources/images/surprisedMario.png</source>
-
-							<delay>1</delay>
-
-							<width>100</width>
-							<height>200</height>
-
-							<hitboxes>
-								<hitbox_0>
-									<point_0>0 0</point_0>
-									<point_1>100 0</point_1>
-									<point_2>100 200</point_2>
-									<point_3>0 200</point_3>
-								</hitbox_0>
-							</hitboxes>
-						</images>
-					</state_1>
-
-					<state_2>
-						<name>win</name>
-
-						<images>
-							<source>/resources/images/happyMario.png</source>
-
-							<delay>1</delay>
-
-							<width>100</width>
-							<height>200</height>
-
-							<hitboxes>
-								<hitbox_0>
-									<point_0>0 0</point_0>
-									<point_1>100 0</point_1>
-									<point_2>100 200</point_2>
-									<point_3>0 200</point_3>
-								</hitbox_0>
-							</hitboxes>
-						</images>
-					</state_2>
-
-					<state_3>
-						<name>key</name>
-
-						<images>
-							<source>/resources/images/keyMario.png</source>
-
-							<delay>1</delay>
-
-							<width>100</width>
-							<height>200</height>
-
-							<hitboxes>
-								<hitbox_0>
-									<point_0>0 0</point_0>
-									<point_1>100 0</point_1>
-									<point_2>100 200</point_2>
-									<point_3>0 200</point_3>
-								</hitbox_0>
-							</hitboxes>
-						</images>
-					</state_3>
-				</animation>
-
-				<physics>
-					<type>ComplexPhysicsObject</type>
-					<material>bouncy_ball</material>
-					<position>50 100</position>
-				</physics>
-			</sprite_0>
-
-			<sprite_1>
-				<initial_state>immobile</initial_state>
-
-				<animation>
-					<state_0>
-						<name>immobile</name>
-
-						<images>
-							<image_0>
-								<source>/resources/images/ground.png</source>
-
-								<delay>1</delay>
-
-								<width>2000</width>
-								<height>200</height>
-
-								<hitboxes>
-									<hitbox_0>
-										<point_0>0 0</point_0>
-										<point_1>2000 0</point_1>
-										<point_2>2000 200</point_2>
-										<point_3>0 200</point_3>
-									</hitbox_0>
-								</hitboxes>
-							</image_0>
-						</images>
-					</state_0>
-				</animation>
-
-				<physics>
-					<type>ComplexPhysicsObject</type>
-					<material>floating</material>
-					<position>0 0</position>
-				</physics>
-			</sprite_1>
-
-			<sprite_2>
-				<initial_state>immobile</initial_state>
-
-				<animation>
-					<state_0>
-						<name>immobile</name>
-
-						<images>
-							<image_0>
-								<source>/resources/images/ground.png</source>
-
-								<delay>1</delay>
-
-								<width>300</width>
-								<height>50</height>
-
-								<hitboxes>
-									<hitbox_0>
-										<point_0>0 0</point_0>
-										<point_1>300 0</point_1>
-										<point_2>300 50</point_2>
-										<point_3>0 50</point_3>
-									</hitbox_0>
-								</hitboxes>
-							</image_0>
-						</images>
-					</state_0>
-				</animation>
-
-				<physics>
-					<type>ComplexPhysicsObject</type>
-					<material>floating</material>
-					<position>1000 300</position>
-				</physics>
-			</sprite_2>
-
-			<sprite_3>
-				<initial_state>immobile</initial_state>
-
-				<animation>
-					<state_0>
-						<name>immobile</name>
-
-						<images>
-							<image_0>
-								<source>/resources/images/bowser.png</source>
-
-								<delay>1</delay>
-
-								<width>100</width>
-								<height>200</height>
-
-								<hitboxes>
-									<hitbox_0>
-										<point_0>0 0</point_0>
-										<point_1>100 0</point_1>
-										<point_2>100 200</point_2>
-										<point_3>0 200</point_3>
-									</hitbox_0>
-								</hitboxes>
-							</image_0>
-						</images>
-					</state_0>
-				</animation>
-
-				<physics>
-					<type>ComplexPhysicsObject</type>
-					<material>bouncy_ball</material>
-					<position>600 100</position>
-				</physics>
-			</sprite_3>
-
-			<sprite_4>
-				<initial_state>immobile</initial_state>
-
-				<animation>
-					<state_0>
-						<name>immobile</name>
-
-						<images>
-							<image_0>
-								<source>/resources/images/key.png</source>
-
-								<delay>1</delay>
-
-								<width>50</width>
-								<height>50</height>
-
-								<hitboxes>
-									<hitbox_0>
-										<point_0>0 0</point_0>
-										<point_1>50 0</point_1>
-										<point_2>50 50</point_2>
-										<point_3>0 50</point_3>
-									</hitbox_0>
-								</hitboxes>
-							</image_0>
-						</images>
-					</state_0>
-				</animation>
-
-				<physics>
-					<type>ComplexPhysicsObject</type>
-					<material>static</material>
-					<position>1100 350</position>
-				</physics>
-			</sprite_4>
-
-			<sprite_5>
-				<initial_state>immobile</initial_state>
-
-				<animation>
-					<state_0>
-						<name>immobile</name>
-
-						<images>
-							<image_0>
-								<source>/resources/images/goal.png</source>
-
-								<delay>1</delay>
-
-								<width>500</width>
-								<height>100</height>
-
-								<hitboxes>
-									<hitbox_0>
-										<point_0>0 0</point_0>
-										<point_1>500 0</point_1>
-										<point_2>500 100</point_2>
-										<point_3>0 100</point_3>
-									</hitbox_0>
-								</hitboxes>
-							</image_0>
-						</images>
-					</state_0>
-				</animation>
-
-				<physics>
-					<type>ComplexPhysicsObject</type>
-					<material>static</material>
-					<position>1800 100</position>
-				</physics>
-			</sprite_5>
-		</sprites>
-
-		<physics_engine>
-			<type>ComplexPhysicsEngine</type>
-			<drag_coefficeitn>0.2</drag_coefficeitn>
-			<global_accelerations>
-				<accel_0>0 9.8</accel_0>
-			</global_accelerations>
-		</physics_engine>
-
-		<controls>
-			<control_scheme_0>
-				<key_0>
-					<key>RIGHT</key>
-					
-					<onPressed>
+		
+		<level_0>
+			<level_objectives>
+				<objective_0>
+					<description>Reach the flag</description>
+	
+					<prereqs>1</prereqs>
+	
+					<onComplete>
 						<behaviors>
 							<behavior_0>
 								<targetType>sprite</targetType>
 								<targetIndex>0</targetIndex>
-								<name>moveForward</name>
-								<parameters>.005 0</parameters>
+								<name>setState</name>
+								<parameters>win</parameters>
 							</behavior_0>
+	
+							<behavior_1>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>jump</name>
+								<parameters>.05</parameters>
+							</behavior_1>
 						</behaviors>
-					</onPressed>
-					
-					<onReleased>
+					</onComplete>
+				</objective_0>
+	
+				<objective_1>
+					<description>Get the key</description>
+	
+					<onComplete>
 						<behaviors>
 							<behavior_0>
 								<targetType>sprite</targetType>
 								<targetIndex>0</targetIndex>
-								<name>moveForward</name>
-								<parameters>-.005 0</parameters>
+								<name>setState</name>
+								<parameters>key</parameters>
 							</behavior_0>
 						</behaviors>
-					</onReleased>
-				</key_0>
-
-				<key_1>
-					<key>LEFT</key>
-					
-					<onPressed>
+					</onComplete>
+	
+					<onFailed>
 						<behaviors>
 							<behavior_0>
 								<targetType>sprite</targetType>
 								<targetIndex>0</targetIndex>
-								<name>moveForward</name>
-								<parameters>-.005 0</parameters>
+								<name>setState</name>
+								<parameters>dead</parameters>
 							</behavior_0>
 						</behaviors>
-					</onPressed>
-					
-					<onReleased>
-						<behaviors>
-							<behavior_0>
-								<targetType>sprite</targetType>
-								<targetIndex>0</targetIndex>
-								<name>moveForward</name>
-								<parameters>.005 0</parameters>
-							</behavior_0>
-						</behaviors>
-					</onReleased>
-				</key_1>
-
-				<key_2>
-					<key>UP</key>
-					
-					<onPressed>
+					</onFailed>
+				</objective_1>
+	
+				<objective_2>
+					<description>Don't collide with bowser</description>
+	
+					<onComplete>
 						<behaviors>
 							<behavior_0>
 								<targetType>sprite</targetType>
 								<targetIndex>0</targetIndex>
 								<name>jump</name>
-								<parameters>.055</parameters>
+								<parameters>.03</parameters>
 							</behavior_0>
+	
+							<behavior_1>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>setState</name>
+								<parameters>dead</parameters>
+							</behavior_1>
 						</behaviors>
-					</onPressed>
-				</key_2>
-			</control_scheme_0>
-		</controls>
-		
-		<collisions>
-			<collision_0>
-				<sprites>0 3</sprites>
-				
-				<detectors>
-					<detector_0>SimpleDetector</detector_0>
-					<detector_1>PixelPerfectDetector</detector_1>
-				</detectors>
-				
-				<resolvers>
-					<resolver_0>
-						<type>PhysicalResolver</type>
-					</resolver_0>
-					
-					<resolver_1>
-						<type>SimpleResolver</type>
+					</onComplete>
+				</objective_2>
+			</level_objectives>
+	
+			<sprites>
+				<sprite_0>
+					<initial_state>standing</initial_state>
+	
+					<animation>
+						<state_0>
+							<name>standing</name>
+	
+							<images>
+								<image_0>
+									<source>/resources/images/mario.png</source>
+	
+									<delay>1</delay>
+	
+									<width>100</width>
+									<height>200</height>
+	
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>100 0</point_1>
+											<point_2>100 200</point_2>
+											<point_3>0 200</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+	
+						<state_1>
+							<name>dead</name>
+	
+							<images>
+								<source>/resources/images/surprisedMario.png</source>
+	
+								<delay>1</delay>
+	
+								<width>100</width>
+								<height>200</height>
+	
+								<hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes>
+							</images>
+						</state_1>
+	
+						<state_2>
+							<name>win</name>
+	
+							<images>
+								<source>/resources/images/happyMario.png</source>
+	
+								<delay>1</delay>
+	
+								<width>100</width>
+								<height>200</height>
+	
+								<hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes>
+							</images>
+						</state_2>
+	
+						<state_3>
+							<name>key</name>
+	
+							<images>
+								<source>/resources/images/keyMario.png</source>
+	
+								<delay>1</delay>
+	
+								<width>100</width>
+								<height>200</height>
+	
+								<hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes>
+							</images>
+						</state_3>
+					</animation>
+	
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>bouncy_ball</material>
+						<position>50 100</position>
+					</physics>
+				</sprite_0>
+	
+				<sprite_1>
+					<initial_state>immobile</initial_state>
+	
+					<animation>
+						<state_0>
+							<name>immobile</name>
+	
+							<images>
+								<image_0>
+									<source>/resources/images/ground.png</source>
+	
+									<delay>1</delay>
+	
+									<width>2000</width>
+									<height>200</height>
+	
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>2000 0</point_1>
+											<point_2>2000 200</point_2>
+											<point_3>0 200</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animation>
+	
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>floating</material>
+						<position>0 0</position>
+					</physics>
+				</sprite_1>
+	
+				<sprite_2>
+					<initial_state>immobile</initial_state>
+	
+					<animation>
+						<state_0>
+							<name>immobile</name>
+	
+							<images>
+								<image_0>
+									<source>/resources/images/ground.png</source>
+	
+									<delay>1</delay>
+	
+									<width>300</width>
+									<height>50</height>
+	
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>300 0</point_1>
+											<point_2>300 50</point_2>
+											<point_3>0 50</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animation>
+	
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>floating</material>
+						<position>1000 300</position>
+					</physics>
+				</sprite_2>
+	
+				<sprite_3>
+					<initial_state>immobile</initial_state>
+	
+					<animation>
+						<state_0>
+							<name>immobile</name>
+	
+							<images>
+								<image_0>
+									<source>/resources/images/bowser.png</source>
+	
+									<delay>1</delay>
+	
+									<width>100</width>
+									<height>200</height>
+	
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>100 0</point_1>
+											<point_2>100 200</point_2>
+											<point_3>0 200</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animation>
+	
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>bouncy_ball</material>
+						<position>600 100</position>
+					</physics>
+				</sprite_3>
+	
+				<sprite_4>
+					<initial_state>immobile</initial_state>
+	
+					<animation>
+						<state_0>
+							<name>immobile</name>
+	
+							<images>
+								<image_0>
+									<source>/resources/images/key.png</source>
+	
+									<delay>1</delay>
+	
+									<width>50</width>
+									<height>50</height>
+	
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>50 0</point_1>
+											<point_2>50 50</point_2>
+											<point_3>0 50</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animation>
+	
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>static</material>
+						<position>1100 350</position>
+					</physics>
+				</sprite_4>
+	
+				<sprite_5>
+					<initial_state>immobile</initial_state>
+	
+					<animation>
+						<state_0>
+							<name>immobile</name>
+	
+							<images>
+								<image_0>
+									<source>/resources/images/goal.png</source>
+	
+									<delay>1</delay>
+	
+									<width>500</width>
+									<height>100</height>
+	
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>500 0</point_1>
+											<point_2>500 100</point_2>
+											<point_3>0 100</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animation>
+	
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>static</material>
+						<position>1800 100</position>
+					</physics>
+				</sprite_5>
+			</sprites>
+	
+			<physics_engine>
+				<type>ComplexPhysicsEngine</type>
+				<drag_coefficeint>0.2</drag_coefficeint>
+				<global_accelerations>
+					<accel_0>0 9.8</accel_0>
+				</global_accelerations>
+			</physics_engine>
+	
+			<controls>
+				<control_scheme_0>
+					<key_0>
+						<key>RIGHT</key>
 						
-						<behaviors>
-							<behavior_0>
+						<onPressed>
+							<behaviors>
+								<behavior_0>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>moveForward</name>
+									<parameters>.005 0</parameters>
+								</behavior_0>
+							</behaviors>
+						</onPressed>
+						
+						<onReleased>
+							<behaviors>
+								<behavior_0>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>moveForward</name>
+									<parameters>-.005 0</parameters>
+								</behavior_0>
+							</behaviors>
+						</onReleased>
+					</key_0>
+	
+					<key_1>
+						<key>LEFT</key>
+						
+						<onPressed>
+							<behaviors>
+								<behavior_0>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>moveForward</name>
+									<parameters>-.005 0</parameters>
+								</behavior_0>
+							</behaviors>
+						</onPressed>
+						
+						<onReleased>
+							<behaviors>
+								<behavior_0>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>moveForward</name>
+									<parameters>.005 0</parameters>
+								</behavior_0>
+							</behaviors>
+						</onReleased>
+					</key_1>
+	
+					<key_2>
+						<key>UP</key>
+						
+						<onPressed>
+							<behaviors>
+								<behavior_0>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>jump</name>
+									<parameters>.055</parameters>
+								</behavior_0>
+							</behaviors>
+						</onPressed>
+					</key_2>
+				</control_scheme_0>
+			</controls>
+			
+			<collisions>
+				<collision_0>
+					<sprites>0 3</sprites>
+					
+					<detectors>
+						<detector_0>SimpleDetector</detector_0>
+						<detector_1>PixelPerfectDetector</detector_1>
+					</detectors>
+					
+					<resolvers>
+						<resolver_0>
+							<type>PhysicalResolver</type>
+						</resolver_0>
+						
+						<resolver_1>
+							<type>SimpleResolver</type>
+							
+							<behaviors>
+								<behavior_0>
+									<targetType>objective</targetType>
+									<targetIndex>2</targetIndex>
+									<name>setStatus</name>
+									<parameters>complete</parameters>
+								</behavior_0>
+							</behaviors>
+						</resolver_1>
+					</resolvers>
+				</collision_0>
+				
+				<collision_1>
+					<sprites>0 1</sprites>
+					
+					<detectors>
+						<detector_0>SimpleDetector</detector_0>
+						<detector_1>PixelPerfectDetector</detector_1>
+					</detectors>
+					
+					<resolvers>
+						<resolver_0>
+							<type>PhysicalResolver</type>
+						</resolver_0>
+					</resolvers>
+				</collision_1>
+				
+				<collision_2>
+					<sprites>0 2</sprites>
+					
+					<detectors>
+						<detector_0>SimpleDetector</detector_0>
+						<detector_1>PixelPerfectDetector</detector_1>
+					</detectors>
+					
+					<resolvers>
+						<resolver_0>
+							<type>PhysicalResolver</type>
+						</resolver_0>
+					</resolvers>
+				</collision_2>
+				
+				<collision_3>
+					<sprites>0 4</sprites>
+					
+					<detectors>
+						<detector_0>SimpleDetector</detector_0>
+						<detector_1>PixelPerfectDetector</detector_1>
+					</detectors>
+					
+					<resolvers>
+						<resolver_0>
+							<type>SimpleResolver</type>
+							
+							<behavior_1>
 								<targetType>objective</targetType>
 								<targetIndex>2</targetIndex>
 								<name>setStatus</name>
 								<parameters>complete</parameters>
-							</behavior_0>
-						</behaviors>
-					</resolver_1>
-				</resolvers>
-			</collision_0>
-			
-			<collision_1>
-				<sprites>0 1</sprites>
+							</behavior_1>
+						</resolver_0>
+					</resolvers>
+				</collision_3>
 				
-				<detectors>
-					<detector_0>SimpleDetector</detector_0>
-					<detector_1>PixelPerfectDetector</detector_1>
-				</detectors>
+				<collision_4>
+					<sprites>0 5</sprites>
+					
+					<detectors>
+						<detector_0>SimpleDetector</detector_0>
+						<detector_1>PixelPerfectDetector</detector_1>
+					</detectors>
+					
+					<resolvers>
+						<resolver_0>
+							<type>SimpleResolver</type>
+							
+							<behaviors>
+								<behavior_0>
+									<targetType>objective</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setStatus</name>
+									<parameters>complete</parameters>
+								</behavior_0>
+							</behaviors>
+						</resolver_0>
+					</resolvers>
+				</collision_4>
 				
-				<resolvers>
-					<resolver_0>
-						<type>PhysicalResolver</type>
-					</resolver_0>
-				</resolvers>
-			</collision_1>
-			
-			<collision_2>
-				<sprites>0 2</sprites>
-				
-				<detectors>
-					<detector_0>SimpleDetector</detector_0>
-					<detector_1>PixelPerfectDetector</detector_1>
-				</detectors>
-				
-				<resolvers>
-					<resolver_0>
-						<type>PhysicalResolver</type>
-					</resolver_0>
-				</resolvers>
-			</collision_2>
-			
-			<collision_3>
-				<sprites>0 4</sprites>
-				
-				<detectors>
-					<detector_0>SimpleDetector</detector_0>
-					<detector_1>PixelPerfectDetector</detector_1>
-				</detectors>
-				
-				<resolvers>
-					<resolver_0>
-						<type>SimpleResolver</type>
-						
-						<behavior_1>
-							<targetType>objective</targetType>
-							<targetIndex>2</targetIndex>
-							<name>setStatus</name>
-							<parameters>complete</parameters>
-						</behavior_1>
-					</resolver_0>
-				</resolvers>
-			</collision_3>
-			
-			<collision_4>
-				<sprites>0 5</sprites>
-				
-				<detectors>
-					<detector_0>SimpleDetector</detector_0>
-					<detector_1>PixelPerfectDetector</detector_1>
-				</detectors>
-				
-				<resolvers>
-					<resolver_0>
-						<type>SimpleResolver</type>
-						
-						<behaviors>
-							<behavior_0>
-								<targetType>objective</targetType>
-								<targetIndex>0</targetIndex>
-								<name>setStatus</name>
-								<parameters>complete</parameters>
-							</behavior_0>
-						</behaviors>
-					</resolver_0>
-				</resolvers>
-			</collision_4>
-			
-			<collision_5>
-				<sprites>1 3</sprites>
-				
-				<detectors>
-					<detector_0>SimpleDetector</detector_0>
-					<detector_1>PixelPerfectDetector</detector_1>
-				</detectors>
-				
-				<resolvers>
-					<resolver_0>
-						<type>PhysicalResolver</type>
-					</resolver_0>
-				</resolvers>
-			</collision_5>
-		</collisions>
+				<collision_5>
+					<sprites>1 3</sprites>
+					
+					<detectors>
+						<detector_0>SimpleDetector</detector_0>
+						<detector_1>PixelPerfectDetector</detector_1>
+					</detectors>
+					
+					<resolvers>
+						<resolver_0>
+							<type>PhysicalResolver</type>
+						</resolver_0>
+					</resolvers>
+				</collision_5>
+			</collisions>
+		<level_0></level_0>
 	</level>
 </game>

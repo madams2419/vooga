@@ -3,7 +3,7 @@ package game_player;
 import game_engine.Level;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
-import game_engine.controls.ControlManager;
+import game_engine.controls.ControlsManager;
 import game_engine.sprite.Sprite;
 
 import java.util.ArrayList;
@@ -17,10 +17,15 @@ public class VoogaGame extends AnimationTimer implements IActor {
 	private List<Level> levels;
 	private Level activeLevel;
 	private Group root;
+	private double frameRate;
 
 	public VoogaGame() {
 		levels = new ArrayList<Level>();
 		root = new Group();
+	}
+	
+	public void setFrameRate(double fr) {
+		frameRate = fr;
 	}
 
 	public void addLevel(Level l) {
@@ -43,7 +48,7 @@ public class VoogaGame extends AnimationTimer implements IActor {
 			root.getChildren().add(sprite.getImageView());
 		});
 		root.requestFocus();
-		ControlManager controlManager = activeLevel.getControlManager();
+		ControlsManager controlManager = activeLevel.getControlManager();
 		root.setOnKeyPressed(e -> controlManager.handleInput(e));
 		root.setOnKeyReleased(e -> controlManager.handleInput(e));
 

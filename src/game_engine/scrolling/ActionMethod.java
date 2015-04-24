@@ -3,8 +3,6 @@ package game_engine.scrolling;
 import game_engine.behaviors.IAction;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 
 public class ActionMethod implements IAction{
     private Method myMethod;
@@ -30,9 +28,9 @@ public class ActionMethod implements IAction{
     
     
     public static void main (String[] args) {
-        XStream x = new XStream(new DomDriver());
+       // XStream x = new XStream(new DomDriver());
         
-            System.out.println(2 == (int)x.fromXML("<int>2</int>"));
+            //System.out.println(2 == (int)x.fromXML("<int>2</int>"));
         
         
     }

@@ -1,4 +1,4 @@
-package game_engine.objective;
+package game_engine.objectives;
 
 import java.util.Collections;
 import java.util.List;

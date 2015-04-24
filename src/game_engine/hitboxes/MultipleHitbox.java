@@ -69,4 +69,8 @@ public class MultipleHitbox implements IHitbox {
 			hitbox.addPositionSupplier(position);
 		}
 	}
+	
+	public void addHitbox(SingleHitbox hitbox) {
+		hitboxes.add(hitbox);
+	}
 }

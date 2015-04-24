@@ -1,5 +1,7 @@
 package game_engine.physics.engines;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiFunction;
 
 import game_engine.behaviors.IAction;
@@ -9,15 +11,23 @@ import game_engine.physics.objects.PhysicsObject;
 
 public class PhysicsEngine implements IActor {
 	
-	private Vector globalAcceleration, globalForce;
+	private List<Vector> globalAcceleration, globalForce;
 	private double lastUpdateTime, timeLapse;
 	
 	public Vector getGlobalAccel() {
-		return globalAcceleration;
+		return Vector.sum(globalAcceleration);
 	}
 	
 	public Vector getGlobalForce() {
-		return globalForce;
+		return Vector.sum(globalForce);
+	}
+	
+	public void addGlobalAccel(Vector accel) {
+		globalAcceleration.add(accel);
+	}
+	
+	public void addGlobalForce(Vector force) {
+		globalForce.add(force);
 	}
 	
 	public BiFunction<Double, Vector, Vector> getDependentForces() {
@@ -36,11 +46,13 @@ public class PhysicsEngine implements IActor {
 	}
 	
 	private IAction setGlobalAccel = (params) -> {
-		globalAcceleration = new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1]));
+		globalAcceleration = new ArrayList<>();
+		globalAcceleration.add(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
 	};
 	
 	private IAction setGlobalForce = (params) -> {
-		globalForce = new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1]));
+		globalForce = new ArrayList<>();
+		globalForce.add(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
 	};
 
 	public IAction getAction(String name) {

@@ -11,9 +11,11 @@ public class Collision {
 	private ICollisionDetector detector;
 	private ICollisionResolver resolver;
 	
-	public Collision(ICollisionDetector detect, ICollisionResolver resolve) {
+	public Collision(ICollisionDetector detect, ICollisionResolver resolve, Sprite a, Sprite b) {
 		detector = detect;
 		resolver = resolve;
+		spriteA = a;
+		spriteB = b;
 	}
 	
 	public void update() {

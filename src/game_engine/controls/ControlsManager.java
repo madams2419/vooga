@@ -5,12 +5,12 @@ import java.util.List;
 
 import javafx.scene.input.InputEvent;
 
-public class ControlManager {
+public class ControlsManager {
 	
 	private List<ControlScheme> availableControlSchemes;
 	private ControlScheme activeControlScheme;
 	
-	public ControlManager() {
+	public ControlsManager() {
 		availableControlSchemes = new ArrayList<>();
 	}
 	
