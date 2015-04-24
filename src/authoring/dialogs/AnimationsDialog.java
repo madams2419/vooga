@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -43,18 +42,20 @@ public class AnimationsDialog extends DataDialog {
                                                             "*.gif" };
 
     public AnimationsDialog (Sprite sprite, ObservableList<String> states) {
-        super(sprite, 3,
-              new Node[] { new Label(STATE), new Label(IMAGE), new Label(IMAGE_FILE_URL) }, states);
-
+//        super(sprite, 3,
+//              new Node[] { new Label(STATE), new Label(IMAGE), new Label(IMAGE_FILE_URL) }, states);
+        super();
         myStates = states;
         mySprite = sprite;
-        
+        initializeEverything(states);
+        initialize(sprite, 3,
+                 new Node[] { new Label(STATE), new Label(IMAGE), new Label(IMAGE_FILE_URL) }, states);
     }
 
-    private Button addImageButton (String label) {
+    private Button addImageButton (String label, int index) {
         Button button = new Button(label);
         myImageAdderButtons.add(button);
-        button.setOnKeyPressed(e -> selectImage(myComboBoxes.size() - 1));
+        button.setOnKeyPressed(e -> selectImage(index));
         return button;
     }
 
@@ -116,13 +117,12 @@ public class AnimationsDialog extends DataDialog {
     }
     
     @Override
-    void addRow (DialogGridOrganizer grid, ObservableList<String> comboBoxContent) {
-        grid.addRowEnd(addComboBox(), addImageButton(ADD_IMAGE), addImageURL());
+    void addRow (DialogGridOrganizer grid, ObservableList<String> comboBoxContent, int index) {
+        grid.addRowEnd(addComboBox(), addImageButton(ADD_IMAGE, index), addImageURL());
     }
 
     @Override
     List<ComboBox<String>> getComboBoxes () {
-        System.out.println(myComboBoxes);
         return myComboBoxes;
     }
 
