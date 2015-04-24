@@ -274,6 +274,7 @@ public class Sprite extends ImageView {
     }
 
     public void setAnimations (AnimationsDialog c) {
+        System.out.println("Setting animations");
         myAnimations = c;
     }
     
