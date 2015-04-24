@@ -24,7 +24,6 @@ import authoring.fileBuilders.XMLBuilder;
 import authoring.panes.centerPane.CenterCanvas;
 import authoring.userInterface.AuthoringWindow;
 
-
 /***
  * Class which contains methods that are reusable across front-end development
  * 
@@ -33,108 +32,113 @@ import authoring.userInterface.AuthoringWindow;
  */
 public class FrontEndUtils {
 
-    public static File selectFile (String imageChooserTitle,
-                               String imageChooserDescription,
-                               String imageChooserExtensions[]) {
-        FileChooser imageChooser = new FileChooser();
-        imageChooser.setTitle(imageChooserTitle);
-        imageChooser.getExtensionFilters().add(
-                                               new ExtensionFilter(imageChooserDescription,
-                                                                   imageChooserExtensions));
-        return imageChooser.showOpenDialog(null);
-    }
-    
-    public static Button makeButton (java.util.Map.Entry<String, EventHandler<Event>> entry) {
-        Button mButton = new Button(entry.getKey());
-        mButton.setOnMouseReleased(entry.getValue());
-        return mButton;
-    }
+	public static File selectFile(String imageChooserTitle,
+			String imageChooserDescription, String imageChooserExtensions[]) {
+		FileChooser imageChooser = new FileChooser();
+		imageChooser.setTitle(imageChooserTitle);
+		imageChooser.getExtensionFilters().add(
+				new ExtensionFilter(imageChooserDescription,
+						imageChooserExtensions));
+		return imageChooser.showOpenDialog(null);
+	}
 
-    public static Map<String, String> stringToMap (String s) {
-        Map<String, String> result = new HashMap<>();
-        if (s.charAt(0) == '{')
-            s = s.substring(1, s.length() - 1);
-        Arrays.asList(s.split(", ")).forEach(
-                                             entry -> result.put(entry.split("=")[0],
-                                                                 entry.split("=")[1]));
-        return result;
-    }
+	public static Button makeButton(
+			java.util.Map.Entry<String, EventHandler<Event>> entry) {
+		Button mButton = new Button(entry.getKey());
+		mButton.setOnMouseReleased(entry.getValue());
+		return mButton;
+	}
 
-    public static void setKeyActions (Parent n) {
-        System.out
-                .printf("Setting key actions on %s%n", n.getClass().getName());
-        n.setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.CONTROL)
-                AuthoringWindow.setControlOn();
-            System.out.println("detected key press");
-        });
-        n.setOnKeyReleased(e -> {
-            if (e.getCode() == KeyCode.CONTROL)
-                AuthoringWindow.setControlOff();
-            System.out.println("detected key release");
-        });
-    }
+	public static Map<String, String> stringToMap(String s) {
+		Map<String, String> result = new HashMap<>();
+		if (s.charAt(0) == '{')
+			s = s.substring(1, s.length() - 1);
+		Arrays.asList(s.split(", ")).forEach(
+				entry -> result.put(entry.split("=")[0], entry.split("=")[1]));
+		return result;
+	}
 
-    public static void setKeyActions (TabPane t) {
-        setKeyActions((Parent) t);
-    }
+	public static void setKeyActions(Parent n) {
+		System.out
+				.printf("Setting key actions on %s%n", n.getClass().getName());
+		n.setOnKeyPressed(e -> {
+			if (e.getCode() == KeyCode.CONTROL)
+				AuthoringWindow.setControlOn();
+			System.out.println("detected key press");
+		});
+		n.setOnKeyReleased(e -> {
+			if (e.getCode() == KeyCode.CONTROL)
+				AuthoringWindow.setControlOff();
+			System.out.println("detected key release");
+		});
+	}
 
-    public static HBox makeToggleGroup () {
-        HBox hbox = new HBox(10);
-        ToggleGroup toggleGroup = new ToggleGroup();
-        RadioButton button1 = new RadioButton("Sprite");
-        button1.setToggleGroup(toggleGroup);
-        button1.setSelected(true);
-        RadioButton button2 = new RadioButton("Hit Box");
-        button2.setToggleGroup(toggleGroup);
-        hbox.getChildren().addAll(button1, button2);
-        // toggleGroup.selectedToggleProperty().addListener(); edit this line to
-        // add listener
-        return hbox;
-    }
+	public static void setKeyActions(TabPane t) {
+		setKeyActions((Parent) t);
+	}
 
-    public static void buildXMLFile (AuthoringWindow parent, String filename) {
-        // Adding the root element
-        XMLBuilder xml = XMLBuilder.getInstance("game");
+	public static HBox makeToggleGroup() {
+		HBox hbox = new HBox(10);
+		ToggleGroup toggleGroup = new ToggleGroup();
+		RadioButton button1 = new RadioButton("Sprite");
+		button1.setToggleGroup(toggleGroup);
+		button1.setSelected(true);
+		RadioButton button2 = new RadioButton("Hit Box");
+		button2.setToggleGroup(toggleGroup);
+		hbox.getChildren().addAll(button1, button2);
+		// toggleGroup.selectedToggleProperty().addListener(); edit this line to
+		// add listener
+		return hbox;
+	}
 
-        // Adding title to root
-        xml.addChildWithValue(xml.getRoot(), "title", "Simple_Game");
+	public static void buildXMLFile(AuthoringWindow parent, String filename) {
+		// Adding the root element
+		XMLBuilder xml = XMLBuilder.getInstance("game");
 
-        // Adding the level tag
-        Element level = xml.addToRoot("level");
+		// Adding title to root
+		xml.addChildWithValue(xml.getRoot(), "title", "Simple_Game");
 
-        // Adding the properties of objective
-        Element objective = xml.add(level, "objective");
+		// Adding the level tag
+		Element level = xml.addToRoot("level");
 
-        List<Objective> objectives = new ArrayList<>();
-        Objective test = new Objective();
-        Objective test1 = new Objective();
-        objectives.add(test);
-        objectives.add(test1);
-        int a = 0;
-        for (Objective o : objectives)
-            xml.add(objective, String.format("objective_%d", a++));
-        // more stuff here... perhaps modify xmlbuilder to have an addObjective
-        // method
+		// Adding start
+		xml.addChildWithValue(level, "start", "0");
 
-        // Adding sprites
-        Element sprite = xml.add(level, "sprite");
-        Iterator<List<CenterCanvas>> iter = parent.getCenterPane().getMaps();
-        while (iter.hasNext()) {
-            List<CenterCanvas> maps = iter.next();
-            maps.forEach(c -> xml.addAllSprites(sprite, c.getSprites()));
-            System.out.println("Outputting map");
-        }
-        // Adding physics
-        xml.add(level, "physics");
+		List<CenterCanvas> allMaps = new ArrayList<>();
+		for (List<CenterCanvas> l : parent.getCenterPane().getMaps())
+			allMaps.addAll(l);
 
-        // Adding controls
-        xml.add(level, "control");
+		for (CenterCanvas c : allMaps) {
+			// Adding the properties of objective
+			Element objective = xml.add(level, "objective");
 
-        // Adding collision
-        xml.add(level, "collision");
+			List<Objective> objectives = new ArrayList<>();
+			Objective test = new Objective();
+			Objective test1 = new Objective();
+			objectives.add(test);
+			objectives.add(test1);
+			int a = 0;
+			for (Objective o : objectives)
+				xml.add(objective, String.format("objective_%d", a++));
+			// more stuff here... perhaps modify xmlbuilder to have an
+			// addObjective
+			// method
 
-        // Streaming result
-        xml.streamFile("output/test.xml");
-    }
+			// Adding sprites
+			Element sprite = xml.add(level, "sprite");
+			xml.addAllSprites(sprite, c.getSprites());
+			
+			// Adding physics
+			xml.add(level, "physics");
+
+			// Adding controls
+			xml.add(level, "control");
+
+			// Adding collision
+			xml.add(level, "collision");
+
+			// Streaming result
+			xml.streamFile("output/test.xml");
+		}
+	}
 }

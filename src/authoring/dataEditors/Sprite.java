@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import javafx.scene.control.Label;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import authoring.dialogs.AnimationsDialog;
@@ -285,5 +285,10 @@ public class Sprite extends ImageView {
 
     public void setPlayable (Boolean b) {
         isPlayable = b;
+    }
+    
+    @Override
+    public String toString(){
+    	return String.format("%s, %s, %s", this.myName, this.myID, this.getImageURI());
     }
 }
