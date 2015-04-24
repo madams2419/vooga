@@ -18,9 +18,9 @@ public class LoginScreen {
 	private static final int TEMPHEIGHT = 600;
 
 	private Scene loginScreen;
+	private ProfilePage profile;
 	private StackPane root = new StackPane();
 	private Driver db=new Driver();
-	private String LoginID;
 	private SocialCenterMenu menu=new SocialCenterMenu();
 	private Stage stage;
 
@@ -85,9 +85,9 @@ public class LoginScreen {
 	private void checkValid(String id, String password){
 		try {
 			ArrayList<String> results=db.get("SELECT Login_id,Login_pass FROM Login WHERE Login_id = '"+id+"' AND Login_pass='"+password+"'");
-			LoginID=id;
 			if(!results.contains("none")){
-				stage.setScene(menu.returnScene());
+				profile=new ProfilePage(id,TEMPWIDTH,TEMPHEIGHT);
+				stage.setScene(profile.getProfileScreen());
 			}		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -95,13 +95,14 @@ public class LoginScreen {
 		}
 	}
 
-	public String getID(){
-		return LoginID;
-	}
 
 	public void getLoginScreen(Stage s) {
 		stage=s;
 		s.setScene(loginScreen);
+	}
+	
+	public Stage getStage(){
+		return stage;
 	}
 
 }

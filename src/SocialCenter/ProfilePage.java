@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import javafx.scene.Scene;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -20,19 +21,28 @@ public class ProfilePage {
 	private Scene profilePage;
 	private StackPane root = new StackPane();
 	private static General_Driver db = new General_Driver();
-
+	private static String ID;
 	/**
 	 * @param args
 	 */
 
-	public ProfilePage(){
-		initialize(800,600);
+	public ProfilePage(String id, int width, int height){
+		ID=id;
+		initialize(width,height);
 		createStats();
 	}
 
 	private void initialize(int width, int height){
 		profilePage=new Scene(root, width, height);
 		StackPane background=new StackPane();
+		
+		profilePage.getStylesheets().add("styles/login.css");
+		profilePage.getStylesheets().add("http://fonts.googleapis.com/css?family=Exo:100,200,400");
+		background.setId("pane");
+//		Rectangle r = makeSmoke(loginScreen);
+		background.setEffect(new GaussianBlur(10));
+//		background.getChildren().add(r);
+		root.getChildren().add(background);
 	}
 
 //	private void getInfo(){
@@ -53,14 +63,14 @@ public class ProfilePage {
 	private static void createStats(){	
 	ArrayList<String> result = new ArrayList<>();	
 		try {
-			result=db.get("SELECT Nickname FROM profile WHERE ID = '"+ls.getID()+"'","Nickname");
+			//System.out.println(ls.getID());
+			result=db.get("SELECT ID FROM profile WHERE ID = '"+ID+"'","ID");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if(result.contains("none")){
 			Scanner s=new Scanner(System.in);
-			String ID=ls.getID();
 			System.out.println("What is your nickname?");
 			String Nickname=s.next();
 			System.out.println("What Game did you play?");
