@@ -1,6 +1,6 @@
 package authoring.panes.rightPane;
 
-import javax.swing.GroupLayout.Alignment;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,18 +10,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import authoring.dialogs.ObjectiveDialog;
 
 public class ObjectivePane extends EditingPane {
 
-	private final String[] categories = { "On complete", "On failed", "blabla" };
-	private final String[] categories_name = { "onComplete", "onFailed" };
-	private final String[] behaviours = { "targetType", "targetIndex", "name",
-			"parameters" };
-
 	private int numObjectives;
-	private ObservableList<VBox> mObjectives = FXCollections.observableArrayList();
+	private ObservableList<Text> mObjectives = FXCollections.observableArrayList();
  	
 	public ObjectivePane(Scene scene, RightPane parent) {
 		super(scene, parent);
@@ -29,24 +24,22 @@ public class ObjectivePane extends EditingPane {
 	}
 
 	private void initButtons() {
-		ListView<VBox> list = new ListView<VBox>(mObjectives);
+		ListView<Text> list = new ListView<>(mObjectives);
+		list.setOnMouseClicked(e -> {
+			new ObjectiveDialog(this);
+		});
 		this.getChildren().add(list);
 		
 		Button b = new Button("Add objective");
 		b.setOnMouseClicked(e -> {
-			createFields(numObjectives++);
+			createObjective(numObjectives++);
 		});
 		this.getChildren().add(b);
 	}
 
-	public void createFields(int index) {
-		VBox v = new VBox(5);
-		v.setAlignment(Pos.CENTER);
-		v.getChildren().add(new Text("objective_" + index));
-		for (String s : behaviours) 
-			v.getChildren().add(createLabelField(s));
-		mObjectives.add(v);
-		mObjectives.add(new VBox(5));
+	public void createObjective(int index) {
+		
+		mObjectives.add(new Text("objective_" + index));
 	}
 
 	private HBox createLabelField(String label) {
@@ -57,4 +50,8 @@ public class ObjectivePane extends EditingPane {
 		return h;
 	}
 
+	public List<Text> getObjectives() {
+		return mObjectives;
+	}
+	
 }
