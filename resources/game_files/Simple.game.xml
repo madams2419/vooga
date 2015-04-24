@@ -1,82 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game>
 	<title>Simple Game</title>
+	<objectives>
+		<objective_0>
+			<prereqs>1</prereqs>
+			<onComplete>
+				<behaviors>
+					<behavior_0>
+						<targetType>sprite</targetType>
+						<targetIndex>0</targetIndex>
+						<name>setState</name>
+						<parameters>win</parameters>
+					</behavior_0>
+
+					<behavior_1>
+						<targetType>sprite</targetType>
+						<targetIndex>0</targetIndex>
+						<name>jump</name>
+						<parameters>.05</parameters>
+					</behavior_1>
+				</behaviors>
+			</onComplete>
+		</objective_0>
+
+		<objective_1>
+			<onComplete>
+				<behaviors>
+					<behavior_0>
+						<targetType>sprite</targetType>
+						<targetIndex>0</targetIndex>
+						<name>setState</name>
+						<parameters>key</parameters>
+					</behavior_0>
+				</behaviors>
+			</onComplete>
+			<onFailed>
+				<behaviors>
+					<behavior_0>
+						<targetType>sprite</targetType>
+						<targetIndex>0</targetIndex>
+						<name>setState</name>
+						<parameters>dead</parameters>
+					</behavior_0>
+				</behaviors>
+			</onFailed>
+		</objective_1>
+
+		<objective_2>
+			<onComplete>
+				<behaviors>
+					<behavior_0>
+						<targetType>sprite</targetType>
+						<targetIndex>0</targetIndex>
+						<name>jump</name>
+						<parameters>.03</parameters>
+					</behavior_0>
+					<behavior_1>
+						<targetType>sprite</targetType>
+						<targetIndex>0</targetIndex>
+						<name>setState</name>
+						<parameters>dead</parameters>
+					</behavior_1>
+				</behaviors>
+			</onComplete>
+		</objective_2>
+	</objectives>
+	
 	<level>
 		<start>0</start>
 		<level_0>
-			<objective>
-				<objective_0>
-					<prereqs>1</prereqs>
-					<onComplete>
-						<behaviors>
-							<behavior_0>
-								<targetType>sprite</targetType>
-								<targetIndex>0</targetIndex>
-								<name>setState</name>
-								<parameters>win</parameters>
-							</behavior_0>
-							
-							<behavior_1>
-								<targetType>sprite</targetType>
-								<targetIndex>0</targetIndex>
-								<name>jump</name>
-								<parameters>.05</parameters>							
-							</behavior_1>
-						</behaviors>
-					</onComplete>
-					<onFailed>
-						<behaviors></behaviors>
-					</onFailed>
-				</objective_0>
-				
-				<objective_1>
-					<prereqs></prereqs>
-					<onComplete>
-						<behaviors>
-							<behavior_0>
-								<targetType>sprite</targetType>
-								<targetIndex>0</targetIndex>
-								<name>setState</name>
-								<parameters>key</parameters>
-							</behavior_0>
-						</behaviors>
-					</onComplete>
-					<onFailed>
-						<behaviors>
-							<behavior_0>
-								<targetType>sprite</targetType>
-								<targetIndex>0</targetIndex>
-								<name>setState</name>
-								<parameters>dead</parameters>
-							</behavior_0>
-						</behaviors>
-					</onFailed>
-				</objective_1>
-				
-				<objective_2>
-					<prereqs></prereqs>
-					<onComplete>
-						<behaviors>
-							<behavior_0>
-								<targetType>sprite</targetType>
-								<targetIndex>0</targetIndex>
-								<name>jump</name>
-								<parameters>.03</parameters>
-							</behavior_0>
-							<behavior_1>
-								<targetType>sprite</targetType>
-								<targetIndex>0</targetIndex>
-								<name>setState</name>
-								<parameters>dead</parameters>
-							</behavior_1>
-						</behaviors>
-					</onComplete>
-					<onFailed>
-						<behaviors></behaviors>
-					</onFailed>
-				</objective_2>
-			</objective>
-			
 			<sprite>
 				<sprite_0>
 					<initialState>standing</initialState>

@@ -1,6 +1,5 @@
 package game_player;
 
-import game_engine.Animation;
 import game_engine.Level;
 import game_engine.behaviors.Behavior;
 import game_engine.behaviors.IAction;
@@ -8,14 +7,14 @@ import game_engine.behaviors.IActor;
 import game_engine.behaviors.IBehavior;
 import game_engine.behaviors.MultipleBehaviors;
 import game_engine.collisions.Collision;
-import game_engine.collisions.CollisionEngine;
-import game_engine.control.ControlManager;
-import game_engine.control.KeyControl;
+import game_engine.collisions.CollisionManager;
+import game_engine.controls.ControlManager;
 import game_engine.objective.GameTimer;
 import game_engine.objective.Objective;
-import game_engine.physics_engine.complex.ComplexPhysicsEngine;
-import game_engine.physics_engine.complex.Material;
-import game_engine.physics_engine.physics_object.IPhysicsObject;
+import game_engine.physics.Material;
+import game_engine.physics.engines.ComplexPhysicsEngine;
+import game_engine.physics.objects.PhysicsObject;
+import game_engine.sprite.Animation;
 import game_engine.sprite.Sprite;
 
 import java.lang.reflect.Constructor;
@@ -85,12 +84,12 @@ public class VoogaGameBuilder {
             parser.moveDown(directory);
             String name = parser.getValue("name");
             String image = parser.getValue("image");
-            spriteImage.setImage(name, image);
+            spriteImage.associateImage(name, image);
             parser.moveUp();
         }
         parser.moveUp();
         
-        IPhysicsObject physObj = buildPhysicsObject(spriteImage);
+        PhysicsObject physObj = buildPhysicsObject(spriteImage);
         
         parser.moveUp();
         
@@ -99,7 +98,7 @@ public class VoogaGameBuilder {
         return sprite;
     }
     
-    private IPhysicsObject buildPhysicsObject(Animation a) {
+    private PhysicsObject buildPhysicsObject(Animation a) {
 	parser.moveDown("physics");
         Material material = Material.valueOf(parser.getValue("material").toUpperCase());
         int startX = Integer.parseInt(parser.getValue("x"));
@@ -113,7 +112,7 @@ public class VoogaGameBuilder {
 	try {
 	    Class physObj = Class.forName("game_engine.physics_engine.physics_object.complex_physics_object." + type);
 	    Constructor c = physObj.getConstructor(ComplexPhysicsEngine.class, int.class, int.class, Material.class, int.class, int.class, Animation.class);
-	    return (IPhysicsObject) c.newInstance(engine, width, height, material, startX, startY, a);
+	    return (PhysicsObject) c.newInstance(engine, width, height, material, startX, startY, a);
 	}
 	catch (Exception e) {
 	    e.printStackTrace();
@@ -131,9 +130,9 @@ public class VoogaGameBuilder {
         return mySpriteMap.get(fullID);
     }
 
-    private CollisionEngine buildCollisionEngine () {
+    private CollisionManager buildCollisionEngine () {
         parser.moveDown("collision");
-        CollisionEngine collisionEngine = new CollisionEngine();
+        CollisionManager collisionEngine = new CollisionManager();
         for (String directory : parser.getValidSubDirectories()) {
             collisionEngine.addCollision(buildCollision(directory));
         }

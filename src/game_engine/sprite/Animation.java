@@ -24,11 +24,11 @@ public class Animation implements Observer {
     	lastUpdateTime = System.currentTimeMillis();
     }
     
-    public void associateImage(String state, String imagePath, double delay) {
+    public void associateImage(String state, String imagePath, double delay, double height, double width) {
     	if (!paths.containsKey(state)) {
     		paths.put(state, new ImageLink());
     	}
-    	paths.get(state).add(imagePath, delay);
+    	paths.get(state).add(new Image(imagePath, width, height, false, true), delay);
     }
     
     protected class Node {
@@ -37,8 +37,8 @@ public class Animation implements Observer {
 		private Node next;
 		private double delay;
 		
-		public Node(String imagePath, Node n, double d) {
-			image = new Image(imagePath);
+		public Node(Image i, Node n, double d) {
+			image = i;
 			next = n;
 			delay = d;
 		}
@@ -48,17 +48,17 @@ public class Animation implements Observer {
     	
     	private Node first;
     	
-    	public void add(String imagePath, double delay) {
+    	public void add(Image image, double delay) {
     		
     		if (first == null) {
-    			first = new Node(imagePath, first, delay);
+    			first = new Node(image, first, delay);
     			return;
     		}
     		Node current = first;
     		while (current.next != first) {
     			current = current.next;
     		}
-    		current.next = new Node(imagePath, first, delay);
+    		current.next = new Node(image, first, delay);
     	}
     }
     

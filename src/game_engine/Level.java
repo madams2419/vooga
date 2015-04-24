@@ -1,8 +1,9 @@
 package game_engine;
 
 import game_engine.collisions.CollisionManager;
-import game_engine.control.ControlManager;
+import game_engine.controls.ControlManager;
 import game_engine.objective.Objective;
+import game_engine.physics.engines.PhysicsEngine;
 import game_engine.sprite.Sprite;
 
 import java.util.ArrayList;
@@ -16,13 +17,14 @@ import java.util.List;
  */
 public class Level {
 	
-	List<Objective> myObjectives;
-	List<Sprite> mySprites;
+	private List<Objective> myObjectives;
+	private List<Sprite> mySprites;
 	private CollisionManager myCollisionEngine;
 	private ControlManager myControlManager;
+	private PhysicsEngine engine;
+	
 	
 	public Level() {
-		// TODO
 	    myObjectives = new ArrayList<>();
 	    mySprites = new ArrayList<>();
 	}
@@ -32,23 +34,27 @@ public class Level {
          * Update contents of a layer
          */
         public void update(long now) {
-                // TODO
-            //Potentially different method
             myObjectives.forEach(objective -> objective.update(now));
             mySprites.forEach(sprite -> sprite.update());
+            myControlManager.update();
             myCollisionEngine.checkCollisions();
+            engine.update();
         }
         
-        public void setControlManager( ControlManager controlManager) {
+        public void setControlManager(ControlManager controlManager) {
             myControlManager = controlManager;
         }
         
         public ControlManager getControlManager() {
-            return myControlManager;
+        	return myControlManager;
         }
         
         public void setCollisionEngine (CollisionManager collisionEngine) {
             myCollisionEngine = collisionEngine;
+        }
+        
+        public void setPhysicsEngine(PhysicsEngine e) {
+        	engine = e;
         }
         
 	/**
