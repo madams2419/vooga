@@ -41,6 +41,7 @@ public class CenterCanvas extends ScrollPane {
     private Scene myScene;
     private AuthoringWindow myParent;
     private Label myInitialLabel;
+    private float myGravity = 10;
 
     CenterCanvas(Scene scene, AuthoringWindow parent) {
         assert (scene != null);
@@ -140,5 +141,16 @@ public class CenterCanvas extends ScrollPane {
     public Map<Integer, Map<String,List<String>>> getObjectives() {
     	return myListOfObjectives;
     }
+
+	public void addSetting(String type, String value) {
+		if(type.equals("gravity"))
+			myGravity = Float.parseFloat(value);
+	}
+	
+	public String getSetting(String type) {
+		if(type.equals("gravity"))
+			return Float.toString(myGravity);
+		return ""; // or null?
+	}
     
 }

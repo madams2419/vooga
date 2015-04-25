@@ -17,6 +17,12 @@
 			<Button>
 				<X>0</X>
 				<Y>0</Y>
+				<label>Physics</label>
+				<listener>showPhysicsSettings</listener>
+			</Button>
+			<Button>
+				<X>0</X>
+				<Y>0</Y>
 				<label>Objectives</label>
 				<listener>switchToObjectivePane</listener>
 			</Button>

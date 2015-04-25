@@ -1,7 +1,6 @@
 package authoring.dialogs;
 
 import java.util.function.Consumer;
-
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;

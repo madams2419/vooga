@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -229,6 +228,12 @@ public class Sprite extends ImageView {
 
     public void setKeyActions (Map<String, String> keyActions) {
         myKeyActions = keyActions;
+    }
+    
+    public Map<String,String> getKeyActions() {
+    	if(isPlayable)
+    		return myKeyActions;
+    	return null;
     }
 
     public String getImageURI () {
