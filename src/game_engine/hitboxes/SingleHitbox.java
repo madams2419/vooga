@@ -161,6 +161,10 @@ public class SingleHitbox implements IHitbox {
 		orderedPoints.add(point);
 	}
 	
+	public void addPoints(List<Vector> points) {
+		orderedPoints.addAll(points);
+	}
+	
 	public List<Vector> convexHull() {
 		orderedPoints.add(orderedPoints.get(0));
 		orderedPoints.add(orderedPoints.get(1));
