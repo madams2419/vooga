@@ -58,6 +58,14 @@ public abstract class PhysicsObject extends Observable implements Observer {
 		setChanged();
 		notifyObservers();
 	}
+	
+	public Vector getPosition() {
+		return new Vector(xPosition, yPosition);
+	}
+	
+	public abstract Vector getVelocity();
+	
+	public abstract double getRestitution();
 
 	public double getXPosition() {
 		return xPosition;
@@ -100,6 +108,10 @@ public abstract class PhysicsObject extends Observable implements Observer {
 	public void increment(Vector amount) {
 		xPosition += amount.getX();
 		yPosition += amount.getY();
+	}
+	
+	public void addPosition(Vector amount) {
+		increment(amount);
 	}
 	
 	public abstract void applyImpulse(Vector impulse);

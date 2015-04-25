@@ -18,7 +18,7 @@ public class MovingPhysicsObject extends PhysicsObject {
 		yVelocity = 0.0;
 	}
 	
-	protected Vector getVelocity() {
+	public Vector getVelocity() {
 		return new Vector(xVelocity, yVelocity);
 	}
 	
@@ -39,5 +39,10 @@ public class MovingPhysicsObject extends PhysicsObject {
 	
 	public void applyImpulse(Vector impulse) {
 		set(impulse);
+	}
+
+	@Override
+	public double getRestitution() {
+		return 0;
 	}
 }
