@@ -14,30 +14,26 @@ public class Driver {
 		//get();
 	}*/
 	
-
-	public static ArrayList<String> get(String statement) throws Exception{
+	public static ArrayList<String> get(String statement, String request)throws Exception{
 		try{
-			Connection con=getConnection();
+			Connection con = getConnection();
 			PreparedStatement select=con.prepareStatement(statement);
 			//PreparedStatement statement=con.prepareStatement("SELECT Login_id,Login_pass FROM Login WHERE Login_id = '"+ID+"' AND Login_pass='"+Pass+"'");
-			ResultSet result=select.executeQuery();	
+			ResultSet result=select.executeQuery();
 			ArrayList<String> array=new ArrayList<String>();
 			while(result.next()){
-				System.out.println("ID: "+result.getString("Login_id"));
-				System.out.println("Pass: "+result.getString("Login_pass"));
-				array.add(result.getString("Login_pass"));
+				array.add(result.getString(request));
 			}
 			if(result.first()==false){
-				System.out.println("Invalid UserName or Password");
 				array.add("none");
 			}
 			return array;
 		}catch(Exception e){
-			System.out.println("Invalid UserName or Password");
+			System.out.println("Exception");
 			return null;
 		}
-		
 	}
+
 	
 	public static void post(String statement) throws Exception{
 		try{

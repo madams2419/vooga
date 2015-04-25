@@ -6,11 +6,11 @@ package SocialCenter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.effect.GaussianBlur;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 /**
@@ -20,8 +20,9 @@ import javafx.scene.text.Text;
 public class ProfilePage {
 	private Scene profilePage;
 	private StackPane root = new StackPane();
-	private static General_Driver db = new General_Driver();
+	private static Driver db = new Driver();
 	private static String ID;
+	
 	/**
 	 * @param args
 	 */
@@ -29,35 +30,44 @@ public class ProfilePage {
 	public ProfilePage(String id, int width, int height){
 		ID=id;
 		initialize(width,height);
-		createStats();
+		//createStats();
+		createGUI();
 	}
 
 	private void initialize(int width, int height){
 		profilePage=new Scene(root, width, height);
-		StackPane background=new StackPane();
-		
+		StackPane background=new StackPane();		
 		profilePage.getStylesheets().add("styles/login.css");
 		profilePage.getStylesheets().add("http://fonts.googleapis.com/css?family=Exo:100,200,400");
 		background.setId("pane");
-//		Rectangle r = makeSmoke(loginScreen);
-		background.setEffect(new GaussianBlur(10));
-//		background.getChildren().add(r);
 		root.getChildren().add(background);
 	}
 
 //	private void getInfo(){
 //
 //	}
-//	
-//	private void createGUI(){
-//		VBox profileBox=new VBox();
-//		HBox photoBox=new HBox();
-//		Text ID=new Text(ls.getID());
-//		Text NickName=new Text("Jeannie");
-//		Text GamesPlayed=new Text("Mario");
-//		Text HighScore=new Text("100");
-//		profileBox.getChildren().addAll(photoBox,ID,NickName,GamesPlayed,HighScore);
-//	}
+
+	private void createGUI(){
+		GridPane gridpane = new GridPane();
+		String[] s={"ID","NickName","Game","HighScore"};
+		for(int i=0; i<s.length; i++){
+			setConstraints(gridpane,s[i],i);
+		}
+		gridpane.setTranslateX(350);
+		gridpane.setTranslateY(300);
+		root.getChildren().add(gridpane);
+		
+	}
+	
+	private void setConstraints(GridPane g, String s, int row){
+		HBox region=new HBox();
+		Text temp=new Text(String.format("%s",s));
+		temp.getStyleClass().add("prof_font");
+		region.getStyleClass().add("prof_grid");
+		region.getChildren().add(temp);
+		g.setConstraints(region, 1, row);
+		g.getChildren().add(region);
+	}
 
 	
 	private static void createStats(){	

@@ -28,6 +28,18 @@
     -fx-background-radius: 0;
 }
 
+.prof_font{
+    -fx-font: 13px "Exo";
+    -fx-text-fill: white;
+    -fx-stroke-width: 3;
+}
+
+.prof_grid{
+    -fx-border-color:white;
+    -fx-border-insets: 5;
+    -fx-border-width: 3;
+}
+
 
 @font-face {
     font-family: 'Exo';

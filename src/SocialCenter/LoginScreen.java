@@ -84,11 +84,14 @@ public class LoginScreen {
 
 	private void checkValid(String id, String password){
 		try {
-			ArrayList<String> results=db.get("SELECT Login_id,Login_pass FROM Login WHERE Login_id = '"+id+"' AND Login_pass='"+password+"'");
+			ArrayList<String> results=db.get("SELECT Login_id,Login_pass FROM Login WHERE Login_id = '"+id+"' AND Login_pass='"+password+"'","Login_id");
 			if(!results.contains("none")){
+				System.out.println("Login Success");
 				profile=new ProfilePage(id,TEMPWIDTH,TEMPHEIGHT);
 				stage.setScene(profile.getProfileScreen());
-			}		
+			}else{
+				System.out.println("Login Fail!");
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
