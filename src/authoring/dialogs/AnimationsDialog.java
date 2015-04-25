@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -50,7 +51,6 @@ public class AnimationsDialog extends DataDialog {
         return button;
     }
     
-    @Override
     void addAddButton() {
         //don't put an Add button
     }
