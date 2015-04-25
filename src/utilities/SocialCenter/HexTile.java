@@ -1,4 +1,4 @@
-package SocialCenter;
+package utilities.SocialCenter;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;

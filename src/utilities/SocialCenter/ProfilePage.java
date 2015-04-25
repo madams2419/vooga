@@ -1,7 +1,7 @@
 /**
  * 
  */
-package SocialCenter;
+package utilities.SocialCenter;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package SocialCenter;
+package utilities.SocialCenter;
 
 import menu.VoogaMenu;
 import javafx.application.Application;

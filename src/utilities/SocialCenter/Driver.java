@@ -1,4 +1,4 @@
-package SocialCenter;
+package utilities.SocialCenter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
