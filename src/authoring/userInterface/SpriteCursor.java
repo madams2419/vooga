@@ -1,6 +1,6 @@
 package authoring.userInterface;
 
-import authoring.Sprite;
+import authoring.dataEditors.Sprite;
 import javafx.scene.ImageCursor;
 
 public class SpriteCursor extends ImageCursor{

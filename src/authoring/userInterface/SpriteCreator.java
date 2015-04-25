@@ -11,11 +11,8 @@ public class SpriteCreator extends JFrame {
 	BufferedImage sprite;
 	private static final int WIDTH =512;
 	private static final int HEIGHT=512;
-	private BufferedImage image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
-	private BufferedImage spriteSheet=null;
 
 	//Creating an ArrayList of Players based on spritesheets
-	private BufferedImage player;
 	private ArrayList<BufferedImage> Player=new ArrayList<>();
 
 	public SpriteCreator() { 
@@ -31,18 +28,27 @@ public class SpriteCreator extends JFrame {
 	private void init() {  
 		BufferedImageLoader loader = new BufferedImageLoader();
 		BufferedImage spriteSheet = null;  
+		int pixelcount=60;
+		
 		try {   
 			spriteSheet = loader.loadImage("/Resources/images/Test.Spritesheet.png"); 
 		} catch (IOException e) { 
 			e.printStackTrace(); 
 		} 
 		SpriteSheet ss = new SpriteSheet(spriteSheet);  
-		sprite = ss.grabSprite(0, 0, 60, 60);
+		for(int i=0; i<spriteSheet.getWidth()/pixelcount; i++){
+			for(int j=0; j<spriteSheet.getHeight()/pixelcount; i++){
+				Player.add(ss.grabSprite(i,j, 60, 60));
+			}
+		}
 	}
 
 	@Override
 	public void paint(Graphics g) {
-		g.drawImage(sprite, 100, 100, 50, 50, null);
+		for(int k=0; k<Player.size(); k++){
+			g.drawImage(Player.get(k), 100, 100, 50, 50, null);
+		}
+		
 		repaint();
 	}
 
