@@ -26,7 +26,8 @@ public class SocialCenterMain extends Application {
 
 		
 		LoginScreen login = new LoginScreen();
-		SocialCenterMenu menu = new SocialCenterMenu();
+		SocialCenterMenu menu = new SocialCenterMenu(stage);
+//		login.getLoginScreen(stage);
 		login.getLoginScreen(stage);
 		stage.show();
 

@@ -21,7 +21,7 @@ public class LoginScreen {
 	private ProfilePage profile;
 	private StackPane root = new StackPane();
 	private Driver db=new Driver();
-	private SocialCenterMenu menu=new SocialCenterMenu();
+	private SocialCenterMenu menu;
 	private Stage stage;
 
 	public LoginScreen() {

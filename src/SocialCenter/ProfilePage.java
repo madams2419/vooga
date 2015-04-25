@@ -31,6 +31,7 @@ public class ProfilePage {
 		createGUI();
 		createStats();
 	}
+	
 
 	private void initialize(int width, int height){
 		profilePage=new Scene(root, width, height);
