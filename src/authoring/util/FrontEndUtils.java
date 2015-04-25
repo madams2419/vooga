@@ -1,7 +1,5 @@
 package authoring.util;
 
-import game_engine.objective.Objective;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +21,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 import org.w3c.dom.Element;
 
+import authoring.dataEditors.Sprite;
 import authoring.fileBuilders.XMLBuilder;
 import authoring.panes.centerPane.CenterCanvas;
 import authoring.userInterface.AuthoringWindow;
@@ -134,7 +133,8 @@ public class FrontEndUtils {
 				for (String s : obj.get("onComplete")) {
 					Element currentBehaviour = xml.add(behaviour, "behaviour"
 							+ i2++);
-					xml.addChildWithValue(currentBehaviour, "targetType", "sprite");
+					xml.addChildWithValue(currentBehaviour, "targetType",
+							"sprite");
 					xml.addChildWithValue(currentBehaviour, "targetIndex", "0");
 					String[] t = s.split(":");
 					xml.addChildWithValue(currentBehaviour, "name", t[1]);
@@ -143,10 +143,11 @@ public class FrontEndUtils {
 				Element onFailure = xml.add(currentObjective, "onFailure");
 				behaviour = xml.add(onFailure, "behaviours");
 				i2 = 0;
-				for (String s : obj.get("onFailure")) {
+				for (String s : obj.get("onFailed")) {
 					Element currentBehaviour = xml.add(behaviour, "behaviour"
 							+ i2++);
-					xml.addChildWithValue(currentBehaviour, "targetType", "sprite");
+					xml.addChildWithValue(currentBehaviour, "targetType",
+							"sprite");
 					xml.addChildWithValue(currentBehaviour, "targetIndex", "0");
 					String[] t = s.split(":");
 					xml.addChildWithValue(currentBehaviour, "name", t[1]);
@@ -159,10 +160,18 @@ public class FrontEndUtils {
 			xml.addAllSprites(sprite, c.getSprites());
 
 			// Adding physics
-			xml.add(currentLevel, "physics");
+			Element physics = xml.add(currentLevel, "physics");
+			xml.addChildWithValue(physics, "gravity", parent.getCenterPane()
+					.getActiveTab().getSetting("gravity"));
 
 			// Adding controls
-			xml.add(currentLevel, "control");
+			Element controls = xml.add(currentLevel, "control");
+			for (Sprite s : c.getSprites()) {
+				Map<String, String> keyActions;
+				if ((keyActions = s.getKeyActions()) != null) {
+
+				}
+			}
 
 			// Adding collision
 			xml.add(currentLevel, "collision");

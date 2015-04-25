@@ -221,6 +221,12 @@ public class Sprite extends ImageView {
     public void setKeyActions (Map<String, String> keyActions) {
         myKeyActions = keyActions;
     }
+    
+    public Map<String,String> getKeyActions() {
+    	if(isPlayable)
+    		return myKeyActions;
+    	return null;
+    }
 
     public String getImageURI () {
         return myCharacteristics.get("imageURI");
