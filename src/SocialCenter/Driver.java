@@ -7,14 +7,14 @@ import java.util.Scanner;
 public class Driver {
 
 
-	/*public static void main(String[] args) throws Exception {
-		getConnection();
-		createTable();
-		post();
-		//get();
-	}*/
-	
-	public static ArrayList<String> get(String statement, String request)throws Exception{
+//	public static void main(String[] args) throws Exception {
+//		getConnection();
+//		createTable();
+//		//post();
+//		//get();
+//	}
+//	
+	public static ArrayList<String> get(String statement, String...strings)throws Exception{
 		try{
 			Connection con = getConnection();
 			PreparedStatement select=con.prepareStatement(statement);
@@ -22,7 +22,9 @@ public class Driver {
 			ResultSet result=select.executeQuery();
 			ArrayList<String> array=new ArrayList<String>();
 			while(result.next()){
-				array.add(result.getString(request));
+				for(int i=0; i<strings.length; i++){
+					array.add(result.getString(strings[i]));					
+				}	
 			}
 			if(result.first()==false){
 				array.add("none");
@@ -35,11 +37,28 @@ public class Driver {
 	}
 
 	
-	public static void post(String statement) throws Exception{
+	public static void renamePlayer(String ID)throws Exception{
+		
 		try{
 			Connection con=getConnection();
-			PreparedStatement posted = con.prepareStatement(statement);
+			//PreparedStatement posted = con.prepareStatement(statement);
 			//PreparedStatement posted = con.prepareStatement("INSERT INTO Profile (ID,NICKNAME,GAMESPLAYED,HIGHSCORE) VALUES ('"+ID+"','"+Nickname+"','"+GamesPlayed+"','"+HighScore+"')");
+			PreparedStatement posted=con.prepareStatement("ALTER TABLE profile CHANGE PLAYER '"+ID+"' char(30)");
+			//executeQuery (receives info), executeUpdate(manipulates info)
+			posted.executeUpdate();
+		}catch(Exception e){
+			System.out.println(e);
+		}finally{
+			System.out.println("insert complete");
+		}	
+	}
+	
+	public static void addPlayer() throws Exception{
+		try{
+			Connection con=getConnection();
+			//PreparedStatement posted = con.prepareStatement(statement);
+			//PreparedStatement posted = con.prepareStatement("INSERT INTO Profile (ID,NICKNAME,GAMESPLAYED,HIGHSCORE) VALUES ('"+ID+"','"+Nickname+"','"+GamesPlayed+"','"+HighScore+"')");
+			PreparedStatement posted=con.prepareStatement("ALTER TABLE profile ADD PLAYER char(30)");
 			//executeQuery (receives info), executeUpdate(manipulates info)
 			posted.executeUpdate();
 		}catch(Exception e){
@@ -47,14 +66,15 @@ public class Driver {
 		}finally{
 			System.out.println("insert complete");
 		}
-		
 	}
-	public static void createTable(String statement) throws Exception{
+	
+	public static void createTable() throws Exception{
 		try{
 			Connection con=getConnection();
 			//Getting the sql statement ready to be used
-			PreparedStatement create=con.prepareStatement(statement);
+			//PreparedStatement create=con.prepareStatement(statement);
 			//PreparedStatement create = con.prepareStatement("CREATE TABLE IF NOT EXISTS profile(ID VARCHAR(30), NICKNAME VARCHAR(30), GAMESPLAYED VARCHAR(255), HIGHSCORE INT,PRIMARY KEY(ID))");
+			PreparedStatement create=con.prepareStatement("CREATE TABLE IF NOT EXISTS players(PLayer VARCHAR(30))");
 			create.executeUpdate();
 		}catch(Exception e){
 			System.out.println(e);
@@ -62,6 +82,7 @@ public class Driver {
 			System.out.println("Function complete");
 		}
 	}
+	
 	public static Connection getConnection() throws Exception{
 		try{
 			

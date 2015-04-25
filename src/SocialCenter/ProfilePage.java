@@ -4,9 +4,7 @@
 package SocialCenter;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -30,8 +28,8 @@ public class ProfilePage {
 	public ProfilePage(String id, int width, int height){
 		ID=id;
 		initialize(width,height);
-		//createStats();
 		createGUI();
+		createStats();
 	}
 
 	private void initialize(int width, int height){
@@ -43,13 +41,10 @@ public class ProfilePage {
 		root.getChildren().add(background);
 	}
 
-//	private void getInfo(){
-//
-//	}
 
 	private void createGUI(){
 		GridPane gridpane = new GridPane();
-		String[] s={"ID","NickName","Game","HighScore"};
+		String[] s={"NickName","Game","HighScore"};
 		for(int i=0; i<s.length; i++){
 			setConstraints(gridpane,s[i],i);
 		}
@@ -70,30 +65,21 @@ public class ProfilePage {
 	}
 
 	
-	private static void createStats(){	
-	ArrayList<String> result = new ArrayList<>();	
+	private static void createStats(){		
+		String[] request={"NickName","GamesPlayed","HighScore"};
+		ArrayList<String> results=new ArrayList<>();
 		try {
 			//System.out.println(ls.getID());
-			result=db.get("SELECT ID FROM profile WHERE ID = '"+ID+"'","ID");
+			results=db.get("SELECT * FROM profile WHERE ID = '"+ID+"'",request);
+			for(String s:results){
+				System.out.println(s);
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(result.contains("none")){
-			Scanner s=new Scanner(System.in);
-			System.out.println("What is your nickname?");
-			String Nickname=s.next();
-			System.out.println("What Game did you play?");
-			String GamesPlayed=s.next();
-			System.out.println("What was your High Score?");
-			String HighScore=s.next();
-			try {
-				db.post("INSERT INTO Profile (ID,NICKNAME,GAMESPLAYED,HIGHSCORE) VALUES ('"+ID+"','"+Nickname+"','"+GamesPlayed+"','"+HighScore+"')");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		
+		
 	}
 	
 	public Scene getProfileScreen(){
