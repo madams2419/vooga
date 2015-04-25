@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import authoring.dataEditors.Sprite;
@@ -76,6 +77,12 @@ public abstract class DataDialog extends Dialog<ButtonType> {
         list.add(button);
         button.setOnMouseClicked(toDoOnClick);
         return button;
+    }
+    
+    Label addLabel (String content, List<Label> list) {
+        Label label = new Label(content);
+        list.add(label);
+        return label;
     }
     
     TextField addTextField (List<TextField> list) {
