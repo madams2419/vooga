@@ -44,7 +44,7 @@ public class ProfilePage {
 
 	private void createGUI(){
 		GridPane gridpane = new GridPane();
-		String[] s={"NickName","Game","HighScore"};
+		String[] s={"ID","NickName","Game","HighScore"};
 		for(int i=0; i<s.length; i++){
 			setConstraints(gridpane,s[i],i);
 		}
