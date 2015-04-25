@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -48,6 +47,7 @@ public class Sprite extends ImageView {
     private AnimationsDialog myAnimations;
     private Map<String, String> myAnimationsMap;
     private ObservableList<String> myStates;
+    private int myCurrentScore;
 
     private Map<Sprite, Interaction> myInteractions;
 
@@ -81,10 +81,10 @@ public class Sprite extends ImageView {
         this.myID = ID;
         myScale = 1.0;
         myCharacteristics.put("imageURI", imageURI);
-        myCharacteristics.put("ID", String.valueOf(ID));
         myCharacteristics.put(SCALE, String.valueOf(myScale));
         myIcon = new ImageView();
         changeImage(new Image(imageURI));
+        myCurrentScore = 0;
     }
 
     public Sprite (CenterPane parent) {
@@ -180,6 +180,14 @@ public class Sprite extends ImageView {
         setXPosition(myPosition.get(X_STRING));
         setYPosition(myPosition.get(Y_STRING));
     }
+    
+    public void setScore(int score){
+    	myCurrentScore = score;
+    }
+    
+    public int getScore(){
+    	return myCurrentScore;
+    }
 
     public void setScale (double scale) {
 
@@ -220,6 +228,12 @@ public class Sprite extends ImageView {
 
     public void setKeyActions (Map<String, String> keyActions) {
         myKeyActions = keyActions;
+    }
+    
+    public Map<String,String> getKeyActions() {
+    	if(isPlayable)
+    		return myKeyActions;
+    	return null;
     }
 
     public String getImageURI () {

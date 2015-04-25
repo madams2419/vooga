@@ -42,7 +42,7 @@ public class GlobalCreationPane extends EditingPane {
     }
 
     private enum GlobalCreationPaneFieldNames {
-        GAME_NAME, SCROLLING_SPEED, FRAME_RATE, SCROLLING_SIZE, INITIAL_LEVEL
+        GAME_NAME, SCENE_WIDTH, SCENE_HEIGHT, FRAME_RATE, FIRST_LEVEL
     }
     
     private String[] getFieldNames () {
