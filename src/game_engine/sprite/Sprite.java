@@ -37,9 +37,9 @@ public class Sprite extends Observable implements IActor {
 		actions.put("setState", setState);
 	}
 	
-	public void update(double currentTime) {
-	    physicsObject.update(currentTime);
-	    animation.update(currentTime);
+	public void update(double frameRate) {
+	    physicsObject.update(frameRate);
+	    animation.update(frameRate);
 	}
 	
 	public ImageView getImageView() {
@@ -66,7 +66,6 @@ public class Sprite extends Observable implements IActor {
 	};
 
 	private IAction jump = (params) -> {
-		System.out.println(Double.parseDouble(params[0]));
 		Vector myVector = new Vector(0, Double.parseDouble(params[0]));
 		physicsObject.applyImpulse(myVector);
 	};

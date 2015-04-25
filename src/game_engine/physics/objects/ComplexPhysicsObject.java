@@ -30,12 +30,13 @@ public class ComplexPhysicsObject extends AcceleratingPhysicsObject {
 		return mass == 0 ? 0 : 1.0/mass;
 	}
 	
-	public void update(double currentTime) {
+	public void update(double frameRate) {
 		Vector totalForce = new Vector(xForce, yForce).plus(
 				getEngine().getGlobalForce()).plus(
 						getEngine().getDependentForces().apply(getHitbox().getArea(), getVelocity()));
-		super.increment(totalForce.times(computeInverseMass()).times(getTimeLapse(currentTime)));
-		super.update(currentTime);
+		super.set(totalForce.times(computeInverseMass()));
+		super.increment(getEngine().getGlobalAccel().times(computeMass() * computeInverseMass()));
+		super.update(frameRate);
 	}
 	
 	public void set(Vector amount) {
@@ -53,7 +54,6 @@ public class ComplexPhysicsObject extends AcceleratingPhysicsObject {
 	}
 	
 	public void applyImpulse(Vector impulse) {
-		System.out.println(impulse.times(computeInverseMass()));
 		super.applyImpulse(impulse.times(computeInverseMass()));
 	}
 }

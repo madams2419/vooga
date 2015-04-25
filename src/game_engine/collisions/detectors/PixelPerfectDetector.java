@@ -37,7 +37,7 @@ public class PixelPerfectDetector implements ICollisionDetector {
         
         for (int i = xBounds.x; i < xBounds.y && i >= translateXA && i >= translateXB; i++) {
             for (int j = yBounds.x; j < yBounds.y && j >= translateYA && j >= translateYB; j++) {
-                boolean a= bitMapA[j - translateYA][i - translateXA];
+                boolean a = bitMapA[j - translateYA][i - translateXA];
                 boolean b = bitMapB[j - translateYB][i - translateXB];
                 if (a && b) {
                     return true;

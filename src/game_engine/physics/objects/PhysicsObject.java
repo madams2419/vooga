@@ -46,9 +46,9 @@ public abstract class PhysicsObject extends Observable implements Observer {
 		return () -> new Vector(xPosition, yPosition);
 	}
 	
-	protected double getTimeLapse(double currentTime) {
-		return currentTime < lastUpdateTime ? currentTime : currentTime - lastUpdateTime;
-	}
+//	protected double getTimeLapse(double currentTime) {
+//		return currentTime < lastUpdateTime ? currentTime : currentTime - lastUpdateTime;
+//	}
 
 	/**
 	 * Allows for the PhysicsObject to be updated frame by frame.

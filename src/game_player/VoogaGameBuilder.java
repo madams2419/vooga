@@ -211,7 +211,7 @@ public class VoogaGameBuilder {
 		String[] point = parser.getValue("position").split(" ");
 		Vector position = new Vector(Double.parseDouble(point[0]), Double.parseDouble(point[1]));
 		
-		PhysicsObject physObj = type.equals("ComplexPhysicsObject") ? new ComplexPhysicsObject(engine, hitboxes, position, animation, Material.valueOf(parser.getValue("material"))) :
+		PhysicsObject physObj = type.equals("ComplexPhysicsObject") ? new ComplexPhysicsObject(engine, hitboxes, position, animation, Material.valueOf(parser.getValue("material").toUpperCase())) :
 								type.equals("AcceleratingPhysicsObject") ? new AcceleratingPhysicsObject(engine, hitboxes, position, animation) :
 																				new MovingPhysicsObject(engine, hitboxes, position, animation);
 		parser.moveUp();

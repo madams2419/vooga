@@ -24,17 +24,20 @@ public class VoogaGame implements IActor {
 	private Timeline timeline;
 	private double width, height;
 	private ControlsManager controlsManager;
+	private double frameRate;
 
-	public VoogaGame(double frameRate, double w, double h) {
+	public VoogaGame(double fr, double w, double h) {
 		levels = new ArrayList<Level>();
 		root = new Group();
+		frameRate = fr;
 		timeline = new Timeline(getFrame(frameRate));
+		timeline.setCycleCount(Timeline.INDEFINITE);
 		width = w;
 		height = h;
 	}
 	
 	private KeyFrame getFrame(double frameRate) {
-		return new KeyFrame(Duration.millis(frameRate), (frame) -> update(System.currentTimeMillis()));
+		return new KeyFrame(Duration.millis(frameRate), (frame) -> update());
 	}
 
 	public void addLevel(Level l) {
@@ -69,8 +72,8 @@ public class VoogaGame implements IActor {
 		}
 	}
 
-	public void update(double now) {
-		activeLevel.update(now);
+	public void update() {
+		activeLevel.update(frameRate);
 	}
 	
 	public void start() {

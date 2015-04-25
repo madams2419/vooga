@@ -28,6 +28,16 @@ public class Material {
 	}
 	
 	public static Material valueOf(String name) {
-	    return WOOD;
+	    switch(name) {
+	    case "ROCK": return ROCK;
+	    case "WOOD": return WOOD;
+	    case "METAL": return METAL;
+	    case "BOUNCY_BALL": return BOUNCY_BALL;
+	    case "SUPER_BALL": return SUPER_BALL;
+	    case "PILLOW": return PILLOW;
+	    case "STATIC": return STATIC;
+	    case "FLOATING": return FLOATING;
+	    default: return STATIC;
+	    }
 	}
 }
