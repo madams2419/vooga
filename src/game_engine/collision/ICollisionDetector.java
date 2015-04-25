@@ -11,6 +11,6 @@ public interface ICollisionDetector {
 	
 	//wondering if detector should contain references to sprites
 	
-	public boolean isColliding(Sprite a, Sprite b);
+	public boolean isColliding();
 
 }
