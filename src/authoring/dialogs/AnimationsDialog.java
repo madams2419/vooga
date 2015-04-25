@@ -45,10 +45,7 @@ public class AnimationsDialog extends DataDialog {
     }
 
     private Button addImageButton (String label, int index) {
-        Button button = new Button(label);
-        myImageAdderButtons.add(button);
-        button.setOnKeyPressed(e -> selectImage(index));
-        return button;
+        return addButton(label, e -> selectImage(index), myImageAdderButtons);
     }
     
     void addAddButton() {

@@ -11,7 +11,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import authoring.dataEditors.Sprite;
 import authoring.userInterface.DialogGridOrganizer;
 
@@ -59,33 +59,31 @@ public abstract class DataDialog extends Dialog<ButtonType> {
     abstract Consumer<ButtonType> getTodoOnOK ();
 
     public void showBox (Sprite s) {
-        Consumer<ButtonType> todoOnOK = getTodoOnOK();
         this.showAndWait()
                 .filter(response -> response == ButtonType.OK)
-                .ifPresent(todoOnOK);
+                .ifPresent(getTodoOnOK());
     }
 
-    ComboBox<String> addComboBox (List<ComboBox<String>> comboBoxes, ObservableList<String> toAdd) {
+    ComboBox<String> addComboBox (List<ComboBox<String>> list, ObservableList<String> toAdd) {
         ComboBox<String> box = new ComboBox<>();
         box.getItems().addAll(toAdd);
-        comboBoxes.add(box);
+        list.add(box);
         return box;
     }
     
-    TextField addTextField (List<TextField> textFields) {
-        TextField result = new TextField();
-        textFields.add(result);
-        return result;
+    Button addButton (String label, EventHandler<MouseEvent> toDoOnClick, List<Button> list) {
+        Button button = new Button(label);
+        list.add(button);
+        button.setOnMouseClicked(toDoOnClick);
+        return button;
     }
     
-    TextField addTextField (EventHandler<KeyEvent> todoOnKeyPressed, List<TextField> myTextFields) {
-        TextField result = new TextField();
-        result.setEditable(false);
-        result.setOnKeyPressed(todoOnKeyPressed);
-        myTextFields.add(result);
-        return result;
+    TextField addTextField (List<TextField> list) {
+        TextField textField = new TextField();
+        list.add(textField);
+        return textField;
     }
-
+    
     void addRow (int index) {
         addBlankRow(myGrid, index);
     }
