@@ -66,9 +66,9 @@ public class InteractionEditingPane extends EditingPane {
 
     private ObjectProperty<String> addSpriteAndModifiersToPane (Sprite sprite,
                                                                 List<String> actionPossibilities,
-                                                                String action,
-                                                                int numParams) {
+                                                                String action) {
         addSpriteToPane(sprite);
+        addButtonToReturnToCreationPane("Update Interaction 1 Params");
 //        addToggleGroupToPane();
         return addComboBoxToPane(actionPossibilities, action);
     }
