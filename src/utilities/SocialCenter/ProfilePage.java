@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * @author hojeanniechung
@@ -25,15 +26,15 @@ public class ProfilePage {
 	 * @param args
 	 */
 
-	public ProfilePage(String id, int width, int height){
+	public ProfilePage(String id, double WIDTH, double HEIGHT){
 		ID=id;
-		initialize(width,height);
+		initialize(WIDTH,HEIGHT);
 		createGUI();
 		createStats();
 	}
 	
 
-	private void initialize(int width, int height){
+	private void initialize(double width, double height){
 		profilePage=new Scene(root, width, height);
 		StackPane background=new StackPane();		
 		profilePage.getStylesheets().add("styles/login.css");
@@ -83,8 +84,8 @@ public class ProfilePage {
 		
 	}
 	
-	public Scene getProfileScreen(){
-		return profilePage;
+	public void getProfileScreen(Stage s){
+		s.setScene(profilePage);
 	}
 
 }

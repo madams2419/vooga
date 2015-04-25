@@ -24,10 +24,9 @@ public class SocialCenterMain extends Application {
 		stage.setResizable(false);
 		//ProfilePage profile=new ProfilePage();
 
-		
-		LoginScreen login = new LoginScreen();
-		SocialCenterMenu menu = new SocialCenterMenu(stage);
-//		login.getLoginScreen(stage);
+		stage.setWidth(800);
+		stage.setHeight(600);
+		LoginScreen login = new LoginScreen(stage,stage.getWidth(),stage.getHeight());
 		login.getLoginScreen(stage);
 		stage.show();
 
