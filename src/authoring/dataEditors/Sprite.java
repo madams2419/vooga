@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import authoring.dialogs.AnimationsDialog;
 import authoring.dialogs.ControlsDialog;
+import authoring.dialogs.StatesDialog;
 import authoring.panes.centerPane.CenterPane;
 import authoring.panes.rightPane.RightPane;
 import authoring.userInterface.ClickHandler;

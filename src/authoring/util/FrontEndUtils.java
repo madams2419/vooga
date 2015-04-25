@@ -21,6 +21,8 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 import org.w3c.dom.Element;
 
+import com.sun.org.apache.xerces.internal.impl.dv.dtd.XML11NMTOKENDatatypeValidator;
+
 import authoring.dataEditors.Sprite;
 import authoring.fileBuilders.XMLBuilder;
 import authoring.panes.centerPane.CenterCanvas;
@@ -166,10 +168,14 @@ public class FrontEndUtils {
 
 			// Adding controls
 			Element controls = xml.add(currentLevel, "control");
+			int i3 = 0;
 			for (Sprite s : c.getSprites()) {
+				Element currentControl = xml.add(controls, "control_"+i3++);
 				Map<String, String> keyActions;
+				int i4 = 0;
 				if ((keyActions = s.getKeyActions()) != null) {
-
+					Element currentKey = xml.add(currentControl, "key_"+i4++);
+					
 				}
 			}
 
