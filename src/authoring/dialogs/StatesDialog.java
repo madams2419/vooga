@@ -27,8 +27,8 @@ public class StatesDialog extends DataDialog {
 
     public StatesDialog (Sprite sprite) {
         initializeEverything(sprite);
-        initialize(sprite, 1,
-                   new Node[] { new Label(STATES) });
+        initialize(sprite, 2,
+                   new Node[] { new Label(STATES),  }, myStates.size());
     }
 
     private void initializeEverything (Sprite sprite) {
@@ -37,8 +37,7 @@ public class StatesDialog extends DataDialog {
         myTextFields = new ArrayList<>();
     }
 
-    @Override
-    ObservableList<String> getListContent () {
+    ObservableList<String> getStates () {
         return myStates;
     }
 

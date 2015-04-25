@@ -41,7 +41,7 @@ public class AnimationsDialog extends DataDialog {
     public AnimationsDialog (Sprite sprite, ObservableList<String> states) {
         initializeEverything(states, sprite);
         initialize(sprite, 3,
-                   new Node[] { new Label(STATE), new Label(IMAGE), new Label(IMAGE_FILE_URL) });
+                   new Node[] { new Label(STATE), new Label(IMAGE), new Label(IMAGE_FILE_URL) }, myStates.size());
     }
 
     private Button addImageButton (String label, int index) {
@@ -101,8 +101,7 @@ public class AnimationsDialog extends DataDialog {
         });
     }
 
-    @Override
-    ObservableList<String> getListContent () {
+    ObservableList<String> getStates () {
         return myStates;
     }
 

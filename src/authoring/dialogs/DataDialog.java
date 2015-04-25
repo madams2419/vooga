@@ -23,11 +23,11 @@ public abstract class DataDialog extends Dialog<ButtonType> {
     private int myIndex;
     private DialogGridOrganizer myGrid;
 
-    void initialize (Sprite s, int sizeOfGridOrganizer, Node[] titleLabelRow) {
+    void initialize (Sprite s, int sizeOfGridOrganizer, Node[] titleLabelRow, int numCols) {
         myGrid = new DialogGridOrganizer(sizeOfGridOrganizer);
         myGrid.addRowEnd(titleLabelRow);
 
-        for (int i = 0; i < getListContent().size(); i++) {
+        for (int i = 0; i < numCols; i++) {
             this.setHeight(this.getHeight() + BOTTOM_SPACING);
             addBlankRow(myGrid, myIndex++);
         }
@@ -54,8 +54,6 @@ public abstract class DataDialog extends Dialog<ButtonType> {
         });
     }
 
-    abstract ObservableList<String> getListContent ();
-
     abstract void addBlankRow (DialogGridOrganizer grid, int index);
 
     abstract Consumer<ButtonType> getTodoOnOK ();
@@ -67,8 +65,7 @@ public abstract class DataDialog extends Dialog<ButtonType> {
                 .ifPresent(todoOnOK);
     }
 
-    ComboBox<String> addComboBox (List<ComboBox<String>> comboBoxes) {
-        ObservableList<String> toAdd = getListContent();
+    ComboBox<String> addComboBox (List<ComboBox<String>> comboBoxes, ObservableList<String> toAdd) {
         ComboBox<String> box = new ComboBox<>();
         box.getItems().addAll(toAdd);
         comboBoxes.add(box);
