@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
 
 
@@ -20,7 +21,13 @@ public class Anchor extends Circle {
         y.bind(centerYProperty());
         enableDrag();
       }
-      
+    
+    public void combineNode(Anchor node2){
+        this.setCenterX(node2.getCenterX());
+        this.setTranslateX(getTranslateX());
+        this.setCenterY(node2.getCenterY());
+        this.setTranslateY(getTranslateY());
+    }
 
       // make a node movable by dragging it around with the mouse.
       private void enableDrag() {
@@ -33,20 +40,27 @@ public class Anchor extends Circle {
             mouseEvent.consume();
           }
         });
+      
         setOnMouseReleased(new EventHandler<MouseEvent>() {
           @Override public void handle(MouseEvent mouseEvent) {
-          mouseEvent.consume();
+//          mouseEvent.consume();
           }
         });
         setOnMouseDragged(new EventHandler<MouseEvent>() {
           @Override public void handle(MouseEvent mouseEvent) {
             double newX = mouseEvent.getX() + dragDelta.x;
             if (newX > 0 && newX < getScene().getWidth()) {
+//                setTranslateX(newX+10);
               setCenterX(newX);
+              setTranslateX(getTranslateX());
+//                setTranslateX(newX);
             }  
             double newY = mouseEvent.getY() + dragDelta.y;
             if (newY > 0 && newY < getScene().getHeight()) {
+//                setTranslateY(newY+ 10);
               setCenterY(newY);
+              setTranslateY(getTranslateY());
+//                setTranslateY(newY);
             }  
             
             mouseEvent.consume();

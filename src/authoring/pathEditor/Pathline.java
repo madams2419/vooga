@@ -15,22 +15,27 @@ import javafx.stage.Stage;
  * @author Kevin Chang
  * Class creates elements to define paths for sprites to follow
  */
-public class Path{
+public class Pathline{
+    private CubicCurve myPath;
     
-    public Path(){
+    public Pathline(){
        
     }
     
-    public ArrayList<Node> createPathElements(double startx, double starty,double endx, double endy){
-        ArrayList<Node> elements = new ArrayList<>();
+    public ArrayList<Anchor> createPathElements(double startx, double starty,double endx, double endy){
+        ArrayList<Anchor> elements = new ArrayList<>();
         CubicCurve curve = createPath(startx, starty, endx, endy);
-        elements.add(curve);
+        myPath = curve;
         elements.add(createNode(Color.PALEGREEN, curve.startXProperty(),curve.startYProperty()));
         elements.add( new ControlAnchor(Color.GOLD,      curve.controlX1Property(), curve.controlY1Property()));
         elements.add(new ControlAnchor(Color.GOLDENROD, curve.controlX2Property(), curve.controlY2Property()));
         elements.add(createNode(Color.TOMATO,    curve.endXProperty(),      curve.endYProperty()));
        
         return elements;
+    }
+    
+    public CubicCurve getPath(){
+        return myPath;
     }
     
     private CubicCurve createPath(double startx, double starty,double endx, double endy){
