@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import authoring.dataEditors.InteractionManager;
 import authoring.dataEditors.Sprite;
+import authoring.dialogs.PhysicsSettingsDialog;
 import authoring.panes.WindowPane;
 import authoring.userInterface.AuthoringWindow;
 
@@ -152,6 +153,10 @@ public class RightPane extends WindowPane {
 
     public void switchToMapSettingPane () {
         switchToPane(new MapSettingPane(myScene, this));
+    }
+    
+    public void showPhysicsSettings() {
+    	new PhysicsSettingsDialog(this);
     }
 
     public void setScene (Scene scene, List<String> availableSpriteURIs) {

@@ -1,0 +1,35 @@
+
+
+#pane {
+    -fx-background-image: url("http://ginva.com/wp-content/uploads/2012/07/city-skyline-wallpapers-008.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+.login {
+    -fx-background-color: transparent;
+    -fx-padding: 5 10 5 10;
+    -fx-border-color: white;
+    -fx-background-radius: 5.0;
+    -fx-text-fill: white;
+    -fx-font-size: 13pt;
+    -fx-font-weight: bold;
+    -fx-font-family: "Exo";
+}
+.title {
+    -fx-font: 50px "Exo";
+    -fx-text-fill: white;
+    -fx-stroke-width: 3;
+}
+.submit {
+    -fx-background-color: white;
+    -fx-font-weight: bold;
+    -fx-text-fill: #857510;
+    -fx-font-family: "Exo";
+    -fx-background-radius: 0;
+}
+
+
+@font-face {
+    font-family: 'Exo';
+    src: url('http://fonts.googleapis.com/css?family=Exo:100,200,400');
+}

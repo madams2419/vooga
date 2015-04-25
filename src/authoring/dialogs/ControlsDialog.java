@@ -24,6 +24,7 @@ public class ControlsDialog extends Dialog<ButtonType>{
 	
 	private List<ComboBox<String>> myComboBoxes;
 	private List<TextField> myTextFields;
+	private List<TextField> myParamTextFields;
 	private Map<String, String> myKeyActions;
 	
 	private static final int BOTTOM_SPACING = 25;
@@ -33,11 +34,12 @@ public class ControlsDialog extends Dialog<ButtonType>{
 		
 		myComboBoxes = new ArrayList<>();
 		myTextFields = new ArrayList<>();
+		myParamTextFields = new ArrayList<>();
 
-		DialogGridOrganizer grid = new DialogGridOrganizer(2);
-		grid.addRowEnd(new Label("Action"), new Label("Key"));
+		DialogGridOrganizer grid = new DialogGridOrganizer(3);
+		grid.addRowEnd(new Label("Action"), new Label("Key"), new Label("Params"));
 		
-		grid.addRowEnd(addComboBox(), addTextField());
+		grid.addRowEnd(addComboBox(), addKeyPressedField(), addParamTextField());
 		this.getDialogPane().setContent(grid);
 		ButtonType b = new ButtonType("Add");
 		this.getDialogPane().getButtonTypes().addAll(b, ButtonType.OK, ButtonType.CANCEL);
@@ -45,7 +47,7 @@ public class ControlsDialog extends Dialog<ButtonType>{
 		 final Button addButton = (Button) this.getDialogPane().lookupButton(b);
 		 addButton.addEventFilter(ActionEvent.ACTION, event -> {
 			 this.setHeight(this.getHeight() + BOTTOM_SPACING);
-			 grid.addRowEnd(addComboBox(), addTextField());
+			 grid.addRowEnd(addComboBox(), addKeyPressedField(), addParamTextField());
 			 event.consume();
 		 });
 		 
@@ -58,14 +60,15 @@ public class ControlsDialog extends Dialog<ButtonType>{
 		.ifPresent(response -> {
 			myKeyActions = new HashMap<>();
 			for (int i = 0; i < myTextFields.size(); i++){
-				myKeyActions.put(myTextFields.get(i).getText(), myComboBoxes.get(i).getValue());
+				myKeyActions.put(myTextFields.get(i).getText(), 
+						myComboBoxes.get(i).getValue() + ", " + myParamTextFields.get(i).getText());
 			}
 			s.setKeyActions(myKeyActions);
 			System.out.println(myKeyActions);
 		});
 	}
 	
-	public ComboBox<String> addComboBox(){
+	private ComboBox<String> addComboBox(){
 		// TODO: Add String list of interactions
 		ComboBox<String> result = new ComboBox<>();
 		result.getItems().addAll("jump", "forward", "backward");
@@ -73,7 +76,7 @@ public class ControlsDialog extends Dialog<ButtonType>{
 		return result;
 	}
 	
-	public TextField addTextField(){
+	private TextField addKeyPressedField(){
 		TextField result = new TextField();
 		result.setEditable(false);
 		result.setOnKeyPressed(e -> result.setText(e.getCode().toString()));
@@ -81,6 +84,11 @@ public class ControlsDialog extends Dialog<ButtonType>{
 		return result;
 	}
 	
+	private TextField addParamTextField(){
+		TextField result = new TextField();
+		myParamTextFields.add(result);
+		return result;
+	}
 	
 	public List<ComboBox<String>> getComboBoxes(){
 		return myComboBoxes;
@@ -92,6 +100,5 @@ public class ControlsDialog extends Dialog<ButtonType>{
 	
 	public Map<String, String> getKeyActions(){
 		return myKeyActions;
-	}
-	
+	}	
 }
