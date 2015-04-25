@@ -20,6 +20,7 @@ import authoring.dataEditors.Sprite;
 import authoring.dialogs.FileChooserDialog;
 import authoring.dialogs.NewRegionDialog;
 import authoring.fileBuilders.Objective_XML;
+import authoring.fileBuilders.PhysicsEngine_XML;
 import authoring.panes.rightPane.GlobalCreationPane;
 import authoring.userInterface.AuthoringWindow;
 import authoring.userInterface.SpriteCursor;
@@ -42,6 +43,7 @@ public class CenterCanvas extends ScrollPane {
     private AuthoringWindow myParent;
     private Label myInitialLabel;
     private float myGravity = 10;
+    private PhysicsEngine_XML myEngine;
 
     CenterCanvas(Scene scene, AuthoringWindow parent) {
         assert (scene != null);
@@ -151,6 +153,14 @@ public class CenterCanvas extends ScrollPane {
 		if(type.equals("gravity"))
 			return Float.toString(myGravity);
 		return ""; // or null?
+	}
+	
+	public void addPhysics(PhysicsEngine_XML p) {
+		myEngine = p;
+	}
+	
+	public PhysicsEngine_XML getPhysics() {
+		return myEngine;
 	}
     
 }
