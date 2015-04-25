@@ -5,22 +5,32 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
-
+/**
+ * 
+ * @author Kevin Chang
+ *      Class that marks certain curve property points
+ */
 
 public class Anchor extends Circle {
-    Anchor(Color color, DoubleProperty x, DoubleProperty y) {
+    private CubicCurve myPath;
+    Anchor(Color color, DoubleProperty x, DoubleProperty y,CubicCurve path) {
         super(x.get(), y.get(), 10);
         setFill(color.deriveColor(1, 1, 1, 0.5));
         setStroke(color);
         setStrokeWidth(1.5);
         setStrokeType(StrokeType.OUTSIDE);
-
         x.bind(centerXProperty());
         y.bind(centerYProperty());
+        myPath = path;
         enableDrag();
       }
+    
+    public CubicCurve getPath(){
+        return myPath;
+    }
     
     public void combineNode(Anchor node2){
         this.setCenterX(node2.getCenterX());

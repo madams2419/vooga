@@ -1,5 +1,6 @@
 package authoring.pathEditor;
 import java.util.ArrayList;
+import java.util.List;
 import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -17,20 +18,20 @@ import javafx.stage.Stage;
  */
 public class Pathline{
     private CubicCurve myPath;
+    private List<PathElement> myPathEl;
     
     public Pathline(){
-       
+       myPathEl = new ArrayList<>();
     }
     
     public ArrayList<Anchor> createPathElements(double startx, double starty,double endx, double endy){
         ArrayList<Anchor> elements = new ArrayList<>();
         CubicCurve curve = createPath(startx, starty, endx, endy);
         myPath = curve;
-        elements.add(createNode(Color.PALEGREEN, curve.startXProperty(),curve.startYProperty()));
-        elements.add( new ControlAnchor(Color.GOLD,      curve.controlX1Property(), curve.controlY1Property()));
-        elements.add(new ControlAnchor(Color.GOLDENROD, curve.controlX2Property(), curve.controlY2Property()));
-        elements.add(createNode(Color.TOMATO,    curve.endXProperty(),      curve.endYProperty()));
-       
+        elements.add(createNode(Color.PALEGREEN, curve.startXProperty(),curve.startYProperty(),curve));
+        elements.add( new ControlAnchor(Color.GOLD,      curve.controlX1Property(), curve.controlY1Property(),curve));
+        elements.add(new ControlAnchor(Color.GOLDENROD, curve.controlX2Property(), curve.controlY2Property(),curve));
+        elements.add(createNode(Color.TOMATO,    curve.endXProperty(),      curve.endYProperty(),curve));
         return elements;
     }
     
@@ -38,6 +39,11 @@ public class Pathline{
         return myPath;
     }
     
+    public List<PathElement> getPathEl(){
+        return myPathEl;
+    }
+    
+
     private CubicCurve createPath(double startx, double starty,double endx, double endy){
         double deltax = (endx-startx)/2;
         double deltay = (endy-starty)/2;
@@ -53,8 +59,8 @@ public class Pathline{
        return curve;
     }
     
-    private Anchor createNode(Color color, DoubleProperty x, DoubleProperty y){
-        return new Anchor(color,x,y);
+    private Anchor createNode(Color color, DoubleProperty x, DoubleProperty y,CubicCurve path){
+        return new Anchor(color,x,y,path);
     }
     
     public void combineNode(Anchor node1, Anchor node2){
