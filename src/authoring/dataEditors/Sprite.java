@@ -55,6 +55,7 @@ public class Sprite extends ImageView {
 
 	private String myMaterial;
 
+	private Map<Sprite, Map<String, String>> mySpriteInteractionMap;
     private Map<Sprite, Interaction> myInteractions;
 
     private Consumer<Sprite> myOnMouseClickedAction;
@@ -94,9 +95,10 @@ public class Sprite extends ImageView {
 
     public Sprite (CenterPane parent) {
         myParent = parent;
-        myInteractions = new HashMap<>();
+        myInteractions = new HashMap<>(); // TODO: not needed?
         myPosition = new HashMap<>();
         myVelocity = new HashMap<>();
+        mySpriteInteractionMap =  new HashMap<>();
         myVelocity.put(X_STRING, "0.0");
         myVelocity.put(Y_STRING, "0.0");
         myStates = FXCollections.observableArrayList();
@@ -110,6 +112,19 @@ public class Sprite extends ImageView {
         this(ID, sprite.getImageURI(), parent);
     }
 
+    public void addInteractionToMap(Sprite target, String action, String params){
+//    	if (mySpriteInteractionMap.get(target) == null){
+//    		Map<String, String> interaction = new HashMap<>();
+//    		interaction.put(action, params);
+//    		mySpriteInteractionMap.put(target, interaction);
+//    	}
+//    	else{
+//    		mySpriteInteractionMap.get(target).put(action, params);
+//    	}
+    	mySpriteInteractionMap.getOrDefault(target, new HashMap<>()).put(action, params);
+    }
+    
+    
     public void addDefaultCharacteristics (List<String> characteristics) {
         characteristics.forEach(characteristic -> myCharacteristics.put(
                                                                         characteristic, ""));
@@ -262,6 +277,10 @@ public class Sprite extends ImageView {
 
     public void setInteraction (Sprite otherSprite, Interaction interaction) {
         myInteractions.put(otherSprite, interaction);
+    }
+    
+    public void addInteraction (Sprite otherSprite, Map<String, String> interaction){
+    	mySpriteInteractionMap.put(otherSprite, interaction); 
     }
 
     @SuppressWarnings("unchecked")

@@ -67,11 +67,10 @@ public abstract class DataDialog extends Dialog<ButtonType> {
                 .ifPresent(todoOnOK);
     }
 
-    ComboBox<String> addComboBox (List<ComboBox<String>> comboBoxes) {
-        ObservableList<String> toAdd = getListContent();
+    ComboBox<String> addComboBox (List<String> items) {
         ComboBox<String> box = new ComboBox<>();
+        ObservableList<String> toAdd = getListContent();
         box.getItems().addAll(toAdd);
-        comboBoxes.add(box);
         return box;
     }
     

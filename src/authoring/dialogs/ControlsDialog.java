@@ -94,7 +94,7 @@ public class ControlsDialog extends Dialog<ButtonType>{
 		return myComboBoxes;
 	}
 	
-	public void PopulateComboBox(List<String> controlsList, List<KeyCode> keycodeList){
+	public void PopulateComboBox(List<String> controlsList){
 		
 	}
 	
