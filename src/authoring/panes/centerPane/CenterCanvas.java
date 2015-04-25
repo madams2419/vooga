@@ -2,7 +2,6 @@ package authoring.panes.centerPane;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +19,7 @@ import javafx.stage.FileChooser;
 import authoring.dataEditors.Sprite;
 import authoring.dialogs.FileChooserDialog;
 import authoring.dialogs.NewRegionDialog;
+import authoring.fileBuilders.Objective_XML;
 import authoring.panes.rightPane.GlobalCreationPane;
 import authoring.userInterface.AuthoringWindow;
 import authoring.userInterface.SpriteCursor;
@@ -33,7 +33,7 @@ public class CenterCanvas extends ScrollPane {
     
     private List<Map<String, String>> myEnvironmentList = new ArrayList<>();
     private ObservableList<Sprite> myListOfSprites = FXCollections.observableArrayList();
-    private Map<Integer, Map<String,List<String>>> myListOfObjectives = new HashMap<>();
+    private List<Objective_XML> myListOfObjectives = new ArrayList<>();
     
     private Region myCurrentRectangle;
     private GlobalCreationPane gp;
@@ -55,7 +55,7 @@ public class CenterCanvas extends ScrollPane {
         //myGroup.setOnMouseClicked(e -> canvasClicked(e));
 
         myListOfSprites = FXCollections.observableArrayList();
-        myListOfObjectives = new HashMap<>();
+        myListOfObjectives = new ArrayList<>();
         myEnvironmentList = new ArrayList<>();
 
         FrontEndUtils.setKeyActions(this);
@@ -134,11 +134,11 @@ public class CenterCanvas extends ScrollPane {
         return myCurrentRectangle;
     }
     
-    public void addObjective(int index, Map<String,List<String>> params) {
-    	myListOfObjectives.put(index, params);
+    public void addObjective(Objective_XML e) {
+    	myListOfObjectives.add(e);
     }
     
-    public Map<Integer, Map<String,List<String>>> getObjectives() {
+    public List<Objective_XML> getObjectives() {
     	return myListOfObjectives;
     }
 

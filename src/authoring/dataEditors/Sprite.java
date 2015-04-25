@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -45,9 +46,14 @@ public class Sprite extends ImageView {
     private ImageView myIcon;
     private ControlsDialog myControls;
     private AnimationsDialog myAnimations;
+    private StatesDialog myStatesDialog;
     private Map<String, String> myAnimationsMap;
     private ObservableList<String> myStates;
     private int myCurrentScore;
+    
+    private String myType;
+
+	private String myMaterial;
 
     private Map<Sprite, Interaction> myInteractions;
 
@@ -67,7 +73,6 @@ public class Sprite extends ImageView {
 
     private CenterPane myParent;
 
-    private StatesDialog myStatesDialog;
 
     /***
      * 
@@ -326,7 +331,31 @@ public class Sprite extends ImageView {
     public void setStates (StatesDialog states) {
         myStatesDialog = states;
     }
+    
+    public double getWidth() {
+    	return this.getFitWidth();
+    }
+    
+    public double getHeight() {
+    	return this.getFitHeight();
+    }
 
+    public String getMyType() {
+    	return myType;
+    }
+    
+    public void setMyType(String myType) {
+    	this.myType = myType;
+    }
+    
+    public String getMyMaterial() {
+    	return myMaterial;
+    }
+    
+    public void setMyMaterial(String myMaterial) {
+    	this.myMaterial = myMaterial;
+    }
+    
     @Override
     public String toString(){
     	return String.format("%s, %s, %s", this.myName, this.myID, this.getImageURI());
