@@ -7,7 +7,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class SocialCenterMain extends Application {
-
+	private LoginScreen login;
 	@Override
 	
 	
@@ -22,10 +22,12 @@ public class SocialCenterMain extends Application {
 //		stage.setWidth(primaryScreenBounds.getWidth());
 //		stage.setHeight(primaryScreenBounds.getHeight());
 		stage.setResizable(false);
+		//ProfilePage profile=new ProfilePage();
+
 		
 		LoginScreen login = new LoginScreen();
 		SocialCenterMenu menu = new SocialCenterMenu();
-		stage.setScene(login.getLoginScreen());
+		login.getLoginScreen(stage);
 		stage.show();
 
 	}

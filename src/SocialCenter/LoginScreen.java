@@ -1,7 +1,8 @@
 package SocialCenter;
 
-import javafx.scene.Scene;
+import java.util.ArrayList;
 
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -10,15 +11,19 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 public class LoginScreen {
 	private static final int TEMPWIDTH = 1000;
 	private static final int TEMPHEIGHT = 600;
 
 	private Scene loginScreen;
+	private ProfilePage profile;
 	private StackPane root = new StackPane();
 	private Driver db=new Driver();
-	
+	private SocialCenterMenu menu=new SocialCenterMenu();
+	private Stage stage;
+
 	public LoginScreen() {
 		initialize();
 		createForm();
@@ -29,7 +34,7 @@ public class LoginScreen {
 		loginScreen = new Scene(root, TEMPWIDTH, TEMPHEIGHT);
 		loginScreen.getStylesheets().add("styles/login.css");
 		loginScreen.getStylesheets().add("http://fonts.googleapis.com/css?family=Exo:100,200,400");
-		
+
 		StackPane background = new StackPane();
 		background.setId("pane");
 //		Rectangle r = makeSmoke(loginScreen);
@@ -76,18 +81,28 @@ public class LoginScreen {
 		return new javafx.scene.shape.Rectangle(s.getWidth(), s.getHeight(),
 				Color.WHITESMOKE.deriveColor(0, 1, 1, 0.20));
 	}
-	
+
 	private void checkValid(String id, String password){
 		try {
-			db.get(id,password);
+			ArrayList<String> results=db.get("SELECT Login_id,Login_pass FROM Login WHERE Login_id = '"+id+"' AND Login_pass='"+password+"'");
+			if(!results.contains("none")){
+				profile=new ProfilePage(id,TEMPWIDTH,TEMPHEIGHT);
+				stage.setScene(profile.getProfileScreen());
+			}		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public Scene getLoginScreen() {
-		return loginScreen;
+
+	public void getLoginScreen(Stage s) {
+		stage=s;
+		s.setScene(loginScreen);
+	}
+	
+	public Stage getStage(){
+		return stage;
 	}
 
 }

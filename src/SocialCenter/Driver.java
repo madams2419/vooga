@@ -6,17 +6,21 @@ import java.util.Scanner;
 
 public class Driver {
 
-//	public static void main(String[] args) throws Exception {
-//		getConnection();
-////		createTable();
-////		//post();
-////		get();
-//	}
-	public static ArrayList<String> get(String ID, String Pass) throws Exception{
+
+	/*public static void main(String[] args) throws Exception {
+		getConnection();
+		createTable();
+		post();
+		//get();
+	}*/
+	
+
+	public static ArrayList<String> get(String statement) throws Exception{
 		try{
 			Connection con=getConnection();
-			PreparedStatement statement=con.prepareStatement("SELECT Login_id,Login_pass FROM Login WHERE Login_id = '"+ID+"' AND Login_pass='"+Pass+"'");
-			ResultSet result=statement.executeQuery();	
+			PreparedStatement select=con.prepareStatement(statement);
+			//PreparedStatement statement=con.prepareStatement("SELECT Login_id,Login_pass FROM Login WHERE Login_id = '"+ID+"' AND Login_pass='"+Pass+"'");
+			ResultSet result=select.executeQuery();	
 			ArrayList<String> array=new ArrayList<String>();
 			while(result.next()){
 				System.out.println("ID: "+result.getString("Login_id"));
@@ -25,6 +29,7 @@ public class Driver {
 			}
 			if(result.first()==false){
 				System.out.println("Invalid UserName or Password");
+				array.add("none");
 			}
 			return array;
 		}catch(Exception e){
@@ -34,15 +39,11 @@ public class Driver {
 		
 	}
 	
-	public static void post() throws Exception{
-		Scanner s = new Scanner( System.in );
-		System.out.println("Enter your login ID");
-		final String ID=s.next();
-		System.out.println("Enter your Password");
-		final String Password=s.next();
+	public static void post(String statement) throws Exception{
 		try{
 			Connection con=getConnection();
-			PreparedStatement posted = con.prepareStatement("INSERT INTO Login (Login_id, Login_pass) VALUES ('"+ID+"','"+Password+"')");
+			PreparedStatement posted = con.prepareStatement(statement);
+			//PreparedStatement posted = con.prepareStatement("INSERT INTO Profile (ID,NICKNAME,GAMESPLAYED,HIGHSCORE) VALUES ('"+ID+"','"+Nickname+"','"+GamesPlayed+"','"+HighScore+"')");
 			//executeQuery (receives info), executeUpdate(manipulates info)
 			posted.executeUpdate();
 		}catch(Exception e){
@@ -52,11 +53,12 @@ public class Driver {
 		}
 		
 	}
-	public static void createTable() throws Exception{
+	public static void createTable(String statement) throws Exception{
 		try{
 			Connection con=getConnection();
 			//Getting the sql statement ready to be used
-			PreparedStatement create = con.prepareStatement("CREATE TABLE IF NOT EXISTS Testing(Login_id VARCHAR(30), Login_pass VARCHAR(30),PRIMARY KEY(Login_id))");
+			PreparedStatement create=con.prepareStatement(statement);
+			//PreparedStatement create = con.prepareStatement("CREATE TABLE IF NOT EXISTS profile(ID VARCHAR(30), NICKNAME VARCHAR(30), GAMESPLAYED VARCHAR(255), HIGHSCORE INT,PRIMARY KEY(ID))");
 			create.executeUpdate();
 		}catch(Exception e){
 			System.out.println(e);
@@ -68,11 +70,11 @@ public class Driver {
 		try{
 			
 			String driver="com.mysql.jdbc.Driver";
-//			String url="jdbc:mysql://localhost:3306/LoginInfo";
-			String url="jdbc:mysql://10.190.3.194:3306/LoginInfo";
+			String url="jdbc:mysql://localhost:3306/LoginInfo";
+//			String url="jdbc:mysql://10.190.3.194:3306/LoginInfo";
 			//no local host
-			String username="guest";
-			String password="password";
+			String username="root";
+			String password="Tkfkdgo<3";
 			Class.forName(driver);
 
 			Connection conn=DriverManager.getConnection(url,username,password);
