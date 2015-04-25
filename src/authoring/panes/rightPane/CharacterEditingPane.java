@@ -21,6 +21,8 @@ import javafx.scene.text.Text;
 import authoring.dataEditors.Sprite;
 import authoring.dialogs.AnimationsDialog;
 import authoring.dialogs.ControlsDialog;
+import authoring.dialogs.ErrorDialog;
+import authoring.dialogs.StatesDialog;
 import authoring.util.FrontEndUtils;
 import authoring.util.ImageEditor;
 

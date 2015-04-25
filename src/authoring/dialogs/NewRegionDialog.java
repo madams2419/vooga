@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import authoring.panes.centerPane.CenterCanvas;
 import authoring.panes.centerPane.CenterPane;
 import authoring.userInterface.DialogGridOrganizer;
+import authoring.util.UserInputChecker;
 
 /**
  * 
