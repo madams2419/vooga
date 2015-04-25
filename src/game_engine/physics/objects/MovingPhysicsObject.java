@@ -30,6 +30,7 @@ public class MovingPhysicsObject extends PhysicsObject {
 	public void set(Vector amount) {
 		 xVelocity = amount.getX();
 		 yVelocity = amount.getY();
+		 System.out.println(yVelocity);
 	}
 	
 	public void increment(Vector amount) {

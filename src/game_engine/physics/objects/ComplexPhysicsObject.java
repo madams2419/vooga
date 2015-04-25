@@ -53,6 +53,7 @@ public class ComplexPhysicsObject extends AcceleratingPhysicsObject {
 	}
 	
 	public void applyImpulse(Vector impulse) {
-		super.set(impulse.times(computeInverseMass()));
+		System.out.println(impulse.times(computeInverseMass()));
+		super.applyImpulse(impulse.times(computeInverseMass()));
 	}
 }

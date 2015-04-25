@@ -52,6 +52,8 @@ public class VoogaGameBuilder {
 	private List<Sprite> sprites;
 	private List<Objective> objectives;
 	
+	private VoogaGame game;
+	
 	public VoogaGameBuilder(XMLParser p) {
 		parser = p;
 	}
@@ -60,7 +62,9 @@ public class VoogaGameBuilder {
 		parser.moveDown("game");
 		
 		double frameRate = Double.parseDouble(parser.getValue("frame_rate"));
-		VoogaGame game = new VoogaGame(frameRate);
+		double width = Double.parseDouble(parser.getValue("scene_width"));
+		double height = Double.parseDouble(parser.getValue("scene_height"));
+		game = new VoogaGame(frameRate, width, height);
 		
 		parser.moveDown("level");
 		for (String directory : parser.getValidSubDirectories()) {
@@ -148,7 +152,7 @@ public class VoogaGameBuilder {
 	private Animation buildAnimation(Map<String, List<IHitbox>> hitboxes) {
 		parser.moveDown("animation");
 		
-		Animation animation = new Animation();
+		Animation animation = new Animation(game.getHeight());
 		
 		for (String directory : parser.getValidSubDirectories()) {
 			parser.moveDown(directory);

@@ -29,7 +29,6 @@ public class Sprite extends Observable implements IActor {
 		notifyObservers();
 		
 		buildActionMap();
-		actions = new HashMap<>();
 	}
 	
 	private void buildActionMap(){ 
@@ -67,8 +66,8 @@ public class Sprite extends Observable implements IActor {
 	};
 
 	private IAction jump = (params) -> {
+		System.out.println(Double.parseDouble(params[0]));
 		Vector myVector = new Vector(0, Double.parseDouble(params[0]));
-		System.out.println("jump");
 		physicsObject.applyImpulse(myVector);
 	};
 

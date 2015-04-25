@@ -35,6 +35,6 @@ public class AcceleratingPhysicsObject extends MovingPhysicsObject {
 	}
 	
 	public void applyImpulse(Vector impulse) {
-		super.set(impulse);
+		super.applyImpulse(impulse);
 	}
 }

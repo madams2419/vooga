@@ -12,6 +12,8 @@ import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class VoogaGame implements IActor {
@@ -20,11 +22,15 @@ public class VoogaGame implements IActor {
 	private Level activeLevel;
 	private Group root;
 	private Timeline timeline;
+	private double width, height;
+	private ControlsManager controlsManager;
 
-	public VoogaGame(double frameRate) {
+	public VoogaGame(double frameRate, double w, double h) {
 		levels = new ArrayList<Level>();
 		root = new Group();
 		timeline = new Timeline(getFrame(frameRate));
+		width = w;
+		height = h;
 	}
 	
 	private KeyFrame getFrame(double frameRate) {
@@ -33,6 +39,10 @@ public class VoogaGame implements IActor {
 
 	public void addLevel(Level l) {
 		levels.add(l);
+	}
+	
+	public double getHeight() {
+		return height;
 	}
 	
 	public IAction getAction(String name) {
@@ -51,9 +61,7 @@ public class VoogaGame implements IActor {
 			root.getChildren().add(sprite.getImageView());
 		});
 		root.requestFocus();
-		ControlsManager controlManager = activeLevel.getControlManager();
-		root.setOnKeyPressed(e -> controlManager.handleInput(e));
-		root.setOnKeyReleased(e -> controlManager.handleInput(e));
+		controlsManager = activeLevel.getControlManager();
 
 		if (!activeLevel.getSprites().isEmpty()) {
 			Sprite sprite = activeLevel.getSprites().get(0);
@@ -66,11 +74,19 @@ public class VoogaGame implements IActor {
 	}
 	
 	public void start() {
+		Stage stage = new Stage();
+		stage.setHeight(height);
+		stage.setWidth(width);
+		Scene scene = new Scene(root);
+		scene.setOnKeyPressed(e -> controlsManager.handleInput(e));
+		scene.setOnKeyReleased(e -> controlsManager.handleInput(e));
+		stage.setScene(scene);
+		stage.setResizable(false);
+		stage.show();
 		timeline.play();
 	}
 
 	public Group getRoot() {
-		
 		return root;
 	}
 }

@@ -19,11 +19,13 @@ public class Animation extends Observable implements Observer {
     Map<String, ImageLink> paths;
     private double timeElapsed;
     private double lastUpdateTime;
+    private double height;
 
-    public Animation() {
+    public Animation(double h) {
     	image = new ImageView();
     	paths = new HashMap<>();
     	timeElapsed = 0;
+    	height = h;
     }
     
     public void associateImage(String state, String imagePath, double delay, double height, double width) {
@@ -110,7 +112,7 @@ public class Animation extends Observable implements Observer {
     	try {
     		PhysicsObject physicsObject = (PhysicsObject) source;
     		image.setTranslateX(physicsObject.getXPosition());
-    		image.setTranslateY(physicsObject.getYPosition());
+    		image.setTranslateY(height - physicsObject.getYPosition() - image.getImage().getHeight());
     	}
     	catch (Exception e) {
     		// do nothing
