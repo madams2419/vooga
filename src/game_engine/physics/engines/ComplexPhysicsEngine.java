@@ -13,9 +13,9 @@ public class ComplexPhysicsEngine extends PhysicsEngine {
 		dragCoefficient = drag;
 	}
 	
-	public void resolveCollision(PhysicsObject spriteA, PhysicsObject spriteB) {
-		
-	}
+//	public void resolveCollision(PhysicsObject spriteA, PhysicsObject spriteB) {
+//		
+//	}
 	
 	public BiFunction<Double, Vector, Vector> getDependentForces() {
 		return (area, velocity) -> {
