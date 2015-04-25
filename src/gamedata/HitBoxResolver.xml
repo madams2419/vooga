@@ -1,0 +1,53 @@
+<collision_3>
+	<sprites>0 4</sprites>
+
+	<detectors>
+		<detector_0>SimpleDetector</detector_0>
+		// you can have multiple detectors which go in order of importance
+		<detector_1>PixelPerfectDetector</detector_1>
+		//another kind of detector is: HitBoxDetector
+	</detectors>
+
+	<resolvers>
+		<resolver_0>
+			<type>SimpleResolver</type>
+
+			<behaviors>
+				<behavior_1>
+					<targetType>objective</targetType>
+					<targetIndex>2</targetIndex>
+					<name>setStatus</name>
+					<parameters>complete</parameters>
+				</behavior_1>
+			</behaviors>
+		</resolver_0>
+
+		<resolver_1>
+			<type>HitBoxResolver</type>
+
+			<pair_0>
+				<pair>0 1</pair> // index of relevant hitbox for sprite0 is 0, index of relevant hitbox for sprite4 is 1
+				<behaviors>
+					<behavior_1>
+						<targetType>objective</targetType>
+						<targetIndex>2</targetIndex>
+						<name>setStatus</name>
+						<parameters>complete</parameters>
+					</behavior_1>
+				</behaviors>
+			</pair_0>
+
+			<pair_1>
+
+			</pair_1>
+
+		</resolver_1>
+
+		<resolver_3>
+			<resolver_0>
+				<type>PhysicalResolver</type>
+			</resolver_0>
+		</resolver_3>
+
+	</resolvers>
+</collision_3>
