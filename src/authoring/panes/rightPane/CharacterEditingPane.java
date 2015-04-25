@@ -20,6 +20,8 @@ import javafx.scene.text.Text;
 import authoring.dataEditors.Sprite;
 import authoring.dialogs.AnimationsDialog;
 import authoring.dialogs.ControlsDialog;
+import authoring.dialogs.ErrorDialog;
+import authoring.dialogs.StatesDialog;
 import authoring.util.FrontEndUtils;
 import authoring.util.ImageEditor;
 
@@ -34,14 +36,16 @@ import authoring.util.ImageEditor;
  */
 
 class CharacterEditingPane extends EditingPane {
+    private static final String ANIMATION_ERROR = "Please create states \nbefore adding animations!";
     private static final String NAME = "name";
     private static final String POSITION = "position";
-    private static final String imageChooserTitle = "Change Character Image";
-    private static final String imageChooserDescription = "Image Files";
-    private static final String[] imageChooserExtensions = { "*.png", "*.jpg",
+    private static final String IMAGE_CHOOSER_TITLE = "Change Character Image";
+    private static final String IMAGE_CHOOSER_DESCRIPTION = "Image Files";
+    private static final String[] IMAGE_CHOOSER_EXTENSIONS = { "*.png", "*.jpg",
                                                             "*.gif" };
     private static final String UPDATE = "Update";
     private static final String ADD_ANIMATIONS = "Add Animations";
+    private static final String ADD_STATES = "Add States";
     private static final String DELETE = "Delete";
     private static final String CONTROLS = "Controls";
     private static final String PLAYABLE = "Playable";
@@ -59,12 +63,29 @@ class CharacterEditingPane extends EditingPane {
         addAnimations(sprite);
         setFields(this.getChildren(), sprite.getCharacteristics());
 
+        addStatesButton(sprite);
         addPlayableCheckBox(addControlsButton(sprite), sprite);
         addUpdateButton(sprite);
         addDeleteButton(sprite);
 //        addBackButton(); // I don't know if this is really necessary anymore...
 
         // ================================================================= //
+    }
+
+    private void addStatesButton (Sprite sprite) {
+        Button statesButton = new Button(ADD_STATES);
+        statesButton.setOnAction(e -> addState(sprite));
+        this.getChildren().add(statesButton);
+    }
+
+    private void addState (Sprite sprite) {
+        if (sprite.getStatesDialog() != null) {
+            sprite.getStatesDialog().showBox(sprite);
+        }
+        else {
+            StatesDialog statesDialog = new StatesDialog(sprite);
+            sprite.setStates(statesDialog);
+        }
     }
 
     private void addAnimations (Sprite sprite) {
@@ -74,12 +95,17 @@ class CharacterEditingPane extends EditingPane {
     }
 
     private void addAnimation (Sprite sprite) {
-        if (sprite.getAnimations() != null) {
-            sprite.getAnimations().showBox(sprite);
+        if (sprite.getStates().size() == 0) {
+            new ErrorDialog(ANIMATION_ERROR);
         }
         else {
-            AnimationsDialog animationsDialog = new AnimationsDialog(sprite);
-            sprite.setAnimations(animationsDialog);
+            if (sprite.getAnimations() != null) {
+                sprite.getAnimations().showBox(sprite);
+            }
+            else {
+                AnimationsDialog animationsDialog = new AnimationsDialog(sprite, sprite.getStates());
+                sprite.setAnimations(animationsDialog);
+            }
         }
     }
     
@@ -178,7 +204,7 @@ class CharacterEditingPane extends EditingPane {
 
     private void changeCharacterImage (Sprite sprite) {
         File selectedImageFile =
-                FrontEndUtils.selectFile(imageChooserTitle, imageChooserDescription, imageChooserExtensions);
+                FrontEndUtils.selectFile(IMAGE_CHOOSER_TITLE, IMAGE_CHOOSER_DESCRIPTION, IMAGE_CHOOSER_EXTENSIONS);
         if (selectedImageFile != null) {
             sprite.changeImage(new Image(selectedImageFile.toURI().toString()));
         }

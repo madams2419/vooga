@@ -40,6 +40,7 @@ public class AuthoringWindow {
 	private static final int VIEW_MENU = 2;
 	private static final int HELP_MENU = 3;
 
+	private boolean sprite_selection_waiting;
 	private static Sprite currentlySelected;
 	private static boolean control;
 
@@ -142,6 +143,14 @@ public class AuthoringWindow {
 
 	public static boolean getControl() {
 		return control;
+	}
+	
+	public void setSpriteWaiting(boolean wait) {
+		sprite_selection_waiting = wait;
+	}
+	
+	public boolean getSpriteWaiting() {
+		return sprite_selection_waiting;
 	}
 
 	public TopPane getTopPane() {

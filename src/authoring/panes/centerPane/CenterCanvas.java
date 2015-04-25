@@ -1,12 +1,10 @@
 package authoring.panes.centerPane;
 
-import game_engine.objective.Objective;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -21,6 +19,8 @@ import javafx.stage.FileChooser;
 import authoring.dataEditors.Sprite;
 import authoring.dialogs.FileChooserDialog;
 import authoring.dialogs.NewRegionDialog;
+import authoring.fileBuilders.Objective_XML;
+import authoring.fileBuilders.PhysicsEngine_XML;
 import authoring.panes.rightPane.GlobalCreationPane;
 import authoring.userInterface.AuthoringWindow;
 import authoring.userInterface.SpriteCursor;
@@ -32,9 +32,9 @@ public class CenterCanvas extends ScrollPane {
     private static final int INITIAL_REGION_Y = 600;
     private static final int INITIAL_REGION_X = 1000;
     
-    private List<Map<String, String>> myEnvironmentList;
-    private ObservableList<Sprite> myListOfSprites;
-    private ObservableList<String> myListOfObjectives;
+    private List<Map<String, String>> myEnvironmentList = new ArrayList<>();
+    private ObservableList<Sprite> myListOfSprites = FXCollections.observableArrayList();
+    private List<Objective_XML> myListOfObjectives = new ArrayList<>();
     
     private Region myCurrentRectangle;
     private GlobalCreationPane gp;
@@ -42,6 +42,8 @@ public class CenterCanvas extends ScrollPane {
     private Scene myScene;
     private AuthoringWindow myParent;
     private Label myInitialLabel;
+    private float myGravity = 10;
+    private PhysicsEngine_XML myEngine;
 
     CenterCanvas(Scene scene, AuthoringWindow parent) {
         assert (scene != null);
@@ -55,7 +57,7 @@ public class CenterCanvas extends ScrollPane {
         //myGroup.setOnMouseClicked(e -> canvasClicked(e));
 
         myListOfSprites = FXCollections.observableArrayList();
-        myListOfObjectives = FXCollections.observableArrayList();
+        myListOfObjectives = new ArrayList<>();
         myEnvironmentList = new ArrayList<>();
 
         FrontEndUtils.setKeyActions(this);
@@ -134,8 +136,31 @@ public class CenterCanvas extends ScrollPane {
         return myCurrentRectangle;
     }
     
-    public void addObjective(int index, Map<String,List<String>> params) {
-    	System.out.println(params.toString());
+    public void addObjective(Objective_XML e) {
+    	myListOfObjectives.add(e);
     }
+    
+    public List<Objective_XML> getObjectives() {
+    	return myListOfObjectives;
+    }
+
+	public void addSetting(String type, String value) {
+		if(type.equals("gravity"))
+			myGravity = Float.parseFloat(value);
+	}
+	
+	public String getSetting(String type) {
+		if(type.equals("gravity"))
+			return Float.toString(myGravity);
+		return ""; // or null?
+	}
+	
+	public void addPhysics(PhysicsEngine_XML p) {
+		myEngine = p;
+	}
+	
+	public PhysicsEngine_XML getPhysics() {
+		return myEngine;
+	}
     
 }

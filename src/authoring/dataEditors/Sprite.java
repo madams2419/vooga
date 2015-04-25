@@ -5,11 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import javafx.scene.control.Label;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import authoring.dialogs.AnimationsDialog;
 import authoring.dialogs.ControlsDialog;
+import authoring.dialogs.StatesDialog;
 import authoring.panes.centerPane.CenterPane;
 import authoring.panes.rightPane.RightPane;
 import authoring.userInterface.ClickHandler;
@@ -43,7 +46,14 @@ public class Sprite extends ImageView {
     private ImageView myIcon;
     private ControlsDialog myControls;
     private AnimationsDialog myAnimations;
+    private StatesDialog myStatesDialog;
     private Map<String, String> myAnimationsMap;
+    private ObservableList<String> myStates;
+    private int myCurrentScore;
+    
+    private String myType;
+
+	private String myMaterial;
 
     private Map<Sprite, Interaction> myInteractions;
 
@@ -63,6 +73,7 @@ public class Sprite extends ImageView {
 
     private CenterPane myParent;
 
+
     /***
      * 
      * @param ID
@@ -75,10 +86,10 @@ public class Sprite extends ImageView {
         this.myID = ID;
         myScale = 1.0;
         myCharacteristics.put("imageURI", imageURI);
-        myCharacteristics.put("ID", String.valueOf(ID));
         myCharacteristics.put(SCALE, String.valueOf(myScale));
         myIcon = new ImageView();
         changeImage(new Image(imageURI));
+        myCurrentScore = 0;
     }
 
     public Sprite (CenterPane parent) {
@@ -88,6 +99,7 @@ public class Sprite extends ImageView {
         myVelocity = new HashMap<>();
         myVelocity.put(X_STRING, "0.0");
         myVelocity.put(Y_STRING, "0.0");
+        myStates = FXCollections.observableArrayList();
         myKeyActions = new HashMap<>();
         myCharacteristics = new HashMap<>();
         addDefaultCharacteristics(Arrays.asList(new String[] { "Name" }));
@@ -139,7 +151,6 @@ public class Sprite extends ImageView {
                                                        .getRightPane(), this));
         }
         catch (NoSuchMethodException | SecurityException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -173,6 +184,14 @@ public class Sprite extends ImageView {
         newPosition.forEach( (s1, s2) -> myPosition.put(s1, s2));
         setXPosition(myPosition.get(X_STRING));
         setYPosition(myPosition.get(Y_STRING));
+    }
+    
+    public void setScore(int score){
+    	myCurrentScore = score;
+    }
+    
+    public int getScore(){
+    	return myCurrentScore;
     }
 
     public void setScale (double scale) {
@@ -214,6 +233,12 @@ public class Sprite extends ImageView {
 
     public void setKeyActions (Map<String, String> keyActions) {
         myKeyActions = keyActions;
+    }
+    
+    public Map<String,String> getKeyActions() {
+    	if(isPlayable)
+    		return myKeyActions;
+    	return null;
     }
 
     public String getImageURI () {
@@ -268,6 +293,7 @@ public class Sprite extends ImageView {
     }
 
     public void setAnimations (AnimationsDialog c) {
+        System.out.println("Setting animations");
         myAnimations = c;
     }
     
@@ -276,6 +302,9 @@ public class Sprite extends ImageView {
     }
 
     public AnimationsDialog getAnimations () {
+        if (myAnimations != null) {
+            return myAnimations.update(getStates());
+        }
         return myAnimations;
     }
 
@@ -286,4 +315,50 @@ public class Sprite extends ImageView {
     public void setPlayable (Boolean b) {
         isPlayable = b;
     }
+
+    public ObservableList<String> getStates () {
+        return myStates;
+    }
+    
+    public StatesDialog getStatesDialog () {
+        return myStatesDialog;
+    }
+    
+    public void setStates (ObservableList<String> states) {
+        myStates = states;
+    }
+
+    public void setStates (StatesDialog states) {
+        myStatesDialog = states;
+    }
+    
+    public double getWidth() {
+    	return this.getFitWidth();
+    }
+    
+    public double getHeight() {
+    	return this.getFitHeight();
+    }
+
+    public String getMyType() {
+    	return myType;
+    }
+    
+    public void setMyType(String myType) {
+    	this.myType = myType;
+    }
+    
+    public String getMyMaterial() {
+    	return myMaterial;
+    }
+    
+    public void setMyMaterial(String myMaterial) {
+    	this.myMaterial = myMaterial;
+    }
+    
+    @Override
+    public String toString(){
+    	return String.format("%s, %s, %s", this.myName, this.myID, this.getImageURI());
+    }
+    
 }

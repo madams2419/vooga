@@ -1,7 +1,5 @@
 package authoring.panes.rightPane;
 
-import game_engine.objective.Objective;
-
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -12,10 +10,12 @@ import java.util.Map;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import authoring.dataEditors.InteractionManager;
 import authoring.dataEditors.Sprite;
+import authoring.dialogs.PhysicsSettingsDialog;
 import authoring.panes.WindowPane;
 import authoring.userInterface.AuthoringWindow;
 
@@ -45,6 +45,8 @@ public class RightPane extends WindowPane {
     private List<String> availableBlockTypeURIs;
     private List<String> availableDecorationTypeURIs;
     private List<String> availableObjectTypeURIs;
+    
+    private ObjectivePane myObjectives;
     
     public RightPane (Scene scene, AuthoringWindow window) {
         super(scene, new VBox(SPACING), window);
@@ -104,7 +106,14 @@ public class RightPane extends WindowPane {
     }
     
     public void switchToObjectivePane() {
-    	switchToPane(new ObjectivePane(myScene, this));
+    	if(myObjectives == null)
+    		myObjectives = new ObjectivePane(myScene, this);
+    	switchToPane(myObjectives);
+    }
+    
+    public void switchToObjectivesPane(Sprite s) {
+    	switchToPane(myObjectives);
+    	myObjectives.returnFromSpriteSelection(s);
     }
 
     private void printOutInteractions () {
@@ -122,6 +131,9 @@ public class RightPane extends WindowPane {
     public void switchPane (Sprite s) {
         if (AuthoringWindow.getControl())
             switchToInteractionEditingPane((Sprite) AuthoringWindow.getCurrentlySelected(), s);
+        else if (this.myParent.getSpriteWaiting()){
+        	switchToObjectivesPane(s);
+        }
         else {
             AuthoringWindow.setCurrentlySelected(s);
             switchToCharacterEditingPane(s);
@@ -142,6 +154,10 @@ public class RightPane extends WindowPane {
     public void switchToMapSettingPane () {
         switchToPane(new MapSettingPane(myScene, this));
     }
+    
+    public void showPhysicsSettings() {
+    	new PhysicsSettingsDialog(this);
+    }
 
     public void setScene (Scene scene, List<String> availableSpriteURIs) {
         myScene = scene;
@@ -154,8 +170,12 @@ public class RightPane extends WindowPane {
     }
 
     private void addFromCurrentContent () {
-        ((VBox) getContainer()).getChildren().addAll(
-                                                     myCurrentContent.getChildren());
+    	List<Node> l;
+    	if(myCurrentContent instanceof ObjectivePane)
+    		l = ((ObjectivePane) myCurrentContent).getComponents();
+    	else
+    		l = myCurrentContent.getChildren();
+        ((VBox) getContainer()).getChildren().addAll(l);
     }
 
     public void addContent (EditingPane p) {

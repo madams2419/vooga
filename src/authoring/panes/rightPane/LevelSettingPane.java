@@ -1,9 +1,9 @@
 package authoring.panes.rightPane;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -27,11 +27,11 @@ public class LevelSettingPane extends EditingPane {
     public void updateLevels(RightPane parent){
         this.getChildren().clear();
         /* Default Map */
-        Iterator<List<CenterCanvas>> it = myParent.getParent().getCenterPane().getMaps();
+        List<List<CenterCanvas>> it = myParent.getParent().getCenterPane().getMaps();
         int levelIndex = 0, mapIndex = 0;
         HBox h = new HBox(5);
-        while(it.hasNext()){
-            List<CenterCanvas> maps = it.next();
+        for(int i = 0; i < it.size(); i++){
+            List<CenterCanvas> maps = it.get(i);
             Label levelLabel = new Label("Level "+ levelIndex++);
             ComboBox<String> mapBox = new ComboBox<String>();
             mapBox.setPromptText("Select Map");
