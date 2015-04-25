@@ -37,28 +37,24 @@ public class Driver {
 	}
 
 	
-	public static void renamePlayer(String ID)throws Exception{
-		
+	public static void updateHS(String ID, String GamesPlayed, String HighScore)throws Exception{
 		try{
 			Connection con=getConnection();
-			//PreparedStatement posted = con.prepareStatement(statement);
-			//PreparedStatement posted = con.prepareStatement("INSERT INTO Profile (ID,NICKNAME,GAMESPLAYED,HIGHSCORE) VALUES ('"+ID+"','"+Nickname+"','"+GamesPlayed+"','"+HighScore+"')");
-			PreparedStatement posted=con.prepareStatement("ALTER TABLE profile CHANGE PLAYER '"+ID+"' char(30)");
-			//executeQuery (receives info), executeUpdate(manipulates info)
-			posted.executeUpdate();
+			PreparedStatement update=con.prepareStatement("UPDATE '"+ID+"' SET HighScore='"+HighScore+"' WHERE Gamesplayed='"+GamesPlayed+"'");
+			update.executeUpdate();
 		}catch(Exception e){
 			System.out.println(e);
 		}finally{
-			System.out.println("insert complete");
-		}	
+			System.out.println("update complete");
+		}
 	}
 	
-	public static void addPlayer() throws Exception{
+
+	public static void addGame(String table, String GamesPlayed, String HighScore) throws Exception{
 		try{
 			Connection con=getConnection();
 			//PreparedStatement posted = con.prepareStatement(statement);
-			//PreparedStatement posted = con.prepareStatement("INSERT INTO Profile (ID,NICKNAME,GAMESPLAYED,HIGHSCORE) VALUES ('"+ID+"','"+Nickname+"','"+GamesPlayed+"','"+HighScore+"')");
-			PreparedStatement posted=con.prepareStatement("ALTER TABLE profile ADD PLAYER char(30)");
+			PreparedStatement posted = con.prepareStatement("INSERT INTO '"+table+"' (GAMESPLAYED,HIGHSCORE) VALUES ('"+GamesPlayed+"','"+HighScore+"')");
 			//executeQuery (receives info), executeUpdate(manipulates info)
 			posted.executeUpdate();
 		}catch(Exception e){
@@ -68,13 +64,13 @@ public class Driver {
 		}
 	}
 	
-	public static void createTable() throws Exception{
+	public static void createTable(String ID) throws Exception{
 		try{
 			Connection con=getConnection();
 			//Getting the sql statement ready to be used
 			//PreparedStatement create=con.prepareStatement(statement);
 			//PreparedStatement create = con.prepareStatement("CREATE TABLE IF NOT EXISTS profile(ID VARCHAR(30), NICKNAME VARCHAR(30), GAMESPLAYED VARCHAR(255), HIGHSCORE INT,PRIMARY KEY(ID))");
-			PreparedStatement create=con.prepareStatement("CREATE TABLE IF NOT EXISTS players(PLayer VARCHAR(30))");
+			PreparedStatement create=con.prepareStatement(String.format("CREATE TABLE IF NOT EXISTS %s(PLayer VARCHAR(30), HighScore VARCHAR(255))", ID));
 			create.executeUpdate();
 		}catch(Exception e){
 			System.out.println(e);

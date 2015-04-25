@@ -46,7 +46,7 @@ public class ProfilePage {
 
 	private void createGUI(){
 		GridPane gridpane = new GridPane();
-		String[] s={"ID","NickName","Game","HighScore"};
+		String[] s={"ID","NickName"};
 		for(int i=0; i<s.length; i++){
 			setConstraints(gridpane,s[i],i);
 		}
@@ -68,7 +68,7 @@ public class ProfilePage {
 
 	
 	private static void createStats(){		
-		String[] request={"NickName","GamesPlayed","HighScore"};
+		String[] request={"NickName"};
 		ArrayList<String> results=new ArrayList<>();
 		try {
 			//System.out.println(ls.getID());
@@ -82,8 +82,7 @@ public class ProfilePage {
 		}
 		
 		
-	}
-	
+	}	
 	public void getProfileScreen(Stage s){
 		s.setScene(profilePage);
 	}
