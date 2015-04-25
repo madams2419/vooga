@@ -115,11 +115,11 @@ public class ControlsDialog extends Dialog<ButtonType> {
 	public List<ComboBox<String>> getComboBoxes() {
 		return myComboBoxes;
 	}
-
-	public void PopulateComboBox(List<String> controlsList,
-			List<KeyCode> keycodeList) {
-
+	
+	public void PopulateComboBox(List<String> controlsList){
+	
 	}
+		
 
 	public Map<String, String> getKeyActions() {
 		return myKeyActions;

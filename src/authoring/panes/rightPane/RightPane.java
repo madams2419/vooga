@@ -1,6 +1,7 @@
 package authoring.panes.rightPane;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,7 +78,7 @@ public class RightPane extends WindowPane {
     
     void deleteSprite (Sprite sprite) {
         getParent().getCenterPane().removeSprite(sprite);
-        InteractionManager.getInstance().removeSpriteInteractions(sprite);
+        //InteractionManager.getInstance().removeSpriteInteractions(sprite);
         switchToCharacterCreationPane();
     }
 
@@ -97,12 +98,12 @@ public class RightPane extends WindowPane {
         switchToPane(new CreationPane(myScene, this, availableObjectTypeURIs));
     }
 
-    public void switchToInteractionEditingPane (Sprite sprite1, Sprite sprite2) {
+    public void switchToInteractionEditingPane (Sprite sprite1, Sprite sprite2) throws IOException {
         if (!(myCurrentContent instanceof InteractionEditingPane)
             && (sprite1 != sprite2)) // checking memory address
             switchToPane(new InteractionEditingPane(myScene, this, sprite1,
                                                     sprite2, getListOfInteractions()));
-        printOutInteractions();
+        //printOutInteractions();
     }
     
     public void switchToObjectivePane() {
@@ -117,7 +118,7 @@ public class RightPane extends WindowPane {
     }
 
     private void printOutInteractions () {
-        InteractionManager.getInstance().printOut();
+        //InteractionManager.getInstance().printOut();
     }
 
     public void UIControlCreate () {
@@ -128,7 +129,7 @@ public class RightPane extends WindowPane {
         switchToPane(new DefaultEditingPane(myScene, this));
     }
 
-    public void switchPane (Sprite s) {
+    public void switchPane (Sprite s) throws IOException {
         if (AuthoringWindow.getControl())
             switchToInteractionEditingPane((Sprite) AuthoringWindow.getCurrentlySelected(), s);
         else if (this.myParent.getSpriteWaiting()){
