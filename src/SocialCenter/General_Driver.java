@@ -17,7 +17,6 @@ public class General_Driver {
 	/**
 	 * @param args
 	 */
-	private static ResultSet result;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
@@ -27,7 +26,7 @@ public class General_Driver {
 		try{
 			Connection con = getConnection();
 			PreparedStatement select=con.prepareStatement(statement);
-			result=select.executeQuery();
+			ResultSet result=select.executeQuery();
 			ArrayList<String> array=new ArrayList<String>();
 			while(result.next()){
 				array.add(result.getString(request));
