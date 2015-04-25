@@ -14,14 +14,14 @@ public class SingleHitboxTest {
 
 	@Test
 	public void getBoundingBoxTest() {
-		SingleHitbox s = new SingleHitbox();
+		SingleHitbox sHitbox = new SingleHitbox();
 		
-		s.addPoint(new Vector(-5, -8));
-		s.addPoint(new Vector(-7, 13));
-		s.addPoint(new Vector(12, -3));
-		s.addPoint(new Vector(19, 22));
+		sHitbox.addPoint(new Vector(-5, -8));
+		sHitbox.addPoint(new Vector(-7, 13));
+		sHitbox.addPoint(new Vector(12, -3));
+		sHitbox.addPoint(new Vector(19, 22));
 		
-		List<Vector> boundingBox = s.getBoundingBox();
+		List<Vector> boundingBox = sHitbox.getBoundingBox();
 		
 		Vector lowerLeft = boundingBox.get(0);
 		Vector upperRight = boundingBox.get(1);
