@@ -1,4 +1,4 @@
-package SocialCenter;
+package utilities.SocialCenter;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;

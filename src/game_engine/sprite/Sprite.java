@@ -3,8 +3,20 @@ package game_engine.sprite;
 import game_engine.annotation.IActionAnnotation;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
+<<<<<<< HEAD
 import game_engine.physics_engine.Vector;
 import game_engine.physics_engine.physics_object.IPhysicsObject;
+=======
+<<<<<<< HEAD
+import game_engine.physics.Material;
+import game_engine.physics.PhysicsEngine;
+import game_engine.physics.PhysicsObject;
+import game_engine.physics.RigidBody.RBodyType;
+=======
+import game_engine.physics_engine.Vector;
+import game_engine.physics_engine.physics_object.IPhysicsObject;
+>>>>>>> 22264357c8c80e754b05e8fb37839b38026dd385
+>>>>>>> 76ac245ad5aa02e6c3f45238f1cc6763a4d3c008
 import game_player.Animation;
 
 import java.lang.reflect.Field;
@@ -21,6 +33,70 @@ public class Sprite extends Observable implements IActor {
 	private Animation myAnimation;
 	protected IPhysicsObject myPhysicsObject;
 	private Map<String, IAction> myActionMap = new HashMap<>();
+	protected PhysicsObject myPhysicsObject;
+	private Map<String, IBehavior> myBehaviorMap = new HashMap<>();
+//	private HitBox myHitBox;
+	
+	
+	/**
+	 * Testing constructor
+	 */
+	public Sprite(String defaultState, String defaultImage, int height, int width, RBodyType rbType,
+			PhysicsEngine globalPhysics, Material material, int startX, int startY) {
+		myId = 0;
+		myPhysicsObject = new PhysicsObject(globalPhysics, rbType, height, width, material, startX, startY);
+		myAnimation = new Animation(this, myPhysicsObject);
+		addImage(defaultState, defaultImage);
+		setState(defaultState);
+		setImageSize(height, width);
+		
+	}
+	
+	/**
+	 * Blank Constructor
+	 */
+	public Sprite(PhysicsObject physics) {
+		// TODO
+	    myPhysicsObject = physics;
+	    myId = 0;
+	    myAnimation = new Animation(this,myPhysicsObject);
+	}
+	
+	/**
+	 * Constructor Sprite
+	 * Creates sprite object with a defined name
+	 * @param name the string to name the sprite
+	 */
+	public Sprite(PhysicsObject physics, String name){
+	    myPhysicsObject = physics;
+	    myId = 0; //TODO make call to SpriteManager to get unique ID or don't allow sprite to constructed without ID
+	    myName = name;
+	    myAnimation = new Animation(this,myPhysicsObject);
+	}
+	
+	/**
+	 * Constructor Sprite
+	 * Creates sprite object with a defined name and specified id
+	 * @param name the string to name the sprite
+	 * @param id the id of the specific sprite
+	 */
+	public Sprite(PhysicsObject physics, String name, int id){
+	    myPhysicsObject = physics;
+	    myName = name;
+	    myId = id;
+	    myAnimation = new Animation(this,myPhysicsObject);
+	}
+	
+	/**
+	 * method update
+	 * Updates the sprite
+	 */
+	public abstract void update();
+=======
+	protected IPhysicsObject myPhysicsObject;
+	private Map<String, IAction> myActionMap = new HashMap<>();
+>>>>>>> 22264357c8c80e754b05e8fb37839b38026dd385
+>>>>>>> 76ac245ad5aa02e6c3f45238f1cc6763a4d3c008
 	
 	public Sprite(String state, Animation animation, IPhysicsObject physicsObject) {
 		myState = state;
@@ -97,9 +173,24 @@ public class Sprite extends Observable implements IActor {
 	    return this.myName;
 	}
 	
+<<<<<<< HEAD
 	public void setStateName(String movementName){
 		myState = movementName;
 		notifyObservers(myState);
+=======
+<<<<<<< HEAD
+//	public HitBox getHitBox(){
+//	    return myHitBox;
+//	}
+	
+	public void setPhysicsObject(PhysicsObject physicsObject){
+	    myPhysicsObject = physicsObject;
+=======
+	public void setStateName(String movementName){
+		myState = movementName;
+		notifyObservers(myState);
+>>>>>>> 22264357c8c80e754b05e8fb37839b38026dd385
+>>>>>>> 76ac245ad5aa02e6c3f45238f1cc6763a4d3c008
 	}
 	
 	@IActionAnnotation(numParams = 2, description = "moving forward/backward")

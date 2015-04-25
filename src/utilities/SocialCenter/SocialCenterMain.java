@@ -1,4 +1,4 @@
-package SocialCenter;
+package utilities.SocialCenter;
 
 import menu.VoogaMenu;
 import javafx.application.Application;
@@ -26,7 +26,8 @@ public class SocialCenterMain extends Application {
 
 		
 		LoginScreen login = new LoginScreen();
-		SocialCenterMenu menu = new SocialCenterMenu();
+		SocialCenterMenu menu = new SocialCenterMenu(stage);
+//		login.getLoginScreen(stage);
 		login.getLoginScreen(stage);
 		stage.show();
 

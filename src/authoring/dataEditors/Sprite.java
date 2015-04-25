@@ -37,7 +37,7 @@ public class Sprite extends ImageView {
 
     private Map<String, String> myPosition;
     private Map<String, String> myVelocity;
-    private Map<String, String> myKeyActions;
+    private Map<String, List<String>> myKeyActions;
     private Map<String, String> myCharacteristics;
 
     private String myName;
@@ -247,12 +247,12 @@ public class Sprite extends ImageView {
     }
 
     public void setKeyActions (Map<String, String> keyActions) {
-        myKeyActions = keyActions;
+//        myKeyActions = keyActions;
     }
     
     public Map<String,String> getKeyActions() {
-    	if(isPlayable)
-    		return myKeyActions;
+//    	if(isPlayable)
+//    		return myKeyActions;
     	return null;
     }
 

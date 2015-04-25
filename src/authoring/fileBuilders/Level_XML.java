@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.w3c.dom.Element;
 
+import authoring.dataEditors.InteractionManager;
 import authoring.panes.centerPane.CenterCanvas;
 
 public class Level_XML {
@@ -28,8 +29,8 @@ public class Level_XML {
 		level_objectives = level.getObjectives();
 		sprites = ObjectToXML.spritesToXML(level.getSprites());
 		physics_engine = level.getPhysics();
-//		controls = new Control_XML(level.getControls());
-//		collisions = ObjectToXML.collisionToXML(level.getCollisions());
+		controls = new Control_XML(level.getKeyActions());
+		collisions = ObjectToXML.collisionToXML(InteractionManager.getInstance().get);
 	}
 
 	public void writeToXML(Element root, int index, XMLBuilder xml) {
