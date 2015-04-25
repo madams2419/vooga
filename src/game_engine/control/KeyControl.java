@@ -3,10 +3,12 @@ package game_engine.control;
 
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IBehavior;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javafx.scene.input.KeyCode;
 
 /**
@@ -14,7 +16,7 @@ import javafx.scene.input.KeyCode;
  * @author 
  *
  */
-public class KeyControl {
+public class KeyControl extends SceneControl {
 
 //	Map<String, IAction> myControlMap;
 //	Map<String, String> myDesignerMap;
@@ -54,6 +56,9 @@ public class KeyControl {
 		}
 	}
 
+
+
+
 //	/**
 //	 * method executeBehavior
 //	 * executes a behavior corresponding to a key
@@ -63,7 +68,7 @@ public class KeyControl {
 //		myControlMap.get(myDesignerMap.get(keyText)).execute();
 //	}
 //	/**
-//	 * KeyCode version of executeBehavior
+//	 * KeyCode version of execut   eBehavior
 //	 * @param keycode
 //	 */
 //	public void executeBehavior(KeyCode keycode){

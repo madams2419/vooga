@@ -228,7 +228,7 @@ public class VoogaGameBuilder {
         SceneControlManager controlManager = new SceneControlManager();
         for (String controlDirectory : parser.getValidSubDirectories()) {
             KeyControl newControl = buildKeyControl(controlDirectory);
-            controlManager.addControl(newControl);
+            controlManager.addKeyControl(newControl);
         }
         parser.moveUp();
         return controlManager;

@@ -11,6 +11,7 @@ import java.util.Map;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -78,8 +79,8 @@ public class ControlTester extends Application{
 		text2.setFont(new Font(20));
 		s.setScene(scene);
 		keyManipulation();
-		scene.setOnKeyPressed(e -> handleKeyInput(e,PRESSED_KEY));
-		scene.setOnKeyReleased(e -> handleKeyInput(e,RELEASED_KEY));
+		scene.setOnKeyPressed(e -> handleKeyInput(e,PRESSED_KEY, e));
+		scene.setOnKeyReleased(e -> handleKeyInput(e,RELEASED_KEY, e));
 		s.show();
 	}
 	
@@ -116,15 +117,15 @@ public class ControlTester extends Application{
 		//Map<IAction, String[]> map2 = new LinkedHashMap<IAction, String[]>(){{put(sub, new String[3]); put(div, new String[3]);}};
 		//Map<KeyCode, Map<IAction, String[]>> pressMap = new HashMap<KeyCode, Map<IAction, String[]>>(){{  put(KeyCode.UP, map1); put(KeyCode.DOWN, map2);}};
 		//Map<KeyCode, Map<IAction, String[]>> releaseMap = new HashMap<KeyCode, Map<IAction, String[]>>(){{  put(KeyCode.DOWN, map2); put(KeyCode.UP, map2);}};
-		cManager.addControl(pressMap, releaseMap, null);
+		cManager.addKeyControl(pressMap, releaseMap, null);
 		
 //		myControl.addBehavior("UP", "Add");
 //		myControl.addBehavior("DOWN", "Sub");
 	}
 
 
-	private void handleKeyInput (KeyEvent e, boolean pressed) {
-		System.out.println("The event name is "+e.getClass());
+	private void handleKeyInput (KeyEvent e, boolean pressed, InputEvent t) {
+		System.out.println("The event name is "+t.getClass());
 		KeyCode keyCode = e.getCode();
 		cManager.handleKeyEvent(keyCode, pressed);
 	}
