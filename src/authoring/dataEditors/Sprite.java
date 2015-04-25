@@ -37,7 +37,7 @@ public class Sprite extends ImageView {
 
     private Map<String, String> myPosition;
     private Map<String, String> myVelocity;
-    private Map<String, String> myKeyActions;
+    private Map<String, List<String>> myKeyActions;
     private Map<String, String> myCharacteristics;
 
     private String myName;

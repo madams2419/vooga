@@ -28,7 +28,7 @@ public class Level_XML {
 		level_objectives = level.getObjectives();
 		sprites = ObjectToXML.spritesToXML(level.getSprites());
 		physics_engine = level.getPhysics();
-//		controls = new Control_XML(level.getControls());
+		controls = new Control_XML(level.getKeyActions());
 //		collisions = ObjectToXML.collisionToXML(level.getCollisions());
 	}
 
