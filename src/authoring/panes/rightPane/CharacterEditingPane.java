@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -20,8 +21,6 @@ import javafx.scene.text.Text;
 import authoring.dataEditors.Sprite;
 import authoring.dialogs.AnimationsDialog;
 import authoring.dialogs.ControlsDialog;
-import authoring.dialogs.ErrorDialog;
-import authoring.dialogs.StatesDialog;
 import authoring.util.FrontEndUtils;
 import authoring.util.ImageEditor;
 
