@@ -2,9 +2,8 @@ package game_engine.sprite;
 
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
-import game_engine.physics_engine.Vector;
-import game_engine.physics_engine.physics_object.IPhysicsObject;
-import game_player.Animation;
+import game_engine.physics.Vector;
+import game_engine.physics.objects.PhysicsObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,104 +12,65 @@ import java.util.Observable;
 import javafx.scene.image.ImageView;
 
 public class Sprite extends Observable implements IActor {
-        private int myId;
-        private String myName;
-        private String myState;
-        private Animation myAnimation;
-        protected IPhysicsObject myPhysicsObject;
-        private Map<String, IAction> myActionMap = new HashMap<>();
-        
-        public Sprite(String state, Animation animation, IPhysicsObject physicsObject) {
-                myState = state;
-                myAnimation = animation;
-                myPhysicsObject = physicsObject;
-                buildActionMap();
-                addObserver(animation);
-        }
-        
-        private void buildActionMap(){ 
-                myActionMap.put("moveForward", moveForward);
-                myActionMap.put("jump", jump);
-                myActionMap.put("setState", setState);
-        }
-        
-        public void update() {
-            myPhysicsObject.update();
-        }
-        
-        public IPhysicsObject getPhysicsObject() {
-            return myPhysicsObject;
-        }
-        
-        public void addImage(String state,String ImagePath){
-            myAnimation.setImage(state, ImagePath);
-        }
-        
-        public void removeImage(String state){
-            myAnimation.removeImage(state);
-        }
-        
-        public ImageView getImageView(){
-            return myAnimation.getImageView();
-        }
-        
-        public void setImageSize(double xSize, double ySize){
-            myAnimation.getImageView().setFitHeight(ySize);
-            myAnimation.getImageView().setFitWidth(xSize);
-        }
-        
-        public void setState(String state){
-                myState = state;
-        }
-        
-        private IAction setState = (params) -> {
-            String state = params[0];
-            setState(state);
-        };
-        
+	
+	private String state;
+	private Animation animation;
+	private Map<String, IAction> actions;
+	private PhysicsObject physicsObject;
+	
+	public Sprite(PhysicsObject po, Animation a, String initialState) {
+		state = initialState;
+		physicsObject = po;
+		animation = a;
+		actions = new HashMap<>();
+		addObserver(animation);
+		addObserver(physicsObject);
+		setChanged();
+		notifyObservers();
+		
+		buildActionMap();
+	}
+	
+	private void buildActionMap(){ 
+		actions.put("moveForward", moveForward);
+		actions.put("jump", jump);
+		actions.put("setState", setState);
+	}
+	
+	public void update(double frameRate) {
+	    physicsObject.update(frameRate);
+	    animation.update(frameRate);
+	}
+	
+	public ImageView getImageView() {
+	    return animation.getImageView();
+	}
+	
+	public PhysicsObject getPhysicsObject() {
+	    return physicsObject;
+	}
 
-        public IAction setStateBehavior(){
+	private IAction setState = (params) -> {
+		String newState = params[0];
+		state = newState;
+		setChanged();
+		notifyObservers();
+	};
 
-            return setState;
-        }
-        
-        public String getState(){
-                return myState;
-        }
+	public String getState() {
+		return state;
+	}
 
-        public void setID(int id){
-            myId = id;
-        }
-        
-        public double getID(){
-            return myId;
-        }
+	private IAction moveForward = (params) -> {
+		physicsObject.applyImpulse(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
+	};
 
-        public void setName(String name){
-            this.myName = name;
-        }
-        
-        public String getName(){
-            return this.myName;
-        }
-        
-        public void setStateName(String movementName){
-                myState = movementName;
-                notifyObservers(myState);
-        }
-        
-        private IAction moveForward = (params) -> {
-                myPhysicsObject.move(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
-                setStateName("forward");
-        };
+	private IAction jump = (params) -> {
+		Vector myVector = new Vector(0, Double.parseDouble(params[0]));
+		physicsObject.applyImpulse(myVector);
+	};
 
-        private IAction jump = (params) -> {
-                Vector myVector = new Vector(0,1*Double.parseDouble(params[0]));
-                myPhysicsObject.move(myVector);
-                setStateName("jump");
-        };
-
-        public IAction getAction(String name) {
-                return myActionMap.get(name);
-        }
+	public IAction getAction(String name) {
+		return actions.get(name);
+	}
 }
