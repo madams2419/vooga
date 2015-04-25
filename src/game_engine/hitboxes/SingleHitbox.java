@@ -161,6 +161,10 @@ public class SingleHitbox implements IHitbox {
 		orderedPoints.add(point);
 	}
 	
+	public void addPoints(List<Vector> points) {
+		orderedPoints.addAll(points);
+	}
+	
 	public List<Vector> convexHull() {
 		orderedPoints.add(orderedPoints.get(0));
 		orderedPoints.add(orderedPoints.get(1));
@@ -173,5 +177,26 @@ public class SingleHitbox implements IHitbox {
 		orderedPoints.remove(0);
 		orderedPoints.remove(1);
 		return convexHull;
+	}
+	
+	public List<Vector> getBoundingBox() {
+		List<Vector> boundingBox = new ArrayList<>();
+		Vector lowerLeft, upperRight;
+		double minX = 0, minY = 0, maxX = 0, maxY = 0;
+		
+		for(Vector point : orderedPoints) {
+			minX = Math.min(minX, point.getX());
+			minY = Math.min(minY, point.getY());
+			maxX = Math.max(maxX, point.getX());
+			maxY = Math.max(maxY, point.getY());
+		}
+		
+		lowerLeft = new Vector(minX, minY);
+		upperRight = new Vector(maxX, maxY);
+		
+		boundingBox.add(lowerLeft);
+		boundingBox.add(upperRight);
+		
+		return boundingBox;
 	}
 }
