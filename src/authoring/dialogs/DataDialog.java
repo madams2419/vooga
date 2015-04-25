@@ -32,22 +32,26 @@ public abstract class DataDialog extends Dialog<ButtonType> {
             addBlankRow(myGrid, myIndex++);
         }
 
-        this.getDialogPane().setContent(myGrid);
-
-        this.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        addAddButton();
+        getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        getDialogPane().setContent(myGrid);
         showBox(s);
-
     }
 
-    ButtonType addAddButton (DialogGridOrganizer grid) {
-        ButtonType b = new ButtonType(ADD);
+    void addAddButton() {
+        ButtonType addButton = new ButtonType(ADD);
+        getDialogPane().getButtonTypes().add(addButton);
+        lookupAddButton(addButton);
+    }
+    
+    void lookupAddButton (ButtonType b) {
         final Button addButton = (Button) this.getDialogPane().lookupButton(b);
+        System.out.println("add button: " + addButton);
         addButton.addEventFilter(ActionEvent.ACTION, event -> {
             this.setHeight(this.getHeight() + BOTTOM_SPACING);
-            addBlankRow(grid, myIndex++);
+            addBlankRow(myGrid, myIndex++);
             event.consume();
         });
-        return b;
     }
 
     abstract ObservableList<String> getListContent ();
@@ -56,8 +60,6 @@ public abstract class DataDialog extends Dialog<ButtonType> {
 
     abstract Consumer<ButtonType> getTodoOnOK ();
 
-    abstract List<ComboBox<String>> getComboBoxes ();
-    
     public void showBox (Sprite s) {
         Consumer<ButtonType> todoOnOK = getTodoOnOK();
         this.showAndWait()
@@ -65,15 +67,20 @@ public abstract class DataDialog extends Dialog<ButtonType> {
                 .ifPresent(todoOnOK);
     }
 
-    ComboBox<String> addComboBox () {
-        List<ComboBox<String>> myComboBoxes = getComboBoxes();
+    ComboBox<String> addComboBox (List<ComboBox<String>> comboBoxes) {
         ObservableList<String> toAdd = getListContent();
         ComboBox<String> box = new ComboBox<>();
         box.getItems().addAll(toAdd);
-        myComboBoxes.add(box);
+        comboBoxes.add(box);
         return box;
     }
-
+    
+    TextField addTextField (List<TextField> textFields) {
+        TextField result = new TextField();
+        textFields.add(result);
+        return result;
+    }
+    
     TextField addTextField (EventHandler<KeyEvent> todoOnKeyPressed, List<TextField> myTextFields) {
         TextField result = new TextField();
         result.setEditable(false);

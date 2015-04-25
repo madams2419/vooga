@@ -10,7 +10,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import authoring.dataEditors.Sprite;
 import authoring.userInterface.DialogGridOrganizer;
@@ -23,27 +22,25 @@ import authoring.userInterface.DialogGridOrganizer;
  */
 public class AnimationsDialog extends DataDialog {
 
-    private static final String IMAGE_FILE_URL = "Image File URL";
     private List<Button> myImageAdderButtons;
-    private List<Label> myStateLabels;
-    private List<Label> myShortImageURLs;
-    private List<Label> myCompleteImageURLs;
+    private List<Label> myStateLabels, myShortImageURLs, myCompleteImageURLs;
     private ObservableList<String> myStates;
     private Map<String, String> myAnimations;
     private Sprite mySprite;
 
+    private static final String IMAGE_FILE_URL = "Image File URL";
     private static final String ADD_IMAGE = "Set image for state";
     private static final String STATE = "State";
     private static final String IMAGE = "Image";
 
     private static final String IMAGE_CHOOSER_DESCRIPTION = "Image Files";
     private static final String[] IMAGE_CHOOSER_EXTENSIONS = { "*.png", "*.jpg",
-                                                            "*.gif" };
+                                                              "*.gif" };
 
     public AnimationsDialog (Sprite sprite, ObservableList<String> states) {
         initializeEverything(states, sprite);
         initialize(sprite, 3,
-                 new Node[] { new Label(STATE), new Label(IMAGE), new Label(IMAGE_FILE_URL) });
+                   new Node[] { new Label(STATE), new Label(IMAGE), new Label(IMAGE_FILE_URL) });
     }
 
     private Button addImageButton (String label, int index) {
@@ -51,6 +48,11 @@ public class AnimationsDialog extends DataDialog {
         myImageAdderButtons.add(button);
         button.setOnKeyPressed(e -> selectImage(index));
         return button;
+    }
+    
+    @Override
+    void addAddButton() {
+        //don't put an Add button
     }
 
     private Label addImageURL () {
@@ -75,7 +77,9 @@ public class AnimationsDialog extends DataDialog {
 
     private void selectImage (int index) {
         File selectedImageFile;
-        if ((selectedImageFile = new FileChooserDialog(IMAGE_CHOOSER_DESCRIPTION, IMAGE_CHOOSER_EXTENSIONS).initialize()) != null) {
+        if ((selectedImageFile =
+                new FileChooserDialog(IMAGE_CHOOSER_DESCRIPTION, IMAGE_CHOOSER_EXTENSIONS)
+                        .initialize()) != null) {
             myShortImageURLs.get(index).setText(shortenURL(selectedImageFile.toURI().toString()));
             myCompleteImageURLs.get(index).setText(selectedImageFile.toURI().toString());
         }
@@ -101,25 +105,20 @@ public class AnimationsDialog extends DataDialog {
     ObservableList<String> getListContent () {
         return myStates;
     }
-    
+
     public void setStates (ObservableList<String> states) {
         myStates = states;
     }
-    
+
     private Label addLabel (int index) {
         Label label = new Label(myStates.get(index));
         myStateLabels.add(label);
         return label;
     }
-    
+
     @Override
     void addBlankRow (DialogGridOrganizer grid, int index) {
         grid.addRowEnd(addLabel(index), addImageButton(ADD_IMAGE, index), addImageURL());
-    }
-
-    @Override
-    List<ComboBox<String>> getComboBoxes () {
-        return null;
     }
 
     void initializeEverything (ObservableList<String> states, Sprite sprite) {
@@ -134,17 +133,17 @@ public class AnimationsDialog extends DataDialog {
     public AnimationsDialog update (ObservableList<String> newStates) {
         myStates = newStates;
         int goalSize = myStates.size();
-        
+
         while (myImageAdderButtons.size() < goalSize) {
             System.out.println("current size: " + myImageAdderButtons.size());
             int i = myImageAdderButtons.size();
             addRow(i);
         }
-        
+
         for (int i = 0; i < goalSize; i++) {
             myStateLabels.get(i).setText(myStates.get(i));
         }
-        
+
         return this;
     }
 }
