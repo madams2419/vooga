@@ -2,6 +2,7 @@ package authoring.panes.rightPane;
 
 import java.io.File;
 import java.util.List;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -32,7 +33,8 @@ public class CreationPane extends EditingPane {
     private static final String imageChooserDescription = "Image Files";
     private static final String[] imageChooserExtensions = { "*.png", "*.jpg",
                                                             "*.gif" };
-
+    private static int ID; //we have a static instance variable because we only want to create this once.
+    
     CreationPane (Scene scene, RightPane parent, List<String> availableTypeURIs) {
         super(scene, parent);
 //        this.getChildren().add(
@@ -103,12 +105,12 @@ public class CreationPane extends EditingPane {
     }
 
     // an image in the right pane is clicked to be moved to the center pane
-    private void imageClicked (Sprite sampleImage, int ID) {
+    private void imageClicked (Sprite sampleImage, int id) {
         // need to now set mouse cursor to the sprite image
         // getMyScene().setCursor(new SpriteCursor(new Sprite(sampleImage, ID,
         // spriteClicked)));
         getMyScene().setCursor(
-                               new SpriteCursor(new Sprite(sampleImage, ID, myParent
+                               new SpriteCursor(new Sprite(sampleImage, ID++, myParent
                                        .getParent().getCenterPane())));
 
     }
