@@ -4,7 +4,6 @@ import game_engine.BasicScroller;
 import game_engine.Level;
 import game_engine.ScrollTracker;
 import game_engine.behaviors.IAction;
-import game_engine.behaviors.IActor;
 import game_engine.control.ControlManager;
 import game_engine.sprite.Sprite;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import javafx.animation.AnimationTimer;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 
-public class VoogaGame extends AnimationTimer implements IActor{
+public class VoogaGame extends AnimationTimer {
     
     private List<Level> levels;
     private Level activeLevel;
@@ -67,7 +66,6 @@ public class VoogaGame extends AnimationTimer implements IActor{
 	return root;
     }
 
-    @Override
     public IAction getAction (String name) {
         if (name.equals("activeLevel")){
             return getSetActiveLevelBehavior();

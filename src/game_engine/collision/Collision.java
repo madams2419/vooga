@@ -1,8 +1,8 @@
 package game_engine.collision;
 
 import game_engine.behaviors.IBehavior;
-import game_engine.physics.PhysicsCollision;
-import game_engine.physics.PhysicsCollisionFactory;
+import game_engine.physics_engine.IPhysicsCollision;
+import game_engine.physics_engine.PhysicsCollisionFactory;
 import game_engine.sprite.Sprite;
 import javafx.scene.image.ImageView;
 
@@ -19,7 +19,7 @@ public class Collision {
 //	private Map<Sprite, Map<IBehavior, String[]>> behaviorList;
 	private IBehavior behavior;
 	private boolean isRealistic;
-	private PhysicsCollision pCollision;
+	private IPhysicsCollision pCollision;
 
 	/**
 	 * 
@@ -57,7 +57,7 @@ public class Collision {
 	}
 	
 	private boolean collidingHitBox(){
-		pCollision = PhysicsCollisionFactory.getCollision(spriteA, spriteB);
+		pCollision = PhysicsCollisionFactory.getCollision(spriteA.getPhysicsObject(), spriteB.getPhysicsObject());
 		return pCollision.collide();
 	}
 

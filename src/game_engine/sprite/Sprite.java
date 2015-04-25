@@ -1,32 +1,32 @@
 package game_engine.sprite;
 
-import game_engine.IBehavior;
+import game_engine.annotation.IActionAnnotation;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
+<<<<<<< HEAD
 import game_engine.physics.Material;
 import game_engine.physics.PhysicsEngine;
 import game_engine.physics.PhysicsObject;
 import game_engine.physics.RigidBody.RBodyType;
+=======
+import game_engine.physics_engine.Vector;
+import game_engine.physics_engine.physics_object.IPhysicsObject;
+>>>>>>> 22264357c8c80e754b05e8fb37839b38026dd385
 import game_player.Animation;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
 import javafx.scene.image.ImageView;
 
-/**
- * Abstract class for the creation of multiple sprite types
- * @TODO remove observer observable and clean
- * @author 
- *
- */
-public abstract class Sprite extends Observable implements IActor{
-	
+public class Sprite extends Observable implements IActor {
 	private int myId;
-	private String myName;	
+	private String myName;
 	private String myState;
 	private Animation myAnimation;
+<<<<<<< HEAD
 	protected PhysicsObject myPhysicsObject;
 	private Map<String, IBehavior> myBehaviorMap = new HashMap<>();
 //	private HitBox myHitBox;
@@ -86,26 +86,32 @@ public abstract class Sprite extends Observable implements IActor{
 	 * Updates the sprite
 	 */
 	public abstract void update();
+=======
+	protected IPhysicsObject myPhysicsObject;
+	private Map<String, IAction> myActionMap = new HashMap<>();
+>>>>>>> 22264357c8c80e754b05e8fb37839b38026dd385
 	
-	public IAction createBehavior(String behavior) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
-	    Class<?> runClass = null;
-	    IAction classInstance = null;
-	    String className = "game_engine." + behavior;
-	    runClass = Class.forName(className);
-	    return classInstance = (IAction) runClass.newInstance();
-	    
+	public Sprite(String state, Animation animation, IPhysicsObject physicsObject) {
+		myState = state;
+		myAnimation = animation;
+		myPhysicsObject = physicsObject;
+		buildActionMap();
+		addObserver(animation);
 	}
 	
-	public void addBehavior(String behavior) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
-	   // myBehaviorMap.put(behavior, createBehavior(behavior));
+	private void buildActionMap(){ 
+		myActionMap.put("moveForward", moveForward);
+		myActionMap.put(jump.toString(), jump);
+		myActionMap.put("setState", setState);
+		
 	}
 	
-	public void removeBehavior(String behavior){
-	    myBehaviorMap.remove(behavior);
+	public void update() {
+	    myPhysicsObject.update();
 	}
 	
-	public void runBehavior(String behavior, String... params){
-	    myBehaviorMap.get(behavior).perform(params);
+	public IPhysicsObject getPhysicsObject() {
+	    return myPhysicsObject;
 	}
 	
 	public void addImage(String state,String ImagePath){
@@ -127,16 +133,16 @@ public abstract class Sprite extends Observable implements IActor{
 	
 	public void setState(String state){
 		myState = state;
-		setChanged();
-		notifyObservers();
 	}
 	
-	private IAction setState = (params) -> { // stateChanging
+	private IAction setState = (params) -> {
             String state = params[0];
             setState(state);
 	};
 	
+
 	public IAction setStateBehavior(){
+
 	    return setState;
 	}
 	
@@ -160,55 +166,43 @@ public abstract class Sprite extends Observable implements IActor{
 	    return this.myName;
 	}
 	
+<<<<<<< HEAD
 //	public HitBox getHitBox(){
 //	    return myHitBox;
 //	}
 	
 	public void setPhysicsObject(PhysicsObject physicsObject){
 	    myPhysicsObject = physicsObject;
+=======
+	public void setStateName(String movementName){
+		myState = movementName;
+		notifyObservers(myState);
+>>>>>>> 22264357c8c80e754b05e8fb37839b38026dd385
 	}
 	
-	public PhysicsObject getPhysicsObject(){
-	    return myPhysicsObject;
-	}
+	@IActionAnnotation(numParams = 2, description = "moving forward/backward")
+	private IAction moveForward = (params) -> {
+	    myPhysicsObject.move(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
+		setStateName("forward");
+	};
 	
-	
-	public void moveX(double x){
-		myPhysicsObject.setXPixels(
-				myPhysicsObject.getXPixels() + x);
-		setChanged();
-                notifyObservers();
-	}
-	
-	public void moveY(double y){
-		myPhysicsObject.setYPixels(
-				myPhysicsObject.getYPixels() + y);
-		setChanged();
-                notifyObservers();
-	}
+	@IActionAnnotation(numParams = 1,description = "jumping movement")
+	private IAction jump = (params) -> {
+		Vector myVector = new Vector(0,1*Double.parseDouble(params[0]));
+		myPhysicsObject.move(myVector);
+		setStateName("jump");
+	};
 	
 	public IAction getAction(String name) {
-	    if (name.equals("setState")){
-	        return setState;
-	    }
-	    return (params) -> {};
+		return myActionMap.get(name);
 	}
 	
-	
-	
-	
-//	public static void main(String[] args){
-//	    Sprite player = new Enemy();
-//	    player.addImage("idle", "idle");
-//	    player.addImage("walk", "walk");
-//	    player.addImage("jump", "jump");
-//	    player.addImage("float", "float");
-//	    player.addImage("move", "move");
-//	    player.addImage("bounce", "bounce");
-//	    
-//	    player.setState("idle");
-//	    player.setState("jump");
-//	    
-//	}
-
+	public static void main(String[] args) {
+		Field[] fields = Sprite.class.getDeclaredFields();
+		for (Field field: fields) {
+			if (field.isAnnotationPresent(IActionAnnotation.class)){
+				System.out.println(field.getName());
+			}
+		}
+	}
 }

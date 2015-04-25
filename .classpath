@@ -15,6 +15,9 @@
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.35-bin.jar"/>
+=======
+>>>>>>> 22264357c8c80e754b05e8fb37839b38026dd385
 	<classpathentry kind="output" path="bin"/>
 </classpath>
