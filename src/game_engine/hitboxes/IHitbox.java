@@ -97,4 +97,11 @@ public interface IHitbox {
 	 * 			a Supplier of Vector positions.
 	 */
 	public void addPositionSupplier(Supplier<Vector> position);
+	
+	/**
+	 * Provides a rectangle that bounds the hitbox
+	 * 
+	 * @return an array of two Vectors defining the corners of the bounding box
+	 */
+	public List<Vector> getBoundingBox();
 }

@@ -77,4 +77,8 @@ public class MultipleHitbox implements IHitbox {
 	public void addHitbox(SingleHitbox hitbox) {
 		hitboxes.add(hitbox);
 	}
+	
+	public List<Vector> getBoudningBox() {
+		
+	}
 }
