@@ -125,9 +125,10 @@ public class ControlTester extends Application{
 
 
 	private void handleKeyInput (KeyEvent e, boolean pressed, InputEvent t) {
-		System.out.println("The event name is "+t.getClass());
-		KeyCode keyCode = e.getCode();
-		cManager.handleKeyEvent(keyCode, pressed);
+		//System.out.println("The event name is "+t.getEventType());
+		//KeyCode keyCode = e.getCode();
+		//cManager.handleKeyEvent(keyCode, pressed);
+		cManager.handleEvent(e);
 	}
 	
 	public static void updateText(){

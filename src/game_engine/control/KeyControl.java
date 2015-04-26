@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 /**
  * Defines controls and maps them to behaviors
@@ -26,8 +28,10 @@ public class KeyControl extends SceneControl {
 	private Map<KeyCode, IBehavior> myKeyReleasedMap;
 	private Map<KeyCode, IBehavior> myKeyHeldMap;
 	private List<KeyCode> myWhilePressedKey;
-
-	public KeyControl(Map<KeyCode, IBehavior> keyPressMap, Map<KeyCode, IBehavior> keyReleaseMap, Map<KeyCode, IBehavior> keyHeldMap) {
+	private SceneControlFactory myControlFactory;
+	private final Integer EXECUTION_RESULT = 0;
+	
+	public KeyControl(Map<KeyCode, IBehavior> keyPressMap, Map<KeyCode, IBehavior> keyReleaseMap, Map<KeyCode, IBehavior> keyHeldMap, SceneControlFactory controlFactory) {
 //		myControlMap = new HashMap<>();
 //		myDesignerMap = new HashMap<>();
 //		myVirtualKeyboard = new HashMap<>();
@@ -35,6 +39,7 @@ public class KeyControl extends SceneControl {
 		myKeyReleasedMap = keyReleaseMap;
 		myKeyHeldMap = keyHeldMap;
 		myWhilePressedKey = new ArrayList<>();
+		myControlFactory = controlFactory;
 	}
 
 
@@ -57,7 +62,38 @@ public class KeyControl extends SceneControl {
 	}
 
 
+	public void executeEvent(KeyEvent e){
+		System.out.println("Start executing keyevent");
+		if(myKeyPressedMap.containsKey(e.getCode())){
+			myControlFactory.getKeyEventType(e).apply(e);
+			System.out.println("Perfect");
+		}
+	}
 
+	public Function<KeyEvent, Integer> executePressed(){
+		Function<KeyEvent, Integer> pressedFunction = t -> {
+			myKeyPressedMap.get(t.getCode()).perform();
+			myWhilePressedKey.add(t.getCode());
+			return EXECUTION_RESULT;
+		};
+		return pressedFunction;
+	}
+	
+	public Function<KeyEvent, Integer> executeReleased(){
+		Function<KeyEvent, Integer> releasedFunction = t -> {
+			myKeyReleasedMap.get(t.getCode()).perform();
+			myWhilePressedKey.remove(t.getCode());
+			return EXECUTION_RESULT;
+		};
+		return releasedFunction;
+	}
+	
+	public Function<KeyEvent, Integer> executeHeld(){
+		Function<KeyEvent, Integer> heldFunction = t -> {
+			return EXECUTION_RESULT;
+		};
+		return heldFunction;
+	}
 
 //	/**
 //	 * method executeBehavior

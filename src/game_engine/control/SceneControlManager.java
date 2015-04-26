@@ -23,7 +23,7 @@ public class SceneControlManager {
 	}
 
 	public void addKeyControl(Map<KeyCode, IBehavior> keyPressedMap, Map<KeyCode, IBehavior> keyReleasedMap, Map<KeyCode, IBehavior> keyHeldMap){
-		KeyControl newControl = new KeyControl(keyPressedMap, keyReleasedMap, keyHeldMap);
+		KeyControl newControl = new KeyControl(keyPressedMap, keyReleasedMap, keyHeldMap, myControlFactory);
 		myKeyControls.add(newControl);
 		myActiveKeyControl++;
 	}
@@ -54,7 +54,7 @@ public class SceneControlManager {
 	}
 	
 	public void handleEvent(InputEvent event){
-		myControlFactory.getControlType(myActiveMouseControl, myActiveKeyControl, event).executeEvent(myControlFactory.getEventType(event));
+		myControlFactory.getControlType(event).executeEvent(myControlFactory.getEventType(event));
 	}
 
 	public void handleKeyEvent(KeyCode keycode, boolean pressed){
@@ -66,12 +66,12 @@ public class SceneControlManager {
 		}
 	}
 	
-	public SceneControl getActiveMouseControl(int index){
-		return myMouseControls.get(index);
+	public SceneControl getActiveMouseControl(){
+		return myMouseControls.get(myActiveMouseControl);
 	}
 	
-	public SceneControl getActiveKeyControl(int index){
-		return myKeyControls.get(index);
+	public SceneControl getActiveKeyControl(){
+		return myKeyControls.get(myActiveKeyControl);
 	}
 
 }
