@@ -75,8 +75,9 @@ public class ControlTester extends Application{
 		text2.setFont(new Font(20));
 		s.setScene(scene);
 		keyManipulation();
-		scene.setOnKeyPressed(e -> ((SceneControlManager) cManager).handleEvent(e));
-		scene.setOnKeyReleased(e -> ((SceneControlManager) cManager).handleEvent(e));
+		scene.setOnKeyPressed(e -> cManager.handleEvent(e));
+		scene.setOnKeyReleased(e -> cManager.handleEvent(e));
+		launchVoiceControl();
 		s.show();
 	}
 	

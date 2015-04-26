@@ -37,6 +37,7 @@ public class SceneControlManager extends ControlManager{
 		myActiveMouseControl++;
 	}
 	
+	@Override
 	public IAction setActiveControl(String... indexArray){
 		int keyIndex = Integer.parseInt(indexArray[0]);
 		int mouseIndex = Integer.parseInt(indexArray[1]);
@@ -57,8 +58,9 @@ public class SceneControlManager extends ControlManager{
 				&& mouseIndex < myKeyControls.size() && keyIndex < myMouseControls.size());
 	}
 	
-	public void handleEvent(InputEvent event){
-		myControlFactory.getControlType(event).executeEvent(myControlFactory.getEventType(event));
+	@Override
+	public void handleEvent(Object obj){
+		myControlFactory.getControlType((InputEvent) obj).executeEvent(myControlFactory.getEventType((InputEvent) obj));
 	}
 
 	public MouseControl getActiveMouseControl(){

@@ -1,5 +1,19 @@
 package game_engine.control;
 
-public class VoiceControlManager extends ControlManager{
+import java.util.*;
 
+public class VoiceControlManager extends ControlManager{
+	private List<VoiceControl> myVoiceControls;
+	private int myActiveVoiceControl;
+	
+	public VoiceControlManager(){
+		myVoiceControls = new ArrayList<>();
+		myActiveVoiceControl = -1;
+	}
+	
+	@Override
+	public void addControl(Control control){
+		myVoiceControls.add((VoiceControl) control);
+		myActiveVoiceControl++;
+	}
 }

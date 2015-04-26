@@ -107,33 +107,33 @@ public class SpeechInterface
 	}
 
 	/// Requests that the given string be synthesized as soon as possible.
-	public static void synthesize(String message)
-	{
-		if (null == mSynthesizer)
-		{
-			Utils.log("warning", "synthesize called before " 
-				+ "synthesizer was initialized.  Request will be ignored.");
-			return;
-		}
-
-		//Utils.log("debug", "SpeechInterface.speak: Adding message to speech queue: " + message);
-		
-		mSynthesizer.synthesize(message);
-	}
+//	public static void synthesize(String message)
+//	{
+//		if (null == mSynthesizer)
+//		{
+//			Utils.log("warning", "synthesize called before " 
+//				+ "synthesizer was initialized.  Request will be ignored.");
+//			return;
+//		}
+//
+//		//Utils.log("debug", "SpeechInterface.speak: Adding message to speech queue: " + message);
+//		
+//		mSynthesizer.synthesize(message);
+//	}
 
 	/// Tells the speech synthesizer to stop synthesizing.  This cancels all 
 	/// pending messages.
-	public static void stopSynthesizing()
-	{
-		if (null == mSynthesizer)
-		{
-			Utils.log("warning", "stopSynthesizing called before " 
-				+ "synthesizer was initialized.  Request will be ignored.");
-			return;
-		}
-
-		mSynthesizer.stopSynthesizing();
-	}
+//	public static void stopSynthesizing()
+//	{
+//		if (null == mSynthesizer)
+//		{
+//			Utils.log("warning", "stopSynthesizing called before " 
+//				+ "synthesizer was initialized.  Request will be ignored.");
+//			return;
+//		}
+//
+//		mSynthesizer.stopSynthesizing();
+//	}
 
 	/// Returns the number of recognized strings currently in the 
 	/// recognizer's queue.
