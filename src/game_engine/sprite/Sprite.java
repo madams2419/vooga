@@ -45,7 +45,7 @@ public class Sprite extends Observable implements IActor {
 		owner = null;
 		worth = initialWorth;
 		addObserver(animation);
-		addObserver(physicsObject);
+//		addObserver(physicsObject);
 		setChanged();
 		notifyObservers();
 		buildActionMap();
