@@ -12,7 +12,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import java.util.Observer;
-
+/**
+ * 
+ * @author Kevin Chang, Brian Lavalee
+ * Class to hold images and deal with switching images in sprites
+ */
 public class Animation extends Observable implements Observer {
 
     private ImageView image;
@@ -29,6 +33,14 @@ public class Animation extends Observable implements Observer {
     	height = h;
     }
     
+    /**
+     * method associateImage
+     * @param state the state linked to the current image
+     * @param imagePath the imagePath for the image
+     * @param delay 
+     * @param height the height to set the image to
+     * @param width  the width to set the image to
+     */
     public void associateImage(String state, String imagePath, double delay, double height, double width) {
     	if (!paths.containsKey(state)) {
     		paths.put(state, new ImageLink());
@@ -43,7 +55,11 @@ public class Animation extends Observable implements Observer {
     		System.exit(0);
 		}
     }
-    
+    /**
+     * 
+     * @author Kevin Chang, Brian Lavalee
+     *  Nodes to hold images in the linked list corresponding to a state
+     */
     protected class Node {
 		 
 		private Image image;
@@ -76,7 +92,7 @@ public class Animation extends Observable implements Observer {
     		current.next = new Node(image, first, delay, current.index + 1);
     	}
     }
-    
+   
     public void update(double currentTime) {
     	double timeLapse = currentTime < lastUpdateTime ? currentTime : currentTime - lastUpdateTime;
     	timeElapsed += timeLapse;
@@ -98,15 +114,28 @@ public class Animation extends Observable implements Observer {
     	notifyObservers();
     }
     
+    /**
+     * method getImageView
+     * @return current ImageView set to be animated
+     */
     public ImageView getImageView() {
     	return image;
     }
     
+    /**
+     * method update
+     * observes and listens for a state change or position change in the sprite
+     */
     public void update(Observable source, Object arg) {
     	changeState(source);
     	changePosition(source);
     }
     
+    /**
+     * method changeState
+     * @param source the observable that is changed
+     * sets state based on the changed sprite state
+     */
     private void changeState(Observable source) {
     	try {
     		Sprite sprite = (Sprite) source;
@@ -117,6 +146,12 @@ public class Animation extends Observable implements Observer {
     	}
     }
     
+    /**
+     * method changePosition
+     * @param source the observable that is changed
+     * sets the position of the image based on the position of the 
+     * sprite as contained in the physics object
+     */
     private void changePosition(Observable source) {
     	try {
     		PhysicsObject physicsObject = (PhysicsObject) source;
@@ -128,6 +163,11 @@ public class Animation extends Observable implements Observer {
     	}
     }
     
+    /**
+     * method changeImage
+     * @param state
+     * changes the animation image based on the state set
+     */
     private void changeImage(String state) {
     	current = paths.get(state).first;
     	image.setImage(current.image);

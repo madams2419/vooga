@@ -2,7 +2,6 @@ package authoring.panes.rightPane;
 
 import java.io.File;
 import java.util.List;
-
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -105,5 +104,9 @@ public class CreationPane extends EditingPane {
                                new SpriteCursor(new Sprite(sampleImage, ID++, myParent
                                        .getParent().getCenterPane())));
 
+    }
+
+    public static int incrementID () {
+        return ID++;
     }
 }

@@ -116,14 +116,14 @@ public class FrontEndUtils {
 		// Adding the level tag
 		Element level = xml.addToRoot("level");
 
-		// Adding start
-		xml.addChildWithValue(level, "start", "0");
 
 		List<CenterCanvas> allMaps = new ArrayList<>();
 		for (List<CenterCanvas> l : parent.getCenterPane().getMaps())
 			allMaps.addAll(l);
 
 		int i = 0;
+		// Adding start
+		xml.addChildWithValue(level, "first_level", "0");
 		for (CenterCanvas c : allMaps) {
 
 			Level_XML currentLevel = new Level_XML(c);

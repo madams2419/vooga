@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.w3c.dom.Element;
 
-import authoring.dataEditors.InteractionManager;
 import authoring.panes.centerPane.CenterCanvas;
 
 public class Level_XML {
@@ -53,10 +52,10 @@ public class Level_XML {
 		controls.writeToXML(control, xml);
 
 		// Adding collisions
-//		Element collision = xml.add(currentLevel, "collisions");
-//		for (Collision_XML c : collisions) {
-//			c.writeToXML(collision, i++, xml);
-//		}
+		Element collision = xml.add(currentLevel, "collisions");
+		for (Collision_XML c : collisions) {
+			c.writeToXML(collision, i++, xml);
+		}
 
 	}
 

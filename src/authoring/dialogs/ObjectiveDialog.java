@@ -92,7 +92,7 @@ public class ObjectiveDialog extends Dialog<ButtonType> {
 		mResult.put("onFailed", new ArrayList<String>());
 		mResult.put("prereqs", new ArrayList<String>());
 		for (int i = 0; i < mActions.size(); i++) {
-			String action = String.format("%s:%s", mSprites.get(i)
+			String action = String.format("%s:%s:%s", mSprites.get(i)
 					.getSelectionModel().getSelectedItem(), mActions.get(i)
 					.getSelectionModel().getSelectedItem(), mParams.get(i)
 					.getText());

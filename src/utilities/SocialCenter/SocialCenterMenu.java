@@ -1,62 +1,132 @@
 package utilities.SocialCenter;
 
-import java.util.ArrayList;
-
+import javafx.animation.RotateTransition;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class SocialCenterMenu {
-	
-	private Scene menu;
-	private StackPane root = new StackPane();
-	private Group hexGroup = new Group();
-	private static final int TEMPWIDTH = 1000;
-	private static final int TEMPHEIGHT = 600;
-	private ArrayList<HexTile> list;
 	private Stage myStage;
+	private StackPane myRoot = new StackPane();
+	private Scene myMenu;
+	private Scene myLogin;
+	// hexpage variables
+	private HexPage myHexPage;
+	private Group myHexGroup = new Group();
+	private static final int HEX_SIZE = 90;
+	private static final int MENU_OFFSET = 20;
+	// menu
+	private static final int ROTATION = 3;
+	private static final int ROTATION_CYCLE = 7;
+	private static final int ROTATION_DURATION = 50;
 
-	public SocialCenterMenu(Stage stage) {
+	// CSS tags
+	private static final String CSS = "styles/social_menu.css";
+	private static final String CSS_BACKGROUND = "background";
+	private static final String CSS_HEX = "hex";
+	private static final String CSS_HEXHOVER = "hexHover";
+
+	// image url
+	private static final String PROFILE = "http://media.philly.com/images/20080510_kutcher_300.jpg";
+	private static final String BACK_BUTTON = "http://th07.deviantart.net/fs70/PRE/f/2014/002/7/1/kr_vector___duke_mark_by_malunis-d6yqn8j.png";
+
+	private double WIDTH;
+	private double HEIGHT;
+	private String ID;
+	private ProfilePage pp;
+	private StatsPage sp;
+	private ChatPage cp;
+
+	public SocialCenterMenu(String id, double width, double height,
+			Scene login, Stage stage) {
 		myStage = stage;
+		myLogin = login;
+		ID = id;
+		WIDTH = width;
+		HEIGHT = height;
 		initializeHexPage();
-		root.getStyleClass().add("background");
-		menu.getStylesheets().add("styles/social_menu.css");
-	}
-	
-	private void initializeHexPage(){
-		menu = new Scene(root, TEMPWIDTH, TEMPHEIGHT);
-		HexPage hex = new HexPage(TEMPWIDTH/2,TEMPHEIGHT/2, 90, 20);
-		list = hex.getList();
-		list.forEach(h-> hexGroup.getChildren().add(h.getHexagon()));
-		hex.addCSS("hex");
-		list.forEach(h->h.getHexagon().setFill(Color.WHITESMOKE.deriveColor(0, 1, 1, 0.5)));
-		
-		//hex profile page
-		list.get(0).setOnMouseEnter(e->replaceHex());
-		list.get(0).setOnMouseExit(e->removeImage());
-		list.get(0).setOnMouseClicked(e->myStage.setScene(new ProfilePage(null, TEMPWIDTH,TEMPHEIGHT).getProfileScreen()));
-		
-
-		root.getChildren().add(hexGroup);	
-	}
-	
-	
-	//hardcoded. to be improved
-	private void removeImage() {
-		list.get(0).getHexagon().setFill(Color.WHITESMOKE.deriveColor(0, 1, 1, 0.5));
+		myRoot.getStyleClass().add(CSS_BACKGROUND);
+		myMenu.getStylesheets().add(CSS);
 	}
 
-	private void replaceHex(){
-		Image profilePic = new Image("https://photos-5.dropbox.com/t/2/AAD2CB0YPtiwv4dYembdzaCIDYgVessA942_atn-J6WWzA/12/49423891/png/1024x768/3/1429956000/0/2/Screenshot%202015-04-20%2017.07.20.png/CJPMyBcgASACIAMoAQ/4MAyNY-XzTDXejkRTerhDqfB_CUlQJsiRFBVqa2trPE");
-		list.get(0).getHexagon().setFill(new ImagePattern(profilePic));
+	private void initializeHexPage() {
+		myMenu = new Scene(myRoot, WIDTH, HEIGHT);
+		myHexPage = new HexPage(WIDTH / 2, HEIGHT / 2, HEX_SIZE, MENU_OFFSET);
+		myHexPage.addGroup(myHexGroup);
+		myHexPage.addTag(CSS_HEX);
+
+		for (int i = 0; i < myHexPage.getNumberOfHexagons(); i++) {
+			int temp = i;
+			String id = CSS_HEX + temp;
+			myHexPage.getPosition(i).getHexagon().getStyleClass().add(id);
+
+			myHexPage.getPosition(i).setOnMouseEnter(
+					e -> handleHoverEnter(temp));
+			myHexPage.getPosition(i).setOnMouseExit(e -> handleHoverExit(temp));
+		}
+
+		// PROFILE
+		myHexPage.getPosition(0).setOnMouseClicked(e -> goChatPage());
+		Image profilePic = new Image(PROFILE);
+		myHexPage.getPosition(0).getHexagon()
+				.setFill(new ImagePattern(profilePic));
+
+		// BACK TO LOGIN
+		myHexPage.getPosition(3).setOnMouseClicked(e -> goLoginPage());
+		Image back = new Image(BACK_BUTTON);
+		myHexPage.getPosition(3).getHexagon().setFill(new ImagePattern(back));
+
+		myRoot.getChildren().add(myHexGroup);
+	}
+
+	private void handleHoverExit(int i) {
+		myHexPage.getPosition(i).getHexagon().getStyleClass()
+				.removeAll(CSS_HEXHOVER);
+	}
+
+	private void handleHoverEnter(int i) {
+		myHexPage.getPosition(i).getHexagon().getStyleClass().add(CSS_HEXHOVER);
+		RotateTransition rt = new RotateTransition(
+				Duration.millis(ROTATION_DURATION), myHexPage.getPosition(i)
+						.getHexagon());
+		rt.setFromAngle(-ROTATION);
+		rt.setByAngle(ROTATION);
+		rt.setCycleCount(ROTATION_CYCLE);
+		rt.setAutoReverse(true);
+		rt.play();
+
+	}
+
+	// CENTER BUTTON
+	private void goProfilePage() {
+		pp = new ProfilePage(ID, WIDTH, HEIGHT, myMenu);
+		pp.getProfileScreen(myStage);
 	}
 	
-	public Scene returnScene(){
-		return menu;
+	private void goScorePage(){
+		sp=new StatsPage(ID,WIDTH,HEIGHT);
+		sp.getStatsScreen(myStage);
+		
+	}
+	
+	private void goChatPage(){
+		cp=new ChatPage(ID,WIDTH,HEIGHT);
+		cp.getChatScreen(myStage);
+	}
+
+	// 3rd Position
+	private void goLoginPage() {
+		System.out.println("login");
+		myStage.setScene(myLogin);
+	}
+
+	public void returnScene(Stage s) {
+		myStage = s;
+		s.setScene(myMenu);
 	}
 
 }
