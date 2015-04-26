@@ -123,8 +123,7 @@ public class PathCreator extends Application {
                             anim.associateImage("standing", "resources/images/brick.png", 0, 50, 50);
 
                         myCurveMap.put(elements, path.getPath());
-                        Sprite temp = new Sprite(null, anim, "standing",1
-                                                 );
+                        Sprite temp = new Sprite(null, anim, "standing",1);
                         ArrayList<String[]> parameters = new ArrayList<String[]>();
                         String[] params = createParams(path.getPath());
                         parameters.add(params);
