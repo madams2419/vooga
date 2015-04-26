@@ -27,9 +27,9 @@ public class SocialCenterMain extends Application {
 		stage.setWidth(800);
 		stage.setHeight(600);
 		LoginScreen login = new LoginScreen(stage,stage.getWidth(),stage.getHeight());
-//		login.getLoginScreen(stage);
-		SocialCenterMenu menu = new SocialCenterMenu(null, 800, 600);
-		menu.returnScene(stage);
+		login.getLoginScreen(stage);
+//		SocialCenterMenu menu = new SocialCenterMenu(null, 800, 600);
+//		menu.returnScene(stage);
 		stage.show();
 
 	}

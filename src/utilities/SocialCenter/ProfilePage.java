@@ -1,14 +1,20 @@
 /**
- * 
+ * ToDo: Add profile pic adder
  */
 package utilities.SocialCenter;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -21,6 +27,8 @@ public class ProfilePage {
 	private StackPane root = new StackPane();
 	private static Driver db = new Driver();
 	private static String ID;
+	private static double W;
+	private static double H;
 	
 	/**
 	 * @param args
@@ -28,8 +36,11 @@ public class ProfilePage {
 
 	public ProfilePage(String id, double WIDTH, double HEIGHT){
 		ID=id;
+		W=WIDTH;
+		H=HEIGHT;
 		initialize(WIDTH,HEIGHT);
 		createGUI();
+		profileImage();
 		createStats();
 	}
 	
@@ -43,6 +54,18 @@ public class ProfilePage {
 		root.getChildren().add(background);
 	}
 
+	private void profileImage(){
+		HBox hbox=new HBox();
+		Rectangle rect=new Rectangle(200,200);
+		Image picture=new Image("http://i.ytimg.com/vi/c_cg-2f9RUw/hqdefault.jpg");
+		rect.setFill(new ImagePattern(picture));
+		hbox.getChildren().add(rect);
+		hbox.setTranslateX(W/2-85);
+		hbox.setTranslateY(H/6);
+		root.getChildren().add(hbox);
+		
+	}
+	
 
 	private void createGUI(){
 		GridPane gridpane = new GridPane();
