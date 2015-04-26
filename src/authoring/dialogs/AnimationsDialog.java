@@ -65,7 +65,15 @@ public class AnimationsDialog extends DataDialog {
         return (response -> {
             populateStates();
             populateAnimationsMap();
+            changeSpriteImage();
         });
+    }
+
+    private void changeSpriteImage () {
+        String image = myImageURLs.get(0);
+        if (image.length() > 0) {
+            mySprite.changeImage(image);
+        }
     }
 
     private void populateStates () {

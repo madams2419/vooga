@@ -32,7 +32,6 @@ import authoring.util.ImageEditor;
  */
 
 class CharacterEditingPane extends EditingPane {
-	private static final String ANIMATION_ERROR = "Please create states \nbefore adding animations!";
 	private static final String NAME = "name";
 	private static final String POSITION = "position";
 	private static final String IMAGE_CHOOSER_TITLE = "Change Character Image";
@@ -41,35 +40,31 @@ class CharacterEditingPane extends EditingPane {
 			"*.jpg", "*.gif" };
 	private static final String UPDATE = "Update";
 	private static final String ADD_ANIMATIONS = "Add Animations";
-	private static final String ADD_STATES = "Add States";
 	private static final String DELETE = "Delete";
 	private static final String CONTROLS = "Controls";
 	private static final String PLAYABLE = "Playable";
-	private static final String BACK = "Back";
 
 	private static final String IMAGE_LABEL = "Click on the image to change it!";
 
 	private List<HBox> myFields = new LinkedList<>();
 
-	CharacterEditingPane(Scene scene, RightPane parent, Sprite sprite) {
+	CharacterEditingPane(Scene scene, RightPane parent, Sprite sprite, List<String> miscellaneousImages) {
 		super(scene, parent);
 		// ======================== New design in here ===================== //
 		addSpriteIcon(sprite);
 		addLabel(IMAGE_LABEL);
-		addAnimations(sprite);
+		addAnimations(sprite, miscellaneousImages);
 		setFields(this.getChildren(), sprite.getCharacteristics());
 
 		addPlayableCheckBox(addControlsButton(sprite), sprite);
 		addUpdateButton(sprite);
 		addDeleteButton(sprite);
-		// addBackButton(); // I don't know if this is really necessary
-		// anymore...
 
 		// ================================================================= //
 	}
 
-	private void addAnimations(Sprite sprite) {
-		Button animationsButton = new Button(ADD_ANIMATIONS);
+	private void addAnimations(Sprite sprite, List<String> miscellaneousImages) {
+		Button animationsButton = new Button(ADD_ANIMATIONS, new ImageView(miscellaneousImages.get(0)));
 		animationsButton.setOnAction(e -> addAnimation(sprite));
 		this.getChildren().add(animationsButton);
 	}
@@ -92,10 +87,6 @@ class CharacterEditingPane extends EditingPane {
 	private void addLabel(String string) {
 		Label label = new Label(string);
 		getChildren().add(label);
-	}
-
-	private void addBackButton() {
-		addButtonToReturnToCreationPane(BACK);
 	}
 
 	private void addUpdateButton(Sprite sprite) {

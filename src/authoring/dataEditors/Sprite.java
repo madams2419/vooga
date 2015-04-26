@@ -77,7 +77,7 @@ public class Sprite extends ImageView {
         myCharacteristics.put(IMAGE_URI, imageURI);
         myCharacteristics.put(SCALE, String.valueOf(myScale));
         myIcon = new ImageView();
-        changeImage(new Image(imageURI));
+        changeImage(imageURI);
         myCurrentScore = 0;
     }
 
@@ -139,6 +139,10 @@ public class Sprite extends ImageView {
     public void changeImage (Image image) {
         setImage(image);
         setImageIcon(image);
+    }
+    
+    public void changeImage (String imageURL) {
+        changeImage (new Image(imageURL));
     }
 
     @SuppressWarnings("unchecked")
