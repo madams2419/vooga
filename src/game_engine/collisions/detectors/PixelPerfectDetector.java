@@ -1,14 +1,13 @@
 package game_engine.collisions.detectors;
 
+import game_engine.sprite.Sprite;
 import java.awt.Point;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
-import game_engine.sprite.Sprite;
 
 /**
  * 
@@ -16,6 +15,7 @@ import game_engine.sprite.Sprite;
  *         precise Image collisions Occurred. Recommended for Player objects
  *
  */
+
 public class PixelPerfectDetector implements ICollisionDetector {
 
     private static Map<Image, boolean[][]> imageToBits = new HashMap<Image, boolean[][]>();
@@ -30,6 +30,7 @@ public class PixelPerfectDetector implements ICollisionDetector {
         boolean[][] bitMapA = getBitMap(objectA);
         boolean[][] bitMapB = getBitMap(objectB);
         
+
         int translateXA = (int) objectA.getTranslateX();
         int translateYA = (int) objectA.getTranslateY();
         int translateXB = (int) objectB.getTranslateX();
@@ -51,9 +52,9 @@ public class PixelPerfectDetector implements ICollisionDetector {
         Image imageA = viewA.getImage();
         Image imageB = viewB.getImage();
         
-        double startAX = viewA.getTranslateX();
+        double startAX = viewA.getLocalToSceneTransform().getTx();
         double endAX = startAX + imageA.getWidth();
-        double startBX = viewB.getTranslateX();
+        double startBX = viewB.getLocalToSceneTransform().getTx();
         double endBX = startBX + imageB.getWidth();
         return getMiddle(startAX, endAX, startBX, endBX);
     }
@@ -62,9 +63,9 @@ public class PixelPerfectDetector implements ICollisionDetector {
         Image imageA = viewA.getImage();
         Image imageB = viewB.getImage();
         
-        double startAY = viewA.getTranslateY();
+        double startAY = viewA.getLocalToSceneTransform().getTy();
         double endAY = startAY + imageA.getHeight();
-        double startBY = viewB.getTranslateY();
+        double startBY = viewB.getLocalToSceneTransform().getTy();
         double endBY = startBY + imageB.getHeight();
         return getMiddle(startAY, endAY, startBY, endBY);
     }
