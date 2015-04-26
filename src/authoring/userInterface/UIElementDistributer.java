@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
+import authoring.testers.AuthoringGUITester;
+import authoring.util.Reflection;
 import javafx.scene.Scene;
 import XML.LayoutXMLParser;
 
@@ -20,7 +21,7 @@ public class UIElementDistributer extends AuthoringGUITester {
 	public static ArrayList<Map> MapofValues = new ArrayList<Map>();
 
 	@SuppressWarnings("unchecked")
-	public static void ElementDistributer(Scene scene, AuthoringWindow window) {
+	public static void distributeElements(Scene scene, AuthoringWindow window) {
 		String f = "settings/layout.xml";
 		LayoutXMLParser.parse(f);
 
@@ -29,15 +30,15 @@ public class UIElementDistributer extends AuthoringGUITester {
 			String panes = Entry.getKey();
 			System.out.println(panes);
 			ArrayList<Map> values = Entry.getValue();
-			String classname = String.format("authoring.userInterface.%s",
+			String classname = String.format("authoring.%s",
 					panes);
 			ClassConstructors.put(classname, window.getPane(classname));
-			MethodInvoker(ClassConstructors.get(classname), "Components",
+			invokeMethod(ClassConstructors.get(classname), "Components",
 					values);
 		}
 	}
 
-	public static void MethodInvoker(Object selectedClass, String key,
+	public static void invokeMethod(Object selectedClass, String key,
 			ArrayList<Map> values) {
 		MapofValues = values;
 		Reflection.callMethod(selectedClass, String.format("generate%s", key),
