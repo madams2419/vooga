@@ -48,7 +48,8 @@ public class InteractionsDialog extends Dialog<ButtonType> {
 
 	private static final int BOTTOM_SPACING = 31;
 
-	public InteractionsDialog(RightPane parent, Sprite a, Sprite b) throws IOException {
+	public InteractionsDialog(RightPane parent, Sprite a, Sprite b)
+			throws IOException {
 		myParent = parent;
 		mySprite1Interactions = new HashMap<>();
 		mySprite2Interactions = new HashMap<>();
@@ -111,34 +112,32 @@ public class InteractionsDialog extends Dialog<ButtonType> {
 	}
 
 	public void showBox(Sprite a, Sprite b) {
-		this.showAndWait()
-				.filter(response -> response == ButtonType.OK)
+		this.showAndWait().filter(response -> response == ButtonType.OK)
 				.ifPresent(response -> collectProperties(a, b));
 	}
-	
+
 	private void collectProperties(Sprite a, Sprite b) {
 		mySprite1Interactions = new HashMap<>();
 		mySprite2Interactions = new HashMap<>();
 		List<String> totalInteractions = new ArrayList<>();
 		for (int i = 0; i < myDescriptions1.size(); i++) {
-			mySprite1Interactions.put(myComboBoxes1.get(i)
-					.getValue().getAction(),
-					myParams1.get(i).getText());
-			totalInteractions.add(myComboBoxes1.get(i)
-					.getValue().getAction()
+			mySprite1Interactions.put(myComboBoxes1.get(i).getValue()
+					.getAction(), myParams1.get(i).getText());
+			totalInteractions.add("SimpleResolver:" + "sprite:" + a.getID() + ":"
+					+ myComboBoxes1.get(i).getValue().getAction() + ":"
 					+ myParams1.get(i).getText());
 		}
 		for (int i = 0; i < myDescriptions2.size(); i++) {
-			mySprite2Interactions.put(myComboBoxes2.get(i)
-					.getValue().getAction(),
-					myParams2.get(i).getText());
-			totalInteractions.add(myComboBoxes2.get(i)
-					.getValue().getAction()
+			mySprite2Interactions.put(myComboBoxes2.get(i).getValue()
+					.getAction(), myParams2.get(i).getText());
+			totalInteractions.add("SimpleResolver:" + "sprite:" + b.getID() + ":"
+					+ myComboBoxes2.get(i).getValue().getAction() + ":"
 					+ myParams2.get(i).getText());
 		}
 		a.addInteraction(b, mySprite1Interactions);
 		b.addInteraction(a, mySprite2Interactions);
-		myParent.getParent().getCenterPane().getActiveTab().addCollision(new Collision_XML(a,b,totalInteractions), a,b);
+		myParent.getParent().getCenterPane().getActiveTab()
+				.addCollision(new Collision_XML(a, b, totalInteractions), a, b);
 	}
 
 	private void addButton(ButtonType b, EventHandler<ActionEvent> e) {

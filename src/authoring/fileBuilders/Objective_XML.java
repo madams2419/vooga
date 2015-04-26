@@ -43,6 +43,7 @@ public class Objective_XML {
 			IActor target) {
 		l.addAll(actions.stream().map(s -> {
 			String[] par = s.split(":");
+			System.out.println(s);
 			return new Behaviours_XML("sprite", "0", par[1], par[2]);
 		}).collect(Collectors.toList()));
 	}

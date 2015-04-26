@@ -42,8 +42,9 @@ public class Sprite_XML {
 	public void writeToXML(Element parent, XMLBuilder xml) {
 		Element current = xml.add(parent, "sprite_" + index);
 		xml.addChildWithValue(current, "initial_state", initial_state);
+		Element am = xml.add(current, "animations");
 		for (int i = 0; i < animation.size(); i++)
-			animation.get(i).writeToXML(current, i, xml);
+			animation.get(i).writeToXML(am, i, xml);
 		physics.writeToXML(current, xml);
 	}
 
@@ -59,8 +60,9 @@ public class Sprite_XML {
 		public void writeToXML(Element parent, int index, XMLBuilder xml) {
 			Element current = xml.add(parent, "state_" + index);
 			xml.addChildWithValue(current, "name", name);
+			Element im = xml.add(current, "images");
 			for (int i = 0; i < images.length; i++)
-				images[i].writeToXML(current, i, xml);
+				images[i].writeToXML(im, i, xml);
 		}
 	}
 

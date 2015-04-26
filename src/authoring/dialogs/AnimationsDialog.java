@@ -27,7 +27,7 @@ public class AnimationsDialog extends DataDialog {
     private List<TextField> myTextFields;
     private List<String> myStates;
     private List<String> myImageURLs;
-    private Map<String, String> myAnimations;
+    private Map<String, String> myAnimations = new HashMap<>();
     private Sprite mySprite;
 
     private static final String ADD_IMAGE = "Set image for state";

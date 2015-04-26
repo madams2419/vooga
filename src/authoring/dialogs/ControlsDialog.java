@@ -34,7 +34,8 @@ public class ControlsDialog extends Dialog<ButtonType> {
 	private RightPane myParent;
 	private int c = 0;
 
-	private String[] myMouseClickedStrings = {"onClicked", "whilePressed", "onReleased"};
+	private String[] myMouseClickedStrings = { "onClicked", "whilePressed",
+			"onReleased" };
 	private static final int BOTTOM_SPACING = 25;
 
 	// TODO: refactoring
@@ -81,13 +82,25 @@ public class ControlsDialog extends Dialog<ButtonType> {
 												+ myParamTextFields.get(i)
 														.getText());
 								List<String> behaviours = new ArrayList<>();
-								behaviours.add(String.format("%s:%s:%s", s
-										.getID(), myComboBoxes.get(i)
-										.getValue(), myParamTextFields.get(i)));
-								KeyAction_XML action = new KeyAction_XML(myTextFields
-										.get(i).getText(), behaviours, true);
-								myParent.getParent().getCenterPane().getActiveTab()
-								.addKeyAction(myTextFields.get(i).getText(), action);
+								behaviours.add(String.format("%s:%s:%s",
+										s.getID(), myComboBoxes.get(i)
+												.getSelectionModel()
+												.getSelectedItem(),
+										myParamTextFields.get(i).getText()));
+								System.err.println(String.format("%s:%s:%s",
+										s.getID(), myComboBoxes.get(i)
+												.getSelectionModel()
+												.getSelectedItem(),
+										myParamTextFields.get(i).getText()));
+								KeyAction_XML action = new KeyAction_XML(
+										myTextFields.get(i).getText(),
+										behaviours, true);
+								myParent.getParent()
+										.getCenterPane()
+										.getActiveTab()
+										.addKeyAction(
+												myTextFields.get(i).getText(),
+												action);
 							}
 							s.setKeyActions(myKeyActions);
 							System.out.println(myKeyActions);
@@ -108,10 +121,9 @@ public class ControlsDialog extends Dialog<ButtonType> {
 		result.setContextMenu(new ContextMenu());
 		result.setOnKeyPressed(e -> result.setText(e.getCode().toString()));
 		result.setOnMouseClicked(e -> {
-			result.setText(e.getButton().toString() + " " + 
-					myMouseClickedStrings[c++ % myMouseClickedStrings.length]
-					);
-			
+			result.setText(e.getButton().toString() + " "
+					+ myMouseClickedStrings[c++ % myMouseClickedStrings.length]);
+
 		});
 		myTextFields.add(result);
 		return result;
@@ -126,11 +138,10 @@ public class ControlsDialog extends Dialog<ButtonType> {
 	public List<ComboBox<String>> getComboBoxes() {
 		return myComboBoxes;
 	}
-	
-	public void PopulateComboBox(List<String> controlsList){
-	
+
+	public void PopulateComboBox(List<String> controlsList) {
+
 	}
-		
 
 	public Map<String, String> getKeyActions() {
 		return myKeyActions;

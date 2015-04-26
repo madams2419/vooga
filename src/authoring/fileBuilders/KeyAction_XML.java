@@ -1,13 +1,14 @@
 package authoring.fileBuilders;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.w3c.dom.Element;
 
 public class KeyAction_XML {
 	private String key;
-	private List<Behaviours_XML> onPressed;
-	private List<Behaviours_XML> onReleased;
+	private List<Behaviours_XML> onPressed = new ArrayList<>();
+	private List<Behaviours_XML> onReleased = new ArrayList<>();
 
 	/***
 	 * 
