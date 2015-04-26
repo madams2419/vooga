@@ -1,4 +1,5 @@
 package utilities.SocialCenter;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -54,7 +55,7 @@ public class Driver {
 		try{
 			Connection con=getConnection();
 			//PreparedStatement posted = con.prepareStatement(statement);
-			PreparedStatement posted = con.prepareStatement("INSERT INTO '"+table+"' (GAMESPLAYED,HIGHSCORE) VALUES ('"+GamesPlayed+"','"+HighScore+"')");
+			PreparedStatement posted = con.prepareStatement("INSERT INTO "+table+" (GAMESPLAYED,HIGHSCORE) VALUES ('"+GamesPlayed+"','"+HighScore+"')");
 			//executeQuery (receives info), executeUpdate(manipulates info)
 			posted.executeUpdate();
 		}catch(Exception e){
@@ -70,7 +71,7 @@ public class Driver {
 			//Getting the sql statement ready to be used
 			//PreparedStatement create=con.prepareStatement(statement);
 			//PreparedStatement create = con.prepareStatement("CREATE TABLE IF NOT EXISTS profile(ID VARCHAR(30), NICKNAME VARCHAR(30), GAMESPLAYED VARCHAR(255), HIGHSCORE INT,PRIMARY KEY(ID))");
-			PreparedStatement create=con.prepareStatement(String.format("CREATE TABLE IF NOT EXISTS %s(PLayer VARCHAR(30), HighScore VARCHAR(255))", ID));
+			PreparedStatement create=con.prepareStatement(String.format("CREATE TABLE IF NOT EXISTS %s(GamesPlayed VARCHAR(255), HighScore VARCHAR(255))", ID));
 			create.executeUpdate();
 		}catch(Exception e){
 			System.out.println(e);
