@@ -95,6 +95,7 @@ public class Sprite extends ImageView {
         myVelocity.put(Y_STRING, "0.0");
         myKeyActions = new HashMap<>();
         myCharacteristics = new HashMap<>();
+        myPath = new String[0];
         addDefaultCharacteristics(Arrays.asList(new String[] { NAME }));
         onMouseClicked();
     }
