@@ -45,13 +45,8 @@ public class SocialCenterMenu {
 
 			hexPage.getPosition(i).setOnMouseEnter(e -> handleHoverEnter(temp));
 			hexPage.getPosition(i).setOnMouseExit(e -> handleHoverExit(temp));
-<<<<<<< HEAD
-
-		}
-=======
 		}
 		hexPage.getPosition(0).setOnMouseClicked(e -> goProfilePage());
->>>>>>> ff8b21766adcaf5ded51491c73efab36f59a78f9
 
 		Image profilePic = new Image(
 				"http://media.philly.com/images/20080510_kutcher_300.jpg");
@@ -68,7 +63,6 @@ public class SocialCenterMenu {
 
 	private void handleHoverEnter(int i) {
 		hexPage.getPosition(i).getHexagon().getStyleClass().add("hexHover");
-<<<<<<< HEAD
 		RotateTransition rt = new RotateTransition(Duration.millis(50), hexPage
 				.getPosition(i).getHexagon());
 		rt.setFromAngle(0);
@@ -76,8 +70,7 @@ public class SocialCenterMenu {
 		rt.setCycleCount(7);
 		rt.setAutoReverse(true);
 		rt.play();
-=======
->>>>>>> ff8b21766adcaf5ded51491c73efab36f59a78f9
+
 	}
 
 	private void goProfilePage() {
