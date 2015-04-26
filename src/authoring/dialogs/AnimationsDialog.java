@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -36,7 +37,10 @@ public class AnimationsDialog extends DataDialog {
     private static final String IMAGE_CHOOSER_DESCRIPTION = "Image Files";
     private static final String[] IMAGE_CHOOSER_EXTENSIONS = { "*.png", "*.jpg",
                                                               "*.gif" };
-
+    public static AnimationsDialog defaultAnimations(Sprite s){
+    	return new AnimationsDialog(s);
+    }
+    
     public AnimationsDialog (Sprite sprite) {
         initializeEverything(sprite);
         initialize(sprite, 3,

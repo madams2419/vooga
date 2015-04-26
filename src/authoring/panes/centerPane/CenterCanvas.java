@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -20,6 +21,7 @@ import javafx.stage.FileChooser;
 import authoring.dataEditors.Sprite;
 import authoring.dialogs.FileChooserDialog;
 import authoring.dialogs.NewRegionDialog;
+import authoring.fileBuilders.Collision_XML;
 import authoring.fileBuilders.KeyAction_XML;
 import authoring.fileBuilders.Objective_XML;
 import authoring.fileBuilders.PhysicsEngine_XML;
@@ -41,6 +43,7 @@ public class CenterCanvas extends ScrollPane {
 			.observableArrayList();
 	private List<Objective_XML> myListOfObjectives = new ArrayList<>();
 	private Map<String, KeyAction_XML> myKeyActions = new HashMap<>();
+	private Map<String, Collision_XML> myCollisions = new HashMap<>();
 	private Mode myMode;
 
 	private Region myCurrentRectangle;
@@ -50,7 +53,8 @@ public class CenterCanvas extends ScrollPane {
 	private AuthoringWindow myParent;
 	private Label myInitialLabel;
 	private float myGravity = 10;
-	private PhysicsEngine_XML myEngine;
+	private PhysicsEngine_XML myEngine = PhysicsEngine_XML
+			.defaultPhysicsEngine(); // default physics engine
 
 	CenterCanvas(Scene scene, AuthoringWindow parent) {
 		assert (scene != null);
@@ -180,7 +184,7 @@ public class CenterCanvas extends ScrollPane {
 	}
 
 	public void addKeyAction(String key, KeyAction_XML action) {
-		if(myKeyActions.containsKey(key))
+		if (myKeyActions.containsKey(key))
 			myKeyActions.get(key).appendBehaviours(action);
 		else
 			myKeyActions.put(key, action);
@@ -190,4 +194,12 @@ public class CenterCanvas extends ScrollPane {
         myMode = myMode.getToggle();
     }
     
+	public void addCollision(Collision_XML collision, Sprite... interactors) {
+		myCollisions.put(FrontEndUtils.getSpritesIDSorted(interactors), collision);
+	}
+
+	public List<Collision_XML> getCollisions() {
+		return myCollisions.values().stream().collect(Collectors.toList());
+	}
+
 }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -36,7 +37,6 @@ public class Sprite extends ImageView {
     public static final String SCALE = "Scale";
     private static final String IMAGE_URI = "imageURI";
     private static final String SWITCH_PANE_METHOD = "switchPane";
-
     private static final int MAX_ICON_WIDTH = 100;
     private static final int MAX_ICON_HEIGHT = 100;
 
@@ -44,7 +44,7 @@ public class Sprite extends ImageView {
 
     private Map<String, String> myPosition;
     private Map<String, String> myVelocity;
-    private Map<String, List<String>> myKeyActions;
+    private Map<String, String> myKeyActions;
     private Map<String, String> myCharacteristics;
 
     private int myID;
@@ -103,16 +103,9 @@ public class Sprite extends ImageView {
         this(ID, sprite.getImageURI(), parent);
     }
 
-    public void addInteractionToMap (Sprite target, String action, String params) {
-        // if (mySpriteInteractionMap.get(target) == null){
-        // Map<String, String> interaction = new HashMap<>();
-        // interaction.put(action, params);
-        // mySpriteInteractionMap.put(target, interaction);
-        // }
-        // else{
-        // mySpriteInteractionMap.get(target).put(action, params);
-        // }
-        mySpriteInteractionMap.getOrDefault(target, new HashMap<>()).put(action, params);
+    
+    public Map<Sprite, Map<String, String>> getInteractionMap() {
+    	return mySpriteInteractionMap;
     }
 
     public void addDefaultCharacteristics (List<String> characteristics) {
@@ -246,13 +239,11 @@ public class Sprite extends ImageView {
     }
 
     public void setKeyActions (Map<String, String> keyActions) {
-        // myKeyActions = keyActions;
+        myKeyActions = keyActions;
     }
 
     public Map<String, String> getKeyActions () {
-        // if(isPlayable)
-        // return myKeyActions;
-        return null;
+        return myKeyActions;
     }
 
     public String getImageURI () {
@@ -274,12 +265,11 @@ public class Sprite extends ImageView {
         return myCharacteristics.get(characteristic);
     }
 
-    public void setInteraction (Sprite otherSprite, Interaction interaction) {
-        myInteractions.put(otherSprite, interaction);
-    }
-
     public void addInteraction (Sprite otherSprite, Map<String, String> interaction) {
-        mySpriteInteractionMap.put(otherSprite, interaction);
+    	//mySpriteInteractionMap.getOrDefault(otherSprite, interaction);
+    	mySpriteInteractionMap.putIfAbsent(otherSprite, interaction);
+        mySpriteInteractionMap.replace(otherSprite, interaction);
+        String s = "buffer";
     }
 
     @SuppressWarnings("unchecked")
@@ -316,7 +306,7 @@ public class Sprite extends ImageView {
         if (myAnimations != null) {
             return myAnimations.update();
         }
-        return myAnimations;
+        return myAnimations = AnimationsDialog.defaultAnimations(this);
     }
 
     public void setPhysics (CharacterPhysicsDialog physics) {

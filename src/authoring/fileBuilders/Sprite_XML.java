@@ -7,6 +7,11 @@ import org.w3c.dom.Element;
 
 import authoring.dataEditors.Sprite;
 
+/***
+ * 
+ * @author daniel
+ *
+ */
 public class Sprite_XML {
 
 	private String initial_state;
@@ -16,7 +21,7 @@ public class Sprite_XML {
 
 	public Sprite_XML(Sprite s) {
 		populateAnimations(s);
-		initial_state = animation.get(0).name;
+		initial_state = animation.size() > 0 ? animation.get(0).name : "0";
 		physics = new Physics(s.getMyType(), s.getMyMaterial(), String.format(
 				"%f %f", s.getXPosition(), s.getYPosition()));
 		index = s.getID();		
