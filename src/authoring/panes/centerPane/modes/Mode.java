@@ -12,12 +12,12 @@ import authoring.dataEditors.Sprite;
  */
 public interface Mode {
 
-    public void imageDragged (MouseEvent a, Sprite s);
-
-    public Mode getToggle ();
+    public void mouseDragged (MouseEvent a, Sprite s);
 
     public void mousePressed (MouseEvent click);
 
     public void mouseReleased (MouseEvent click, Sprite sprite, Group group);
+
+    public Mode getToggle ();
 
 }

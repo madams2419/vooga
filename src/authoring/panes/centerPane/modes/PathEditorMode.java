@@ -24,7 +24,7 @@ public class PathEditorMode implements Mode {
     private double startx, starty;
     
     @Override
-    public void imageDragged (MouseEvent event, Sprite sprite) {
+    public void mouseDragged (MouseEvent event, Sprite sprite) {
         // do nothing
     }
 
@@ -64,10 +64,10 @@ public class PathEditorMode implements Mode {
         params[5] = (Double.toString(path.getControlY2()));
         params[6] = (Double.toString(path.getEndX()));
         params[7] = (Double.toString(path.getEndY()));
-        for (int count = 0; count < params.length; count++) {
-            System.out.print(params[count] + "\t");
-        }
-        System.out.println();
+//        for (int count = 0; count < params.length; count++) {
+//            System.out.print(params[count] + "\t");
+//        }
+//        System.out.println();
         return params;
     }
     

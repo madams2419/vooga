@@ -105,7 +105,7 @@ public class CenterCanvas extends ScrollPane {
 	            myGroup.getChildren().add(s);
 	            myListOfSprites.add(s);
 	            myScene.setCursor(ImageCursor.DEFAULT);
-	            s.setOnMouseDragged(a -> myMode.imageDragged(a, s));
+	            s.setOnMouseDragged(a -> myMode.mouseDragged(a, s));
 	            s.setOnMousePressed(a -> myMode.mousePressed(a));
 	            s.setOnMouseReleased(a -> myMode.mouseReleased(a, s, myGroup));
 	        }
