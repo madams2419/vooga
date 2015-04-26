@@ -35,10 +35,9 @@ class CharacterEditingPane extends EditingPane {
     private static final String[] IMAGE_CHOOSER_EXTENSIONS = { "*.png", "*.jpg", "*.gif" };
     private static final String
             CREATE_PATH = "",
-            RETURN_FROM_PATH = "",
             UPDATE = "Update",
             DELETE = "Delete",
-            CONTROLS = "",
+            ADD_CONTROLS = "",
             PLAYABLE = "Playable",
             NAME = "name",
             POSITION = "position",
@@ -47,10 +46,14 @@ class CharacterEditingPane extends EditingPane {
             IMAGE_LABEL = "Click on the image to change it!",
             IMAGE_CHOOSER_DESCRIPTION = "Image Files",
             IMAGE_CHOOSER_TITLE = "Change Character Image";
-    private static final int BUTTON_WIDTH = 220;
     private int myModeIndex;
+    private static final int
+            ANIMATIONS = 0,
+            PHYSICS = 1,
+            CONTROLS = 2,
+            PATH1 = 3,
+            PATH2 = 4;
     private String[] pathButtonContent;
-//            new String[] { CREATE_PATH, RETURN_FROM_PATH };
 
     private List<HBox> myFields = new LinkedList<>();
 
@@ -62,13 +65,13 @@ class CharacterEditingPane extends EditingPane {
         // ======================== New design in here ===================== //
         addSpriteIcon(sprite);
         addLabel(IMAGE_LABEL);
-        addAnimations(sprite, miscellaneousImages.get(0));
-        addPhysics(sprite, miscellaneousImages.get(1));
+        addAnimations(sprite, miscellaneousImages.get(ANIMATIONS));
+        addPhysics(sprite, miscellaneousImages.get(PHYSICS));
         // setFields(this.getChildren(), sprite.getCharacteristics());
 
-        pathButtonContent = new String[] { miscellaneousImages.get(3), miscellaneousImages.get(4)};
-        addCreatePathButton(sprite, miscellaneousImages.get(3));
-        addPlayableCheckBox(addControlsButton(sprite, miscellaneousImages.get(2)), sprite);
+        pathButtonContent = new String[] { miscellaneousImages.get(PATH1), miscellaneousImages.get(PATH2)};
+        addCreatePathButton(sprite, miscellaneousImages.get(PATH1));
+        addPlayableCheckBox(addControlsButton(sprite, miscellaneousImages.get(PHYSICS)), sprite);
 //        addUpdateButton(sprite);
         addDeleteButton(sprite);
 
@@ -127,7 +130,7 @@ class CharacterEditingPane extends EditingPane {
     }
 
     private Button addControlsButton (Sprite sprite, String image) {
-        Button controls = new Button(CONTROLS, new ImageView(image));
+        Button controls = new Button(ADD_CONTROLS, new ImageView(image));
         controls.setDisable(!sprite.getPlayable());
         controls.setOnMouseClicked(e -> controlsClicked(sprite));
 //        controls.setPrefWidth(BUTTON_WIDTH);
