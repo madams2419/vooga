@@ -31,6 +31,10 @@ public class CharacterPhysicsDialog extends DataDialog {
         {"rock", "wood", "metal", "bouncy_ball", "super_ball", "pillow", "static", "floating"};
     private String[] myMaterialChoices, myTypeChoices;
 
+    public static CharacterPhysicsDialog defaultPhysics (Sprite s) {
+        return new CharacterPhysicsDialog(s);
+    }
+    
     public CharacterPhysicsDialog (Sprite sprite) {
         initializeEverything(sprite);
         initialize(sprite, 1, new Node[]{}, 0);

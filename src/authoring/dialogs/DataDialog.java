@@ -43,7 +43,6 @@ public abstract class DataDialog extends Dialog<ButtonType> {
         addAddButton();
         getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
         getDialogPane().setContent(myGrid);
-        showBox(s);
     }
 
     void addAddButton() {

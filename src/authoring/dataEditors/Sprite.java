@@ -318,7 +318,7 @@ public class Sprite extends ImageView {
         if (myPhysics != null) {
             return myPhysics;
         }
-        return myPhysics;
+        return myPhysics = CharacterPhysicsDialog.defaultPhysics(this);
     }
     
     public Boolean getPlayable () {

@@ -86,13 +86,7 @@ class CharacterEditingPane extends EditingPane {
     }
 
     private void addAnimation (Sprite sprite) {
-        if (sprite.getAnimations() != null) {
-            sprite.getAnimations().showBox(sprite);
-        }
-        else {
-            AnimationsDialog animationsDialog = new AnimationsDialog(sprite);
-            sprite.setAnimations(animationsDialog);
-        }
+        sprite.getAnimations().showBox(sprite);
     }
 
     private Button addPhysics (Sprite sprite, String image) {
@@ -107,10 +101,10 @@ class CharacterEditingPane extends EditingPane {
         if (sprite.getPhysics() != null) {
             sprite.getPhysics().showBox(sprite);
         }
-        else {
-            CharacterPhysicsDialog physicsDialog = new CharacterPhysicsDialog(sprite);
-            sprite.setPhysics(physicsDialog);
-        }
+//        else {
+//            CharacterPhysicsDialog physicsDialog = new CharacterPhysicsDialog(sprite);
+//            sprite.setPhysics(physicsDialog);
+//        }
     }
 
     private void addDeleteButton (Sprite sprite) {
