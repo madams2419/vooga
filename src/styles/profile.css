@@ -1,0 +1,18 @@
+.background {
+ 	-fx-background-image: url("http://cdn.superbwallpapers.com/wallpapers/digital-art/pastel-geometric-shapes-25189-1920x1200.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+
+}
+
+.profile_pic{
+	-fx-stroke:rgba(249,245,177,1);
+	-fx-stroke-width: 9;
+}
+
+.prof_font{
+    -fx-fill: rgba(249,245,177,1);
+    -fx-font-size: 15pt;
+    -fx-font-weight: bold;
+    -fx-font-family: "Exo";
+}
