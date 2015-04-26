@@ -51,7 +51,7 @@ public class RightPane extends WindowPane {
     
     public RightPane (Scene scene, AuthoringWindow window) {
         super(scene, new VBox(SPACING), window);
-        System.out.printf("Instantiated %s%n", this.getClass().getName());
+//        System.out.printf("Instantiated %s%n", this.getClass().getName());
         getContainer().getStylesheets().add(CSS);
         getContainer().setPadding(new Insets(PADDING));
         ((VBox) getContainer()).setAlignment(Pos.TOP_CENTER);
