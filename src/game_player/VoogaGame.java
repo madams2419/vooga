@@ -5,7 +5,6 @@ import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.controls.ControlsManager;
 import game_engine.scrolling.scroller.BasicScroller;
-import game_engine.scrolling.scrollfocus.BasicFocus;
 import game_engine.scrolling.scrollfocus.DeadZoneFocus;
 import game_engine.scrolling.scrollfocus.IScrollFocus;
 import game_engine.scrolling.tracker.SpriteTracker;
@@ -16,6 +15,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -76,6 +76,7 @@ public class VoogaGame implements IActor {
 	}
 	
 	public void setUpScrolling () {
+	    System.out.println(width + height);
 	    IScrollFocus focus= new DeadZoneFocus(width, height, 0.2);
 	    SpriteTracker tracker = new SpriteTracker(focus, new BasicScroller(root));
 	    Sprite sprite = activeLevel.getSprites().get(0);
@@ -90,11 +91,11 @@ public class VoogaGame implements IActor {
 	
 	public void start() {
 		Stage stage = new Stage();
-		stage.setHeight(height);
-		stage.setWidth(width);
-		Scene scene = new Scene(root);
+		Scene scene = new Scene(root, width, height);
 		scene.setOnKeyPressed(e -> controlsManager.handleInput(e));
 		scene.setOnKeyReleased(e -> controlsManager.handleInput(e));
+		stage.setX(Screen.getPrimary().getVisualBounds().getMinX());
+		stage.setY(Screen.getPrimary().getVisualBounds().getMinY());
 		root.requestFocus();
 		stage.setScene(scene);
 		stage.setResizable(false);
