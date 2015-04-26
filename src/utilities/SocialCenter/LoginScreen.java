@@ -92,7 +92,7 @@ public class LoginScreen {
 			if(!results.contains("none")){
 				System.out.println("Login Success");
 				db.createTable(results.get(0));
-				menu=new SocialCenterMenu(results.get(0),WIDTH,HEIGHT);
+				menu=new SocialCenterMenu(results.get(0),WIDTH,HEIGHT, loginScreen, myStage);
 				menu.returnScene(myStage);
 				
 			}else{
