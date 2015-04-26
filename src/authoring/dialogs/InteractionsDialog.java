@@ -81,7 +81,7 @@ public class InteractionsDialog extends Dialog<ButtonType> {
 				this.setHeight(this.getHeight() + BOTTOM_SPACING);
 			}
 			mySprite1Grid.addRowEnd(addComboBox(myComboBoxes1, myDescriptions1),
-					addParamTextField(myParams1), addLabel(myDescriptions1),
+					addParamTextField(myParams1, myComboBoxes1, myChecks1), addLabel(myDescriptions1),
 					addLabel(myChecks1));
 			this.setWidth(1200);
 			e.consume();
@@ -94,7 +94,7 @@ public class InteractionsDialog extends Dialog<ButtonType> {
 				this.setHeight(this.getHeight() + BOTTOM_SPACING);
 			}
 			mySprite2Grid.addRowEnd(addComboBox(myComboBoxes2, myDescriptions2),
-					addParamTextField(myParams2), addLabel(myDescriptions2),
+					addParamTextField(myParams2,  myComboBoxes2, myChecks2), addLabel(myDescriptions2),
 					addLabel(myChecks2));
 			this.setWidth(1200);
 			e.consume();
@@ -112,7 +112,7 @@ public class InteractionsDialog extends Dialog<ButtonType> {
 		for (Action act: mySprite1Interactions.keySet()){
 			ComboBox<Action> combo = addComboBox(myComboBoxes1, myDescriptions1);
 			combo.setValue(act);
-			TextField param = addParamTextField(myParams1);
+			TextField param = addParamTextField(myParams1, myComboBoxes1, myChecks1);
 			param.setText(mySprite1Interactions.get(act));
 			mySprite1Grid.addRowEnd(combo,
 					param, addLabel(myDescriptions1),
@@ -122,7 +122,7 @@ public class InteractionsDialog extends Dialog<ButtonType> {
 		for (Action act: mySprite2Interactions.keySet()){
 			ComboBox<Action> combo = addComboBox(myComboBoxes2, myDescriptions2);
 			combo.setValue(act);
-			TextField param = addParamTextField(myParams2);
+			TextField param = addParamTextField(myParams2, myComboBoxes2, myChecks2);
 			param.setText(mySprite2Interactions.get(act));
 			mySprite2Grid.addRowEnd(combo,
 					param, addLabel(myDescriptions2),
@@ -173,9 +173,15 @@ public class InteractionsDialog extends Dialog<ButtonType> {
 		addButton.addEventFilter(ActionEvent.ACTION, e);
 	}
 
-	private TextField addParamTextField(List<TextField> list) {
+	private TextField addParamTextField(List<TextField> list, List<ComboBox<Action>> comboList,
+			List<Label> check) {
 		TextField result = new TextField();
 		list.add(result);
+		result.setOnKeyReleased(e -> {
+			int index = list.indexOf(result);
+			check.get(index).setText(
+					Boolean.toString(comboList.get(index).getValue().checkParams(result.getText())));
+		});
 		return result;
 	}
 
