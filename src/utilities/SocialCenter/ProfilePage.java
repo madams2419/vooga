@@ -3,19 +3,23 @@
  */
 package utilities.SocialCenter;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 /**
@@ -29,7 +33,8 @@ public class ProfilePage {
 	private static String ID;
 	private static double W;
 	private static double H;
-	
+	private Stage myStage;
+
 	/**
 	 * @param args
 	 */
@@ -43,7 +48,7 @@ public class ProfilePage {
 		profileImage();
 		createStats();
 	}
-	
+
 
 	private void initialize(double width, double height){
 		profilePage=new Scene(root, width, height);
@@ -56,16 +61,60 @@ public class ProfilePage {
 
 	private void profileImage(){
 		HBox hbox=new HBox();
+		Image picture;
+		ArrayList<String> imageURL=new ArrayList<>();
 		Rectangle rect=new Rectangle(200,200);
-		Image picture=new Image("http://i.ytimg.com/vi/c_cg-2f9RUw/hqdefault.jpg");
-		rect.setFill(new ImagePattern(picture));
+		try {
+			imageURL=db.get("SELECT ProfilePic FROM profile WHERE ID = '"+ID+"'", "ProfilePic");
+			picture=new Image(imageURL.get(0));
+			rect.setFill(new ImagePattern(picture));
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	
+		rect.setOnMouseClicked(e->saveURL());
 		hbox.getChildren().add(rect);
 		hbox.setTranslateX(W/2-85);
 		hbox.setTranslateY(H/6);
 		root.getChildren().add(hbox);
-		
+
 	}
-	
+	private void saveURL(){
+		Stage insert= new Stage();
+		Group URLgroup=new Group();
+		StackPane stack=new StackPane();
+		
+		Text t=new Text("Insert the URL of your profile picture");
+		Button submit=new Button("Submit");
+		Button close=new Button("Close");
+		TextField URLinsert=new TextField();
+		submit.setOnMouseClicked(e->insertQuery(URLinsert.getText()));
+		close.setOnMouseClicked(e->insert.close());
+		
+		//layout
+		stack.getChildren().addAll(t,URLinsert,submit,close);
+		URLgroup.getChildren().addAll(stack);
+		stack.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+		
+		
+		Scene URLscene=new Scene(URLgroup,500,50);
+		
+	    insert.setScene(URLscene);
+	    insert.initModality(Modality.WINDOW_MODAL);
+	    insert.setTitle("Pop up window");
+	  
+		insert.show();
+	}
+
+
+	private void insertQuery(String URL){
+		try{
+			db.updateURL(ID, URL);
+		}catch(Exception e){
+			System.out.println(e);
+		}
+	}
 
 	private void createGUI(){
 		GridPane gridpane = new GridPane();
@@ -85,9 +134,9 @@ public class ProfilePage {
 		gridpane.setTranslateX(350);
 		gridpane.setTranslateY(300);
 		root.getChildren().add(gridpane);
-		
+
 	}
-	
+
 	private void setConstraints(GridPane g, String s, int row, int col){
 		HBox region=new HBox();
 		Text temp=new Text(String.format("%s",s));
@@ -98,7 +147,7 @@ public class ProfilePage {
 		g.getChildren().add(region);
 	}
 
-	
+
 	private static void createStats(){		
 		String[] request={"NickName"};
 		ArrayList<String> results=new ArrayList<>();
@@ -112,10 +161,11 @@ public class ProfilePage {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
+
 	}	
 	public void getProfileScreen(Stage s){
+		myStage=s;
 		s.setScene(profilePage);
 	}
 
