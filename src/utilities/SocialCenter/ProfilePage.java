@@ -5,7 +5,6 @@ package utilities.SocialCenter;
 
 import java.util.ArrayList;
 
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,7 +18,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 /**
@@ -65,7 +63,7 @@ public class ProfilePage {
 		ArrayList<String> imageURL=new ArrayList<>();
 		Rectangle rect=new Rectangle(200,200);
 		try {
-			imageURL=db.get("SELECT ProfilePic FROM profile WHERE ID = '"+ID+"'", "ProfilePic");
+			imageURL=db.get("LoginInfo","SELECT ProfilePic FROM profile WHERE ID = '"+ID+"'", "ProfilePic");
 			picture=new Image(imageURL.get(0));
 			rect.setFill(new ImagePattern(picture));
 		} catch (Exception e1) {
@@ -110,7 +108,7 @@ public class ProfilePage {
 
 	private void insertQuery(String URL){
 		try{
-			db.updateURL(ID, URL);
+			db.updateURL("LoginInfo",ID, URL);
 		}catch(Exception e){
 			System.out.println(e);
 		}
@@ -122,7 +120,7 @@ public class ProfilePage {
 		String[] s={"ID","NickName"};
 		String command="SELECT ID,NickName FROM Profile WHERE ID = '"+ID+"'";
 		try {
-			query=db.get(command, s);
+			query=db.get("LoginInfo",command, s);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -153,7 +151,7 @@ public class ProfilePage {
 		ArrayList<String> results=new ArrayList<>();
 		try {
 			//System.out.println(ls.getID());
-			results=db.get("SELECT * FROM profile WHERE ID = '"+ID+"'",request);
+			results=db.get("LoginInfo","SELECT * FROM profile WHERE ID = '"+ID+"'",request);
 			for(String s:results){
 				System.out.println(s);
 			}

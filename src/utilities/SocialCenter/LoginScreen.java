@@ -88,10 +88,10 @@ public class LoginScreen {
 
 	private void checkValid(String id, String password){
 		try {
-			ArrayList<String> results=db.get("SELECT Login_id,Login_pass FROM Login WHERE Login_id = '"+id+"' AND Login_pass='"+password+"'","Login_id");
+			ArrayList<String> results=db.get("LoginInfo","SELECT Login_id,Login_pass FROM Login WHERE Login_id = '"+id+"' AND Login_pass='"+password+"'","Login_id");
 			if(!results.contains("none")){
 				System.out.println("Login Success");
-				db.createTable(results.get(0));
+				db.createTable("LoginInfo",results.get(0));
 				menu=new SocialCenterMenu(results.get(0),WIDTH,HEIGHT);
 				menu.returnScene(myStage);
 				
