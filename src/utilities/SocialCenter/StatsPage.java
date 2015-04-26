@@ -8,5 +8,9 @@ package utilities.SocialCenter;
  *
  */
 public class StatsPage {
+	public StatsPage(){
+		
+	}
+	
 
 }
