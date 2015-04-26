@@ -28,6 +28,7 @@ public class SceneControlManager extends ControlManager{
 	}
 
 	public void addKeyControl(KeyControl newControl){
+		newControl.addControlFactory(myControlFactory);
 		myKeyControls.add(newControl);
 		myActiveKeyControl++;
 	}

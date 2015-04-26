@@ -26,13 +26,12 @@
 /// The main package that contains everything in the Voce Java API.
 package game_engine.control.speech_recognition.voce;
 
-/// A set of static methods that give users access to the main speech 
-/// interaction components.  These methods are the only ones exposed to 
-/// other programming languages through the Java Native Interface.
-public class SpeechInterface
-{
-	private static SpeechSynthesizer mSynthesizer = null;
-	private static SpeechRecognizer mRecognizer = null;
+public class SpeechInterface {
+	
+	private static final String CONFIG_PATH = "lib/voce.config.xml";
+	private static final String LIB_PATH = "lib/gram";
+	
+	private static SpeechRecognizer mRecognizer;
 	/// Initializes Voce.  The 'vocePath' String specifies the path where 
 	/// Voce classes and config file can be found.  'initSynthesis' 
 	/// and 'initRecognition' enable these capabilities; if you don't 
@@ -43,154 +42,59 @@ public class SpeechInterface
 	/// be searched).  'grammarName' is the name of a specific grammar 
 	/// within a .gram file in the 'grammarPath'.  If the 'grammarName' 
 	/// is empty, a simple default grammar will be used.
-	public static void init(String vocePath, boolean initSynthesis, 
-		boolean initRecognition, String grammarPath, String grammarName)
-	{
-		Utils.setPrintDebug(false);
-		Utils.log("debug", "Beginning initialization");
+	
+	public void init(String grammarName){
 
-		if (!initSynthesis && !initRecognition)
-		{
-			Utils.log("warning", "Synthesizer and recognizer are both" 
-				+ "uninitialized.");
-		}
-
-		if (initSynthesis)
-		{
-			// Create a speech synthesizer and give it a name.
-			Utils.log("", "Initializing synthesizer");
-			//mSynthesizer = new SpeechSynthesizer("Kevin16");
-		}
-
-		if (initRecognition)
-		{
-			if (grammarPath.equals(""))
-			{
-				grammarPath = "./";
-			}
-
-			// Always use the same config file.
-			String configFilename = "voce.config.xml";
-
-			// Create the speech recognizer.
-			Utils.log("", "Initializing recognizer. " 
-				+ "This may take some time...");
-//			mRecognizer = new SpeechRecognizer(vocePath + "/" 
-//				+ configFilename, grammarPath, grammarName);
-			mRecognizer = new SpeechRecognizer("lib/" 
-					+ configFilename, "lib/gram", grammarName);
-
-			// Enable the recognizer; this will start the recognition 
-			// thread.
+			System.out.println("Initialize Recognizer...");
+			mRecognizer = new SpeechRecognizer(CONFIG_PATH, LIB_PATH, grammarName);
 			setRecognizerEnabled(true);
-		}
-
-		Utils.log("", "Initialization complete");
+			System.out.println("Initialization Complete");
 	}
 
-	/// Destroys Voce.	
-	public static void destroy()
-	{
-		Utils.log("debug", "Shutting down...");
-		
-		if (null != mSynthesizer)
-		{
-			//mSynthesizer.destroy();
-		}
-
-		if (null != mRecognizer)
-		{
+	public void destroy(){
+		if (mRecognizer != null){
 			mRecognizer.destroy();
 		}
-
-		Utils.log("", "Shutdown complete");
+		System.out.println("Shutdown Recognizer");
 	}
 
-	/// Requests that the given string be synthesized as soon as possible.
-//	public static void synthesize(String message)
-//	{
-//		if (null == mSynthesizer)
-//		{
-//			Utils.log("warning", "synthesize called before " 
-//				+ "synthesizer was initialized.  Request will be ignored.");
-//			return;
-//		}
-//
-//		//Utils.log("debug", "SpeechInterface.speak: Adding message to speech queue: " + message);
-//		
-//		mSynthesizer.synthesize(message);
-//	}
 
-	/// Tells the speech synthesizer to stop synthesizing.  This cancels all 
-	/// pending messages.
-//	public static void stopSynthesizing()
-//	{
-//		if (null == mSynthesizer)
-//		{
-//			Utils.log("warning", "stopSynthesizing called before " 
-//				+ "synthesizer was initialized.  Request will be ignored.");
-//			return;
-//		}
-//
-//		mSynthesizer.stopSynthesizing();
-//	}
-
-	/// Returns the number of recognized strings currently in the 
-	/// recognizer's queue.
-	public static int getRecognizerQueueSize()
-	{
-		if (null == mRecognizer)
-		{
-			Utils.log("warning", "getRecognizerQueueSize "
-				+ "called before recognizer was initialized.  Returning " 
-				+ "0.");
+	public int getRecognizerQueueSize(){
+		if (mRecognizer == null){
+			printWarning();
 			return 0;
 		}
-		//System.out.println("Is enabled? " + mRecognizer.isEnabled());
-		//System.out.println("The queue size is "+mRecognizer.getQueueSize());
 		return mRecognizer.getQueueSize();
 	}
 
-	/// Returns and removes the oldest recognized string from the 
-	/// recognizer's queue.
-	public static String popRecognizedString()
-	{
-		if (null == mRecognizer)
+	public String popRecognizedString(){
+		if (mRecognizer == null)
 		{
-			Utils.log("warning", "popRecognizedString "
-				+ "called before recognizer was initialized.  Returning " 
-				+ "an empty string.");
+			printWarning();
 			return "";
 		}
 		return mRecognizer.popString();
 	}
 
-	/// Enables and disables the speech recognizer.
-	public static void setRecognizerEnabled(boolean e)
-	{
+	public void setRecognizerEnabled(boolean enable){
 		if (null == mRecognizer)
 		{
-			Utils.log("warning", "setRecognizerEnabled "
-				+ "called before recognizer was initialized.  Request " 
-				+ "will be ignored.");
+			printWarning();
 			return;
 		}
-
-		//mRecognizer.setEnabled(e);
-		mRecognizer.setEnabled(e);
+		mRecognizer.setEnabled(enable);
 	}
 
-	/// Returns true if the recognizer is currently enabled.
-	public static boolean isRecognizerEnabled()
-	{
-		if (null == mRecognizer)
+	public boolean isRecognizerEnabled(){
+		if (mRecognizer == null)
 		{
-			Utils.log("warning", "isRecognizerEnabled "
-				+ "called before recognizer was initialized.  Returning " 
-				+ "false.");
+			printWarning();
 			return false;
 		}	
-
 		return mRecognizer.isEnabled();
+	}
+	
+	private void printWarning(){
+		System.out.println("Recognizer Uninitialized");
 	}
 }

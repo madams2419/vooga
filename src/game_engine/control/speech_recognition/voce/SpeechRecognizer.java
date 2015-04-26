@@ -31,165 +31,88 @@ import edu.cmu.sphinx.result.Result;
 import edu.cmu.sphinx.util.props.ConfigurationManager;
 import edu.cmu.sphinx.util.props.PropertyException;
 
-import java.util.LinkedList;
-import java.io.File;
-import java.io.IOException;
+import java.util.*;
+import java.io.*;
 import java.net.URL;
 
 /// Handles all speech recognition (i.e. speech-to-text) functions.  Uses 
 /// a separate thread for recognition.  Maintains an internal queue of 
 /// recognized strings.
-public class SpeechRecognizer implements Runnable
-{
-	/// The speech Recognizer instance.
-	private Recognizer mRecognizer = null;
-
-	/// The Microphone instance.
-	private Microphone mMicrophone = null;
-
-	/// The thread used for speech recognition.  This is necessary to 
-	/// avoid making applications wait for recognition to finish.
-	private volatile Thread mRecognitionThread = null;
-
-	/// A boolean that determines whether the recognition thread should be 
-	/// enabled.  This is used for communication between the main thread 
-	/// and the recognition thread.
+public class SpeechRecognizer implements Runnable{
+	private Recognizer mRecognizer;
+	private Microphone mMicrophone;
+	private volatile Thread mRecognitionThread;
 	private boolean mRecognitionThreadEnabled = false;
-
-	/// A queue of the recognized strings.
 	private LinkedList<String> mRecognizedStringQueue;
-
-	/// Constructs and initializes the speech recognizer.  'grammarPath' can 
-	/// be a relative or absolute path.  'grammarName' is the name of a 
-	/// grammar within a .gram file in the 'grammarPath' (all .gram files 
-	/// in 'grammarPath' will automatically be searched).  If the 
-	/// 'grammarName' is empty, no grammar will be used.
-	public SpeechRecognizer(String configFilename, String grammarPath, 
-		String grammarName)
-	{
-		try
-		{
+	
+	
+	public SpeechRecognizer(String configFilename, String grammarPath, String grammarName){
+		try{
 			URL configURL = new File(configFilename).toURI().toURL();
 			ConfigurationManager cm = new ConfigurationManager(configURL);
 
 			mRecognizer = (Recognizer) cm.lookup("recognizer");
 			mMicrophone = (Microphone) cm.lookup("microphone");
-
-			if (!grammarName.equals(""))
-			{
-				// This will create this componenent if it has not already 
-				// been created.
-				cm.lookup("jsgfGrammar");
-
-				// Setup in the user-defined grammar.
-				cm.setProperty("jsgfGrammar", "grammarLocation", grammarPath);
-				cm.setProperty("jsgfGrammar", "grammarName", grammarName);
-				System.out.println("passes this step " + grammarPath);
-			}
-			else
-			{
-				Utils.log("", "No grammar file specified.  Defaulting to " 
-					+ "'digits.gram'");
-			}
-
+			cm.lookup("jsgfGrammar");
+			cm.setProperty("jsgfGrammar", "grammarLocation", grammarPath);
+			cm.setProperty("jsgfGrammar", "grammarName", grammarName);
 			mRecognizer.allocate();
 			mRecognizedStringQueue = new LinkedList<String>();
-		}
-		catch (IOException e)
-		{
-			Utils.log("ERROR", "Cannot load speech recognizer: ");
-			e.printStackTrace();
-		}
-		catch (PropertyException e)
-		{
-			Utils.log("ERROR", "Cannot configure speech recognizer: ");
-			e.printStackTrace();
-		}
-		catch (InstantiationException e)
-		{
-			Utils.log("ERROR", "Cannot create speech recognizer: ");
-			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("Cannot load speech recognizer: ");
+		} catch (PropertyException e) {
+			System.out.println("Cannot configure speech recognizer: ");
+		} catch (InstantiationException e) {
+			System.out.println("Cannot create speech recognizer: ");
 		}
 	}
 
 	/// Contains the main processing to be done by the recognition 
 	/// thread.  Called indirectly after 'start' is called.
-	public void run()
-	{
-		Utils.log("debug", "Recognition thread starting");
-
-		while (true == mRecognitionThreadEnabled)
-		{
-			if (!mMicrophone.isRecording())
-			{
-				Utils.log("warning", "Recognition thread is running, but " 
-					+ "the microphone is disabled.");
-			}
-			else
-			{
+	public void run(){
+		while (mRecognitionThreadEnabled == true){
+			if (!mMicrophone.isRecording()){
+				System.out.println("Microphone is disable");
+			} else {
 				Result result = mRecognizer.recognize();
-
-				if (result != null)
-				{
+				if (result != null){
 					String s = result.getBestFinalResultNoFiller();
-
-					// Only save non-empty strings.
-					if (!s.equals(""))
-					{
-						Utils.log("debug", "Finished recognizing");
+					if (!s.equals("")){
 						mRecognizedStringQueue.addLast(s);
 					}
 				}
 			}
 		}
-
-		Utils.log("debug", "Recognition thread finished");
 	}
 
 	/// Returns the number of recognized strings currently in the 
 	/// recognized string queue.
-	public int getQueueSize()
-	{
+	public int getQueueSize(){
 		return mRecognizedStringQueue.size();
 	}
 
 	/// Returns and removes the oldest recognized string from the 
 	/// recognized string queue.  Returns an empty string if the 
 	/// queue is empty.
-	public String popString()
-	{
-		if (getQueueSize() > 0)
-		{
+	public String popString(){
+		if (getQueueSize() > 0){
 			return mRecognizedStringQueue.removeFirst();
-		}
-		else
-		{
+		} else {
 			return "";
 		}
 	}
 
 	/// Enables and disables the speech recognizer.  Starts and stops the 
 	/// speech recognition thread.
-	public void setEnabled(boolean e)
-	{
-		if (e)
-		{
-			Utils.log("debug", "Starting microphone...");
+	public void setEnabled(boolean enable){
+		if (enable){
 			boolean success = mMicrophone.startRecording();
-			Utils.log("debug", "Microphone on");
-
-			if (!success)
-			{
-				Utils.log("warning", "Cannot initialize microphone. " + 
-					"Speech recognition disabled.");
+			if (!success){
+				System.out.println("Cannot initialize microphone");
 				return;
-			}
-			else
-			{
-				if (null != mRecognitionThread)
-				{
-					Utils.log("warning", "New recognition thread being " 
-						+ "created before the previous one finished.");
+			} else {
+				if (mRecognitionThread != null){
+					System.out.println("New recognition thread is created before finishing the previous one");
 				}
 
 				mRecognitionThread = new Thread(this, "Recognition thread");
@@ -198,12 +121,8 @@ public class SpeechRecognizer implements Runnable
 				mRecognitionThreadEnabled = true;
 				mRecognitionThread.start();
 			}
-		}
-		else
-		{
-			Utils.log("debug", "Stopping microphone...");
+		} else {
 			mMicrophone.stopRecording();
-			Utils.log("debug", "Microphone off");
 
 			// The following line indirectly stops the recognition thread 
 			// from running.  The next time the recognition thread checks 
@@ -213,35 +132,27 @@ public class SpeechRecognizer implements Runnable
 			// Wait for the thread to die before proceeding.
 			while (mRecognitionThread.isAlive())
 			{
-				Utils.log("debug", "Waiting for recognition thread to die...");
-
-				try
-				{
+				try{
 					// Have the main thread sleep for a bit...
 					Thread.sleep(100);
-				}
-				catch (InterruptedException exception)
-				{
+				} catch (InterruptedException exception) {
+					System.out.println("Thread Interruption");
 				}
 			}
 
 			mRecognitionThread = null;
 			mMicrophone.clear();
-
-			Utils.log("debug", "Clearing recognized string queue");
 			mRecognizedStringQueue.clear();
 		}
 	}
 
 	/// Returns true if the recognizer is currently enabled.
-	public boolean isEnabled()
-	{
+	public boolean isEnabled(){
 		return mMicrophone.isRecording();
 	}
 
 	/// Deallocates speech recognizer.
-	public void destroy()
-	{
+	public void destroy(){
 		// This function call will shut down everything, including the 
 		// recognition thread.
 		setEnabled(false);

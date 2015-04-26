@@ -16,4 +16,9 @@ public class VoiceControlManager extends ControlManager{
 		myVoiceControls.add((VoiceControl) control);
 		myActiveVoiceControl++;
 	}
+	
+	@Override
+	public void handleEvent(Object obj){
+		myVoiceControls.get(myActiveVoiceControl).executeEvent();
+	}
 }

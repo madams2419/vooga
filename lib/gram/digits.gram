@@ -6,4 +6,4 @@
 
 grammar digits;
 
-public <numbers> = (oh | zero | one | two | three | four | five | six | seven | eight | nine | jump | walk | add | subtract | divide | multiply) * ;
+public <numbers> = (oh | zero | one | two | three | four | five | six | seven | eight | nine | jump | walk | add | subtract | divide | multiply | quit) * ;

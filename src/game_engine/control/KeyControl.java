@@ -28,16 +28,18 @@ public class KeyControl extends SceneControl {
 	private SceneControlFactory myControlFactory;
 	private final Integer EXECUTION_RESULT = 0;
 
-	public KeyControl(Map<KeyCode, IBehavior> keyPressMap, Map<KeyCode, IBehavior> keyReleaseMap, Map<KeyCode, IBehavior> keyHeldMap, SceneControlFactory controlFactory) {
+	public KeyControl(Map<KeyCode, IBehavior> keyPressMap, Map<KeyCode, IBehavior> keyReleaseMap, Map<KeyCode, IBehavior> keyHeldMap) {
 		myKeyPressedMap = keyPressMap;
 		myKeyReleasedMap = keyReleaseMap;
 		myKeyHeldMap = keyHeldMap;
 		myWhilePressedKey = new ArrayList<>();
-		myControlFactory = controlFactory;
 	}
 
 
-
+	public void addControlFactory(SceneControlFactory sceneControlFactory){
+		myControlFactory = sceneControlFactory;
+	}
+	
 	public void executeKeyEvent(KeyCode keycode, boolean pressed){
 		if(myKeyPressedMap.containsKey(keycode)){
 			if(pressed){
