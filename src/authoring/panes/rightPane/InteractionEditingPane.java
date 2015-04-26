@@ -72,13 +72,14 @@ public class InteractionEditingPane extends EditingPane {
     	Button b = new Button(s);
 			b.setOnMouseClicked(e -> {
 				try{
-					new InteractionsDialog(mySprite1, mySprite2);
+					new InteractionsDialog(myParent, mySprite1, mySprite2);
 				        getInteractions(mySprite1, mySprite1Interactions);
 				        getInteractions(mySprite2, mySprite2Interactions);
 				}
 				catch (Exception a){}
 	    	});
     	getChildren().add(b);
+//    	myParent.getParent().getCenterPane().getActiveTab().addInteraction()
     }
 
     private void addSpriteToPane (Sprite sprite) {

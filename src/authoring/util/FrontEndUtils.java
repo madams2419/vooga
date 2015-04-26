@@ -3,9 +3,11 @@ package authoring.util;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -21,6 +23,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 import org.w3c.dom.Element;
 
+import authoring.dataEditors.Sprite;
 import authoring.fileBuilders.Level_XML;
 import authoring.fileBuilders.XMLBuilder;
 import authoring.panes.centerPane.CenterCanvas;
@@ -93,6 +96,16 @@ public class FrontEndUtils {
 		return hbox;
 	}
 
+	public static String getSpritesIDSorted(Sprite... sprites){
+		StringBuilder s = new StringBuilder();
+		List<Integer> elements = Arrays.asList(sprites).stream().map(sprite -> {
+			return sprite.getID();
+		}).collect(Collectors.toList());
+		Collections.sort(elements);
+		elements.forEach(num -> s.append(num + " "));
+		return s.toString();
+	}
+	
 	public static void buildXMLFile(AuthoringWindow parent, String filename) {
 		// Adding the root element
 		XMLBuilder xml = XMLBuilder.getInstance("game");

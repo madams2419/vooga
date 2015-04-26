@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -16,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import authoring.dataEditors.Sprite;
 import authoring.dialogs.NewRegionDialog;
+import authoring.fileBuilders.Collision_XML;
 import authoring.fileBuilders.KeyAction_XML;
 import authoring.fileBuilders.Objective_XML;
 import authoring.fileBuilders.PhysicsEngine_XML;
@@ -35,6 +37,7 @@ public class CenterCanvas extends ScrollPane {
 			.observableArrayList();
 	private List<Objective_XML> myListOfObjectives = new ArrayList<>();
 	private Map<String, KeyAction_XML> myKeyActions = new HashMap<>();
+	private Map<String, Collision_XML> myCollisions = new HashMap<>();
 	private Mode myMode;
 
 	private Region myCurrentRectangle;
@@ -82,7 +85,8 @@ public class CenterCanvas extends ScrollPane {
 	}
 
 	private void canvasClicked(MouseEvent e) {
-	    myMode.canvasClicked(e, myCurrentRectangle, myScene, myGroup, myListOfSprites);
+		myMode.canvasClicked(e, myCurrentRectangle, myScene, myGroup,
+				myListOfSprites);
 	}
 
 	public void removeSprite(Sprite s) {
@@ -154,6 +158,14 @@ public class CenterCanvas extends ScrollPane {
 			myKeyActions.get(key).appendBehaviours(action);
 		else
 			myKeyActions.put(key, action);
+	}
+
+	public void addCollision(Collision_XML collision, Sprite... interactors) {
+		myCollisions.put(FrontEndUtils.getSpritesIDSorted(interactors), collision);
+	}
+
+	public List<Collision_XML> getCollisions() {
+		return myCollisions.values().stream().collect(Collectors.toList());
 	}
 
 }

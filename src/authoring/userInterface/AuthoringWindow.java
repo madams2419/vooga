@@ -79,8 +79,6 @@ public class AuthoringWindow {
 		rootContainer.setPrefWidth(myScene.getWidth());
 
 		// Setting up borderPane
-		// canvas.setBottom(setupBottomPane(myScene.getWidth()));
-
 		rootContainer.setTop(setupTopPane());
 		rootContainer.setLeft(setupLeftPane());
 		rootContainer.setRight(setupRightPane());

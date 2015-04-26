@@ -1,12 +1,21 @@
 package authoring.fileBuilders;
 
+import java.util.List;
+
 import org.w3c.dom.Element;
+
+import authoring.dataEditors.Sprite;
+import authoring.util.FrontEndUtils;
 
 public class Collision_XML {
 
 	private String sprites;
 	private String[] detectors;
 	private Resolver[] resolvers;
+	
+	public Collision_XML(Sprite a, Sprite b, List<String> totalInteractions){
+		sprites = FrontEndUtils.getSpritesIDSorted(a, b);
+	}
 
 	public void writeToXML(Element parent, int index, XMLBuilder xml) {
 		Element current = xml.add(parent, "collision_" + index);
