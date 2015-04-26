@@ -1,17 +1,16 @@
 package game_engine.sprite;
 
 import game_engine.physics.objects.PhysicsObject;
-
+import java.io.FileInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-
 import java.util.Observer;
 
 public class Animation extends Observable implements Observer {
