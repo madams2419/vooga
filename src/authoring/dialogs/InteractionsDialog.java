@@ -7,17 +7,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
-
 import authoring.dataEditors.Action;
 import authoring.dataEditors.Sprite;
 import authoring.userInterface.DialogGridOrganizer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
@@ -87,12 +83,12 @@ public class InteractionsDialog extends Dialog<ButtonType>{
 		});
 		
 		addButton(spr2, e->{
-			System.out.println(sprite1Grid.getHeight());
+			System.out.println(sprite2Grid.getHeight());
 			System.out.println(this.getHeight());
 			if (sprite2Grid.getHeight() + 116 >= this.getHeight()){
 				 this.setHeight(this.getHeight() + BOTTOM_SPACING);
 			}
-			sprite1Grid.addRowEnd(addComboBox(myComboBoxes2, myDescriptions2), 
+			sprite2Grid.addRowEnd(addComboBox(myComboBoxes2, myDescriptions2), 
 					addParamTextField(myParams2),
 					addLabel(myDescriptions2), addLabel(myChecks2));
 			this.setWidth(1200);
@@ -129,7 +125,6 @@ public class InteractionsDialog extends Dialog<ButtonType>{
 	}
 	
 	private void addButton(ButtonType b, EventHandler<ActionEvent> e){
-
 		 final Button addButton = (Button) this.getDialogPane().lookupButton(b);
 		 addButton.addEventFilter(ActionEvent.ACTION, e);
 	}
@@ -151,8 +146,7 @@ public class InteractionsDialog extends Dialog<ButtonType>{
 		for (Action a : myActions){
 			result.getItems().add(a);
 		}
-		result.setCellFactory(new Callback<ListView<Action>,ListCell<Action>>(){
-			 
+		result.setCellFactory(new Callback<ListView<Action>,ListCell<Action>>(){			 
             @Override
             public ListCell<Action> call(ListView<Action> p) {                
                 final ListCell<Action> cell = new ListCell<Action>(){
@@ -165,33 +159,21 @@ public class InteractionsDialog extends Dialog<ButtonType>{
                             setText(null);
                         }
                     } 
-                };
-                 
+                };  
                 return cell;
             }
 		});
 		result.valueProperty().addListener(new ChangeListener<Action>() {
             @Override 
-            public void changed(ObservableValue<? extends Action> ov, Action t, Action t1) { 
+            public void changed(ObservableValue<? extends Action> ov, Action before, Action after) { 
             	int index = comboList.indexOf(result);
-            	descriptionList.get(index).setText(t1.getDescription());
+            	descriptionList.get(index).setText(after.getDescription());
             }    
         });
 		comboList.add(result);
 		return result;
 	}
 	
-
-//	private Label[] createLabels(){
-//		Label[] labels = new Label[8];
-//		for (int i = 1; i < 2; i++){
-//			labels[1*i-1] = new Label("Action"+Integer.toString(i));
-//			labels[2*i-1] = new Label("Params"+Integer.toString(i));
-//			labels[3*i-1] = new Label("Description"+Integer.toString(i));
-//			labels[4*i-1] = new Label("Check"+Integer.toString(i));
-//		}
-//		return labels;
-//	}
 	
 	private List<Action> grabActions() throws IOException{
 		ReadProperties reader = new ReadProperties();
