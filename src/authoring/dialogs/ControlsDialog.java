@@ -87,14 +87,11 @@ public class ControlsDialog extends Dialog<ButtonType> {
 												.getSelectionModel()
 												.getSelectedItem(),
 										myParamTextFields.get(i).getText()));
-								System.err.println(String.format("%s:%s:%s",
-										s.getID(), myComboBoxes.get(i)
-												.getSelectionModel()
-												.getSelectedItem(),
-										myParamTextFields.get(i).getText()));
+
 								KeyAction_XML action = new KeyAction_XML(
 										myTextFields.get(i).getText(),
 										behaviours, true);
+
 								myParent.getParent()
 										.getCenterPane()
 										.getActiveTab()

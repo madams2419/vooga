@@ -15,6 +15,7 @@ import authoring.dataEditors.Sprite;
 public class Sprite_XML {
 
 	private String initial_state;
+	private String path;
 	private List<State> animation;
 	private Physics physics;
 	private int index;
@@ -22,9 +23,10 @@ public class Sprite_XML {
 	public Sprite_XML(Sprite s) {
 		populateAnimations(s);
 		initial_state = animation.size() > 0 ? animation.get(0).name : "0";
+		path = s.getPath();
 		physics = new Physics(s.getMyType(), s.getMyMaterial(), String.format(
 				"%f %f", s.getXPosition(), s.getYPosition()));
-		index = s.getID();		
+		index = s.getID();
 	}
 
 	private void populateAnimations(Sprite s) {
@@ -42,6 +44,7 @@ public class Sprite_XML {
 	public void writeToXML(Element parent, XMLBuilder xml) {
 		Element current = xml.add(parent, "sprite_" + index);
 		xml.addChildWithValue(current, "initial_state", initial_state);
+		xml.addChildWithValue(current, "path", path);
 		Element am = xml.add(current, "animations");
 		for (int i = 0; i < animation.size(); i++)
 			animation.get(i).writeToXML(am, i, xml);

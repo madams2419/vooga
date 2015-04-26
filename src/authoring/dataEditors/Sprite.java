@@ -8,6 +8,7 @@ import java.util.function.Consumer;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import authoring.dialogs.AnimationsDialog;
 import authoring.dialogs.CharacterPhysicsDialog;
 import authoring.dialogs.ControlsDialog;
@@ -36,7 +37,6 @@ public class Sprite extends ImageView {
     public static final String SCALE = "Scale";
     private static final String IMAGE_URI = "imageURI";
     private static final String SWITCH_PANE_METHOD = "switchPane";
-
     private static final int MAX_ICON_WIDTH = 100;
     private static final int MAX_ICON_HEIGHT = 100;
 
@@ -58,11 +58,12 @@ public class Sprite extends ImageView {
     private CharacterPhysicsDialog myPhysics;
     private String myType;
     private String myMaterial;
-    private Map<Sprite, Map<String, String>> mySpriteInteractionMap;
+    private Map<Sprite, Map<Action, String>> mySpriteInteractionMap;
     private Map<Sprite, Interaction> myInteractions;
     private Consumer<Sprite> myOnMouseClickedAction;
 
     private CenterPane myParent;
+    private String[] myPath;
 
     // private final double initialScale = 1.0;
 
@@ -94,6 +95,7 @@ public class Sprite extends ImageView {
         myVelocity.put(Y_STRING, "0.0");
         myKeyActions = new HashMap<>();
         myCharacteristics = new HashMap<>();
+        myPath = new String[0];
         addDefaultCharacteristics(Arrays.asList(new String[] { NAME }));
         onMouseClicked();
     }
@@ -103,7 +105,7 @@ public class Sprite extends ImageView {
     }
 
     
-    public Map<Sprite, Map<String, String>> getInteractionMap() {
+    public Map<Sprite, Map<Action, String>> getInteractionMap() {
     	return mySpriteInteractionMap;
     }
 
@@ -144,15 +146,24 @@ public class Sprite extends ImageView {
 
     @SuppressWarnings("unchecked")
     private void onMouseClicked () {
+        setOnMouseClicked(getClickHandler());
+    }
+    
+    private ClickHandler getClickHandler() {
         try {
-            setOnMouseClicked(new ClickHandler(RightPane.class.getMethod(SWITCH_PANE_METHOD, Sprite.class),
-                                               myParent.getParent().getRightPane(), this));
+            return new ClickHandler(RightPane.class.getMethod(SWITCH_PANE_METHOD, Sprite.class),
+                             myParent.getParent().getRightPane(), this);
         }
         catch (NoSuchMethodException | SecurityException e) {
             e.printStackTrace();
+            return null;
         }
     }
-
+    
+    public void handleMouseClicked(MouseEvent event) {
+        getClickHandler().handle(event);
+    }
+    
     private void setImageIcon (Image image) {
         myIcon.setImage(image);
         ImageEditor.setToAppropriateWidthAndHeight(myIcon, MAX_ICON_WIDTH, MAX_ICON_HEIGHT);
@@ -255,9 +266,11 @@ public class Sprite extends ImageView {
         return myCharacteristics.get(characteristic);
     }
 
-    public void addInteraction (Sprite otherSprite, Map<String, String> interaction) {
-    	mySpriteInteractionMap.getOrDefault(otherSprite, interaction);
+    public void addInteraction (Sprite otherSprite, Map<Action, String> interaction) {
+    	//mySpriteInteractionMap.getOrDefault(otherSprite, interaction);
+    	mySpriteInteractionMap.putIfAbsent(otherSprite, interaction);
         mySpriteInteractionMap.replace(otherSprite, interaction);
+        String s = "buffer";
     }
 
     @SuppressWarnings("unchecked")
@@ -305,7 +318,7 @@ public class Sprite extends ImageView {
         if (myPhysics != null) {
             return myPhysics;
         }
-        return myPhysics;
+        return myPhysics = CharacterPhysicsDialog.defaultPhysics(this);
     }
     
     public Boolean getPlayable () {
@@ -345,4 +358,15 @@ public class Sprite extends ImageView {
         return String.format("%s, %s, %s", this.myName, this.myID, this.getImageURI());
     }
 
+    public void setPath (String[] path) {
+        myPath = path;
+    }
+    
+    public String getPath () {
+        String ret = "";
+        for (String point : myPath) {
+            ret += point + " ";
+        }
+        return ret.trim();
+    }
 }

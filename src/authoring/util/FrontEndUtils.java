@@ -64,17 +64,16 @@ public class FrontEndUtils {
 	}
 
 	public static void setKeyActions(Parent n) {
-		System.out
-				.printf("Setting key actions on %s%n", n.getClass().getName());
+//		System.out.printf("Setting key actions on %s%n", n.getClass().getName());
 		n.setOnKeyPressed(e -> {
 			if (e.getCode() == KeyCode.CONTROL)
 				AuthoringWindow.setControlOn();
-			System.out.println("detected key press");
+//			System.out.println("detected key press");
 		});
 		n.setOnKeyReleased(e -> {
 			if (e.getCode() == KeyCode.CONTROL)
 				AuthoringWindow.setControlOff();
-			System.out.println("detected key release");
+//			System.out.println("detected key release");
 		});
 	}
 
@@ -117,14 +116,14 @@ public class FrontEndUtils {
 		// Adding the level tag
 		Element level = xml.addToRoot("level");
 
-		// Adding start
-		xml.addChildWithValue(level, "start", "0");
 
 		List<CenterCanvas> allMaps = new ArrayList<>();
 		for (List<CenterCanvas> l : parent.getCenterPane().getMaps())
 			allMaps.addAll(l);
 
 		int i = 0;
+		// Adding start
+		xml.addChildWithValue(level, "first_level", "0");
 		for (CenterCanvas c : allMaps) {
 
 			Level_XML currentLevel = new Level_XML(c);

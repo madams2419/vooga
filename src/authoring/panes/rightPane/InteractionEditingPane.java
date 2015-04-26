@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import authoring.dataEditors.Action;
 import authoring.dataEditors.Sprite;
 import authoring.dialogs.InteractionsDialog;
 
@@ -52,17 +53,18 @@ public class InteractionEditingPane extends EditingPane {
 
     private void getInteractions(Sprite s, ObservableList<String> list){
     	list.clear();
-    	for (Map<String, String> m : s.getInteractionMap().values()){
-    		for (String a : m.keySet()){
+    	for (Map<Action, String> m : s.getInteractionMap().values()){
+    		for (Action a : m.keySet()){
     			System.out.println("printing");
-    			list.add(a);
+    			list.add(a.getAction());
     		}
     	}
     }
     
     private void addButtonToUpdate (String label) {
         Button b = new Button(label);
-        // TODO: Anything to update?
+        getInteractions(mySprite1, mySprite1Interactions);
+        getInteractions(mySprite2, mySprite2Interactions);
         getChildren().add(b);
     }
 

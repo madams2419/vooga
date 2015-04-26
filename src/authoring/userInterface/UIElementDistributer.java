@@ -28,7 +28,7 @@ public class UIElementDistributer extends AuthoringGUITester {
 		for (Entry<String, ArrayList> Entry : LayoutXMLParser.myElementMap
 				.entrySet()) {
 			String panes = Entry.getKey();
-			System.out.println(panes);
+//			System.out.println(panes);
 			ArrayList<Map> values = Entry.getValue();
 			String classname = String.format("authoring.%s",
 					panes);

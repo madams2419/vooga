@@ -2,7 +2,6 @@ package authoring.fileBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.w3c.dom.Element;
 
 public class KeyAction_XML {
@@ -20,6 +19,8 @@ public class KeyAction_XML {
 	public KeyAction_XML(String key, List<String> behaviours,
 			boolean onPress) {
 		this.key = key;
+		onPressed = new ArrayList<>();
+		onReleased = new ArrayList<>();
 		if (onPress) {
 			behaviours.forEach(str -> {
 				String[] behaviour = str.split(":");
