@@ -83,6 +83,10 @@ public class RightPane extends WindowPane {
         //InteractionManager.getInstance().removeSpriteInteractions(sprite);
         switchToCharacterCreationPane();
     }
+    
+    void toggleMode () {
+        getParent().getCenterPane().toggleMode();
+    }
 
     public void switchToCharacterCreationPane () {
         switchToPane(new CreationPane(myScene, this, availableCharacterTypeURIs));
