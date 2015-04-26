@@ -7,14 +7,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
-import authoring.dataEditors.InteractionManager;
 import authoring.dataEditors.Sprite;
 import authoring.dialogs.PhysicsSettingsDialog;
 import authoring.panes.WindowPane;
@@ -36,7 +34,8 @@ public class RightPane extends WindowPane {
     private static final String DECORATION_IMAGE_PATH = "authoring_images/decorations";
     private static final String BLOCK_IMAGE_PATH = "authoring_images/blocks";
     private static final String CHARACTER_IMAGE_PATH = "authoring_images/characters";
-
+    private static final String OTHER_IMAGE_PATH = "authoring_images/other";
+    
     private EditingPane myCurrentContent;
 
     private final static int SPACING = 20;
@@ -46,6 +45,7 @@ public class RightPane extends WindowPane {
     private List<String> availableBlockTypeURIs;
     private List<String> availableDecorationTypeURIs;
     private List<String> availableObjectTypeURIs;
+    private List<String> miscellaneousImages;
     
     private ObjectivePane myObjectives;
     
@@ -65,15 +65,17 @@ public class RightPane extends WindowPane {
         availableBlockTypeURIs = new ArrayList<>();
         availableDecorationTypeURIs = new ArrayList<>();
         availableObjectTypeURIs = new ArrayList<>();
+        miscellaneousImages = new ArrayList<>();
 
         initializeAvailableTypes(availableCharacterTypeURIs, CHARACTER_IMAGE_PATH);
         initializeAvailableTypes(availableBlockTypeURIs, BLOCK_IMAGE_PATH);
         initializeAvailableTypes(availableDecorationTypeURIs, DECORATION_IMAGE_PATH);
         initializeAvailableTypes(availableObjectTypeURIs, OBJECT_IMAGE_PATH);
+        initializeAvailableTypes(miscellaneousImages, OTHER_IMAGE_PATH);
     }
 
     public void switchToCharacterEditingPane (Sprite sprite) {
-        switchToPane(new CharacterEditingPane(myScene, this, sprite));
+        switchToPane(new CharacterEditingPane(myScene, this, sprite, miscellaneousImages));
     }
     
     void deleteSprite (Sprite sprite) {
