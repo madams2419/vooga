@@ -7,6 +7,8 @@ import java.util.Map;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -82,9 +84,7 @@ class CharacterEditingPane extends EditingPane {
     }
 
     private void addDuplicateButton (Sprite sprite) {
-        Button duplicateButton = new Button(DUPLICATE);
-        duplicateButton.setOnAction(e -> duplicateSprite(sprite));
-        this.getChildren().add(duplicateButton);
+        createButton(sprite, DUPLICATE, e -> duplicateSprite(sprite));
     }
 
     private void duplicateSprite (Sprite sprite) {
@@ -94,7 +94,6 @@ class CharacterEditingPane extends EditingPane {
     private Button addAnimations (Sprite sprite, String image) {
         Button animationsButton = new Button(ADD_ANIMATIONS, new ImageView(image));
         animationsButton.setOnAction(e -> addAnimation(sprite));
-//        animationsButton.setPrefWidth(BUTTON_WIDTH);
         this.getChildren().add(animationsButton);
         return animationsButton;
     }
@@ -104,11 +103,7 @@ class CharacterEditingPane extends EditingPane {
     }
 
     private Button addPhysics (Sprite sprite, String image) {
-        Button physicsButton = new Button(ADD_PHYSICS, new ImageView(image));
-        physicsButton.setOnAction(e -> addPhysics(sprite));
-//        physicsButton.setPrefWidth(BUTTON_WIDTH);
-        this.getChildren().add(physicsButton);
-        return physicsButton;
+        return createButton(sprite, ADD_PHYSICS, e -> addPhysics(sprite), image);
     }
 
     private void addPhysics (Sprite sprite) {
@@ -116,19 +111,16 @@ class CharacterEditingPane extends EditingPane {
     }
 
     private void addDeleteButton (Sprite sprite) {
-        Button deleteButton = new Button(DELETE);
-        deleteButton.setOnAction(e -> getMyParent().deleteSprite(sprite));
-        this.getChildren().add(deleteButton);
+        createButton(sprite, DELETE, e -> getMyParent().deleteSprite(sprite));
     }
 
     private void addCreatePathButton (Sprite sprite, String image) {
-        Button createPathButton = new Button(CREATE_PATH, new ImageView(image));
-        createPathButton.setOnAction(e -> {
+        Button b = createButton(sprite, CREATE_PATH, null, image);
+        b.setOnAction(e -> {
             getMyParent().toggleMode();
             myModeIndex = 1 - myModeIndex;
-            createPathButton.setGraphic(new ImageView(pathButtonContent[myModeIndex]));
+            b.setGraphic(new ImageView(pathButtonContent[myModeIndex]));
         });
-        this.getChildren().add(createPathButton);
     }
 
     private void addLabel (String string) {
@@ -137,18 +129,14 @@ class CharacterEditingPane extends EditingPane {
     }
 
     private void addUpdateButton (Sprite sprite) {
-        Button updateButton = new Button(UPDATE);
-        updateButton.setOnAction(e -> updateSprite(sprite));
-        this.getChildren().add(updateButton);
+        createButton(sprite, UPDATE, e -> updateSprite(sprite));
     }
 
     private Button addControlsButton (Sprite sprite, String image) {
-        Button controls = new Button(ADD_CONTROLS, new ImageView(image));
-        controls.setDisable(!sprite.getPlayable());
-        controls.setOnMouseClicked(e -> controlsClicked(sprite));
-//        controls.setPrefWidth(BUTTON_WIDTH);
-        getChildren().add(controls);
-        return controls;
+        Button b = createButton(sprite, ADD_CONTROLS, 
+                                e -> controlsClicked(sprite), image);
+        b.setDisable(!sprite.getPlayable());
+        return b;
     }
 
     private void addPlayableCheckBox (Button controls, Sprite sprite) {
