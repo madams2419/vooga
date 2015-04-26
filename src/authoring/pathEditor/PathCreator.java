@@ -39,7 +39,7 @@ public class PathCreator extends Application {
     private Group myGroup;
     private HashMap<Sprite, String[]> myTransitionMap = new HashMap<Sprite, String[]>();
     private HashMap<CubicCurve, Sprite> myFollowingMap = new HashMap<CubicCurve, Sprite>();
-    private HashMap<ArrayList<Anchor>,CubicCurve> myCurveMap = new HashMap<>();
+    private HashMap<ArrayList<Anchor>, CubicCurve> myCurveMap = new HashMap<>();
 
     // public PathCreator(Group group){
     // myGroup = group;
@@ -71,53 +71,52 @@ public class PathCreator extends Application {
                         ArrayList<Anchor> elements =
                                 path.createPathElements(startx, starty, endx, endy);
 
-
-
                         System.out.println(click.getTarget().getClass());
-//                        for (Anchor element : elements) {
-                       
-                            try { 
-                                Anchor key = (Anchor) click.getTarget();
-                                myCurveMap.keySet().forEach(anchors ->{
-                                    if(anchors.contains(key)){
-                                        System.out.println("new path");
-                                   CubicCurve target =  myCurveMap.get(anchors);
-                                Sprite follower = (Sprite) myFollowingMap.get(target);
-                                String[] transition = myTransitionMap.get(target);     
-                                myFollowingMap.replace(target,follower);
-                                myTransitionMap.replace(follower,createParams(target));
-                                myCurveMap.replace(anchors, target);
-                              
-                                return;
-                                    }  
-                                });
-                                return;
-                                //                                System.out.println("end");
-//                                if ((((Anchor) click.getTarget()).getBoundsInParent())
-//                                        .intersects(element.getBoundsInParent())) {
-//                                    System.out.println(click.getTarget());
-//                                    System.out.println(element);
-//                                    System.out.println("Intersect");
-//                                    Anchor dragged = (Anchor) click.getTarget();
-//                                    Anchor stationary = (Anchor) element;
-//                                    dragged.combineNode(stationary);
-//                                    stationary.combineNode(dragged);
-//                                    return;
-//                                }
-                            }
-                            catch (Exception e) {
-                            }
+                        // for (Anchor element : elements) {
 
-                            if (!click.getSource().getClass()
-                                    .equals(new Scene(new Group()).getClass())) {
-                                System.out.println(click.getSource().getClass());
-                                System.out.println(new Scene(new Group()).getClass());
-//                                break;
-                            }
+                        try {
+                            Anchor key = (Anchor) click.getTarget();
+                            myCurveMap.keySet().forEach(anchors -> {
+                                if (anchors.contains(key)) {
+                                    System.out.println("new path");
+                                    CubicCurve target = myCurveMap.get(anchors);
+                                    Sprite follower = (Sprite) myFollowingMap.get(target);
+                                    String[] transition = myTransitionMap.get(target);
+                                    myFollowingMap.replace(target, follower);
+                                    myTransitionMap.replace(follower, createParams(target));
+                                    myCurveMap.replace(anchors, target);
 
-//                        }
+                                    return;
+                                }
+                            });
+                            return;
+                            //////Possibly implement path intersection here
+                            // System.out.println("end");
+                            // if ((((Anchor) click.getTarget()).getBoundsInParent())
+                            // .intersects(element.getBoundsInParent())) {
+                            // System.out.println(click.getTarget());
+                            // System.out.println(element);
+                            // System.out.println("Intersect");
+                            // Anchor dragged = (Anchor) click.getTarget();
+                            // Anchor stationary = (Anchor) element;
+                            // dragged.combineNode(stationary);
+                            // stationary.combineNode(dragged);
+                            // return;
+                            // }
+                        }
+                        catch (Exception e) {
+                        }
 
-                     // Create elements to test sprite path following
+                        if (!click.getSource().getClass()
+                                .equals(new Scene(new Group()).getClass())) {
+                            System.out.println(click.getSource().getClass());
+                            System.out.println(new Scene(new Group()).getClass());
+                            // break;
+                        }
+
+                        // }
+
+                        // Create elements to test sprite path following
                         Animation anim = new Animation(50);
                         FileInputStream fis;
                         try {
@@ -132,15 +131,13 @@ public class PathCreator extends Application {
                         Sprite temp = new Sprite(null, anim, "standing");
                         ArrayList<String[]> parameters = new ArrayList<String[]>();
                         String[] params = createParams(path.getPath());
-//                        System.out.println(params.length);
                         parameters.add(params);
-                        
-        // add to different transition maps
+
                         System.out.println("ADDED ELEMENTS");
-        myTransitionMap.put(temp,params);
-        myFollowingMap.put(path.getPath(),temp);
-        group.getChildren().add(path.getPath());
-        group.getChildren().addAll(elements);
+                        myTransitionMap.put(temp, params);
+                        myFollowingMap.put(path.getPath(), temp);
+                        group.getChildren().add(path.getPath());
+                        group.getChildren().addAll(elements);
 
                     }
                 });
@@ -152,23 +149,17 @@ public class PathCreator extends Application {
 
             @Override
             public void handle (KeyEvent press) {
-                //Set up transition manager
+                // Set up transition manager
                 ArrayList<Sprite> sprites = new ArrayList<>();
                 ArrayList<String[]> params = new ArrayList<>();
-                
-                
-                                myTransitionMap.keySet().forEach(sprite ->{
-                                    sprites.add(sprite);
-//                                    System.out.println(myTransitionMap.get(sprite)[7]);
-                                    params.add(myTransitionMap.get(sprite));
-                                });
-                TransitionManager pathManager = new TransitionManager(group, sprites,params); 
+
+                myTransitionMap.keySet().forEach(sprite -> {
+                    sprites.add(sprite);
+                    params.add(myTransitionMap.get(sprite));
+                });
+                TransitionManager pathManager = new TransitionManager(group, sprites, params);
                 pathManager.initialize(5);
                 pathManager.playTransitions();
-                
-                //                myTransitionMap.keySet().forEach(key -> {
-                //                    myTransitionMap.get(key).play();
-                //                });    
                 System.out.println("follow");
             }
         });
@@ -178,18 +169,18 @@ public class PathCreator extends Application {
     }
 
     public String[] createParams (CubicCurve path) {
-       String[] params = new String[8];
-       params[0] = (Double.toString(path.startXProperty().doubleValue()));
-       params[1] =(Double.toString(path.startYProperty().doubleValue()));
-       params[2] =(Double.toString(path.controlX1Property().doubleValue()));
-       params[3] =(Double.toString(path.controlY1Property().doubleValue()));
-       params[4] =(Double.toString(path.controlX2Property().doubleValue()));
-       params[5] =(Double.toString(path.controlY2Property().doubleValue()));
-       params[6] =(Double.toString(path.endXProperty().doubleValue()));
-       params[7] =(Double.toString(path.endYProperty().doubleValue()));
-       for(int count = 0;count<params.length;count++){
-           System.out.println(params[count]);
-       }
+        String[] params = new String[8];
+        params[0] = (Double.toString(path.startXProperty().doubleValue()));
+        params[1] = (Double.toString(path.startYProperty().doubleValue()));
+        params[2] = (Double.toString(path.controlX1Property().doubleValue()));
+        params[3] = (Double.toString(path.controlY1Property().doubleValue()));
+        params[4] = (Double.toString(path.controlX2Property().doubleValue()));
+        params[5] = (Double.toString(path.controlY2Property().doubleValue()));
+        params[6] = (Double.toString(path.endXProperty().doubleValue()));
+        params[7] = (Double.toString(path.endYProperty().doubleValue()));
+        for (int count = 0; count < params.length; count++) {
+            System.out.println(params[count]);
+        }
         return params;
     }
 }
