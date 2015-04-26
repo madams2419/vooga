@@ -376,6 +376,7 @@ public class Sprite extends ImageView {
         copy.myPhysics = myPhysics;
         copy.myType = myType;
         copy.myMaterial = myMaterial;
+        copy.mySpriteInteractionMap = mySpriteInteractionMap;
         return copy;
     }
 }
