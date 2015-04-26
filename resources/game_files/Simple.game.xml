@@ -2,7 +2,7 @@
 <game>
 	<title>Simple Game</title>
 
-	<frame_rate>10</frame_rate>
+	<frame_rate>5</frame_rate>
 	
 	<scene_width>1500</scene_width>
 	<scene_height>1000</scene_height>
@@ -190,7 +190,7 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>bouncy_ball</material>
-						<position>50 100</position>
+						<position>50 300</position>
 					</physics>
 				</sprite_0>
 
@@ -298,7 +298,7 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>bouncy_ball</material>
-						<position>600 100</position>
+						<position>600 300</position>
 					</physics>
 				</sprite_3>
 
@@ -379,8 +379,9 @@
 				<type>ComplexPhysicsEngine</type>
 				<drag_coefficeint>0.5</drag_coefficeint>
 				<global_accelerations>
-					<accel_0>0 -.00075</accel_0>
+					<accel_0>0 -.0005</accel_0>
 				</global_accelerations>
+				<global_forces></global_forces>
 			</physics_engine>
 
 			<controls>
@@ -395,7 +396,7 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>moveForward</name>
-									<parameters>750 0</parameters>
+									<parameters>1000 0</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
@@ -406,10 +407,14 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>moveForward</name>
-									<parameters>-750 0</parameters>
+									<parameters>-1000 0</parameters>
 								</behavior_0>
 							</behaviors>
 						</onReleased>
+						
+						<whilePressed>
+							<behaviors></behaviors>
+						</whilePressed>
 					</key_0>
 
 					<key_1>
@@ -421,7 +426,7 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>moveForward</name>
-									<parameters>-750 0</parameters>
+									<parameters>-1000 0</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
@@ -432,10 +437,14 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>moveForward</name>
-									<parameters>750 0</parameters>
+									<parameters>1000 0</parameters>
 								</behavior_0>
 							</behaviors>
 						</onReleased>
+						
+						<whilePressed>
+							<behaviors></behaviors>
+						</whilePressed>
 					</key_1>
 
 					<key_2>
@@ -447,10 +456,18 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>jump</name>
-									<parameters>4000</parameters>
+									<parameters>2500</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
+						
+						<onReleased>
+							<behaviors></behaviors>
+						</onReleased>
+						
+						<whilePressed>
+							<behaviors></behaviors>
+						</whilePressed>
 					</key_2>
 				</control_scheme_0>
 			</controls>

@@ -119,16 +119,12 @@ public class PathCreator extends Application {
                         // Create elements to test sprite path following
                         Animation anim = new Animation(50);
                         FileInputStream fis;
-                        try {
-                            fis = new FileInputStream("resources/images/brick.png");
-                            anim.associateImage("standing", fis, 0, 50, 50);
-                        }
-                        catch (FileNotFoundException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
+                    
+                            anim.associateImage("standing", "resources/images/brick.png", 0, 50, 50);
+
                         myCurveMap.put(elements, path.getPath());
-                        Sprite temp = new Sprite(null, anim, "standing");
+                        Sprite temp = new Sprite(null, anim, "standing",1
+                                                 );
                         ArrayList<String[]> parameters = new ArrayList<String[]>();
                         String[] params = createParams(path.getPath());
                         parameters.add(params);
