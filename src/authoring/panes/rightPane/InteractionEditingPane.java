@@ -62,7 +62,8 @@ public class InteractionEditingPane extends EditingPane {
     
     private void addButtonToUpdate (String label) {
         Button b = new Button(label);
-        // TODO: Anything to update?
+        getInteractions(mySprite1, mySprite1Interactions);
+        getInteractions(mySprite2, mySprite2Interactions);
         getChildren().add(b);
     }
 

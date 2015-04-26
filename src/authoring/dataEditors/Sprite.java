@@ -36,7 +36,6 @@ public class Sprite extends ImageView {
     public static final String SCALE = "Scale";
     private static final String IMAGE_URI = "imageURI";
     private static final String SWITCH_PANE_METHOD = "switchPane";
-
     private static final int MAX_ICON_WIDTH = 100;
     private static final int MAX_ICON_HEIGHT = 100;
 
@@ -256,8 +255,10 @@ public class Sprite extends ImageView {
     }
 
     public void addInteraction (Sprite otherSprite, Map<String, String> interaction) {
-    	mySpriteInteractionMap.getOrDefault(otherSprite, interaction);
+    	//mySpriteInteractionMap.getOrDefault(otherSprite, interaction);
+    	mySpriteInteractionMap.putIfAbsent(otherSprite, interaction);
         mySpriteInteractionMap.replace(otherSprite, interaction);
+        String s = "buffer";
     }
 
     @SuppressWarnings("unchecked")
