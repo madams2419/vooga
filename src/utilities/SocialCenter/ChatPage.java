@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Timer;
-import java.util.TimerTask;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -21,6 +23,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * @author hojeanniechung
@@ -123,8 +126,14 @@ public class ChatPage {
 	
 	
 	private void createFeed(String game){
-		TextField textArea=new TextField();		
+		TextField textArea=new TextField();	
+		int frameRate=1;
 //		updateList(game);
+		KeyFrame frame=start(frameRate,game);
+		Timeline animation=new Timeline();
+		animation.setCycleCount(Animation.INDEFINITE);
+		animation.getKeyFrames().add(frame);
+		animation.play();
 		textArea.setOnKeyPressed(e->AddLine(e,textArea,game));	
 		root.getChildren().addAll(myChat,textArea);
 	}
@@ -133,13 +142,16 @@ public class ChatPage {
 		if(k.getCode()==KeyCode.ENTER){
 			try {
 				db.addLine("Chat",game,textArea.getText());
-				updateList(game);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			textArea.clear();
 		}
+	}
+	
+	private KeyFrame start (int frameRate, String game) {
+		return new KeyFrame(Duration.millis(1000 / frameRate), e -> updateList(game));
 	}
 	
 	private void updateList(String game){
