@@ -1,12 +1,17 @@
 package game_engine;
 
+import game_engine.behaviors.IAction;
 import game_engine.collisions.CollisionsManager;
 import game_engine.controls.ControlsManager;
 import game_engine.objectives.Objective;
 import game_engine.sprite.Sprite;
-
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.scene.Group;
 
 /**
  * Level contains the information for each different game level and updates
@@ -17,13 +22,31 @@ import java.util.List;
 public class Level {
 
 	private List<Objective> myObjectives;
-	private List<Sprite> mySprites;
+	private ObservableList<Sprite> mySprites;
 	private CollisionsManager myCollisionEngine;
 	private ControlsManager myControlManager;
+	private Collection<Sprite> myToBeRemoved;
+	private Group myGroup;
 
 	public Level() {
 		myObjectives = new ArrayList<>();
-		mySprites = new ArrayList<>();
+		mySprites = FXCollections.observableArrayList();
+		initGroup (mySprites);
+		myToBeRemoved = new ArrayList<>();
+	}
+	
+	private void initGroup (ObservableList<Sprite> sprites) {
+	    myGroup = new Group();
+	    sprites.addListener((ListChangeListener<Sprite>) change -> {
+	        while (change.next()) {
+	            if (change.wasAdded()) {
+	                change.getAddedSubList().forEach(sprite -> myGroup.getChildren().add(sprite.getImageView()));
+	            }
+	            if (change.wasRemoved()) {
+	                change.getRemoved().forEach(sprite -> myGroup.getChildren().remove(sprite.getImageView()));
+	            }
+	        }
+	    });
 	}
 
 	/**
@@ -34,7 +57,15 @@ public class Level {
 		mySprites.forEach(sprite -> sprite.update(timeLapse));
 		myControlManager.update();
 		myCollisionEngine.checkCollisions();
+		myToBeRemoved.forEach(this::removeSprite);
+		myToBeRemoved.clear();
 	}
+	
+	private void removeSprite (Sprite sprite) {
+	    myCollisionEngine.remove(sprite);
+	    mySprites.remove(sprite);
+	}
+	
 
 	public void setControlManager(ControlsManager controlManager) {
 		myControlManager = controlManager;
@@ -92,16 +123,6 @@ public class Level {
 	}
 
 	/**
-	 * method removeLayer removes a layer from a specific layer
-	 * 
-	 * @param layer
-	 *            the layer to be removed
-	 */
-	public void removeSprite(Sprite layer) {
-		mySprites.remove(layer);
-	}
-
-	/**
 	 * method getLayers
 	 * 
 	 * @return list of layers for the current level
@@ -109,4 +130,6 @@ public class Level {
 	public List<Sprite> getSprites() {
 		return mySprites;
 	}
+	
+	
 }

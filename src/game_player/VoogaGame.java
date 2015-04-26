@@ -4,15 +4,18 @@ import game_engine.Level;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.controls.ControlsManager;
+import game_engine.scrolling.scroller.BasicScroller;
+import game_engine.scrolling.scrollfocus.DeadZoneFocus;
+import game_engine.scrolling.scrollfocus.IScrollFocus;
+import game_engine.scrolling.tracker.SpriteTracker;
 import game_engine.sprite.Sprite;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -67,30 +70,41 @@ public class VoogaGame implements IActor {
 		controlsManager = activeLevel.getControlManager();
 
 		if (!activeLevel.getSprites().isEmpty()) {
-			Sprite sprite = activeLevel.getSprites().get(0);
-			sprite.getImageView().toFront();
+			setUpScrolling();
 		}
 	}
-	
+
 	public void update(long currentTime) {
 		if (lastUpdateTime == 0) {
 			lastUpdateTime = currentTime;
 		}
-		
+
 		activeLevel.update(currentTime - lastUpdateTime);
 		lastUpdateTime = currentTime;
+	}
+
+	public void setUpScrolling () {
+	    System.out.println(width + height);
+	    IScrollFocus focus= new DeadZoneFocus(width, height, 0.2);
+	    SpriteTracker tracker = new SpriteTracker(focus, new BasicScroller(root));
+	    Sprite sprite = activeLevel.getSprites().get(0);
+	    tracker.setPlayer(sprite);
+	    sprite.getImageView().toFront();
+	    tracker.enable();
 	}
 	
 	public void start() {
 		Stage stage = new Stage();
-		stage.setHeight(height);
-		stage.setWidth(width);
-		Scene scene = new Scene(root);
+		Scene scene = new Scene(root, width, height);
 		scene.setOnKeyPressed(e -> controlsManager.handleInput(e));
 		scene.setOnKeyReleased(e -> controlsManager.handleInput(e));
+		stage.setX(Screen.getPrimary().getVisualBounds().getMinX());
+		stage.setY(Screen.getPrimary().getVisualBounds().getMinY());
+		root.requestFocus();
 		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.show();
+		stage.setOnCloseRequest(e -> animation.stop());
 		animation.play();
 	}
 }

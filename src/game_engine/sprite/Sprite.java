@@ -11,7 +11,11 @@ import java.util.Map;
 import java.util.Observable;
 
 import javafx.scene.image.ImageView;
-
+/**
+ * 
+ * @authors Brian Lavalee, Kevin Chang, Emre Sonmez
+ * Sprite class to hold information for all characters in game
+ */
 public class Sprite extends Observable implements IActor {
 	
 	private String state;
@@ -46,25 +50,45 @@ public class Sprite extends Observable implements IActor {
 	    animation.update(timeLapse);
 	}
 	
+	/**
+	 * method getImageView
+	 * @return the imageview associated with the sprite
+	 */
 	public ImageView getImageView() {
 	    return animation.getImageView();
 	}
 	
+	/**
+	 * getPhysicsObject() 
+	 * @return the physics object associated with the sprite
+	 */
 	public PhysicsObject getPhysicsObject() {
 	    return physicsObject;
 	}
-
+	
+	/**
+	 * IAction setState
+	 * changes the state of the current sprite object
+	 */
 	private IAction setState = (params) -> {
 		String newState = params[0];
 		state = newState;
 		setChanged();
 		notifyObservers();
 	};
-
+	
+	/**
+	 * method getState
+	 * @return the current state associated with the sprite
+	 */
 	public String getState() {
 		return state;
 	}
 	
+	/**
+	 * method getWorth()
+	 * @return the amount (points) assiociated with the sprite
+	 */
 	public Double getWorth(){
 		return worth;
 	}
@@ -79,6 +103,11 @@ public class Sprite extends Observable implements IActor {
 		}
 	};
 	
+	/**
+	 * method incrementScore
+	 * @param value
+	 * adds amount value to your current score count
+	 */
 	private void incrementScore(double value){
 		worth += value;
 	}
@@ -93,7 +122,12 @@ public class Sprite extends Observable implements IActor {
 		Vector myVector = new Vector(0, Double.parseDouble(params[0]));
 		physicsObject.applyImpulse(myVector);
 	};
-
+	
+	/**
+	 * IAction getAction
+	 * @param name
+	 * @return action mapped to the value name
+	 */
 	public IAction getAction(String name) {
 		return actions.get(name);
 	}

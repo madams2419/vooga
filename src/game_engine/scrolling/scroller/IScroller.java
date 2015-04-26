@@ -1,8 +1,8 @@
 package game_engine.scrolling.scroller;
 
+import game_engine.scrolling.WrapAround;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
-import javafx.scene.Node;
 
 
 /**
@@ -33,10 +33,10 @@ public interface IScroller {
     
     /**
      * Adds parallax scrolling.
-     * @param node Background Image
-     * @param ratio Ratio of speed of the background image to the normal group.
+     * @param WrapAround
+     * @param ratio Ratio of speed of the background image to the normal group. Should be less than 1.
      */
-    public void addBackgroundImage (Node node, double ratio);
+    public void addBackground (WrapAround background, double ratio);
     
     /**
      * 
