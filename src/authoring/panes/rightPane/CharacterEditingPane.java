@@ -18,9 +18,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import authoring.dataEditors.Sprite;
-import authoring.dialogs.ControlsDialog;
 import authoring.dialogs.AnimationsDialog;
-import authoring.dialogs.StatesDialog;
+import authoring.dialogs.ControlsDialog;
 import authoring.util.FrontEndUtils;
 import authoring.util.ImageEditor;
 
@@ -60,7 +59,6 @@ class CharacterEditingPane extends EditingPane {
 		addAnimations(sprite);
 		setFields(this.getChildren(), sprite.getCharacteristics());
 
-//		addStatesButton(sprite);
 		addPlayableCheckBox(addControlsButton(sprite), sprite);
 		addUpdateButton(sprite);
 		addDeleteButton(sprite);
@@ -68,21 +66,6 @@ class CharacterEditingPane extends EditingPane {
 		// anymore...
 
 		// ================================================================= //
-	}
-
-	private void addStatesButton(Sprite sprite) {
-		Button statesButton = new Button(ADD_STATES);
-		statesButton.setOnAction(e -> addState(sprite));
-		this.getChildren().add(statesButton);
-	}
-
-	private void addState(Sprite sprite) {
-		if (sprite.getStatesDialog() != null) {
-			sprite.getStatesDialog().showBox(sprite);
-		} else {
-			StatesDialog statesDialog = new StatesDialog(sprite);
-			sprite.setStates(statesDialog);
-		}
 	}
 
 	private void addAnimations(Sprite sprite) {

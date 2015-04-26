@@ -65,7 +65,6 @@ public class AnimationsDialog extends DataDialog {
         return (response -> {
             populateStates();
             populateAnimationsMap();
-            mySprite.setAnimations(myAnimations);
         });
     }
 

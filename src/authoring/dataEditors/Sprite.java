@@ -313,10 +313,6 @@ public class Sprite extends ImageView {
         myAnimations = c;
     }
     
-    public void setAnimations (Map<String, String> animations) {
-        myAnimationsMap = animations;
-    }
-
     public AnimationsDialog getAnimations () {
         if (myAnimations != null) {
             return myAnimations;
