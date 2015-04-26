@@ -3,7 +3,6 @@ package game_engine.scrolling;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
-import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
