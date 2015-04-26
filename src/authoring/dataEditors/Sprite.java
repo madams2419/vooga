@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -13,6 +12,7 @@ import authoring.dialogs.AnimationsDialog;
 import authoring.dialogs.CharacterPhysicsDialog;
 import authoring.dialogs.ControlsDialog;
 import authoring.panes.centerPane.CenterPane;
+import authoring.panes.rightPane.CreationPane;
 import authoring.panes.rightPane.RightPane;
 import authoring.userInterface.ClickHandler;
 import authoring.util.FrontEndUtils;
@@ -34,12 +34,12 @@ public class Sprite extends ImageView {
     private static final String VELOCITY = "velocity";
     private static final String POSITION = "position";
     private static final String KEY_ACTIONS = "key_actions";
-    public static final String SCALE = "Scale";
     private static final String IMAGE_URI = "imageURI";
     private static final String SWITCH_PANE_METHOD = "switchPane";
     private static final int MAX_ICON_WIDTH = 100;
     private static final int MAX_ICON_HEIGHT = 100;
 
+    public static final String SCALE = "Scale";
     public static final double OPACITY_REDUCTION_RATIO = 0.5;
 
     private Map<String, String> myPosition;
@@ -104,7 +104,6 @@ public class Sprite extends ImageView {
         this(ID, sprite.getImageURI(), parent);
     }
 
-    
     public Map<Sprite, Map<Action, String>> getInteractionMap() {
     	return mySpriteInteractionMap;
     }
@@ -368,5 +367,15 @@ public class Sprite extends ImageView {
             ret += point + " ";
         }
         return ret.trim();
+    }
+
+    public Sprite getCopy () {
+        Sprite copy = new Sprite(this, CreationPane.incrementID(), this.myParent);
+        copy.myControls = myControls;
+        copy.myAnimations = myAnimations;
+        copy.myPhysics = myPhysics;
+        copy.myType = myType;
+        copy.myMaterial = myMaterial;
+        return copy;
     }
 }

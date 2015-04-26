@@ -18,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import authoring.dataEditors.Sprite;
 import authoring.dialogs.ControlsDialog;
+import authoring.userInterface.SpriteCursor;
 import authoring.util.FrontEndUtils;
 import authoring.util.ImageEditor;
 
@@ -36,6 +37,7 @@ class CharacterEditingPane extends EditingPane {
     private static final String
             CREATE_PATH = "",
             UPDATE = "Update",
+            DUPLICATE = "Duplicate",
             DELETE = "Delete",
             ADD_CONTROLS = "",
             PLAYABLE = "Playable",
@@ -71,11 +73,22 @@ class CharacterEditingPane extends EditingPane {
 
         pathButtonContent = new String[] { miscellaneousImages.get(PATH1), miscellaneousImages.get(PATH2)};
         addCreatePathButton(sprite, miscellaneousImages.get(PATH1));
-        addPlayableCheckBox(addControlsButton(sprite, miscellaneousImages.get(PHYSICS)), sprite);
+        addPlayableCheckBox(addControlsButton(sprite, miscellaneousImages.get(CONTROLS)), sprite);
 //        addUpdateButton(sprite);
+        addDuplicateButton(sprite);
         addDeleteButton(sprite);
 
         // ================================================================= //
+    }
+
+    private void addDuplicateButton (Sprite sprite) {
+        Button duplicateButton = new Button(DUPLICATE);
+        duplicateButton.setOnAction(e -> duplicateSprite(sprite));
+        this.getChildren().add(duplicateButton);
+    }
+
+    private void duplicateSprite (Sprite sprite) {
+        this.getMyScene().setCursor(new SpriteCursor(sprite.getCopy()));
     }
 
     private Button addAnimations (Sprite sprite, String image) {
