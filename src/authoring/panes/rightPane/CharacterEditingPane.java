@@ -17,9 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import authoring.dataEditors.Sprite;
-import authoring.dialogs.AnimationsDialog;
 import authoring.dialogs.ControlsDialog;
-import authoring.dialogs.CharacterPhysicsDialog;
 import authoring.util.FrontEndUtils;
 import authoring.util.ImageEditor;
 
@@ -66,8 +64,7 @@ class CharacterEditingPane extends EditingPane {
         addLabel(IMAGE_LABEL);
         addAnimations(sprite, miscellaneousImages.get(0));
         addPhysics(sprite, miscellaneousImages.get(1));
-        // addPhysics(sprite, miscellaneousImages.get(1));
-        // setFields(this.getChildren(), sprite.getCharacteristics());
+//         setFields(this.getChildren(), sprite.getCharacteristics());
 
         addCreatePathButton(sprite);
         addPlayableCheckBox(addControlsButton(sprite), sprite);
@@ -98,13 +95,7 @@ class CharacterEditingPane extends EditingPane {
     }
 
     private void addPhysics (Sprite sprite) {
-        if (sprite.getPhysics() != null) {
-            sprite.getPhysics().showBox(sprite);
-        }
-//        else {
-//            CharacterPhysicsDialog physicsDialog = new CharacterPhysicsDialog(sprite);
-//            sprite.setPhysics(physicsDialog);
-//        }
+        sprite.getPhysics().showBox(sprite);
     }
 
     private void addDeleteButton (Sprite sprite) {

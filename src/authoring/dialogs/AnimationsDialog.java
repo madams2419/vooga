@@ -102,6 +102,7 @@ public class AnimationsDialog extends DataDialog {
 
     void initializeEverything (Sprite sprite) {
         mySprite = sprite;
+        myAnimations = new LinkedHashMap<>();
         myTextFields = new ArrayList<>();
         myImageAdderButtons = new ArrayList<>();
         myImageURLs = new ArrayList<>();
