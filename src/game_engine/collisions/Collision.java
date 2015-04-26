@@ -23,4 +23,8 @@ public class Collision {
 			resolver.resolveCollision(spriteA, spriteB);
 		}
 	}
+	
+	public boolean involves (Sprite sprite) {
+	    return spriteA == sprite || spriteB == sprite;
+	}
 }
