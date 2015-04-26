@@ -22,6 +22,7 @@ public class CharacterPhysicsDialog extends DataDialog {
     private ComboBox<String> myTypeBox, myMaterialBox;
     private Sprite mySprite;
 
+    private static final String TITLE = "Physics of Character";
     private static final String PROPERTIES_FILEPATH = "/Resources/properties/CharacterPhysicsDialog.properties";
     private static final String TYPE = "Type";
     private static final String MATERIAL = "Material";
@@ -94,6 +95,10 @@ public class CharacterPhysicsDialog extends DataDialog {
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    String getMyTitle () {
+        return TITLE;
     }
 
     @Override
