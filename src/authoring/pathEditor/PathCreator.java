@@ -128,7 +128,6 @@ public class PathCreator extends Application {
                         String[] params = createParams(path.getPath());
                         parameters.add(params);
 
-                        System.out.println("ADDED ELEMENTS");
                         myTransitionMap.put(temp, params);
                         myFollowingMap.put(path.getPath(), temp);
                         group.getChildren().add(path.getPath());
