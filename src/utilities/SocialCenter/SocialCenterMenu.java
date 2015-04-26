@@ -38,6 +38,8 @@ public class SocialCenterMenu {
 	private double HEIGHT;
 	private String ID;
 	private ProfilePage pp;
+	private StatsPage sp;
+	private ChatPage cp;
 
 	public SocialCenterMenu(String id, double width, double height,
 			Scene login, Stage stage) {
@@ -68,7 +70,7 @@ public class SocialCenterMenu {
 		}
 
 		// PROFILE
-		myHexPage.getPosition(0).setOnMouseClicked(e -> goProfilePage());
+		myHexPage.getPosition(0).setOnMouseClicked(e -> goChatPage());
 		Image profilePic = new Image(PROFILE);
 		myHexPage.getPosition(0).getHexagon()
 				.setFill(new ImagePattern(profilePic));
@@ -103,6 +105,17 @@ public class SocialCenterMenu {
 	private void goProfilePage() {
 		pp = new ProfilePage(ID, WIDTH, HEIGHT);
 		pp.getProfileScreen(myStage);
+	}
+	
+	private void goScorePage(){
+		sp=new StatsPage(ID,WIDTH,HEIGHT);
+		sp.getStatsScreen(myStage);
+		
+	}
+	
+	private void goChatPage(){
+		cp=new ChatPage(ID,WIDTH,HEIGHT);
+		cp.getChatScreen(myStage);
 	}
 
 	// 3rd Position

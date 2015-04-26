@@ -24,7 +24,7 @@ public class Driver {
 			ArrayList<String> array=new ArrayList<String>();
 			while(result.next()){
 				for(int i=0; i<strings.length; i++){
-					array.add(result.getString(strings[i]));					
+					array.add(result.getString(strings[i]));	
 				}	
 			}
 			if(result.first()==false){
@@ -77,6 +77,18 @@ public class Driver {
 		}
 	}
 	
+	public static void addLine(String database, String table,String CHAT) throws Exception{
+		try{
+			Connection con=getConnection(database);
+			PreparedStatement posted=con.prepareStatement("INSERT INTO "+table+" (CHATLINE) VALUES ('"+CHAT+"')");
+			posted.executeUpdate();
+		}catch(Exception e){
+			System.out.println(e);
+		}finally{
+			System.out.println("insert complete");
+		}
+	}
+	
 	public static void createTable(String database,String ID) throws Exception{
 		try{
 			Connection con=getConnection(database);
@@ -92,7 +104,17 @@ public class Driver {
 		}
 	}
 	
-	
+	public static void createChat(String database,String gamename)throws Exception{
+		try{
+			Connection con=getConnection(database);
+			PreparedStatement create=con.prepareStatement(String.format("CREATE TABLE IF NOT EXISTS %s(CHATLINE VARCHAR(255))",gamename));
+			create.executeUpdate();
+		}catch(Exception e){
+			System.out.println(e);
+		}finally{
+			System.out.println("creation complete");
+		}
+	}
 	public static Connection getConnection(String database) throws Exception{
 		try{
 			
@@ -100,8 +122,8 @@ public class Driver {
 			String url=String.format("jdbc:mysql://localhost:3306/%s",database);
 			//String url=String.format("jdbc:mysql://10.190.1.134:3306/%s",database);
 			//no local host
-			String username="guest";
-			String password="password";
+			String username="root";
+			String password="Tkfkdgo<3";
 			Class.forName(driver);
 
 			Connection conn=DriverManager.getConnection(url,username,password);

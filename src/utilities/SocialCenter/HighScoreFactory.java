@@ -4,7 +4,7 @@ package utilities.SocialCenter;
 
 public class HighScoreFactory {
 	private static Driver db = new Driver();
-	private static String[] ID={"Kevin","Michael","Natalie","Tony","Jeannie","Mike","Emre","Daniel","Andrew","Brian","MengChao","YangCheng"};
+	private static String[] ID={"Kevin","Michael","Natalie","Duvall","HoJean","Mike","Emre","Daniel","Andrew","Brian","MengChao","YangCheng"};
 	
 	
 	public static void main(String[] args) throws Exception {
