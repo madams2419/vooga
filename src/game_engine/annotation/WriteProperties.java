@@ -6,6 +6,10 @@ import java.util.Properties;
 /**
  * class to create/write to properties file
  * adapted from www.avajava.com
+ * Call Sequence:
+ * WriteProperties wp = new WriteProperties();
+ * wp.addProperty("description", jump action);
+ * wp.writeToFile("Actions.properties");
  */
 public class WriteProperties {
 	private Properties properties;

@@ -108,4 +108,9 @@ public class AnimationsDialog extends DataDialog {
         return this;
     }
 
+    @Override
+    void addOtherComponents (DialogGridOrganizer grid) {
+        // don't add any other components
+    }
+
 }
