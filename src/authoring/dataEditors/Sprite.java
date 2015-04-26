@@ -57,7 +57,7 @@ public class Sprite extends ImageView {
     private CharacterPhysicsDialog myPhysics;
     private String myType;
     private String myMaterial;
-    private Map<Sprite, Map<String, String>> mySpriteInteractionMap;
+    private Map<Sprite, Map<Action, String>> mySpriteInteractionMap;
     private Map<Sprite, Interaction> myInteractions;
     private Consumer<Sprite> myOnMouseClickedAction;
 
@@ -102,7 +102,7 @@ public class Sprite extends ImageView {
     }
 
     
-    public Map<Sprite, Map<String, String>> getInteractionMap() {
+    public Map<Sprite, Map<Action, String>> getInteractionMap() {
     	return mySpriteInteractionMap;
     }
 
@@ -254,7 +254,7 @@ public class Sprite extends ImageView {
         return myCharacteristics.get(characteristic);
     }
 
-    public void addInteraction (Sprite otherSprite, Map<String, String> interaction) {
+    public void addInteraction (Sprite otherSprite, Map<Action, String> interaction) {
     	//mySpriteInteractionMap.getOrDefault(otherSprite, interaction);
     	mySpriteInteractionMap.putIfAbsent(otherSprite, interaction);
         mySpriteInteractionMap.replace(otherSprite, interaction);

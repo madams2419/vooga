@@ -36,15 +36,14 @@ import authoring.userInterface.DialogGridOrganizer;
 public class InteractionsDialog extends Dialog<ButtonType> {
 
 	private List<Action> myActions;
-	private Map<String, String> mySprite1Interactions;
-	private Map<String, String> mySprite2Interactions;
-	private List<ComboBox<Action>> myComboBoxes1;
-	private List<ComboBox<Action>> myComboBoxes2;
+	private Map<Action, String> mySprite1Interactions, mySprite2Interactions;
+	private List<ComboBox<Action>> myComboBoxes1, myComboBoxes2;
 	private List<Label> myDescriptions1, myDescriptions2, myChecks1, myChecks2;
-	private List<TextField> myParams1;
-	private List<TextField> myParams2;
+	private List<TextField> myParams1, myParams2;
+	private DialogGridOrganizer mySprite1Grid, mySprite2Grid;
 	private HBox myHBox;
 	private RightPane myParent;
+	
 
 	private static final int BOTTOM_SPACING = 31;
 
@@ -61,10 +60,10 @@ public class InteractionsDialog extends Dialog<ButtonType> {
 		myParams2 = new ArrayList<>();
 		myComboBoxes2 = new ArrayList<>();
 
-		DialogGridOrganizer sprite1Grid = createGrid();
-		DialogGridOrganizer sprite2Grid = createGrid();
+		mySprite1Grid = createGrid();
+		mySprite2Grid = createGrid();
 		myHBox = new HBox(50);
-		myHBox.getChildren().addAll(sprite1Grid, sprite2Grid);
+		myHBox.getChildren().addAll(mySprite1Grid, mySprite2Grid);
 
 		myActions = grabActions();
 
@@ -73,14 +72,15 @@ public class InteractionsDialog extends Dialog<ButtonType> {
 		ButtonType spr2 = new ButtonType("Add Sprite 2 Action");
 		this.getDialogPane().getButtonTypes()
 				.addAll(spr1, spr2, ButtonType.OK, ButtonType.CANCEL);
-
+		
+		
 		addButton(spr1, e -> {
-			System.out.println(sprite1Grid.getHeight());
+			System.out.println(mySprite1Grid.getHeight());
 			System.out.println(this.getHeight());
-			if (sprite1Grid.getHeight() + 116 >= this.getHeight()) {
+			if (mySprite1Grid.getHeight() + 116 >= this.getHeight()) {
 				this.setHeight(this.getHeight() + BOTTOM_SPACING);
 			}
-			sprite1Grid.addRowEnd(addComboBox(myComboBoxes1, myDescriptions1),
+			mySprite1Grid.addRowEnd(addComboBox(myComboBoxes1, myDescriptions1),
 					addParamTextField(myParams1), addLabel(myDescriptions1),
 					addLabel(myChecks1));
 			this.setWidth(1200);
@@ -88,19 +88,46 @@ public class InteractionsDialog extends Dialog<ButtonType> {
 		});
 
 		addButton(spr2, e -> {
-			System.out.println(sprite2Grid.getHeight());
+			System.out.println(mySprite2Grid.getHeight());
 			System.out.println(this.getHeight());
-			if (sprite2Grid.getHeight() + 116 >= this.getHeight()) {
+			if (mySprite2Grid.getHeight() + 116 >= this.getHeight()) {
 				this.setHeight(this.getHeight() + BOTTOM_SPACING);
 			}
-			sprite2Grid.addRowEnd(addComboBox(myComboBoxes2, myDescriptions2),
+			mySprite2Grid.addRowEnd(addComboBox(myComboBoxes2, myDescriptions2),
 					addParamTextField(myParams2), addLabel(myDescriptions2),
 					addLabel(myChecks2));
 			this.setWidth(1200);
 			e.consume();
 		});
-
+		
+		populateDialog(a, b);
+		
 		showBox(a, b);
+	}
+
+	private void populateDialog(Sprite a, Sprite b) {
+		mySprite1Interactions = a.getInteractionMap().getOrDefault(b, new HashMap<>());
+		mySprite2Interactions = b.getInteractionMap().getOrDefault(a, new HashMap<>());
+		
+		for (Action act: mySprite1Interactions.keySet()){
+			ComboBox<Action> combo = addComboBox(myComboBoxes1, myDescriptions1);
+			combo.setValue(act);
+			TextField param = addParamTextField(myParams1);
+			param.setText(mySprite1Interactions.get(act));
+			mySprite1Grid.addRowEnd(combo,
+					param, addLabel(myDescriptions1),
+					addLabel(myChecks1));
+		}
+		
+		for (Action act: mySprite2Interactions.keySet()){
+			ComboBox<Action> combo = addComboBox(myComboBoxes2, myDescriptions2);
+			combo.setValue(act);
+			TextField param = addParamTextField(myParams2);
+			param.setText(mySprite2Interactions.get(act));
+			mySprite2Grid.addRowEnd(combo,
+					param, addLabel(myDescriptions2),
+					addLabel(myChecks2));
+		}
 	}
 
 	private DialogGridOrganizer createGrid() {
@@ -122,7 +149,7 @@ public class InteractionsDialog extends Dialog<ButtonType> {
 		List<String> totalInteractions = new ArrayList<>();
 		for (int i = 0; i < myDescriptions1.size(); i++) {
 			mySprite1Interactions.put(myComboBoxes1.get(i)
-					.getValue().getAction(),
+					.getValue(),
 					myParams1.get(i).getText());
 			totalInteractions.add(myComboBoxes1.get(i)
 					.getValue().getAction()
@@ -130,7 +157,7 @@ public class InteractionsDialog extends Dialog<ButtonType> {
 		}
 		for (int i = 0; i < myDescriptions2.size(); i++) {
 			mySprite2Interactions.put(myComboBoxes2.get(i)
-					.getValue().getAction(),
+					.getValue(),
 					myParams2.get(i).getText());
 			totalInteractions.add(myComboBoxes2.get(i)
 					.getValue().getAction()
