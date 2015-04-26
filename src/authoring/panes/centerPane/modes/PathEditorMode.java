@@ -56,14 +56,18 @@ public class PathEditorMode implements Mode {
 
     public String[] createParams (CubicCurve path) {
         String[] params = new String[8];
-        params[0] = (Double.toString(path.getStartX()));
-        params[1] = (Double.toString(path.getStartY()));
-        params[2] = (Double.toString(path.getControlX1()));
-        params[3] = (Double.toString(path.getControlY1()));
-        params[4] = (Double.toString(path.getControlX2()));
-        params[5] = (Double.toString(path.getControlY2()));
-        params[6] = (Double.toString(path.getEndX()));
-        params[7] = (Double.toString(path.getEndY()));
+        try {
+            params[0] = (Double.toString(path.getStartX()));
+            params[1] = (Double.toString(path.getStartY()));
+            params[2] = (Double.toString(path.getControlX1()));
+            params[3] = (Double.toString(path.getControlY1()));
+            params[4] = (Double.toString(path.getControlX2()));
+            params[5] = (Double.toString(path.getControlY2()));
+            params[6] = (Double.toString(path.getEndX()));
+            params[7] = (Double.toString(path.getEndY()));
+        } catch (NullPointerException e) {
+            
+        }
 //        for (int count = 0; count < params.length; count++) {
 //            System.out.print(params[count] + "\t");
 //        }
@@ -82,8 +86,10 @@ public class PathEditorMode implements Mode {
     
     @Override
     public Mode getToggle () {
-        mySprite.setPath(createParams(myPath));
-        pathRemover.handle(null);
+        if (mySprite != null) {
+            mySprite.setPath(createParams(myPath));
+            pathRemover.handle(null);
+        }
         return new DefaultMode();
     }
 }

@@ -34,23 +34,23 @@ class CharacterEditingPane extends EditingPane {
 
     private static final String[] IMAGE_CHOOSER_EXTENSIONS = { "*.png", "*.jpg", "*.gif" };
     private static final String
-            CREATE_PATH = "Create Path",
-            RETURN_FROM_PATH = "Finish Path",
+            CREATE_PATH = "",
+            RETURN_FROM_PATH = "",
             UPDATE = "Update",
             DELETE = "Delete",
-            CONTROLS = "Controls",
+            CONTROLS = "",
             PLAYABLE = "Playable",
             NAME = "name",
             POSITION = "position",
-            ADD_ANIMATIONS = "Add Animations",
-            ADD_PHYSICS = "Add Physics",
+            ADD_ANIMATIONS = "",
+            ADD_PHYSICS = "",
             IMAGE_LABEL = "Click on the image to change it!",
             IMAGE_CHOOSER_DESCRIPTION = "Image Files",
             IMAGE_CHOOSER_TITLE = "Change Character Image";
     private static final int BUTTON_WIDTH = 220;
     private int myModeIndex;
-    private static final String[] pathButtonContent =
-            new String[] { CREATE_PATH, RETURN_FROM_PATH };
+    private String[] pathButtonContent;
+//            new String[] { CREATE_PATH, RETURN_FROM_PATH };
 
     private List<HBox> myFields = new LinkedList<>();
 
@@ -64,11 +64,12 @@ class CharacterEditingPane extends EditingPane {
         addLabel(IMAGE_LABEL);
         addAnimations(sprite, miscellaneousImages.get(0));
         addPhysics(sprite, miscellaneousImages.get(1));
-//         setFields(this.getChildren(), sprite.getCharacteristics());
+        // setFields(this.getChildren(), sprite.getCharacteristics());
 
-        addCreatePathButton(sprite);
-        addPlayableCheckBox(addControlsButton(sprite), sprite);
-        addUpdateButton(sprite);
+        pathButtonContent = new String[] { miscellaneousImages.get(3), miscellaneousImages.get(4)};
+        addCreatePathButton(sprite, miscellaneousImages.get(3));
+        addPlayableCheckBox(addControlsButton(sprite, miscellaneousImages.get(2)), sprite);
+//        addUpdateButton(sprite);
         addDeleteButton(sprite);
 
         // ================================================================= //
@@ -77,7 +78,7 @@ class CharacterEditingPane extends EditingPane {
     private Button addAnimations (Sprite sprite, String image) {
         Button animationsButton = new Button(ADD_ANIMATIONS, new ImageView(image));
         animationsButton.setOnAction(e -> addAnimation(sprite));
-        animationsButton.setPrefWidth(BUTTON_WIDTH);
+//        animationsButton.setPrefWidth(BUTTON_WIDTH);
         this.getChildren().add(animationsButton);
         return animationsButton;
     }
@@ -89,7 +90,7 @@ class CharacterEditingPane extends EditingPane {
     private Button addPhysics (Sprite sprite, String image) {
         Button physicsButton = new Button(ADD_PHYSICS, new ImageView(image));
         physicsButton.setOnAction(e -> addPhysics(sprite));
-        physicsButton.setPrefWidth(BUTTON_WIDTH);
+//        physicsButton.setPrefWidth(BUTTON_WIDTH);
         this.getChildren().add(physicsButton);
         return physicsButton;
     }
@@ -104,12 +105,12 @@ class CharacterEditingPane extends EditingPane {
         this.getChildren().add(deleteButton);
     }
 
-    private void addCreatePathButton (Sprite sprite) {
-        Button createPathButton = new Button(CREATE_PATH);
+    private void addCreatePathButton (Sprite sprite, String image) {
+        Button createPathButton = new Button(CREATE_PATH, new ImageView(image));
         createPathButton.setOnAction(e -> {
             getMyParent().toggleMode();
             myModeIndex = 1 - myModeIndex;
-            createPathButton.setText(pathButtonContent[myModeIndex]);
+            createPathButton.setGraphic(new ImageView(pathButtonContent[myModeIndex]));
         });
         this.getChildren().add(createPathButton);
     }
@@ -125,10 +126,11 @@ class CharacterEditingPane extends EditingPane {
         this.getChildren().add(updateButton);
     }
 
-    private Button addControlsButton (Sprite sprite) {
-        Button controls = new Button(CONTROLS);
+    private Button addControlsButton (Sprite sprite, String image) {
+        Button controls = new Button(CONTROLS, new ImageView(image));
         controls.setDisable(!sprite.getPlayable());
         controls.setOnMouseClicked(e -> controlsClicked(sprite));
+//        controls.setPrefWidth(BUTTON_WIDTH);
         getChildren().add(controls);
         return controls;
     }

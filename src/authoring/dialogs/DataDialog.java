@@ -30,6 +30,7 @@ public abstract class DataDialog extends Dialog<ButtonType> {
     private DialogGridOrganizer myGrid;
 
     void initialize (Sprite s, int sizeOfGridOrganizer, Node[] titleLabelRow, int numCols) {
+        setTitle(getMyTitle());
         myGrid = new DialogGridOrganizer(sizeOfGridOrganizer);
         myGrid.addRowEnd(titleLabelRow);
 
@@ -44,6 +45,8 @@ public abstract class DataDialog extends Dialog<ButtonType> {
         getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
         getDialogPane().setContent(myGrid);
     }
+
+    abstract String getMyTitle ();
 
     void addAddButton() {
         ButtonType addButton = new ButtonType(ADD);
