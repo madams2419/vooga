@@ -1,14 +1,16 @@
 package utilities.SocialCenter;
 
+import javafx.animation.RotateTransition;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class SocialCenterMenu {
-	
+
 	private HexPage hexPage;
 	private Scene menu;
 	private StackPane root = new StackPane();
@@ -35,32 +37,39 @@ public class SocialCenterMenu {
 		// list = hex.getList();
 		hexPage.addGroup(hexGroup);
 		hexPage.addTag("hex");
-		
-		for(int i = 0; i < 7; i++){
+
+		for (int i = 0; i < 7; i++) {
 			int temp = i;
-			String id = "hex"+ temp;
+			String id = "hex" + temp;
 			hexPage.getPosition(i).getHexagon().getStyleClass().add(id);
-			
+
 			hexPage.getPosition(i).setOnMouseEnter(e -> handleHoverEnter(temp));
 			hexPage.getPosition(i).setOnMouseExit(e -> handleHoverExit(temp));
-			
-			
+
 		}
-		
+
 		Image profilePic = new Image(
 				"http://media.philly.com/images/20080510_kutcher_300.jpg");
-		hexPage.getPosition(0).getHexagon().setFill(new ImagePattern(profilePic));
+		hexPage.getPosition(0).getHexagon()
+				.setFill(new ImagePattern(profilePic));
 
-		
 		root.getChildren().add(hexGroup);
 	}
 
 	private void handleHoverExit(int i) {
-				hexPage.getPosition(i).getHexagon().getStyleClass().removeAll("hexHover");
+		hexPage.getPosition(i).getHexagon().getStyleClass()
+				.removeAll("hexHover");
 	}
 
 	private void handleHoverEnter(int i) {
-				hexPage.getPosition(i).getHexagon().getStyleClass().add("hexHover");
+		hexPage.getPosition(i).getHexagon().getStyleClass().add("hexHover");
+		RotateTransition rt = new RotateTransition(Duration.millis(50), hexPage
+				.getPosition(i).getHexagon());
+		rt.setFromAngle(0);
+		rt.setByAngle(3);
+		rt.setCycleCount(7);
+		rt.setAutoReverse(true);
+		rt.play();
 	}
 
 	private void goProfilePage() {
