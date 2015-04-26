@@ -20,17 +20,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class ControlTester extends Application{
-	static Map<String, IAction> behaviorPool = new HashMap<>();
 	static int track1 = 10;
 	static String action = "do something";
 	static String printout = "Tracking Number is: ";
 	static ControlManager cManager = new SceneControlManager();
 	static Text text1 = new Text(100, 200, printout + track1);
 	static Text text2 = new Text(100, 280, "Let's "+action);
-	static private int activeControl = 0;
-	static private final boolean PRESSED_KEY = true;
-	static private final boolean RELEASED_KEY = false;
-	static private SceneControl keyControl;
 	
 	public static void addTrack(){
 		track1++;
@@ -56,14 +51,14 @@ public class ControlTester extends Application{
 		action = "divide";
 	}
 
-	public static IAction selectBehavior(String key){
-		if(behaviorPool.containsKey(key)){
-			return behaviorPool.get(key);
-		} else {
-			System.out.println("Key does not exist");
-			return null;
-		}
-	}
+//	public static IAction selectBehavior(String key){
+//		if(behaviorPool.containsKey(key)){
+//			return behaviorPool.get(key);
+//		} else {
+//			System.out.println("Key does not exist");
+//			return null;
+//		}
+//	}
 
 //	public static void main(String[] args){
 //		launch(args);
@@ -96,12 +91,35 @@ public class ControlTester extends Application{
 	}
 	
 	private void keyManipulation(){
-		IAction add = new AddBehavior();
-		IAction sub = new SubtractBehavior();
-		IAction mul = new MulBehavior();
-		IAction div = new DivBehavior();
-		behaviorPool.put("Add", add);
-		behaviorPool.put("Sub", sub);
+		IAction add = new IAction(){
+			@Override
+			public void execute(String... params) {
+				ControlTester.addTrack();
+				ControlTester.updateText();
+			}
+		};
+		IAction sub = new IAction(){
+			@Override
+			public void execute(String... params) {
+				ControlTester.subTrack();
+				ControlTester.updateText();
+			}
+		};
+		IAction mul = new IAction(){
+			@Override
+			public void execute(String... params) {
+				ControlTester.mulTrack();
+				ControlTester.updateText();
+			}
+		};
+		IAction div = new IAction(){
+			@Override
+			public void execute(String... params) {
+				ControlTester.divTrack();
+				ControlTester.updateText();
+			}
+		};
+		
 		MultipleBehaviors map1 = new MultipleBehaviors();
 		map1.addBehavior(() -> add.execute(new String[3]));
 		//map1.addBehavior(() -> mul.execute(new String[3]));
@@ -116,14 +134,8 @@ public class ControlTester extends Application{
         releaseMap.put(KeyCode.DOWN, null);
 		SceneControlFactory sceneCF = new SceneControlFactory((SceneControlManager) cManager);
 		Control c1 = new KeyControl(pressMap, releaseMap, null, sceneCF);
-		cManager.addControl(c1);
-        
-        
-        
-        //Map<IAction, String[]> map2 = new LinkedHashMap<IAction, String[]>(){{put(sub, new String[3]); put(div, new String[3]);}};
-		//Map<KeyCode, Map<IAction, String[]>> pressMap = new HashMap<KeyCode, Map<IAction, String[]>>(){{  put(KeyCode.UP, map1); put(KeyCode.DOWN, map2);}};
-		//Map<KeyCode, Map<IAction, String[]>> releaseMap = new HashMap<KeyCode, Map<IAction, String[]>>(){{  put(KeyCode.DOWN, map2); put(KeyCode.UP, map2);}};
-	}
+		cManager.addControl(c1);    
+ 	}
 
 	public static void updateText(){
 		text1.setText(printout + track1);
