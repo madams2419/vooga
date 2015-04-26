@@ -98,10 +98,10 @@ public class Driver {
 			
 			String driver="com.mysql.jdbc.Driver";
 			String url=String.format("jdbc:mysql://localhost:3306/%s",database);
-//			String url="jdbc:mysql://10.190.3.194:3306/LoginInfo";
+			//String url=String.format("jdbc:mysql://10.190.1.134:3306/%s",database);
 			//no local host
-			String username="root";
-			String password="Tkfkdgo<3";
+			String username="guest";
+			String password="password";
 			Class.forName(driver);
 
 			Connection conn=DriverManager.getConnection(url,username,password);

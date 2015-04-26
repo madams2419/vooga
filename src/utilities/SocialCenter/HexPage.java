@@ -25,8 +25,8 @@ public class HexPage implements IShapePage {
 		}
 
 	}
-	
-	public HexTile getPosition(int position){
+
+	public HexTile getPosition(int position) {
 		return hexList.get(position);
 	}
 
@@ -39,10 +39,14 @@ public class HexPage implements IShapePage {
 		hexList.get(position).getHexagon().setId(id);
 
 	}
-	
+
 	public void addGroup(Group group) {
 		hexList.forEach(h -> group.getChildren().add(h.getHexagon()));
 
+	}
+
+	public int getNumberOfHexagons() {
+		return NUMBER + 1;
 	}
 
 }
