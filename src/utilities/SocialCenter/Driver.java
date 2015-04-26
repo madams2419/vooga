@@ -15,9 +15,9 @@ public class Driver {
 //		//get();
 //	}
 //	
-	public static ArrayList<String> get(String statement, String...strings)throws Exception{
+	public static ArrayList<String> get(String database,String statement, String...strings)throws Exception{
 		try{
-			Connection con = getConnection();
+			Connection con = getConnection(database);
 			PreparedStatement select=con.prepareStatement(statement);
 			//PreparedStatement statement=con.prepareStatement("SELECT Login_id,Login_pass FROM Login WHERE Login_id = '"+ID+"' AND Login_pass='"+Pass+"'");
 			ResultSet result=select.executeQuery();
@@ -38,9 +38,9 @@ public class Driver {
 	}
 
 	
-	public static void updateHS(String ID, String GamesPlayed, String HighScore)throws Exception{
+	public static void updateHS(String database,String ID, String GamesPlayed, String HighScore)throws Exception{
 		try{
-			Connection con=getConnection();
+			Connection con=getConnection(database);
 			PreparedStatement update=con.prepareStatement("UPDATE '"+ID+"' SET HighScore='"+HighScore+"' WHERE Gamesplayed='"+GamesPlayed+"'");
 			update.executeUpdate();
 		}catch(Exception e){
@@ -50,9 +50,9 @@ public class Driver {
 		}
 	}
 	
-	public static void updateURL(String ID, String URL)throws Exception{
+	public static void updateURL(String database, String ID, String URL)throws Exception{
 		try{
-			Connection con=getConnection();
+			Connection con=getConnection(database);
 			PreparedStatement update=con.prepareStatement("UPDATE profile SET ProfilePic='"+URL+"' WHERE ID='"+ID+"'");
 			update.executeUpdate();
 		}catch(Exception e){
@@ -63,9 +63,9 @@ public class Driver {
 	}
 	
 
-	public static void addGame(String table, String GamesPlayed, String HighScore) throws Exception{
+	public static void addGame(String database, String table, String GamesPlayed, String HighScore) throws Exception{
 		try{
-			Connection con=getConnection();
+			Connection con=getConnection(database);
 			//PreparedStatement posted = con.prepareStatement(statement);
 			PreparedStatement posted = con.prepareStatement("INSERT INTO "+table+" (GAMESPLAYED,HIGHSCORE) VALUES ('"+GamesPlayed+"','"+HighScore+"')");
 			//executeQuery (receives info), executeUpdate(manipulates info)
@@ -77,9 +77,9 @@ public class Driver {
 		}
 	}
 	
-	public static void createTable(String ID) throws Exception{
+	public static void createTable(String database,String ID) throws Exception{
 		try{
-			Connection con=getConnection();
+			Connection con=getConnection(database);
 			//Getting the sql statement ready to be used
 			//PreparedStatement create=con.prepareStatement(statement);
 			//PreparedStatement create = con.prepareStatement("CREATE TABLE IF NOT EXISTS profile(ID VARCHAR(30), NICKNAME VARCHAR(30), GAMESPLAYED VARCHAR(255), HIGHSCORE INT,PRIMARY KEY(ID))");
@@ -93,12 +93,12 @@ public class Driver {
 	}
 	
 	
-	public static Connection getConnection() throws Exception{
+	public static Connection getConnection(String database) throws Exception{
 		try{
 			
 			String driver="com.mysql.jdbc.Driver";
-//			String url="jdbc:mysql://localhost:3306/LoginInfo";
-			String url="jdbc:mysql://10.190.1.134:3306/LoginInfo";
+//			String url=String.format("jdbc:mysql://localhost:3306/%s",database);
+			String url=String.format("jdbc:mysql://10.190.7.201:3306/%s",database);
 			//no local host
 			String username="guest";
 			String password="password";

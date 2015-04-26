@@ -16,7 +16,7 @@ public class HighScoreFactory {
 	private static void createIDTables(){
 		for(int i=0;i<ID.length;i++){
 			try {
-				db.createTable(ID[i]);
+				db.createTable("HighScore",ID[i]);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -31,7 +31,7 @@ public class HighScoreFactory {
 		for(String s:ID){
 			for(int i=0; i<Games.length; i++){
 				try {
-					db.addGame(s, Games[i], Percent[i]);
+					db.addGame("HighScore",s, Games[i], Percent[i]);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
