@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -34,10 +35,26 @@ public class ProfilePage {
 	private Stage myStage;
 
 	// CSS
-	private static final String CSS = "styles/login.css";
+	private static final String CSS = "styles/profile.css";
 	private static final String FONT = "http://fonts.googleapis.com/css?family=Exo:100,200,400";
 	private static final String CSS_BACKGROUND = "background";
-
+	private static final String CSS_FONT = "prof_font";
+	
+	//PROF PIC
+	private static final int PROF_WIDTH = 200;
+	private static final int PROF_HEIGHT = 200;
+	private static final double HEIGHT_CONSTANT = .10;
+	
+	//GRID PANE Positioning
+	private static final int GRID_X = 350;
+	private static final int GRID_Y = 300;
+	private static final String SET_PIC = "Set Profile Pic URL";
+	
+	//POP UP URL DIMENSIONS
+	Group URLgroup;
+	private static final int POP_WIDTH = 500;
+	private static final int POP_HEIGHT = 150;
+	
 	/**
 	 * @param args
 	 */
@@ -54,18 +71,17 @@ public class ProfilePage {
 
 	private void initialize(double width, double height) {
 		profilePage = new Scene(root, width, height);
-		StackPane background = new StackPane();
 		profilePage.getStylesheets().add(CSS);
 		profilePage.getStylesheets().add(FONT);
-		background.setId(CSS_BACKGROUND);
-		root.getChildren().add(background);
+		root.getStyleClass().add(CSS_BACKGROUND);
 	}
 
 	private void profileImage() {
 		HBox hbox = new HBox();
 		Image picture;
 		ArrayList<String> imageURL = new ArrayList<>();
-		Rectangle rect = new Rectangle(200, 200);
+		Rectangle rect = new Rectangle(PROF_WIDTH, PROF_HEIGHT);
+		rect.getStyleClass().add("profile_pic");
 		try {
 			imageURL=db.get("LoginInfo","SELECT ProfilePic FROM profile WHERE ID = '"+ID+"'", "ProfilePic");
 			picture=new Image(imageURL.get(0));
@@ -77,21 +93,27 @@ public class ProfilePage {
 
 		rect.setOnMouseClicked(e -> saveURL());
 		hbox.getChildren().add(rect);
-		hbox.setTranslateX(myWidth / 2 - 85);
-		hbox.setTranslateY(myHeight / 6);
+		hbox.setTranslateX((myWidth / 2) - rect.getWidth()/2  );
+		hbox.setTranslateY(myHeight * HEIGHT_CONSTANT);
 		root.getChildren().add(hbox);
 
 	}
 
 	private void saveURL() {
 		Stage insert = new Stage();
-		Group URLgroup = new Group();
-		StackPane stack = new StackPane();
+		URLgroup = new Group();
+		VBox stack = new VBox();
 
 		Text t = new Text("Insert the URL of your profile picture");
 		Button submit = new Button("Submit");
 		Button close = new Button("Close");
 		TextField URLinsert = new TextField();
+		
+		t.getStyleClass().add(CSS_FONT);
+		submit.getStyleClass().add(CSS_FONT);
+		close.getStyleClass().add(CSS_FONT);
+		URLinsert.getStyleClass().add(CSS_FONT);
+		
 		submit.setOnMouseClicked(e -> insertQuery(URLinsert.getText()));
 		close.setOnMouseClicked(e -> insert.close());
 
@@ -100,11 +122,11 @@ public class ProfilePage {
 		URLgroup.getChildren().addAll(stack);
 		stack.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 
-		Scene URLscene = new Scene(URLgroup, 500, 50);
+		Scene URLscene = new Scene(URLgroup, POP_WIDTH, POP_HEIGHT);
 
 		insert.setScene(URLscene);
 		insert.initModality(Modality.WINDOW_MODAL);
-		insert.setTitle("Pop up window");
+		insert.setTitle(SET_PIC);
 
 		insert.show();
 	}
@@ -130,11 +152,10 @@ public class ProfilePage {
 			e.printStackTrace();
 		}
 		for (int i = 0; i < s.length; i++) {
-			setConstraints(gridpane, s[i], i, 1);
-			setConstraints(gridpane, query.get(i), i, 2);
+			setConstraints(gridpane, s[i]+": "+query.get(i), i, 1);
 		}
-		gridpane.setTranslateX(350);
-		gridpane.setTranslateY(300);
+		gridpane.setTranslateX(GRID_X);
+		gridpane.setTranslateY(GRID_Y);
 		root.getChildren().add(gridpane);
 
 	}
@@ -142,8 +163,7 @@ public class ProfilePage {
 	private void setConstraints(GridPane g, String s, int row, int col) {
 		HBox region = new HBox();
 		Text temp = new Text(String.format("%s", s));
-		temp.getStyleClass().add("prof_font");
-		region.getStyleClass().add("prof_grid");
+		temp.getStyleClass().add(CSS_FONT);
 		region.getChildren().add(temp);
 		g.setConstraints(region, col, row);
 		g.getChildren().add(region);
