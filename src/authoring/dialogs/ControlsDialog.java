@@ -9,10 +9,12 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import authoring.dataEditors.Sprite;
 import authoring.fileBuilders.KeyAction_XML;
 import authoring.panes.rightPane.RightPane;
@@ -30,7 +32,9 @@ public class ControlsDialog extends Dialog<ButtonType> {
 	private List<TextField> myParamTextFields;
 	private Map<String, String> myKeyActions;
 	private RightPane myParent;
+	private int c = 0;
 
+	private String[] myMouseClickedStrings = {"onClicked", "whilePressed", "onReleased"};
 	private static final int BOTTOM_SPACING = 25;
 
 	// TODO: refactoring
@@ -101,7 +105,14 @@ public class ControlsDialog extends Dialog<ButtonType> {
 	private TextField addKeyPressedField() {
 		TextField result = new TextField();
 		result.setEditable(false);
+		result.setContextMenu(new ContextMenu());
 		result.setOnKeyPressed(e -> result.setText(e.getCode().toString()));
+		result.setOnMouseClicked(e -> {
+			result.setText(e.getButton().toString() + " " + 
+					myMouseClickedStrings[c++ % myMouseClickedStrings.length]
+					);
+			
+		});
 		myTextFields.add(result);
 		return result;
 	}
@@ -115,11 +126,11 @@ public class ControlsDialog extends Dialog<ButtonType> {
 	public List<ComboBox<String>> getComboBoxes() {
 		return myComboBoxes;
 	}
-
-	public void PopulateComboBox(List<String> controlsList,
-			List<KeyCode> keycodeList) {
-
+	
+	public void PopulateComboBox(List<String> controlsList){
+	
 	}
+		
 
 	public Map<String, String> getKeyActions() {
 		return myKeyActions;

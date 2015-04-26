@@ -1,4 +1,0 @@
-<Files>
-	<Button id="UserInterface_Button"
-	file="src/Resources/ButtonTest.xml"/>
-</Files>

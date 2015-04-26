@@ -6,27 +6,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
-import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
 import authoring.dataEditors.Sprite;
-import authoring.dialogs.FileChooserDialog;
 import authoring.dialogs.NewRegionDialog;
 import authoring.fileBuilders.KeyAction_XML;
 import authoring.fileBuilders.Objective_XML;
 import authoring.fileBuilders.PhysicsEngine_XML;
+import authoring.panes.centerPane.modes.Mode;
 import authoring.panes.rightPane.GlobalCreationPane;
 import authoring.userInterface.AuthoringWindow;
-import authoring.userInterface.SpriteCursor;
 import authoring.util.FrontEndUtils;
 
 public class CenterCanvas extends ScrollPane {
@@ -39,8 +34,8 @@ public class CenterCanvas extends ScrollPane {
 	private ObservableList<Sprite> myListOfSprites = FXCollections
 			.observableArrayList();
 	private List<Objective_XML> myListOfObjectives = new ArrayList<>();
-
 	private Map<String, KeyAction_XML> myKeyActions = new HashMap<>();
+	private Mode myMode;
 
 	private Region myCurrentRectangle;
 	private GlobalCreationPane gp;
@@ -55,6 +50,7 @@ public class CenterCanvas extends ScrollPane {
 	CenterCanvas(Scene scene, AuthoringWindow parent) {
 		assert (scene != null);
 		assert (parent != null);
+		myMode = new Mode();
 		myScene = scene;
 		myParent = parent;
 		myGroup = new Group();
@@ -86,36 +82,12 @@ public class CenterCanvas extends ScrollPane {
 	}
 
 	private void canvasClicked(MouseEvent e) {
-		try {
-			if (e.getButton() == MouseButton.SECONDARY) {
-				FileChooserDialog chooser = new FileChooserDialog(
-						new FileChooser.ExtensionFilter("JPG files (*.jpg)",
-								"*.JPG"), new FileChooser.ExtensionFilter(
-								"PNG files (*.png)", "*.PNG"));
-				myCurrentRectangle.setBackgroundImage(chooser.grabImage());
-			}
-			Sprite s = ((SpriteCursor) myScene.getCursor()).getCurrentSprite();
-
-			s.setXPosition(e.getX() - s.getImage().getWidth() / 2);
-			s.setYPosition(e.getY() - s.getImage().getHeight() / 2);
-			myGroup.getChildren().add(s);
-			this.myListOfSprites.add(s);
-			myScene.setCursor(ImageCursor.DEFAULT);
-			s.setOnMouseDragged(a -> imageDragged(a, s));
-
-		} catch (ClassCastException a) {
-		} catch (NullPointerException b) {
-		}
+	    myMode.canvasClicked(e, myCurrentRectangle, myScene, myGroup, myListOfSprites);
 	}
 
 	public void removeSprite(Sprite s) {
 		myListOfSprites.remove(s);
 		myGroup.getChildren().remove(s);
-	}
-
-	private void imageDragged(MouseEvent a, Sprite s) {
-		s.setXPosition(a.getSceneX() - (s.getImage().getWidth() / 2));
-		s.setYPosition(a.getSceneY() - (s.getImage().getHeight() / 2));
 	}
 
 	public Object[] getData() {

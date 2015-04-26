@@ -23,7 +23,7 @@ import authoring.util.PropertiesFileParser;
  *
  */
 public class GlobalCreationPane extends EditingPane {
-    private static final String PROPERTIES_FILEPATH = "/Resources/GlobalSettingsPane.properties";
+    private static final String PROPERTIES_FILEPATH = "/Resources/properties/GlobalSettingsPane.properties";
     private static final String UPDATE_STRING = "Update";
     private static final String _VALUE_STRING = "_VALUE";
     private List<HBox> myFieldBoxes = new LinkedList<>();
