@@ -136,12 +136,13 @@ public class Sprite extends ImageView {
         return myIcon;
     }
 
-    public void changeImage (Image image) {
+    private void changeImage (Image image) {
         setImage(image);
         setImageIcon(image);
     }
     
     public void changeImage (String imageURL) {
+        myCharacteristics.put(IMAGE_URI, imageURL);
         changeImage (new Image(imageURL));
     }
 
@@ -300,7 +301,7 @@ public class Sprite extends ImageView {
 
     public AnimationsDialog getAnimations () {
         if (myAnimations != null) {
-            return myAnimations;
+            return myAnimations.update();
         }
         return myAnimations;
     }

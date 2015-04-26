@@ -170,7 +170,7 @@ class CharacterEditingPane extends EditingPane {
 		File selectedImageFile = FrontEndUtils.selectFile(IMAGE_CHOOSER_TITLE,
 				IMAGE_CHOOSER_DESCRIPTION, IMAGE_CHOOSER_EXTENSIONS);
 		if (selectedImageFile != null) {
-			sprite.changeImage(new Image(selectedImageFile.toURI().toString()));
+			sprite.changeImage(selectedImageFile.toURI().toString());
 		}
 	}
 

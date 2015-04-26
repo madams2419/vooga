@@ -103,4 +103,9 @@ public class AnimationsDialog extends DataDialog {
         myImageURLs = new ArrayList<>();
     }
 
+    public AnimationsDialog update () {
+        myImageURLs.set(0, mySprite.getImageURI());
+        return this;
+    }
+
 }
