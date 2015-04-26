@@ -1,22 +1,17 @@
 package game_engine.control;
 
 
-import game_engine.behaviors.IAction;
 import game_engine.behaviors.IBehavior;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
-import javafx.scene.input.InputEvent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.*;
 
 /**
- * Defines controls and maps them to behaviors
- * @author 
+ * This class defines the functionalities of a keycontrol object
+ * and extends the scenecontrol class
+ * @author Yancheng Zeng
  *
  */
 public class KeyControl extends SceneControl {
@@ -43,7 +38,6 @@ public class KeyControl extends SceneControl {
 	public void executeKeyEvent(KeyCode keycode, boolean pressed){
 		if(myKeyPressedMap.containsKey(keycode)){
 			if(pressed){
-				//add error checking later
 				if(myKeyPressedMap.get(keycode) != null){
 					myKeyPressedMap.get(keycode).perform();
 					myWhilePressedKey.add(keycode);

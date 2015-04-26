@@ -26,39 +26,47 @@
 /// The main package that contains everything in the Voce Java API.
 package game_engine.control.speech_recognition.voce;
 
+import game_engine.control.PrintMessage;
+
+
+/**
+ * The interface is originally based on the Sphinx4 project at CMU.
+ * It servers to manage the speechrecognizer and processes user voice input
+ * @author Yancheng Zeng 
+ * Note: This code is the refactored and modified version of the SpeechInterface class
+ * in the Voce Library by Taylor Street 
+ */
 public class SpeechInterface {
 	
 	private static final String CONFIG_PATH = "lib/voce.config.xml";
 	private static final String LIB_PATH = "lib/gram";
 	
 	private static SpeechRecognizer mRecognizer;
-	/// Initializes Voce.  The 'vocePath' String specifies the path where 
-	/// Voce classes and config file can be found.  'initSynthesis' 
-	/// and 'initRecognition' enable these capabilities; if you don't 
-	/// need one or the other, not initializing it will save load time 
-	/// and memory (though the feature will be disabled, of course).  
-	/// 'grammarPath' is a relative or absolute path to one or more 
-	/// grammar files (all .gram files in 'grammarPath' will automatically 
-	/// be searched).  'grammarName' is the name of a specific grammar 
-	/// within a .gram file in the 'grammarPath'.  If the 'grammarName' 
-	/// is empty, a simple default grammar will be used.
-	
+
+	/**
+	 * Method init.
+	 * @param grammarName String
+	 */
 	public void init(String grammarName){
 
-			System.out.println("Initialize Recognizer...");
+			System.out.println(PrintMessage.INITIALIZE_RECOGNIZER.getVal());
 			mRecognizer = new SpeechRecognizer(CONFIG_PATH, LIB_PATH, grammarName);
 			setRecognizerEnabled(true);
-			System.out.println("Initialization Complete");
+			System.out.println(PrintMessage.INITIALIZE_COMPLELE.getVal());
 	}
 
 	public void destroy(){
 		if (mRecognizer != null){
 			mRecognizer.destroy();
 		}
-		System.out.println("Shutdown Recognizer");
+		System.out.println(PrintMessage.SHUTDOWN_RECOGNIZER.getVal());
 	}
 
 
+	/**
+	 * Method getRecognizerQueueSize.
+	 * @return int
+	 */
 	public int getRecognizerQueueSize(){
 		if (mRecognizer == null){
 			printWarning();
@@ -67,6 +75,10 @@ public class SpeechInterface {
 		return mRecognizer.getQueueSize();
 	}
 
+	/**
+	 * Method popRecognizedString.
+	 * @return String
+	 */
 	public String popRecognizedString(){
 		if (mRecognizer == null)
 		{
@@ -76,6 +88,10 @@ public class SpeechInterface {
 		return mRecognizer.popString();
 	}
 
+	/**
+	 * Method setRecognizerEnabled.
+	 * @param enable boolean
+	 */
 	public void setRecognizerEnabled(boolean enable){
 		if (null == mRecognizer)
 		{
@@ -85,6 +101,10 @@ public class SpeechInterface {
 		mRecognizer.setEnabled(enable);
 	}
 
+	/**
+	 * Method isRecognizerEnabled.
+	 * @return boolean
+	 */
 	public boolean isRecognizerEnabled(){
 		if (mRecognizer == null)
 		{
@@ -95,6 +115,6 @@ public class SpeechInterface {
 	}
 	
 	private void printWarning(){
-		System.out.println("Recognizer Uninitialized");
+		System.out.println(PrintMessage.RECOGNIZER_ERROR.getVal());
 	}
 }

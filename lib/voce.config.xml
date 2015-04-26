@@ -99,7 +99,7 @@
     <component name="jsgfGrammar" type="edu.cmu.sphinx.jsapi.JSGFGrammar">
         <property name="dictionary" value="dictionary"/>
         <property name="grammarLocation" value="resource:/voce.SpeechInterface!/gram/"/>
-        <property name="grammarName" value="digits"/>
+        <property name="grammarName" value="words"/>
 	<property name="logMath" value="logMath"/>
     </component>
     

@@ -6,15 +6,23 @@ import game_engine.control.speech_recognition.voce.SpeechRecognizer;
 
 import java.util.*;
 
+/**
+ * This class runs the voice control application
+ * @author Yancheng Zeng
+ */
 public class VoiceControl implements Control{
 	
-	private final boolean ENABLE_RECOGNIZER = true;
-	private final boolean ENABLE_SYNTHESIZER = false;
 	private final String QUIT = "quit";
+	private final String GRAM_FILE = "words";
+	private final String WORD_START = "You said: ";
 	
 	private Map<String, IBehavior> mySpeechMap;
 	private SpeechInterface mySpeechInterface;
 	
+	/**
+	 * Constructor for VoiceControl.
+	 * @param speechMap Map<String,IBehavior>
+	 */
 	public VoiceControl(Map<String, IBehavior> speechMap){
 		mySpeechMap = speechMap;
 		mySpeechInterface = new SpeechInterface();
@@ -31,18 +39,18 @@ public class VoiceControl implements Control{
 	}
 	
 	public void initializeRecognizer(){
-		mySpeechInterface.init("digits");
+		mySpeechInterface.init(GRAM_FILE);
 	}
 	
 	private void processInput(){
-		System.out.println("You may speak");
+		System.out.println(PrintMessage.SPEAK_CUE.getVal());
 		boolean quit = false;
 		String input = "";
 		while(!quit){
 			try{
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				System.out.println("Thread Interruption");
+				System.out.println(PrintMessage.THREAD_ERROR.getVal());
 			}
 			
 			while(mySpeechInterface.getRecognizerQueueSize() > 0){
@@ -60,12 +68,16 @@ public class VoiceControl implements Control{
 			}
 		}
 		
-		System.out.println("About to close speech recognition");
+		System.out.println(PrintMessage.CLOSE_SPEECH.getVal());
 		mySpeechInterface.destroy();
 	}
 	
+	/**
+	 * Method printInput.
+	 * @param message String
+	 */
 	private void printInput(String message){
-		System.out.println("You said: " + message);
+		System.out.println(WORD_START + message);
 	}
 	
 	
