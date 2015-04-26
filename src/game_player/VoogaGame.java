@@ -1,77 +1,109 @@
 package game_player;
 
-import game_engine.BasicScroller;
 import game_engine.Level;
-import game_engine.ScrollTracker;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
-import game_engine.control.SceneControlManager;
+import game_engine.controls.ControlsManager;
+import game_engine.scrolling.scroller.BasicScroller;
+import game_engine.scrolling.scrollfocus.BasicFocus;
+import game_engine.scrolling.scrollfocus.DeadZoneFocus;
+import game_engine.scrolling.scrollfocus.IScrollFocus;
+import game_engine.scrolling.tracker.SpriteTracker;
 import game_engine.sprite.Sprite;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.animation.AnimationTimer;
-import javafx.beans.property.SimpleDoubleProperty;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
-public class VoogaGame extends AnimationTimer implements IActor{
-    
-    private List<Level> levels;
-    private Level activeLevel;
-    private Group root;
-    
-    public VoogaGame() {
-	levels = new ArrayList<Level>();
-	root = new Group();
-    }
-    
-    public void addLevel(Level l) {
-	levels.add(l);
-    }
-    
-    public IAction getSetActiveLevelBehavior() {
-	IAction setActiveLevel = (params) -> {
-	    int index = Integer.parseInt(params[0]);
-	    activeLevel = levels.get(index);
+public class VoogaGame implements IActor {
+
+	private List<Level> levels;
+	private Level activeLevel;
+	private Group root;
+	private Timeline timeline;
+	private double width, height;
+	private ControlsManager controlsManager;
+	private double frameRate;
+
+	public VoogaGame(double fr, double w, double h) {
+		levels = new ArrayList<Level>();
+		root = new Group();
+		frameRate = fr;
+		timeline = new Timeline(getFrame(frameRate));
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		width = w;
+		height = h;
+	}
+	
+	private KeyFrame getFrame(double frameRate) {
+		return new KeyFrame(Duration.millis(frameRate), (frame) -> update());
+	}
+
+	public void addLevel(Level l) {
+		levels.add(l);
+	}
+	
+	public double getHeight() {
+		return height;
+	}
+	
+	public IAction getAction(String name) {
+		return setActiveLevel;
+	}
+
+	private IAction setActiveLevel = (params) -> {
+		int index = Integer.parseInt(params[0]);
+		activeLevel = levels.get(index);
 	};
-	return setActiveLevel;
-    }
-    
-    public void setActiveLevel(int index) {
-        root.getChildren().clear();
-	activeLevel = levels.get(index);
-	activeLevel.getSprites().forEach(sprite -> {
-	    root.getChildren().add(sprite.getImageView());
-	});
-	root.requestFocus();
-	SceneControlManager controlManager = activeLevel.getControlManager();
-	root.setOnKeyPressed(e -> controlManager.handleKeyEvent(e.getCode(), true));
-        root.setOnKeyReleased(e -> controlManager.handleKeyEvent(e.getCode(), false));
-
-        if (!activeLevel.getSprites().isEmpty()){
-            Sprite sprite = activeLevel.getSprites().get(0);
-            sprite.getImageView().toFront();
-            BasicScroller scroller = new BasicScroller (root, sprite.getImageView().getTranslateX(), sprite.getImageView().getTranslateY());
-            ScrollTracker tracker = new ScrollTracker(scroller);
-            tracker.setXTracker(sprite.getImageView().translateXProperty());
-            tracker.setYTracker(new SimpleDoubleProperty(sprite.getImageView().getTranslateY()));
-        }
-    }
-    
     
 
-    public void handle(long now) {
-	activeLevel.update(now);
-    }
-    
-    public Group getRoot() {
-	return root;
-    }
+	public void setActiveLevel(int index) {
+		root.getChildren().clear();
+		activeLevel = levels.get(index);
+		activeLevel.getSprites().forEach(sprite -> {
+			root.getChildren().add(sprite.getImageView());
+		});
+		root.requestFocus();
+		controlsManager = activeLevel.getControlManager();
 
-    @Override
-    public IAction getAction (String name) {
-        if (name.equals("activeLevel")){
-            return getSetActiveLevelBehavior();
-        }
-        return (params) -> {};
-    }
+		if (!activeLevel.getSprites().isEmpty()) {
+			setUpScrolling();
+		}
+	}
+	
+	public void setUpScrolling () {
+	    IScrollFocus focus= new DeadZoneFocus(width, height, 0.2);
+	    SpriteTracker tracker = new SpriteTracker(focus, new BasicScroller(root));
+	    Sprite sprite = activeLevel.getSprites().get(0);
+	    tracker.setPlayer(sprite);
+	    sprite.getImageView().toFront();
+	    tracker.enable();
+	}
+
+	public void update() {
+		activeLevel.update(frameRate);
+	}
+	
+	public void start() {
+		Stage stage = new Stage();
+		stage.setHeight(height);
+		stage.setWidth(width);
+		Scene scene = new Scene(root);
+		scene.setOnKeyPressed(e -> controlsManager.handleInput(e));
+		scene.setOnKeyReleased(e -> controlsManager.handleInput(e));
+		root.requestFocus();
+		stage.setScene(scene);
+		stage.setResizable(false);
+		stage.show();
+		stage.setOnCloseRequest(e -> timeline.stop());
+		timeline.play();
+	}
+
+	public Group getRoot() {
+		return root;
+	}
 }

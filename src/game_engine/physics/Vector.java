@@ -6,6 +6,11 @@ import java.util.List;
 
 public class Vector {
 
+	public static final Vector NORTH = new Vector(0, 1);
+	public static final Vector SOUTH = new Vector(0, -1);
+	public static final Vector EAST = new Vector(1, 0);
+	public static final Vector WEST = new Vector(-1, 0);
+
 	private double myX;
 	private double myY;
 
@@ -33,6 +38,21 @@ public class Vector {
 		}
 
 		return sum;
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		if(other == this) {
+			return true;
+		}
+
+		if(!(other instanceof Vector)) {
+			return false;
+		}
+
+		Vector otherVector = (Vector) other;
+
+		return myX == otherVector.getX() && myY == otherVector.getY();
 	}
 
 	public Vector copy() {
@@ -95,6 +115,16 @@ public class Vector {
 	public double getAngle() {
 		return isZeroVector() ? 0 : Math.atan(myY/myX);
 	}
+	
+	public double getAngleDegrees() {
+		double arcTangent = getAngle();
+		Math.toDegrees(arcTangent);
+		if(myX < 0)
+			arcTangent += 180;
+		else if(myY < 0)
+			arcTangent += 360;
+		return arcTangent;
+	}
 
 	public boolean isZeroVector() {
 		return (myX == 0 && myY == 0);
@@ -104,4 +134,7 @@ public class Vector {
 		return Math.sqrt(myX * myX + myY * myY);
 	}
 
+	public String toString() {
+		return String.format("Vector (%f, %f)\n", myX, myY);
+	}
 }

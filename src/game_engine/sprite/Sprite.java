@@ -1,215 +1,159 @@
 package game_engine.sprite;
 
-import game_engine.IBehavior;
+import game_engine.annotation.IActionAnnotation;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
-import game_engine.collision.HitBox;
-import game_engine.physics.Material;
-import game_engine.physics.PhysicsEngine;
-import game_engine.physics.PhysicsObject;
-import game_engine.physics.RigidBody.RBodyType;
-import game_player.Animation;
+import game_engine.physics.Vector;
+import game_engine.physics.objects.PhysicsObject;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
 import javafx.scene.image.ImageView;
-
 /**
- * Abstract class for the creation of multiple sprite types
- * @TODO remove observer observable and clean
- * @author 
- *
+ * 
+ * @authors Brian Lavalee, Kevin Chang, Emre Sonmez
+ * Sprite class to hold information for all characters in game
  */
-public abstract class Sprite extends Observable implements IActor{
+public class Sprite extends Observable implements IActor {
 	
-	private int myId;
-	private String myName;	
-	private String myState;
-	private Animation myAnimation;
-	protected PhysicsObject myPhysicsObject;
-	private Map<String, IBehavior> myBehaviorMap = new HashMap<>();
-	private HitBox myHitBox;
+	private String state;
+	private Sprite owner; // null if no owner
+	private double worth;
+	private Animation animation;
+	private Map<String, IAction> actions;
+	private PhysicsObject physicsObject;
 	
+	public Sprite(PhysicsObject po, Animation a, String initialState, 
+			Sprite spriteOwner, double initialWorth) {
+		state = initialState;
+		physicsObject = po;
+		animation = a;
+		actions = new HashMap<>();
+		owner = spriteOwner;
+		worth = initialWorth;
+		addObserver(animation);
+		addObserver(physicsObject);
+		setChanged();
+		notifyObservers();
+		buildActionMap();
+	}
 	
-	/**
-	 * Testing constructor
-	 */
-	public Sprite(String defaultState, String defaultImage, int height, int width, RBodyType rbType,
-			PhysicsEngine globalPhysics, Material material, int startX, int startY) {
-		myId = 0;
-		myPhysicsObject = new PhysicsObject(globalPhysics, rbType, height, width, material, startX, startY);
-		myAnimation = new Animation(this, myPhysicsObject);
-		addImage(defaultState, defaultImage);
-		setState(defaultState);
-		setImageSize(height, width);
-		
+	public Sprite(PhysicsObject po, Animation a, String initialState, 
+			double initialWorth) {
+		state = initialState;
+		physicsObject = po;
+		animation = a;
+		actions = new HashMap<>();
+		owner = null;
+		worth = initialWorth;
+		addObserver(animation);
+		addObserver(physicsObject);
+		setChanged();
+		notifyObservers();
+		buildActionMap();
 	}
 	
 	/**
-	 * Blank Constructor
+	 * method buildActionMap
+	 * sets Strings to IAction objects
 	 */
-	public Sprite(PhysicsObject physics) {
-		// TODO
-	    myPhysicsObject = physics;
-	    myId = 0;
-	    myAnimation = new Animation(this,myPhysicsObject);
-	}
-	
-	/**
-	 * Constructor Sprite
-	 * Creates sprite object with a defined name
-	 * @param name the string to name the sprite
-	 */
-	public Sprite(PhysicsObject physics, String name){
-	    myPhysicsObject = physics;
-	    myId = 0; //TODO make call to SpriteManager to get unique ID or don't allow sprite to constructed without ID
-	    myName = name;
-	    myAnimation = new Animation(this,myPhysicsObject);
-	}
-	
-	/**
-	 * Constructor Sprite
-	 * Creates sprite object with a defined name and specified id
-	 * @param name the string to name the sprite
-	 * @param id the id of the specific sprite
-	 */
-	public Sprite(PhysicsObject physics, String name, int id){
-	    myPhysicsObject = physics;
-	    myName = name;
-	    myId = id;
-	    myAnimation = new Animation(this,myPhysicsObject);
+	private void buildActionMap(){ 
+		actions.put("moveForward", moveForward);
+		actions.put("jump", jump);
+		actions.put("setState", setState);
 	}
 	
 	/**
 	 * method update
-	 * Updates the sprite
+	 * @param frameRate the frameRate with which to update items
+	 * updates physicsObject and animation parameters at the specified frame rate
 	 */
-	public abstract void update();
-	
-	public IAction createBehavior(String behavior) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
-	    Class<?> runClass = null;
-	    IAction classInstance = null;
-	    String className = "game_engine." + behavior;
-	    runClass = Class.forName(className);
-	    return classInstance = (IAction) runClass.newInstance();
-	    
+	public void update(double frameRate) {
+	    physicsObject.update(frameRate);
+	    animation.update(frameRate);
 	}
 	
-	public void addBehavior(String behavior) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
-	   // myBehaviorMap.put(behavior, createBehavior(behavior));
+	/**
+	 * method getImageView
+	 * @return the imageview associated with the sprite
+	 */
+	public ImageView getImageView() {
+	    return animation.getImageView();
 	}
 	
-	public void removeBehavior(String behavior){
-	    myBehaviorMap.remove(behavior);
+	/**
+	 * getPhysicsObject() 
+	 * @return the physics object associated with the sprite
+	 */
+	public PhysicsObject getPhysicsObject() {
+	    return physicsObject;
 	}
 	
-	public void runBehavior(String behavior, String... params){
-	    myBehaviorMap.get(behavior).perform(params);
-	}
-	
-	public void addImage(String state,String ImagePath){
-	    myAnimation.setImage(state, ImagePath);
-	}
-	
-	public void removeImage(String state){
-	    myAnimation.removeImage(state);
-	}
-	
-	public ImageView getImageView(){
-	    return myAnimation.getImageView();
-	}
-	
-	public void setImageSize(double xSize, double ySize){
-	    myAnimation.getImageView().setFitHeight(ySize);
-	    myAnimation.getImageView().setFitWidth(xSize);
-	}
-	
-	public void setState(String state){
-		myState = state;
+	/**
+	 * IAction setState
+	 * changes the state of the current sprite object
+	 */
+	private IAction setState = (params) -> {
+		String newState = params[0];
+		state = newState;
 		setChanged();
 		notifyObservers();
-	}
-	
-	private IAction setState = (params) -> { // stateChanging
-            String state = params[0];
-            setState(state);
 	};
 	
-	public IAction setStateBehavior(){
-	    return setState;
+	/**
+	 * method getState
+	 * @return the current state associated with the sprite
+	 */
+	public String getState() {
+		return state;
 	}
 	
-	public String getState(){
-		return myState;
+	/**
+	 * method getWorth()
+	 * @return the amount (points) assiociated with the sprite
+	 */
+	public Double getWorth(){
+		return worth;
+	}
+	
+	@IActionAnnotation(numParams = 1, description = "increments worth of sprite if no parent,"
+			+ " otherwise increments worth of parent sprite")
+	private IAction incrementScore = (params) -> {
+		if(owner.equals(null)){
+			incrementScore(Double.parseDouble(params[0]));
+		}else{
+			owner.incrementScore(Double.parseDouble(params[0]));
+		}
+	};
+	
+	/**
+	 * method incrementScore
+	 * @param value
+	 * adds amount value to your current score count
+	 */
+	private void incrementScore(double value){
+		worth += value;
 	}
 
-	public void setID(int id){
-	    myId = id;
-	}
+	@IActionAnnotation(numParams = 2, description = "moves sprite forward in an x, y vector direction")
+	private IAction moveForward = (params) -> {
+		physicsObject.applyImpulse(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
+	};
 	
-	public double getID(){
-	    return myId;
-	}
-
-	public void setName(String name){
-	    this.myName = name;
-	}
+	@IActionAnnotation(numParams = 1, description = "sprite jumps up or down")
+	private IAction jump = (params) -> {
+		Vector myVector = new Vector(0, Double.parseDouble(params[0]));
+		physicsObject.applyImpulse(myVector);
+	};
 	
-	public String getName(){
-	    return this.myName;
-	}
-	
-	public HitBox getHitBox(){
-	    return myHitBox;
-	}
-	
-	public void setPhysicsObject(PhysicsObject physicsObject){
-	    myPhysicsObject = physicsObject;
-	}
-	
-	public PhysicsObject getPhysicsObject(){
-	    return myPhysicsObject;
-	}
-	
-	
-	public void moveX(double x){
-		myPhysicsObject.setXPixels(
-				myPhysicsObject.getXPixels() + x);
-		setChanged();
-                notifyObservers();
-	}
-	
-	public void moveY(double y){
-		myPhysicsObject.setYPixels(
-				myPhysicsObject.getYPixels() + y);
-		setChanged();
-                notifyObservers();
-	}
-	
+	/**
+	 * IAction getAction
+	 * @param name
+	 * @return action mapped to the value name
+	 */
 	public IAction getAction(String name) {
-	    if (name.equals("setState")){
-	        return setState;
-	    }
-	    return (params) -> {};
+		return actions.get(name);
 	}
-	
-	
-	
-	
-//	public static void main(String[] args){
-//	    Sprite player = new Enemy();
-//	    player.addImage("idle", "idle");
-//	    player.addImage("walk", "walk");
-//	    player.addImage("jump", "jump");
-//	    player.addImage("float", "float");
-//	    player.addImage("move", "move");
-//	    player.addImage("bounce", "bounce");
-//	    
-//	    player.setState("idle");
-//	    player.setState("jump");
-//	    
-//	}
-
 }

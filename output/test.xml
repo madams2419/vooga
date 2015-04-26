@@ -2,74 +2,57 @@
 <game>
 	<title>Simple_Game</title>
 	<level>
-		<objective>
-			<objective_0 />
-			<objective_1 />
-		</objective>
-		<sprite>
-			<sprite_0>
-				<type />
-				<inital_state />
-				<width>0.0</width>
-				<height>0.0</height>
-				<animation>null</animation>
-				<physics>null</physics>
-			</sprite_0>
-			<sprite_1>
-				<type />
-				<inital_state />
-				<width>0.0</width>
-				<height>0.0</height>
-				<animation>null</animation>
-				<physics>null</physics>
-			</sprite_1>
-		</sprite>
-		<physics />
-		<control />
-		<collision />
-	</level>
-	<title>Simple_Game</title>
-	<level>
-		<objective>
-			<objective_0 />
-			<objective_1 />
-		</objective>
-		<sprite>
-			<sprite_0>
-				<type />
-				<inital_state />
-				<width>0.0</width>
-				<height>0.0</height>
-				<animation>null</animation>
-				<physics>null</physics>
-			</sprite_0>
-			<sprite_1>
-				<type />
-				<inital_state />
-				<width>0.0</width>
-				<height>0.0</height>
-				<animation>null</animation>
-				<physics>null</physics>
-			</sprite_1>
-			<sprite_2>
-				<type />
-				<inital_state />
-				<width>0.0</width>
-				<height>0.0</height>
-				<animation>null</animation>
-				<physics>null</physics>
-			</sprite_2>
-			<sprite_3>
-				<type />
-				<inital_state />
-				<width>0.0</width>
-				<height>0.0</height>
-				<animation>null</animation>
-				<physics>null</physics>
-			</sprite_3>
-		</sprite>
-		<physics />
-		<control />
-		<collision />
+		<start>0</start>
+		<level_0>
+			<objective>
+				<objective_0>
+					<prereqs>[null, null, null]</prereqs>
+					<onComplete>
+						<behaviours>
+							<behaviour0>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>win</name>
+							</behaviour0>
+							<behaviour1>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>/home/daniel/Workspace/CS308/voogasalad_HighScrollers/authoring_images/characters/bowser.png</name>
+							</behaviour1>
+						</behaviours>
+					</onComplete>
+					<onFailure>
+						<behaviours>
+							<behaviour0>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>die</name>
+							</behaviour0>
+						</behaviours>
+					</onFailure>
+				</objective_0>
+			</objective>
+			<sprite>
+				<sprite_0>
+					<type />
+					<inital_state />
+					<width>0.0</width>
+					<height>0.0</height>
+					<animation>null</animation>
+					<physics>null</physics>
+				</sprite_0>
+				<sprite_1>
+					<type />
+					<inital_state />
+					<width>0.0</width>
+					<height>0.0</height>
+					<animation>null</animation>
+					<physics>null</physics>
+				</sprite_1>
+			</sprite>
+			<physics />
+			<control />
+			<collision />
+		</level_0>
 	</level>
 </game>
