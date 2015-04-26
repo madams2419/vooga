@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -37,7 +38,11 @@ public class AnimationsDialog extends DataDialog {
     private static final String IMAGE_CHOOSER_DESCRIPTION = "Image Files";
     private static final String[] IMAGE_CHOOSER_EXTENSIONS = { "*.png", "*.jpg",
                                                               "*.gif" };
-
+    public static AnimationsDialog defaultAnimations(Sprite s){
+    	return new AnimationsDialog(s, FXCollections.emptyObservableList());
+    }
+    
+    
     public AnimationsDialog (Sprite sprite, ObservableList<String> states) {
         initializeEverything(states, sprite);
         initialize(sprite, 3,

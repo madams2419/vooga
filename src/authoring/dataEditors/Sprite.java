@@ -305,7 +305,7 @@ public class Sprite extends ImageView {
         if (myAnimations != null) {
             return myAnimations.update(getStates());
         }
-        return myAnimations;
+        return myAnimations = AnimationsDialog.defaultAnimations(this);
     }
 
     public Boolean getPlayable () {

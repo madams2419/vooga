@@ -49,7 +49,8 @@ public class CenterCanvas extends ScrollPane {
 	private AuthoringWindow myParent;
 	private Label myInitialLabel;
 	private float myGravity = 10;
-	private PhysicsEngine_XML myEngine;
+	private PhysicsEngine_XML myEngine = PhysicsEngine_XML
+			.defaultPhysicsEngine(); // default physics engine
 
 	CenterCanvas(Scene scene, AuthoringWindow parent) {
 		assert (scene != null);
@@ -177,7 +178,7 @@ public class CenterCanvas extends ScrollPane {
 	}
 
 	public void addKeyAction(String key, KeyAction_XML action) {
-		if(myKeyActions.containsKey(key))
+		if (myKeyActions.containsKey(key))
 			myKeyActions.get(key).appendBehaviours(action);
 		else
 			myKeyActions.put(key, action);

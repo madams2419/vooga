@@ -29,6 +29,11 @@ public class GlobalCreationPane extends EditingPane {
     private List<HBox> myFieldBoxes = new LinkedList<>();
     private Map<String, String> myValueMap;
     private String[] myFieldNames;
+    
+    private static final String DEFAULT_TITLE = "Simple Game";
+    private static final String DEFAULT_FRAME_RATE = "10";
+    private static final String DEFAULT_SCENE_WIDTH = "1500";
+    private static final String DEFAULT_SCENE_HEIGHT = "1000";
 
     public GlobalCreationPane (Scene myScene, RightPane parent) {
         // TODO Auto-generated constructor stub
@@ -41,8 +46,17 @@ public class GlobalCreationPane extends EditingPane {
         this.getChildren().add(c);
     }
 
+    public static Map<String,String> defaultGlobalSettings() {
+    	Map<String,String> result = new HashMap<>();
+    	result.put("title", DEFAULT_TITLE);
+    	result.put("frame_rate", DEFAULT_FRAME_RATE);
+    	result.put("scene_width", DEFAULT_SCENE_WIDTH);
+    	result.put("scene_height", DEFAULT_SCENE_HEIGHT);
+    	return result;
+    }
+    
     private enum GlobalCreationPaneFieldNames {
-        GAME_NAME, SCENE_WIDTH, SCENE_HEIGHT, FRAME_RATE, FIRST_LEVEL
+        TITLE, SCENE_WIDTH, SCENE_HEIGHT, FRAME_RATE, FIRST_LEVEL
     }
     
     private String[] getFieldNames () {
@@ -99,6 +113,7 @@ public class GlobalCreationPane extends EditingPane {
             myValueMap.put((((Text) hbox.getChildren().get(0)).getText()),
                        (((TextField) hbox.getChildren().get(1)).getText()));
         });
+        myParent.getParent().setGlobalProperties(myValueMap);
         return myValueMap;
         // System.out.println(sprite.getCharacteristics().toString());
     }

@@ -21,9 +21,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 import org.w3c.dom.Element;
 
-import com.sun.org.apache.xerces.internal.impl.dv.dtd.XML11NMTOKENDatatypeValidator;
-
-import authoring.dataEditors.Sprite;
+import authoring.fileBuilders.Level_XML;
 import authoring.fileBuilders.XMLBuilder;
 import authoring.panes.centerPane.CenterCanvas;
 import authoring.userInterface.AuthoringWindow;
@@ -99,8 +97,9 @@ public class FrontEndUtils {
 		// Adding the root element
 		XMLBuilder xml = XMLBuilder.getInstance("game");
 
-		// Adding title to root
-		xml.addChildWithValue(xml.getRoot(), "title", "Simple_Game");
+		parent.getGlobalProperties().forEach(
+				(label, value) -> xml.addChildWithValue(xml.getRoot(), label,
+						value));
 
 		// Adding the level tag
 		Element level = xml.addToRoot("level");
@@ -115,75 +114,13 @@ public class FrontEndUtils {
 		int i = 0;
 		for (CenterCanvas c : allMaps) {
 
-			// Adding the properties of objective
-			Element currentLevel = xml.add(level, "level_" + i++);
+			Level_XML currentLevel = new Level_XML(c);
+			currentLevel.writeToXML(level, i++, xml);
 
-			Element objective = xml.add(currentLevel, "objective");
-
-			for (Integer i1 : c.getObjectives().keySet()) {
-				Element currentObjective = xml.add(objective,
-						String.format("objective_%d", i1));
-
-				Map<String, List<String>> obj = c.getObjectives().get(i1);
-
-				xml.addChildWithValue(currentObjective, "prereqs",
-						obj.get("prereqs").toString());
-
-				Element onComplete = xml.add(currentObjective, "onComplete");
-				Element behaviour = xml.add(onComplete, "behaviours");
-				int i2 = 0;
-				for (String s : obj.get("onComplete")) {
-					Element currentBehaviour = xml.add(behaviour, "behaviour"
-							+ i2++);
-					xml.addChildWithValue(currentBehaviour, "targetType",
-							"sprite");
-					xml.addChildWithValue(currentBehaviour, "targetIndex", "0");
-					String[] t = s.split(":");
-					xml.addChildWithValue(currentBehaviour, "name", t[1]);
-				}
-
-				Element onFailure = xml.add(currentObjective, "onFailure");
-				behaviour = xml.add(onFailure, "behaviours");
-				i2 = 0;
-				for (String s : obj.get("onFailed")) {
-					Element currentBehaviour = xml.add(behaviour, "behaviour"
-							+ i2++);
-					xml.addChildWithValue(currentBehaviour, "targetType",
-							"sprite");
-					xml.addChildWithValue(currentBehaviour, "targetIndex", "0");
-					String[] t = s.split(":");
-					xml.addChildWithValue(currentBehaviour, "name", t[1]);
-				}
-
-			}
-
-			// Adding sprites
-			Element sprite = xml.add(currentLevel, "sprite");
-			xml.addAllSprites(sprite, c.getSprites());
-
-			// Adding physics
-			Element physics = xml.add(currentLevel, "physics");
-			xml.addChildWithValue(physics, "gravity", parent.getCenterPane()
-					.getActiveTab().getSetting("gravity"));
-
-			// Adding controls
-			Element controls = xml.add(currentLevel, "control");
-			int i3 = 0;
-			for (Sprite s : c.getSprites()) {
-				Element currentControl = xml.add(controls, "control_"+i3++);
-				Map<String, String> keyActions;
-				int i4 = 0;
-				if ((keyActions = s.getKeyActions()) != null) {
-					Element currentKey = xml.add(currentControl, "key_"+i4++);
-					
-				}
-			}
-
-			// Adding collision
-			xml.add(currentLevel, "collision");
-
-			// Streaming result
-			xml.streamFile("output/test.xml");
 		}
+
+		// Streaming result
+		xml.streamFile("output/test.xml");
+
 	}
 }
