@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -19,9 +18,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import authoring.dataEditors.Sprite;
-import authoring.dialogs.AnimationsDialog;
 import authoring.dialogs.ControlsDialog;
-import authoring.dialogs.ErrorDialog;
+import authoring.dialogs.AnimationsDialog;
 import authoring.dialogs.StatesDialog;
 import authoring.util.FrontEndUtils;
 import authoring.util.ImageEditor;
@@ -62,7 +60,7 @@ class CharacterEditingPane extends EditingPane {
 		addAnimations(sprite);
 		setFields(this.getChildren(), sprite.getCharacteristics());
 
-		addStatesButton(sprite);
+//		addStatesButton(sprite);
 		addPlayableCheckBox(addControlsButton(sprite), sprite);
 		addUpdateButton(sprite);
 		addDeleteButton(sprite);
@@ -94,17 +92,12 @@ class CharacterEditingPane extends EditingPane {
 	}
 
 	private void addAnimation(Sprite sprite) {
-		if (sprite.getStates().size() == 0) {
-			new ErrorDialog(ANIMATION_ERROR);
-		} else {
-			if (sprite.getAnimations() != null) {
-				sprite.getAnimations().showBox(sprite);
-			} else {
-				AnimationsDialog animationsDialog = new AnimationsDialog(
-						sprite, sprite.getStates());
-				sprite.setAnimations(animationsDialog);
-			}
-		}
+	    if (sprite.getAnimations() != null) {
+	        sprite.getAnimations().showBox(sprite);
+	    } else {
+	        AnimationsDialog animationsDialog = new AnimationsDialog(sprite);
+	        sprite.setAnimations(animationsDialog);
+	    }
 	}
 
 	private void addDeleteButton(Sprite sprite) {

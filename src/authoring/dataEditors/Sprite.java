@@ -5,14 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import authoring.dialogs.AnimationsDialog;
 import authoring.dialogs.ControlsDialog;
-import authoring.dialogs.StatesDialog;
+import authoring.dialogs.AnimationsDialog;
 import authoring.panes.centerPane.CenterPane;
 import authoring.panes.rightPane.RightPane;
 import authoring.userInterface.ClickHandler;
@@ -46,7 +44,6 @@ public class Sprite extends ImageView {
     private ImageView myIcon;
     private ControlsDialog myControls;
     private AnimationsDialog myAnimations;
-    private StatesDialog myStatesDialog;
     private Map<String, String> myAnimationsMap;
     private ObservableList<String> myStates;
     private int myCurrentScore;
@@ -322,7 +319,7 @@ public class Sprite extends ImageView {
 
     public AnimationsDialog getAnimations () {
         if (myAnimations != null) {
-            return myAnimations.update(getStates());
+            return myAnimations;
         }
         return myAnimations;
     }
@@ -339,18 +336,10 @@ public class Sprite extends ImageView {
         return myStates;
     }
     
-    public StatesDialog getStatesDialog () {
-        return myStatesDialog;
-    }
-    
     public void setStates (ObservableList<String> states) {
         myStates = states;
     }
 
-    public void setStates (StatesDialog states) {
-        myStatesDialog = states;
-    }
-    
     public double getWidth() {
     	return this.getFitWidth();
     }
