@@ -71,10 +71,15 @@ public class CharacterPhysicsDialog extends DataDialog {
         mySprite = sprite;
         myTypeLabel = new Label(TYPE);
         myMaterialLabel = new Label(MATERIAL);
-        myTypeBox = new ComboBox<String>();
-        myTypeBox.getItems().addAll(myTypeChoices);
-        myMaterialBox = new ComboBox<String>();
-        myMaterialBox.getItems().addAll(myMaterialChoices);
+        myTypeBox = createComboBox(myTypeChoices);
+        myMaterialBox = createComboBox(myMaterialChoices);
+    }
+
+    private ComboBox<String> createComboBox (String[] choices) {
+        ComboBox<String> box = new ComboBox<String>();
+        box.getItems().addAll(choices);
+        box.setValue(choices[0]);
+        return box;
     }
 
     private void importFromPropertiesFile () {
