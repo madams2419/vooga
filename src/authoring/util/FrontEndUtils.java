@@ -64,17 +64,16 @@ public class FrontEndUtils {
 	}
 
 	public static void setKeyActions(Parent n) {
-		System.out
-				.printf("Setting key actions on %s%n", n.getClass().getName());
+//		System.out.printf("Setting key actions on %s%n", n.getClass().getName());
 		n.setOnKeyPressed(e -> {
 			if (e.getCode() == KeyCode.CONTROL)
 				AuthoringWindow.setControlOn();
-			System.out.println("detected key press");
+//			System.out.println("detected key press");
 		});
 		n.setOnKeyReleased(e -> {
 			if (e.getCode() == KeyCode.CONTROL)
 				AuthoringWindow.setControlOff();
-			System.out.println("detected key release");
+//			System.out.println("detected key release");
 		});
 	}
 

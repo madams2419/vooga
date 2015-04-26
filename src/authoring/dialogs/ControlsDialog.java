@@ -103,7 +103,7 @@ public class ControlsDialog extends Dialog<ButtonType> {
 								List<String> behaviours = new ArrayList<>();
 								behaviours.add(String.format("%s:%s:%s", s
 										.getID(), myComboBoxes.get(i)
-										.getValue(), myParamTextFields.get(i)));
+										.getValue(), myParamTextFields.get(i).getText()));
 								KeyAction_XML action = new KeyAction_XML(myTextFields
 										.get(i).getText(), behaviours, true);
 								myParent.getParent().getCenterPane().getActiveTab()

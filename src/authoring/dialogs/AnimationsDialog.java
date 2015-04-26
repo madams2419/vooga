@@ -29,6 +29,7 @@ public class AnimationsDialog extends DataDialog {
     private Map<String, String> myAnimations;
     private Sprite mySprite;
 
+    private static final String TITLE = "Animations of Character";
     private static final String ADD_IMAGE = "Set image for state";
     private static final String STATE = "State";
     private static final String IMAGE = "Image";
@@ -102,6 +103,7 @@ public class AnimationsDialog extends DataDialog {
 
     void initializeEverything (Sprite sprite) {
         mySprite = sprite;
+        myAnimations = new LinkedHashMap<>();
         myTextFields = new ArrayList<>();
         myImageAdderButtons = new ArrayList<>();
         myImageURLs = new ArrayList<>();
@@ -115,6 +117,10 @@ public class AnimationsDialog extends DataDialog {
     @Override
     void addOtherComponents (DialogGridOrganizer grid) {
         // don't add any other components
+    }
+    
+    String getMyTitle () {
+        return TITLE;
     }
 
 }

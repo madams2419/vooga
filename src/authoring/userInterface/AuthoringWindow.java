@@ -49,7 +49,7 @@ public class AuthoringWindow {
 	private static boolean control;
 
 	public AuthoringWindow() {
-		System.out.println("Instantiated AuthoringWindow");
+//		System.out.println("Instantiated AuthoringWindow");
 	}
 
 	public Scene GameCreateUI(Scene parentScene) {
