@@ -1,15 +1,13 @@
 package game_engine.sprite;
 
 import game_engine.physics.objects.PhysicsObject;
-
+import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-
 import java.util.Observer;
 
 public class Animation extends Observable implements Observer {
@@ -28,7 +26,7 @@ public class Animation extends Observable implements Observer {
     	height = h;
     }
     
-    public void associateImage(String state, String imagePath, double delay, double height, double width) {
+    public void associateImage(String state, FileInputStream imagePath, double delay, double height, double width) {
     	if (!paths.containsKey(state)) {
     		paths.put(state, new ImageLink());
     	}

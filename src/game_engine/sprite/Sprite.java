@@ -24,7 +24,7 @@ public class Sprite extends Observable implements IActor {
 		animation = a;
 		actions = new HashMap<>();
 		addObserver(animation);
-		addObserver(physicsObject);
+//		addObserver(physicsObject);
 		setChanged();
 		notifyObservers();
 		

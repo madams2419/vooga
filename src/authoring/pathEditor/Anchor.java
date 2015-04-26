@@ -62,14 +62,14 @@ public class Anchor extends Circle {
             if (newX > 0 && newX < getScene().getWidth()) {
 //                setTranslateX(newX+10);
               setCenterX(newX);
-              setTranslateX(getTranslateX());
+//              setTranslateX(getTranslateX());
 //                setTranslateX(newX);
             }  
             double newY = mouseEvent.getY() + dragDelta.y;
             if (newY > 0 && newY < getScene().getHeight()) {
 //                setTranslateY(newY+ 10);
               setCenterY(newY);
-              setTranslateY(getTranslateY());
+//              setTranslateY(getTranslateY());
 //                setTranslateY(newY);
             }  
             

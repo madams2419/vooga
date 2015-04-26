@@ -1,6 +1,13 @@
 package authoring.pathEditor;
 
+import game_engine.sprite.Animation;
+import game_engine.sprite.Sprite;
+import game_engine.sprite.TransitionManager;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,14 +32,15 @@ import javafx.util.Duration;
 /**
  * 
  * @author Kevin Chang
- * Class to simulate path creation
+ *         Class to simulate path creation
  */
 
 public class PathCreator extends Application {
     private Group myGroup;
-    private List<PathTransition> myPaths = new ArrayList<PathTransition>();
-    private HashMap<Shape, PathTransition> myTransitionMap = new HashMap<Shape,PathTransition>();
-    private HashMap<CubicCurve,Shape> myFollowingMap = new HashMap<CubicCurve,Shape>();
+    private HashMap<Sprite, String[]> myTransitionMap = new HashMap<Sprite, String[]>();
+    private HashMap<CubicCurve, Sprite> myFollowingMap = new HashMap<CubicCurve, Sprite>();
+    private HashMap<ArrayList<Anchor>,CubicCurve> myCurveMap = new HashMap<>();
+
     // public PathCreator(Group group){
     // myGroup = group;
     // }
@@ -63,63 +71,77 @@ public class PathCreator extends Application {
                         ArrayList<Anchor> elements =
                                 path.createPathElements(startx, starty, endx, endy);
 
-                     
+
 
                         System.out.println(click.getTarget().getClass());
-                        for (Anchor element : elements) {
-                          try {
-                               CubicCurve target =  ((Anchor) click.getTarget()).getPath();
-                               Circle follower = (Circle) myFollowingMap.get(target);
-                                PathTransition transition = myTransitionMap.get(target);                  
-                                myFollowingMap.remove(follower);
-                                                      
-                                
-                                Path pathFollow = new Path();
-                                
-                                pathFollow.getElements().addAll(createFollowable(target));
-                                 
-                                PathTransition trans = initializePath(follower, pathFollow, 2);
-                               
-                                myTransitionMap.put(follower,trans);
-                                
-//                                System.out.println("end");
-                                if ((((Anchor) click.getTarget()).getBoundsInParent())
-                                        .intersects(element.getBoundsInParent())) {
-                                    System.out.println(click.getTarget());
-                                    System.out.println(element);
-                                    System.out.println("Intersect");
-                                    Anchor dragged = (Anchor) click.getTarget();
-                                    Anchor stationary = (Anchor) element;
-                                    dragged.combineNode(stationary);
-                                    stationary.combineNode(dragged);
-                                    return;
-                                }
+//                        for (Anchor element : elements) {
+                       
+                            try { 
+                                Anchor key = (Anchor) click.getTarget();
+                                myCurveMap.keySet().forEach(anchors ->{
+                                    if(anchors.contains(key)){
+                                        System.out.println("new path");
+                                   CubicCurve target =  myCurveMap.get(anchors);
+                                Sprite follower = (Sprite) myFollowingMap.get(target);
+                                String[] transition = myTransitionMap.get(target);     
+                                myFollowingMap.replace(target,follower);
+                                myTransitionMap.replace(follower,createParams(target));
+                                myCurveMap.replace(anchors, target);
+                              
+                                return;
+                                    }  
+                                });
+                                return;
+                                //                                System.out.println("end");
+//                                if ((((Anchor) click.getTarget()).getBoundsInParent())
+//                                        .intersects(element.getBoundsInParent())) {
+//                                    System.out.println(click.getTarget());
+//                                    System.out.println(element);
+//                                    System.out.println("Intersect");
+//                                    Anchor dragged = (Anchor) click.getTarget();
+//                                    Anchor stationary = (Anchor) element;
+//                                    dragged.combineNode(stationary);
+//                                    stationary.combineNode(dragged);
+//                                    return;
+//                                }
                             }
                             catch (Exception e) {
-
                             }
 
                             if (!click.getSource().getClass()
                                     .equals(new Scene(new Group()).getClass())) {
                                 System.out.println(click.getSource().getClass());
                                 System.out.println(new Scene(new Group()).getClass());
-                                break;
+//                                break;
                             }
 
-                        }
-                        
-                        Path pathFollow = new Path();
-                         pathFollow.getElements().addAll(createFollowable(path.getPath()));
-//                        pathFollow.getElements().addAll(path.getPathEl());
-                        Circle circle = new Circle(15);
-                        PathTransition trans = initializePath(circle, pathFollow, 2);
-                        myPaths.add(trans);
-                        myTransitionMap.put(circle,trans);
-                        myFollowingMap.put(path.getPath(),circle);
-                        group.getChildren().add(path.getPath());
-                        group.getChildren().addAll(elements);
+//                        }
 
-                        System.out.println("follow");
+                     // Create elements to test sprite path following
+                        Animation anim = new Animation(50);
+                        FileInputStream fis;
+                        try {
+                            fis = new FileInputStream("resources/images/brick.png");
+                            anim.associateImage("standing", fis, 0, 50, 50);
+                        }
+                        catch (FileNotFoundException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                        myCurveMap.put(elements, path.getPath());
+                        Sprite temp = new Sprite(null, anim, "standing");
+                        ArrayList<String[]> parameters = new ArrayList<String[]>();
+                        String[] params = createParams(path.getPath());
+//                        System.out.println(params.length);
+                        parameters.add(params);
+                        
+        // add to different transition maps
+                        System.out.println("ADDED ELEMENTS");
+        myTransitionMap.put(temp,params);
+        myFollowingMap.put(path.getPath(),temp);
+        group.getChildren().add(path.getPath());
+        group.getChildren().addAll(elements);
+
                     }
                 });
 
@@ -130,12 +152,24 @@ public class PathCreator extends Application {
 
             @Override
             public void handle (KeyEvent press) {
-                myFollowingMap.keySet().forEach(curve ->{
-                    group.getChildren().add(myFollowingMap.get(curve));
-                });
-                myTransitionMap.keySet().forEach(key -> {
-                    myTransitionMap.get(key).play();
-                });
+                //Set up transition manager
+                ArrayList<Sprite> sprites = new ArrayList<>();
+                ArrayList<String[]> params = new ArrayList<>();
+                
+                
+                                myTransitionMap.keySet().forEach(sprite ->{
+                                    sprites.add(sprite);
+//                                    System.out.println(myTransitionMap.get(sprite)[7]);
+                                    params.add(myTransitionMap.get(sprite));
+                                });
+                TransitionManager pathManager = new TransitionManager(group, sprites,params); 
+                pathManager.initialize(5);
+                pathManager.playTransitions();
+                
+                //                myTransitionMap.keySet().forEach(key -> {
+                //                    myTransitionMap.get(key).play();
+                //                });    
+                System.out.println("follow");
             }
         });
 
@@ -143,33 +177,19 @@ public class PathCreator extends Application {
         stage.show();
     }
 
-     public ArrayList<PathElement> createFollowable(CubicCurve path){
-     ArrayList<PathElement> pathEl = new ArrayList<>();
-     MoveTo start = new MoveTo(path.getStartX(),path.getStartY());
-     BoundCubicCurve lineFollow = new BoundCubicCurve();
-     lineFollow.setControlX1(path.getControlX1());
-     lineFollow.setControlY1(path.getControlY1());
-     lineFollow.setControlX2(path.getControlX2());
-     lineFollow.setControlY2(path.getControlY2());
-     lineFollow.setX(path.getEndX());
-     lineFollow.setY(path.getEndY());
-     pathEl.add(start);
-     pathEl.add(lineFollow);
-    
-     return pathEl;
-     }
-     
-     
-
-    public PathTransition initializePath (Shape shape, Path path, int seconds) {
-        PathTransition pathTr = new PathTransition();
-        pathTr.setDuration(Duration.seconds(seconds));
-        pathTr.setPath(path);
-        pathTr.setNode(shape);
-        pathTr.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-        pathTr.setCycleCount(Timeline.INDEFINITE);
-        pathTr.setAutoReverse(true);
-        return pathTr;
-
+    public String[] createParams (CubicCurve path) {
+       String[] params = new String[8];
+       params[0] = (Double.toString(path.startXProperty().doubleValue()));
+       params[1] =(Double.toString(path.startYProperty().doubleValue()));
+       params[2] =(Double.toString(path.controlX1Property().doubleValue()));
+       params[3] =(Double.toString(path.controlY1Property().doubleValue()));
+       params[4] =(Double.toString(path.controlX2Property().doubleValue()));
+       params[5] =(Double.toString(path.controlY2Property().doubleValue()));
+       params[6] =(Double.toString(path.endXProperty().doubleValue()));
+       params[7] =(Double.toString(path.endYProperty().doubleValue()));
+       for(int count = 0;count<params.length;count++){
+           System.out.println(params[count]);
+       }
+        return params;
     }
 }
