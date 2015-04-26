@@ -36,7 +36,8 @@ public class SocialCenterMenu {
 		HexPage hex = new HexPage(WIDTH/2,HEIGHT/2, 90, 20);
 		list = hex.getList();
 		list.forEach(h-> hexGroup.getChildren().add(h.getHexagon()));
-		hex.addCSS("hex");
+		
+		hex.addTag("hex");
 		list.forEach(h->h.getHexagon().setFill(Color.WHITESMOKE.deriveColor(0, 1, 1, 0.5)));
 		
 		//hex profile page
