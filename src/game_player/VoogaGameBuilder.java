@@ -291,6 +291,7 @@ public class VoogaGameBuilder {
     	parser.moveUp();
     	return collision;
     }
+
     
     private Sprite getSprite(int id) {
     	return sprites.get(id);

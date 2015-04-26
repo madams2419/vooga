@@ -2,6 +2,7 @@ package utilities.SocialCenter;
 
 import java.util.ArrayList;
 
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,24 +15,27 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class LoginScreen {
-	private static final int TEMPWIDTH = 1000;
-	private static final int TEMPHEIGHT = 600;
+	private static double WIDTH ;
+	private static double HEIGHT;
 
 	private Scene loginScreen;
 	private ProfilePage profile;
 	private StackPane root = new StackPane();
 	private Driver db=new Driver();
 	private SocialCenterMenu menu;
-	private Stage stage;
+	private Stage myStage;
 
-	public LoginScreen() {
+	public LoginScreen(Stage s, double width, double height) {
+		myStage=s;
+		WIDTH=width;
+		HEIGHT=height;
 		initialize();
 		createForm();
 		createTitle();
 	}
 
 	private void initialize() {
-		loginScreen = new Scene(root, TEMPWIDTH, TEMPHEIGHT);
+		loginScreen = new Scene(root, WIDTH,HEIGHT);
 		loginScreen.getStylesheets().add("styles/login.css");
 		loginScreen.getStylesheets().add("http://fonts.googleapis.com/css?family=Exo:100,200,400");
 
@@ -84,11 +88,17 @@ public class LoginScreen {
 
 	private void checkValid(String id, String password){
 		try {
-			ArrayList<String> results=db.get("SELECT Login_id,Login_pass FROM Login WHERE Login_id = '"+id+"' AND Login_pass='"+password+"'","Login_id");
+			ArrayList<String> results=db.get("LoginInfo","SELECT Login_id,Login_pass FROM Login WHERE Login_id = '"+id+"' AND Login_pass='"+password+"'","Login_id");
 			if(!results.contains("none")){
 				System.out.println("Login Success");
-				profile=new ProfilePage(id,TEMPWIDTH,TEMPHEIGHT);
-				stage.setScene(profile.getProfileScreen());
+
+				db.createTable("LoginInfo",results.get(0));
+				
+
+				menu=new SocialCenterMenu(results.get(0),WIDTH,HEIGHT, loginScreen, myStage);
+
+				menu.returnScene(myStage);
+				
 			}else{
 				System.out.println("Login Fail!");
 			}
@@ -100,12 +110,8 @@ public class LoginScreen {
 
 
 	public void getLoginScreen(Stage s) {
-		stage=s;
+		myStage=s;
 		s.setScene(loginScreen);
 	}
 	
-	public Stage getStage(){
-		return stage;
-	}
-
 }
