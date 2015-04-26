@@ -50,6 +50,18 @@ public class Driver {
 		}
 	}
 	
+	public static void updateURL(String ID, String URL)throws Exception{
+		try{
+			Connection con=getConnection();
+			PreparedStatement update=con.prepareStatement("UPDATE profile SET ProfilePic='"+URL+"' WHERE ID='"+ID+"'");
+			update.executeUpdate();
+		}catch(Exception e){
+			System.out.println(e);
+		}finally{
+			System.out.println("update complete");
+		}
+	}
+	
 
 	public static void addGame(String table, String GamesPlayed, String HighScore) throws Exception{
 		try{
