@@ -38,6 +38,8 @@ public abstract class DataDialog extends Dialog<ButtonType> {
             this.setHeight(this.getHeight() + BOTTOM_SPACING);
             addBlankRow(myGrid, myIndex++);
         }
+        
+        addOtherComponents(myGrid);
 
         addAddButton();
         getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
@@ -61,17 +63,13 @@ public abstract class DataDialog extends Dialog<ButtonType> {
         });
     }
 
-    abstract void addBlankRow (DialogGridOrganizer grid, int index);
-
-    abstract Consumer<ButtonType> getTodoOnOK ();
-
     public void showBox (Sprite s) {
         this.showAndWait()
                 .filter(response -> response == ButtonType.OK)
                 .ifPresent(getTodoOnOK());
     }
     
-    ComboBox<String> addComboBox (List<ComboBox<String>> list, ObservableList<String> toAdd) {
+    ComboBox<String> addComboBox (List<ComboBox<String>> list, List<String> toAdd) {
         ComboBox<String> box = new ComboBox<>();
         box.getItems().addAll(toAdd);
         list.add(box);
@@ -100,5 +98,10 @@ public abstract class DataDialog extends Dialog<ButtonType> {
     void addRow (int index) {
         addBlankRow(myGrid, index);
     }
+    
+    abstract void addBlankRow (DialogGridOrganizer grid, int index);
+    
+    abstract Consumer<ButtonType> getTodoOnOK ();
 
+    abstract void addOtherComponents(DialogGridOrganizer grid);
 }
