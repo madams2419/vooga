@@ -46,9 +46,18 @@ public class ProfilePage {
 
 	private void createGUI(){
 		GridPane gridpane = new GridPane();
-		String[] s={"ID","NickName","Game","HighScore"};
+		ArrayList<String> query=new ArrayList<>();
+		String[] s={"ID","NickName"};
+		String command="SELECT ID,NickName FROM Profile WHERE ID = '"+ID+"'";
+		try {
+			query=db.get(command, s);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		for(int i=0; i<s.length; i++){
-			setConstraints(gridpane,s[i],i);
+			setConstraints(gridpane,s[i],i,1);
+			setConstraints(gridpane,query.get(i),i,2);
 		}
 		gridpane.setTranslateX(350);
 		gridpane.setTranslateY(300);
@@ -56,19 +65,19 @@ public class ProfilePage {
 		
 	}
 	
-	private void setConstraints(GridPane g, String s, int row){
+	private void setConstraints(GridPane g, String s, int row, int col){
 		HBox region=new HBox();
 		Text temp=new Text(String.format("%s",s));
 		temp.getStyleClass().add("prof_font");
 		region.getStyleClass().add("prof_grid");
 		region.getChildren().add(temp);
-		g.setConstraints(region, 1, row);
+		g.setConstraints(region, col, row);
 		g.getChildren().add(region);
 	}
 
 	
 	private static void createStats(){		
-		String[] request={"NickName","GamesPlayed","HighScore"};
+		String[] request={"NickName"};
 		ArrayList<String> results=new ArrayList<>();
 		try {
 			//System.out.println(ls.getID());
@@ -82,8 +91,7 @@ public class ProfilePage {
 		}
 		
 		
-	}
-	
+	}	
 	public void getProfileScreen(Stage s){
 		s.setScene(profilePage);
 	}

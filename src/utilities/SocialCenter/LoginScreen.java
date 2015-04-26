@@ -2,6 +2,7 @@ package utilities.SocialCenter;
 
 import java.util.ArrayList;
 
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -90,7 +91,7 @@ public class LoginScreen {
 			ArrayList<String> results=db.get("SELECT Login_id,Login_pass FROM Login WHERE Login_id = '"+id+"' AND Login_pass='"+password+"'","Login_id");
 			if(!results.contains("none")){
 				System.out.println("Login Success");
-				System.out.println(results.get(0));
+				db.createTable(results.get(0));
 				menu=new SocialCenterMenu(results.get(0),WIDTH,HEIGHT);
 				menu.returnScene(myStage);
 				
