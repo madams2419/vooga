@@ -31,7 +31,7 @@ public class Sprite extends ImageView {
     private static final String VELOCITY = "velocity";
     private static final String POSITION = "position";
     private static final String KEY_ACTIONS = "key_actions";
-    private static final String SCALE = "Scale";
+    public static final String SCALE = "Scale";
     private static final String IMAGE_URI = "imageURI";
     private static final String SWITCH_PANE_METHOD = "switchPane";
 
