@@ -15,12 +15,21 @@ public class SceneControlFactory {
 	public SceneControlFactory(SceneControlManager controlManager){
 		myControlManager = controlManager;
 	}
+	
+	public void addControlType(Control control){
+		if(control.getClass().toString().equals("class game_engine.control.KeyControl")){
+			myControlManager.addKeyControl((KeyControl) control); 
+		} else if (control.getClass().toString().equals("class game_engine.control.KeyControl")){
+			myControlManager.addMouseControl((MouseControl) control); 
+		} else {
+			System.out.println("Invalid Control Type");
+		}
+	}
 
 	public SceneControl getControlType(InputEvent event){
 		if(event.getClass().equals(MOUSE_EVENT))
 			return myControlManager.getActiveMouseControl();
 		else
-			System.out.println("First get keycontrol");
 			return myControlManager.getActiveKeyControl();
 	}
 
@@ -32,7 +41,6 @@ public class SceneControlFactory {
 	}
 
 	public Function<KeyEvent, Integer> getKeyEventType(KeyEvent e){
-		KeyControl keyControl = (KeyControl) myControlManager.getActiveKeyControl();
 		if(e.getEventType().equals(KeyEvent.KEY_PRESSED)){
 			return ((KeyControl) myControlManager.getActiveKeyControl()).executePressed();
 		} else if (e.getEventType().equals(KeyEvent.KEY_RELEASED)){

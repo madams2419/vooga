@@ -6,11 +6,11 @@ import game_engine.behaviors.IBehavior;
 import java.util.*;
 import javafx.scene.input.*;
 
-public class SceneControlManager {
+public class SceneControlManager extends ControlManager{
 	private int myActiveKeyControl;
 	private int myActiveMouseControl;
 	private List<KeyControl> myKeyControls;
-	private List<KeyControl> myMouseControls;
+	private List<MouseControl> myMouseControls;
 	private SceneControlFactory myControlFactory; 
 	
 	
@@ -21,11 +21,10 @@ public class SceneControlManager {
 		myMouseControls = new ArrayList<>();
 		myControlFactory = new SceneControlFactory(this);
 	}
-
-	public void addKeyControl(Map<KeyCode, IBehavior> keyPressedMap, Map<KeyCode, IBehavior> keyReleasedMap, Map<KeyCode, IBehavior> keyHeldMap){
-		KeyControl newControl = new KeyControl(keyPressedMap, keyReleasedMap, keyHeldMap, myControlFactory);
-		myKeyControls.add(newControl);
-		myActiveKeyControl++;
+	
+	@Override
+	public void addControl(Control control){
+		myControlFactory.addControlType(control);
 	}
 
 	public void addKeyControl(KeyControl newControl){
@@ -33,6 +32,11 @@ public class SceneControlManager {
 		myActiveKeyControl++;
 	}
 
+	public void addMouseControl(MouseControl newControl){
+		myMouseControls.add(newControl);
+		myActiveMouseControl++;
+	}
+	
 	public IAction setActiveControl(String... indexArray){
 		int keyIndex = Integer.parseInt(indexArray[0]);
 		int mouseIndex = Integer.parseInt(indexArray[1]);
@@ -57,20 +61,11 @@ public class SceneControlManager {
 		myControlFactory.getControlType(event).executeEvent(myControlFactory.getEventType(event));
 	}
 
-	public void handleKeyEvent(KeyCode keycode, boolean pressed){
-		if(myActiveKeyControl < 0){
-			System.out.println("No Control has been added yet!");
-		} else{
-			System.out.println("myActiveC is "+myActiveKeyControl);
-			myKeyControls.get(myActiveKeyControl).executeKeyEvent(keycode, pressed);
-		}
-	}
-	
-	public SceneControl getActiveMouseControl(){
+	public MouseControl getActiveMouseControl(){
 		return myMouseControls.get(myActiveMouseControl);
 	}
 	
-	public SceneControl getActiveKeyControl(){
+	public KeyControl getActiveKeyControl(){
 		return myKeyControls.get(myActiveKeyControl);
 	}
 

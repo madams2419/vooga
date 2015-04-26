@@ -24,12 +24,13 @@ public class ControlTester extends Application{
 	static int track1 = 10;
 	static String action = "do something";
 	static String printout = "Tracking Number is: ";
-	static SceneControlManager cManager = new SceneControlManager();
+	static ControlManager cManager = new SceneControlManager();
 	static Text text1 = new Text(100, 200, printout + track1);
 	static Text text2 = new Text(100, 280, "Let's "+action);
 	static private int activeControl = 0;
 	static private final boolean PRESSED_KEY = true;
 	static private final boolean RELEASED_KEY = false;
+	static private SceneControl keyControl;
 	
 	public static void addTrack(){
 		track1++;
@@ -79,8 +80,8 @@ public class ControlTester extends Application{
 		text2.setFont(new Font(20));
 		s.setScene(scene);
 		keyManipulation();
-		scene.setOnKeyPressed(e -> handleKeyInput(e,PRESSED_KEY, e));
-		scene.setOnKeyReleased(e -> handleKeyInput(e,RELEASED_KEY, e));
+		scene.setOnKeyPressed(e -> ((SceneControlManager) cManager).handleEvent(e));
+		scene.setOnKeyReleased(e -> ((SceneControlManager) cManager).handleEvent(e));
 		s.show();
 	}
 	
@@ -103,34 +104,27 @@ public class ControlTester extends Application{
 		behaviorPool.put("Sub", sub);
 		MultipleBehaviors map1 = new MultipleBehaviors();
 		map1.addBehavior(() -> add.execute(new String[3]));
-		map1.addBehavior(() -> mul.execute(new String[3]));
+		//map1.addBehavior(() -> mul.execute(new String[3]));
 		MultipleBehaviors map2 = new MultipleBehaviors();
 		map2.addBehavior(() -> sub.execute(new String[3]));
-		map2.addBehavior(() -> div.execute(new String[3]));
+		//map2.addBehavior(() -> div.execute(new String[3]));
 		Map<KeyCode, IBehavior> pressMap = new HashMap<>();
 		pressMap.put(KeyCode.UP, map1);
 		pressMap.put(KeyCode.DOWN, map2);
 		Map<KeyCode, IBehavior> releaseMap = new HashMap<>();
         releaseMap.put(KeyCode.UP, null);
         releaseMap.put(KeyCode.DOWN, null);
-		
-		//Map<IAction, String[]> map2 = new LinkedHashMap<IAction, String[]>(){{put(sub, new String[3]); put(div, new String[3]);}};
+		SceneControlFactory sceneCF = new SceneControlFactory((SceneControlManager) cManager);
+		Control c1 = new KeyControl(pressMap, releaseMap, null, sceneCF);
+		cManager.addControl(c1);
+        
+        
+        
+        //Map<IAction, String[]> map2 = new LinkedHashMap<IAction, String[]>(){{put(sub, new String[3]); put(div, new String[3]);}};
 		//Map<KeyCode, Map<IAction, String[]>> pressMap = new HashMap<KeyCode, Map<IAction, String[]>>(){{  put(KeyCode.UP, map1); put(KeyCode.DOWN, map2);}};
 		//Map<KeyCode, Map<IAction, String[]>> releaseMap = new HashMap<KeyCode, Map<IAction, String[]>>(){{  put(KeyCode.DOWN, map2); put(KeyCode.UP, map2);}};
-		cManager.addKeyControl(pressMap, releaseMap, null);
-		
-//		myControl.addBehavior("UP", "Add");
-//		myControl.addBehavior("DOWN", "Sub");
 	}
 
-
-	private void handleKeyInput (KeyEvent e, boolean pressed, InputEvent t) {
-		//System.out.println("The event name is "+t.getEventType());
-		//KeyCode keyCode = e.getCode();
-		//cManager.handleKeyEvent(keyCode, pressed);
-		cManager.handleEvent(e);
-	}
-	
 	public static void updateText(){
 		text1.setText(printout + track1);
 		text2.setText("Let's " + action);
