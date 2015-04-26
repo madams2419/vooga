@@ -52,9 +52,9 @@ public class PixelPerfectDetector implements ICollisionDetector {
         Image imageA = viewA.getImage();
         Image imageB = viewB.getImage();
         
-        double startAX = viewA.getLocalToSceneTransform().getTx();
+        double startAX = viewA.getTranslateX();
         double endAX = startAX + imageA.getWidth();
-        double startBX = viewB.getLocalToSceneTransform().getTx();
+        double startBX = viewB.getTranslateX();
         double endBX = startBX + imageB.getWidth();
         return getMiddle(startAX, endAX, startBX, endBX);
     }
@@ -63,9 +63,9 @@ public class PixelPerfectDetector implements ICollisionDetector {
         Image imageA = viewA.getImage();
         Image imageB = viewB.getImage();
         
-        double startAY = viewA.getLocalToSceneTransform().getTy();
+        double startAY = viewA.getTranslateY();
         double endAY = startAY + imageA.getHeight();
-        double startBY = viewB.getLocalToSceneTransform().getTy();
+        double startBY = viewB.getTranslateY();
         double endBY = startBY + imageB.getHeight();
         return getMiddle(startAY, endAY, startBY, endBY);
     }

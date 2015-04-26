@@ -1,7 +1,8 @@
 package game_engine.collisions;
 
-import java.util.List;
+import game_engine.sprite.Sprite;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CollisionsManager {
 	List<Collision> collisionList;
@@ -20,5 +21,9 @@ public class CollisionsManager {
 	
 	public void addCollision(Collision c){
 		collisionList.add(c);
+	}
+	
+	public void remove (Sprite sprite) {
+	    collisionList.removeIf(collision -> collision.involves(sprite));
 	}
 }
