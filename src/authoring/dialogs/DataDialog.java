@@ -16,6 +16,12 @@ import javafx.scene.input.MouseEvent;
 import authoring.dataEditors.Sprite;
 import authoring.userInterface.DialogGridOrganizer;
 
+/**
+ * Superclass for the dialogs.
+ * 
+ * @author Natalie, Andrew
+ *
+ */
 
 public abstract class DataDialog extends Dialog<ButtonType> {
 

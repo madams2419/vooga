@@ -8,6 +8,7 @@ import java.util.function.Consumer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import authoring.dialogs.AnimationsDialog;
+import authoring.dialogs.CharacterPhysicsDialog;
 import authoring.dialogs.ControlsDialog;
 import authoring.panes.centerPane.CenterPane;
 import authoring.panes.rightPane.RightPane;
@@ -53,6 +54,7 @@ public class Sprite extends ImageView {
     private ImageView myIcon;
     private ControlsDialog myControls;
     private AnimationsDialog myAnimations;
+    private CharacterPhysicsDialog myPhysics;
     private String myType;
     private String myMaterial;
     private Map<Sprite, Map<String, String>> mySpriteInteractionMap;
@@ -295,8 +297,8 @@ public class Sprite extends ImageView {
         return myControls;
     }
 
-    public void setAnimations (AnimationsDialog c) {
-        myAnimations = c;
+    public void setAnimations (AnimationsDialog animations) {
+        myAnimations = animations;
     }
 
     public AnimationsDialog getAnimations () {
@@ -306,6 +308,17 @@ public class Sprite extends ImageView {
         return myAnimations;
     }
 
+    public void setPhysics (CharacterPhysicsDialog physics) {
+        myPhysics = physics;
+    }
+    
+    public CharacterPhysicsDialog getPhysics () {
+        if (myPhysics != null) {
+            return myPhysics;
+        }
+        return myPhysics;
+    }
+    
     public Boolean getPlayable () {
         return isPlayable;
     }

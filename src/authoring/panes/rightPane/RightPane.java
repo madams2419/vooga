@@ -7,14 +7,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
-import authoring.dataEditors.InteractionManager;
 import authoring.dataEditors.Sprite;
 import authoring.dialogs.PhysicsSettingsDialog;
 import authoring.panes.WindowPane;
