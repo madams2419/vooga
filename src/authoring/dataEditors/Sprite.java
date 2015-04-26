@@ -360,5 +360,12 @@ public class Sprite extends ImageView {
     public void setPath (String[] path) {
         myPath = path;
     }
-
+    
+    public String getPath () {
+        String ret = "";
+        for (String point : myPath) {
+            ret += point + " ";
+        }
+        return ret.trim();
+    }
 }
