@@ -97,7 +97,7 @@ public class PhysicsEngine implements IActor {
 
 		/* apply sink correction */
 		double SC_SLOP = 0.01;
-		double SC_PERCENT = 0.5;
+		double SC_PERCENT = 0.005;
 		if(pDepth < SC_SLOP) {
 			return;
 		}
@@ -130,9 +130,7 @@ public class PhysicsEngine implements IActor {
 		return normal.times(implsMag);
 	}
 	
-	
 	protected double computeRestitution(PhysicsObject spriteA, PhysicsObject spriteB) {
 		return Math.min(spriteA.getRestitution(), spriteB.getRestitution());
 	}
-	
 }

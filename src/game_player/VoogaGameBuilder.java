@@ -103,7 +103,7 @@ public class VoogaGameBuilder {
 		}
 		parser.moveUp();
 		
-		level.setCollisionEngine(buildCollisionsManager());
+		level.setCollisionEngine(buildCollisionsManager(engine));
 		level.setControlManager(buildControlsManager());
 		
 		parser.moveUp();
@@ -124,12 +124,12 @@ public class VoogaGameBuilder {
 		}
 		parser.moveUp();
 		
-//		parser.moveDown("global_forces");
-//		for (String label : parser.getValidLabels()) {
-//			String[] vector = parser.getValue(label).split(" ");
-//			engine.addGlobalForce(new Vector(Double.parseDouble(vector[0]), Double.parseDouble(vector[1])));
-//		}
-//		parser.moveUp();
+		parser.moveDown("global_forces");
+		for (String label : parser.getValidLabels()) {
+			String[] vector = parser.getValue(label).split(" ");
+			engine.addGlobalForce(new Vector(Double.parseDouble(vector[0]), Double.parseDouble(vector[1])));
+		}
+		parser.moveUp();
 		
 		parser.moveUp();
 		return engine;
@@ -264,20 +264,20 @@ public class VoogaGameBuilder {
     	return actor;
     }
     
-    private CollisionsManager buildCollisionsManager() {
+    private CollisionsManager buildCollisionsManager(PhysicsEngine engine) {
     	parser.moveDown("collisions");
     	
     	CollisionsManager manager = new CollisionsManager();
     	
     	for (String directory : parser.getValidSubDirectories()) {
-    		manager.addCollision(buildCollision(directory));
+    		manager.addCollision(buildCollision(directory, engine));
     	}
     	
     	parser.moveUp();
     	return manager;
     }
     
-    private Collision buildCollision(String collisionID) {
+    private Collision buildCollision(String collisionID, PhysicsEngine engine) {
     	parser.moveDown(collisionID);
     	
     	String[] sprites = parser.getValue("sprites").split(" ");
@@ -285,7 +285,7 @@ public class VoogaGameBuilder {
     	Sprite b = getSprite(Integer.parseInt(sprites[1]));
     	
     	ICollisionDetector detector = buildDetector();
-    	ICollisionResolver resolver = buildResolver();
+    	ICollisionResolver resolver = buildResolver(engine);
     	
     	Collision collision = new Collision(detector, resolver, a, b);
     	parser.moveUp();
@@ -311,7 +311,7 @@ public class VoogaGameBuilder {
     	return detector;
     }
     
-    private ICollisionResolver buildResolver() {
+    private ICollisionResolver buildResolver(PhysicsEngine engine) {
     	parser.moveDown("resolvers");
     	
     	MultipleResolver resolver = new MultipleResolver();
@@ -321,7 +321,7 @@ public class VoogaGameBuilder {
     		
     		String type = parser.getValue("type");
     		if (type.equals("PhysicalResolver")) {
-    			resolver.addResolver(new PhysicalResolver());
+    			resolver.addResolver(new PhysicalResolver(engine));
     		}
     		else if (type.equals("SimpleResolver")) {
     			resolver.addResolver(new SimpleResolver(buildBehaviorList()));
@@ -365,13 +365,13 @@ public class VoogaGameBuilder {
         		onPressed.addBehavior(keyCode, buildBehaviorList());
         		parser.moveUp();
 
-//        		parser.moveDown("onReleased");
-//        		onReleased.addBehavior(keyCode, buildBehaviorList());
-//        		parser.moveUp();
+        		parser.moveDown("onReleased");
+        		onReleased.addBehavior(keyCode, buildBehaviorList());
+        		parser.moveUp();
 
-//        		parser.moveDown("whilePressed");
-//        		whilePressed.addBehavior(keyCode, buildBehaviorList());
-//        		parser.moveUp();
+        		parser.moveDown("whilePressed");
+        		whilePressed.addBehavior(keyCode, buildBehaviorList());
+        		parser.moveUp();
         		
         		parser.moveUp();
     		}

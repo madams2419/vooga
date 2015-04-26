@@ -2,6 +2,8 @@ package game_engine.sprite;
 
 import game_engine.physics.objects.PhysicsObject;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -32,7 +34,15 @@ public class Animation extends Observable implements Observer {
     	if (!paths.containsKey(state)) {
     		paths.put(state, new ImageLink());
     	}
-    	paths.get(state).add(new Image(imagePath, width, height, false, true), Duration.seconds(delay));
+    	
+    	try {
+			FileInputStream fis = new FileInputStream(imagePath);
+			paths.get(state).add(new Image(fis, width, height, false, true), Duration.seconds(delay));
+		}
+    	catch (FileNotFoundException e) {
+    		e.printStackTrace();
+    		System.exit(0);
+		}
     }
     
     protected class Node {
