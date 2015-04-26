@@ -21,28 +21,12 @@ public class Sprite extends Observable implements IActor {
 	private Map<String, IAction> actions;
 	private PhysicsObject physicsObject;
 	
-	public Sprite(PhysicsObject po, Animation a, String initialState, 
-			Sprite spriteOwner, double initialWorth) {
+	public Sprite(PhysicsObject po, Animation a, String initialState, Sprite spriteOwner, double initialWorth) {
 		state = initialState;
 		physicsObject = po;
 		animation = a;
 		actions = new HashMap<>();
 		owner = spriteOwner;
-		worth = initialWorth;
-		addObserver(animation);
-		addObserver(physicsObject);
-		setChanged();
-		notifyObservers();
-		buildActionMap();
-	}
-	
-	public Sprite(PhysicsObject po, Animation a, String initialState, 
-			double initialWorth) {
-		state = initialState;
-		physicsObject = po;
-		animation = a;
-		actions = new HashMap<>();
-		owner = null;
 		worth = initialWorth;
 		addObserver(animation);
 		addObserver(physicsObject);
@@ -57,9 +41,9 @@ public class Sprite extends Observable implements IActor {
 		actions.put("setState", setState);
 	}
 	
-	public void update(double frameRate) {
-	    physicsObject.update(frameRate);
-	    animation.update(frameRate);
+	public void update(long timeLapse) {
+	    physicsObject.update(timeLapse);
+	    animation.update(timeLapse);
 	}
 	
 	public ImageView getImageView() {

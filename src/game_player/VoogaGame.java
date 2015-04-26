@@ -21,23 +21,23 @@ public class VoogaGame implements IActor {
 	private List<Level> levels;
 	private Level activeLevel;
 	private Group root;
-	private Timeline timeline;
 	private double width, height;
+	private Timeline animation;
 	private ControlsManager controlsManager;
-	private double frameRate;
+	private long lastUpdateTime;
 
-	public VoogaGame(double fr, double w, double h) {
+	public VoogaGame(double fps, double w, double h) {
 		levels = new ArrayList<Level>();
 		root = new Group();
-		frameRate = fr;
-		timeline = new Timeline(getFrame(frameRate));
-		timeline.setCycleCount(Timeline.INDEFINITE);
 		width = w;
 		height = h;
+		animation = new Timeline(fps, getFrame(fps));
+		animation.setCycleCount(Timeline.INDEFINITE);
+		lastUpdateTime = 0l;
 	}
 	
-	private KeyFrame getFrame(double frameRate) {
-		return new KeyFrame(Duration.millis(frameRate), (frame) -> update());
+	private KeyFrame getFrame(double fps) {
+		return new KeyFrame(Duration.millis(fps), (frame) -> update(System.currentTimeMillis()));
 	}
 
 	public void addLevel(Level l) {
@@ -71,9 +71,14 @@ public class VoogaGame implements IActor {
 			sprite.getImageView().toFront();
 		}
 	}
-
-	public void update() {
-		activeLevel.update(frameRate);
+	
+	public void update(long currentTime) {
+		if (lastUpdateTime == 0) {
+			lastUpdateTime = currentTime;
+		}
+		
+		activeLevel.update(currentTime - lastUpdateTime);
+		lastUpdateTime = currentTime;
 	}
 	
 	public void start() {
@@ -86,10 +91,6 @@ public class VoogaGame implements IActor {
 		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.show();
-		timeline.play();
-	}
-
-	public Group getRoot() {
-		return root;
+		animation.play();
 	}
 }

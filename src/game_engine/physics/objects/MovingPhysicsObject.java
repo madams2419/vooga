@@ -40,9 +40,4 @@ public class MovingPhysicsObject extends PhysicsObject {
 	public void applyImpulse(Vector impulse) {
 		set(impulse);
 	}
-
-	@Override
-	public double getRestitution() {
-		return 0;
-	}
 }
