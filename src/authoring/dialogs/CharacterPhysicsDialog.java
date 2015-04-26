@@ -49,8 +49,17 @@ public class CharacterPhysicsDialog extends DataDialog {
     }
 
     private void updateSpritePhysics () {
-        mySprite.setMyType(myTypeBox.getValue());
-        mySprite.setMyMaterial(myMaterialBox.getValue());
+        mySprite.setMyType(findPair(myTypeBox.getValue(), myTypeProperties, myTypeChoices));
+        mySprite.setMyMaterial(findPair(myMaterialBox.getValue(), myMaterialProperties, myMaterialChoices));
+    }
+
+    private String findPair (String value, String[] properties, String[] choices) {
+        for (int i = 0; i < choices.length; i++) {
+            if (value.equals(choices[i])) {
+                return properties[i];
+            }
+        }
+        return null; //should never get here...
     }
 
     @Override
