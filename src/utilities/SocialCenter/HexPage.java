@@ -2,9 +2,7 @@ package utilities.SocialCenter;
 
 import java.util.ArrayList;
 
-import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.input.MouseEvent;
 
 public class HexPage implements IShapePage {
 	private ArrayList<HexTile> hexList = new ArrayList<>();
@@ -27,18 +25,9 @@ public class HexPage implements IShapePage {
 		}
 
 	}
-
-	public void addClickHandler(EventHandler<MouseEvent> e, int position) {
-		hexList.get(position).setOnMouseClicked(e);
-	}
-
-	public void addEnterHandler(EventHandler<MouseEvent> e, int position) {
-		hexList.get(position).setOnMouseEnter(e);
-	}
-
-	public void setOnMouseExit(EventHandler<MouseEvent> e, int position) {
-		hexList.get(position).setOnMouseExit(e);
-
+	
+	public HexTile getPosition(int position){
+		return hexList.get(position);
 	}
 
 	public void addTag(String tag) {
@@ -50,10 +39,9 @@ public class HexPage implements IShapePage {
 		hexList.get(position).getHexagon().setId(id);
 
 	}
-
-	@Override
+	
 	public void addGroup(Group group) {
-		// TODO Auto-generated method stub
+		hexList.forEach(h -> group.getChildren().add(h.getHexagon()));
 
 	}
 

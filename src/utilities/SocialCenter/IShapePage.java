@@ -15,13 +15,6 @@ public interface IShapePage {
 	//Attach shapes to root
 	public void addGroup(Group group);
 	
-	//Handler methods
-	public void addClickHandler(EventHandler<MouseEvent> e, int position);
-
-	public void addEnterHandler(EventHandler<MouseEvent> e, int position);
-	
-	public void setOnMouseExit(EventHandler<MouseEvent> e, int position);
-	
 	
 	//CSS methods
 	public void addTag(String tag);

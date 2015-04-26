@@ -9,3 +9,23 @@
 	-fx-stroke: white;
 	-fx-stroke-width: 7;
 }
+
+.hex0{}
+
+.hex1{-fx-fill: rgba(245, 245,245, .3)}
+
+.hex2{-fx-fill: rgba(255, 0, 0, .3)}
+
+.hex3{-fx-fill: rgba(255, 255, 0, .3)}
+
+.hex4{-fx-fill: rgba(0, 255,0 , .3)}
+
+.hex5{-fx-fill: rgba(0, 255, 255, .3)}
+
+.hex6{-fx-fill: rgba(0, 0, 255, .3)}
+
+.hexHover{
+	-fx-stroke: white;
+	-fx-stroke-width:7;
+	-fx-fill: rgba(255,255,255, 1)
+}
