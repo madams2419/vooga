@@ -1,5 +1,7 @@
 package game_engine.scrolling;
 
+import game_engine.collision.ICollision;
+import game_engine.collision.ICollisionDetector;
 import game_engine.scrolling.tracker.AbstractTracker;
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -8,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -97,24 +100,26 @@ public class SubClassFinder {
         return string.split("(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])");
     }
     
-    public static Map<String, Collection<Class<?>[]>> getConstructors (Class<?> clazz) throws ClassNotFoundException {
-        Map<String, Class<?>> types = findTypes (clazz);
-        Map<String, Collection<Class<?>[]>> constructors = new HashMap<>();
-        types.forEach((name, cls) -> {
-            Collection<Class<?>[]> params = Arrays.asList(cls.getConstructors())
-                .stream()
-                .map(Constructor::getParameterTypes)
-                .collect(Collectors.toList());
-            constructors.put(name, params);
-        });
+    public static Map<String, Map<String, Constructor<?>[]>> getConstructorMap (Class<?>... classes) throws ClassNotFoundException, SecurityException {
+        Map<String, Map<String, Constructor<?>[]>> map = new HashMap<>();
+        for (Class<?> clazz: classes) {
+            map.put(clazz.getSimpleName(), getConstructors(clazz));
+        }
+        return map;
+    }
+    
+    public static Map<String, Constructor<?>[]> getConstructors (Class<?> clazz) throws ClassNotFoundException, SecurityException {
+        Map<String, Constructor<?>[]> constructors = new HashMap<>();
+        for (Entry<String, Class<?>> entry: findTypes(clazz).entrySet()) {
+            constructors.put(entry.getKey(), entry.getValue().getConstructors());
+        }
         return constructors;
     }
 
     public static void main (String[] args) {
         try {
-            System.out.println(findTypes(AbstractTracker.class).keySet());
             XStream x = new XStream (new DomDriver());
-            Map<String, Collection<Class<?>[]>> map= getConstructors(AbstractTracker.class);
+            Map<String, Map<String, Constructor<?>[]>> map= getConstructorMap(ICollision.class);
             System.out.println(x.toXML(map));
         }
         catch (Exception e) {
