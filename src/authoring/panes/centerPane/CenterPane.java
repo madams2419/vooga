@@ -97,6 +97,10 @@ public class CenterPane extends WindowPane {
 	public void removeSprite (Sprite sprite) {
 	    getActiveTab().removeSprite(sprite);
 	}
+	
+	public void toggleMode () {
+            getActiveTab().toggleMode();
+        }
 
 	@Override
 	public Group generateComponents(

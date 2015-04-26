@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import authoring.dialogs.AnimationsDialog;
 import authoring.dialogs.CharacterPhysicsDialog;
 import authoring.dialogs.ControlsDialog;
@@ -62,6 +63,7 @@ public class Sprite extends ImageView {
     private Consumer<Sprite> myOnMouseClickedAction;
 
     private CenterPane myParent;
+    private String[] myPath;
 
     // private final double initialScale = 1.0;
 
@@ -150,15 +152,24 @@ public class Sprite extends ImageView {
 
     @SuppressWarnings("unchecked")
     private void onMouseClicked () {
+        setOnMouseClicked(getClickHandler());
+    }
+    
+    private ClickHandler getClickHandler() {
         try {
-            setOnMouseClicked(new ClickHandler(RightPane.class.getMethod(SWITCH_PANE_METHOD, Sprite.class),
-                                               myParent.getParent().getRightPane(), this));
+            return new ClickHandler(RightPane.class.getMethod(SWITCH_PANE_METHOD, Sprite.class),
+                             myParent.getParent().getRightPane(), this);
         }
         catch (NoSuchMethodException | SecurityException e) {
             e.printStackTrace();
+            return null;
         }
     }
-
+    
+    public void handleMouseClicked(MouseEvent event) {
+        getClickHandler().handle(event);
+    }
+    
     private void setImageIcon (Image image) {
         myIcon.setImage(image);
         ImageEditor.setToAppropriateWidthAndHeight(myIcon, MAX_ICON_WIDTH, MAX_ICON_HEIGHT);
@@ -354,6 +365,10 @@ public class Sprite extends ImageView {
     @Override
     public String toString () {
         return String.format("%s, %s, %s", this.myName, this.myID, this.getImageURI());
+    }
+
+    public void setPath (String[] path) {
+        myPath = path;
     }
 
 }
