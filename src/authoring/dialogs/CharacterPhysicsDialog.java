@@ -1,16 +1,9 @@
 package authoring.dialogs;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import authoring.dataEditors.Sprite;
 import authoring.userInterface.DialogGridOrganizer;
 
@@ -22,90 +15,44 @@ import authoring.userInterface.DialogGridOrganizer;
  */
 public class CharacterPhysicsDialog extends DataDialog {
 
-    private List<Button> myImageAdderButtons;
-    private List<TextField> myTextFields;
-    private List<String> myStates;
-    private List<String> myImageURLs;
-    private Map<String, String> myAnimations;
+    private Label myTypeLabel, myMaterialLabel;
+    private ComboBox<String> myTypeBox, myMaterialBox;
     private Sprite mySprite;
 
-    private static final String ADD_IMAGE = "Set image for state";
-    private static final String STATE = "State";
-    private static final String IMAGE = "Image";
-
-    private static final String IMAGE_CHOOSER_DESCRIPTION = "Image Files";
-    private static final String[] IMAGE_CHOOSER_EXTENSIONS = { "*.png", "*.jpg",
-                                                              "*.gif" };
+    private static final String TYPE = "Type";
+    private static final String MATERIAL = "Material";
 
     public CharacterPhysicsDialog (Sprite sprite) {
         initializeEverything(sprite);
-        initialize(sprite, 3,
-                   new Node[] { new Label(STATE), new Label(IMAGE) }, 1);
+        initialize(sprite, 1, null, 0);
     }
 
-    private Button addImageButton (String label, int index) {
-        return addButton(label, e -> selectImage(index), myImageAdderButtons);
+    @Override
+    public void addAddButton() {
+        // don't make an add button
     }
-
-    private void selectImage (int index) {
-        File selectedImageFile;
-        if ((selectedImageFile =
-                new FileChooserDialog(IMAGE_CHOOSER_DESCRIPTION, IMAGE_CHOOSER_EXTENSIONS)
-                        .initialize()) != null) {
-            myImageURLs.set(index, selectedImageFile.toURI().toString());
-        }
-    }
-
-    public Map<String, String> getAnimations () {
-        return myAnimations;
-    }
-
+    
     @Override
     Consumer<ButtonType> getTodoOnOK () {
         return (response -> {
-            populateStates();
-            populateAnimationsMap();
-            changeSpriteImage();
+            updateSpritePhysics();
         });
     }
 
-    private void changeSpriteImage () {
-        String image = myImageURLs.get(0);
-        if (image.length() > 0) {
-            mySprite.changeImage(image);
-        }
-    }
-
-    private void populateStates () {
-        myStates = new ArrayList<>();
-        for (TextField field : myTextFields) {
-            myStates.add(field.getText());
-        }
-    }
-
-    private void populateAnimationsMap () {
-        myAnimations = new HashMap<>();
-        for (int i = 0; i < myImageAdderButtons.size(); i++) {
-            myAnimations.put(myStates.get(i), myImageURLs.get(i));
-        }
+    private void updateSpritePhysics () {
+        mySprite.setMyType(myTypeBox.getValue());
+        mySprite.setMyMaterial(myMaterialBox.getValue());
     }
 
     @Override
-    void addBlankRow (DialogGridOrganizer grid, int index) {
-        grid.addRowEnd(addTextField(myTextFields), addImageButton(ADD_IMAGE, index));
-        myImageURLs.add(mySprite.getImageURI());
-    }
+    void addBlankRow (DialogGridOrganizer grid, int index) { }
 
     void initializeEverything (Sprite sprite) {
         mySprite = sprite;
-        myTextFields = new ArrayList<>();
-        myImageAdderButtons = new ArrayList<>();
-        myImageURLs = new ArrayList<>();
-    }
-
-    public CharacterPhysicsDialog update () {
-        myImageURLs.set(0, mySprite.getImageURI());
-        return this;
+        myTypeLabel = new Label(TYPE);
+        myMaterialLabel = new Label(MATERIAL);
+        myTypeBox = new ComboBox<String>();
+        myMaterialBox = new ComboBox<String>();
     }
 
 }
