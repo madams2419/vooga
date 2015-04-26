@@ -1,19 +1,15 @@
 package game_engine.scrolling;
 
-import game_engine.collision.ICollision;
-import game_engine.collision.ICollisionDetector;
-import game_engine.scrolling.tracker.AbstractTracker;
+import game_engine.collisions.resolvers.ICollisionResolver;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
@@ -119,7 +115,7 @@ public class SubClassFinder {
     public static void main (String[] args) {
         try {
             XStream x = new XStream (new DomDriver());
-            Map<String, Map<String, Constructor<?>[]>> map= getConstructorMap(ICollision.class);
+            Map<String, Map<String, Constructor<?>[]>> map= getConstructorMap(ICollisionResolver.class);
             System.out.println(x.toXML(map));
         }
         catch (Exception e) {

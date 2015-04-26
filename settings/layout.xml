@@ -1,52 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layout name="authoring_environment">
-	<BottomPane>
-	<buttons>
+	<panes.BottomPane>
+		<buttons>
 			<Button>
-			 	<X>1</X>
-			 	<Y>0</Y>
+				<X>1</X>
+				<Y>0</Y>
 				<label>Map Settings</label>
 				<listener>switchToMapSettingPane</listener>
 			</Button>
 			<Button>
 				<X>0</X>
-			 	<Y>0</Y>
+				<Y>0</Y>
 				<label>Global Settings</label>
 				<listener>switchToGlobalSettingPane</listener>
 			</Button>
 			<Button>
-			 	<X>2</X>
-			 	<Y>0</Y>
-				<label>Interactions List</label>
-				<listener>InteractionCreate</listener>
+				<X>0</X>
+				<Y>0</Y>
+				<label>Physics</label>
+				<listener>showPhysicsSettings</listener>
 			</Button>
 			<Button>
 				<X>0</X>
-			 	<Y>3</Y>
+				<Y>0</Y>
+				<label>Objectives</label>
+				<listener>switchToObjectivePane</listener>
+			</Button>
+			<Button>
+				<X>0</X>
+				<Y>3</Y>
 				<label>Characters</label>
 				<listener>switchToCharacterCreationPane</listener>
 			</Button>
 			<Button>
 				<X>0</X>
-			 	<Y>4</Y>
+				<Y>4</Y>
 				<label>Blocks</label>
 				<listener>switchToBlockCreationPane</listener>
 			</Button>
 			<Button>
 				<X>0</X>
-			 	<Y>5</Y>
+				<Y>5</Y>
 				<label>Decorations</label>
-				<listener>DecorationCreate</listener>
+				<listener>switchToDecorationCreationPane</listener>
 			</Button>
 			<Button>
 				<X>0</X>
-			 	<Y>6</Y>
+				<Y>6</Y>
+				<label>Objects</label>
+				<listener>switchToObjectCreationPane</listener>
+			</Button>
+			<Button>
+				<X>0</X>
+				<Y>7</Y>
 				<label>UI Controls</label>
 				<listener>UIControlCreate</listener>
 			</Button>
 		</buttons>
-	</BottomPane>
-	<TopPane>
+	</panes.BottomPane>
+	<panes.TopPane>
 		<dropdowns>
 			<Dropdown>
 				<X>0</X>
@@ -91,5 +103,5 @@
 				<listener0>null</listener0>
 			</Dropdown>
 		</dropdowns>
-	</TopPane>
+	</panes.TopPane>
 </layout>
