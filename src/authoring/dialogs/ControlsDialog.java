@@ -13,8 +13,6 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseButton;
 import authoring.dataEditors.Sprite;
 import authoring.fileBuilders.KeyAction_XML;
 import authoring.panes.rightPane.RightPane;
