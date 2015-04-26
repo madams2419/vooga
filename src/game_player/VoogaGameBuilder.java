@@ -143,7 +143,7 @@ public class VoogaGameBuilder {
 		PhysicsObject physObj = buildPhysicsObject(animation, engine, hitboxes);
 		String initialState = parser.getValue("initial_state");
 		
-		Sprite sprite = new Sprite(physObj, animation, initialState);
+		Sprite sprite = new Sprite(physObj, animation, initialState, null, 0);
 		
 		parser.moveUp();
 		return sprite;
