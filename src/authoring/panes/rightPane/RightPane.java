@@ -1,19 +1,18 @@
 package authoring.panes.rightPane;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
-import authoring.dataEditors.InteractionManager;
 import authoring.dataEditors.Sprite;
 import authoring.dialogs.PhysicsSettingsDialog;
 import authoring.panes.WindowPane;
@@ -35,7 +34,8 @@ public class RightPane extends WindowPane {
     private static final String DECORATION_IMAGE_PATH = "authoring_images/decorations";
     private static final String BLOCK_IMAGE_PATH = "authoring_images/blocks";
     private static final String CHARACTER_IMAGE_PATH = "authoring_images/characters";
-
+    private static final String OTHER_IMAGE_PATH = "authoring_images/other";
+    
     private EditingPane myCurrentContent;
 
     private final static int SPACING = 20;
@@ -45,12 +45,13 @@ public class RightPane extends WindowPane {
     private List<String> availableBlockTypeURIs;
     private List<String> availableDecorationTypeURIs;
     private List<String> availableObjectTypeURIs;
+    private List<String> miscellaneousImages;
     
     private ObjectivePane myObjectives;
     
     public RightPane (Scene scene, AuthoringWindow window) {
         super(scene, new VBox(SPACING), window);
-        System.out.printf("Instantiated %s%n", this.getClass().getName());
+//        System.out.printf("Instantiated %s%n", this.getClass().getName());
         getContainer().getStylesheets().add(CSS);
         getContainer().setPadding(new Insets(PADDING));
         ((VBox) getContainer()).setAlignment(Pos.TOP_CENTER);
@@ -64,21 +65,27 @@ public class RightPane extends WindowPane {
         availableBlockTypeURIs = new ArrayList<>();
         availableDecorationTypeURIs = new ArrayList<>();
         availableObjectTypeURIs = new ArrayList<>();
+        miscellaneousImages = new ArrayList<>();
 
         initializeAvailableTypes(availableCharacterTypeURIs, CHARACTER_IMAGE_PATH);
         initializeAvailableTypes(availableBlockTypeURIs, BLOCK_IMAGE_PATH);
         initializeAvailableTypes(availableDecorationTypeURIs, DECORATION_IMAGE_PATH);
         initializeAvailableTypes(availableObjectTypeURIs, OBJECT_IMAGE_PATH);
+        initializeAvailableTypes(miscellaneousImages, OTHER_IMAGE_PATH);
     }
 
     public void switchToCharacterEditingPane (Sprite sprite) {
-        switchToPane(new CharacterEditingPane(myScene, this, sprite));
+        switchToPane(new CharacterEditingPane(myScene, this, sprite, miscellaneousImages));
     }
     
     void deleteSprite (Sprite sprite) {
         getParent().getCenterPane().removeSprite(sprite);
-        InteractionManager.getInstance().removeSpriteInteractions(sprite);
+        //InteractionManager.getInstance().removeSpriteInteractions(sprite);
         switchToCharacterCreationPane();
+    }
+    
+    void toggleMode () {
+        getParent().getCenterPane().toggleMode();
     }
 
     public void switchToCharacterCreationPane () {
@@ -97,12 +104,12 @@ public class RightPane extends WindowPane {
         switchToPane(new CreationPane(myScene, this, availableObjectTypeURIs));
     }
 
-    public void switchToInteractionEditingPane (Sprite sprite1, Sprite sprite2) {
+    public void switchToInteractionEditingPane (Sprite sprite1, Sprite sprite2) throws IOException {
         if (!(myCurrentContent instanceof InteractionEditingPane)
             && (sprite1 != sprite2)) // checking memory address
             switchToPane(new InteractionEditingPane(myScene, this, sprite1,
                                                     sprite2, getListOfInteractions()));
-        printOutInteractions();
+        //printOutInteractions();
     }
     
     public void switchToObjectivePane() {
@@ -117,7 +124,7 @@ public class RightPane extends WindowPane {
     }
 
     private void printOutInteractions () {
-        InteractionManager.getInstance().printOut();
+        //InteractionManager.getInstance().printOut();
     }
 
     public void UIControlCreate () {
@@ -128,7 +135,7 @@ public class RightPane extends WindowPane {
         switchToPane(new DefaultEditingPane(myScene, this));
     }
 
-    public void switchPane (Sprite s) {
+    public void switchPane (Sprite s) throws IOException {
         if (AuthoringWindow.getControl())
             switchToInteractionEditingPane((Sprite) AuthoringWindow.getCurrentlySelected(), s);
         else if (this.myParent.getSpriteWaiting()){

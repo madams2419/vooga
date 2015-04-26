@@ -1,0 +1,14 @@
+<sprites>
+	<sprite_0>
+		<path>
+			<startX>0</startX>
+			<startY>0</startY>
+			<control1X>20</control1X>
+			<control1Y>80</control1Y>
+			<control1X>20</control1X>
+			<control1Y>80</control1Y>
+			<endX>100</endX>
+			<endY>100</endY>
+		</path>
+	</sprite_0>
+</sprites>

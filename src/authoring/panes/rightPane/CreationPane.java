@@ -37,14 +37,6 @@ public class CreationPane extends EditingPane {
     
     CreationPane (Scene scene, RightPane parent, List<String> availableTypeURIs) {
         super(scene, parent);
-//        this.getChildren().add(
-//                               new TextArea(String
-//                                       .format("Information%n"
-//                                               + "when a drop down%n" + "item is selected, or%n"
-//                                               + "a current element on%n" + "the scroll pane is%n"
-//                                               + "selected (up to two%n"
-//                                               + "selections), its (their)%n"
-//                                               + "information will be%n" + "shown here.")));
         addHelpLabel();
         myAvailableTypeURIs = availableTypeURIs;
         addSpritesToPane();
