@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -33,6 +34,7 @@ public class ProfilePage {
 	private double myWidth;
 	private double myHeight;
 	private Stage myStage;
+	private Scene myMenu;
 
 	// CSS
 	private static final String CSS = "styles/profile.css";
@@ -55,11 +57,20 @@ public class ProfilePage {
 	private static final int POP_WIDTH = 500;
 	private static final int POP_HEIGHT = 150;
 	
+	//BACK BUTTON
+	private static final String BACK_BUTTON = "http://eingleses.com/wp-content/uploads/2014/03/duke-footer-logo.png";
+	private static final double BACK_X = -225;
+	private static final double BACK_Y = -225;
+	private static final double BACK_WIDTH = 150;
+	private static final double BACK_HEIGHT = 75;
+	
 	/**
+	 * @param menu 
 	 * @param args
 	 */
 
-	public ProfilePage(String id, double WIDTH, double HEIGHT) {
+	public ProfilePage(String id, double WIDTH, double HEIGHT, Scene menu) {
+		myMenu = menu;
 		ID = id;
 		myWidth = WIDTH;
 		myHeight = HEIGHT;
@@ -67,6 +78,23 @@ public class ProfilePage {
 		createGUI();
 		profileImage();
 		createStats();
+		createBackButton();
+	}
+
+	private void createBackButton() {
+		ImageView backButton = new ImageView(new Image(BACK_BUTTON));
+		backButton.setTranslateX(BACK_X);
+		backButton.setTranslateY(BACK_Y);
+		backButton.setFitWidth(BACK_WIDTH);
+		backButton.setFitHeight(BACK_HEIGHT);
+		
+		backButton.setOnMouseClicked(e->backMenu());
+		root.getChildren().add(backButton);
+		
+	}
+
+	private void backMenu() {
+		myStage.setScene(myMenu);
 	}
 
 	private void initialize(double width, double height) {

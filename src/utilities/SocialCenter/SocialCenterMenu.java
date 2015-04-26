@@ -32,7 +32,7 @@ public class SocialCenterMenu {
 
 	// image url
 	private static final String PROFILE = "http://media.philly.com/images/20080510_kutcher_300.jpg";
-	private static final String BACK_BUTTON = "http://devlup.com/wp-content/uploads/2010/07/droid-logo-light-blue.png";
+	private static final String BACK_BUTTON = "http://th07.deviantart.net/fs70/PRE/f/2014/002/7/1/kr_vector___duke_mark_by_malunis-d6yqn8j.png";
 
 	private double WIDTH;
 	private double HEIGHT;
@@ -101,7 +101,7 @@ public class SocialCenterMenu {
 
 	// CENTER BUTTON
 	private void goProfilePage() {
-		pp = new ProfilePage(ID, WIDTH, HEIGHT);
+		pp = new ProfilePage(ID, WIDTH, HEIGHT, myMenu);
 		pp.getProfileScreen(myStage);
 	}
 
