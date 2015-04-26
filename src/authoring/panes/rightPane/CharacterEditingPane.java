@@ -62,7 +62,7 @@ class CharacterEditingPane extends EditingPane {
         addAnimations(sprite, miscellaneousImages.get(0));
         addPhysics(sprite, miscellaneousImages.get(1));
 //        addPhysics(sprite, miscellaneousImages.get(1));
-//        setFields(this.getChildren(), sprite.getCharacteristics());
+        setFields(this.getChildren(), sprite.getCharacteristics());
 
         addPlayableCheckBox(addControlsButton(sprite), sprite);
         addUpdateButton(sprite);
