@@ -1,5 +1,0 @@
-1) add "params" to interactions pane, because each of their commands require some number of params
-2) make our xml file readable by engine (They are using XStream)
-3) (to be done by engine_ Properties file containing the list of interactions/characters
-4) define a new sprite in authoring environment
-5) finish refactoring
