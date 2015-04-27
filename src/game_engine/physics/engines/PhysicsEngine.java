@@ -53,7 +53,6 @@ public class PhysicsEngine implements IActor {
 	}
 	
 	public void resolveCollision(SimplePhysicsObject spriteA, SimplePhysicsObject spriteB) {
-		spriteA.setMinYVelocity(0);
-		spriteB.setMinYVelocity(0);
+		
 	}
 }

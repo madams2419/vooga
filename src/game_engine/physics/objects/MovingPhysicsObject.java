@@ -17,10 +17,7 @@ public abstract class MovingPhysicsObject extends PhysicsObject {
 	public MovingPhysicsObject(PhysicsEngine physEng, Map<String, List<IHitbox>> hb, Vector position, Animation animation) {
 		super(physEng, hb, position, animation);
 		velocity = new Vector(0 ,0);
-		maxXVelocity = Double.MAX_VALUE;
-		maxYVelocity = Double.MAX_VALUE;
-		minXVelocity = Double.MIN_VALUE;
-		minYVelocity = Double.MIN_VALUE;
+		resetBounds();
 	}
 	
 	public Vector getVelocity() {
@@ -33,9 +30,19 @@ public abstract class MovingPhysicsObject extends PhysicsObject {
 	}
 	
 	protected void setVelocity(Vector vel) {
-		vel.setX(vel.getX() > maxXVelocity ? maxXVelocity : vel.getX() < minXVelocity ? minXVelocity : vel.getX());
-		vel.setY(vel.getY() > maxYVelocity ? maxYVelocity : vel.getY() < minYVelocity ? minYVelocity : vel.getY());
+		vel = vel.setX(vel.getX() > maxXVelocity ? maxXVelocity : vel.getX());
+		vel = vel.setX(vel.getX() < minXVelocity ? minXVelocity : vel.getX());
+		vel = vel.setY(vel.getY() > maxYVelocity ? maxYVelocity : vel.getY());
+		vel = vel.setY(vel.getY() < minYVelocity ? minYVelocity : vel.getY());
 		velocity = vel;
+		resetBounds();
+	}
+	
+	private void resetBounds() {
+		maxXVelocity = Double.POSITIVE_INFINITY;
+		maxYVelocity = Double.POSITIVE_INFINITY;
+		minXVelocity = Double.NEGATIVE_INFINITY;
+		minYVelocity = Double.NEGATIVE_INFINITY;
 	}
 	
 	public void setMinXVelocity(double min) {
@@ -47,11 +54,11 @@ public abstract class MovingPhysicsObject extends PhysicsObject {
 	}
 	
 	public void setMaxXVelocity(double max) {
-		minXVelocity = max;
+		maxXVelocity = max;
 	}
 	
 	public void setMaxYVelocity(double max) {
-		minYVelocity = max;
+		maxYVelocity = max;
 	}
 	
 	protected void incrementVelocity(Vector amount) {
