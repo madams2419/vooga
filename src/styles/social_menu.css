@@ -2,10 +2,29 @@
  	-fx-background-image: url("https://i1.creativecow.net/u/11128/out_of_focus.jpg");
     -fx-background-size: auto;
     -fx-background-position: center center;
-    
 }
 
 .hex{
 	-fx-stroke: white;
 	-fx-stroke-width: 7;
+}
+
+.hex0{}
+
+.hex1{-fx-fill: rgba(255, 0,255, .4)}
+
+.hex2{-fx-fill: rgba(255, 0, 0, .4)}
+
+.hex3{}
+
+.hex4{-fx-fill: rgba(0, 255,0 , .4)}
+
+.hex5{-fx-fill: rgba(0, 255, 255, .4)}
+
+.hex6{-fx-fill: rgba(0, 0, 255, .4)}
+
+.hexHover{
+	-fx-stroke: white;
+	-fx-stroke-width:7;
+	-fx-fill: rgba(255,255,255, 1)
 }

@@ -130,5 +130,4 @@ public class Level {
 		return mySprites;
 	}
 	
-	
 }

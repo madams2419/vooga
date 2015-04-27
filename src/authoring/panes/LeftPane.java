@@ -16,7 +16,7 @@ public class LeftPane extends WindowPane {
 
 	public LeftPane(Scene scene, AuthoringWindow myParent) {
 		super(scene, new VBox(), myParent);
-		System.out.printf("Instantiated %s%n", this.getClass().getName());
+//		System.out.printf("Instantiated %s%n", this.getClass().getName());
 	}
 
 	@Override

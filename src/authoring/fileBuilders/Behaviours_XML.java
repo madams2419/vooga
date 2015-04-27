@@ -18,6 +18,19 @@ public class Behaviours_XML {
 		this.parameters = parameters;
 	}
 	
+	public Behaviours_XML(String targetType, String targetIndex, String name, String parameters) {
+		this(targetType, targetIndex, name, parameters.split(" "));	
+	}
+	
+	public Behaviours_XML(String... params){
+		if(params.length == 4){
+			this.targetType = params[0];
+			this.targetIndex = params[1];
+			this.name = params[2];
+			this.parameters = Arrays.copyOfRange(params,3,4);                                                               
+		}
+	}
+	
 	public void writeToXML(Element parent, int index, XMLBuilder xml){
 		Element currentBehaviour = xml.add(parent, "behaviour_"+index);
 		xml.addChildWithValue(currentBehaviour, "targetType", targetType);

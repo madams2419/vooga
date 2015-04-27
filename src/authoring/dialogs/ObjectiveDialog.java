@@ -14,7 +14,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import authoring.dataEditors.Sprite;
+import authoring.fileBuilders.Objective_XML;
 import authoring.panes.rightPane.ObjectivePane;
 import authoring.userInterface.DialogGridOrganizer;
 
@@ -31,20 +33,26 @@ public class ObjectiveDialog extends Dialog<ButtonType> {
 	private List<ComboBox<String>> mPrereqs = new ArrayList<>();
 	private List<ComboBox<String>> mSprites = new ArrayList<>();
 	private List<ComboBox<String>> mStates = new ArrayList<>();
+	private List<TextField> mParams = new ArrayList<>();
+	private TextField myDescription;
 
 	private ObjectivePane myParent;
+
 	private int myIndex;
 	private int selected;
 
 	public ObjectiveDialog(ObjectivePane parent, int objectiveNumber) {
 		myParent = parent;
 
-		DialogGridOrganizer grid = new DialogGridOrganizer(4);
+		DialogGridOrganizer grid = new DialogGridOrganizer(5);
+		grid.addRowEnd(new Label("Description"),
+				myDescription = new TextField());
 		grid.addRowEnd(new Label("Complete/Failed"), new Label("Sprite"),
-				new Label("Action"), new Label("Pre-requisites"));
+				new Label("Action"), new Label("Parameters"), new Label(
+						"Pre-requisites"));
 
 		grid.addRowEnd(addStatesBox(), addSpritesBox(0), addActionsBox(),
-				addPrereqsBox());
+				addTextField(), addPrereqsBox());
 		this.getDialogPane().setContent(grid);
 		ButtonType b = new ButtonType("Add");
 		this.getDialogPane().getButtonTypes()
@@ -54,7 +62,7 @@ public class ObjectiveDialog extends Dialog<ButtonType> {
 		addButton.addEventFilter(ActionEvent.ACTION, event -> {
 			this.setHeight(this.getHeight() + BOTTOM_SPACING);
 			grid.addRowEnd(addStatesBox(), addSpritesBox(mSprites.size()),
-					addActionsBox(), addPrereqsBox());
+					addActionsBox(), addTextField(), addPrereqsBox());
 			event.consume();
 		});
 		this.setTitle(String.format("Objective %d Behaviours",
@@ -67,9 +75,14 @@ public class ObjectiveDialog extends Dialog<ButtonType> {
 				.filter(response -> response == ButtonType.OK)
 				.ifPresent(
 						response -> {
+							Map<String, List<String>> res = collectBehaviours();
+							Objective_XML newObjective = new Objective_XML(
+									myDescription.getText());
+							newObjective.addOnComplete(res.get("onComplete"), null);
+							newObjective.addOnFailed(res.get("onFailed"), null);
+							newObjective.addPrereqs(res.get("prereqs"));
 							myParent.getMyParent().getParent().getCenterPane()
-									.getActiveTab()
-									.addObjective(myIndex, collectBehaviours());
+									.getActiveTab().addObjective(newObjective);
 						});
 	}
 
@@ -79,9 +92,10 @@ public class ObjectiveDialog extends Dialog<ButtonType> {
 		mResult.put("onFailed", new ArrayList<String>());
 		mResult.put("prereqs", new ArrayList<String>());
 		for (int i = 0; i < mActions.size(); i++) {
-			String action = String.format("%s:%s", mSprites.get(i)
+			String action = String.format("%s:%s:%s", mSprites.get(i)
 					.getSelectionModel().getSelectedItem(), mActions.get(i)
-					.getSelectionModel().getSelectedItem());
+					.getSelectionModel().getSelectedItem(), mParams.get(i)
+					.getText());
 			mResult.get(mStates.get(i).getSelectionModel().getSelectedItem())
 					.add(action);
 			mResult.get("prereqs").add(
@@ -123,6 +137,12 @@ public class ObjectiveDialog extends Dialog<ButtonType> {
 				}).collect(Collectors.toList()));
 		mPrereqs.add(b);
 		return b;
+	}
+
+	private TextField addTextField() {
+		TextField t = new TextField();
+		mParams.add(t);
+		return t;
 	}
 
 	public void setSprite(Sprite s) {
