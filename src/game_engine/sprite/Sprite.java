@@ -21,20 +21,18 @@ public class Sprite extends Observable implements IActor {
 	private String state;
 	private Sprite owner; // null if no owner
 	private double worth;
-	private double health;
 	private Animation animation;
 	private Map<String, IAction> actions;
 	private PhysicsObject physicsObject;
 	
 	public Sprite(PhysicsObject po, Animation a, String initialState, 
-			Sprite spriteOwner, double initialWorth,double initialHealth) {
+			Sprite spriteOwner, double initialWorth) {
 		state = initialState;
 		physicsObject = po;
 		animation = a;
 		actions = new HashMap<>();
 		owner = spriteOwner;
 		worth = initialWorth;
-		health = initialHealth;
 		addObserver(animation);
 		addObserver(physicsObject);
 		setChanged();
@@ -43,14 +41,13 @@ public class Sprite extends Observable implements IActor {
 	}
 	
 	public Sprite(PhysicsObject po, Animation a, String initialState, 
-			double initialWorth, double initialHealth) {
+			double initialWorth) {
 		state = initialState;
 		physicsObject = po;
 		animation = a;
 		actions = new HashMap<>();
 		owner = null;
 		worth = initialWorth;
-		health = initialHealth;
 		addObserver(animation);
 //		addObserver(physicsObject);
 		setChanged();
@@ -120,7 +117,7 @@ public class Sprite extends Observable implements IActor {
 	
 	/**
 	 * method getWorth()
-	 * @return the amount (points) associated with the sprite
+	 * @return the amount (points) assiociated with the sprite
 	 */
 	public Double getWorth(){
 		return worth;
@@ -143,20 +140,6 @@ public class Sprite extends Observable implements IActor {
 	 */
 	private void incrementScore(double value){
 		worth += value;
-	}
-	
-	@IActionAnnotation(numParams = 1, description = "adds to health")
-	private IAction incrementHealth = (params) -> {
-		incrementHealth(Double.parseDouble(params[0]));
-	};
-	
-	/**
-	 * method increment
-	 * @param value
-	 * adds amount value to your current health
-	 */
-	private void incrementHealth(double value){
-		health+= value;
 	}
 
 	@IActionAnnotation(numParams = 2, description = "moves sprite forward in an x, y vector direction")

@@ -11,7 +11,6 @@ import java.util.Properties;
 /**
  * class to read properties file and return map of integer id to map of key, value pairs
  * adapted from www.avajava.com
- * @author Emre Sonmez
  */
 public class ReadProperties {
 	private Map<Integer,Map<String,String>> properties;

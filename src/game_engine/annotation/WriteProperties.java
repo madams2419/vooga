@@ -10,7 +10,6 @@ import java.util.Properties;
  * WriteProperties wp = new WriteProperties();
  * wp.addProperty("description", jump action);
  * wp.writeToFile("Actions.properties");
- * @author Emre Sonmez
  */
 public class WriteProperties {
 	private Properties properties;
