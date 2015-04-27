@@ -36,7 +36,8 @@ public class SimplePhysicsObject extends AcceleratingPhysicsObject {
 	}
 	
 	public void update(double timeLapse) {
-		incrementAcceleration(force.times(computeInverseMass()));
+		setAcceleration(force.times(computeInverseMass()));
+		incrementAcceleration(getEngine().getGlobalAccel().times(getMass() * computeInverseMass()));
 		super.update(timeLapse);
 	}
 	

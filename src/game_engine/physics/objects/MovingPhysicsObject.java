@@ -17,7 +17,7 @@ public abstract class MovingPhysicsObject extends PhysicsObject {
 	
 	public MovingPhysicsObject(PhysicsEngine physEng, Map<String, List<IHitbox>> hb, Vector position, Animation animation) {
 		super(physEng, hb, position, animation);
-		velocity = new Vector(0 ,0);
+		velocity = new Vector(0, 0);
 		resetBounds();
 	}
 	

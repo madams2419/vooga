@@ -23,8 +23,7 @@ public class ComplexPhysicsObject extends SimplePhysicsObject {
 		Vector totalForce = getForce().plus(
 				getEngine().getGlobalForce()).plus(
 						getEngine().getDependentForces().apply(getHitbox().getArea(), getVelocity()));
-		super.setAcceleration(totalForce.times(computeInverseMass()));
-		super.incrementAcceleration(getEngine().getGlobalAccel().times(getMass() * computeInverseMass()));
+		setForce(totalForce);
 		super.update(frameRate);
 	}
 	
