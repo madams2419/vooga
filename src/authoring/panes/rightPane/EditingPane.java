@@ -1,13 +1,17 @@
 package authoring.panes.rightPane;
 
 import java.util.List;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import authoring.dataEditors.Sprite;
 import authoring.userInterface.ClickHandler;
@@ -52,15 +56,31 @@ public class EditingPane extends VBox {
         this.getChildren().add(b);
     }
     
-    Button createButton(Sprite sprite, String label, EventHandler<ActionEvent> onAction) {
+    Button createButton(String label, EventHandler<ActionEvent> onAction) {
         Button button = new Button(label);
         button.setOnAction(onAction);
         this.getChildren().add(button);
         return button;
     }
     
+    
+    TextField addLabeledTextField(String label){
+      HBox h = new HBox(10);
+      TextField text = new TextField();
+      Label l = new Label(label);
+      h.getChildren().addAll(l, text);
+      getChildren().add(h);
+      return text;
+    }
+    
+    TextField addLabeledTextField(String label, String defaultText){
+      TextField result = addLabeledTextField(label);
+      result.setText(defaultText);
+      return result;
+    }
+    
     Button createButton(Sprite sprite, String label, EventHandler<ActionEvent> onAction, String image) {
-        Button b = createButton(sprite, label, onAction);
+        Button b = createButton(label, onAction);
         b.setGraphic(new ImageView(image));
         return b;
     }
