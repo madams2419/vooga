@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.NodeType;
 
 
 /**
@@ -204,6 +205,7 @@ public class XMLParser {
             pathName += component + "/";
         }
         setActivePath(getActivePath() + pathName);
+        System.out.println(activePath);
     }
 
     /**
@@ -260,20 +262,29 @@ public class XMLParser {
      * Recursively builds the Directory tree and populates the map.
      */
     private void read (Node node, String path, Directory parent) {
-        if (node.getChildNodes().getLength() == 1) {
+        if (node.getNodeType() != Node.TEXT_NODE) {
             xml.put(path + "/" + node.getNodeName(), node.getTextContent());
-        }
-        else if (node.getChildNodes().getLength() == 0 && !node.getNodeName().equals("#text")) {
-            Directory child = new Directory(node.getNodeName());
-            parent.addSubDirectory(child);
-            xml.put(path + "/" + node.getNodeName(), "");
-        }
-        else if (!node.getNodeName().equals("#text")) {
             Directory child = new Directory(node.getNodeName());
             parent.addSubDirectory(child);
             for (int i = 0; i < node.getChildNodes().getLength(); i++) {
                 read(node.getChildNodes().item(i), path + "/" + node.getNodeName(), child);
             }
         }
+        // else if (node.getChildNodes().getLength() == 0 && !node.getNodeName().equals("#text")) {
+        // Directory child = new Directory(node.getNodeName());
+        // parent.addSubDirectory(child);
+        // xml.put(path + "/" + node.getNodeName(), "");
+        // }
+        // else if (!node.getNodeName().equals("#text")) {
+        // Directory child = new Directory(node.getNodeName());
+        // parent.addSubDirectory(child);
+        // for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+        // read(node.getChildNodes().item(i), path + "/" + node.getNodeName(), child);
+        // }
+        // }
+    }
+
+    public static void main (String[] args) {
+        XMLParser x = new XMLParser(new File("output/test.xml"));
     }
 }

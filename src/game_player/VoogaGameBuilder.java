@@ -1,12 +1,5 @@
 package game_player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import javafx.scene.input.KeyCode;
 import game_engine.Level;
 import game_engine.behaviors.Behavior;
 import game_engine.behaviors.IAction;
@@ -44,6 +37,14 @@ import game_engine.physics.objects.MovingPhysicsObject;
 import game_engine.physics.objects.PhysicsObject;
 import game_engine.sprite.Animation;
 import game_engine.sprite.Sprite;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import javafx.scene.input.KeyCode;
 
 public class VoogaGameBuilder {
 	
@@ -68,7 +69,9 @@ public class VoogaGameBuilder {
 		
 		parser.moveDown("level");
 		for (String directory : parser.getValidSubDirectories()) {
+		    if (directory.startsWith("level")) {
 			game.addLevel(buildLevel(directory));
+		    }
 		}
 		
 		int start = Integer.parseInt(parser.getValue("first_level"));
@@ -238,7 +241,7 @@ public class VoogaGameBuilder {
     }
     
     private IBehavior buildBehaviorList() {
-        parser.moveDown("behaviors");
+        parser.moveDown("behaviours");
         MultipleBehaviors behaviors = new MultipleBehaviors();
         for (String directory : parser.getValidSubDirectories()) {
             behaviors.addBehavior(buildBehavior(directory));
@@ -259,7 +262,9 @@ public class VoogaGameBuilder {
     }
     
     private IActor getActor(String id) {
+        System.out.println(id);
     	String[] details = id.split("_");
+    	System.out.println(Arrays.asList(details));
     	IActor actor = details[0].startsWith("sprite") ? sprites.get(Integer.parseInt(details[1])) : details[0].startsWith("objective") ? objectives.get(Integer.parseInt(details[1])) : null;
     	return actor;
     }
@@ -340,6 +345,7 @@ public class VoogaGameBuilder {
     
     private ControlsManager buildControlsManager() {
     	parser.moveDown("controls");
+    	System.out.println(parser.getValue("active_scheme"));
     	
     	int startIndex = Integer.parseInt(parser.getValue("active_scheme"));
     	
