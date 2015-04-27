@@ -42,26 +42,18 @@ public class Sprite extends ImageView {
     public static final String SCALE = "Scale";
     public static final double OPACITY_REDUCTION_RATIO = 0.5;
 
-    private Map<String, String> myPosition;
-    private Map<String, String> myVelocity;
-    private Map<String, String> myKeyActions;
-    private Map<String, String> myCharacteristics;
+    private Map<String, String> myPosition, myVelocity, myKeyActions, myCharacteristics;
 
     private int myID;
-    private int myCurrentScore;
     private double myScale;
     private boolean isPlayable = false;
-    private String myName;
     private ImageView myIcon;
     private ControlsDialog myControls;
     private AnimationsDialog myAnimations;
     private CharacterPhysicsDialog myPhysics;
-    private String myType;
-    private String myMaterial;
+    private String myName, myType, myMaterial;
     private Map<Sprite, Map<Action, String>> mySpriteInteractionMap;
-    private Map<Sprite, Interaction> myInteractions;
     private Consumer<Sprite> myOnMouseClickedAction;
-
     private CenterPane myParent;
     private String[] myPath;
 
@@ -82,12 +74,10 @@ public class Sprite extends ImageView {
         myCharacteristics.put(SCALE, String.valueOf(myScale));
         myIcon = new ImageView();
         changeImage(imageURI);
-        myCurrentScore = 0;
     }
 
     public Sprite (CenterPane parent) {
         myParent = parent;
-        myInteractions = new HashMap<>(); // TODO: not needed?
         myPosition = new HashMap<>();
         myVelocity = new HashMap<>();
         mySpriteInteractionMap = new HashMap<>();
@@ -192,15 +182,7 @@ public class Sprite extends ImageView {
         setXPosition(myPosition.get(X_STRING));
         setYPosition(myPosition.get(Y_STRING));
     }
-
-    public void setScore (int score) {
-        myCurrentScore = score;
-    }
-
-    public int getScore () {
-        return myCurrentScore;
-    }
-
+    
     public void setScale (double scale) {
 
         this.setScaleX(scale);
@@ -266,10 +248,8 @@ public class Sprite extends ImageView {
     }
 
     public void addInteraction (Sprite otherSprite, Map<Action, String> interaction) {
-    	//mySpriteInteractionMap.getOrDefault(otherSprite, interaction);
     	mySpriteInteractionMap.putIfAbsent(otherSprite, interaction);
         mySpriteInteractionMap.replace(otherSprite, interaction);
-        String s = "buffer";
     }
 
     @SuppressWarnings("unchecked")

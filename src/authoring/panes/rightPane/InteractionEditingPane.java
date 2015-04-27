@@ -1,6 +1,8 @@
 package authoring.panes.rightPane;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -47,8 +49,14 @@ public class InteractionEditingPane extends EditingPane {
         addSpriteToPane(sprite2);
         getChildren().add(list2);
         addInteractionParams("Update Interaction Params");
+        
+        List<String> collisionChoices = Arrays.asList("Simple", "Pixel Perfect", "HitBox");
+        addComboBoxToPane(collisionChoices, "Simple");
+        
         addButtonToUpdate(updateButtonString);
         addButtonToReturnToCreationPane(doneButtonString);
+        
+
     }
 
     private void getInteractions(Sprite s, ObservableList<String> list){

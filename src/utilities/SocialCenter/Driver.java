@@ -27,7 +27,7 @@ public class Driver {
 					array.add(result.getString(strings[i]));	
 				}	
 			}
-			if(result.first()==false){
+			if(result.first()){
 				array.add("none");
 			}
 			return array;
