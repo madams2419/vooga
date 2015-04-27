@@ -25,7 +25,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -106,6 +109,7 @@ public class ChatPage {
 	
 	
 	private void createFeed(String game){
+		//TEXT FIELD
 		TextField textArea=new TextField();	
 		int frameRate=2;
 		
@@ -114,22 +118,34 @@ public class ChatPage {
 		animation.setCycleCount(Animation.INDEFINITE);
 		animation.getKeyFrames().add(frame);
 		animation.play();
-		
-		Popup getChatName=new Popup();
-		Label instr=new Label("Add me a chat name");
-		TextField name=new TextField();
-		Button submit=new Button();
-		getChatName.getContent().addAll(instr,name,submit);
-		submit.setOnMouseClicked(e->getChatID(getChatName,name));
-		getChatName.show(myStage,Width/2,Height/2);
-		
+		nameGUI();
 		textArea.setOnKeyPressed(e->AddLine(e,chatName,textArea,game));	
-		root.getChildren().addAll(myChat,textArea);
+		VBox chatBox = new VBox();
+		chatBox.getChildren().addAll(myChat,textArea);
+		root.getChildren().addAll(chatBox);
+		
+		//scrolling
+		myChat.scrollTo(myChat.getItems().size()-1);
 	}
 	
-	private void getChatID(Popup c,TextField t){
+	private void nameGUI(){
+		Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(myStage);
+        HBox dialogHbox = new HBox(20);
+		Label instr=new Label("Add me a chat name");
+		TextField name=new TextField();
+		Button submit=new Button("Set Name");
+        dialogHbox.getChildren().addAll(instr,name,submit);
+        Scene dialogScene = new Scene(dialogHbox, 500, 50);
+        dialog.setScene(dialogScene);
+        dialog.show();
+		submit.setOnMouseClicked(e->getChatID(dialog,name));
+	}
+	
+	private void getChatID(Stage dialog,TextField t){
 		chatName=t.getText();
-		c.hide();
+		dialog.close();
 	}
 	
 	private void AddLine(KeyEvent k, String chatname,TextField textArea, String game){

@@ -86,7 +86,14 @@ public class SocialCenterMenu {
 		myHexPage.getPosition(6).setOnMouseClicked(e->goChatPage());
 		Image chat = new Image(CHAT);
 		myHexPage.getPosition(6).getHexagon()
-				.setFill(new ImagePattern(chat));	
+				.setFill(new ImagePattern(chat));
+		
+		//STATSPAGE
+		myHexPage.getPosition(2).setOnMouseClicked(e->goScorePage());
+		Image score = new Image(CHAT);
+		myHexPage.getPosition(2).getHexagon()
+				.setFill(new ImagePattern(score));
+		
 		myRoot.getChildren().add(myHexGroup);
 	}
 
