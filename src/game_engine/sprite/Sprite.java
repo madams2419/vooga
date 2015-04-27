@@ -115,7 +115,7 @@ public class Sprite extends Observable implements IActor {
 	
 	/**
 	 * method getWorth()
-	 * @return the amount (points) assiociated with the sprite
+	 * @return the amount (points) associated with the sprite
 	 */
 	public Double getWorth(){
 		return worth;
