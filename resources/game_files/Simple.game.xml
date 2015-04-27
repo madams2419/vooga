@@ -594,6 +594,9 @@
 					</resolvers>
 				</collision_5>
 			</collisions>
-		</level_0>
+			<sprite_paths>
+				<path_0>
+					<id>4</id>
+					<values>10 10 100 100 300 100 500 100</values></path_0></sprite_paths></level_0>
 	</level>
 </game>

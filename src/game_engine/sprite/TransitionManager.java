@@ -37,6 +37,14 @@ public class TransitionManager {
        myParams = params;
    }
    
+   public List<String[]> getParams(){
+       return myParams;
+   }
+   
+   public List<PathTransition> getTransitions(){
+       return myTransitions;
+   }
+   
    public void initialize(int seconds){
        for(int i = 0;i<mySprites.size();i++){
            
@@ -51,12 +59,14 @@ public class TransitionManager {
            myGroup.getChildren().add(sprite.getImageView());
            Path path = new Path();
            path.getElements().addAll(myTransitionMap.get(sprite));
+           sprite.getAnimation().setFollowing();
            PathTransition pt = initializePath((Node) sprite.getImageView(),path,seconds);
            myTransitions.add(pt);
        });
    }
    
    public void playTransitions(){
+       
        myTransitions.forEach(transition ->{
            transition.play();
        });

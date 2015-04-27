@@ -5,10 +5,9 @@ import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.controls.ControlsManager;
 import game_engine.sprite.Sprite;
-
+import game_engine.sprite.TransitionManager;
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
@@ -25,6 +24,7 @@ public class VoogaGame implements IActor {
 	private double width, height;
 	private ControlsManager controlsManager;
 	private double frameRate;
+	private TransitionManager transitionManager;
 
 	public VoogaGame(double fr, double w, double h) {
 		levels = new ArrayList<Level>();
@@ -70,9 +70,22 @@ public class VoogaGame implements IActor {
 			Sprite sprite = activeLevel.getSprites().get(0);
 			sprite.getImageView().toFront();
 		}
+		transitionManager.playTransitions();
+	}
+	
+	public void setTransitionManager(TransitionManager manager){
+	    transitionManager =manager; 
+	}
+	
+	public TransitionManager getTransitionManager(){
+	    return transitionManager;
 	}
 
 	public void update() {
+	transitionManager.getTransitions().forEach(transition->{
+	        System.out.println(transition.getNode().getTranslateX());
+	           System.out.println(transition.getNode().getTranslateY()); 
+	});
 		activeLevel.update(frameRate);
 	}
 	

@@ -82,6 +82,11 @@ public abstract class PhysicsObject extends Observable implements Observer {
 	protected PhysicsEngine getEngine() {
 		return engine;
 	}
+	
+	public void setPosition(Vector pos) {
+	    xPosition = pos.getX();
+	    yPosition = pos.getY();
+	}
 
 	/**
 	 * Allows for the position of the PhysicsObject to be changed in some way.
