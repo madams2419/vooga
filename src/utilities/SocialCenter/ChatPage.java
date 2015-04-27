@@ -5,9 +5,7 @@ package utilities.SocialCenter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
-import java.util.Timer;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -15,7 +13,6 @@ import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -29,7 +26,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -39,21 +35,15 @@ import javafx.util.Duration;
  */
 public class ChatPage {
 	private Stage myStage;
-	private Scene myMenu;
 	private String ID;
 	private Scene chatScreen;
 	private ListView<String> myChat=new ListView<>();
-	private double Width;
-	private double Height;
 	private StackPane root=new StackPane();
 	private Driver db=new Driver();
 	private String chatName;
 	
 	ChatPage(String id, double width, double height, Scene menu){
-		myMenu = menu;
 		ID=id;
-		Width=width;
-		Height=height;
 		initialize(width,height);
 		gameList();
 	}
@@ -78,7 +68,7 @@ public class ChatPage {
 		
 	}
 	
-	private void createComboBox(Set g){
+	private void createComboBox(Set<String> g){
 		ArrayList<String> games=new ArrayList<>(g);
 		ObservableList<String> observable=FXCollections.observableArrayList(games);
 		ComboBox<String> comboBox=new ComboBox<>(observable);
@@ -96,7 +86,7 @@ public class ChatPage {
 		
 	}
 	
-	private void chatData(ComboBox comboBox){
+	private void chatData(ComboBox<String> comboBox){
 		String game=comboBox.getSelectionModel().getSelectedItem().toString();
 		try {		
 			db.createChat("Chat",game);

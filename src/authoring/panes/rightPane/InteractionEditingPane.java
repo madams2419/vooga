@@ -32,7 +32,7 @@ public class InteractionEditingPane extends EditingPane {
 			.observableArrayList();
 
     InteractionEditingPane (Scene scene, RightPane parent, Sprite sprite1,
-                            Sprite sprite2, List<String> actionPossibilities) throws IOException {
+                            Sprite sprite2) throws IOException {
         super(scene, parent);
 		ListView<String> list1 = new ListView<>(mySprite1Interactions);
 		ListView<String> list2 = new ListView<>(mySprite2Interactions);

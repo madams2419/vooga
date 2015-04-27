@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import javafx.geometry.Insets;
@@ -24,7 +23,7 @@ import authoring.userInterface.AuthoringWindow;
  * edit a particular character, to edit the interactions between characters, and
  * to create new characters.
  * 
- * @author Natalie Chanfreau, Daniel Luker
+ * @author Natalie Chanfreau, Daniel Luker, Andrew Sun
  *
  */
 
@@ -41,17 +40,13 @@ public class RightPane extends WindowPane {
     private final static int SPACING = 20;
     private final static int PADDING = 10;
     private final static String CSS = "styles/right_pane.css";
-    private List<String> availableCharacterTypeURIs;
-    private List<String> availableBlockTypeURIs;
-    private List<String> availableDecorationTypeURIs;
-    private List<String> availableObjectTypeURIs;
-    private List<String> miscellaneousImages;
+    private List<String> availableCharacterTypeURIs, availableBlockTypeURIs, 
+    availableDecorationTypeURIs, availableObjectTypeURIs, miscellaneousImages;
     
     private ObjectivePane myObjectives;
     
     public RightPane (Scene scene, AuthoringWindow window) {
         super(scene, new VBox(SPACING), window);
-//        System.out.printf("Instantiated %s%n", this.getClass().getName());
         getContainer().getStylesheets().add(CSS);
         getContainer().setPadding(new Insets(PADDING));
         ((VBox) getContainer()).setAlignment(Pos.TOP_CENTER);
@@ -80,7 +75,6 @@ public class RightPane extends WindowPane {
     
     void deleteSprite (Sprite sprite) {
         getParent().getCenterPane().removeSprite(sprite);
-        //InteractionManager.getInstance().removeSpriteInteractions(sprite);
         switchToCharacterCreationPane();
     }
     
@@ -108,8 +102,7 @@ public class RightPane extends WindowPane {
         if (!(myCurrentContent instanceof InteractionEditingPane)
             && (sprite1 != sprite2)) // checking memory address
             switchToPane(new InteractionEditingPane(myScene, this, sprite1,
-                                                    sprite2, getListOfInteractions()));
-        //printOutInteractions();
+                                                    sprite2));
     }
     
     public void switchToObjectivePane() {
@@ -121,10 +114,6 @@ public class RightPane extends WindowPane {
     public void switchToObjectivesPane(Sprite s) {
     	switchToPane(myObjectives);
     	myObjectives.returnFromSpriteSelection(s);
-    }
-
-    private void printOutInteractions () {
-        //InteractionManager.getInstance().printOut();
     }
 
     public void UIControlCreate () {
@@ -154,7 +143,6 @@ public class RightPane extends WindowPane {
     }
 
     public void switchToGlobalSettingPane () {
-        // switchToPane(new CharacterEditingPane(myScene, new Sprite()));
         switchToPane(new GlobalCreationPane(myScene, this));
     }
 
@@ -196,11 +184,6 @@ public class RightPane extends WindowPane {
                                                      myCurrentContent.getChildren());
     }
 
-    // TEMPORARY!!
-    private List<String> getListOfInteractions () {
-        return Arrays.asList(new String[] { "jump", "die", "go to new level",
-                                           "hit box" });
-    }
 
     @Override
     public Group generateComponents (ArrayList<Map<String, Map<String, String>>> values) {

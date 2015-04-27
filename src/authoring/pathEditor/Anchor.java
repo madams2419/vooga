@@ -6,7 +6,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.CubicCurve;
-import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
 /**
  * 
@@ -60,17 +59,11 @@ public class Anchor extends Circle {
           @Override public void handle(MouseEvent mouseEvent) {
             double newX = mouseEvent.getX() + dragDelta.x;
             if (newX > 0 && newX < getScene().getWidth()) {
-//                setTranslateX(newX+10);
               setCenterX(newX);
-//              setTranslateX(getTranslateX());
-//                setTranslateX(newX);
             }  
             double newY = mouseEvent.getY() + dragDelta.y;
             if (newY > 0 && newY < getScene().getHeight()) {
-//                setTranslateY(newY+ 10);
               setCenterY(newY);
-//              setTranslateY(getTranslateY());
-//                setTranslateY(newY);
             }  
             
             mouseEvent.consume();
