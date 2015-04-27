@@ -12,7 +12,8 @@ public abstract class MovingPhysicsObject extends PhysicsObject {
 	
 	private Vector velocity;
 	
-	private double maxXVelocity, minXVelocity, maxYVelocity, minYVelocity;
+	private double maxMajorVelocity, minMajorVelocity, maxMinorVelocity, minMinorVelocity;
+	private Vector majorAxis, minorAxis;
 	
 	public MovingPhysicsObject(PhysicsEngine physEng, Map<String, List<IHitbox>> hb, Vector position, Animation animation) {
 		super(physEng, hb, position, animation);
@@ -30,35 +31,59 @@ public abstract class MovingPhysicsObject extends PhysicsObject {
 	}
 	
 	protected void setVelocity(Vector vel) {
-		vel = vel.setX(vel.getX() > maxXVelocity ? maxXVelocity : vel.getX());
-		vel = vel.setX(vel.getX() < minXVelocity ? minXVelocity : vel.getX());
-		vel = vel.setY(vel.getY() > maxYVelocity ? maxYVelocity : vel.getY());
-		vel = vel.setY(vel.getY() < minYVelocity ? minYVelocity : vel.getY());
-		velocity = vel;
+		Vector majorComponent = majorAxis.times(majorAxis.dot(vel) / Math.pow(majorAxis.getMagnitude(), 2));
+		Vector minorComponent = minorAxis.times(minorAxis.dot(vel) / Math.pow(minorAxis.getMagnitude(), 2));
+		
+		double sign = majorAxis.dot(majorComponent) / Math.abs(majorAxis.dot(majorComponent));
+		double magnitude = majorComponent.getMagnitude();
+		double inverseMagnitude = magnitude == 0 ? 0 : 1.0/magnitude;
+		majorComponent = majorComponent.times(sign * majorComponent.getMagnitude() > maxMajorVelocity ? maxMajorVelocity : 
+											  sign * majorComponent.getMagnitude() < minMajorVelocity ? minMajorVelocity : majorComponent.getMagnitude());
+		majorComponent = majorComponent.times(inverseMagnitude);
+		
+		sign = minorAxis.dot(minorComponent) / Math.abs(minorAxis.dot(minorComponent));
+		magnitude = minorComponent.getMagnitude();
+		inverseMagnitude = magnitude == 0 ? 0 : 1.0/magnitude;
+		minorComponent = minorComponent.times(sign * minorComponent.getMagnitude() > maxMinorVelocity ? maxMinorVelocity : 
+											  sign * minorComponent.getMagnitude() < minMinorVelocity ? minMinorVelocity : minorComponent.getMagnitude());
+		minorComponent = minorComponent.times(inverseMagnitude);
+		
+		velocity = majorComponent.plus(minorComponent);
+		
 		resetBounds();
 	}
 	
 	private void resetBounds() {
-		maxXVelocity = Double.POSITIVE_INFINITY;
-		maxYVelocity = Double.POSITIVE_INFINITY;
-		minXVelocity = Double.NEGATIVE_INFINITY;
-		minYVelocity = Double.NEGATIVE_INFINITY;
+		maxMajorVelocity = Double.POSITIVE_INFINITY;
+		maxMinorVelocity = Double.POSITIVE_INFINITY;
+		minMajorVelocity = Double.NEGATIVE_INFINITY;
+		minMinorVelocity = Double.NEGATIVE_INFINITY;
+		majorAxis = new Vector(1, 0);
+		minorAxis = new Vector(0, 1);
 	}
 	
-	public void setMinXVelocity(double min) {
-		minXVelocity = min;
+	public void setMajorAxis(Vector dir) {
+		majorAxis = dir;
 	}
 	
-	public void setMinYVelocity(double min) {
-		minYVelocity = min;
+	public void setMinorAxis(Vector dir) {
+		minorAxis = dir;
 	}
 	
-	public void setMaxXVelocity(double max) {
-		maxXVelocity = max;
+	public void setMinMajorVelocity(double min) {
+		minMajorVelocity = min;
 	}
 	
-	public void setMaxYVelocity(double max) {
-		maxYVelocity = max;
+	public void setMinMinorVelocity(double min) {
+		minMinorVelocity = min;
+	}
+	
+	public void setMaxMajorVelocity(double max) {
+		maxMajorVelocity = max;
+	}
+	
+	public void setMaxMinorVelocity(double max) {
+		maxMinorVelocity = max;
 	}
 	
 	protected void incrementVelocity(Vector amount) {
