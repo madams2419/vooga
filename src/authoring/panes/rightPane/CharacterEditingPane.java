@@ -38,13 +38,10 @@ class CharacterEditingPane extends EditingPane {
     private static final String[] IMAGE_CHOOSER_EXTENSIONS = { "*.png", "*.jpg", "*.gif" };
     private static final String
             CREATE_PATH = "",
-            UPDATE = "Update",
             DUPLICATE = "Duplicate",
             DELETE = "Delete",
             ADD_CONTROLS = "",
             PLAYABLE = "Playable",
-            NAME = "name",
-            POSITION = "position",
             ADD_ANIMATIONS = "",
             ADD_PHYSICS = "",
             IMAGE_LABEL = "Click on the image to change it!",
@@ -58,34 +55,35 @@ class CharacterEditingPane extends EditingPane {
             PATH1 = 3,
             PATH2 = 4;
     private String[] pathButtonContent;
-
-    private List<HBox> myFields = new LinkedList<>();
+    private TextField myDurationField, myDelayField;
 
     CharacterEditingPane (Scene scene,
                           RightPane parent,
                           Sprite sprite,
                           List<String> miscellaneousImages) {
         super(scene, parent);
-        // ======================== New design in here ===================== //
-        addSpriteIcon(sprite);
-        addLabel(IMAGE_LABEL);
-        addAnimations(sprite, miscellaneousImages.get(ANIMATIONS));
-        addPhysics(sprite, miscellaneousImages.get(PHYSICS));
-        // setFields(this.getChildren(), sprite.getCharacteristics());
-
-        pathButtonContent = new String[] { miscellaneousImages.get(PATH1), miscellaneousImages.get(PATH2)};
-        addCreatePathButton(sprite, miscellaneousImages.get(PATH1));
-        addPlayableCheckBox(addControlsButton(sprite, miscellaneousImages.get(CONTROLS)), sprite);
-
-        addDuplicateButton(sprite);
-        addDeleteButton(sprite);
-       // addUpdateButton(sprite);
-
-        // ================================================================= //
+        initializeButtons(sprite, miscellaneousImages);
+    }
+    
+    private void initializeButtons(Sprite sprite, List<String> miscellaneousImages){
+      addSpriteIcon(sprite);
+      addLabel(IMAGE_LABEL);
+      addAnimations(sprite, miscellaneousImages.get(ANIMATIONS));
+      addPhysics(sprite, miscellaneousImages.get(PHYSICS));
+      pathButtonContent = new String[] { miscellaneousImages.get(PATH1), miscellaneousImages.get(PATH2)};
+      addCreatePathButton(sprite, miscellaneousImages.get(PATH1));
+      myDurationField = addLabeledTextField("Path Duration", "5");
+      myDelayField = addLabeledTextField("Path Delay", "0");
+      myDurationField.setDisable(true);
+      myDelayField.setDisable(true);
+      addPlayableCheckBox(addControlsButton(sprite, miscellaneousImages.get(CONTROLS)), sprite);
+//      addUpdateButton(sprite);
+      addDuplicateButton(sprite);
+      addDeleteButton(sprite);
     }
 
     private void addDuplicateButton (Sprite sprite) {
-        createButton(sprite, DUPLICATE, e -> duplicateSprite(sprite));
+        createButton(DUPLICATE, e -> duplicateSprite(sprite));
     }
 
     private void duplicateSprite (Sprite sprite) {
@@ -112,7 +110,7 @@ class CharacterEditingPane extends EditingPane {
     }
 
     private void addDeleteButton (Sprite sprite) {
-        createButton(sprite, DELETE, e -> getMyParent().deleteSprite(sprite));
+        createButton(DELETE, e -> getMyParent().deleteSprite(sprite));
     }
 
     private void addCreatePathButton (Sprite sprite, String image) {
@@ -121,16 +119,15 @@ class CharacterEditingPane extends EditingPane {
             getMyParent().toggleMode();
             myModeIndex = 1 - myModeIndex;
             b.setGraphic(new ImageView(pathButtonContent[myModeIndex]));
+            myDurationField.setDisable(false);
+            myDelayField.setDisable(false);
+            // TODO: grab info and put into XML here
         });
     }
 
     private void addLabel (String string) {
         Label label = new Label(string);
         getChildren().add(label);
-    }
-
-    private void addUpdateButton (Sprite sprite) {
-        createButton(sprite, UPDATE, e -> updateSprite(sprite));
     }
 
     private Button addControlsButton (Sprite sprite, String image) {
@@ -163,27 +160,6 @@ class CharacterEditingPane extends EditingPane {
         }
     }
 
-    private void updateSprite (Sprite sprite) {
-        myFields.forEach(hbox -> {
-            String s, t;
-            sprite.setCharacteristic(
-                                     (s = ((Text) hbox.getChildren().get(0)).getText()),
-                                     (t = ((TextField) hbox.getChildren().get(1)).getText()));
-            switch (s) {
-                case POSITION:
-                    sprite.setPosition(FrontEndUtils.stringToMap(t));
-                    break;
-                case NAME:
-                    sprite.setName(t);
-                    break;
-                case Sprite.SCALE:
-                    sprite.setScale(Double.parseDouble(t));
-                    break;
-            }
-
-        });
-    }
-
     private void addSpriteIcon (Sprite sprite) {
         ImageView spriteIcon = sprite.getIcon();
         spriteIcon.setOnMouseClicked(i -> spriteIconClicked(sprite));
@@ -212,16 +188,4 @@ class CharacterEditingPane extends EditingPane {
             sprite.changeImage(selectedImageFile.toURI().toString());
         }
     }
-
-    private void setFields (ObservableList<Node> parent,
-                            Map<String, String> fields) {
-        fields.forEach( (label, value) -> {
-            HBox h = new HBox(5);
-            h.getChildren().addAll(new Text(label),
-                                   new javafx.scene.control.TextField(value));
-            parent.add(h);
-            myFields.add(h);
-        });
-    }
-
 }
