@@ -50,12 +50,6 @@
 				<label>Objects</label>
 				<listener>switchToObjectCreationPane</listener>
 			</Button>
-			<Button>
-				<X>0</X>
-				<Y>7</Y>
-				<label>UI Controls</label>
-				<listener>UIControlCreate</listener>
-			</Button>
 		</buttons>
 	</panes.BottomPane>
 	<panes.TopPane>
