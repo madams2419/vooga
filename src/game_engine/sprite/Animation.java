@@ -25,8 +25,6 @@ public class Animation extends Observable implements Observer {
     private double timeElapsed;
     private double lastUpdateTime;
     private double height;
-    
-    boolean hasPath = false;
 
     public Animation(double h) {
     	image = new ImageView();
@@ -151,10 +149,7 @@ public class Animation extends Observable implements Observer {
     		// do nothing
     	}
     }
-    
-    public void setFollowing(){
-        hasPath = !hasPath;
-    }
+  
     
     /**
      * method changePosition
@@ -163,11 +158,10 @@ public class Animation extends Observable implements Observer {
      * sprite as contained in the physics object
      */
     private void changePosition(Observable source) {
-    	try {      if(!hasPath){
+    	try { 
     		PhysicsObject physicsObject = (PhysicsObject) source;
     		image.setTranslateX(physicsObject.getXPosition());
     		image.setTranslateY(height - physicsObject.getYPosition() - image.getImage().getHeight());
-    	}
     	}
     	catch (Exception e) {
     		// do nothing

@@ -5,10 +5,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
+import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.shape.CubicCurveTo;
@@ -25,14 +32,14 @@ import javafx.util.Duration;
 public class TransitionManager {
     private Group myGroup;
     private Map<Sprite,List<PathElement>> myTransitionMap;
-    private List<PathTransition> myTransitions;
+    private List<SequentialTransition> myTransitions;
     private List<Sprite> mySprites;
     private List<String[]> myParams;
     
    public TransitionManager(Group group, ArrayList<Sprite> sprites,ArrayList<String[]> params){
        myGroup = group;
        myTransitionMap = new HashMap<Sprite,List<PathElement>>();
-       myTransitions = new ArrayList<PathTransition>();
+       myTransitions = new ArrayList<SequentialTransition>();
        mySprites = sprites;
        myParams = params;
    }
@@ -41,7 +48,7 @@ public class TransitionManager {
        return myParams;
    }
    
-   public List<PathTransition> getTransitions(){
+   public List<SequentialTransition> getTransitions(){
        return myTransitions;
    }
    
@@ -59,8 +66,8 @@ public class TransitionManager {
            myGroup.getChildren().add(sprite.getImageView());
            Path path = new Path();
            path.getElements().addAll(myTransitionMap.get(sprite));
-           sprite.getAnimation().setFollowing();
-           PathTransition pt = initializePath((Node) sprite.getImageView(),path,seconds);
+           sprite.getPhysicsObject().ignorePhysics(sprite.getAnimation());
+           SequentialTransition pt = initializePath((Node) sprite.getImageView(),path,seconds);
            myTransitions.add(pt);
        });
    }
@@ -72,15 +79,22 @@ public class TransitionManager {
        });
    }
    
-   private PathTransition initializePath (Node object, Path path, int seconds) {
+   private SequentialTransition initializePath (Node object, Path path, int seconds) {
        PathTransition pathTr = new PathTransition();
        pathTr.setDuration(Duration.seconds(seconds));
        pathTr.setPath(path);
        pathTr.setNode(object);
        pathTr.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-       pathTr.setCycleCount(Timeline.INDEFINITE);
        pathTr.setAutoReverse(true);
-       return pathTr;
+       
+       PauseTransition pause = new PauseTransition(Duration.seconds(1));
+       pause.setAutoReverse(true);
+
+      SequentialTransition seqTran = new SequentialTransition(pause,pathTr);
+      seqTran.setCycleCount(Timeline.INDEFINITE);
+      seqTran.setAutoReverse(true);
+      
+       return seqTran;
 
    }
    

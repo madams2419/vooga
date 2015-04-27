@@ -82,10 +82,10 @@ public class VoogaGame implements IActor {
 	}
 
 	public void update() {
-	transitionManager.getTransitions().forEach(transition->{
-	        System.out.println(transition.getNode().getTranslateX());
-	           System.out.println(transition.getNode().getTranslateY()); 
-	});
+//	transitionManager.getTransitions().forEach(transition->{
+//	        System.out.println(transition.getNode().getTranslateX());
+//	           System.out.println(transition.getNode().getTranslateY()); 
+//	});
 		activeLevel.update(frameRate);
 	}
 	
