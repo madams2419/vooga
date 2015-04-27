@@ -17,13 +17,16 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -41,6 +44,7 @@ public class ChatPage {
 	private double Height;
 	private StackPane root=new StackPane();
 	private Driver db=new Driver();
+	private String chatName;
 	
 	ChatPage(String id, double width, double height, Scene menu){
 		myMenu = menu;
@@ -103,17 +107,29 @@ public class ChatPage {
 	
 	private void createFeed(String game){
 		TextField textArea=new TextField();	
-		int frameRate=1;
+		int frameRate=2;
+		
 		KeyFrame frame=start(frameRate,game);
 		Timeline animation=new Timeline();
 		animation.setCycleCount(Animation.INDEFINITE);
 		animation.getKeyFrames().add(frame);
 		animation.play();
-		Scanner s=new Scanner(System.in);
-		System.out.println("Please insert your chatname");
-		String chatname=s.next();
-		textArea.setOnKeyPressed(e->AddLine(e,chatname,textArea,game));	
+		
+		Popup getChatName=new Popup();
+		Label instr=new Label("Add me a chat name");
+		TextField name=new TextField();
+		Button submit=new Button();
+		getChatName.getContent().addAll(instr,name,submit);
+		submit.setOnMouseClicked(e->getChatID(getChatName,name));
+		getChatName.show(myStage,Width/2,Height/2);
+		
+		textArea.setOnKeyPressed(e->AddLine(e,chatName,textArea,game));	
 		root.getChildren().addAll(myChat,textArea);
+	}
+	
+	private void getChatID(Popup c,TextField t){
+		chatName=t.getText();
+		c.hide();
 	}
 	
 	private void AddLine(KeyEvent k, String chatname,TextField textArea, String game){
