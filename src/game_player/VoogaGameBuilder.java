@@ -1,12 +1,5 @@
 package game_player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import javafx.scene.input.KeyCode;
 import game_engine.Level;
 import game_engine.behaviors.Behavior;
 import game_engine.behaviors.IAction;
@@ -42,6 +35,15 @@ import game_engine.physics.objects.ComplexPhysicsObject;
 import game_engine.physics.objects.SimplePhysicsObject;
 import game_engine.sprite.Animation;
 import game_engine.sprite.Sprite;
+import game_engine.sprite.TransitionManager;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import javafx.scene.Group;
+import javafx.scene.input.KeyCode;
 
 public class VoogaGameBuilder {
 	
@@ -103,9 +105,38 @@ public class VoogaGameBuilder {
 		
 		level.setCollisionEngine(buildCollisionsManager(engine));
 		level.setControlManager(buildControlsManager());
+		game.setTransitionManager(buildTransitionManager(game.getRoot()));
+		game.getTransitionManager().initialize();
+		game.getTransitionManager().getParams().forEach(param->{
+		    System.out.println(Arrays.toString(param));
+		});
+		game.getTransitionManager().playTransitions();
 		
 		parser.moveUp();
 		return level;
+	}
+	
+	private TransitionManager buildTransitionManager(Group group) {
+	    parser.moveDown("sprite_paths");
+	    ArrayList<Sprite> pathSprites = new ArrayList<>();
+	    ArrayList<String[]> pathValues = new ArrayList<>();
+	    ArrayList<Integer> durations = new ArrayList<>();
+	    ArrayList<Integer> delays = new ArrayList<>();
+	    for (String directory: parser.getValidSubDirectories()) {
+	        parser.moveDown(directory);
+	        int id = Integer.parseInt(parser.getValue("id"));
+	        Sprite sprite = sprites.get(id);
+	        String[] values = parser.getValue("values").split(" ");
+	        pathSprites.add(sprite);
+	        pathValues.add(values);
+	         int duration = Integer.parseInt(parser.getValue("duration"));
+	         durations.add(duration);
+	         int delay = Integer.parseInt(parser.getValue("delay"));
+	         delays.add(delay);
+	        parser.moveUp();
+	    }
+	    parser.moveUp();
+	    return new TransitionManager(group,pathSprites,pathValues,durations,delays);
 	}
 	
 	private PhysicsEngine buildPhysicsEngine() {
@@ -224,7 +255,7 @@ public class VoogaGameBuilder {
             if (directory.toLowerCase().startsWith("on")) {
                 parser.moveDown(directory);
                 IBehavior behavior = buildBehaviorList();
-                objective.setBehavior(directory.substring(2, directory.length()), behavior);
+                objective.setBehavior(directory.substring(2, directory.length() - 1), behavior);
                 parser.moveUp();
             }
         }

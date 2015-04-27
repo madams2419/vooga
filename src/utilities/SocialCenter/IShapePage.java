@@ -1,8 +1,6 @@
 package utilities.SocialCenter;
 
-import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.input.MouseEvent;
 /**
  * 
  * @author Michael Lee

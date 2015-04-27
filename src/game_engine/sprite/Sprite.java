@@ -48,6 +48,10 @@ public class Sprite extends Observable implements IActor {
 	public void update(long timeLapse) {
 	    physicsObject.update(timeLapse);
 	    animation.update(timeLapse);
+	
+	}
+	public Animation getAnimation(){
+	    return animation;
 	}
 	
 	/**
