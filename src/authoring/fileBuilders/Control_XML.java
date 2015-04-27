@@ -1,56 +1,55 @@
 package authoring.fileBuilders;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.w3c.dom.Element;
+
+import authoring.dataEditors.Sprite;
 
 public class Control_XML {
 
 	private String active_scheme;
-	private ControlScheme[] control_schemes;
+	private List<ControlScheme> control_schemes;
+
+	public Control_XML(Map<Sprite, Map<String, List<String>>> controls) {
+		control_schemes = new ArrayList<>();
+		for (Sprite s : controls.keySet()) {
+			control_schemes.add(new ControlScheme(s.getID(), controls.get(s)));
+		}
+	}
+	
+	public Control_XML(List<KeyAction_XML> mActions) {
+		control_schemes = new ArrayList<>();
+		control_schemes.add(new ControlScheme(mActions));
+	}
 
 	public void writeToXML(Element control, XMLBuilder xml) {
 		xml.addChildWithValue(control, "active_scheme", active_scheme);
-		for(int i = 0; i < control_schemes.length; i++)
-			control_schemes[i].writeToXML(control, i, xml);
+		for (int i = 0; i < control_schemes.size(); i++)
+			control_schemes.get(i).writeToXML(control, i, xml);
 	}
 
 	private class ControlScheme {
-		private KeyAction[] keyActions;
 
-		private ControlScheme(KeyAction[] keyActions) {
-			this.keyActions = keyActions;
+		private List<KeyAction_XML> keyActions;
+		
+		private ControlScheme(List<KeyAction_XML> actions) {
+			keyActions = actions;
+		}
+
+		private ControlScheme(int index, Map<String, List<String>> actions) {
+			keyActions = new ArrayList<>();
+			for (String key : actions.keySet()) {
+				keyActions.add(new KeyAction_XML(key, actions.get(key), true));
+			}
 		}
 
 		public void writeToXML(Element parent, int index, XMLBuilder xml) {
-			Element current = xml.add(parent, "control_scheme_"+index);
-			for(int i = 0; i < keyActions.length; i++)
-				keyActions[i].writeToXML(current, i, xml);				
-		}
-	}
-
-	private class KeyAction {
-		private String key;
-		private Behaviours_XML[] onPressed;
-		private Behaviours_XML[] onReleased;
-
-		private KeyAction(String key, Behaviours_XML[] onPressed,
-				Behaviours_XML[] onReleased) {
-			super();
-			this.key = key;
-			this.onPressed = onPressed;
-			this.onReleased = onReleased;
-		}
-
-		public void writeToXML(Element parent, int index, XMLBuilder xml) {
-			Element currentKey = xml.add(parent, "key_" + index);
-			xml.addChildWithValue(currentKey, "key", key);
-			Element pressed = xml.add(currentKey, "onPressed");
-			Element beh = xml.add(pressed, "behaviours");
-			for (int i = 0; i < onPressed.length; i++)
-				onPressed[i].writeToXML(beh, i, xml);
-			Element released = xml.add(currentKey, "onReleased");
-			beh = xml.add(released, "behaviours");
-			for (int i = 0; i < onReleased.length; i++)
-				onReleased[i].writeToXML(beh, i, xml);
+			Element current = xml.add(parent, "control_scheme_" + index);
+			for (int i = 0; i < keyActions.size(); i++)
+				keyActions.get(i).writeToXML(current, i, xml);
 		}
 	}
 

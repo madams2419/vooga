@@ -89,6 +89,18 @@
 				<sprite_0>
 					<initial_state>standing</initial_state>
 
+
+					<path>
+						<startX>0</startX>
+						<startY>0</startY>
+						<control1X>20</control1X>
+						<control1Y>80</control1Y>
+						<control1X>20</control1X>
+						<control1Y>80</control1Y>
+						<endX>100</endX>
+						<endY>100</endY>
+					</path>
+					
 					<animation>
 						<state_0>
 							<name>standing</name>

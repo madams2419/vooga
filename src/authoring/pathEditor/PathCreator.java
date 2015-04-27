@@ -45,6 +45,11 @@ public class PathCreator extends Application {
     // myGroup = group;
     // }
 
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+    
     @Override
     public void start (Stage stage) throws Exception {
         // TODO Auto-generated method stub
@@ -144,16 +149,16 @@ public class PathCreator extends Application {
             @Override
             public void handle (KeyEvent press) {
                 // Set up transition manager
-                ArrayList<Sprite> sprites = new ArrayList<>();
-                ArrayList<String[]> params = new ArrayList<>();
-
-                myTransitionMap.keySet().forEach(sprite -> {
-                    sprites.add(sprite);
-                    params.add(myTransitionMap.get(sprite));
-                });
-                TransitionManager pathManager = new TransitionManager(group, sprites, params);
-                pathManager.initialize(5);
-                pathManager.playTransitions();
+//                ArrayList<Sprite> sprites = new ArrayList<>();
+//                ArrayList<String[]> params = new ArrayList<>();
+//
+//                myTransitionMap.keySet().forEach(sprite -> {
+//                    sprites.add(sprite);
+//                    params.add(myTransitionMap.get(sprite));
+//                });
+//                TransitionManager pathManager = new TransitionManager(group, sprites, params);
+//                pathManager.initialize(5);
+//                pathManager.playTransitions();
                 System.out.println("follow");
             }
         });

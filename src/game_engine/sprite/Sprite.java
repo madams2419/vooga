@@ -49,7 +49,7 @@ public class Sprite extends Observable implements IActor {
 		owner = null;
 		worth = initialWorth;
 		addObserver(animation);
-		addObserver(physicsObject);
+//		addObserver(physicsObject);
 		setChanged();
 		notifyObservers();
 		buildActionMap();
@@ -65,6 +65,10 @@ public class Sprite extends Observable implements IActor {
 		actions.put("setState", setState);
 	}
 	
+	public Animation getAnimation(){
+	    return animation;
+	}
+	
 	/**
 	 * method update
 	 * @param frameRate the frameRate with which to update items
@@ -73,6 +77,7 @@ public class Sprite extends Observable implements IActor {
 	public void update(double frameRate) {
 	    physicsObject.update(frameRate);
 	    animation.update(frameRate);
+	    physicsObject.setPosition(animation.getPosition());
 	}
 	
 	/**

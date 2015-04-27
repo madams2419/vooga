@@ -49,6 +49,10 @@ public abstract class PhysicsObject extends Observable implements Observer {
 //	protected double getTimeLapse(double currentTime) {
 //		return currentTime < lastUpdateTime ? currentTime : currentTime - lastUpdateTime;
 //	}
+	
+	public void ignorePhysics(Observer o){
+	    this.deleteObserver(o);
+	}
 
 	/**
 	 * Allows for the PhysicsObject to be updated frame by frame.
@@ -81,6 +85,11 @@ public abstract class PhysicsObject extends Observable implements Observer {
 	
 	protected PhysicsEngine getEngine() {
 		return engine;
+	}
+	
+	public void setPosition(Vector pos) {
+	    xPosition = pos.getX();
+	    yPosition = pos.getY();
 	}
 
 	/**

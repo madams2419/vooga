@@ -2,6 +2,7 @@ package authoring.userInterface;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -18,6 +19,7 @@ import authoring.panes.WindowPane;
 import authoring.panes.centerPane.CenterPane;
 import authoring.panes.menuBar.GameMenu;
 import authoring.panes.menuBar.HelpMediaPlayer;
+import authoring.panes.rightPane.GlobalCreationPane;
 import authoring.panes.rightPane.RightPane;
 
 /**
@@ -34,6 +36,8 @@ public class AuthoringWindow {
 	private RightPane myRightPane;
 	private LeftPane myLeftPane;
 	private Map<String, WindowPane> myPanes = new HashMap<String, WindowPane>();
+	private Map<String, String> myGlobalProperties = new HashMap<>();
+//			GlobalCreationPane.defaultGlobalSettings();
 
 	private static final int FILE_MENU = 0;
 	private static final int EDIT_MENU = 1;
@@ -45,7 +49,7 @@ public class AuthoringWindow {
 	private static boolean control;
 
 	public AuthoringWindow() {
-		System.out.println("Instantiated AuthoringWindow");
+//		System.out.println("Instantiated AuthoringWindow");
 	}
 
 	public Scene GameCreateUI(Scene parentScene) {
@@ -57,11 +61,11 @@ public class AuthoringWindow {
 		root.getChildren().addAll(makeMenuBar(), rootContainer);
 		populatePaneMap();
 		UIElementDistributer.distributeElements(myScene, this);
-		
+
 		return myScene;
 	}
 
-	private void populatePaneMap () {
+	private void populatePaneMap() {
 		myPanes.put(myBottomPane.getClass().getName(), myBottomPane);
 		myPanes.put(myTopPane.getClass().getName(), myTopPane);
 		myPanes.put(myCenterPane.getClass().getName(), myCenterPane);
@@ -69,14 +73,12 @@ public class AuthoringWindow {
 		myPanes.put(myRightPane.getClass().getName(), myRightPane);
 	}
 
-	private BorderPane setupRootContainer () {
+	private BorderPane setupRootContainer() {
 		BorderPane rootContainer = new BorderPane();
 		rootContainer.setPrefHeight(myScene.getHeight());
 		rootContainer.setPrefWidth(myScene.getWidth());
 
 		// Setting up borderPane
-		// canvas.setBottom(setupBottomPane(myScene.getWidth()));
-
 		rootContainer.setTop(setupTopPane());
 		rootContainer.setLeft(setupLeftPane());
 		rootContainer.setRight(setupRightPane());
@@ -86,16 +88,22 @@ public class AuthoringWindow {
 		return rootContainer;
 	}
 
-    private MenuBar makeMenuBar() {		
-		GameMenu menu = new GameMenu(new String[]{"File", "Edit", "View", "Help"});
-		menu.addItemToMenu(FILE_MENU, "New", e -> new NewRegionDialog(myCenterPane));
-		menu.addItemToMenu(FILE_MENU, "Load", e -> new FileChooserDialog().initialize());
+	private MenuBar makeMenuBar() {
+		GameMenu menu = new GameMenu(new String[] { "File", "Edit", "View",
+				"Help" });
+		menu.addItemToMenu(FILE_MENU, "New", e -> new NewRegionDialog(
+				myCenterPane));
+		menu.addItemToMenu(FILE_MENU, "Load",
+				e -> new FileChooserDialog().initialize());
 		menu.addItemToMenu(FILE_MENU, "Close", e -> Platform.exit());
-		
-		menu.addItemToMenu(EDIT_MENU, "Copy", e -> {});
-		menu.addItemToMenu(VIEW_MENU, "Screen Options", e -> {});
-		menu.addItemToMenu(HELP_MENU, "Help", e -> new HelpMediaPlayer("src/Resources/help.mp3"));
-		
+
+		menu.addItemToMenu(EDIT_MENU, "Copy", e -> {
+		});
+		menu.addItemToMenu(VIEW_MENU, "Screen Options", e -> {
+		});
+		menu.addItemToMenu(HELP_MENU, "Help", e -> new HelpMediaPlayer(
+				"src/Resources/help.mp3"));
+
 		return menu;
 	}
 
@@ -144,11 +152,11 @@ public class AuthoringWindow {
 	public static boolean getControl() {
 		return control;
 	}
-	
+
 	public void setSpriteWaiting(boolean wait) {
 		sprite_selection_waiting = wait;
 	}
-	
+
 	public boolean getSpriteWaiting() {
 		return sprite_selection_waiting;
 	}
@@ -172,4 +180,13 @@ public class AuthoringWindow {
 	public BottomPane getBottomPane() {
 		return myBottomPane;
 	}
+
+	public void setGlobalProperties(Map<String, String> myValueMap) {
+		myGlobalProperties = myValueMap;
+	}
+
+	public Map<String, String> getGlobalProperties() {
+		return myGlobalProperties;
+	}
+
 }
