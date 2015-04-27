@@ -37,9 +37,7 @@ public class ObjectiveDialog extends Dialog<ButtonType> {
 	private TextField myDescription;
 
 	private ObjectivePane myParent;
-
-	private int myIndex;
-	private int selected;
+	private int selected, myIndex;
 
 	public ObjectiveDialog(ObjectivePane parent, int objectiveNumber) {
 		myParent = parent;

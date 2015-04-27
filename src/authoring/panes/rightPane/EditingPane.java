@@ -1,12 +1,15 @@
 package authoring.panes.rightPane;
 
 import java.util.List;
-
 import javafx.beans.property.ObjectProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import authoring.dataEditors.Sprite;
 import authoring.userInterface.ClickHandler;
 
 
@@ -47,6 +50,19 @@ public class EditingPane extends VBox {
             // TODO
         }
         this.getChildren().add(b);
+    }
+    
+    Button createButton(Sprite sprite, String label, EventHandler<ActionEvent> onAction) {
+        Button button = new Button(label);
+        button.setOnAction(onAction);
+        this.getChildren().add(button);
+        return button;
+    }
+    
+    Button createButton(Sprite sprite, String label, EventHandler<ActionEvent> onAction, String image) {
+        Button b = createButton(sprite, label, onAction);
+        b.setGraphic(new ImageView(image));
+        return b;
     }
 
     protected ObjectProperty<String> addComboBoxToPane (
