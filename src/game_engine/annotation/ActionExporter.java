@@ -13,6 +13,7 @@ import java.util.function.Function;
 
 /**
  * pulls annotations from specified root class and writes them to properties folder
+ * @author Emre Sonmez
  */
 public class ActionExporter {
 	private Map<String, List<String>> myMap;
