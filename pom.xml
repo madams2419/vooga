@@ -38,7 +38,7 @@
 		<dependency>
 			<groupId>duke-compsci308-spring2015.voogasalad_util</groupId>
 			<artifactId>voogasalad_util</artifactId>
-			<version>SNAPSHOT</version>
+			<version>master-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<build>
