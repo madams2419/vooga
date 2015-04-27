@@ -68,7 +68,9 @@ public class VoogaGameBuilder {
 		
 		parser.moveDown("level");
 		for (String directory : parser.getValidSubDirectories()) {
+		    if (directory.startsWith("level")) {
 			game.addLevel(buildLevel(directory));
+		    }
 		}
 		
 		int start = Integer.parseInt(parser.getValue("first_level"));
@@ -143,12 +145,13 @@ public class VoogaGameBuilder {
 		parser.moveDown("physics_engine");
 		
 		String type = parser.getValue("type");
-		
-		PhysicsEngine engine = type.equals("ComlexPhysicsEngine") ? new ComplexPhysicsEngine(Double.parseDouble(parser.getValue("drag_coefficient"))) : new PhysicsEngine();
+		System.out.println(type);
+		PhysicsEngine engine = type.equals("ComplexPhysicsEngine") ? new ComplexPhysicsEngine(Double.parseDouble(parser.getValue("drag_coefficient"))) : new PhysicsEngine();
 		
 		parser.moveDown("global_accelerations");
 		for (String label : parser.getValidLabels()) {
 			String[] vector = parser.getValue(label).split(" ");
+			System.out.println(Arrays.asList(vector));
 			engine.addGlobalAccel(new Vector(Double.parseDouble(vector[0]), Double.parseDouble(vector[1])));
 		}
 		parser.moveUp();
@@ -179,7 +182,7 @@ public class VoogaGameBuilder {
 	}
 	
 	private Animation buildAnimation(Map<String, List<IHitbox>> hitboxes) {
-		parser.moveDown("animation");
+		parser.moveDown("animations");
 		
 		Animation animation = new Animation(game.getHeight());
 		
@@ -287,7 +290,9 @@ public class VoogaGameBuilder {
     }
     
     private IActor getActor(String id) {
+        System.out.println(id);
     	String[] details = id.split("_");
+    	System.out.println(Arrays.asList(details));
     	IActor actor = details[0].startsWith("sprite") ? sprites.get(Integer.parseInt(details[1])) : details[0].startsWith("objective") ? objectives.get(Integer.parseInt(details[1])) : null;
     	return actor;
     }
@@ -368,6 +373,7 @@ public class VoogaGameBuilder {
     
     private ControlsManager buildControlsManager() {
     	parser.moveDown("controls");
+    	System.out.println(parser.getValue("active_scheme"));
     	
     	int startIndex = Integer.parseInt(parser.getValue("active_scheme"));
     	
@@ -398,9 +404,9 @@ public class VoogaGameBuilder {
         		onReleased.addBehavior(keyCode, buildBehaviorList());
         		parser.moveUp();
 
-        		parser.moveDown("whilePressed");
-        		whilePressed.addBehavior(keyCode, buildBehaviorList());
-        		parser.moveUp();
+        		//parser.moveDown("whilePressed");
+        		//whilePressed.addBehavior(keyCode, buildBehaviorList());
+        		//parser.moveUp();
         		
         		parser.moveUp();
     		}
