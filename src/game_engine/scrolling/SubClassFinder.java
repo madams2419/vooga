@@ -1,6 +1,9 @@
 package game_engine.scrolling;
 
 import game_engine.collisions.resolvers.ICollisionResolver;
+import game_engine.scrolling.scroller.IScroller;
+import game_engine.scrolling.scrollfocus.IScrollFocus;
+import game_engine.scrolling.tracker.AbstractTracker;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
@@ -115,7 +118,7 @@ public class SubClassFinder {
     public static void main (String[] args) {
         try {
             XStream x = new XStream (new DomDriver());
-            Map<String, Map<String, Constructor<?>[]>> map= getConstructorMap(ICollisionResolver.class);
+            Map<String, Map<String, Constructor<?>[]>> map= getConstructorMap(IScroller.class, AbstractTracker.class, IScrollFocus.class);
             System.out.println(x.toXML(map));
         }
         catch (Exception e) {

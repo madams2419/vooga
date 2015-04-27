@@ -2,10 +2,14 @@ package game_engine.scrolling.tracker;
 
 import game_engine.scrolling.scroller.IScroller;
 import game_engine.scrolling.scrollfocus.IScrollFocus;
+import javafx.animation.PauseTransition;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
+
 
 //TODO: May want to add a square representing where the camera would be when the mouse hovers over the minimap.
 
@@ -17,7 +21,9 @@ import javafx.scene.image.ImageView;
  *
  */
 public class MiniMapTracker extends AbstractTracker {
-    private Node myMiniMap;
+    private Group myMiniMap;
+    private Node myNode;
+    private Image myImage;
     private double myRatio;
 
     /**
@@ -34,12 +40,14 @@ public class MiniMapTracker extends AbstractTracker {
     public MiniMapTracker (IScrollFocus focuser, IScroller scroller, Node node, double ratio) {
         super(focuser, scroller);
         myRatio = ratio;
-        myMiniMap = makeMiniMap(node, ratio);
+        myNode = node;
+        myMiniMap = new Group(makeMiniMap(node, ratio));
     }
     
     private Node makeMiniMap (Node node, double ratio) {
         double width = node.getBoundsInParent().getWidth();
         double height = node.getBoundsInParent().getHeight();
+        System.out.println(width + " " + height);
         Image image = node.snapshot(new SnapshotParameters(), null);
         ImageView view = new ImageView(image);
         view.setFitHeight(height * ratio);
@@ -50,9 +58,16 @@ public class MiniMapTracker extends AbstractTracker {
     @Override
     protected void start () {
         myMiniMap.setOnMousePressed(e -> {
-            System.out.println(e.getSource());
             tell(e.getX() / myRatio, e.getY() / myRatio);
         });
+        PauseTransition pause = new PauseTransition (Duration.millis(100));
+        pause.setOnFinished(e -> {
+            myMiniMap.getChildren().clear();
+            myMiniMap.getChildren().add(makeMiniMap(myNode, myRatio));
+            pause.play();
+        });
+        pause.play();
+        
     }
 
     @Override

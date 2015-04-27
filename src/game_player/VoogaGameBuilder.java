@@ -1,12 +1,5 @@
 package game_player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import javafx.scene.input.KeyCode;
 import game_engine.Level;
 import game_engine.behaviors.Behavior;
 import game_engine.behaviors.IAction;
@@ -44,6 +37,14 @@ import game_engine.physics.objects.MovingPhysicsObject;
 import game_engine.physics.objects.PhysicsObject;
 import game_engine.sprite.Animation;
 import game_engine.sprite.Sprite;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import javafx.scene.input.KeyCode;
 
 public class VoogaGameBuilder {
 	
@@ -51,6 +52,7 @@ public class VoogaGameBuilder {
 	
 	private List<Sprite> sprites;
 	private List<Objective> objectives;
+	private Map<String, IActor> myActors;
 	
 	private VoogaGame game;
 	
@@ -84,7 +86,8 @@ public class VoogaGameBuilder {
 		Level level = new Level();
 		sprites = new ArrayList<>();
 		objectives = new ArrayList<>();
-		
+		myActors = new HashMap<>();
+		myActors.put(levelID, level);
 		PhysicsEngine engine = buildPhysicsEngine();
 		
 		parser.moveDown("sprites");
@@ -92,6 +95,7 @@ public class VoogaGameBuilder {
 			Sprite sprite = buildSprite(directory, engine);
 			level.addSprite(sprite);
 			sprites.add(sprite);
+			myActors.put(directory, sprite);
 		}
 		parser.moveUp();
 		
@@ -100,6 +104,21 @@ public class VoogaGameBuilder {
 			Objective objective = buildObjective(directory);
 			level.addObjective(objective);
 			objectives.add(objective);
+			myActors.put(directory, objective);
+		}
+		int i = 0;
+		for (String directory: parser.getValidSubDirectories()) {
+		    parser.moveDown(directory);
+		    if (parser.getValue("prereqs") != null) {
+		        String[] prereqs = parser.getValue("prereqs").split(" ");
+	                    List<Objective> list = new ArrayList<>();
+	                    for (String id: prereqs) {
+	                        list.add(objectives.get(Integer.parseInt(id)));
+	                    }
+	                    objectives.get(i).setPreReqs(list);
+		    }
+		    i++;
+		    parser.moveUp();
 		}
 		parser.moveUp();
 		
@@ -107,6 +126,7 @@ public class VoogaGameBuilder {
 		level.setControlManager(buildControlsManager());
 		
 		parser.moveUp();
+		
 		return level;
 	}
 	
@@ -115,7 +135,7 @@ public class VoogaGameBuilder {
 		
 		String type = parser.getValue("type");
 		
-		PhysicsEngine engine = type.equals("ComlexPhysicsEngine") ? new ComplexPhysicsEngine(Double.parseDouble(parser.getValue("drag_coefficient"))) : new PhysicsEngine();
+		PhysicsEngine engine = type.equals("ComplexPhysicsEngine") ? new ComplexPhysicsEngine(Double.parseDouble(parser.getValue("drag_coefficient"))) : new PhysicsEngine();
 		
 		parser.moveDown("global_accelerations");
 		for (String label : parser.getValidLabels()) {
@@ -142,8 +162,8 @@ public class VoogaGameBuilder {
 		Animation animation = buildAnimation(hitboxes);
 		PhysicsObject physObj = buildPhysicsObject(animation, engine, hitboxes);
 		String initialState = parser.getValue("initial_state");
-		
-		Sprite sprite = new Sprite(physObj, animation, initialState, null, 0);
+		String id = parser.getValue("id");
+		Sprite sprite = new Sprite(physObj, animation, initialState, null, 0, id);
 		
 		parser.moveUp();
 		return sprite;
@@ -218,6 +238,7 @@ public class VoogaGameBuilder {
 		return physObj;
 	}
 	
+    
     private Objective buildObjective(String objectiveID) {
         parser.moveDown(objectiveID);
         
@@ -259,9 +280,10 @@ public class VoogaGameBuilder {
     }
     
     private IActor getActor(String id) {
-    	String[] details = id.split("_");
-    	IActor actor = details[0].startsWith("sprite") ? sprites.get(Integer.parseInt(details[1])) : details[0].startsWith("objective") ? objectives.get(Integer.parseInt(details[1])) : null;
-    	return actor;
+    	//String[] details = id.split("_");
+    	//IActor actor = details[0].startsWith("sprite") ? sprites.get(Integer.parseInt(details[1])) : details[0].startsWith("objective") ? objectives.get(Integer.parseInt(details[1])) : null;
+    	//return actor;
+    	return myActors.get(id);
     }
     
     private CollisionsManager buildCollisionsManager(PhysicsEngine engine) {

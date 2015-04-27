@@ -5,11 +5,9 @@ import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.physics.Vector;
 import game_engine.physics.objects.PhysicsObject;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-
 import javafx.scene.image.ImageView;
 /**
  * 
@@ -24,9 +22,10 @@ public class Sprite extends Observable implements IActor {
 	private Animation animation;
 	private Map<String, IAction> actions;
 	private PhysicsObject physicsObject;
+	private String id;
 	
 	public Sprite(PhysicsObject po, Animation a, String initialState, 
-			Sprite spriteOwner, double initialWorth) {
+			Sprite spriteOwner, double initialWorth, String id) {
 		state = initialState;
 		physicsObject = po;
 		animation = a;
@@ -37,32 +36,13 @@ public class Sprite extends Observable implements IActor {
 		addObserver(physicsObject);
 		setChanged();
 		notifyObservers();
-		buildActionMap();
+		actions = buildActionMap();
+		this.id = id;
 	}
 	
 	public Sprite(PhysicsObject po, Animation a, String initialState, 
 			double initialWorth) {
-		state = initialState;
-		physicsObject = po;
-		animation = a;
-		actions = new HashMap<>();
-		owner = null;
-		worth = initialWorth;
-		addObserver(animation);
-		addObserver(physicsObject);
-		setChanged();
-		notifyObservers();
-		buildActionMap();
-	}
-	
-	/**
-	 * method buildActionMap
-	 * sets Strings to IAction objects
-	 */
-	private void buildActionMap(){ 
-		actions.put("moveForward", moveForward);
-		actions.put("jump", jump);
-		actions.put("setState", setState);
+	        this(po, a, initialState, null, initialWorth, "");
 	}
 	
 	/**
@@ -95,6 +75,7 @@ public class Sprite extends Observable implements IActor {
 	 * IAction setState
 	 * changes the state of the current sprite object
 	 */
+	@IActionAnnotation(description = "Changes the sprite state", numParams = 1)
 	private IAction setState = (params) -> {
 		String newState = params[0];
 		state = newState;
@@ -155,5 +136,9 @@ public class Sprite extends Observable implements IActor {
 	 */
 	public IAction getAction(String name) {
 		return actions.get(name);
+	}
+	
+	public boolean checkID (String string) {
+	    return id.equals(string);
 	}
 }

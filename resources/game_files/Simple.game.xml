@@ -13,10 +13,35 @@
 		<level_0>
 			<level_objectives>
 				<objective_0>
-					<description>Reach the flag</description>
-
+					<description>never complete</description>
 					<prereqs>1</prereqs>
-
+				</objective_0>
+				
+				<objective_1>
+					<description>never complete</description>
+					<prereqs>0</prereqs>
+				</objective_1>
+				
+				<objective_2>
+					<description></description>
+					<prereqs>0 1<prereqs>
+					<timer>1000</timer>
+					<onFailed>
+						<behaviors>
+							<behavior_0>
+								<targetType>level</targetType>
+								<targetIndex>0</targetIndex>
+								<name>removeSprite</name>
+								<parameters>mario</parameters>
+							</behavior_0>
+						</behaviors>
+					</onFailed>
+				</objective_2>
+				
+				<objective_3>
+					<description>Reach the flag</description>
+					<prereqs>4</prereqs>
+					<timer>10000</timer>
 					<onComplete>
 						<behaviors>
 							<behavior_0>
@@ -34,11 +59,12 @@
 							</behavior_1>
 						</behaviors>
 					</onComplete>
-				</objective_0>
+				</objective_3>
 
-				<objective_1>
+				<objective_4>
 					<description>Get the key</description>
-
+					<prereqs></prereqs>
+					<timer>20000</timer>
 					<onComplete>
 						<behaviors>
 							<behavior_0>
@@ -53,18 +79,18 @@
 					<onFailed>
 						<behaviors>
 							<behavior_0>
-								<targetType>sprite</targetType>
-								<targetIndex>0</targetIndex>
-								<name>setState</name>
-								<parameters>dead</parameters>
+								<targetType>objective</targetType>
+								<targetIndex>2</targetIndex>
+								<name>setStatus</name>
+								<parameters>active</parameters>
 							</behavior_0>
 						</behaviors>
 					</onFailed>
-				</objective_1>
+				</objective_4>
 
-				<objective_2>
+				<objective_5>
 					<description>Don't collide with bowser</description>
-
+					<prereqs></prereqs>
 					<onComplete>
 						<behaviors>
 							<behavior_0>
@@ -73,22 +99,16 @@
 								<name>jump</name>
 								<parameters>.03</parameters>
 							</behavior_0>
-
-							<behavior_1>
-								<targetType>sprite</targetType>
-								<targetIndex>0</targetIndex>
-								<name>setState</name>
-								<parameters>dead</parameters>
-							</behavior_1>
 						</behaviors>
 					</onComplete>
-				</objective_2>
+				</objective_5>
 			</level_objectives>
 
 			<sprites>
 				<sprite_0>
+					<id>mario</id>
 					<initial_state>standing</initial_state>
-
+					
 					<animation>
 						<state_0>
 							<name>standing</name>
@@ -195,6 +215,7 @@
 				</sprite_0>
 
 				<sprite_1>
+					<id>ground</id>
 					<initial_state>immobile</initial_state>
 
 					<animation>
@@ -231,6 +252,7 @@
 				</sprite_1>
 
 				<sprite_2>
+					<id>platform</id>
 					<initial_state>immobile</initial_state>
 
 					<animation>
@@ -268,7 +290,7 @@
 
 				<sprite_3>
 					<initial_state>immobile</initial_state>
-
+					<id>bowser</id>
 					<animation>
 						<state_0>
 							<name>immobile</name>
@@ -304,7 +326,7 @@
 
 				<sprite_4>
 					<initial_state>immobile</initial_state>
-
+					<id>key</id>
 					<animation>
 						<state_0>
 							<name>immobile</name>
@@ -340,7 +362,7 @@
 
 				<sprite_5>
 					<initial_state>immobile</initial_state>
-
+					<id>flag</id>
 					<animation>
 						<state_0>
 							<name>immobile</name>
@@ -377,9 +399,9 @@
 
 			<physics_engine>
 				<type>ComplexPhysicsEngine</type>
-				<drag_coefficeint>0.5</drag_coefficeint>
+				<drag_coefficient>0.00</drag_coefficient>
 				<global_accelerations>
-					<accel_0>0 -.0005</accel_0>
+					<accel_0>0 -.001</accel_0>
 				</global_accelerations>
 				<global_forces></global_forces>
 			</physics_engine>
@@ -482,22 +504,30 @@
 					</detectors>
 
 					<resolvers>
-						<resolver_0>
-							<type>PhysicalResolver</type>
-						</resolver_0>
-
-						<resolver_1>
+						<resolve_1>
 							<type>SimpleResolver</type>
-
 							<behaviors>
 								<behavior_0>
 									<targetType>objective</targetType>
 									<targetIndex>2</targetIndex>
 									<name>setStatus</name>
-									<parameters>complete</parameters>
+									<parameters>active</parameters>
 								</behavior_0>
+								<behavior_1>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>dead</parameters>
+								</behavior_1>
+								
+								<behavior_2>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>moveForward</name>
+									<parameters>-1000000 300</parameters>
+								</behavior_2>
 							</behaviors>
-						</resolver_1>
+						</resolve_1>
 					</resolvers>
 				</collision_0>
 
@@ -511,7 +541,16 @@
 
 					<resolvers>
 						<resolver_0>
-							<type>PhysicalResolver</type>
+							<type>SimpleResolver</type>
+
+							<behaviors>
+								<behavior_1>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>jump</name>
+									<parameters>100</parameters>
+								</behavior_1>
+							</behaviors>
 						</resolver_0>
 					</resolvers>
 				</collision_1>
@@ -546,7 +585,7 @@
 							<behaviors>
 								<behavior_1>
 									<targetType>objective</targetType>
-									<targetIndex>2</targetIndex>
+									<targetIndex>4</targetIndex>
 									<name>setStatus</name>
 									<parameters>complete</parameters>
 								</behavior_1>
@@ -570,7 +609,7 @@
 							<behaviors>
 								<behavior_0>
 									<targetType>objective</targetType>
-									<targetIndex>0</targetIndex>
+									<targetIndex>3</targetIndex>
 									<name>setStatus</name>
 									<parameters>complete</parameters>
 								</behavior_0>
@@ -589,7 +628,16 @@
 
 					<resolvers>
 						<resolver_0>
-							<type>PhysicalResolver</type>
+							<type>SimpleResolver</type>
+
+							<behaviors>
+								<behavior_1>
+									<targetType>sprite</targetType>
+									<targetIndex>3</targetIndex>
+									<name>jump</name>
+									<parameters>100</parameters>
+								</behavior_1>
+							</behaviors>
 						</resolver_0>
 					</resolvers>
 				</collision_5>

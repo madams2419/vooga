@@ -17,6 +17,7 @@ public class PhysicsEngine implements IActor {
 	public PhysicsEngine() {
 		globalAcceleration = new ArrayList<>();
 		globalForce = new ArrayList<>();
+		
 	}
 	
 	public Vector getGlobalAccel() {
