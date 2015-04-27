@@ -1,15 +1,9 @@
 package authoring.pathEditor;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.event.EventHandler;
-import javafx.scene.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-import javafx.stage.Stage;
 
 /**
  * 

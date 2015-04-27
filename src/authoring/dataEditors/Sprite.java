@@ -286,7 +286,7 @@ public class Sprite extends ImageView {
         if (myAnimations != null) {
             return myAnimations.update();
         }
-        return myAnimations = AnimationsDialog.defaultAnimations(this);
+        return myAnimations = new AnimationsDialog(this);
     }
 
     public void setPhysics (CharacterPhysicsDialog physics) {

@@ -4,18 +4,11 @@
 package utilities.SocialCenter;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -24,18 +17,15 @@ import javafx.stage.Stage;
  *
  */
 public class StatsPage {
-	private Stage myStage;
 	private String ID;
 	private Scene scoreScreen;
 	private double Width;
-	private double Height;
 	private StackPane root=new StackPane();
 	private Driver db=new Driver();
 	
 	StatsPage(String id, double width, double height){
 		ID=id;
 		Width=width;
-		Height=height;
 		initialize(width,height);
 		IDList();
 
@@ -43,7 +33,15 @@ public class StatsPage {
 	}
 	
 	private void initialize(double w, double h){
+		Text title = new Text("STATS");
+		title.getStyleClass().add("title");
+		title.setTranslateX(-200);
+		title.setTranslateY(0);
+		root.getChildren().add(title);
 		scoreScreen=new Scene(root,w,h);
+		root.getStyleClass().add("background");
+		scoreScreen.getStylesheets().add("styles/stats.css");
+		scoreScreen.getStylesheets().add("http://fonts.googleapis.com/css?family=Exo:100,200,400");
 	
 	}
 	
@@ -64,26 +62,36 @@ public class StatsPage {
 	}
 	
 	private void createGrid(ArrayList<String> g, ArrayList<String> h){
-		GridPane grid=new GridPane();
+		ScrollPane grid=new ScrollPane();
+		grid.getStyleClass().add("scrollPane");
+//		grid.setHbarPolicy(ScrollBarPolicy.NEVER);
+//		grid.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+		grid.setMaxWidth(200);
+		grid.setMaxHeight(400);
+		VBox textList = new VBox();
+		grid.setTranslateX(Width*.15);
+//		grid.setTranslateY(Height*.1);
 		for(int i=0; i<g.size(); i++){
-			gridCreate(grid, g.get(i),i,0);
-			gridCreate(grid, h.get(i),i,1);
+			gridCreate(textList, g.get(i) + ": "+ h.get(i),i,0);
+//			gridCreate(grid, ,i,1);
 		}
+		System.out.println("hello");
+		grid.setContent(textList);
 		root.getChildren().add(grid);
 	}
 	
-	private void gridCreate(GridPane g, String s, int row, int col) {
-		HBox region = new HBox();
+	private void gridCreate(VBox g, String s, int row, int col) {
 		Text temp = new Text(String.format("%s", s));
+		temp.getStyleClass().add("font");
 //		temp.getStyleClass().add(CSS_FONT);
-		region.getChildren().add(temp);
-		g.setConstraints(region, col, row);
-		g.getChildren().add(region);
+//		region.getChildren().add(temp);
+//		g.setConstraints(region, col, row);
+		g.getChildren().add(temp);
+//		g.getChildren().add(region);
 	}
 	
 	
 	void getStatsScreen(Stage s){
-		myStage=s;
 		s.setScene(scoreScreen);
 	}
 	
