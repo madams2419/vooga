@@ -1,6 +1,5 @@
 package game_engine;
 
-import game_engine.behaviors.IAction;
 import game_engine.collisions.CollisionsManager;
 import game_engine.controls.ControlsManager;
 import game_engine.objectives.Objective;

@@ -4,7 +4,7 @@ import game_engine.annotation.IActionAnnotation;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.physics.Vector;
-import game_engine.physics.objects.PhysicsObject;
+import game_engine.physics.objects.SimplePhysicsObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,9 +23,9 @@ public class Sprite extends Observable implements IActor {
 	private double worth;
 	private Animation animation;
 	private Map<String, IAction> actions;
-	private PhysicsObject physicsObject;
+	private SimplePhysicsObject physicsObject;
 	
-	public Sprite(PhysicsObject po, Animation a, String initialState, Sprite spriteOwner, double initialWorth) {
+	public Sprite(SimplePhysicsObject po, Animation a, String initialState, Sprite spriteOwner, double initialWorth) {
 		state = initialState;
 		physicsObject = po;
 		animation = a;
@@ -62,7 +62,7 @@ public class Sprite extends Observable implements IActor {
 	 * getPhysicsObject() 
 	 * @return the physics object associated with the sprite
 	 */
-	public PhysicsObject getPhysicsObject() {
+	public SimplePhysicsObject getPhysicsObject() {
 	    return physicsObject;
 	}
 	

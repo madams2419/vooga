@@ -152,8 +152,8 @@ public class Animation extends Observable implements Observer {
     private void changePosition(Observable source) {
     	try {
     		PhysicsObject physicsObject = (PhysicsObject) source;
-    		image.setTranslateX(physicsObject.getXPosition());
-    		image.setTranslateY(height - physicsObject.getYPosition() - image.getImage().getHeight());
+    		image.setTranslateX(physicsObject.getPosition().getX());
+    		image.setTranslateY(height - physicsObject.getPosition().getY() - image.getImage().getHeight());
     	}
     	catch (Exception e) {
     		// do nothing

@@ -25,40 +25,36 @@ import game_engine.sprite.Sprite;
  */
 public abstract class PhysicsObject extends Observable implements Observer {
 
-	private double xPosition, yPosition;
+	private Vector position;
 	private Map<String, List<IHitbox>> hitboxes;
 	private IHitbox activeHitbox;
 	private PhysicsEngine engine;
 	private String currentState;
 	
-	public PhysicsObject(PhysicsEngine physEng, Map<String, List<IHitbox>> map, Vector position, Animation animation) {
+	public PhysicsObject(PhysicsEngine physEng, Map<String, List<IHitbox>> map, Vector pos, Animation animation) {
 		engine = physEng;
 		hitboxes = map;
-		xPosition = position.getX();
-		yPosition = position.getY();
+		position = pos;
 		hitboxes.keySet().forEach((name) -> hitboxes.get(name).forEach((hitbox) -> hitbox.addPositionSupplier(getPositionSupplier())));
 		addObserver(animation);
 		animation.addObserver(this);
 	}
 	
 	protected Supplier<Vector> getPositionSupplier() {
-		return () -> new Vector(xPosition, yPosition);
+		return () -> position;
 	}
 
-	/**
-	 * Allows for the PhysicsObject to be updated frame by frame.
-	 */
-	public void update(double currentTime) {
+	public void ignorePhysics(Observer o) {
+		deleteObserver(o);
+	}
+	
+	public void update(double timeLapse) {
 		setChanged();
 		notifyObservers();
 	}
-
-	public double getXPosition() {
-		return xPosition;
-	}
-
-	public double getYPosition() {
-		return yPosition;
+	
+	public Vector getPosition() {
+		return getPositionSupplier().get();
 	}
 	
 	public IHitbox getHitbox() {
@@ -68,43 +64,18 @@ public abstract class PhysicsObject extends Observable implements Observer {
 	protected PhysicsEngine getEngine() {
 		return engine;
 	}
-
-	/**
-	 * Allows for the position of the PhysicsObject to be changed in some way.
-	 * This is different depending on the implementation.
-	 * 
-	 * @param amount
-	 *            Potentially a displacement, but may also be implemented as a
-	 *            velocity, acceleration, force, etcetera.
-	 */
-	public void set(Vector amount) {
-		xPosition = amount.getX();
-		yPosition = amount.getY();
+	
+	protected void setPosition(Vector pos) {
+		position = pos;
 	}
 	
-	/**
-	 * Allows for the position of the PhysicsObject to be changed in some way.
-	 * Differs depending on implementation.  Suggested that increment adds to the
-	 * existing variable amount while move completely resets it.
-	 * 
-	 * @param amount
-	 * 			Potentially a displacement, but may also be implemented as a
-	 *            velocity, acceleration, force, etcetera.
-	 */
-	public void increment(Vector amount) {
-		xPosition += amount.getX();
-		yPosition += amount.getY();
+	protected void incrementPosition(Vector amount) {
+		setPosition(position.plus(amount));
 	}
 	
-	public void addPosition(Vector amount) {
-		increment(amount);
-	}
-	
-	public abstract void applyImpulse(Vector impulse);
-	
-	public void update(Observable arg0, Object arg1) {
-		updateSprite(arg0);
-		updateAnimation(arg0);
+	public void update(Observable source, Object argument) {
+		updateSprite(source);
+		updateAnimation(source);
 	}
 	
 	private void updateSprite(Observable source) {

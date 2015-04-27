@@ -6,9 +6,8 @@ import java.util.function.BiFunction;
 
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
-import game_engine.hitboxes.IHitbox;
 import game_engine.physics.Vector;
-import game_engine.physics.objects.PhysicsObject;
+import game_engine.physics.objects.SimplePhysicsObject;
 
 public class PhysicsEngine implements IActor {
 	
@@ -53,7 +52,8 @@ public class PhysicsEngine implements IActor {
 		return name.equals("setGlobalAccel") ? setGlobalAccel : name.equals("setGlobalForce") ? setGlobalForce : null;
 	}
 	
-	public void resolveCollision(PhysicsObject spriteA, PhysicsObject spriteB) {
-		
+	public void resolveCollision(SimplePhysicsObject spriteA, SimplePhysicsObject spriteB) {
+		spriteA.setMinYVelocity(0);
+		spriteB.setMinYVelocity(0);
 	}
 }

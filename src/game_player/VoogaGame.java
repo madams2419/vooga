@@ -84,7 +84,6 @@ public class VoogaGame implements IActor {
 	}
 
 	public void setUpScrolling () {
-	    System.out.println(width + height);
 	    IScrollFocus focus= new DeadZoneFocus(width, height, 0.2);
 	    SpriteTracker tracker = new SpriteTracker(focus, new BasicScroller(root));
 	    Sprite sprite = activeLevel.getSprites().get(0);
