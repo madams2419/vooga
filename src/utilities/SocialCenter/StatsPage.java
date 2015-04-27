@@ -4,15 +4,9 @@
 package utilities.SocialCenter;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -43,7 +37,15 @@ public class StatsPage {
 	}
 	
 	private void initialize(double w, double h){
+		Text title = new Text("STATS");
+		title.getStyleClass().add("font");
+		title.setTranslateX(Width*.25);
+		title.setTranslateY(.9*Height/2);
+		root.getChildren().add(title);
 		scoreScreen=new Scene(root,w,h);
+		root.getStyleClass().add("background");
+		scoreScreen.getStylesheets().add("styles/stats.css");
+		scoreScreen.getStylesheets().add("http://fonts.googleapis.com/css?family=Exo:100,200,400");
 	
 	}
 	
@@ -65,6 +67,8 @@ public class StatsPage {
 	
 	private void createGrid(ArrayList<String> g, ArrayList<String> h){
 		GridPane grid=new GridPane();
+		grid.setTranslateX(Width*.75);
+		grid.setTranslateY(Height*.1);
 		for(int i=0; i<g.size(); i++){
 			gridCreate(grid, g.get(i),i,0);
 			gridCreate(grid, h.get(i),i,1);
@@ -75,6 +79,7 @@ public class StatsPage {
 	private void gridCreate(GridPane g, String s, int row, int col) {
 		HBox region = new HBox();
 		Text temp = new Text(String.format("%s", s));
+		temp.getStyleClass().add("font");
 //		temp.getStyleClass().add(CSS_FONT);
 		region.getChildren().add(temp);
 		g.setConstraints(region, col, row);

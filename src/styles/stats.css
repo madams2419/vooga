@@ -1,0 +1,12 @@
+.background{
+    -fx-background-image: url("http://wallpaperscraft.com/image/wooden_background_board_65898_1280x800.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.font{
+	-fx-fill: white;
+    -fx-font-size: 10pt;
+    -fx-font-weight: bold;
+    -fx-font-family: "Exo";
+}
