@@ -21,6 +21,7 @@ import authoring.panes.menuBar.GameMenu;
 import authoring.panes.menuBar.HelpMediaPlayer;
 import authoring.panes.rightPane.GlobalCreationPane;
 import authoring.panes.rightPane.RightPane;
+import authoring.util.AuthLoader;
 
 /**
  * @author hojeanniechung & Daniel Luker & Andrew Sun & Natalie
@@ -35,7 +36,7 @@ public class AuthoringWindow {
 	private BottomPane myBottomPane;
 	private RightPane myRightPane;
 	private LeftPane myLeftPane;
-	private Map<String, WindowPane> myPanes = new HashMap<String, WindowPane>();
+	public Map<String, WindowPane> myPanes = new HashMap<String, WindowPane>();
 	private Map<String, String> myGlobalProperties = new HashMap<>();
 //			GlobalCreationPane.defaultGlobalSettings();
 
@@ -94,7 +95,7 @@ public class AuthoringWindow {
 		menu.addItemToMenu(FILE_MENU, "New", e -> new NewRegionDialog(
 				myCenterPane));
 		menu.addItemToMenu(FILE_MENU, "Load",
-				e -> new FileChooserDialog().initialize());
+				e -> new AuthLoader().load(myCenterPane));
 		menu.addItemToMenu(FILE_MENU, "Close", e -> Platform.exit());
 
 		menu.addItemToMenu(EDIT_MENU, "Copy", e -> {
@@ -107,6 +108,7 @@ public class AuthoringWindow {
 		return menu;
 	}
 
+	
 	private Node setupBottomPane() {
 		return (myBottomPane = new BottomPane(myScene, this)).getContainer();
 	}

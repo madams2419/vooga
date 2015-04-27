@@ -39,7 +39,7 @@ public class CenterCanvas extends ScrollPane {
 	private static final int INITIAL_REGION_X = 1000;
 
 	private List<Map<String, String>> myEnvironmentList = new ArrayList<>();
-	private ObservableList<Sprite> myListOfSprites = FXCollections
+	public ObservableList<Sprite> myListOfSprites = FXCollections
 			.observableArrayList();
 	private List<Objective_XML> myListOfObjectives = new ArrayList<>();
 	private Map<String, KeyAction_XML> myKeyActions = new HashMap<>();
@@ -48,9 +48,9 @@ public class CenterCanvas extends ScrollPane {
 
 	private Region myCurrentRectangle;
 	private GlobalCreationPane gp;
-	private Group myGroup;
+	public Group myGroup;
 	private Scene myScene;
-	private AuthoringWindow myParent;
+	public AuthoringWindow myParent;
 	private Label myInitialLabel;
 	private float myGravity = 10;
 	private PhysicsEngine_XML myEngine = PhysicsEngine_XML
@@ -68,7 +68,6 @@ public class CenterCanvas extends ScrollPane {
 
 		// myGroup.setOnMouseClicked(e -> canvasClicked(e));
 
-		myListOfSprites = FXCollections.observableArrayList();
 		myListOfObjectives = new ArrayList<>();
 		myEnvironmentList = new ArrayList<>();
 

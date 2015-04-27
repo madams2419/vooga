@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import XML.LayoutXMLParser;
 
 /**
- * @author hojeanniechung & mungcheow
+ * @author hojeanniechung & mengchao
  * 
  */
 @SuppressWarnings("rawtypes")

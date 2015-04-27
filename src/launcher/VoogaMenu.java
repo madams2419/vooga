@@ -310,8 +310,7 @@ public class VoogaMenu {
 	}
 
 	private StackPane createBackButton(Pos position, double rotate, double sign) {
-		ImageView backButton = new ImageView(new Image(
-				"resources/images/backArrow.png"));
+	    ImageView backButton = new ImageView(new Image("./resources/images/backArrow.png"));
 		backButton.setFitWidth(100);
 		backButton.setFitHeight(100);
 		backButton.setTranslateX(50 * sign);
