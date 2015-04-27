@@ -9,6 +9,8 @@ import game_engine.scrolling.scrollfocus.DeadZoneFocus;
 import game_engine.scrolling.scrollfocus.IScrollFocus;
 import game_engine.scrolling.tracker.SpriteTracker;
 import game_engine.sprite.Sprite;
+import game_engine.sprite.TransitionManager;
+
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.KeyFrame;
@@ -28,6 +30,7 @@ public class VoogaGame implements IActor {
 	private double width, height;
 	private ControlsManager controlsManager;
 	private double frameRate;
+	private TransitionManager transitionManager;
 
 	public VoogaGame(double fr, double w, double h) {
 		levels = new ArrayList<Level>();
@@ -73,6 +76,15 @@ public class VoogaGame implements IActor {
 		if (!activeLevel.getSprites().isEmpty()) {
 			setUpScrolling();
 		}
+		//transitionManager.playTransitions();
+	}
+	
+	public void setTransitionManager(TransitionManager manager){
+	    transitionManager =manager; 
+	}
+	
+	public TransitionManager getTransitionManager(){
+	    return transitionManager;
 	}
 	
 	public void setUpScrolling () {

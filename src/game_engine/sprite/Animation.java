@@ -1,10 +1,9 @@
 package game_engine.sprite;
 
+import game_engine.physics.Vector;
 import game_engine.physics.objects.PhysicsObject;
 import java.io.FileInputStream;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -57,7 +56,7 @@ public class Animation extends Observable implements Observer {
     }
     /**
      * 
-     * @author Kevin Chang, Brian Lavalee
+     * @author Kevin Chang, Brian Lavallee
      *  Nodes to hold images in the linked list corresponding to a state
      */
     protected class Node {
@@ -103,16 +102,20 @@ public class Animation extends Observable implements Observer {
     	}
     }
     
+    public Vector getPosition() {
+        return new Vector(image.getTranslateX(), -image.getTranslateY() + height - image.getImage().getHeight());
+    }
+    
     public int getIndex() {
     	return current.index;
     }
     
-    private void rotateImage() {
-    	current = current.next;
-    	image.setImage(current.image);
-    	setChanged();
-    	notifyObservers();
-    }
+//    private void rotateImage() {
+//    	current = current.next;
+//    	image.setImage(current.image);
+//    	setChanged();
+//    	notifyObservers();
+//    }
     
     /**
      * method getImageView
@@ -145,6 +148,7 @@ public class Animation extends Observable implements Observer {
     		// do nothing
     	}
     }
+  
     
     /**
      * method changePosition
@@ -153,7 +157,7 @@ public class Animation extends Observable implements Observer {
      * sprite as contained in the physics object
      */
     private void changePosition(Observable source) {
-    	try {
+    	try { 
     		PhysicsObject physicsObject = (PhysicsObject) source;
     		image.setTranslateX(physicsObject.getXPosition());
     		image.setTranslateY(height - physicsObject.getYPosition() - image.getImage().getHeight());
@@ -170,6 +174,7 @@ public class Animation extends Observable implements Observer {
      */
     private void changeImage(String state) {
     	current = paths.get(state).first;
+    	System.out.println(current);
     	image.setImage(current.image);
     }
 }

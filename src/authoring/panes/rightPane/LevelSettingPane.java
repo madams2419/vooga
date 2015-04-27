@@ -1,6 +1,5 @@
 package authoring.panes.rightPane;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,18 +8,16 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import authoring.panes.centerPane.CenterCanvas;
-import authoring.panes.centerPane.CenterPane;
 
+/**
+ * Updates levels settings
+ * @author Someone, Andrew
+ *
+ */
 public class LevelSettingPane extends EditingPane {
-    private List<HBox> myFields = new LinkedList<>();
-    private CenterPane cp;
     public Map<String, String> fields;
-    private static Scene mScene;
-
     public LevelSettingPane(Scene myScene, RightPane parent) {
-        // TODO Auto-generated constructor stub
         super(myScene, parent);
-        mScene = myScene;
         updateLevels(parent);
     }
 
@@ -35,7 +32,7 @@ public class LevelSettingPane extends EditingPane {
             Label levelLabel = new Label("Level "+ levelIndex++);
             ComboBox<String> mapBox = new ComboBox<String>();
             mapBox.setPromptText("Select Map");
-            for(CenterCanvas c : maps){
+            for(int k = 0; k < maps.size(); k++){
                 mapBox.getItems().add("Map "+mapIndex++);
                 mapBox.setEditable(true);
             }

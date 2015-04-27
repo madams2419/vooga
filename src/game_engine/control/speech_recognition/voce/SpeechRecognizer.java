@@ -93,7 +93,7 @@ public class SpeechRecognizer implements Runnable{
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run(){
-		while (mRecognitionThreadEnabled == true){
+		while (mRecognitionThreadEnabled){
 			if (!mMicrophone.isRecording()){
 				System.out.println(PrintMessage.MICROPHONE_DISABLE.getVal());
 			} else {

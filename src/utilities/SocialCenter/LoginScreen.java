@@ -10,8 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class LoginScreen {
@@ -19,7 +17,6 @@ public class LoginScreen {
 	private static double HEIGHT;
 
 	private Scene loginScreen;
-	private ProfilePage profile;
 	private StackPane root = new StackPane();
 	private Driver db=new Driver();
 	private SocialCenterMenu menu;
@@ -81,10 +78,10 @@ public class LoginScreen {
 		root.getChildren().add(TitleBox);
 	}
 
-	private Rectangle makeSmoke(Scene s) {
-		return new javafx.scene.shape.Rectangle(s.getWidth(), s.getHeight(),
-				Color.WHITESMOKE.deriveColor(0, 1, 1, 0.20));
-	}
+//	private Rectangle makeSmoke(Scene s) {
+//		return new javafx.scene.shape.Rectangle(s.getWidth(), s.getHeight(),
+//				Color.WHITESMOKE.deriveColor(0, 1, 1, 0.20));
+//	}
 
 	private void checkValid(String id, String password){
 		try {

@@ -6,7 +6,6 @@ package utilities.SocialCenter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Timer;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -14,14 +13,19 @@ import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -34,46 +38,15 @@ public class ChatPage {
 	private String ID;
 	private Scene chatScreen;
 	private ListView<String> myChat=new ListView<>();
-	private double Width;
-	private double Height;
-	private Group root=new Group();
+	private StackPane root=new StackPane();
 	private Driver db=new Driver();
-	private Timer timer;
+	private String chatName;
 	
-	ChatPage(String id, double width, double height){
+	ChatPage(String id, double width, double height, Scene menu){
 		ID=id;
-		Width=width;
-		Height=height;
 		initialize(width,height);
 		gameList();
 	}
-	
-//	public class Updater extends TimerTask{
-//		private String myGame;
-//		
-//		public Updater(String game){
-//			myGame = game;
-//		}
-//		
-//		@Override
-//		public void run() {
-//			updateList(myGame);
-//			System.out.println("updating");
-//		}
-//		
-//		private void updateList(String game){
-//			try {
-//				//First get what is in the database
-//				ArrayList<String> prev=new ArrayList<>();
-//				prev=db.get("Chat", String.format("SELECT * FROM %s",game), "CHATLINE");
-//				ObservableList<String> listViewData=FXCollections.observableArrayList(prev);
-//				myChat.setItems(listViewData);
-//			} catch (Exception e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//		}
-//	}
 	
 	private void initialize(double w, double h){
 		chatScreen=new Scene(root,w,h);
@@ -95,12 +68,14 @@ public class ChatPage {
 		
 	}
 	
-	private void createComboBox(Set g){
+	private void createComboBox(Set<String> g){
 		ArrayList<String> games=new ArrayList<>(g);
 		ObservableList<String> observable=FXCollections.observableArrayList(games);
 		ComboBox<String> comboBox=new ComboBox<>(observable);
 		comboBox.setPromptText("Pick a chatroom by game");
 		comboBox.setOnAction(e->chatData(comboBox));
+		comboBox.setTranslateX(0);
+		comboBox.setTranslateY(0);
 		
 		GridPane grid=new GridPane();
 		grid.setVgap(4);
@@ -111,11 +86,9 @@ public class ChatPage {
 		
 	}
 	
-	private void chatData(ComboBox comboBox){
+	private void chatData(ComboBox<String> comboBox){
 		String game=comboBox.getSelectionModel().getSelectedItem().toString();
-		try {
-//			timer = new Timer();
-//			timer.schedule(new Updater(game), 100);			
+		try {		
 			db.createChat("Chat",game);
 			createFeed(game);
 		} catch (Exception e) {
@@ -126,22 +99,49 @@ public class ChatPage {
 	
 	
 	private void createFeed(String game){
+		//TEXT FIELD
 		TextField textArea=new TextField();	
-		int frameRate=1;
-//		updateList(game);
+		int frameRate=2;
+		
 		KeyFrame frame=start(frameRate,game);
 		Timeline animation=new Timeline();
 		animation.setCycleCount(Animation.INDEFINITE);
 		animation.getKeyFrames().add(frame);
 		animation.play();
-		textArea.setOnKeyPressed(e->AddLine(e,textArea,game));	
-		root.getChildren().addAll(myChat,textArea);
+		nameGUI();
+		textArea.setOnKeyPressed(e->AddLine(e,chatName,textArea,game));	
+		VBox chatBox = new VBox();
+		chatBox.getChildren().addAll(myChat,textArea);
+		root.getChildren().addAll(chatBox);
+		
+		//scrolling
+		myChat.scrollTo(myChat.getItems().size()-1);
 	}
 	
-	private void AddLine(KeyEvent k, TextField textArea, String game){
+	private void nameGUI(){
+		Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(myStage);
+        HBox dialogHbox = new HBox(20);
+		Label instr=new Label("Add me a chat name");
+		TextField name=new TextField();
+		Button submit=new Button("Set Name");
+        dialogHbox.getChildren().addAll(instr,name,submit);
+        Scene dialogScene = new Scene(dialogHbox, 500, 50);
+        dialog.setScene(dialogScene);
+        dialog.show();
+		submit.setOnMouseClicked(e->getChatID(dialog,name));
+	}
+	
+	private void getChatID(Stage dialog,TextField t){
+		chatName=t.getText();
+		dialog.close();
+	}
+	
+	private void AddLine(KeyEvent k, String chatname,TextField textArea, String game){
 		if(k.getCode()==KeyCode.ENTER){
 			try {
-				db.addLine("Chat",game,textArea.getText());
+				db.addLine("Chat",game,String.format("%s: ",chatname)+textArea.getText());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

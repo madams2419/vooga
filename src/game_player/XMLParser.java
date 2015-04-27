@@ -66,7 +66,7 @@ public class XMLParser {
         }
 
         public String toString () {
-            return name;
+            return name.substring(0, name.length() - 1);
         }
 
         public boolean equals (Object o) {
@@ -152,7 +152,7 @@ public class XMLParser {
     public String getActivePath () {
         String path = "";
         for (Directory directory : activePath) {
-            path += directory.toString();
+            path += directory.toString() + "/";
         }
         return path;
     }
