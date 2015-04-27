@@ -76,9 +76,10 @@ class CharacterEditingPane extends EditingPane {
         pathButtonContent = new String[] { miscellaneousImages.get(PATH1), miscellaneousImages.get(PATH2)};
         addCreatePathButton(sprite, miscellaneousImages.get(PATH1));
         addPlayableCheckBox(addControlsButton(sprite, miscellaneousImages.get(CONTROLS)), sprite);
-//        addUpdateButton(sprite);
+
         addDuplicateButton(sprite);
         addDeleteButton(sprite);
+       // addUpdateButton(sprite);
 
         // ================================================================= //
     }
