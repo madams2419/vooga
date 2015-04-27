@@ -1,23 +1,15 @@
 package authoring.panes.rightPane;
 
 import java.io.File;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 import authoring.dataEditors.Sprite;
 import authoring.dialogs.ControlsDialog;
 import authoring.userInterface.SpriteCursor;

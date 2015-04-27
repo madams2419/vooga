@@ -6,6 +6,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * Region where sprites are put.
+ * @author Andrew Sun
+ *
+ */
 public class Region extends StackPane {
 	private Rectangle myRectangle;
 	private ImageView myImageView;

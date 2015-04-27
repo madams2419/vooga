@@ -1,7 +1,6 @@
 package authoring.panes.rightPane;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -76,22 +75,23 @@ public class InteractionEditingPane extends EditingPane {
         getChildren().add(b);
     }
 
-    
-    // TODO: refactor this method and "add button to update method" into superclass?
+
     private void addInteractionParams(String s) throws IOException{
     	Button b = new Button(s);
-			b.setOnMouseClicked(e -> {
-				try{
-					new InteractionsDialog(myParent, mySprite1, mySprite2);
-				        getInteractions(mySprite1, mySprite1Interactions);
-				        getInteractions(mySprite2, mySprite2Interactions);
-				}
-				catch (Exception a){}
-	    	});
+			b.setOnMouseClicked(e -> newInteractionDialog());
     	getChildren().add(b);
-//    	myParent.getParent().getCenterPane().getActiveTab().addInteraction()
     }
 
+    private void newInteractionDialog(){
+      try {
+        new InteractionsDialog(myParent, mySprite1, mySprite2);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      getInteractions(mySprite1, mySprite1Interactions);
+      getInteractions(mySprite2, mySprite2Interactions);
+    }
+    
     private void addSpriteToPane (Sprite sprite) {
         ImageView spriteIcon = sprite.getIcon();
         getChildren().add(spriteIcon);
