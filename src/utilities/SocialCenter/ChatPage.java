@@ -5,6 +5,7 @@ package utilities.SocialCenter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.Timer;
 
@@ -108,14 +109,17 @@ public class ChatPage {
 		animation.setCycleCount(Animation.INDEFINITE);
 		animation.getKeyFrames().add(frame);
 		animation.play();
-		textArea.setOnKeyPressed(e->AddLine(e,textArea,game));	
+		Scanner s=new Scanner(System.in);
+		System.out.println("Please insert your chatname");
+		String chatname=s.next();
+		textArea.setOnKeyPressed(e->AddLine(e,chatname,textArea,game));	
 		root.getChildren().addAll(myChat,textArea);
 	}
 	
-	private void AddLine(KeyEvent k, TextField textArea, String game){
+	private void AddLine(KeyEvent k, String chatname,TextField textArea, String game){
 		if(k.getCode()==KeyCode.ENTER){
 			try {
-				db.addLine("Chat",game,textArea.getText());
+				db.addLine("Chat",game,String.format("%s: ",chatname)+textArea.getText());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
