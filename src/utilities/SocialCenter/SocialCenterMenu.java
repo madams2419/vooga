@@ -33,7 +33,8 @@ public class SocialCenterMenu {
 	// image url
 	private static final String PROFILE = "http://media.philly.com/images/20080510_kutcher_300.jpg";
 	private static final String BACK_BUTTON = "http://th07.deviantart.net/fs70/PRE/f/2014/002/7/1/kr_vector___duke_mark_by_malunis-d6yqn8j.png";
-
+	private static final String CHAT="https://lh3.googleusercontent.com/-HBPhOisn6-k/VT1TjYgdssI/AAAAAAAAAGQ/BqPCkScWecU/w346-h461/11082549_886228631419332_9053992119777199589_n.jpg";
+	
 	private double WIDTH;
 	private double HEIGHT;
 	private String ID;
@@ -70,16 +71,29 @@ public class SocialCenterMenu {
 		}
 
 		// PROFILE
-		myHexPage.getPosition(0).setOnMouseClicked(e -> goChatPage());
+		myHexPage.getPosition(0).setOnMouseClicked(e -> goProfilePage());
 		Image profilePic = new Image(PROFILE);
-		myHexPage.getPosition(0).getHexagon()
-				.setFill(new ImagePattern(profilePic));
+		myHexPage.getPosition(0).getHexagon().setFill(new ImagePattern(profilePic));
+		
 
 		// BACK TO LOGIN
 		myHexPage.getPosition(3).setOnMouseClicked(e -> goLoginPage());
 		Image back = new Image(BACK_BUTTON);
 		myHexPage.getPosition(3).getHexagon().setFill(new ImagePattern(back));
 
+		
+		//CHATPAGE
+		myHexPage.getPosition(6).setOnMouseClicked(e->goChatPage());
+		Image chat = new Image(CHAT);
+		myHexPage.getPosition(6).getHexagon()
+				.setFill(new ImagePattern(chat));
+		
+		//STATSPAGE
+		myHexPage.getPosition(2).setOnMouseClicked(e->goScorePage());
+		Image score = new Image(CHAT);
+		myHexPage.getPosition(2).getHexagon()
+				.setFill(new ImagePattern(score));
+		
 		myRoot.getChildren().add(myHexGroup);
 	}
 
@@ -114,7 +128,7 @@ public class SocialCenterMenu {
 	}
 	
 	private void goChatPage(){
-		cp=new ChatPage(ID,WIDTH,HEIGHT);
+		cp=new ChatPage(ID,WIDTH,HEIGHT, myMenu);
 		cp.getChatScreen(myStage);
 	}
 

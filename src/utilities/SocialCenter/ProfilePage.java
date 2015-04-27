@@ -180,7 +180,7 @@ public class ProfilePage {
 			e.printStackTrace();
 		}
 		for (int i = 0; i < s.length; i++) {
-			setConstraints(gridpane, s[i]+": "+query.get(i), i, 1);
+			setConstraints(gridpane, s[i]+": "+query.get(i), i, 0);
 		}
 		gridpane.setTranslateX(GRID_X);
 		gridpane.setTranslateY(GRID_Y);
