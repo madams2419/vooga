@@ -72,11 +72,7 @@ public class VoiceControl implements Control{
 		mySpeechInterface.destroy();
 	}
 	
-	/**
-	 * Method printInput.
-	 * @param message String
-	 */
-	private void printInput(String message){
+ void printInput(String message){
 		System.out.println(WORD_START + message);
 	}
 	

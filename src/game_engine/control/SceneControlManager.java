@@ -21,7 +21,7 @@ public class SceneControlManager extends ControlManager{
 	
 	public SceneControlManager(){
 		myActiveKeyControl = ControlConstants.INITIAL_INDEX;		
-		myActiveKeyControl = ControlConstants.INITIAL_INDEX;		
+		myActiveMouseControl = ControlConstants.INITIAL_INDEX;		
 		myKeyControls = new ArrayList<>();
 		myMouseControls = new ArrayList<>();
 		myControlFactory = new SceneControlFactory(this);
@@ -33,6 +33,7 @@ public class SceneControlManager extends ControlManager{
 	 */
 	@Override
 	public void addControl(Control control){
+	//  ((SceneControl) control).addControlFactory(myControlFactory);
 		myControlFactory.addControlType(control);
 	}
 
@@ -41,7 +42,6 @@ public class SceneControlManager extends ControlManager{
 	 * @param newControl KeyControl
 	 */
 	public void addKeyControl(KeyControl newControl){
-		newControl.addControlFactory(myControlFactory);
 		myKeyControls.add(newControl);
 		myActiveKeyControl++;
 	}

@@ -12,9 +12,11 @@ import javafx.scene.input.MouseEvent;
  * helps to diffentiate key events and mouse events
  */
 public class SceneControlFactory {
-	private SceneControlManager myControlManager;
-	private final String MOUSE_EVENT = "javafx.scene.input.MouseEvent";
-	private final String KEY_EVENT = "javafx.scene.input.KeyEvent";
+	private static SceneControlManager myControlManager;
+	private static final String MOUSE_EVENT = "javafx.scene.input.MouseEvent";
+	private static final String KEY_EVENT = "javafx.scene.input.KeyEvent";
+	private static final String KEY_CONTROL = "game_engine.control.KeyControl";
+	private static final String MOUSE_CONTROL = "game_engine.control.MouseControl";
 
 	/**
 	 * Constructor for SceneControlFactory.
@@ -23,18 +25,18 @@ public class SceneControlFactory {
 	public SceneControlFactory(SceneControlManager controlManager){
 		myControlManager = controlManager;
 	}
-	
+
 	/**
 	 * Method addControlType.
 	 * @param control Control
 	 */
-	public void addControlType(Control control){
-		if(control.getClass().toString().equals("class game_engine.control.KeyControl")){
+	public static void addControlType(Control control){
+		if(control.getClass().getName().toString().equals(KEY_CONTROL)){
 			myControlManager.addKeyControl((KeyControl) control); 
-		} else if (control.getClass().toString().equals("class game_engine.control.KeyControl")){
+		} else if (control.getClass().getName().toString().equals(MOUSE_CONTROL)){
 			myControlManager.addMouseControl((MouseControl) control); 
 		} else {
-			System.out.println("Invalid Control Type");
+			System.out.println(PrintMessage.INVALID_CONTROL_TYPE.getVal());
 		}
 	}
 
@@ -43,8 +45,8 @@ public class SceneControlFactory {
 	 * @param event InputEvent
 	 * @return SceneControl
 	 */
-	public SceneControl getControlType(InputEvent event){
-		if(event.getClass().equals(MOUSE_EVENT))
+	public static SceneControl getControlType(InputEvent event){
+		if(event.getClass().getName().toString().equals(MOUSE_EVENT))
 			return myControlManager.getActiveMouseControl();
 		else
 			return myControlManager.getActiveKeyControl();
@@ -55,11 +57,14 @@ public class SceneControlFactory {
 	 * @param event InputEvent
 	 * @return InputEvent
 	 */
-	public InputEvent getEventType(InputEvent event){
-		if(event.getClass().equals(MOUSE_EVENT))
+	public static InputEvent getEventType(InputEvent event){
+		if(event.getClass().getName().toString().equals(MOUSE_EVENT)){
+			//System.out.println("it's mouseevent " + event.getClass());
 			return (MouseEvent) event;
-		else
+		} else{
+			//System.out.println("it's keyevent " + event.getClass());
 			return (KeyEvent) event;
+		}
 	}
 
 	/**
@@ -67,7 +72,7 @@ public class SceneControlFactory {
 	 * @param e KeyEvent
 	 * @return Function<KeyEvent,Integer>
 	 */
-	public Function<KeyEvent, Integer> getKeyEventType(KeyEvent e){
+	public static Function<KeyEvent, Integer> getKeyEventType(KeyEvent e){
 		if(e.getEventType().equals(KeyEvent.KEY_PRESSED)){
 			return ((KeyControl) myControlManager.getActiveKeyControl()).executePressed();
 		} else if (e.getEventType().equals(KeyEvent.KEY_RELEASED)){
@@ -76,4 +81,12 @@ public class SceneControlFactory {
 			return ((KeyControl) myControlManager.getActiveKeyControl()).executeHeld();
 	}
 
+	public static Function<MouseEvent, Integer> getMouseEventType(MouseEvent e){
+		if(e.getEventType().equals(MouseEvent.MOUSE_CLICKED)){
+			return ((MouseControl) myControlManager.getActiveMouseControl()).executeClicked();
+		} else if (e.getEventType().equals(MouseEvent.MOUSE_MOVED)){
+			return ((MouseControl) myControlManager.getActiveMouseControl()).executeMoved();
+		} else
+			return ((MouseControl) myControlManager.getActiveMouseControl()).executeReleased();
+	}
 }

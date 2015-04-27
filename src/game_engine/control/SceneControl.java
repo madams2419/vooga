@@ -7,11 +7,21 @@ import javafx.scene.input.InputEvent;
  * and specifies the API
  */
 public abstract class SceneControl implements Control{
+	//private SceneControlFactory myControlFactory;
 	
 	/**
 	 * Method executeEvent.
 	 * @param e InputEvent
 	 */
 	public void executeEvent(InputEvent e){System.out.println("Get called");}
+	
+
+//	public void addControlFactory(SceneControlFactory sceneControlFactory){
+//		myControlFactory = sceneControlFactory;
+//	}
+//	
+//	public SceneControlFactory getControlFactory(){
+//		return myControlFactory;
+//	}
 	
 }
