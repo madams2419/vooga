@@ -53,9 +53,9 @@ public class PixelPerfectDetector implements ICollisionDetector {
         Image imageB = viewB.getImage();
         
         double startAX = viewA.getTranslateX();
-        double endAX = startAX + imageA.getWidth();
+        double endAX = startAX + (int) imageA.getWidth();
         double startBX = viewB.getTranslateX();
-        double endBX = startBX + imageB.getWidth();
+        double endBX = startBX + (int) imageB.getWidth();
         return getMiddle(startAX, endAX, startBX, endBX);
     }
     

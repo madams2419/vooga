@@ -8,33 +8,29 @@ import game_engine.physics.Vector;
 import game_engine.physics.engines.PhysicsEngine;
 import game_engine.sprite.Animation;
 
-public class AcceleratingPhysicsObject extends MovingPhysicsObject {
+public abstract class AcceleratingPhysicsObject extends MovingPhysicsObject {
 	
-	private double xAccel, yAccel;
+	private Vector acceleration;
 	
 	public AcceleratingPhysicsObject(PhysicsEngine physEng, Map<String, List<IHitbox>> hitbox, Vector position, Animation animation) {
 		super(physEng, hitbox, position, animation);
-		xAccel = 0.0;
-		yAccel = 0.0;
+		acceleration = new Vector(0, 0);
 	}
 	
-	public void update(double frameRate) {
-		Vector totalAccel = new Vector(xAccel, yAccel);
-		super.increment(totalAccel.times(frameRate));
-		super.update(frameRate);
+	public Vector getAcceleration() {
+		return acceleration;
 	}
 	
-	public void set(Vector amount) {
-		 xAccel = amount.getX();
-		 yAccel = amount.getY();
+	public void update(double timeLapse) {
+		incrementVelocity(acceleration.times(timeLapse));
+		super.update(timeLapse);
 	}
 	
-	public void increment(Vector amount) {
-		 xAccel += amount.getX();
-		 yAccel += amount.getY();
+	protected void setAcceleration(Vector accel) {
+		 acceleration = accel;
 	}
 	
-	public void applyImpulse(Vector impulse) {
-		super.increment(impulse);
+	protected void incrementAcceleration(Vector amount) {
+		 setAcceleration(acceleration.plus(amount));
 	}
 }

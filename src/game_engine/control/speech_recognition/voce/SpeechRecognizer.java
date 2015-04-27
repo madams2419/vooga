@@ -25,16 +25,16 @@
 
 package game_engine.control.speech_recognition.voce;
 
+import java.util.*;
+import java.io.*;
+import java.net.URL;
+
 import edu.cmu.sphinx.frontend.util.Microphone;
 import edu.cmu.sphinx.recognizer.Recognizer;
 import edu.cmu.sphinx.result.Result;
 import edu.cmu.sphinx.util.props.ConfigurationManager;
 import edu.cmu.sphinx.util.props.PropertyException;
 import game_engine.control.PrintMessage;
-
-import java.util.*;
-import java.io.*;
-import java.net.URL;
 
 
 /**The interface is originally based on the Sphinx4 project at CMU.

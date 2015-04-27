@@ -9,51 +9,25 @@ import game_engine.physics.Vector;
 import game_engine.physics.engines.PhysicsEngine;
 import game_engine.sprite.Animation;
 
-public class ComplexPhysicsObject extends AcceleratingPhysicsObject {
+public class ComplexPhysicsObject extends SimplePhysicsObject {
 	
 	private Material material;
-	private double xForce, yForce;
 	
 	public ComplexPhysicsObject(PhysicsEngine physEng, Map<String, List<IHitbox>> hitbox, Vector position, Animation animation, Material mat) {
-		super(physEng, hitbox, position, animation);
+		super(physEng, hitbox, position, animation, 0);
 		material = mat;
-		xForce = 0.0;
-		yForce = 0.0;
-	}
-	
-	private double computeMass() {
-		return material.getDensity() * getHitbox().getArea();
-	}
-	
-	private double computeInverseMass() {
-		double mass = computeMass();
-		return mass == 0 ? 0 : 1.0/mass;
 	}
 	
 	public void update(double frameRate) {
-		Vector totalForce = new Vector(xForce, yForce).plus(
+		setMass(material.getDensity() * getHitbox().getArea());
+		Vector totalForce = getForce().plus(
 				getEngine().getGlobalForce()).plus(
 						getEngine().getDependentForces().apply(getHitbox().getArea(), getVelocity()));
-		super.set(totalForce.times(computeInverseMass()));
-		super.increment(getEngine().getGlobalAccel().times(computeMass() * computeInverseMass()));
+		setForce(totalForce);
 		super.update(frameRate);
-	}
-	
-	public void set(Vector amount) {
-		xForce = amount.getX();
-		yForce = amount.getY();
-	}
-	
-	public void increment(Vector amount) {
-		xForce += amount.getX();
-		yForce += amount.getY();
 	}
 	
 	public double getRestitution() {
 		return material.getRestitution();
-	}
-	
-	public void applyImpulse(Vector impulse) {
-		super.applyImpulse(impulse.times(computeInverseMass()));
 	}
 }
