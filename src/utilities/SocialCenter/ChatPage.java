@@ -22,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -31,49 +32,23 @@ import javafx.util.Duration;
  */
 public class ChatPage {
 	private Stage myStage;
+	private Scene myMenu;
 	private String ID;
 	private Scene chatScreen;
 	private ListView<String> myChat=new ListView<>();
 	private double Width;
 	private double Height;
-	private Group root=new Group();
+	private StackPane root=new StackPane();
 	private Driver db=new Driver();
-	private Timer timer;
 	
-	ChatPage(String id, double width, double height){
+	ChatPage(String id, double width, double height, Scene menu){
+		myMenu = menu;
 		ID=id;
 		Width=width;
 		Height=height;
 		initialize(width,height);
 		gameList();
 	}
-	
-//	public class Updater extends TimerTask{
-//		private String myGame;
-//		
-//		public Updater(String game){
-//			myGame = game;
-//		}
-//		
-//		@Override
-//		public void run() {
-//			updateList(myGame);
-//			System.out.println("updating");
-//		}
-//		
-//		private void updateList(String game){
-//			try {
-//				//First get what is in the database
-//				ArrayList<String> prev=new ArrayList<>();
-//				prev=db.get("Chat", String.format("SELECT * FROM %s",game), "CHATLINE");
-//				ObservableList<String> listViewData=FXCollections.observableArrayList(prev);
-//				myChat.setItems(listViewData);
-//			} catch (Exception e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//		}
-//	}
 	
 	private void initialize(double w, double h){
 		chatScreen=new Scene(root,w,h);
@@ -101,6 +76,8 @@ public class ChatPage {
 		ComboBox<String> comboBox=new ComboBox<>(observable);
 		comboBox.setPromptText("Pick a chatroom by game");
 		comboBox.setOnAction(e->chatData(comboBox));
+		comboBox.setTranslateX(0);
+		comboBox.setTranslateY(0);
 		
 		GridPane grid=new GridPane();
 		grid.setVgap(4);
@@ -113,9 +90,7 @@ public class ChatPage {
 	
 	private void chatData(ComboBox comboBox){
 		String game=comboBox.getSelectionModel().getSelectedItem().toString();
-		try {
-//			timer = new Timer();
-//			timer.schedule(new Updater(game), 100);			
+		try {		
 			db.createChat("Chat",game);
 			createFeed(game);
 		} catch (Exception e) {
@@ -128,7 +103,6 @@ public class ChatPage {
 	private void createFeed(String game){
 		TextField textArea=new TextField();	
 		int frameRate=1;
-//		updateList(game);
 		KeyFrame frame=start(frameRate,game);
 		Timeline animation=new Timeline();
 		animation.setCycleCount(Animation.INDEFINITE);
