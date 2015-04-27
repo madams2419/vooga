@@ -6,10 +6,10 @@ package utilities.SocialCenter;
 import java.util.ArrayList;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -38,9 +38,9 @@ public class StatsPage {
 	
 	private void initialize(double w, double h){
 		Text title = new Text("STATS");
-		title.getStyleClass().add("font");
-		title.setTranslateX(Width*.25);
-		title.setTranslateY(.9*Height/2);
+		title.getStyleClass().add("title");
+		title.setTranslateX(-200);
+		title.setTranslateY(0);
 		root.getChildren().add(title);
 		scoreScreen=new Scene(root,w,h);
 		root.getStyleClass().add("background");
@@ -66,24 +66,32 @@ public class StatsPage {
 	}
 	
 	private void createGrid(ArrayList<String> g, ArrayList<String> h){
-		GridPane grid=new GridPane();
-		grid.setTranslateX(Width*.75);
-		grid.setTranslateY(Height*.1);
+		ScrollPane grid=new ScrollPane();
+		grid.getStyleClass().add("scrollPane");
+//		grid.setHbarPolicy(ScrollBarPolicy.NEVER);
+//		grid.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+		grid.setMaxWidth(200);
+		grid.setMaxHeight(400);
+		VBox textList = new VBox();
+		grid.setTranslateX(Width*.15);
+//		grid.setTranslateY(Height*.1);
 		for(int i=0; i<g.size(); i++){
-			gridCreate(grid, g.get(i),i,0);
-			gridCreate(grid, h.get(i),i,1);
+			gridCreate(textList, g.get(i) + ": "+ h.get(i),i,0);
+//			gridCreate(grid, ,i,1);
 		}
+		System.out.println("hello");
+		grid.setContent(textList);
 		root.getChildren().add(grid);
 	}
 	
-	private void gridCreate(GridPane g, String s, int row, int col) {
-		HBox region = new HBox();
+	private void gridCreate(VBox g, String s, int row, int col) {
 		Text temp = new Text(String.format("%s", s));
 		temp.getStyleClass().add("font");
 //		temp.getStyleClass().add(CSS_FONT);
-		region.getChildren().add(temp);
-		g.setConstraints(region, col, row);
-		g.getChildren().add(region);
+//		region.getChildren().add(temp);
+//		g.setConstraints(region, col, row);
+		g.getChildren().add(temp);
+//		g.getChildren().add(region);
 	}
 	
 	
