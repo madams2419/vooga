@@ -2,7 +2,6 @@ package authoring.panes.rightPane;
 
 import java.io.File;
 import java.util.List;
-
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -37,14 +36,6 @@ public class CreationPane extends EditingPane {
     
     CreationPane (Scene scene, RightPane parent, List<String> availableTypeURIs) {
         super(scene, parent);
-//        this.getChildren().add(
-//                               new TextArea(String
-//                                       .format("Information%n"
-//                                               + "when a drop down%n" + "item is selected, or%n"
-//                                               + "a current element on%n" + "the scroll pane is%n"
-//                                               + "selected (up to two%n"
-//                                               + "selections), its (their)%n"
-//                                               + "information will be%n" + "shown here.")));
         addHelpLabel();
         myAvailableTypeURIs = availableTypeURIs;
         addSpritesToPane();
@@ -104,14 +95,14 @@ public class CreationPane extends EditingPane {
 
     }
 
-    // an image in the right pane is clicked to be moved to the center pane
     private void imageClicked (Sprite sampleImage, int id) {
-        // need to now set mouse cursor to the sprite image
-        // getMyScene().setCursor(new SpriteCursor(new Sprite(sampleImage, ID,
-        // spriteClicked)));
         getMyScene().setCursor(
                                new SpriteCursor(new Sprite(sampleImage, ID++, myParent
                                        .getParent().getCenterPane())));
 
+    }
+
+    public static int incrementID () {
+        return ID++;
     }
 }

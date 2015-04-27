@@ -1,10 +1,9 @@
 package game_engine.sprite;
 
+import game_engine.physics.Vector;
 import game_engine.physics.objects.PhysicsObject;
 import java.io.FileInputStream;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -22,8 +21,7 @@ public class Animation extends Observable implements Observer {
     private ImageView image;
     private Node current;
     Map<String, ImageLink> paths;
-    private double timeElapsed;
-    private double lastUpdateTime;
+    private long timeElapsed;
     private double height;
 
     public Animation(double h) {
@@ -57,7 +55,7 @@ public class Animation extends Observable implements Observer {
     }
     /**
      * 
-     * @author Kevin Chang, Brian Lavalee
+     * @author Kevin Chang, Brian Lavallee
      *  Nodes to hold images in the linked list corresponding to a state
      */
     protected class Node {
@@ -83,6 +81,7 @@ public class Animation extends Observable implements Observer {
     		
     		if (first == null) {
     			first = new Node(image, first, delay, 0);
+    			first.next = first;
     			return;
     		}
     		Node current = first;
@@ -92,15 +91,17 @@ public class Animation extends Observable implements Observer {
     		current.next = new Node(image, first, delay, current.index + 1);
     	}
     }
-   
-    public void update(double currentTime) {
-    	double timeLapse = currentTime < lastUpdateTime ? currentTime : currentTime - lastUpdateTime;
+    
+    public void update(long timeLapse) {
     	timeElapsed += timeLapse;
-    	lastUpdateTime = currentTime;
     	if (current.delay.toMillis() < timeElapsed) {
-    		//rotateImage();
-    		timeElapsed = 0;
+    		rotateImage();
+    		timeElapsed = 0l;
     	}
+    }
+    
+    public Vector getPosition() {
+        return new Vector(image.getTranslateX(), -image.getTranslateY() + height - image.getImage().getHeight());
     }
     
     public int getIndex() {
@@ -145,6 +146,7 @@ public class Animation extends Observable implements Observer {
     		// do nothing
     	}
     }
+  
     
     /**
      * method changePosition
@@ -153,10 +155,10 @@ public class Animation extends Observable implements Observer {
      * sprite as contained in the physics object
      */
     private void changePosition(Observable source) {
-    	try {
+    	try { 
     		PhysicsObject physicsObject = (PhysicsObject) source;
-    		image.setTranslateX(physicsObject.getXPosition());
-    		image.setTranslateY(height - physicsObject.getYPosition() - image.getImage().getHeight());
+    		image.setTranslateX(physicsObject.getPosition().getX());
+    		image.setTranslateY(height - physicsObject.getPosition().getY() - image.getImage().getHeight());
     	}
     	catch (Exception e) {
     		// do nothing

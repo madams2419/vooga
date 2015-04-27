@@ -5,14 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import authoring.dialogs.AnimationsDialog;
+import authoring.dialogs.CharacterPhysicsDialog;
 import authoring.dialogs.ControlsDialog;
-import authoring.dialogs.StatesDialog;
 import authoring.panes.centerPane.CenterPane;
+import authoring.panes.rightPane.CreationPane;
 import authoring.panes.rightPane.RightPane;
 import authoring.userInterface.ClickHandler;
 import authoring.util.FrontEndUtils;
@@ -28,46 +28,36 @@ import authoring.util.ImageEditor;
  */
 public class Sprite extends ImageView {
 
+    private static final String NAME = "Name";
+    private static final String X_STRING = "x";
+    private static final String Y_STRING = "y";
+    private static final String VELOCITY = "velocity";
+    private static final String POSITION = "position";
+    private static final String KEY_ACTIONS = "key_actions";
+    private static final String IMAGE_URI = "imageURI";
+    private static final String SWITCH_PANE_METHOD = "switchPane";
+    private static final int MAX_ICON_WIDTH = 100;
+    private static final int MAX_ICON_HEIGHT = 100;
+
+    public static final String SCALE = "Scale";
     public static final double OPACITY_REDUCTION_RATIO = 0.5;
 
-    private final String X_STRING = "x";
-    private final String Y_STRING = "y";
-    // private boolean selected;
+    private Map<String, String> myPosition, myVelocity, myKeyActions, myCharacteristics;
 
-    private Map<String, String> myPosition;
-    private Map<String, String> myVelocity;
-    private Map<String, String> myKeyActions;
-    private Map<String, String> myCharacteristics;
-
-    private String myName;
     private int myID;
     private double myScale;
+    private boolean isPlayable = false;
     private ImageView myIcon;
     private ControlsDialog myControls;
     private AnimationsDialog myAnimations;
-    private Map<String, String> myAnimationsMap;
-    private ObservableList<String> myStates;
-    private int myCurrentScore;
-
-    private Map<Sprite, Interaction> myInteractions;
-
+    private CharacterPhysicsDialog myPhysics;
+    private String myName, myType, myMaterial;
+    private Map<Sprite, Map<Action, String>> mySpriteInteractionMap;
     private Consumer<Sprite> myOnMouseClickedAction;
-
-    private final static int MAX_ICON_WIDTH = 100;
-    private final static int MAX_ICON_HEIGHT = 100;
-
-    public final static String VELOCITY = "velocity";
-    public final static String POSITION = "position";
-    public static final String KEY_ACTIONS = "key_actions";
-    public final static String SCALE = "Scale";
-
-    private Boolean isPlayable = false;
+    private CenterPane myParent;
+    private String[] myPath;
 
     // private final double initialScale = 1.0;
-
-    private CenterPane myParent;
-
-    private StatesDialog myStatesDialog;
 
     /***
      * 
@@ -80,29 +70,32 @@ public class Sprite extends ImageView {
         this(parent);
         this.myID = ID;
         myScale = 1.0;
-        myCharacteristics.put("imageURI", imageURI);
+        myCharacteristics.put(IMAGE_URI, imageURI);
         myCharacteristics.put(SCALE, String.valueOf(myScale));
         myIcon = new ImageView();
-        changeImage(new Image(imageURI));
-        myCurrentScore = 0;
+        changeImage(imageURI);
     }
 
     public Sprite (CenterPane parent) {
         myParent = parent;
-        myInteractions = new HashMap<>();
         myPosition = new HashMap<>();
         myVelocity = new HashMap<>();
+        mySpriteInteractionMap = new HashMap<>();
         myVelocity.put(X_STRING, "0.0");
         myVelocity.put(Y_STRING, "0.0");
-        myStates = FXCollections.observableArrayList();
         myKeyActions = new HashMap<>();
         myCharacteristics = new HashMap<>();
-        addDefaultCharacteristics(Arrays.asList(new String[] { "Name" }));
+        myPath = new String[0];
+        addDefaultCharacteristics(Arrays.asList(new String[] { NAME }));
         onMouseClicked();
     }
 
     public Sprite (Sprite sprite, int ID, CenterPane parent) {
         this(ID, sprite.getImageURI(), parent);
+    }
+
+    public Map<Sprite, Map<Action, String>> getInteractionMap() {
+    	return mySpriteInteractionMap;
     }
 
     public void addDefaultCharacteristics (List<String> characteristics) {
@@ -130,30 +123,39 @@ public class Sprite extends ImageView {
         return myIcon;
     }
 
-    public void changeImage (Image image) {
+    private void changeImage (Image image) {
         setImage(image);
         setImageIcon(image);
+    }
+    
+    public void changeImage (String imageURL) {
+        myCharacteristics.put(IMAGE_URI, imageURL);
+        changeImage (new Image(imageURL));
     }
 
     @SuppressWarnings("unchecked")
     private void onMouseClicked () {
+        setOnMouseClicked(getClickHandler());
+    }
+    
+    private ClickHandler getClickHandler() {
         try {
-            setOnMouseClicked(new ClickHandler(
-                                               RightPane.class
-                                                       .getMethod(
-                                                                  "switchPane", Sprite.class),
-                                               myParent.getParent()
-                                                       .getRightPane(), this));
+            return new ClickHandler(RightPane.class.getMethod(SWITCH_PANE_METHOD, Sprite.class),
+                             myParent.getParent().getRightPane(), this);
         }
         catch (NoSuchMethodException | SecurityException e) {
             e.printStackTrace();
+            return null;
         }
     }
-
+    
+    public void handleMouseClicked(MouseEvent event) {
+        getClickHandler().handle(event);
+    }
+    
     private void setImageIcon (Image image) {
         myIcon.setImage(image);
-        ImageEditor.setToAppropriateWidthAndHeight(myIcon, MAX_ICON_WIDTH,
-                                                   MAX_ICON_HEIGHT);
+        ImageEditor.setToAppropriateWidthAndHeight(myIcon, MAX_ICON_WIDTH, MAX_ICON_HEIGHT);
     }
 
     public void setXPosition (double value) {
@@ -181,14 +183,6 @@ public class Sprite extends ImageView {
         setYPosition(myPosition.get(Y_STRING));
     }
     
-    public void setScore(int score){
-    	myCurrentScore = score;
-    }
-    
-    public int getScore(){
-    	return myCurrentScore;
-    }
-
     public void setScale (double scale) {
 
         this.setScaleX(scale);
@@ -229,15 +223,13 @@ public class Sprite extends ImageView {
     public void setKeyActions (Map<String, String> keyActions) {
         myKeyActions = keyActions;
     }
-    
-    public Map<String,String> getKeyActions() {
-    	if(isPlayable)
-    		return myKeyActions;
-    	return null;
+
+    public Map<String, String> getKeyActions () {
+        return myKeyActions;
     }
 
     public String getImageURI () {
-        return myCharacteristics.get("imageURI");
+        return myCharacteristics.get(IMAGE_URI);
     }
 
     public void setCharacteristic (String characteristic, String value) {
@@ -255,8 +247,9 @@ public class Sprite extends ImageView {
         return myCharacteristics.get(characteristic);
     }
 
-    public void setInteraction (Sprite otherSprite, Interaction interaction) {
-        myInteractions.put(otherSprite, interaction);
+    public void addInteraction (Sprite otherSprite, Map<Action, String> interaction) {
+    	mySpriteInteractionMap.putIfAbsent(otherSprite, interaction);
+        mySpriteInteractionMap.replace(otherSprite, interaction);
     }
 
     @SuppressWarnings("unchecked")
@@ -269,12 +262,10 @@ public class Sprite extends ImageView {
                                        myVelocity };
         for (int i = 0; i < mapCharacteristics.length; i += 2) {
             myCharacteristics
-                    .put(
-                         (String) mapCharacteristics[i],
+                    .put((String) mapCharacteristics[i],
                          ((Map<String, String>) mapCharacteristics[i + 1]).toString()
-                                 .substring(1,
-                                            ((Map<String, String>) mapCharacteristics[i + 1])
-                                                    .toString().length() - 1));
+                                 .substring(1,((Map<String, String>) mapCharacteristics[i + 1])
+                                            .toString().length() - 1));
         }
         return this.myCharacteristics;
     }
@@ -287,22 +278,28 @@ public class Sprite extends ImageView {
         return myControls;
     }
 
-    public void setAnimations (AnimationsDialog c) {
-        System.out.println("Setting animations");
-        myAnimations = c;
-    }
-    
-    public void setAnimations (Map<String, String> animations) {
-        myAnimationsMap = animations;
+    public void setAnimations (AnimationsDialog animations) {
+        myAnimations = animations;
     }
 
     public AnimationsDialog getAnimations () {
         if (myAnimations != null) {
-            return myAnimations.update(getStates());
+            return myAnimations.update();
         }
-        return myAnimations;
+        return myAnimations = new AnimationsDialog(this);
     }
 
+    public void setPhysics (CharacterPhysicsDialog physics) {
+        myPhysics = physics;
+    }
+    
+    public CharacterPhysicsDialog getPhysics () {
+        if (myPhysics != null) {
+            return myPhysics;
+        }
+        return myPhysics = CharacterPhysicsDialog.defaultPhysics(this);
+    }
+    
     public Boolean getPlayable () {
         return isPlayable;
     }
@@ -311,25 +308,55 @@ public class Sprite extends ImageView {
         isPlayable = b;
     }
 
-    public ObservableList<String> getStates () {
-        return myStates;
-    }
-    
-    public StatesDialog getStatesDialog () {
-        return myStatesDialog;
-    }
-    
-    public void setStates (ObservableList<String> states) {
-        myStates = states;
+    public double getWidth () {
+        return this.getFitWidth();
     }
 
-    public void setStates (StatesDialog states) {
-        myStatesDialog = states;
+    public double getHeight () {
+        return this.getFitHeight();
+    }
+
+    public String getMyType () {
+        return myType;
+    }
+
+    public void setMyType (String myType) {
+        this.myType = myType;
+    }
+
+    public String getMyMaterial () {
+        return myMaterial;
+    }
+
+    public void setMyMaterial (String myMaterial) {
+        this.myMaterial = myMaterial;
     }
 
     @Override
-    public String toString(){
-    	return String.format("%s, %s, %s", this.myName, this.myID, this.getImageURI());
+    public String toString () {
+        return String.format("%s, %s, %s", this.myName, this.myID, this.getImageURI());
+    }
+
+    public void setPath (String[] path) {
+        myPath = path;
     }
     
+    public String getPath () {
+        String ret = "";
+        for (String point : myPath) {
+            ret += point + " ";
+        }
+        return ret.trim();
+    }
+
+    public Sprite getCopy () {
+        Sprite copy = new Sprite(this, CreationPane.incrementID(), this.myParent);
+        copy.myControls = myControls;
+        copy.myAnimations = myAnimations;
+        copy.myPhysics = myPhysics;
+        copy.myType = myType;
+        copy.myMaterial = myMaterial;
+        copy.mySpriteInteractionMap = mySpriteInteractionMap;
+        return copy;
+    }
 }

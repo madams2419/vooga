@@ -1,77 +1,79 @@
-/**
- * 
- */
 package authoring.panes.rightPane;
 
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import authoring.panes.centerPane.CenterPane;
+import java.util.stream.Collectors;
+
+import authoring.fileBuilders.PhysicsEngine_XML;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 /**
- * @author hojeanniechung
+ * @author hojeanniechung & Daniel Luker
  *
  */
 public class MapSettingPane extends EditingPane {
 
-    private List<HBox> myFields = new LinkedList<>();
-    private CenterPane cp;
-    public Map<String, String> fields;
-    private static Scene mScene;
+	private ComboBox<String> myType;
+	private TextField myDragCoefficient;
+	private List<TextField> myGlobalAccelerations = new ArrayList<>();
 
-    public MapSettingPane(Scene myScene, RightPane parent) {
-        // TODO Auto-generated constructor stub
-        super(myScene, parent);
-        mScene = myScene;
-        /* Default Map */
-        createDefaultMap();
-        setFields(this.getChildren(), updateMap());
-        Button c = new Button("Update");
-        c.setOnAction(e -> updateMap());
-        this.getChildren().add(c);
-    }
+	public MapSettingPane(Scene myScene, RightPane parent) {
+		// TODO Auto-generated constructor stub
+		super(myScene, parent);
 
-    private Map<String, String> createDefaultMap() {
-        String[] key = { "Map Setting 1", "Map Setting 2", "Map Setting 3" };
-        String[] value = { "Default", "Default", "Default" };
-        fields = new HashMap<String, String>();
-        for (int i = 0; i < key.length; i++) {
-            fields.put(key[i], value[i]);
-        }
-        return fields;
-    }
+		this.getChildren().add(new Label("Physics Engine"));
 
-    private void setFields(ObservableList<Node> parent,
-            Map<String, String> fields) {
-        fields.forEach((label, value) -> {
-            HBox h = new HBox(5);
-            h.getChildren().addAll(new Text(label),
-                    new javafx.scene.control.TextField(value));
-            parent.add(h);
-            myFields.add(h);
-        });
+		ObservableList<String> types = FXCollections.observableArrayList();
+		types.addAll("SimplePhysicsEngine", "ComplexPhysicsEngine");
+		addComboBox("Types", types);
 
-    }
+		myDragCoefficient = addFields("drag_coefficient");
 
-    private Map<String, String> updateMap() {
-        // System.out.println();
+		this.getChildren().add(new Label("Global Accelerations"));
 
-        myFields.forEach(hbox -> {
-            String s, t;
-            fields.put((s = ((Text) hbox.getChildren().get(0)).getText()),
-                    (t = ((TextField) hbox.getChildren().get(1)).getText()));
-        });
-        return fields;
-        // System.out.println(sprite.getCharacteristics().toString());
-    }
+		myGlobalAccelerations.add(addFields("accel_0"));
 
+		Button c = new Button("Update");
+		c.setOnAction(e -> addPhysicsEngine());
+		this.getChildren().add(c);
+	}
 
+	private void addComboBox(String label, ObservableList<String> types) {
+		HBox h = new HBox(5);
+		h.getChildren().addAll(new Text(label),
+				myType = new ComboBox<String>(types));
+		this.getChildren().add(h);
+	}
+
+	private TextField addFields(String label) {
+		TextField ret;
+		HBox toAdd = new HBox(5);
+		toAdd.getChildren().addAll(new Label(label), ret = new TextField());
+		this.getChildren().add(toAdd);
+		return ret;
+	}
+
+	private String[] getAccels() {
+		return myGlobalAccelerations.stream().map(textField -> {
+			return textField.getText();
+		}).collect(Collectors.toList()).toArray(new String[0]);
+	}
+
+	private void addPhysicsEngine() {
+		myParent.getParent()
+				.getCenterPane()
+				.getActiveTab()
+				.addPhysics(
+						new PhysicsEngine_XML(myType.getSelectionModel()
+								.getSelectedItem(),
+								myDragCoefficient.getText(), getAccels()));
+	}
 }

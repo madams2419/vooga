@@ -6,9 +6,8 @@ import java.util.function.BiFunction;
 
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
-import game_engine.hitboxes.IHitbox;
 import game_engine.physics.Vector;
-import game_engine.physics.objects.PhysicsObject;
+import game_engine.physics.objects.SimplePhysicsObject;
 
 public class PhysicsEngine implements IActor {
 	
@@ -54,84 +53,59 @@ public class PhysicsEngine implements IActor {
 		return name.equals("setGlobalAccel") ? setGlobalAccel : name.equals("setGlobalForce") ? setGlobalForce : null;
 	}
 	
-	public void resolveCollision(PhysicsObject spriteA, PhysicsObject spriteB) {
-		Vector normal;
-		double pDepth;
+	public void resolveCollision(SimplePhysicsObject spriteA, SimplePhysicsObject spriteB) {
+		List<Vector> boundsA = spriteA.getHitbox().getBoundingBox();
+		List<Vector> boundsB = spriteB.getHitbox().getBoundingBox();
 		
-		IHitbox hbA = spriteA.getHitbox();
-		IHitbox hbB = spriteB.getHitbox();
-		Vector bboxA = hbA.getBoundingBox().get(1);
-		Vector bboxB = hbB.getBoundingBox().get(1);
-		Vector posA = hbA.getPosition();
-		Vector posB = hbB.getPosition();
+		Vector bottomLeftA = boundsA.get(0).plus(spriteA.getPosition());
+		Vector topRightA = boundsA.get(1).plus(spriteA.getPosition());
+		Vector bottomLeftB = boundsB.get(0).plus(spriteB.getPosition());
+		Vector topRightB = boundsB.get(1).plus(spriteB.getPosition());
 		
-		Vector collisionDelta = posB.minus(posA);
-
-		double halfWidthA = bboxA.getX() / 2;
-		double halfWidthB = bboxB.getY() / 2;
-
-		double x_overlap = halfWidthA + halfWidthB - Math.abs(collisionDelta.getX());
-
-		double halfHeightA = bboxA.getY() / 2;
-		double halfHeightB = bboxB.getY() / 2;
-
-		double y_overlap = halfHeightA + halfHeightB - Math.abs(collisionDelta.getY());
-
-		if(x_overlap < y_overlap) {
-			normal = (collisionDelta.getX() < 0) ? Vector.WEST : Vector.EAST;
-			pDepth = x_overlap;
-		} else {
-			normal = (collisionDelta.getY() < 0) ? Vector.SOUTH : Vector.NORTH;
-			pDepth = y_overlap;
+		int direction = 0;
+		if ((direction = checkHorizontal(bottomLeftA.getX(), bottomLeftB.getX(), topRightA.getX(), topRightB.getX())) != 0) {
+			if (direction == 1) {
+				spriteA.setMaxMajorVelocity(0);
+				spriteB.setMinMajorVelocity(0);
+			}
+			else {
+				spriteA.setMinMajorVelocity(0);
+				spriteB.setMaxMajorVelocity(0);
+			}
 		}
-		
-		/* apply resolution */
-		double rvProjNorm = rvProjOnNorm(spriteA, spriteB, normal);
-		if(rvProjNorm > 0) {
-			return;
+		if ((direction = checkVertical(bottomLeftA.getY(), bottomLeftB.getY(), topRightA.getY(), topRightB.getY())) != 0) {
+			if (direction == 1) {
+				spriteA.setMaxMinorVelocity(0);
+				spriteB.setMinMinorVelocity(0);
+			}
+			else {
+				spriteA.setMinMinorVelocity(0);
+				spriteB.setMaxMinorVelocity(0);
+			}
 		}
-
-		Vector impulse = computeImpulse(spriteA, spriteB, rvProjNorm, normal);
-		
-		spriteA.applyImpulse(impulse.times(getInvArea(spriteA)).negate());
-		spriteB.applyImpulse(impulse.times(getInvArea(spriteB)));
-
-		/* apply sink correction */
-		double SC_SLOP = 0.01;
-		double SC_PERCENT = 0.005;
-		if(pDepth < SC_SLOP) {
-			return;
+	}
+	
+	private int checkHorizontal(double leftA, double leftB, double rightA, double rightB) {
+		if (rightA > leftB && rightA < rightB && leftA < leftB) {
+			return 1;
 		}
-
-		double correctionCoef = SC_PERCENT * pDepth / (getInvArea(spriteA) + getInvArea(spriteB));
-		Vector correction = normal.times(correctionCoef);
-		Vector aCorrection = correction.times(getInvArea(spriteA)).negate();
-		Vector bCorrection = correction.times(getInvArea(spriteB));
-		
-		spriteA.addPosition(aCorrection);
-		spriteB.addPosition(bCorrection);
-
+		else if (rightB > leftA && rightB < rightA && leftB < leftA) {
+			return -1;
+		}
+		else {
+			return 0;
+		}
 	}
 	
-	private double rvProjOnNorm(PhysicsObject spriteA, PhysicsObject spriteB, Vector normal) {
-		return getRelativeVelocity(spriteA, spriteB).dot(normal);
-	}
-	
-	private Vector getRelativeVelocity(PhysicsObject spriteA, PhysicsObject spriteB) {
-		return spriteB.getVelocity().minus(spriteA.getVelocity());
-	}
-	
-	private double getInvArea(PhysicsObject sprite) {
-		return 1 / sprite.getHitbox().getArea();
-	}
-	
-	protected Vector computeImpulse(PhysicsObject spriteA, PhysicsObject spriteB, double rvProjNorm, Vector normal) {
-		double implsMag = -(1 + computeRestitution(spriteA, spriteB)) * rvProjNorm;
-		implsMag /= getInvArea(spriteA) + getInvArea(spriteB);
-		return normal.times(implsMag);
-	}
-	
-	protected double computeRestitution(PhysicsObject spriteA, PhysicsObject spriteB) {
-		return Math.min(spriteA.getRestitution(), spriteB.getRestitution());
+	private int checkVertical(double bottomA, double bottomB, double topA, double topB) {
+		if (bottomA < topB && bottomA > bottomB && topA > topB) {
+			return -1;
+		}
+		else if (bottomB < topA && bottomB > bottomA && topB > topA) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
 	}
 }

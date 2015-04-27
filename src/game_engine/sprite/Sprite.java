@@ -4,7 +4,7 @@ import game_engine.annotation.IActionAnnotation;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.physics.Vector;
-import game_engine.physics.objects.PhysicsObject;
+import game_engine.physics.objects.SimplePhysicsObject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -21,11 +21,10 @@ public class Sprite extends Observable implements IActor {
 	private double worth;
 	private Animation animation;
 	private Map<String, IAction> actions;
-	private PhysicsObject physicsObject;
 	private String id;
+	private SimplePhysicsObject physicsObject;
 	
-	public Sprite(PhysicsObject po, Animation a, String initialState, 
-			Sprite spriteOwner, double initialWorth, String id) {
+	public Sprite(SimplePhysicsObject po, Animation a, String initialState, Sprite spriteOwner, double initialWorth, String id) {
 		state = initialState;
 		physicsObject = po;
 		animation = a;
@@ -40,19 +39,13 @@ public class Sprite extends Observable implements IActor {
 		this.id = id;
 	}
 	
-	public Sprite(PhysicsObject po, Animation a, String initialState, 
-			double initialWorth) {
-	        this(po, a, initialState, null, initialWorth, "");
-	}
+	public void update(long timeLapse) {
+	    physicsObject.update(timeLapse);
+	    animation.update(timeLapse);
 	
-	/**
-	 * method update
-	 * @param frameRate the frameRate with which to update items
-	 * updates physicsObject and animation parameters at the specified frame rate
-	 */
-	public void update(double frameRate) {
-	    physicsObject.update(frameRate);
-	    animation.update(frameRate);
+	}
+	public Animation getAnimation(){
+	    return animation;
 	}
 	
 	/**
@@ -67,7 +60,7 @@ public class Sprite extends Observable implements IActor {
 	 * getPhysicsObject() 
 	 * @return the physics object associated with the sprite
 	 */
-	public PhysicsObject getPhysicsObject() {
+	public SimplePhysicsObject getPhysicsObject() {
 	    return physicsObject;
 	}
 	
@@ -120,13 +113,13 @@ public class Sprite extends Observable implements IActor {
 
 	@IActionAnnotation(numParams = 2, description = "moves sprite forward in an x, y vector direction")
 	private IAction moveForward = (params) -> {
-		physicsObject.applyImpulse(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
+		physicsObject.applyControlImpulse(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
 	};
 	
 	@IActionAnnotation(numParams = 1, description = "sprite jumps up or down")
 	private IAction jump = (params) -> {
 		Vector myVector = new Vector(0, Double.parseDouble(params[0]));
-		physicsObject.applyImpulse(myVector);
+		physicsObject.applyControlImpulse(myVector);
 	};
 	
 	/**

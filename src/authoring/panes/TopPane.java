@@ -20,7 +20,7 @@ public class TopPane extends WindowPane {
 	public TopPane(Scene s, AuthoringWindow w) {
 		super(s, new HBox(), w);
 		// this.getStylesheets().add("styles/top_pane.css");
-		System.out.printf("Instantiated %s%n", this.getClass().getName());
+//		System.out.printf("Instantiated %s%n", this.getClass().getName());
 	}
 
 	@Override

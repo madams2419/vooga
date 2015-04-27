@@ -6,7 +6,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 /**
- * 
+ * Plays a song
  * @author Andrew Sun, Daniel Luker
  *
  */

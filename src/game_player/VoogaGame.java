@@ -9,13 +9,13 @@ import game_engine.scrolling.scroller.BasicScroller;
 import game_engine.scrolling.scroller.IScroller;
 import game_engine.scrolling.scrollfocus.BasicFocus;
 import game_engine.scrolling.scrollfocus.IScrollFocus;
-import game_engine.scrolling.tracker.MiniMapTracker;
 import game_engine.scrolling.tracker.SpriteTracker;
 import game_engine.sprite.Sprite;
+import game_engine.sprite.TransitionManager;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
@@ -27,27 +27,24 @@ import javafx.util.Duration;
 
 
 public class VoogaGame implements IActor {
-
     private List<Level> levels;
     private Level activeLevel;
     private Group root;
-    private Timeline timeline;
     private double width, height;
+    private Timeline animation;
     private ControlsManager controlsManager;
-    private double frameRate;
+    private long lastUpdateTime;
+    private TransitionManager transitionManager;
+    private Map<String, IAction> myActions;
 
-    public VoogaGame (double fr, double w, double h) {
-        levels = new ArrayList<Level>();
-        root = new Group();
-        frameRate = fr;
-        timeline = new Timeline(getFrame(frameRate));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        width = w;
-        height = h;
-    }
-
-    private KeyFrame getFrame (double frameRate) {
-        return new KeyFrame(Duration.millis(frameRate), (frame) -> update());
+    public VoogaGame(double fps, double w, double h) {
+            levels = new ArrayList<Level>();
+            root = new Group();
+            width = w;
+            height = h;
+            animation = new Timeline(fps, getFrame(fps));
+            animation.setCycleCount(Timeline.INDEFINITE);
+            lastUpdateTime = 0l;
     }
 
     public void addLevel (Level l) {
@@ -57,14 +54,14 @@ public class VoogaGame implements IActor {
     public double getHeight () {
         return height;
     }
-
-    public IAction getAction (String name) {
-        return setActiveLevel;
-    }
+	
+	private KeyFrame getFrame(double fps) {
+		return new KeyFrame(Duration.millis(fps), (frame) -> update(System.currentTimeMillis()));
+	}
 
     private IAction setActiveLevel = (params) -> {
         int index = Integer.parseInt(params[0]);
-        activeLevel = levels.get(index);
+        setActiveLevel(index);
     };
 
     public void setActiveLevel (int index) {
@@ -74,6 +71,7 @@ public class VoogaGame implements IActor {
         if (!activeLevel.getSprites().isEmpty()) {
             setUpScrolling(activeLevel.getRoot());
         }
+        transitionManager.playTransitions();
     }
 
     public void setUpScrolling (Group group) {
@@ -100,27 +98,48 @@ public class VoogaGame implements IActor {
             e.printStackTrace();
         }
     }
+	
+	public void setTransitionManager(TransitionManager manager){
+	    transitionManager =manager; 
+	}
+	
+	public TransitionManager getTransitionManager(){
+	    return transitionManager;
+	}
 
-    public void update () {
-        activeLevel.update(frameRate);
-    }
+	public void update(long currentTime) {
+		if (lastUpdateTime == 0) {
+			lastUpdateTime = currentTime;
+		}
 
-    public void start () {
-        Stage stage = new Stage();
-        Scene scene = new Scene(root, width, height);
-        scene.setOnKeyPressed(e -> controlsManager.handleInput(e));
-        scene.setOnKeyReleased(e -> controlsManager.handleInput(e));
-        stage.setX(Screen.getPrimary().getVisualBounds().getMinX());
-        stage.setY(Screen.getPrimary().getVisualBounds().getMinY());
-        root.requestFocus();
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-        stage.setOnCloseRequest(e -> timeline.stop());
-        timeline.play();
-    }
+		activeLevel.update(currentTime - lastUpdateTime);
+		lastUpdateTime = currentTime;
+	}
+	
+	protected Group getRoot() {
+		return root;
+	}
+	
+	public void start() {
+		Stage stage = new Stage();
+		Scene scene = new Scene(root, width, height);
+		scene.setOnKeyPressed(e -> controlsManager.handleInput(e));
+		scene.setOnKeyReleased(e -> controlsManager.handleInput(e));
+		stage.setX(Screen.getPrimary().getVisualBounds().getMinX());
+		stage.setY(Screen.getPrimary().getVisualBounds().getMinY());
+		root.requestFocus();
+		stage.setScene(scene);
+		stage.setResizable(false);
+		stage.show();
+		stage.setOnCloseRequest(e -> animation.stop());
+		animation.play();
+	}
 
-    public Group getRoot () {
-        return root;
+    @Override
+    public IAction getAction (String name) {
+        if (myActions == null) {
+            myActions = buildActionMap();
+        }
+        return myActions.get(name);
     }
 }
