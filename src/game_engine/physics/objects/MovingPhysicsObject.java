@@ -10,23 +10,25 @@ import game_engine.sprite.Animation;
 
 public abstract class MovingPhysicsObject extends PhysicsObject {
 	
-	private Vector velocity;
+	private Vector totalVelocity;
+	private Vector controlVelocity;
 	
 	private double maxMajorVelocity, minMajorVelocity, maxMinorVelocity, minMinorVelocity;
 	private Vector majorAxis, minorAxis;
 	
 	public MovingPhysicsObject(PhysicsEngine physEng, Map<String, List<IHitbox>> hb, Vector position, Animation animation) {
 		super(physEng, hb, position, animation);
-		velocity = new Vector(0, 0);
+		totalVelocity = new Vector(0, 0);
+		controlVelocity = new Vector(0, 0);
 		resetBounds();
 	}
 	
 	public Vector getVelocity() {
-		return velocity;
+		return totalVelocity;
 	}
 	
 	public void update(double timeLapse) {
-		incrementPosition(velocity.times(timeLapse));
+		incrementPosition(totalVelocity.times(timeLapse));
 		super.update(timeLapse);
 	}
 	
@@ -48,7 +50,7 @@ public abstract class MovingPhysicsObject extends PhysicsObject {
 											  sign * minorComponent.getMagnitude() < minMinorVelocity ? minMinorVelocity : minorComponent.getMagnitude());
 		minorComponent = minorComponent.times(inverseMagnitude);
 		
-		velocity = majorComponent.plus(minorComponent);
+		totalVelocity = majorComponent.plus(minorComponent);
 		
 		resetBounds();
 	}
@@ -87,10 +89,24 @@ public abstract class MovingPhysicsObject extends PhysicsObject {
 	}
 	
 	protected void incrementVelocity(Vector amount) {
-		setVelocity(velocity.plus(amount));
+		setVelocity(totalVelocity.plus(amount));
 	}
 	
 	public void applyImpulse(Vector impulse) {
 		incrementVelocity(impulse);
+	}
+	
+	public void applyControlImpulse(Vector impulse) {
+		Vector realImpulse = impulse.copy();
+		
+		if (Math.abs(totalVelocity.getX() - controlVelocity.getX()) > Math.abs(totalVelocity.getX() - controlVelocity.plus(impulse).getX())) {
+			realImpulse = new Vector(0, realImpulse.getY());
+		}
+		
+		if (Math.abs(totalVelocity.minus(controlVelocity).getX()) > Math.abs(totalVelocity.minus(controlVelocity.plus(impulse)).getX())) {
+			realImpulse = new Vector(realImpulse.getX(), 0);
+		}
+		controlVelocity = controlVelocity.plus(impulse);
+		applyImpulse(realImpulse);
 	}
 }

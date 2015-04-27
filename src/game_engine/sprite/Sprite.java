@@ -114,13 +114,13 @@ public class Sprite extends Observable implements IActor {
 
 	@IActionAnnotation(numParams = 2, description = "moves sprite forward in an x, y vector direction")
 	private IAction moveForward = (params) -> {
-		physicsObject.applyImpulse(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
+		physicsObject.applyControlImpulse(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
 	};
 	
 	@IActionAnnotation(numParams = 1, description = "sprite jumps up or down")
 	private IAction jump = (params) -> {
 		Vector myVector = new Vector(0, Double.parseDouble(params[0]));
-		physicsObject.applyImpulse(myVector);
+		physicsObject.applyControlImpulse(myVector);
 	};
 	
 	/**

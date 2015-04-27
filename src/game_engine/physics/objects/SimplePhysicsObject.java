@@ -52,4 +52,8 @@ public class SimplePhysicsObject extends AcceleratingPhysicsObject {
 	public void applyImpusle(Vector impulse) {
 		super.applyImpulse(impulse.times(computeInverseMass()));
 	}
+	
+	public void applyControlImpulse(Vector impulse) {
+		super.applyControlImpulse(impulse.times(computeInverseMass()));
+	}
 }

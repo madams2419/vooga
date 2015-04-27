@@ -30,8 +30,4 @@ public class ComplexPhysicsObject extends SimplePhysicsObject {
 	public double getRestitution() {
 		return material.getRestitution();
 	}
-	
-	public void applyImpulse(Vector impulse) {
-		super.applyImpulse(impulse.times(computeInverseMass()));
-	}
 }

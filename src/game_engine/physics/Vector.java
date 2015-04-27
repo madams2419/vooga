@@ -42,9 +42,6 @@ public class Vector {
 
 	@Override
 	public boolean equals(Object other) {
-		if(other == this) {
-			return true;
-		}
 
 		if(!(other instanceof Vector)) {
 			return false;
