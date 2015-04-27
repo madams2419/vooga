@@ -4,16 +4,13 @@
 package utilities.SocialCenter;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -26,7 +23,7 @@ public class StatsPage {
 	private Scene scoreScreen;
 	private double Width;
 	private double Height;
-	private Group root;
+	private StackPane root=new StackPane();
 	private Driver db=new Driver();
 	
 	StatsPage(String id, double width, double height){
@@ -34,23 +31,33 @@ public class StatsPage {
 		Width=width;
 		Height=height;
 		initialize(width,height);
-		gameList();
+		IDList();
+
 		
 	}
 	
 	private void initialize(double w, double h){
+		Text title = new Text("STATS");
+		title.getStyleClass().add("title");
+		title.setTranslateX(-200);
+		title.setTranslateY(0);
+		root.getChildren().add(title);
 		scoreScreen=new Scene(root,w,h);
+		root.getStyleClass().add("background");
+		scoreScreen.getStylesheets().add("styles/stats.css");
+		scoreScreen.getStylesheets().add("http://fonts.googleapis.com/css?family=Exo:100,200,400");
 	
 	}
 	
 
-	private void gameList(){
+	private void IDList(){
 		//get the different types of games the user played
 		ArrayList<String> gamesPlayed=new ArrayList<>();
+		ArrayList<String> highScore =new ArrayList<>();
 		try {
-			gamesPlayed=db.get("HighScore","SELECT gamesplayed FROM '"+ID+"'","GamesPlayed");
-			Set<String> gamesSet=new HashSet<String>(gamesPlayed);
-			createComboBox(gamesSet);
+			gamesPlayed=db.get("HighScore","SELECT * FROM "+ID+"","GamesPlayed");
+			highScore=db.get("HighScore", "SELECT * FROM "+ID+"", "HighScore");
+			createGrid(gamesPlayed,highScore);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -58,20 +65,34 @@ public class StatsPage {
 		
 	}
 	
-	private void createComboBox(Set g){
-		ArrayList<String> games=new ArrayList<>(g);
-		ObservableList<String> observable=FXCollections.observableArrayList(games);
-		ComboBox<String> comboBox=new ComboBox<>(observable);
-		comboBox.setPromptText("Pick a game you want to see");
-		GridPane grid=new GridPane();
-		grid.setVgap(4);
-		grid.setHgap(10);
-		grid.setPadding(new Insets(5,5,5,5));
-		grid.add(comboBox, 1, 0);
+	private void createGrid(ArrayList<String> g, ArrayList<String> h){
+		ScrollPane grid=new ScrollPane();
+		grid.getStyleClass().add("scrollPane");
+//		grid.setHbarPolicy(ScrollBarPolicy.NEVER);
+//		grid.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+		grid.setMaxWidth(200);
+		grid.setMaxHeight(400);
+		VBox textList = new VBox();
+		grid.setTranslateX(Width*.15);
+//		grid.setTranslateY(Height*.1);
+		for(int i=0; i<g.size(); i++){
+			gridCreate(textList, g.get(i) + ": "+ h.get(i),i,0);
+//			gridCreate(grid, ,i,1);
+		}
+		System.out.println("hello");
+		grid.setContent(textList);
 		root.getChildren().add(grid);
-		
 	}
 	
+	private void gridCreate(VBox g, String s, int row, int col) {
+		Text temp = new Text(String.format("%s", s));
+		temp.getStyleClass().add("font");
+//		temp.getStyleClass().add(CSS_FONT);
+//		region.getChildren().add(temp);
+//		g.setConstraints(region, col, row);
+		g.getChildren().add(temp);
+//		g.getChildren().add(region);
+	}
 	
 	
 	void getStatsScreen(Stage s){
