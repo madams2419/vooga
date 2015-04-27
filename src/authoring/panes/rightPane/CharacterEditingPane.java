@@ -119,8 +119,8 @@ class CharacterEditingPane extends EditingPane {
             getMyParent().toggleMode();
             myModeIndex = 1 - myModeIndex;
             b.setGraphic(new ImageView(pathButtonContent[myModeIndex]));
-            myDurationField.setDisable(false);
-            myDelayField.setDisable(false);
+            myDurationField.setDisable(!myDurationField.isDisable());
+            myDelayField.setDisable(!myDelayField.isDisable());
             // TODO: grab info and put into XML here
         });
     }

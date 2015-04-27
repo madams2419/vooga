@@ -15,11 +15,11 @@ public class Game_Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		AuthoringWindow createScene = new AuthoringWindow();
-		Scene myScene = createScene.GameCreateUI(new Scene(new VBox(), 600,
-				400));
+		Scene myScene = createScene.GameCreateUI(new Scene(new VBox(), 1000,
+				1000));
 		primaryStage.setScene(myScene);
 		primaryStage.setResizable(true);
-		// primaryStage.setFullScreen(true);
+//		 primaryStage.setFullScreen(true);
 		primaryStage.show();
 	}
 
