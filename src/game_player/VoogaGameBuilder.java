@@ -44,6 +44,7 @@ import game_engine.physics.objects.MovingPhysicsObject;
 import game_engine.physics.objects.PhysicsObject;
 import game_engine.sprite.Animation;
 import game_engine.sprite.Sprite;
+import game_engine.storing.StoreGame;
 
 public class VoogaGameBuilder {
 	
@@ -74,7 +75,13 @@ public class VoogaGameBuilder {
 		int start = Integer.parseInt(parser.getValue("first_level"));
 		game.setActiveLevel(start);
 		parser.moveUp(2);
-		
+		StoreGame sg = new StoreGame();
+		try {
+			sg.getFields(game);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return game;
 	}
 	
