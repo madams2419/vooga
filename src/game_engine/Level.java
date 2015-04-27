@@ -1,6 +1,5 @@
 package game_engine;
 
-import game_engine.behaviors.IAction;
 import game_engine.collisions.CollisionsManager;
 import game_engine.controls.ControlsManager;
 import game_engine.objectives.Objective;
@@ -52,9 +51,9 @@ public class Level {
 	/**
 	 * method update Update contents of a layer
 	 */
-	public void update(double now) {
-		myObjectives.forEach(objective -> objective.update(now));
-		mySprites.forEach(sprite -> sprite.update(now));
+	public void update(long timeLapse) {
+		myObjectives.forEach(objective -> objective.update(timeLapse));
+		mySprites.forEach(sprite -> sprite.update(timeLapse));
 		myControlManager.update();
 		myCollisionEngine.checkCollisions();
 		myToBeRemoved.forEach(this::removeSprite);

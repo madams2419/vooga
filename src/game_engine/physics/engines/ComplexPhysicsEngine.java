@@ -3,7 +3,6 @@ package game_engine.physics.engines;
 import java.util.function.BiFunction;
 
 import game_engine.physics.Vector;
-import game_engine.physics.objects.PhysicsObject;
 
 public class ComplexPhysicsEngine extends PhysicsEngine {
 	
@@ -13,7 +12,7 @@ public class ComplexPhysicsEngine extends PhysicsEngine {
 		dragCoefficient = drag;
 	}
 	
-//	public void resolveCollision(PhysicsObject spriteA, PhysicsObject spriteB) {
+//	public void resolveCollision(SimplePhysicsObject spriteA, SimplePhysicsObject spriteB) {
 //		
 //	}
 	

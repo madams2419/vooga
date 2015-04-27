@@ -84,7 +84,6 @@ public class MultipleHitbox implements IHitbox {
 		double minX = 0, minY = 0, maxX = 0, maxY = 0;
 		
 		for(IHitbox hitbox : hitboxes) {
-			//TODO this does not take into account sub hitbox relative positioning
 			List<Vector> bBox  = hitbox.getBoundingBox();
 			Vector lLeft = bBox.get(0);
 			Vector uRight = bBox.get(1);

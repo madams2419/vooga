@@ -21,8 +21,7 @@ public class Animation extends Observable implements Observer {
     private ImageView image;
     private Node current;
     Map<String, ImageLink> paths;
-    private double timeElapsed;
-    private double lastUpdateTime;
+    private long timeElapsed;
     private double height;
 
     public Animation(double h) {
@@ -82,6 +81,7 @@ public class Animation extends Observable implements Observer {
     		
     		if (first == null) {
     			first = new Node(image, first, delay, 0);
+    			first.next = first;
     			return;
     		}
     		Node current = first;
@@ -91,14 +91,12 @@ public class Animation extends Observable implements Observer {
     		current.next = new Node(image, first, delay, current.index + 1);
     	}
     }
-   
-    public void update(double currentTime) {
-    	double timeLapse = currentTime < lastUpdateTime ? currentTime : currentTime - lastUpdateTime;
+    
+    public void update(long timeLapse) {
     	timeElapsed += timeLapse;
-    	lastUpdateTime = currentTime;
     	if (current.delay.toMillis() < timeElapsed) {
-    		//rotateImage();
-    		timeElapsed = 0;
+    		rotateImage();
+    		timeElapsed = 0l;
     	}
     }
     
@@ -110,12 +108,12 @@ public class Animation extends Observable implements Observer {
     	return current.index;
     }
     
-//    private void rotateImage() {
-//    	current = current.next;
-//    	image.setImage(current.image);
-//    	setChanged();
-//    	notifyObservers();
-//    }
+    private void rotateImage() {
+    	current = current.next;
+    	image.setImage(current.image);
+    	setChanged();
+    	notifyObservers();
+    }
     
     /**
      * method getImageView
@@ -159,8 +157,8 @@ public class Animation extends Observable implements Observer {
     private void changePosition(Observable source) {
     	try { 
     		PhysicsObject physicsObject = (PhysicsObject) source;
-    		image.setTranslateX(physicsObject.getXPosition());
-    		image.setTranslateY(height - physicsObject.getYPosition() - image.getImage().getHeight());
+    		image.setTranslateX(physicsObject.getPosition().getX());
+    		image.setTranslateY(height - physicsObject.getPosition().getY() - image.getImage().getHeight());
     	}
     	catch (Exception e) {
     		// do nothing

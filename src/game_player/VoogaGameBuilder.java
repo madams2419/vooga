@@ -31,10 +31,8 @@ import game_engine.physics.Material;
 import game_engine.physics.Vector;
 import game_engine.physics.engines.ComplexPhysicsEngine;
 import game_engine.physics.engines.PhysicsEngine;
-import game_engine.physics.objects.AcceleratingPhysicsObject;
 import game_engine.physics.objects.ComplexPhysicsObject;
-import game_engine.physics.objects.MovingPhysicsObject;
-import game_engine.physics.objects.PhysicsObject;
+import game_engine.physics.objects.SimplePhysicsObject;
 import game_engine.sprite.Animation;
 import game_engine.sprite.Sprite;
 import game_engine.sprite.TransitionManager;
@@ -171,7 +169,7 @@ public class VoogaGameBuilder {
 		
 		Map<String, List<IHitbox>> hitboxes = new HashMap<>();
 		Animation animation = buildAnimation(hitboxes);
-		PhysicsObject physObj = buildPhysicsObject(animation, engine, hitboxes);
+		SimplePhysicsObject physObj = buildPhysicsObject(animation, engine, hitboxes);
 		String initialState = parser.getValue("initial_state");
 		
 		Sprite sprite = new Sprite(physObj, animation, initialState, null, 0);
@@ -235,16 +233,15 @@ public class VoogaGameBuilder {
 		return hitbox;
 	}
 	
-	private PhysicsObject buildPhysicsObject(Animation animation, PhysicsEngine engine, Map<String, List<IHitbox>> hitboxes) {
+	private SimplePhysicsObject buildPhysicsObject(Animation animation, PhysicsEngine engine, Map<String, List<IHitbox>> hitboxes) {
 		parser.moveDown("physics");
 		
 		String type = parser.getValue("type");
 		String[] point = parser.getValue("position").split(" ");
 		Vector position = new Vector(Double.parseDouble(point[0]), Double.parseDouble(point[1]));
 		
-		PhysicsObject physObj = type.equals("ComplexPhysicsObject") ? new ComplexPhysicsObject(engine, hitboxes, position, animation, Material.valueOf(parser.getValue("material").toUpperCase())) :
-								type.equals("AcceleratingPhysicsObject") ? new AcceleratingPhysicsObject(engine, hitboxes, position, animation) :
-																				new MovingPhysicsObject(engine, hitboxes, position, animation);
+		SimplePhysicsObject physObj = type.equals("ComplexPhysicsObject") ? new ComplexPhysicsObject(engine, hitboxes, position, animation, Material.valueOf(parser.getValue("material").toUpperCase())) :
+																	  new SimplePhysicsObject(engine, hitboxes, position, animation, Double.parseDouble(parser.getValue("mass")));
 		parser.moveUp();
 		return physObj;
 	}
@@ -258,7 +255,7 @@ public class VoogaGameBuilder {
             if (directory.toLowerCase().startsWith("on")) {
                 parser.moveDown(directory);
                 IBehavior behavior = buildBehaviorList();
-                objective.setBehavior(directory.substring(2, directory.length()), behavior);
+                objective.setBehavior(directory.substring(2, directory.length() - 1), behavior);
                 parser.moveUp();
             }
         }

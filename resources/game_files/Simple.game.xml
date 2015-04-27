@@ -2,7 +2,7 @@
 <game>
 	<title>Simple Game</title>
 
-	<frame_rate>5</frame_rate>
+	<frame_rate>30</frame_rate>
 	
 	<scene_width>1500</scene_width>
 	<scene_height>1000</scene_height>
@@ -30,7 +30,7 @@
 								<targetType>sprite</targetType>
 								<targetIndex>0</targetIndex>
 								<name>jump</name>
-								<parameters>.05</parameters>
+								<parameters>1000</parameters>
 							</behavior_1>
 						</behaviors>
 					</onComplete>
@@ -71,7 +71,7 @@
 								<targetType>sprite</targetType>
 								<targetIndex>0</targetIndex>
 								<name>jump</name>
-								<parameters>.03</parameters>
+								<parameters>1000</parameters>
 							</behavior_0>
 
 							<behavior_1>
@@ -351,8 +351,8 @@
 
 									<delay>1</delay>
 
-									<width>500</width>
-									<height>100</height>
+									<width>200</width>
+									<height>500</height>
 
 									<hitboxes>
 										<hitbox_0>
@@ -370,7 +370,7 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>static</material>
-						<position>1800 100</position>
+						<position>1800 120</position>
 					</physics>
 				</sprite_5>
 			</sprites>
@@ -456,7 +456,7 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>jump</name>
-									<parameters>2500</parameters>
+									<parameters>3000</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
