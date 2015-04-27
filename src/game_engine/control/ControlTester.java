@@ -100,10 +100,6 @@ public class ControlTester extends Application{
 		myGroup.getChildren().add(text1);
 		myGroup.getChildren().add(text2);
 		
-		//scene.setOnMouseClicked(e -> handleDragEnter(e));
-		//scene.setOnMouseMoved(e -> handleDragMove(e));
-		//scene.setOnMouseReleased(e -> handleDragRelease(e));
-		
 		voiceInitialization();
 		cFactory.getControlManager(ControlConstants.VOICE_CONTROL).handleEvent(null);
 		
@@ -232,13 +228,7 @@ public class ControlTester extends Application{
 				(y > myCircle.getCenterY() - myCircle.getRadius());
 	}
 
-	private void handleDragEnter(MouseEvent e){
-		enterTag = true;
-		if(!checkB(e)){
-			dragTag = true;
-		} 
-		System.out.println("MouseClick" + dragTag);
-	}
+
 	
 	private void handleClick(double x, double y){
 		enterTag = true;
@@ -249,17 +239,7 @@ public class ControlTester extends Application{
 	}
 
 
-	private void handleDragMove(MouseEvent e){
-		System.out.println("DragMove and " + dragTag);
-		System.out.println(e.getClass().getName().toString() + " and " + e.getClass().getName().toString().equals("javafx.scene.input.MouseEvent"));
-		if(dragTag && checkB(e)){
-			myCircle.setCenterX(e.getX());
-			myCircle.setCenterY(e.getY());
-			System.out.println("X and Y is " + e.getX() + e.getY());
-			System.out.println("CX and CY is " + myCircle.getCenterX() + myCircle.getCenterY());
-		}
-	}
-	
+
 	private void handleMove(double x, double y){
 		if(dragTag && boundCheck(x, y)){
 			myCircle.setCenterX(x);
@@ -269,11 +249,6 @@ public class ControlTester extends Application{
 		}
 	}
 
-	private void handleDragRelease(MouseEvent e){
-		dragTag = false;
-		enterTag = true;
-		System.out.println("DragRelease" + dragTag + enterTag);
-	}
 	
 	private void handleRelease(){
 		dragTag = false;
