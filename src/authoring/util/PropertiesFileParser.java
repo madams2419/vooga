@@ -27,6 +27,7 @@ public class PropertiesFileParser {
         return ret;
     }
 
+    @SuppressWarnings("rawtypes")
     public static String[] loadProperties (Enum[] properties, String filePath) throws IOException {
         return loadProperties(convertEnumToStringArray(properties), filePath);
     }
@@ -37,11 +38,13 @@ public class PropertiesFileParser {
         return loadProperties(sortedProperties, filePath);
     }
 
+    @SuppressWarnings("rawtypes")
     public static String[] alphabeticallyLoadProperties (Enum[] properties, String filePath)
                                                                                             throws IOException {
         return alphabeticallyLoadProperties(convertEnumToStringArray(properties), filePath);
     }
 
+    @SuppressWarnings("rawtypes")
     public static String[] convertEnumToStringArray (Enum[] enums) {
         String[] ret = new String[enums.length];
         for (int i = 0; i < enums.length; i++) {

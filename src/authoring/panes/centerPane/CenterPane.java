@@ -38,7 +38,6 @@ public class CenterPane extends WindowPane {
 		myMaps = new HashMap<>();
 		initLevelsListener();
 		addLevel();
-//		System.out.printf("Instantiated %s%n", this.getClass().getName());
 	}
 
 	private void initLevelsListener() {
@@ -105,7 +104,6 @@ public class CenterPane extends WindowPane {
 	@Override
 	public Group generateComponents(
 			ArrayList<Map<String, Map<String, String>>> values) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

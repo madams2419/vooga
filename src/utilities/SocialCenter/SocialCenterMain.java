@@ -1,13 +1,10 @@
 package utilities.SocialCenter;
 
-import launcher.VoogaMenu;
 import javafx.application.Application;
-import javafx.geometry.Rectangle2D;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class SocialCenterMain extends Application {
-	private LoginScreen login;
+//	private LoginScreen login;
 	@Override
 	
 	
@@ -15,7 +12,7 @@ public class SocialCenterMain extends Application {
 		
 		//idk if we want to initialize the size itself
 		stage.setTitle("Social Center");
-		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+		//Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 //		stage.setX(primaryScreenBounds.getMinX());
 //		stage.setY(primaryScreenBounds.getMinY());
 		

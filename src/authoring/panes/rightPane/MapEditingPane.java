@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import authoring.panes.centerPane.CenterPane;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -13,17 +12,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
+/**
+ * Updates map settings
+ * @author Someone, Andrew Sun
+ *
+ */
 public class MapEditingPane extends EditingPane {
 
 	   private List<HBox> myFields = new LinkedList<>();
-	    private CenterPane cp;
 	    public Map<String, String> fields;
-	    private static Scene mScene;
-
 	    public MapEditingPane(Scene myScene, RightPane parent) {
-	        // TODO Auto-generated constructor stub
 	        super(myScene, parent);
-	        mScene = myScene;
 	        /* Default Map */
 	        createDefaultMap();
 	        setFields(this.getChildren(), updateMap());
@@ -55,15 +54,11 @@ public class MapEditingPane extends EditingPane {
 	    }
 
 	    private Map<String, String> updateMap() {
-	        // System.out.println();
-
 	        myFields.forEach(hbox -> {
-	            String s, t;
-	            fields.put((s = ((Text) hbox.getChildren().get(0)).getText()),
-	                    (t = ((TextField) hbox.getChildren().get(1)).getText()));
+	            fields.put((((Text) hbox.getChildren().get(0)).getText()),
+	                    (((TextField) hbox.getChildren().get(1)).getText()));
 	        });
 	        return fields;
-	        // System.out.println(sprite.getCharacteristics().toString());
 	    }
 
 }

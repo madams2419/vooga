@@ -3,7 +3,6 @@ package game_engine.sprite;
 import game_engine.physics.Vector;
 import game_engine.physics.objects.PhysicsObject;
 import java.io.FileInputStream;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
@@ -111,12 +110,12 @@ public class Animation extends Observable implements Observer {
     	return current.index;
     }
     
-    private void rotateImage() {
-    	current = current.next;
-    	image.setImage(current.image);
-    	setChanged();
-    	notifyObservers();
-    }
+//    private void rotateImage() {
+//    	current = current.next;
+//    	image.setImage(current.image);
+//    	setChanged();
+//    	notifyObservers();
+//    }
     
     /**
      * method getImageView

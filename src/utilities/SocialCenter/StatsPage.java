@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -18,18 +17,15 @@ import javafx.stage.Stage;
  *
  */
 public class StatsPage {
-	private Stage myStage;
 	private String ID;
 	private Scene scoreScreen;
 	private double Width;
-	private double Height;
 	private StackPane root=new StackPane();
 	private Driver db=new Driver();
 	
 	StatsPage(String id, double width, double height){
 		ID=id;
 		Width=width;
-		Height=height;
 		initialize(width,height);
 		IDList();
 
@@ -96,7 +92,6 @@ public class StatsPage {
 	
 	
 	void getStatsScreen(Stage s){
-		myStage=s;
 		s.setScene(scoreScreen);
 	}
 	

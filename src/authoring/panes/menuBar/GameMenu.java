@@ -1,18 +1,16 @@
 package authoring.panes.menuBar;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 
 /**
- * 
+ * Creates the menu bar for the game.
  * @author Andrew
  *
  */
