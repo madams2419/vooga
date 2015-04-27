@@ -36,12 +36,18 @@ public class TransitionManager {
     private List<Sprite> mySprites;
     private List<String[]> myParams;
     
-   public TransitionManager(Group group, ArrayList<Sprite> sprites,ArrayList<String[]> params){
+    private ArrayList<Integer> myDuration;
+    private ArrayList<Integer> myDelay;
+    
+   public TransitionManager(Group group, ArrayList<Sprite> sprites,ArrayList<String[]> params,ArrayList<Integer> duration,
+                            ArrayList<Integer> delay){
        myGroup = group;
        myTransitionMap = new HashMap<Sprite,List<PathElement>>();
        myTransitions = new ArrayList<SequentialTransition>();
        mySprites = sprites;
        myParams = params;
+       myDuration = duration;
+       myDelay = delay;
    }
    
    public List<String[]> getParams(){
@@ -52,24 +58,25 @@ public class TransitionManager {
        return myTransitions;
    }
    
-   public void initialize(int seconds){
+   public void initialize(){
+      
        for(int i = 0;i<mySprites.size();i++){
            
            createTransitions(mySprites.get(i),myParams.get(i));
+           Sprite sprite = mySprites.get(i);
+           myGroup.getChildren().add(sprite.getImageView());
+           Path path = new Path();
+           path.getElements().addAll(myTransitionMap.get(sprite));
+           sprite.getPhysicsObject().ignorePhysics(sprite.getAnimation());
+           System.out.println("TIME PARAMS:"+myDuration+ " "+myDelay);
+           SequentialTransition pt = initializePath((Node) sprite.getImageView(),path,myDuration.get(i),myDelay.get(i));
+           myTransitions.add(pt);
+           
            System.out.println(myParams.get(i).length);
           for(int count = 0;count<myParams.get(i).length;count++){
               System.out.println(myParams.get(i)[count]);
           }
        }
-       
-       myTransitionMap.keySet().forEach(sprite ->{
-           myGroup.getChildren().add(sprite.getImageView());
-           Path path = new Path();
-           path.getElements().addAll(myTransitionMap.get(sprite));
-           sprite.getPhysicsObject().ignorePhysics(sprite.getAnimation());
-           SequentialTransition pt = initializePath((Node) sprite.getImageView(),path,seconds);
-           myTransitions.add(pt);
-       });
    }
    
    public void playTransitions(){
@@ -79,7 +86,7 @@ public class TransitionManager {
        });
    }
    
-   private SequentialTransition initializePath (Node object, Path path, int seconds) {
+   private SequentialTransition initializePath (Node object, Path path, int seconds,int delay) {
        PathTransition pathTr = new PathTransition();
        pathTr.setDuration(Duration.seconds(seconds));
        pathTr.setPath(path);
@@ -87,7 +94,7 @@ public class TransitionManager {
        pathTr.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
        pathTr.setAutoReverse(true);
        
-       PauseTransition pause = new PauseTransition(Duration.seconds(1));
+       PauseTransition pause = new PauseTransition(Duration.seconds(delay));
        pause.setAutoReverse(true);
 
       SequentialTransition seqTran = new SequentialTransition(pause,pathTr);

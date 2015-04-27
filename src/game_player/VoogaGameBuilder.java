@@ -108,7 +108,7 @@ public class VoogaGameBuilder {
 		level.setCollisionEngine(buildCollisionsManager(engine));
 		level.setControlManager(buildControlsManager());
 		game.setTransitionManager(buildTransitionManager(game.getRoot()));
-		game.getTransitionManager().initialize(5);
+		game.getTransitionManager().initialize();
 		game.getTransitionManager().getParams().forEach(param->{
 		    System.out.println(Arrays.toString(param));
 		});
@@ -122,6 +122,8 @@ public class VoogaGameBuilder {
 	    parser.moveDown("sprite_paths");
 	    ArrayList<Sprite> pathSprites = new ArrayList<>();
 	    ArrayList<String[]> pathValues = new ArrayList<>();
+	    ArrayList<Integer> durations = new ArrayList<>();
+	    ArrayList<Integer> delays = new ArrayList<>();
 	    for (String directory: parser.getValidSubDirectories()) {
 	        parser.moveDown(directory);
 	        int id = Integer.parseInt(parser.getValue("id"));
@@ -129,10 +131,14 @@ public class VoogaGameBuilder {
 	        String[] values = parser.getValue("values").split(" ");
 	        pathSprites.add(sprite);
 	        pathValues.add(values);
+	         int duration = Integer.parseInt(parser.getValue("duration"));
+	         durations.add(duration);
+	         int delay = Integer.parseInt(parser.getValue("delay"));
+	         delays.add(delay);
 	        parser.moveUp();
 	    }
 	    parser.moveUp();
-	    return new TransitionManager(group,pathSprites,pathValues);
+	    return new TransitionManager(group,pathSprites,pathValues,durations,delays);
 	}
 	
 	private PhysicsEngine buildPhysicsEngine() {
