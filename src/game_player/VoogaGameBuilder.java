@@ -215,7 +215,7 @@ public class VoogaGameBuilder {
 	
 	private RigidBody buildRigidBody(double width, double height, PhysicsEngine engine) {
 		//TODO refactor this if we have time to add complex rigid bodies
-		return engine.getRigidBody(width, height, "rectangle");
+		return engine.makeRigidBody(width, height, "rectangle");
 	}
 	
 //	private IHitbox buildHitbox() {
@@ -248,7 +248,7 @@ public class VoogaGameBuilder {
 		Material material = Material.valueOf(parser.getValue("material").toUpperCase());
 		
 		
-		PhysicsObject physObj = new PhysicsObject(engine, material, position);
+		PhysicsObject physObj = engine.addPhysicsObject(material, position);
 		
 		parser.moveUp();
 		return physObj;

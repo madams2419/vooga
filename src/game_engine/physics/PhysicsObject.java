@@ -19,9 +19,7 @@ public class PhysicsObject extends Observable {
 	private List<Joint> myJoints;
 	private PhysicsEngine myPhysics;
 	private Scaler myScaler;
-	
 	private Supplier<Vector> myPositionConstraint;
-
 	private RigidBody myRigidBody;
 
 	public PhysicsObject(PhysicsEngine physics, RigidBody rigidBody, Material material, Vector positionPx) {
@@ -61,6 +59,7 @@ public class PhysicsObject extends Observable {
 		notifyObservers();
 	}
 	
+	//TODO change to posotion modifier
 	public void constrainPosition(Supplier<Vector> positionConstraint) {
 		//TODO replace with strategy pattern
 		myPositionConstraint = positionConstraint;

@@ -1,13 +1,10 @@
 package game_engine.physics;
 
-import game_engine.sprite.Sprite;
 import game_engine.physics.RigidBody.RBodyType;
 
 public class PhysicsCollisionFactory {
 
-	public static PhysicsCollision getCollision(Sprite a, Sprite b) {
-		PhysicsObject poA = a.getPhysicsObject();
-		PhysicsObject poB = b.getPhysicsObject();
+	public PhysicsCollision createCollision(PhysicsObject poA, PhysicsObject poB) {
 		RigidBody rbA = poA.getRigidBody();
 		RigidBody rbB = poB.getRigidBody();
 
@@ -21,7 +18,7 @@ public class PhysicsCollisionFactory {
 		} else if(rbA.getType() == RBodyType.RECTANGLE && rbB.getType() == RBodyType.RECTANGLE) {
 				return new RectRectCollision(poA, poB);
 		} else {
-			return getCollision(b, a);
+			return createCollision(poB, poA);
 		}
 	}
 
