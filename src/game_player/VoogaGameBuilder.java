@@ -24,7 +24,6 @@ import game_engine.controls.key_controls.ReleasedKeyControlMap;
 import game_engine.objectives.GameTimer;
 import game_engine.objectives.Objective;
 import game_engine.physics.Material;
-import game_engine.physics.RectangleBody;
 import game_engine.physics.RigidBody;
 import game_engine.physics.Vector;
 import game_engine.physics.PhysicsEngine;
@@ -169,7 +168,7 @@ public class VoogaGameBuilder {
 		parser.moveDown(spriteID);
 		
 		Map<String, List<RigidBody>> rigidBodies = new HashMap<>();
-		Animation animation = buildAnimation(rigidBodies);
+		Animation animation = buildAnimation(rigidBodies, engine);
 		PhysicsObject physObj = buildPhysicsObject(animation, engine, rigidBodies);
 		String initialState = parser.getValue("initial_state");
 		
@@ -179,7 +178,7 @@ public class VoogaGameBuilder {
 		return sprite;
 	}
 	
-	private Animation buildAnimation(Map<String, List<RigidBody>> rigidbodies) {
+	private Animation buildAnimation(Map<String, List<RigidBody>> rigidbodies, PhysicsEngine engine) {
 		parser.moveDown("animations");
 		
 		Animation animation = new Animation(game.getHeight());
@@ -188,7 +187,7 @@ public class VoogaGameBuilder {
 			parser.moveDown(directory);
 			
 			String name = parser.getValue("name");
-			List<RigidBody> hb = new ArrayList<>();
+			List<RigidBody> rb = new ArrayList<>();
 			
 			parser.moveDown("images");
 			for (String imageDirectory : parser.getValidSubDirectories()) {
@@ -200,12 +199,12 @@ public class VoogaGameBuilder {
 				
 				animation.associateImage(name, source, delay, height, width);
 				
-				hb.add(buildRigidBody());
+				rb.add(buildRigidBody(width, height, engine));
 				parser.moveUp();
 			}
 			parser.moveUp();
 			
-			rigidbodies.put(name, hb);
+			rigidbodies.put(name, rb);
 			parser.moveUp();
 		}
 		
@@ -213,9 +212,9 @@ public class VoogaGameBuilder {
 		return animation;
 	}
 	
-	private RigidBody buildRigidBody(double width, double height) {
-		//TODO add rigid body factory if we have time to support complex rigid bodies
-		RigidBody rectangle = new RectangleBody(width, height);
+	private RigidBody buildRigidBody(double width, double height, PhysicsEngine engine) {
+		//TODO refactor this if we have time to add complex rigid bodies
+		return engine.getRigidBody(width, height, "rectangle");
 	}
 	
 //	private IHitbox buildHitbox() {
@@ -239,15 +238,17 @@ public class VoogaGameBuilder {
 //		return hitbox;
 //	}
 	
-	private SimplePhysicsObject buildPhysicsObject(Animation animation, PhysicsEngine engine, Map<String, List<IHitbox>> hitboxes) {
+	private PhysicsObject buildPhysicsObject(Animation animation, PhysicsEngine engine, RigidBody rigidBody) {
 		parser.moveDown("physics");
 		
 		String type = parser.getValue("type");
 		String[] point = parser.getValue("position").split(" ");
 		Vector position = new Vector(Double.parseDouble(point[0]), Double.parseDouble(point[1]));
+		Material material = Material.valueOf(parser.getValue("material").toUpperCase());
 		
-		SimplePhysicsObject physObj = type.equals("ComplexPhysicsObject") ? new ComplexPhysicsObject(engine, hitboxes, position, animation, Material.valueOf(parser.getValue("material").toUpperCase())) :
-																	  new SimplePhysicsObject(engine, hitboxes, position, animation, Double.parseDouble(parser.getValue("mass")));
+		
+		PhysicsObject physObj = new PhysicsObject(engine, rigidBody, material, position);
+		
 		parser.moveUp();
 		return physObj;
 	}
@@ -358,7 +359,7 @@ public class VoogaGameBuilder {
     		
     		String type = parser.getValue("type");
     		if (type.equals("PhysicalResolver")) {
-    			resolver.addResolver(new PhysicalResolver(engine));
+    			// physical resolver doesn't exist anymore
     		}
     		else if (type.equals("SimpleResolver")) {
     			resolver.addResolver(new SimpleResolver(buildBehaviorList()));

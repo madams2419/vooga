@@ -1,15 +1,19 @@
 package game_engine.sprite;
 
+import game_engine.physics.RigidBody;
 import game_engine.physics.Vector;
 import game_engine.physics.PhysicsObject;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+
 import java.util.Observer;
 /**
  * 
@@ -18,7 +22,8 @@ import java.util.Observer;
  */
 public class Animation extends Observable implements Observer {
 
-    private ImageView image;
+	private ImageView image;
+	private RigidBody rigidBody;
     private Node current;
     Map<String, ImageLink> paths;
     private long timeElapsed;
@@ -39,14 +44,14 @@ public class Animation extends Observable implements Observer {
      * @param height the height to set the image to
      * @param width  the width to set the image to
      */
-    public void associateImage(String state, String imagePath, double delay, double height, double width) {
+    public void associateImage(String state, String imagePath, RigidBody rBody, double delay, double height, double width) {
     	if (!paths.containsKey(state)) {
     		paths.put(state, new ImageLink());
     	}
     	
     	try {
 			FileInputStream fis = new FileInputStream(imagePath);
-			paths.get(state).add(new Image(fis, width, height, false, true), Duration.seconds(delay));
+			paths.get(state).add(new Image(fis, width, height, false, true), rBody, Duration.seconds(delay));
 		}
     	catch (FileNotFoundException e) {
     		e.printStackTrace();
@@ -61,12 +66,14 @@ public class Animation extends Observable implements Observer {
     protected class Node {
 		 
 		private Image image;
+		private RigidBody rBody;
 		private Node next;
 		private Duration delay;
 		private int index;
 		
-		public Node(Image i, Node n, Duration d, int ind) {
+		public Node(Image i, RigidBody rb, Node n, Duration d, int ind) {
 			image = i;
+			rBody = rb;
 			next = n;
 			delay = d;
 			index = ind;
@@ -77,10 +84,10 @@ public class Animation extends Observable implements Observer {
     	
     	private Node first;
     	
-    	public void add(Image image, Duration delay) {
+    	public void add(Image image, RigidBody rBody, Duration delay) {
     		
     		if (first == null) {
-    			first = new Node(image, first, delay, 0);
+    			first = new Node(image, rBody, first, delay, 0);
     			first.next = first;
     			return;
     		}
@@ -88,7 +95,7 @@ public class Animation extends Observable implements Observer {
     		while (current.next != first) {
     			current = current.next;
     		}
-    		current.next = new Node(image, first, delay, current.index + 1);
+    		current.next = new Node(image, rBody, first, delay, current.index + 1);
     	}
     }
     
@@ -111,6 +118,7 @@ public class Animation extends Observable implements Observer {
     private void rotateImage() {
     	current = current.next;
     	image.setImage(current.image);
+    	rigidBody = current.rBody;
     	setChanged();
     	notifyObservers();
     }
@@ -121,6 +129,10 @@ public class Animation extends Observable implements Observer {
      */
     public ImageView getImageView() {
     	return image;
+    }
+    
+    public RigidBody getRigidBody() {
+    	return rigidBody;
     }
     
     /**

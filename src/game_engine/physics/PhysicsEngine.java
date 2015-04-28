@@ -16,7 +16,6 @@ import game_engine.sprite.Sprite;
 public class PhysicsEngine {
 
 	private double myDrag;
-	private double myScaleFactor;
 	private Map<String, Vector> myGlobalForces;
 	private Map<String, Vector> myGlobalAccels;
 	private Vector myNetGlobalAccel;
@@ -31,7 +30,7 @@ public class PhysicsEngine {
 		myNetGlobalForce = new Vector();
 		myNetGlobalAccel = new Vector();
 		myCollisionFactory = new PhysicsCollisionFactory();
-		myRigidBodyFactory = new RigidBodyFactory(myScaler);
+		myRigidBodyFactory = new RigidBodyFactory();
 		myScaler = new Scaler(scaleFactor);
 		myDrag = drag;
 	}
@@ -93,6 +92,12 @@ public class PhysicsEngine {
 	
 	public Scaler getScaler() {
 		return myScaler;
+	}
+	
+	public RigidBody getRigidBody(double widthPx, double heightPx, String type) {
+		double width = myScaler.pixelsToMeters(widthPx);
+		double height = myScaler.pixelsToMeters(heightPx);
+		return myRigidBodyFactory.createRigidBody(width, height, type);
 	}
 
 }

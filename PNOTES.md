@@ -10,5 +10,13 @@
 * Not sure how to deal with paths yet
 	> maybe pass a path supplier function into physics object
 	> have path-constrained physics object
+* For now, just using animation height and width to build RigidBodies
+	> if time, extend to take extra parameters from hitbox definition
+
+TODO
+* make animation update physics state
+* Add interfaces for physics engine and physics object
 * Add ComplexResolver which takes in collision normal and does direction
   based resolution
+* Change velocity and force handling to reset every timestep
+
