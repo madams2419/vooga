@@ -96,8 +96,8 @@ public class PhysicsEngine {
 		return myScaler;
 	}
 	
-	public PhysicsObject addPhysicsObject(Material material, Vector position) {
-		PhysicsObject physicsObject = new PhysicsObject(this, material, position);
+	public PhysicsObject addPhysicsObject(RigidBody rBody, Material material, Vector position) {
+		PhysicsObject physicsObject = new PhysicsObject(this, rBody, material, position);
 		myObjects.add(physicsObject);
 		return physicsObject;
 	}

@@ -248,7 +248,7 @@ public class VoogaGameBuilder {
 		Material material = Material.valueOf(parser.getValue("material").toUpperCase());
 		
 		
-		PhysicsObject physObj = engine.addPhysicsObject(material, position);
+		PhysicsObject physObj = engine.addPhysicsObject(animation.getRigidBody(), material, position);
 		
 		parser.moveUp();
 		return physObj;

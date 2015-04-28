@@ -38,10 +38,6 @@ public class PhysicsObject extends Observable {
 		
 		myPositionConstraint = null;
 	}
-	
-	public PhysicsObject(PhysicsEngine physics, Material material, Vector positionPx) {
-		this(physics, RigidBody.POINT, material, positionPx);
-	}
 
 	public void update(double dt) {
 		//TODO replace with strategy pattern
