@@ -14,44 +14,37 @@ import game_engine.sprite.Sprite;
 // - optimize net force computation
 
 public class PhysicsEngine {
+	
+	//TODO move to properties file
+	private static final double SCALE_FACTOR = 0.01;
+	private static final double DRAG_COEF = 0.2;
 
-	//TODO move these to properties file
-	private static double SCALE_FACTOR = 0.01; // pixel to meter scaling
-	private static String GRAV_STRING = "gravity";
-	private static double GRAV_MAGNITUDE = 9.8;
-	private static double DRAG_COEF = 0.2;
-
-	private double myGround;
 	private double myTimeStep;
 	private double myDrag;
+	private double myScaleFactor;
 	private Map<String, Vector> myGlobalForces;
 	private Map<String, Vector> myGlobalAccels;
 	private Vector myNetGlobalAccel;
 	private Vector myNetGlobalForce;
+	private PhysicsCollisionFactory collisionFactory;
 
-	public PhysicsEngine(double groundPixels, double timeStep, double gravity, double drag) {
-		myGround = pixelsToMeters(groundPixels);
-		myTimeStep = timeStep;
+	public PhysicsEngine(double drag, double scaleFactor) {
 		myGlobalForces = new HashMap<>();
 		myGlobalAccels = new HashMap<>();
 		myNetGlobalForce = new Vector();
 		myNetGlobalAccel = new Vector();
-		setGravity(gravity);
+		collisionFactory = new PhysicsCollisionFactory();
 		myDrag = drag;
+		myScaleFactor = scaleFactor;
 	}
 
-	public PhysicsEngine(double groundPixels, double timeStep) {
-		this(groundPixels, timeStep, GRAV_MAGNITUDE, DRAG_COEF);
+	public PhysicsEngine() {
+		this(DRAG_COEF, SCALE_FACTOR);
 	}
 
 	public Vector getDragForce(PhysicsObject physObj) {
 		double dragCoef = - myDrag * physObj.getRigidBody().getCxArea();
 		return physObj.getVelocity().times(dragCoef);
-	}
-
-	public void setGravity(double gravity) {
-		myGlobalAccels.put(GRAV_STRING, new Vector(0, -GRAV_MAGNITUDE));
-		computeNetGlobalAccel();
 	}
 
 	public void update(List<Sprite> sprites) {
@@ -118,34 +111,30 @@ public class PhysicsEngine {
 		myTimeStep = timeStep;
 	}
 
-	public double getGround() {
-		return myGround;
-	}
-
 	/* Scaling utility functions */
 	//TODO move these elsewhere
 
-	public static double pixelsToMeters(double pixels) {
-		return pixels * SCALE_FACTOR;
+	public double pixelsToMeters(double pixels) {
+		return pixels * myScaleFactor;
 	}
 
-	public static double metersToPixels(double meters) {
-		return meters / SCALE_FACTOR;
+	public double metersToPixels(double meters) {
+		return meters / myScaleFactor;
 	}
 
-	public static Vector vectorPixelsToMeters(Vector vectorPixels) {
+	public Vector vectorPixelsToMeters(Vector vectorPixels) {
 		return vectorPixelsToMeters(vectorPixels.getX(), vectorPixels.getY());
 	}
 
-	public static Vector vectorPixelsToMeters(double xPixels, double yPixels) {
+	public Vector vectorPixelsToMeters(double xPixels, double yPixels) {
 		return new Vector(pixelsToMeters(xPixels), pixelsToMeters(yPixels));
 	}
 
-	public static Vector vectorMetersToPixels(Vector vector) {
+	public Vector vectorMetersToPixels(Vector vector) {
 		return vectorMetersToPixels(vector.getX(), vector.getY());
 	}
 
-	public static Vector vectorMetersToPixels(double xMeters, double yMeters) {
+	public Vector vectorMetersToPixels(double xMeters, double yMeters) {
 		return new Vector(metersToPixels(xMeters), metersToPixels(yMeters));
 	}
 }

@@ -1,7 +1,7 @@
 package game_engine.sprite;
 
 import game_engine.physics.Vector;
-import game_engine.physics.objects.PhysicsObject;
+import game_engine.physics.PhysicsObject;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -157,8 +157,8 @@ public class Animation extends Observable implements Observer {
     private void changePosition(Observable source) {
     	try { 
     		PhysicsObject physicsObject = (PhysicsObject) source;
-    		image.setTranslateX(physicsObject.getPosition().getX());
-    		image.setTranslateY(height - physicsObject.getPosition().getY() - image.getImage().getHeight());
+    		image.setTranslateX(physicsObject.getPositionPixels().getX());
+    		image.setTranslateY(height - physicsObject.getPositionPixels().getY() - image.getImage().getHeight());
     	}
     	catch (Exception e) {
     		// do nothing

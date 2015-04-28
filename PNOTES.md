@@ -7,3 +7,8 @@
 	> all behavioral collisions must still be defined
 * A single call to PhysicsEngine.update() will check and resolve all
   collisions
+* Not sure how to deal with paths yet
+	> maybe pass a path supplier function into physics object
+	> have path-constrained physics object
+* Add ComplexResolver which takes in collision normal and does direction
+  based resolution
