@@ -3,7 +3,7 @@ package game_engine.physics.engines;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
-
+import game_engine.annotation.IActionAnnotation;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.physics.Vector;
@@ -39,11 +39,13 @@ public class PhysicsEngine implements IActor {
 		return (a, b) -> new Vector(0, 0);
 	}
 	
+	@IActionAnnotation(description = "Sets a global acceleration", numParams = 2, paramDetails = "2D vector")
 	private IAction setGlobalAccel = (params) -> {
 		globalAcceleration = new ArrayList<>();
 		globalAcceleration.add(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
 	};
 	
+	@IActionAnnotation(description = "Sets a global force", numParams = 1, paramDetails = "2D vector")
 	private IAction setGlobalForce = (params) -> {
 		globalForce = new ArrayList<>();
 		globalForce.add(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
