@@ -45,7 +45,7 @@ public class PhysicsEngine implements IActor {
 		globalAcceleration.add(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
 	};
 	
-	@IActionAnnotation(description = "Sets a global force", numParams = 1, paramDetails = "2D vector")
+	@IActionAnnotation(description = "Sets a global force", numParams = 2, paramDetails = "2D vector")
 	private IAction setGlobalForce = (params) -> {
 		globalForce = new ArrayList<>();
 		globalForce.add(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
