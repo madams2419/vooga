@@ -55,7 +55,8 @@ public class ObjectiveDialog extends DataDialog {
 		Map<String, List<String>> mResult = new HashMap<>();
 		mResult.put("onComplete", new ArrayList<String>());
 		mResult.put("onFailed", new ArrayList<String>());
-		mResult.put("prereqs", Arrays.asList(new String[]{mPrereqs.get(0).getValue()}));
+		String prereq = mPrereqs.get(0).getValue();
+		mResult.put("prereqs", Arrays.asList(new String[]{prereq == null ? "" : prereq}));
 		for (int i = 0; i < mActions.size(); i++) {
 			String action = String.format("%s:%s:%s", mSpriteBoxes.get(i)
 					.getSelectionModel().getSelectedItem().split(", ")[1], 
