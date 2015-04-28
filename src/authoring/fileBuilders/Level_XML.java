@@ -29,7 +29,6 @@ public class Level_XML {
 
 		// Adding objectives
 		Element levels = xml.add(currentLevel, "level_objectives");
-		System.out.println("numObjectives: " + level_objectives.size());
 		for (Objective_XML objective : level_objectives) {
 			objective.writeToXML(levels, i++, xml);
 		}
@@ -54,7 +53,6 @@ public class Level_XML {
 
 		// Adding collisions
 		Element collision = xml.add(currentLevel, "collisions");
-		System.out.println("num collisions: " + collisions.length);
 		for (Collision_XML c : collisions) {
 			c.writeToXML(collision, i++, xml);
 		}

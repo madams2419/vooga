@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-
 import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
@@ -25,6 +24,25 @@ import authoring.userInterface.DialogGridOrganizer;
  */
 public class ObjectiveDialog extends DataDialog {
 
+        private static final String SET_STATE = "setState";
+        private static final String JUMP = "jump";
+        private static final String MOVE_FORWARD = "moveForward";
+        private static final String INCREMENT_SCORE = "incrementScore";
+        private static final String EMPTY_STRING = "";
+        private static final String TITLE = "Objective %d Behaviors";
+        private static final String ACTION_SPLIT_BY = ", ";
+        private static final String ACTION_FORMAT = "%s:%s:%s";
+        private static final String PREREQS = "prereqs";
+        private static final String ON_FAILED = "onFailed";
+        private static final String ON_COMPLETE = "onComplete";
+        private static final String PRE_REQUISITES = "Pre-requisites";
+        private static final String PARAMETERS = "Parameters";
+        private static final String ACTION = "Action";
+        private static final String SPRITE = "Sprite";
+        private static final String COMPLETE_FAILED = "Complete/Failed";
+        private static final List<String> myActionsList = Arrays.asList(new String[]{INCREMENT_SCORE, 
+                                                          MOVE_FORWARD, JUMP, SET_STATE});
+        
 	private List<ComboBox<String>> mActions = new ArrayList<>();
 	private List<ComboBox<String>> mPrereqs = new ArrayList<>();
 	private List<ComboBox<String>> mSpriteBoxes = new ArrayList<>();
@@ -44,22 +62,22 @@ public class ObjectiveDialog extends DataDialog {
 		mSprites = sprites;
 		setupSprites();
 		initialize(5, 1, 1,
-		           new Node[] { new Label("Complete/Failed"), new Label("Sprite"),
-		                        new Label("Action"), new Label("Parameters"), new Label(
-		                                "Pre-requisites")});
+		           new Node[] { new Label(COMPLETE_FAILED), new Label(SPRITE),
+		                        new Label(ACTION), new Label(PARAMETERS), new Label(
+		                                PRE_REQUISITES)});
 		addAddButton();
 		showBox();
 	}
 
     private Map<String, List<String>> collectBehaviours() {
 		Map<String, List<String>> mResult = new HashMap<>();
-		mResult.put("onComplete", new ArrayList<String>());
-		mResult.put("onFailed", new ArrayList<String>());
+		mResult.put(ON_COMPLETE, new ArrayList<String>());
+		mResult.put(ON_FAILED, new ArrayList<String>());
 		String prereq = mPrereqs.get(0).getValue();
-		mResult.put("prereqs", Arrays.asList(new String[]{prereq == null ? "" : prereq}));
+		mResult.put(PREREQS, Arrays.asList(new String[]{prereq == null ? EMPTY_STRING : prereq}));
 		for (int i = 0; i < mActions.size(); i++) {
-			String action = String.format("%s:%s:%s", mSpriteBoxes.get(i)
-					.getSelectionModel().getSelectedItem().split(", ")[1], 
+			String action = String.format(ACTION_FORMAT, mSpriteBoxes.get(i)
+					.getSelectionModel().getSelectedItem().split(ACTION_SPLIT_BY)[1], 
 					mActions.get(i)
 					.getSelectionModel().getSelectedItem(), mParams.get(i)
 					.getText());
@@ -76,7 +94,7 @@ public class ObjectiveDialog extends DataDialog {
 
 	public ComboBox<String> addStatesBox() {
 		ComboBox<String> b = addComboBox(mStates, 
-		    Arrays.asList(new String[]{"onComplete", "onFailed"}));
+		    Arrays.asList(new String[]{ON_COMPLETE, ON_FAILED}));
 		b.getSelectionModel().select(0);
 		return b;
 	}
@@ -96,21 +114,19 @@ public class ObjectiveDialog extends DataDialog {
 
   @Override
   String getMyTitle() {
-    return String.format("Objective %d Behaviours", myIndex);
+    return String.format(TITLE, myIndex);
   }
 
   @Override
   void addBlankRow(int index, DialogGridOrganizer... grid) {
     grid[0].addRowEnd(addStatesBox(), addSpritesBox(), addComboBox(mActions, 
-        Arrays.asList(new String[]{"win", "lose", "die"})),
-        addTextField(mParams), addPrereqsBox());
+        myActionsList), addTextField(mParams), addPrereqsBox());
   }
   
   @Override
   void addAdditionalBlankRow(int index, DialogGridOrganizer... grid) {
     grid[0].addRowEnd(addStatesBox(), addSpritesBox(), addComboBox(mActions, 
-        Arrays.asList(new String[]{"win", "lose", "die"})),
-        addTextField(mParams));
+        myActionsList), addTextField(mParams));
   }
 
   @Override
@@ -119,9 +135,9 @@ public class ObjectiveDialog extends DataDialog {
       Map<String, List<String>> res = collectBehaviours();
       Objective_XML newObjective = new Objective_XML(
           myDescription.getText());
-      newObjective.addOnComplete(res.get("onComplete"), null);
-      newObjective.addOnFailed(res.get("onFailed"), null);
-      newObjective.addPrereqs(res.get("prereqs"));
+      newObjective.addOnComplete(res.get(ON_COMPLETE), null);
+      newObjective.addOnFailed(res.get(ON_FAILED), null);
+      newObjective.addPrereqs(res.get(PREREQS));
       myParent.getMyParent().getParent().getCenterPane()
       .getActiveTab().setObjective(newObjective, myIndex);
   });

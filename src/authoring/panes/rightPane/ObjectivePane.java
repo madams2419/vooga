@@ -17,6 +17,8 @@ import authoring.dialogs.ObjectiveDialog;
 
 public class ObjectivePane extends EditingPane {
 
+    private static final String OBJECTIVE = "objective_";
+    private static final String ADD_OBJECTIVE = "Add objective";
     private int numObjectives;
     private ObservableList<Text> mObjectives = FXCollections
             .observableArrayList();
@@ -46,7 +48,7 @@ public class ObjectivePane extends EditingPane {
             });
         this.getChildren().add(list);
 
-        Button b = new Button("Add objective");
+        Button b = new Button(ADD_OBJECTIVE);
         b.setOnMouseClicked(e -> {
             createObjective(numObjectives++);
         });
@@ -56,7 +58,7 @@ public class ObjectivePane extends EditingPane {
     }
 
     public void createObjective (int index) {
-        mObjectives.add(new Text("objective_" + index));
+        mObjectives.add(new Text(OBJECTIVE + index));
     }
 
     public List<Text> getObjectives () {
