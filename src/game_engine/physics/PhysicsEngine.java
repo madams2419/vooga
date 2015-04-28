@@ -15,7 +15,6 @@ import game_engine.sprite.Sprite;
 
 public class PhysicsEngine {
 
-	private double myTimeStep;
 	private double myDrag;
 	private double myScaleFactor;
 	private Map<String, Vector> myGlobalForces;
@@ -23,6 +22,7 @@ public class PhysicsEngine {
 	private Vector myNetGlobalAccel;
 	private Vector myNetGlobalForce;
 	private PhysicsCollisionFactory collisionFactory;
+	private Scaler myScaler;
 
 	public PhysicsEngine(double drag, double scaleFactor) {
 		myGlobalForces = new HashMap<>();
@@ -30,8 +30,8 @@ public class PhysicsEngine {
 		myNetGlobalForce = new Vector();
 		myNetGlobalAccel = new Vector();
 		collisionFactory = new PhysicsCollisionFactory();
+		myScaler = new Scaler(scaleFactor);
 		myDrag = drag;
-		myScaleFactor = scaleFactor;
 	}
 
 	public PhysicsEngine() {
@@ -98,39 +98,9 @@ public class PhysicsEngine {
 		myGlobalAccels.remove(name);
 		computeNetGlobalAccel();
 	}
-
-	public double getTimeStep() {
-		return myTimeStep;
+	
+	public Scaler getScaler() {
+		return myScaler;
 	}
 
-	public void setTimeStep(double timeStep) {
-		myTimeStep = timeStep;
-	}
-
-	/* Scaling utility functions */
-	//TODO move these elsewhere
-
-	public double pixelsToMeters(double pixels) {
-		return pixels * myScaleFactor;
-	}
-
-	public double metersToPixels(double meters) {
-		return meters / myScaleFactor;
-	}
-
-	public Vector vectorPixelsToMeters(Vector vectorPixels) {
-		return vectorPixelsToMeters(vectorPixels.getX(), vectorPixels.getY());
-	}
-
-	public Vector vectorPixelsToMeters(double xPixels, double yPixels) {
-		return new Vector(pixelsToMeters(xPixels), pixelsToMeters(yPixels));
-	}
-
-	public Vector vectorMetersToPixels(Vector vector) {
-		return vectorMetersToPixels(vector.getX(), vector.getY());
-	}
-
-	public Vector vectorMetersToPixels(double xMeters, double yMeters) {
-		return new Vector(metersToPixels(xMeters), metersToPixels(yMeters));
-	}
 }

@@ -24,18 +24,22 @@ import game_engine.controls.key_controls.ReleasedKeyControlMap;
 import game_engine.objectives.GameTimer;
 import game_engine.objectives.Objective;
 import game_engine.physics.Material;
+import game_engine.physics.RectangleBody;
+import game_engine.physics.RigidBody;
 import game_engine.physics.Vector;
 import game_engine.physics.PhysicsEngine;
 import game_engine.physics.PhysicsObject;
 import game_engine.sprite.Animation;
 import game_engine.sprite.Sprite;
 import game_engine.sprite.TransitionManager;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 
@@ -164,9 +168,9 @@ public class VoogaGameBuilder {
 	private Sprite buildSprite(String spriteID, PhysicsEngine engine) {
 		parser.moveDown(spriteID);
 		
-		Map<String, List<IHitbox>> hitboxes = new HashMap<>();
-		Animation animation = buildAnimation(hitboxes);
-		SimplePhysicsObject physObj = buildPhysicsObject(animation, engine, hitboxes);
+		Map<String, List<RigidBody>> rigidBodies = new HashMap<>();
+		Animation animation = buildAnimation(rigidBodies);
+		PhysicsObject physObj = buildPhysicsObject(animation, engine, rigidBodies);
 		String initialState = parser.getValue("initial_state");
 		
 		Sprite sprite = new Sprite(physObj, animation, initialState, null, 0);
@@ -175,7 +179,7 @@ public class VoogaGameBuilder {
 		return sprite;
 	}
 	
-	private Animation buildAnimation(Map<String, List<IHitbox>> hitboxes) {
+	private Animation buildAnimation(Map<String, List<RigidBody>> rigidbodies) {
 		parser.moveDown("animations");
 		
 		Animation animation = new Animation(game.getHeight());
@@ -184,7 +188,7 @@ public class VoogaGameBuilder {
 			parser.moveDown(directory);
 			
 			String name = parser.getValue("name");
-			List<IHitbox> hb = new ArrayList<>();
+			List<RigidBody> hb = new ArrayList<>();
 			
 			parser.moveDown("images");
 			for (String imageDirectory : parser.getValidSubDirectories()) {
@@ -196,12 +200,12 @@ public class VoogaGameBuilder {
 				
 				animation.associateImage(name, source, delay, height, width);
 				
-				hb.add(buildHitbox());
+				hb.add(buildRigidBody());
 				parser.moveUp();
 			}
 			parser.moveUp();
 			
-			hitboxes.put(name, hb);
+			rigidbodies.put(name, hb);
 			parser.moveUp();
 		}
 		
@@ -209,26 +213,31 @@ public class VoogaGameBuilder {
 		return animation;
 	}
 	
-	private IHitbox buildHitbox() {
-		parser.moveDown("hitboxes");
-		
-		MultipleHitbox hitbox = new MultipleHitbox();
-		for (String directory : parser.getValidSubDirectories()) {
-			parser.moveDown(directory);
-			
-			SingleHitbox hb = new SingleHitbox();
-			for (String label : parser.getValidLabels()) {
-				String[] point = parser.getValue(label).split(" ");
-				hb.addPoint(new Vector(Double.parseDouble(point[0]), Double.parseDouble(point[1])));
-			}
-			
-			hitbox.addHitbox(hb);
-			parser.moveUp();
-		}
-		
-		parser.moveUp();
-		return hitbox;
+	private RigidBody buildRigidBody(double width, double height) {
+		//TODO add rigid body factory if we have time to support complex rigid bodies
+		RigidBody rectangle = new RectangleBody(width, height);
 	}
+	
+//	private IHitbox buildHitbox() {
+//		parser.moveDown("hitboxes");
+//		
+//		MultipleHitbox hitbox = new MultipleHitbox();
+//		for (String directory : parser.getValidSubDirectories()) {
+//			parser.moveDown(directory);
+//			
+//			SingleHitbox hb = new SingleHitbox();
+//			for (String label : parser.getValidLabels()) {
+//				String[] point = parser.getValue(label).split(" ");
+//				hb.addPoint(new Vector(Double.parseDouble(point[0]), Double.parseDouble(point[1])));
+//			}
+//			
+//			hitbox.addHitbox(hb);
+//			parser.moveUp();
+//		}
+//		
+//		parser.moveUp();
+//		return hitbox;
+//	}
 	
 	private SimplePhysicsObject buildPhysicsObject(Animation animation, PhysicsEngine engine, Map<String, List<IHitbox>> hitboxes) {
 		parser.moveDown("physics");

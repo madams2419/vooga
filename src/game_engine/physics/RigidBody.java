@@ -2,9 +2,6 @@ package game_engine.physics;
 
 public abstract class RigidBody {
 
-	//TODO move somewhere else...constants or properties file
-	private static final double DEFAULT_DEPTH = 5;
-
 	protected RBodyType myType;
 	protected double myDepth;
 
@@ -13,7 +10,7 @@ public abstract class RigidBody {
 	}
 
 	public RigidBody() {
-		this(DEFAULT_DEPTH);
+		this(Constants.DEPTH);
 	}
 
 	public RigidBody(double depth) {

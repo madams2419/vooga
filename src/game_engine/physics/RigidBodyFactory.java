@@ -4,7 +4,13 @@ import game_engine.physics.RigidBody.RBodyType;
 
 public class RigidBodyFactory {
 	
-	public static RigidBody createRigidBody(int heightPixels, int widthPixels, RBodyType rbType) {
+	private Scaler myScaler;
+	
+	public RigidBodyFactor(Scaler scaler) {
+		myScaler = scaler;
+	}
+	
+	public static RigidBody createRigidBody(int widthPixels, int heightPixels, RBodyType rbType) {
 		double height = PhysicsEngine.pixelsToMeters(heightPixels);
 		double width = PhysicsEngine.pixelsToMeters(widthPixels);
 		RigidBody rBody;
