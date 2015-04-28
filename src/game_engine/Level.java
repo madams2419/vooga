@@ -41,6 +41,7 @@ public class Level implements IActor {
 	private CollisionsManager myCollisionEngine;
 	private ControlsManager myControlManager;
 	private Collection<Sprite> myToBeRemoved;
+	private Group mySpriteGroup;
 	private Group myGroup;
 	private Map<String, IAction> myActions;
 	
@@ -60,14 +61,14 @@ public class Level implements IActor {
 	}
 	
 	private void initGroup (ObservableList<Sprite> sprites) {
-	    myGroup = new Group();
+	    mySpriteGroup = new Group();
 	    sprites.addListener((ListChangeListener<Sprite>) change -> {
 	        while (change.next()) {
 	            if (change.wasAdded()) {
-	                change.getAddedSubList().forEach(sprite -> myGroup.getChildren().add(sprite.getImageView()));
+	                change.getAddedSubList().forEach(sprite -> mySpriteGroup.getChildren().add(sprite.getImageView()));
 	            }
 	            if (change.wasRemoved()) {
-	                change.getRemoved().forEach(sprite -> myGroup.getChildren().remove(sprite.getImageView()));
+	                change.getRemoved().forEach(sprite -> mySpriteGroup.getChildren().remove(sprite.getImageView()));
 	            }
 	        }
 	    });
@@ -146,22 +147,22 @@ public class Level implements IActor {
 	
 	public void start (double width, double height) {
 	    try {
-	            Group group2 = new Group(myGroup);
+	            myGroup = new Group(mySpriteGroup);
 	            IScrollFocus focus = new BasicFocus(width, height);
-	            IScroller scroller = new BasicScroller(myGroup);
+	            IScroller scroller = new BasicScroller(mySpriteGroup);
 	            WrapAround wrap =
 	                    new WrapAround(new Image(new FileInputStream("Resources/images/samplebackground.png")),
 	                                   width, height);
 	            wrap.repeatHorizontal();
 	            scroller.addBackground(wrap, 0.5);
-	            group2.getChildren().add(wrap.getGroup());
+	            myGroup.getChildren().add(wrap.getGroup());
 	            wrap.getGroup().toBack();
 	            SpriteTracker tracker = new SpriteTracker(focus, scroller);
 	            Sprite sprite = mySprites.get(0);
 	            sprite.getImageView().toFront();
 	            tracker.setPlayer(sprite, true, false);
-	            tracker.enable();
-	            tracker.tellY(height - 200);
+	            //tracker.enable();
+	            //tracker.tellY(height - 200);
 	        }
 	        catch (Exception e) {
 	            e.printStackTrace();

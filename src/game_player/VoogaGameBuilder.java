@@ -37,7 +37,6 @@ import game_engine.sprite.Animation;
 import game_engine.sprite.Sprite;
 import game_engine.sprite.TransitionManager;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +50,7 @@ public class VoogaGameBuilder {
 	
 	private List<Sprite> sprites;
 	private List<Objective> objectives;
-	private Map<String, IActor> myActors;
+	private Map<String, IActor> actors;
 	
 	private VoogaGame game;
 	
@@ -87,8 +86,8 @@ public class VoogaGameBuilder {
 		Level level = new Level();
 		sprites = new ArrayList<>();
 		objectives = new ArrayList<>();
-		myActors = new HashMap<>();
-		myActors.put(levelID, level);
+		actors = new HashMap<>();
+		actors.put(levelID, level);
 		PhysicsEngine engine = buildPhysicsEngine();
 		
 		parser.moveDown("sprites");
@@ -96,7 +95,7 @@ public class VoogaGameBuilder {
 			Sprite sprite = buildSprite(directory, engine);
 			level.addSprite(sprite);
 			sprites.add(sprite);
-			myActors.put(directory, sprite);
+			actors.put(directory, sprite);
 		}
 		parser.moveUp();
 		
@@ -104,7 +103,7 @@ public class VoogaGameBuilder {
 		for (String directory : parser.getValidSubDirectories()) {
 			Objective objective = buildObjective(directory);
 			objectives.add(objective);
-			myActors.put(directory, objective);
+			actors.put(directory, objective);
 		}
 		level.setObjectives(objectives);
 		int i = 0;
@@ -127,9 +126,6 @@ public class VoogaGameBuilder {
 		level.setControlManager(buildControlsManager());
 		game.setTransitionManager(buildTransitionManager(game.getRoot()));
 		game.getTransitionManager().initialize();
-		game.getTransitionManager().getParams().forEach(param->{
-		    System.out.println(Arrays.toString(param));
-		});
 		game.getTransitionManager().playTransitions();
 		
 		parser.moveUp();
@@ -169,7 +165,6 @@ public class VoogaGameBuilder {
 		parser.moveDown("global_accelerations");
 		for (String label : parser.getValidLabels()) {
 			String[] vector = parser.getValue(label).split(" ");
-			System.out.println(Arrays.asList(vector));
 			engine.addGlobalAccel(new Vector(Double.parseDouble(vector[0]), Double.parseDouble(vector[1])));
 		}
 		parser.moveUp();
@@ -312,7 +307,7 @@ public class VoogaGameBuilder {
     	//String[] details = id.split("_");
     	//IActor actor = details[0].startsWith("sprite") ? sprites.get(Integer.parseInt(details[1])) : details[0].startsWith("objective") ? objectives.get(Integer.parseInt(details[1])) : null;
     	//return actor;
-    	return myActors.get(id);
+    	return actors.get(id);
     }
     
     private CollisionsManager buildCollisionsManager(PhysicsEngine engine) {
@@ -391,7 +386,6 @@ public class VoogaGameBuilder {
     
     private ControlsManager buildControlsManager() {
     	parser.moveDown("controls");
-    	System.out.println(parser.getValue("active_scheme"));
     	
     	int startIndex = Integer.parseInt(parser.getValue("active_scheme"));
     	

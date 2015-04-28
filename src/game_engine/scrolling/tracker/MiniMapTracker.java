@@ -47,7 +47,6 @@ public class MiniMapTracker extends AbstractTracker {
     private Node makeMiniMap (Node node, double ratio) {
         double width = node.getBoundsInParent().getWidth();
         double height = node.getBoundsInParent().getHeight();
-        System.out.println(width + " " + height);
         Image image = node.snapshot(new SnapshotParameters(), null);
         ImageView view = new ImageView(image);
         view.setFitHeight(height * ratio);

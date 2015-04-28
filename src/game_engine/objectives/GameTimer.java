@@ -41,7 +41,6 @@ public class GameTimer {
      * @return True if timer has expired and false otherwise.
      */
     public boolean isFinished(){
-        System.out.println(getTimePassed() >=myDuration);
         return getTimePassed() >= myDuration;
     }
     
