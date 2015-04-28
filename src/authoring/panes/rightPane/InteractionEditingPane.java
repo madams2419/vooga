@@ -42,65 +42,65 @@ public class InteractionEditingPane extends EditingPane {
         mySprite1 = sprite1;
         mySprite2 = sprite2;
         
-        setupSprite(mySprite1Interactions, mySprite1);
-        setupSprite(mySprite2Interactions, mySprite2);
+        setupSprite(mySprite1Interactions, mySprite1, mySprite2);
+        setupSprite(mySprite2Interactions, mySprite2, mySprite1);
         
         addInteractionParams(UPDATE_INTERACTION_PARAMS);
         
         List<String> collisionChoices = Arrays.asList(SIMPLE, PIXEL_PERFECT, HIT_BOX);
         addComboBoxToPane(collisionChoices, SIMPLE);
         
+        getInteractions();
         addButtonToUpdate(UPDATE_BUTTON_STRING);
         addButtonToReturnToCreationPane(DONE_BUTTON_STRING);
         
     }
     
     private void setupSprite (ObservableList<String> mySpriteInteractions, 
-                              Sprite mySprite) {
+                              Sprite mySprite, Sprite other) {
         
         ListView<String> list = new ListView<>(mySpriteInteractions);
-        getInteractions(mySprite, mySpriteInteractions);
+        getInteractions(mySprite, mySpriteInteractions, other);
         addSpriteToPane(mySprite);
         getChildren().add(list);
     }
 
-    private void getInteractions(Sprite s, ObservableList<String> list){
+    private void getInteractions(Sprite s, ObservableList<String> list, Sprite other){
     	list.clear();
-    	for (Map<Action, String> m : s.getInteractionMap().values()){
-    		for (Action a : m.keySet()){
-    			System.out.println("printing");
-    			list.add(a.getAction());
-    		}
+    	Map<Action, String> m = s.getInteractionWithSprite(other);
+    	for (Action a : m.keySet()){
+    	    System.out.println("printing");
+    	    list.add(a.getAction());
     	}
     }
     
     private void addButtonToUpdate (String label) {
-        Button b = new Button(label);
-        getInteractions(mySprite1, mySprite1Interactions);
-        getInteractions(mySprite2, mySprite2Interactions);
-        getChildren().add(b);
+        getChildren().add(new Button(label));
     }
 
-
-    private void addInteractionParams(String s) throws IOException{
+    private void addInteractionParams (String s) throws IOException{
     	Button b = new Button(s);
     	b.setOnMouseClicked(e -> newInteractionDialog());
     	getChildren().add(b);
     }
 
-    private void newInteractionDialog(){
+    private void newInteractionDialog (){
         try {
             new InteractionsDialog(myParent, mySprite1, mySprite2);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        getInteractions(mySprite1, mySprite1Interactions);
-        getInteractions(mySprite2, mySprite2Interactions);
+        getInteractions();
     }
     
     private void addSpriteToPane (Sprite sprite) {
         ImageView spriteIcon = sprite.getIcon();
         getChildren().add(spriteIcon);
+    }
+    
+    private void getInteractions () {
+        getInteractions(mySprite1, mySprite1Interactions, mySprite2);
+        getInteractions(mySprite2, mySprite2Interactions, mySprite1);
     }
 
 }
