@@ -343,7 +343,8 @@ public class Sprite extends ImageView {
 
     @Override
     public String toString () {
-        return String.format("%s, %s, %s", this.myName, this.myID, this.getImageURI());
+//        return String.format("%s, %s, %s", this.myName, this.myID, this.getImageURI());
+        return String.format("%s, %s", this.myName, this.myID);
     }
 
     public void setPath (String[] path) {

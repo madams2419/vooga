@@ -30,23 +30,26 @@ public class ObjectiveDialog extends DataDialog {
 	private List<ComboBox<String>> mSprites = new ArrayList<>();
 	private List<ComboBox<String>> mStates = new ArrayList<>();
 	private List<TextField> mParams = new ArrayList<>();
+	private List<String> mSpriteNames = new ArrayList<>();
 	private TextField myDescription;
 
 	private ObjectivePane myParent;
 	private int selected, myIndex;
 
-	public ObjectiveDialog(ObjectivePane parent, int objectiveNumber) {
+	public ObjectiveDialog(ObjectivePane parent, int objectiveNumber, List<Sprite> sprites) {
 		myParent = parent;
 		myIndex = objectiveNumber;
-    myDescription = new TextField();	
-    initialize(5, 1, 1,
-        new Node[] { new Label("Complete/Failed"), new Label("Sprite"),
-        new Label("Action"), new Label("Parameters"), new Label(
-            "Pre-requisites")});
+		myDescription = new TextField();
+		setupSprites(sprites);
+		initialize(5, 1, 1,
+		           new Node[] { new Label("Complete/Failed"), new Label("Sprite"),
+		                        new Label("Action"), new Label("Parameters"), new Label(
+		                                "Pre-requisites")});
 		showBox();
+		addAddButton();
 	}
 
-	private Map<String, List<String>> collectBehaviours() {
+    private Map<String, List<String>> collectBehaviours() {
 		Map<String, List<String>> mResult = new HashMap<>();
 		mResult.put("onComplete", new ArrayList<String>());
 		mResult.put("onFailed", new ArrayList<String>());
@@ -64,19 +67,24 @@ public class ObjectiveDialog extends DataDialog {
 		return mResult;
 	}
 
-
 	public ComboBox<String> addSpritesBox(int index) {
-		ComboBox<String> b = addComboBox(mSprites, 
-		    Arrays.asList(new String[]{"Main player", "other"}));
-		b.valueProperty().addListener((ov, t, t1) -> {
-			if (t1.equals("other")) {
-				this.selected = index;
-				this.myParent.getMyParent().getParent().setSpriteWaiting(true);
-				this.close();
-			}
-		});
-		return b;
+	    ComboBox<String> box = addComboBox(mSprites, mSpriteNames);
+	    return box;
 	}
+
+//	public ComboBox<String> addSpritesBox(int index) {
+//		ComboBox<String> b = addComboBox(mSprites, 
+//		    Arrays.asList(new String[]{"Main player", "other"}));
+//		b.valueProperty().addListener((ov, t, t1) -> {
+//			if (t1.equals("other")) {
+//				this.selected = index;
+//				this.myParent.getMyParent().getParent().setSpriteWaiting(true);
+//				myParent.setCurrentDialog(this);
+//				this.close();
+//			}
+//		});
+//		return b;
+//	}
 
 	public ComboBox<String> addStatesBox() {
 		ComboBox<String> b = addComboBox(mStates, 
@@ -128,4 +136,12 @@ public class ObjectiveDialog extends DataDialog {
   void addOtherComponents(DialogGridOrganizer... grid) {
     // not needed    
   }
+  
+  private void setupSprites (List<Sprite> sprites) {
+      mSpriteNames = new ArrayList<>();
+      for (Sprite sprite : sprites) {
+          mSpriteNames.add(sprite.toString());
+      }
+  }
+
 }
