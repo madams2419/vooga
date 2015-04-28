@@ -1,5 +1,6 @@
 package game_engine.objectives;
 
+import game_engine.annotation.IActionAnnotation;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.behaviors.IBehavior;
@@ -205,6 +206,7 @@ public class Objective implements IActor {
         return myName;
     }
 
+    @IActionAnnotation (description = "set status", numParams = 1)
     private IAction setStatus = (params) -> {
         if (isActive() && !params[0].equals("active")) {
             addCondition( (now) -> true, params[0]);

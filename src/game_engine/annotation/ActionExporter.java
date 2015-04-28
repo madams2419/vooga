@@ -1,10 +1,14 @@
 package game_engine.annotation;
+import game_engine.behaviors.IActor;
+import game_engine.scrolling.SubClassFinder;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -51,6 +55,7 @@ public class ActionExporter {
 			NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		processAnnotations(fullClassName);
 		writeToFile(fileName);
+		myMap.clear();
 	}
 
 	/**
@@ -120,7 +125,6 @@ public class ActionExporter {
 	InvocationTargetException {
 		processAnnotations(rootClass.getDeclaredFields());
 		processAnnotations(rootClass.getDeclaredMethods());
-		System.out.println(myMap);
 	}
 
 	/**
@@ -173,21 +177,18 @@ public class ActionExporter {
 		propertiesWriter.writeToFile(fileName);
 	}
 
-//	public static void main (String[] args) {
-//		ActionExporter e = new ActionExporter(IActionAnnotation.class);
-//		e.addAttribute("name", e::getDefaultName);
-//		e.addAttribute("description");
-//		e.addAttribute("numParams");
-//		System.out.println(e.myMap);
-//		
-//		try {
-//			e.runExporter("game_engine.sprite.Sprite", "Actions.properties");
-//		}catch (NoSuchMethodException | SecurityException | IllegalAccessException
-//				| IllegalArgumentException | InvocationTargetException | IOException 
-//				| ClassNotFoundException e1) {
-//			e1.printStackTrace();
-//			
-//		}
-//		
-//	}
+	public static void main (String[] args) throws ClassNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		ActionExporter e = new ActionExporter(IActionAnnotation.class);
+		e.addAttribute("name", e::getDefaultName);
+		e.addAttribute("description");
+		e.addAttribute("numParams");
+		
+		
+		Collection<Class<?>> classes = SubClassFinder.findTypes(new File("src/game_engine"), c -> IActor.class.isAssignableFrom(c) , c -> c.getSimpleName()).values();
+	            for (Class<?> clazz: classes) {
+	                e.processAnnotations(clazz);
+	                System.out.println(e.myMap);
+	            }
+		
+	}
 }
