@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -23,39 +22,46 @@ import authoring.dialogs.InteractionsDialog;
  */
 
 public class InteractionEditingPane extends EditingPane {
-    private static final String doneButtonString = "Done";
-    private static final String updateButtonString = "Update";
+    private static final String HIT_BOX = "HitBox";
+    private static final String PIXEL_PERFECT = "Pixel Perfect";
+    private static final String SIMPLE = "Simple";
+    private static final String UPDATE_INTERACTION_PARAMS = "Update Interaction Params";
+    private static final String DONE_BUTTON_STRING = "Done";
+    private static final String UPDATE_BUTTON_STRING = "Update";
+    
     private Sprite mySprite1, mySprite2;
-	private ObservableList<String> mySprite1Interactions = FXCollections
-			.observableArrayList();
-	private ObservableList<String> mySprite2Interactions = FXCollections
-			.observableArrayList();
+    private ObservableList<String> mySprite1Interactions = 
+            FXCollections.observableArrayList();
+    private ObservableList<String> mySprite2Interactions = 
+            FXCollections.observableArrayList();
 
     InteractionEditingPane (Scene scene, RightPane parent, Sprite sprite1,
                             Sprite sprite2) throws IOException {
         super(scene, parent);
-		ListView<String> list1 = new ListView<>(mySprite1Interactions);
-		ListView<String> list2 = new ListView<>(mySprite2Interactions);
-		
+        
         mySprite1 = sprite1;
         mySprite2 = sprite2;
-
-        getInteractions(sprite1, mySprite1Interactions);
-        getInteractions(sprite2, mySprite2Interactions);
-               
-        addSpriteToPane(sprite1);
-        getChildren().add(list1);
-        addSpriteToPane(sprite2);
-        getChildren().add(list2);
-        addInteractionParams("Update Interaction Params");
         
-        List<String> collisionChoices = Arrays.asList("Simple", "Pixel Perfect", "HitBox");
-        addComboBoxToPane(collisionChoices, "Simple");
+        setupSprite(mySprite1Interactions, mySprite1);
+        setupSprite(mySprite2Interactions, mySprite2);
         
-        addButtonToUpdate(updateButtonString);
-        addButtonToReturnToCreationPane(doneButtonString);
+        addInteractionParams(UPDATE_INTERACTION_PARAMS);
         
-
+        List<String> collisionChoices = Arrays.asList(SIMPLE, PIXEL_PERFECT, HIT_BOX);
+        addComboBoxToPane(collisionChoices, SIMPLE);
+        
+        addButtonToUpdate(UPDATE_BUTTON_STRING);
+        addButtonToReturnToCreationPane(DONE_BUTTON_STRING);
+        
+    }
+    
+    private void setupSprite (ObservableList<String> mySpriteInteractions, 
+                              Sprite mySprite) {
+        
+        ListView<String> list = new ListView<>(mySpriteInteractions);
+        getInteractions(mySprite, mySpriteInteractions);
+        addSpriteToPane(mySprite);
+        getChildren().add(list);
     }
 
     private void getInteractions(Sprite s, ObservableList<String> list){
@@ -78,18 +84,18 @@ public class InteractionEditingPane extends EditingPane {
 
     private void addInteractionParams(String s) throws IOException{
     	Button b = new Button(s);
-			b.setOnMouseClicked(e -> newInteractionDialog());
+    	b.setOnMouseClicked(e -> newInteractionDialog());
     	getChildren().add(b);
     }
 
     private void newInteractionDialog(){
-      try {
-        new InteractionsDialog(myParent, mySprite1, mySprite2);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-      getInteractions(mySprite1, mySprite1Interactions);
-      getInteractions(mySprite2, mySprite2Interactions);
+        try {
+            new InteractionsDialog(myParent, mySprite1, mySprite2);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        getInteractions(mySprite1, mySprite1Interactions);
+        getInteractions(mySprite2, mySprite2Interactions);
     }
     
     private void addSpriteToPane (Sprite sprite) {
