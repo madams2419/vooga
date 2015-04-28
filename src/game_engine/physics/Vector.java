@@ -28,7 +28,7 @@ public class Vector {
 	}
 
 	public static Vector sum(List<Vector> vectors) {
-		Vector sum = new Vector();
+		Vector sum = Vector.ZERO;
 
 		for(Vector vect : vectors) {
 			sum = sum.plus(vect);
@@ -78,7 +78,7 @@ public class Vector {
 
 	public Vector normalize() {
 		if(isZeroVector()) {
-			return new Vector();
+			return Vector.ZERO;
 		} else {
 			double mag = getMagnitude();
 			return new Vector(myX / mag, myY / mag);

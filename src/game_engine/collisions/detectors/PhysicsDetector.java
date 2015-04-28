@@ -25,7 +25,7 @@ public class PhysicsDetector implements ICollisionDetector {
 	}
 	
 	public boolean detectCollision(Sprite spriteA, Sprite spriteB) {
-		myPhysics.isCollided(spriteA.getPhysicsObject(), spriteB.getPhysicsObject());
+		return myPhysics.isCollided(spriteA.getPhysicsObject(), spriteB.getPhysicsObject());
 	}
 
 }

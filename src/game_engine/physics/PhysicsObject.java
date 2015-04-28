@@ -40,6 +40,10 @@ public class PhysicsObject extends Observable {
 		
 		myPositionConstraint = null;
 	}
+	
+	public PhysicsObject(PhysicsEngine physics, Material material, Vector positionPx) {
+		this(physics, RigidBody.POINT, material, positionPx);
+	}
 
 	public void update(double dt) {
 		//TODO replace with strategy pattern
@@ -63,12 +67,7 @@ public class PhysicsObject extends Observable {
 	}
 
 	private double computeInvMass() {
-		double mass = computeMass();
-		if(mass == 0) {
-			return 0;
-		} else {
-			return 1/mass;
-		}
+		return (computeMass() == 0) ? 0 : 1/computeMass();
 	}
 	
 	private double computeMass() {

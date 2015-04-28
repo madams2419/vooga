@@ -1,6 +1,8 @@
 package game_engine.physics;
 
 public abstract class RigidBody {
+	
+	public static final RigidBody POINT = new CircleBody(0);
 
 	protected RBodyType myType;
 	protected double myDepth;

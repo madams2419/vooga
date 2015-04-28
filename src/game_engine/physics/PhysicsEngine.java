@@ -99,5 +99,10 @@ public class PhysicsEngine {
 		double height = myScaler.pixelsToMeters(heightPx);
 		return myRigidBodyFactory.createRigidBody(width, height, type);
 	}
+	
+	public boolean isCollided(PhysicsObject poA, PhysicsObject poB) {
+		//TODO
+		return false;
+	}
 
 }

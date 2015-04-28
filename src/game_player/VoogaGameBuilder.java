@@ -169,7 +169,7 @@ public class VoogaGameBuilder {
 		
 		Map<String, List<RigidBody>> rigidBodies = new HashMap<>();
 		Animation animation = buildAnimation(rigidBodies, engine);
-		PhysicsObject physObj = buildPhysicsObject(animation, engine, rigidBodies);
+		PhysicsObject physObj = buildPhysicsObject(animation, engine);
 		String initialState = parser.getValue("initial_state");
 		
 		Sprite sprite = new Sprite(physObj, animation, initialState, null, 0);
@@ -196,10 +196,11 @@ public class VoogaGameBuilder {
 				double delay = Double.parseDouble(parser.getValue("delay"));
 				double width = Double.parseDouble(parser.getValue("width"));
 				double height = Double.parseDouble(parser.getValue("height"));
+				RigidBody rBody = buildRigidBody(width, height, engine);
+				rb.add(rBody);
 				
-				animation.associateImage(name, source, delay, height, width);
+				animation.associateImage(name, source, rBody, delay, height, width);
 				
-				rb.add(buildRigidBody(width, height, engine));
 				parser.moveUp();
 			}
 			parser.moveUp();
@@ -238,7 +239,7 @@ public class VoogaGameBuilder {
 //		return hitbox;
 //	}
 	
-	private PhysicsObject buildPhysicsObject(Animation animation, PhysicsEngine engine, RigidBody rigidBody) {
+	private PhysicsObject buildPhysicsObject(Animation animation, PhysicsEngine engine) {
 		parser.moveDown("physics");
 		
 		String type = parser.getValue("type");
@@ -247,7 +248,7 @@ public class VoogaGameBuilder {
 		Material material = Material.valueOf(parser.getValue("material").toUpperCase());
 		
 		
-		PhysicsObject physObj = new PhysicsObject(engine, rigidBody, material, position);
+		PhysicsObject physObj = new PhysicsObject(engine, material, position);
 		
 		parser.moveUp();
 		return physObj;
@@ -321,7 +322,7 @@ public class VoogaGameBuilder {
     	Sprite a = getSprite(Integer.parseInt(sprites[0]));
     	Sprite b = getSprite(Integer.parseInt(sprites[1]));
     	
-    	ICollisionDetector detector = buildDetector();
+    	ICollisionDetector detector = buildDetector(engine);
     	ICollisionResolver resolver = buildResolver(engine);
     	
     	Collision collision = new Collision(detector, resolver, a, b);
@@ -334,13 +335,13 @@ public class VoogaGameBuilder {
     	return sprites.get(id);
     }
     
-    private ICollisionDetector buildDetector() {
+    private ICollisionDetector buildDetector(PhysicsEngine engine) {
     	parser.moveDown("detectors");
     	
     	MultipleDetector detector = new MultipleDetector();
     	for (String label : parser.getValidLabels()) {
     		ICollisionDetector component = parser.getValue(label).equals("SimpleDetector") ? new SimpleDetector() : 
-    										parser.getValue(label).equals("HitboxDetector") ? new PhysicsDetector() :
+    										parser.getValue(label).equals("HitboxDetector") ? new PhysicsDetector(engine) :
     											parser.getValue(label).equals("PixelPerfectDetector") ? new PixelPerfectDetector() : null;
     		detector.addDetector(component);
     	}
