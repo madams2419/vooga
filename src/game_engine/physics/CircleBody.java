@@ -37,8 +37,4 @@ public class CircleBody extends RigidBody {
 		return point.getMagnitude() <= myRadius;
 	}
 
-	protected void setType() {
-		myType = RBodyType.CIRCLE;
-	}
-
 }

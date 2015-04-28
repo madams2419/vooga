@@ -80,11 +80,11 @@ public class VoogaGameBuilder {
 	private Level buildLevel(String levelID) {
 		parser.moveDown(levelID);
 		
-		Level level = new Level();
+		PhysicsEngine engine = buildPhysicsEngine();
+		
+		Level level = new Level(engine);
 		sprites = new ArrayList<>();
 		objectives = new ArrayList<>();
-		
-		PhysicsEngine engine = buildPhysicsEngine();
 		
 		parser.moveDown("sprites");
 		for (String directory : parser.getValidSubDirectories()) {
@@ -215,7 +215,7 @@ public class VoogaGameBuilder {
 	
 	private RigidBody buildRigidBody(double width, double height, PhysicsEngine engine) {
 		//TODO refactor this if we have time to add complex rigid bodies
-		return engine.makeRigidBody(width, height, "rectangle");
+		return engine.createRigidBody(width, height);
 	}
 	
 //	private IHitbox buildHitbox() {

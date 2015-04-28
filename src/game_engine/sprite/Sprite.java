@@ -52,6 +52,7 @@ public class Sprite extends Observable implements Observer, IActor {
 	}
 	
 	public void update(long timeLapse) {
+		//TODO check position change in animation update instead of with observer
 	    animation.update(timeLapse);
 	
 	}

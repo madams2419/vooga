@@ -14,7 +14,7 @@ public class CollisionManager {
 		myCollisionFactory = new PhysicsCollisionFactory();
 	}
 	
-	public void update(List<PhysicsObject> myObjects) {
+	public void checkAndResolveCollisions(List<PhysicsObject> myObjects) {
 		for(int i = 0; i < myObjects.size(); i++) {
 			PhysicsObject poA = myObjects.get(i);
 
@@ -23,6 +23,7 @@ public class CollisionManager {
 				PhysicsCollision collision = myCollisionFactory.createCollision(poA, poB);
 				mapCollision(poA, poB, collision);
 				mapCollision(poB, poA, collision);
+				collision.resolve();
 			}
 		}
 	}

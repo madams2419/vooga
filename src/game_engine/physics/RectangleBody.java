@@ -96,8 +96,4 @@ public class RectangleBody extends RigidBody {
 		return myLowerLeft.setX(myUpperRight.getX());
 	}
 
-	protected void setType() {
-		myType = RBodyType.RECTANGLE;
-	}
-
 }

@@ -235,7 +235,7 @@
 				<type>ComplexPhysicsEngine</type>
 				<drag_coefficient>0.5</drag_coefficient>
 				<global_accelerations>
-					<accel_0>0 0</accel_0>
+					<gravity>0 -9.8</gravity>
 				</global_accelerations>
 				<global_forces></global_forces>
 			</physics_engine>
@@ -331,15 +331,7 @@
 			<collisions>
 			</collisions>
 			<sprite_paths>
-				<path_0>
-					<id>4</id>
-					<values>0 500 100 100 300 100 500 100</values>
-					<duration>10</duration>
-					<delay>0</delay></path_0>
-				<path_1>
-					<id>3</id>
-					<values>50 50 100 50 300 50 400 50</values>
-					<duration>5</duration>
-					<delay>1</delay></path_1></sprite_paths></level_0>
+			</sprite_paths>
+			</level_0>
 	</level>
 </game>

@@ -37,7 +37,7 @@ public class PhysicsEngine {
 	}
 	
 	public void update(double timeStep) {
-		myCollisionManager.update(myObjects);
+		myCollisionManager.checkAndResolveCollisions(myObjects);
 		myObjects.forEach(po -> po.update(timeStep));
 	}
 
@@ -106,10 +106,10 @@ public class PhysicsEngine {
 		myObjects.remove(physicsObject);
 	}
 	
-	public RigidBody makeRigidBody(double widthPx, double heightPx, String type) {
+	public RigidBody createRigidBody(double widthPx, double heightPx) {
 		double width = myScaler.pixelsToMeters(widthPx);
 		double height = myScaler.pixelsToMeters(heightPx);
-		return myRigidBodyFactory.createRigidBody(width, height, type);
+		return myRigidBodyFactory.createRigidBody(width, height);
 	}
 	
 	public boolean isCollided(PhysicsObject poA, PhysicsObject poB) {
