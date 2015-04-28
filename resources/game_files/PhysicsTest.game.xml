@@ -252,19 +252,13 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>moveForward</name>
-									<parameters>1000 0</parameters>
+									<parameters>10 0</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
 
 						<onReleased>
 							<behaviors>
-								<behavior_0>
-									<targetType>sprite</targetType>
-									<targetIndex>0</targetIndex>
-									<name>moveForward</name>
-									<parameters>-1000 0</parameters>
-								</behavior_0>
 							</behaviors>
 						</onReleased>
 						
@@ -282,19 +276,13 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>moveForward</name>
-									<parameters>-1000 0</parameters>
+									<parameters>-10 0</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
 
 						<onReleased>
 							<behaviors>
-								<behavior_0>
-									<targetType>sprite</targetType>
-									<targetIndex>0</targetIndex>
-									<name>moveForward</name>
-									<parameters>1000 0</parameters>
-								</behavior_0>
 							</behaviors>
 						</onReleased>
 						
@@ -312,7 +300,7 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>jump</name>
-									<parameters>3000</parameters>
+									<parameters>15</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>

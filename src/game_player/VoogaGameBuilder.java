@@ -383,6 +383,8 @@ public class VoogaGameBuilder {
     	ControlsManager manager = new ControlsManager();
     	
     	for (String directory : parser.getValidSubDirectories()) {
+    		if(directory.equals("active_scheme")) continue;
+    		
     		parser.moveDown(directory);
     		
     		ControlScheme scheme = new ControlScheme();
