@@ -27,6 +27,14 @@ public class CollisionManager {
 		}
 	}
 	
+	public boolean isCollided(PhysicsObject poA, PhysicsObject poB) {
+		return getCollision(poA, poB).isCollided();
+	}
+	
+	public PhysicsCollision getCollision(PhysicsObject poA, PhysicsObject poB) {
+		return myCollisions.get(poA).get(poB);
+	}
+	
 	private void mapCollision(PhysicsObject poA, PhysicsObject poB, PhysicsCollision collision) {
 		if(!myCollisions.containsKey(poA)) {
 			myCollisions.put(poA, new HashMap<PhysicsObject, PhysicsCollision>());

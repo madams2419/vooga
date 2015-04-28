@@ -11,7 +11,7 @@ public abstract class PhysicsCollision {
 	protected Vector myNormal;
 	protected double myPenetrationDepth;
 
-	private PhysicsCollision(PhysicsObject objectA, PhysicsObject objectB) {
+	public PhysicsCollision(PhysicsObject objectA, PhysicsObject objectB) {
 		myObjectA = objectA;
 		myObjectB = objectB;
 		solve();

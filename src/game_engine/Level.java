@@ -3,10 +3,13 @@ package game_engine;
 import game_engine.collisions.CollisionsManager;
 import game_engine.controls.ControlsManager;
 import game_engine.objectives.Objective;
+import game_engine.physics.PhysicsEngine;
 import game_engine.sprite.Sprite;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -26,12 +29,14 @@ public class Level {
 	private ControlsManager myControlManager;
 	private Collection<Sprite> myToBeRemoved;
 	private Group myGroup;
+	private PhysicsEngine myPhysics;
 
-	public Level() {
+	public Level(PhysicsEngine physics) {
 		myObjectives = new ArrayList<>();
 		mySprites = FXCollections.observableArrayList();
 		initGroup (mySprites);
 		myToBeRemoved = new ArrayList<>();
+		myPhysics = physics;
 	}
 	
 	private void initGroup (ObservableList<Sprite> sprites) {
@@ -53,9 +58,10 @@ public class Level {
 	 */
 	public void update(long timeLapse) {
 		myObjectives.forEach(objective -> objective.update(timeLapse));
+		myPhysics.update(timeLapse); // update PhysicsObjects and physical collisons
 		mySprites.forEach(sprite -> sprite.update(timeLapse));
 		myControlManager.update();
-		myCollisionEngine.checkCollisions();
+		myCollisionEngine.checkCollisions(); // update behavioral collisions
 		myToBeRemoved.forEach(this::removeSprite);
 		myToBeRemoved.clear();
 	}

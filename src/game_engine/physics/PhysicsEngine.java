@@ -119,8 +119,7 @@ public class PhysicsEngine {
 	}
 	
 	public boolean isCollided(PhysicsObject poA, PhysicsObject poB) {
-		//TODO
-		return false;
+		return myCollisionManager.isCollided(poA, poB);
 	}
 
 }

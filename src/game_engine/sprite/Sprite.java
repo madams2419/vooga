@@ -52,7 +52,6 @@ public class Sprite extends Observable implements Observer, IActor {
 	}
 	
 	public void update(long timeLapse) {
-	    physicsObject.update(timeLapse);
 	    animation.update(timeLapse);
 	
 	}
