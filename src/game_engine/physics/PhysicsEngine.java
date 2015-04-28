@@ -20,7 +20,7 @@ public class PhysicsEngine {
 	private Map<String, Vector> myGlobalAccels;
 	private Vector myNetGlobalAccel;
 	private Vector myNetGlobalForce;
-	private PhysicsCollisionFactory myCollisionFactory;
+	private CollisionManager myCollisionManager;
 	private RigidBodyFactory myRigidBodyFactory;
 	private Scaler myScaler;
 	
@@ -32,7 +32,7 @@ public class PhysicsEngine {
 		myGlobalAccels = new HashMap<>();
 		myNetGlobalForce = Vector.ZERO;
 		myNetGlobalAccel = Vector.ZERO;
-		myCollisionFactory = new PhysicsCollisionFactory();
+		myCollisionManager = new CollisionManager();
 		myRigidBodyFactory = new RigidBodyFactory();
 		myScaler = new Scaler(scaleFactor);
 		myDrag = drag;
@@ -43,31 +43,9 @@ public class PhysicsEngine {
 	}
 	
 	public void update(double timeStep) {
-		updateCollisions();
-		updatePhysicsObjects(timeStep);
-	}
-	
-	private void updatePhysicsObjects(double timeStep) {
+		myCollisionManager.update(myObjects);
 		myObjects.forEach(po -> po.update(timeStep));
 	}
-
-	//TODO move to collision manager
-	private void updateCollisions() {
-		for(int i = 0; i < myObjects.size(); i++) {
-			PhysicsObject poA = myObjects.get(i);
-
-			for(int j = i + 1; j < myObjects.size(); j++) {
-				PhysicsObject b = myObjects.get(j);
-				myCollisionMan
-			}
-		}
-	}
-	
-    public static void main(String[] args){
-        for(int i=1; i<11; i++){
-             System.out.println("Count is: " + i);
-        }
-   }
 
 	public Vector getDragForce(PhysicsObject physObj) {
 		double dragCoef = - myDrag * physObj.getRigidBody().getCxArea();

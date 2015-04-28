@@ -11,14 +11,10 @@ public abstract class PhysicsCollision {
 	protected Vector myNormal;
 	protected double myPenetrationDepth;
 
-	public PhysicsCollision(PhysicsObject objectA, PhysicsObject objectB) {
+	private PhysicsCollision(PhysicsObject objectA, PhysicsObject objectB) {
 		myObjectA = objectA;
 		myObjectB = objectB;
-	}
-
-	public boolean collide() {
 		solve();
-		return (myPenetrationDepth >= 0);
 	}
 
 	/**
@@ -28,12 +24,13 @@ public abstract class PhysicsCollision {
 
 	public void resolve() {
 		// return if objects are moving apart
-		if(rvProjOnNorm() > 0) {
+		if(computeRVProjection() > 0) {
 			return;
 		}
 
 		// apply impulse
 		Vector impulse = computeImpulse();
+		//TODO change to an addVelocity() call
 		myObjectA.applyImpulse(impulse.negate());
 		myObjectB.applyImpulse(impulse);
 
@@ -60,12 +57,12 @@ public abstract class PhysicsCollision {
 	}
 
 	protected Vector computeImpulse() {
-		double implsMag = -(1 + computeRestitution()) * rvProjOnNorm();
+		double implsMag = -(1 + computeRestitution()) * computeRVProjection();
 		implsMag /= myObjectA.getInvMass() + myObjectB.getInvMass();
 		return myNormal.times(implsMag);
 	}
 
-	protected double rvProjOnNorm() {
+	protected double computeRVProjection() {
 		return getRelativeVelocity().dot(myNormal);
 	}
 
@@ -95,6 +92,10 @@ public abstract class PhysicsCollision {
 
 	public double getPenetrationDepth() {
 		return myPenetrationDepth;
+	}
+	
+	public boolean isCollided() {
+		return myPenetrationDepth >= 0;
 	}
 
 }
