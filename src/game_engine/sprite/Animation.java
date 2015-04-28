@@ -22,7 +22,7 @@ import java.util.function.Supplier;
  * @author Kevin Chang, Brian Lavalee
  * Class to hold images and deal with switching images in sprites
  */
-public class Animation extends Observable implements Observer {
+public class Animation {
 
 	private ImageView image;
     private Node current;
@@ -104,7 +104,7 @@ public class Animation extends Observable implements Observer {
     	}
     }
     
-    public void update(long timeLapse) {
+    public void updateImage(long timeLapse) {
     	timeElapsed += timeLapse;
     	if (current.delay.toMillis() < timeElapsed) {
     		rotateImage();
@@ -128,8 +128,6 @@ public class Animation extends Observable implements Observer {
     private void rotateImage() {
     	current = current.next;
     	image.setImage(current.image);
-    	setChanged();
-    	notifyObservers();
     }
     
     /**
@@ -145,27 +143,11 @@ public class Animation extends Observable implements Observer {
     }
     
     /**
-     * method update
-     * observes and listens for a state change or position change in the sprite
-     */
-    public void update(Observable source, Object arg) {
-    	changeState(source);
-    	changePosition(source);
-    }
-    
-    /**
      * method changeState
-     * @param source the observable that is changed
-     * sets state based on the changed sprite state
+     * @param the new state
      */
-    private void changeState(Observable source) {
-    	try {
-    		Sprite sprite = (Sprite) source;
-    		changeImage(sprite.getState());
-    	}
-    	catch (Exception e) {
-    		// do nothing
-    	}
+    public void setState(String state) {
+    	changeImage(state);
     }
   
     
@@ -175,19 +157,12 @@ public class Animation extends Observable implements Observer {
      * sets the position of the image based on the position of the 
      * sprite as contained in the physics object
      */
-    private void changePosition(Observable source) {
-    	try { 
-    		PhysicsObject physicsObject = (PhysicsObject) source;
-    		Vector poCenter = physicsObject.getPositionPixels();
-    		double imgWidth = image.getImage().getWidth();
-    		double imgHeight = image.getImage().getHeight();
-    		Vector imgTranslate = Utilities.physicsCenterToNodeTranslation(poCenter, imgWidth, imgHeight, height);
-    		image.setTranslateX(imgTranslate.getX());
-    		image.setTranslateY(imgTranslate.getY());
-    	}
-    	catch (Exception e) {
-    		// do nothing
-    	}
+    public void updatePosition(Vector poCenter) {
+    	double imgWidth = image.getImage().getWidth();
+    	double imgHeight = image.getImage().getHeight();
+    	Vector imgTranslate = Utilities.physicsCenterToNodeTranslation(poCenter, imgWidth, imgHeight, height);
+    	image.setTranslateX(imgTranslate.getX());
+    	image.setTranslateY(imgTranslate.getY());
     }
     
     /**

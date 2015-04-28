@@ -215,5 +215,9 @@ public class PhysicsObject extends Observable {
 	public RigidBody getRigidBody() {
 		return myRigidBody;
 	}
+	
+	public boolean isPositionConstrained() {
+		return myPositionConstraint != null;
+	}
 
 }

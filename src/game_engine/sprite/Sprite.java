@@ -17,7 +17,7 @@ import javafx.scene.image.ImageView;
  * @authors Brian Lavalee, Kevin Chang, Emre Sonmez
  * Sprite class to hold information for all characters in game
  */
-public class Sprite extends Observable implements Observer, IActor {
+public class Sprite implements IActor {
 	
 	private String state;
 	private Sprite owner; // null if no owner
@@ -30,19 +30,11 @@ public class Sprite extends Observable implements Observer, IActor {
 		state = initialState;
 		physicsObject = po;
 		animation = a;
+		a.setState(initialState);
 		actions = new HashMap<>();
 		owner = spriteOwner;
 		worth = initialWorth;
-		setObservations();
-		setChanged();
-		notifyObservers();
 		buildActionMap();
-	}
-	
-	private void setObservations() {
-		addObserver(animation);
-		animation.addObserver(this);
-		physicsObject.addObserver(animation);
 	}
 	
 	private void buildActionMap(){ 
@@ -52,10 +44,13 @@ public class Sprite extends Observable implements Observer, IActor {
 	}
 	
 	public void update(long timeLapse) {
-		//TODO check position change in animation update instead of with observer
-	    animation.update(timeLapse);
-	
+		if(!physicsObject.isPositionConstrained()) {
+			animation.updatePosition(physicsObject.getPositionPixels());
+		}
+	    animation.updateImage(timeLapse);
+	    physicsObject.setRigidBody(animation.getRigidBody());
 	}
+	
 	public Animation getAnimation(){
 	    return animation;
 	}
@@ -83,8 +78,7 @@ public class Sprite extends Observable implements Observer, IActor {
 	private IAction setState = (params) -> {
 		String newState = params[0];
 		state = newState;
-		setChanged();
-		notifyObservers();
+		animation.setState(newState);
 	};
 	
 	/**
@@ -142,13 +136,4 @@ public class Sprite extends Observable implements Observer, IActor {
 		return actions.get(name);
 	}
 
-	public void update(Observable source, Object arg) {
-		try {
-			Animation animation = (Animation) source;
-			physicsObject.setRigidBody(animation.getRigidBody());
-		}
-		catch (Exception e) {
-			// do nothing
-		}
-	}
 }

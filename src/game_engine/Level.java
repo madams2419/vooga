@@ -9,6 +9,7 @@ import game_engine.sprite.Sprite;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -57,8 +58,9 @@ public class Level {
 	 * method update Update contents of a layer
 	 */
 	public void update(long timeLapse) {
+		double timeLapseSec = timeLapse / 1000;
 		myObjectives.forEach(objective -> objective.update(timeLapse));
-		myPhysics.update(timeLapse); // update PhysicsObjects and handle physical collisions
+		myPhysics.update(timeLapseSec); // update PhysicsObjects and handle physical collisions
 		mySprites.forEach(sprite -> sprite.update(timeLapse)); // update animations
 		myControlManager.update();
 		myCollisionEngine.checkCollisions(); // handle behavioral collisions
