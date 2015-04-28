@@ -21,9 +21,11 @@ public class CollisionManager {
 			for(int j = i + 1; j < myObjects.size(); j++) {
 				PhysicsObject poB = myObjects.get(j);
 				PhysicsCollision collision = myCollisionFactory.createCollision(poA, poB);
-				mapCollision(poA, poB, collision);
-				mapCollision(poB, poA, collision);
-				collision.resolve();
+				if(collision.isCollided()) {
+					mapCollision(poA, poB, collision);
+					mapCollision(poB, poA, collision);
+					collision.resolve();
+				}
 			}
 		}
 	}
