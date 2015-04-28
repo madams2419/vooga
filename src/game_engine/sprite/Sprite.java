@@ -9,6 +9,7 @@ import game_engine.physics.PhysicsObject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
+import java.util.Observer;
 
 import javafx.scene.image.ImageView;
 /**
@@ -16,7 +17,7 @@ import javafx.scene.image.ImageView;
  * @authors Brian Lavalee, Kevin Chang, Emre Sonmez
  * Sprite class to hold information for all characters in game
  */
-public class Sprite extends Observable implements IActor {
+public class Sprite extends Observable implements Observer, IActor {
 	
 	private String state;
 	private Sprite owner; // null if no owner
@@ -32,10 +33,15 @@ public class Sprite extends Observable implements IActor {
 		actions = new HashMap<>();
 		owner = spriteOwner;
 		worth = initialWorth;
-		addObserver(animation);
+		linkToAnimation(animation);
 		setChanged();
 		notifyObservers();
 		buildActionMap();
+	}
+	
+	private void linkToAnimation(Animation animation) {
+		addObserver(animation);
+		animation.addObserver(this);
 	}
 	
 	private void buildActionMap(){ 
@@ -133,5 +139,15 @@ public class Sprite extends Observable implements IActor {
 	 */
 	public IAction getAction(String name) {
 		return actions.get(name);
+	}
+
+	public void update(Observable source, Object arg) {
+		try {
+			Animation animation = (Animation) source;
+			physicsObject.setRigidBody(animation.getRigidBody());
+		}
+		catch (Exception e) {
+			// do nothing
+		}
 	}
 }
