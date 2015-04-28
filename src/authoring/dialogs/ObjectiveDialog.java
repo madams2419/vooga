@@ -55,7 +55,7 @@ public class ObjectiveDialog extends DataDialog {
 		Map<String, List<String>> mResult = new HashMap<>();
 		mResult.put("onComplete", new ArrayList<String>());
 		mResult.put("onFailed", new ArrayList<String>());
-		mResult.put("prereqs", new ArrayList<String>());
+		mResult.put("prereqs", Arrays.asList(new String[]{mPrereqs.get(0).getValue()}));
 		for (int i = 0; i < mActions.size(); i++) {
 			String action = String.format("%s:%s:%s", mSpriteBoxes.get(i)
 					.getSelectionModel().getSelectedItem().split(", ")[1], 
@@ -64,9 +64,6 @@ public class ObjectiveDialog extends DataDialog {
 					.getText());
 			mResult.get(mStates.get(i).getSelectionModel().getSelectedItem())
 					.add(action);
-			if (i == 0) {
-			    mResult.get("prereqs").add(mPrereqs.get(i).getSelectionModel().getSelectedItem());
-			}
 		}
 		return mResult;
 	}
@@ -75,20 +72,6 @@ public class ObjectiveDialog extends DataDialog {
 	    ComboBox<String> box = addComboBox(mSpriteBoxes, mSpriteNames);
 	    return box;
 	}
-
-//	public ComboBox<String> addSpritesBox(int index) {
-//		ComboBox<String> b = addComboBox(mSprites, 
-//		    Arrays.asList(new String[]{"Main player", "other"}));
-//		b.valueProperty().addListener((ov, t, t1) -> {
-//			if (t1.equals("other")) {
-//				this.selected = index;
-//				this.myParent.getMyParent().getParent().setSpriteWaiting(true);
-//				myParent.setCurrentDialog(this);
-//				this.close();
-//			}
-//		});
-//		return b;
-//	}
 
 	public ComboBox<String> addStatesBox() {
 		ComboBox<String> b = addComboBox(mStates, 
@@ -139,7 +122,6 @@ public class ObjectiveDialog extends DataDialog {
       newObjective.addOnFailed(res.get("onFailed"), null);
       newObjective.addPrereqs(res.get("prereqs"));
       myParent.getMyParent().getParent().getCenterPane()
-//          .getActiveTab().addObjective(newObjective);
       .getActiveTab().setObjective(newObjective, myIndex);
   });
   }
