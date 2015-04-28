@@ -14,10 +14,6 @@ import game_engine.sprite.Sprite;
 // - optimize net force computation
 
 public class PhysicsEngine {
-	
-	//TODO move to properties file
-	private static final double SCALE_FACTOR = 0.01;
-	private static final double DRAG_COEF = 0.2;
 
 	private double myTimeStep;
 	private double myDrag;
@@ -39,7 +35,7 @@ public class PhysicsEngine {
 	}
 
 	public PhysicsEngine() {
-		this(DRAG_COEF, SCALE_FACTOR);
+		this(Constants.DRAG_COEF, Constants.SCALE_FACTOR);
 	}
 
 	public Vector getDragForce(PhysicsObject physObj) {

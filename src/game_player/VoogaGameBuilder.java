@@ -140,7 +140,7 @@ public class VoogaGameBuilder {
 		
 		String type = parser.getValue("type");
 		System.out.println(type);
-		PhysicsEngine engine = type.equals("ComplexPhysicsEngine") ? new ComplexPhysicsEngine(Double.parseDouble(parser.getValue("drag_coefficient"))) : new PhysicsEngine();
+		PhysicsEngine engine = new PhysicsEngine();
 		
 		parser.moveDown("global_accelerations");
 		for (String label : parser.getValidLabels()) {
