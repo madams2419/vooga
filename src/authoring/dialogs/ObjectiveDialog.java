@@ -20,7 +20,7 @@ import authoring.userInterface.DialogGridOrganizer;
 
 /**
  * Creates a dialog that lets user define the objectives for the game.
- * @author Daniel, refactored by Andrew
+ * @author Daniel, Natalie, refactored by Andrew
  *
  */
 public class ObjectiveDialog extends DataDialog {
@@ -149,15 +149,27 @@ public class ObjectiveDialog extends DataDialog {
 
 public void update () {
     setupSprites();
-    readdNames();
+    updateLists();
     this.showBox();
 }
 
-private void readdNames () {
-    for (ComboBox<String> box : mSpriteBoxes) {
+private void updateLists () {
+    List<String> prereqList = myParent.getObjectives().stream()
+            .map(e -> {
+                return e.getText();
+        }).collect(Collectors.toList());
+    
+    updateList(mSpriteBoxes, mSpriteNames);
+    updateList(mPrereqs, prereqList);
+}
+private void updateList(List<ComboBox<String>> comboBoxes, List<String> list) {
+    for (ComboBox<String> box : comboBoxes) {
+        String value = box.getValue();
         box.getItems().clear();
-        box.getItems().addAll(mSpriteNames);
+        box.getItems().addAll(list);
+        box.setValue(value);
     }
 }
+
 
 }
