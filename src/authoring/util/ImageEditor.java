@@ -59,4 +59,26 @@ public class ImageEditor {
             imageView.setFitWidth(maxWidth);
         }
     }
+    
+    /**
+     * Sets an ImageView to have a certain width.
+     * 
+     * @param imageView
+     * @param width
+     */
+    public static void setToWidth (ImageView imageView, int width) {
+        imageView.setPreserveRatio(true);
+        imageView.setFitWidth(width);
+    }
+
+    /**
+     * Sets an ImageView to have a certain height.
+     * @param imageView
+     * @param height
+     */
+    public static void setToHeight (ImageView imageView, int height) {
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(height);
+    }
+
 }

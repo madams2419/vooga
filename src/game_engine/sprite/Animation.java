@@ -172,6 +172,7 @@ public class Animation extends Observable implements Observer {
      */
     private void changeImage(String state) {
     	current = paths.get(state).first;
+    	System.out.println(current);
     	image.setImage(current.image);
     }
 }

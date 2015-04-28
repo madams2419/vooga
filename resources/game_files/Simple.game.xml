@@ -108,8 +108,7 @@
 				<sprite_0>
 					<id>mario</id>
 					<initial_state>standing</initial_state>
-					
-					<animation>
+					<animations>
 						<state_0>
 							<name>standing</name>
 
@@ -205,7 +204,7 @@
 								</image_0>
 							</images>
 						</state_3>
-					</animation>
+					</animations>
 
 					<physics>
 						<type>ComplexPhysicsObject</type>
@@ -218,7 +217,7 @@
 					<id>ground</id>
 					<initial_state>immobile</initial_state>
 
-					<animation>
+					<animations>
 						<state_0>
 							<name>immobile</name>
 
@@ -242,7 +241,7 @@
 								</image_0>
 							</images>
 						</state_0>
-					</animation>
+					</animations>
 
 					<physics>
 						<type>ComplexPhysicsObject</type>
@@ -255,7 +254,7 @@
 					<id>platform</id>
 					<initial_state>immobile</initial_state>
 
-					<animation>
+					<animations>
 						<state_0>
 							<name>immobile</name>
 
@@ -279,7 +278,7 @@
 								</image_0>
 							</images>
 						</state_0>
-					</animation>
+					</animations>
 
 					<physics>
 						<type>ComplexPhysicsObject</type>
@@ -291,7 +290,7 @@
 				<sprite_3>
 					<initial_state>immobile</initial_state>
 					<id>bowser</id>
-					<animation>
+					<animations>
 						<state_0>
 							<name>immobile</name>
 
@@ -315,7 +314,7 @@
 								</image_0>
 							</images>
 						</state_0>
-					</animation>
+					</animations>
 
 					<physics>
 						<type>ComplexPhysicsObject</type>
@@ -327,7 +326,7 @@
 				<sprite_4>
 					<initial_state>immobile</initial_state>
 					<id>key</id>
-					<animation>
+					<animations>
 						<state_0>
 							<name>immobile</name>
 
@@ -351,7 +350,7 @@
 								</image_0>
 							</images>
 						</state_0>
-					</animation>
+					</animations>
 
 					<physics>
 						<type>ComplexPhysicsObject</type>
@@ -363,7 +362,7 @@
 				<sprite_5>
 					<initial_state>immobile</initial_state>
 					<id>flag</id>
-					<animation>
+					<animations>
 						<state_0>
 							<name>immobile</name>
 
@@ -387,7 +386,7 @@
 								</image_0>
 							</images>
 						</state_0>
-					</animation>
+					</animations>
 
 					<physics>
 						<type>ComplexPhysicsObject</type>
@@ -399,7 +398,7 @@
 
 			<physics_engine>
 				<type>ComplexPhysicsEngine</type>
-				<drag_coefficient>0.00</drag_coefficient>
+				<drag_coefficient>0.5</drag_coefficient>
 				<global_accelerations>
 					<accel_0>0 -.001</accel_0>
 				</global_accelerations>
