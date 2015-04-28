@@ -43,7 +43,8 @@ public class VoogaGame implements IActor {
 	}
 	
 	private KeyFrame getFrame(double fps) {
-		return new KeyFrame(Duration.seconds(1/fps), (frame) -> update(System.currentTimeMillis()));
+		double framePeriod = 1/fps;
+		return new KeyFrame(Duration.seconds(framePeriod), (frame) -> update(framePeriod));
 	}
 
 	public void addLevel(Level l) {
@@ -87,13 +88,8 @@ public class VoogaGame implements IActor {
 	    return transitionManager;
 	}
 
-	public void update(long currentTime) {
-		if (lastUpdateTime == 0) {
-			lastUpdateTime = currentTime;
-		}
-
-		activeLevel.update(currentTime - lastUpdateTime);
-		lastUpdateTime = currentTime;
+	public void update(double framePeriod) {
+		activeLevel.update(framePeriod);
 	}
 	
 	protected Group getRoot() {

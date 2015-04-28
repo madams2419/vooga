@@ -57,11 +57,11 @@ public class Level {
 	/**
 	 * method update Update contents of a layer
 	 */
-	public void update(long timeLapse) {
-		double timeLapseSec = timeLapse / 1000;
-		myObjectives.forEach(objective -> objective.update(timeLapse));
-		myPhysics.update(timeLapseSec); // update PhysicsObjects and handle physical collisions
-		mySprites.forEach(sprite -> sprite.update(timeLapse)); // update animations
+	public void update(double framePeriod) {
+		long framePeriodMillis = (long) (framePeriod * 1000);
+		myObjectives.forEach(objective -> objective.update(framePeriodMillis));
+		myPhysics.update(framePeriod); // update PhysicsObjects and handle physical collisions
+		mySprites.forEach(sprite -> sprite.update(framePeriodMillis)); // update animations
 		myControlManager.update();
 		myCollisionEngine.checkCollisions(); // handle behavioral collisions
 		myToBeRemoved.forEach(this::removeSprite);
