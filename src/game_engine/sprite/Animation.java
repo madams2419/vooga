@@ -1,5 +1,6 @@
 package game_engine.sprite;
 
+import game_engine.Utilities;
 import game_engine.physics.RigidBody;
 import game_engine.physics.Vector;
 import game_engine.physics.PhysicsObject;
@@ -111,12 +112,13 @@ public class Animation extends Observable implements Observer {
     	}
     }
     
-//    public Vector getPosition() {
-//        return new Vector(image.getTranslateX(), -image.getTranslateY() + height - image.getImage().getHeight());
-//    }
-    
     public Supplier<Vector> getPositionSupplier() {
-    	return () -> new Vector(image.getTranslateX(), height - image.getTranslateY());
+    	return () -> {
+    		Vector imgTranslate = new Vector(image.getTranslateX(), image.getTranslateY());
+    		double imgWidth = image.getImage().getWidth();
+    		double imgHeight = image.getImage().getHeight();
+    		return Utilities.nodeTranslationToPhysicsCenter(imgTranslate, imgWidth, imgHeight, height);
+    	};
     }
     
     public int getIndex() {
@@ -176,8 +178,12 @@ public class Animation extends Observable implements Observer {
     private void changePosition(Observable source) {
     	try { 
     		PhysicsObject physicsObject = (PhysicsObject) source;
-    		image.setTranslateX(physicsObject.getPositionPixels().getX());
-    		image.setTranslateY(height - physicsObject.getPositionPixels().getY() - image.getImage().getHeight());
+    		Vector poCenter = physicsObject.getPositionPixels();
+    		double imgWidth = image.getImage().getWidth();
+    		double imgHeight = image.getImage().getHeight();
+    		Vector imgTranslate = Utilities.physicsCenterToNodeTranslation(poCenter, imgWidth, imgHeight, height);
+    		image.setTranslateX(imgTranslate.getX());
+    		image.setTranslateY(imgTranslate.getY());
     	}
     	catch (Exception e) {
     		// do nothing
