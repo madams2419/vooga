@@ -171,6 +171,12 @@ public class XMLParser {
         }
         return subDirectories;
     }
+    
+    public List<String> getValidSubDirectories (String prefix) {
+        List<String> subDirectories = getValidSubDirectories();
+        subDirectories.removeIf(dir -> !dir.startsWith(prefix));
+        return subDirectories;
+    }
 
     /**
      * Finds all of the valid labels within the current activePath. Also useful for interpreting
