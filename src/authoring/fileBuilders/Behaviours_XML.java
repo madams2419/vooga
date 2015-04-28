@@ -32,7 +32,7 @@ public class Behaviours_XML {
 	}
 	
 	public void writeToXML(Element parent, int index, XMLBuilder xml){
-		Element currentBehaviour = xml.add(parent, "behaviour_"+index);
+		Element currentBehaviour = xml.add(parent, "behavior_"+index);
 		xml.addChildWithValue(currentBehaviour, "targetType", targetType);
 		xml.addChildWithValue(currentBehaviour, "targetIndex", targetIndex);
 		xml.addChildWithValue(currentBehaviour, "name", name);

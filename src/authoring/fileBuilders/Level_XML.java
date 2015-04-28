@@ -29,6 +29,7 @@ public class Level_XML {
 
 		// Adding objectives
 		Element levels = xml.add(currentLevel, "level_objectives");
+		System.out.println("numObjectives: " + level_objectives.size());
 		for (Objective_XML objective : level_objectives) {
 			objective.writeToXML(levels, i++, xml);
 		}

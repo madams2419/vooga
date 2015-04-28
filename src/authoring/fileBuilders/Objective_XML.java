@@ -19,7 +19,7 @@ public class Objective_XML {
 		this.description = description;
 	}
 
-	public Objective_XML(String description, List<String> prereqs,
+	private Objective_XML(String description, List<String> prereqs,
 			List<Behaviours_XML> onComplete, List<Behaviours_XML> onFailed) {
 		this.description = description;
 		this.prereqs = prereqs;
@@ -61,7 +61,7 @@ public class Objective_XML {
 	private void addBehaviours(Element currentObjective, String tagname,
 			List<Behaviours_XML> behaviours, XMLBuilder xml) {
 		Element el = xml.add(currentObjective, tagname);
-		Element b = xml.add(el, "behaviours");
+		Element b = xml.add(el, "behaviors");
 		int i = 0;
 		for (Behaviours_XML be : behaviours)
 			be.writeToXML(b, i++, xml);

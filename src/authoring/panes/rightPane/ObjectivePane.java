@@ -41,7 +41,7 @@ public class ObjectivePane extends EditingPane {
                 else {
                     currentDialog = mDialogs.get(list.getSelectionModel()
                             .getSelectedIndex());
-                    currentDialog.showBox();
+                    currentDialog.update();
                 }
             });
         this.getChildren().add(list);

@@ -27,9 +27,10 @@ public class ObjectiveDialog extends DataDialog {
 
 	private List<ComboBox<String>> mActions = new ArrayList<>();
 	private List<ComboBox<String>> mPrereqs = new ArrayList<>();
-	private List<ComboBox<String>> mSprites = new ArrayList<>();
+	private List<ComboBox<String>> mSpriteBoxes = new ArrayList<>();
 	private List<ComboBox<String>> mStates = new ArrayList<>();
 	private List<TextField> mParams = new ArrayList<>();
+	private List<Sprite> mSprites = new ArrayList<>();
 	private List<String> mSpriteNames = new ArrayList<>();
 	private TextField myDescription;
 
@@ -40,7 +41,8 @@ public class ObjectiveDialog extends DataDialog {
 		myParent = parent;
 		myIndex = objectiveNumber;
 		myDescription = new TextField();
-		setupSprites(sprites);
+		mSprites = sprites;
+		setupSprites();
 		initialize(5, 1, 1,
 		           new Node[] { new Label("Complete/Failed"), new Label("Sprite"),
 		                        new Label("Action"), new Label("Parameters"), new Label(
@@ -55,7 +57,7 @@ public class ObjectiveDialog extends DataDialog {
 		mResult.put("onFailed", new ArrayList<String>());
 		mResult.put("prereqs", new ArrayList<String>());
 		for (int i = 0; i < mActions.size(); i++) {
-			String action = String.format("%s:%s:%s", mSprites.get(i)
+			String action = String.format("%s:%s:%s", mSpriteBoxes.get(i)
 					.getSelectionModel().getSelectedItem(), mActions.get(i)
 					.getSelectionModel().getSelectedItem(), mParams.get(i)
 					.getText());
@@ -67,8 +69,8 @@ public class ObjectiveDialog extends DataDialog {
 		return mResult;
 	}
 
-	public ComboBox<String> addSpritesBox(int index) {
-	    ComboBox<String> box = addComboBox(mSprites, mSpriteNames);
+	public ComboBox<String> addSpritesBox() {
+	    ComboBox<String> box = addComboBox(mSpriteBoxes, mSpriteNames);
 	    return box;
 	}
 
@@ -103,7 +105,7 @@ public class ObjectiveDialog extends DataDialog {
 
 
 	public void setSprite(Sprite s) {
-		mSprites.get(selected).getItems().add(s.toString());
+		mSpriteBoxes.get(selected).getItems().add(s.toString());
 	}
 
   @Override
@@ -113,7 +115,7 @@ public class ObjectiveDialog extends DataDialog {
 
   @Override
   void addBlankRow(int index, DialogGridOrganizer... grid) {
-    grid[0].addRowEnd(addStatesBox(), addSpritesBox(0), addComboBox(mActions, 
+    grid[0].addRowEnd(addStatesBox(), addSpritesBox(), addComboBox(mActions, 
         Arrays.asList(new String[]{"win", "lose", "die"})),
         addTextField(mParams), addPrereqsBox());
   }
@@ -137,11 +139,25 @@ public class ObjectiveDialog extends DataDialog {
     // not needed    
   }
   
-  private void setupSprites (List<Sprite> sprites) {
+  private void setupSprites () {
       mSpriteNames = new ArrayList<>();
-      for (Sprite sprite : sprites) {
+      for (Sprite sprite : mSprites) {
           mSpriteNames.add(sprite.toString());
       }
+      
   }
+
+public void update () {
+    setupSprites();
+    readdNames();
+    this.showBox();
+}
+
+private void readdNames () {
+    for (ComboBox<String> box : mSpriteBoxes) {
+        box.getItems().clear();
+        box.getItems().addAll(mSpriteNames);
+    }
+}
 
 }
