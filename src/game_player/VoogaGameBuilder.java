@@ -67,10 +67,8 @@ public class VoogaGameBuilder {
 		game = new VoogaGame(frameRate, width, height);
 		
 		parser.moveDown("level");
-		for (String directory : parser.getValidSubDirectories()) {
-		    if (directory.startsWith("level")) {
+		for (String directory : parser.getValidSubDirectories("level")) {
 			game.addLevel(buildLevel(directory));
-		    }
 		}
 		
 		int start = Integer.parseInt(parser.getValue("first_level"));
@@ -90,7 +88,7 @@ public class VoogaGameBuilder {
 		PhysicsEngine engine = buildPhysicsEngine();
 		
 		parser.moveDown("sprites");
-		for (String directory : parser.getValidSubDirectories()) {
+		for (String directory : parser.getValidSubDirectories("sprite")) {
 			Sprite sprite = buildSprite(directory, engine);
 			level.addSprite(sprite);
 			sprites.add(sprite);
@@ -98,7 +96,7 @@ public class VoogaGameBuilder {
 		parser.moveUp();
 		
 		parser.moveDown("level_objectives");
-		for (String directory : parser.getValidSubDirectories()) {
+		for (String directory : parser.getValidSubDirectories("objective")) {
 			Objective objective = buildObjective(directory);
 			level.addObjective(objective);
 			objectives.add(objective);
@@ -124,7 +122,7 @@ public class VoogaGameBuilder {
 	    ArrayList<String[]> pathValues = new ArrayList<>();
 	    ArrayList<Integer> durations = new ArrayList<>();
 	    ArrayList<Integer> delays = new ArrayList<>();
-	    for (String directory: parser.getValidSubDirectories()) {
+	    for (String directory: parser.getValidSubDirectories("path")) {
 	        parser.moveDown(directory);
 	        int id = Integer.parseInt(parser.getValue("id"));
 	        Sprite sprite = sprites.get(id);
@@ -186,7 +184,7 @@ public class VoogaGameBuilder {
 		
 		Animation animation = new Animation(game.getHeight());
 		
-		for (String directory : parser.getValidSubDirectories()) {
+		for (String directory : parser.getValidSubDirectories("state")) {
 			parser.moveDown(directory);
 			
 			String name = parser.getValue("name");
@@ -219,7 +217,7 @@ public class VoogaGameBuilder {
 		parser.moveDown("hitboxes");
 		
 		MultipleHitbox hitbox = new MultipleHitbox();
-		for (String directory : parser.getValidSubDirectories()) {
+		for (String directory : parser.getValidSubDirectories("hitbox")) {
 			parser.moveDown(directory);
 			
 			SingleHitbox hb = new SingleHitbox();
@@ -254,13 +252,11 @@ public class VoogaGameBuilder {
         
         Objective objective = new Objective();
 
-        for (String directory : parser.getValidSubDirectories()) {
-            if (directory.toLowerCase().startsWith("on")) {
-                parser.moveDown(directory);
-                IBehavior behavior = buildBehaviorList();
-                objective.setBehavior(directory.substring(2, directory.length() - 1), behavior);
-                parser.moveUp();
-            }
+        for (String directory : parser.getValidSubDirectories("on")) {
+            parser.moveDown(directory);
+            IBehavior behavior = buildBehaviorList();
+            objective.setBehavior(directory.substring(2), behavior);
+            parser.moveUp();
         }
         String timer = parser.getValue("timer");
         Optional.ofNullable(timer).ifPresent(string -> objective.setTimer(new GameTimer(Long.parseLong(string))));
@@ -271,7 +267,7 @@ public class VoogaGameBuilder {
     private IBehavior buildBehaviorList() {
         parser.moveDown("behaviors");
         MultipleBehaviors behaviors = new MultipleBehaviors();
-        for (String directory : parser.getValidSubDirectories()) {
+        for (String directory : parser.getValidSubDirectories("behavior")) {
             behaviors.addBehavior(buildBehavior(directory));
         }
         parser.moveUp();
@@ -302,7 +298,7 @@ public class VoogaGameBuilder {
     	
     	CollisionsManager manager = new CollisionsManager();
     	
-    	for (String directory : parser.getValidSubDirectories()) {
+    	for (String directory : parser.getValidSubDirectories("collision")) {
     		manager.addCollision(buildCollision(directory, engine));
     	}
     	
@@ -350,7 +346,7 @@ public class VoogaGameBuilder {
     	
     	MultipleResolver resolver = new MultipleResolver();
     	
-    	for (String directory : parser.getValidSubDirectories()) {
+    	for (String directory : parser.getValidSubDirectories("resolver")) {
     		parser.moveDown(directory);
     		
     		String type = parser.getValue("type");
@@ -379,7 +375,7 @@ public class VoogaGameBuilder {
     	
     	ControlsManager manager = new ControlsManager();
     	
-    	for (String directory : parser.getValidSubDirectories()) {
+    	for (String directory : parser.getValidSubDirectories("control_scheme")) {
     		parser.moveDown(directory);
     		
     		ControlScheme scheme = new ControlScheme();
@@ -391,7 +387,7 @@ public class VoogaGameBuilder {
     		KeyControlMap whilePressed = new KeyControlMap();
     		scheme.addControlMap(whilePressed);
     		
-    		for (String key : parser.getValidSubDirectories()) {
+    		for (String key : parser.getValidSubDirectories("key")) {
     			parser.moveDown(key);
     			
     			KeyCode keyCode = KeyCode.valueOf(parser.getValue("key"));
@@ -410,7 +406,6 @@ public class VoogaGameBuilder {
         		
         		parser.moveUp();
     		}
-    		
     		manager.addControlScheme(scheme);
     		parser.moveUp();
     	}
