@@ -42,9 +42,6 @@ public class Vector {
 
 	@Override
 	public boolean equals(Object other) {
-		if(other == this) {
-			return true;
-		}
 
 		if(!(other instanceof Vector)) {
 			return false;
@@ -115,6 +112,16 @@ public class Vector {
 	public double getAngle() {
 		return isZeroVector() ? 0 : Math.atan(myY/myX);
 	}
+	
+	public double getAngleDegrees() {
+		double arcTangent = getAngle();
+		Math.toDegrees(arcTangent);
+		if(myX < 0)
+			arcTangent += 180;
+		else if(myY < 0)
+			arcTangent += 360;
+		return arcTangent;
+	}
 
 	public boolean isZeroVector() {
 		return (myX == 0 && myY == 0);
@@ -127,5 +134,4 @@ public class Vector {
 	public String toString() {
 		return String.format("Vector (%f, %f)\n", myX, myY);
 	}
-
 }

@@ -8,7 +8,7 @@ import game_engine.behaviors.IBehavior;
 import game_engine.behaviors.MultipleBehaviors;
 import game_engine.collisions.Collision;
 import game_engine.collisions.CollisionsManager;
-import game_engine.collisions.detectors.HitboxDetector;
+import game_engine.collisions.detectors.PhysicsDetector;
 import game_engine.collisions.detectors.ICollisionDetector;
 import game_engine.collisions.detectors.MultipleDetector;
 import game_engine.collisions.detectors.PixelPerfectDetector;
@@ -258,7 +258,7 @@ public class VoogaGameBuilder {
             if (directory.toLowerCase().startsWith("on")) {
                 parser.moveDown(directory);
                 IBehavior behavior = buildBehaviorList();
-                objective.setBehavior(directory.substring(2, directory.length() - 1), behavior);
+                objective.setBehavior(directory.substring(2, directory.length()), behavior);
                 parser.moveUp();
             }
         }
@@ -336,7 +336,7 @@ public class VoogaGameBuilder {
     	MultipleDetector detector = new MultipleDetector();
     	for (String label : parser.getValidLabels()) {
     		ICollisionDetector component = parser.getValue(label).equals("SimpleDetector") ? new SimpleDetector() : 
-    										parser.getValue(label).equals("HitboxDetector") ? new HitboxDetector() :
+    										parser.getValue(label).equals("HitboxDetector") ? new PhysicsDetector() :
     											parser.getValue(label).equals("PixelPerfectDetector") ? new PixelPerfectDetector() : null;
     		detector.addDetector(component);
     	}
