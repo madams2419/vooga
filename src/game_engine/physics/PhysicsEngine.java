@@ -21,7 +21,8 @@ public class PhysicsEngine {
 	private Map<String, Vector> myGlobalAccels;
 	private Vector myNetGlobalAccel;
 	private Vector myNetGlobalForce;
-	private PhysicsCollisionFactory collisionFactory;
+	private PhysicsCollisionFactory myCollisionFactory;
+	private RigidBodyFactory myRigidBodyFactory;
 	private Scaler myScaler;
 
 	public PhysicsEngine(double drag, double scaleFactor) {
@@ -29,7 +30,8 @@ public class PhysicsEngine {
 		myGlobalAccels = new HashMap<>();
 		myNetGlobalForce = new Vector();
 		myNetGlobalAccel = new Vector();
-		collisionFactory = new PhysicsCollisionFactory();
+		myCollisionFactory = new PhysicsCollisionFactory();
+		myRigidBodyFactory = new RigidBodyFactory(myScaler);
 		myScaler = new Scaler(scaleFactor);
 		myDrag = drag;
 	}
@@ -42,17 +44,7 @@ public class PhysicsEngine {
 		double dragCoef = - myDrag * physObj.getRigidBody().getCxArea();
 		return physObj.getVelocity().times(dragCoef);
 	}
-
-	public void update(List<Sprite> sprites) {
-		updatePhysicsObjects(sprites);
-	}
-
-	private void updatePhysicsObjects(List<Sprite> sprites) {
-		for(Sprite sprite : sprites) {
-			sprite.getPhysicsObject().update();
-		}
-	}
-
+	
 	private Vector computeNetGlobalForce() {
 		myNetGlobalForce = Vector.sum(getGlobalForces());
 		return myNetGlobalForce;

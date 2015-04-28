@@ -19,6 +19,7 @@ public class PhysicsObject extends Observable {
 	private double myDirForceMagnitude;
 	private List<Joint> myJoints;
 	private PhysicsEngine myPhysics;
+	private Scaler myScaler;
 
 	private RigidBody myRigidBody;
 
@@ -28,10 +29,11 @@ public class PhysicsObject extends Observable {
 
 	public PhysicsObject(PhysicsEngine physics, RigidBody rigidBody, Material material, int xPosPixels, int yPosPixels) {
 		myPhysics = physics;
+		myScaler = physics.getScaler();
 		myRigidBody = rigidBody;
 		myMaterial = material;
 
-		myPosition = myPhysics.getScaler().vectorPixelsToMeters(xPosPixels, yPosPixels);
+		myPosition = myScaler.vectorPixelsToMeters(xPosPixels, yPosPixels);
 		myVelocity = new Vector();
 		myNetInternalForce = new Vector();
 		myDirForceMagnitude = 0;
@@ -125,7 +127,7 @@ public class PhysicsObject extends Observable {
 	}
 
 	public Vector getPositionPixels() {
-		return myPhysics.getScaler().vectorMetersToPixels(getPositionMeters());
+		return myScaler.vectorMetersToPixels(getPositionMeters());
 	}
 
 	public double getXMeters() {
@@ -145,31 +147,31 @@ public class PhysicsObject extends Observable {
 	}
 
 	public double getXPixels() {
-		return myPhysics.getScaler().metersToPixels(getXMeters());
+		return myScaler.metersToPixels(getXMeters());
 	}
 
 	public void setXPixels(double xPixels) {
-		myPosition = myPosition.setX(myPhysics.getScaler().pixelsToMeters(xPixels));
+		myPosition = myPosition.setX(myScaler.pixelsToMeters(xPixels));
 	}
 
 	public double getYPixels() {
-		return myPhysics.getScaler().metersToPixels(getYMeters());
+		return myScaler.metersToPixels(getYMeters());
 	}
 
 	public void setYPixels(double yPixels) {
-		myPosition = myPosition.setY(myPhysics.getScaler().pixelsToMeters(yPixels));
+		myPosition = myPosition.setY(myScaler.pixelsToMeters(yPixels));
 	}
 
 	public double getRadiusPixels() {
-		return myPhysics.getScaler().metersToPixels(myRigidBody.getRadius());
+		return myScaler.metersToPixels(myRigidBody.getRadius());
 	}
 	
 	public double getWidthPixels() {
-		return myPhysics.getScaler().metersToPixels(myRigidBody.getWidth());
+		return myScaler.metersToPixels(myRigidBody.getWidth());
 	}
 	
 	public double getHeightPixels() {
-		return myPhysics.getScaler().metersToPixels(myRigidBody.getHeight());
+		return myScaler.metersToPixels(myRigidBody.getHeight());
 	}
 
 	public Vector getVelocity() {

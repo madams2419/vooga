@@ -6,13 +6,13 @@ public class RigidBodyFactory {
 	
 	private Scaler myScaler;
 	
-	public RigidBodyFactor(Scaler scaler) {
+	public RigidBodyFactory(Scaler scaler) {
 		myScaler = scaler;
 	}
 	
-	public static RigidBody createRigidBody(int widthPixels, int heightPixels, RBodyType rbType) {
-		double height = PhysicsEngine.pixelsToMeters(heightPixels);
-		double width = PhysicsEngine.pixelsToMeters(widthPixels);
+	public RigidBody createRigidBody(int widthPixels, int heightPixels, RBodyType rbType) {
+		double height = myScaler.pixelsToMeters(heightPixels);
+		double width = myScaler.pixelsToMeters(widthPixels);
 		RigidBody rBody;
 		
 		switch (rbType) {
