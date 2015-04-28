@@ -8,17 +8,10 @@ public class RectangleBody extends RigidBody {
 	private Vector myUpperRight;
 	private Vector myLowerLeft;
 
-	public RectangleBody(double height, double width) {
+	public RectangleBody(double width, double height) {
 		super();
-		myUpperRight = new Vector(height/2, width/2);
+		myUpperRight = new Vector(width/2, height/2);
 		myLowerLeft = myUpperRight.negate();
-	}
-
-	public static RectangleBody rBodyFromCorners(Vector corner1, Vector corner2) {
-		Vector diagonal = corner1.minus(corner2);
-		double height = diagonal.getY();
-		double width = diagonal.getX();
-		return new RectangleBody(height, width);
 	}
 
 	public double getArea() {
