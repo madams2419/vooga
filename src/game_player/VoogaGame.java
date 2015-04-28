@@ -30,7 +30,6 @@ public class VoogaGame implements IActor {
 	private Timeline animation;
 	private ControlsManager controlsManager;
 	private long lastUpdateTime;
-	private double frameRate;
 	private TransitionManager transitionManager;
 
 	public VoogaGame(double fps, double w, double h) {
@@ -44,7 +43,7 @@ public class VoogaGame implements IActor {
 	}
 	
 	private KeyFrame getFrame(double fps) {
-		return new KeyFrame(Duration.millis(fps), (frame) -> update(System.currentTimeMillis()));
+		return new KeyFrame(Duration.seconds(1/fps), (frame) -> update(System.currentTimeMillis()));
 	}
 
 	public void addLevel(Level l) {
