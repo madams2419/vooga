@@ -64,8 +64,9 @@ public class ObjectiveDialog extends DataDialog {
 					.getText());
 			mResult.get(mStates.get(i).getSelectionModel().getSelectedItem())
 					.add(action);
-			mResult.get("prereqs").add(
-					mPrereqs.get(i).getSelectionModel().getSelectedItem());
+			if (i == 0) {
+			    mResult.get("prereqs").add(mPrereqs.get(i).getSelectionModel().getSelectedItem());
+			}
 		}
 		return mResult;
 	}
@@ -119,6 +120,13 @@ public class ObjectiveDialog extends DataDialog {
     grid[0].addRowEnd(addStatesBox(), addSpritesBox(), addComboBox(mActions, 
         Arrays.asList(new String[]{"win", "lose", "die"})),
         addTextField(mParams), addPrereqsBox());
+  }
+  
+  @Override
+  void addAdditionalBlankRow(int index, DialogGridOrganizer... grid) {
+    grid[0].addRowEnd(addStatesBox(), addSpritesBox(), addComboBox(mActions, 
+        Arrays.asList(new String[]{"win", "lose", "die"})),
+        addTextField(mParams));
   }
 
   @Override
