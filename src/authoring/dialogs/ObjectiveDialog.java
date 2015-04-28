@@ -47,8 +47,8 @@ public class ObjectiveDialog extends DataDialog {
 		           new Node[] { new Label("Complete/Failed"), new Label("Sprite"),
 		                        new Label("Action"), new Label("Parameters"), new Label(
 		                                "Pre-requisites")});
-		showBox();
 		addAddButton();
+		showBox();
 	}
 
     private Map<String, List<String>> collectBehaviours() {
@@ -58,7 +58,8 @@ public class ObjectiveDialog extends DataDialog {
 		mResult.put("prereqs", new ArrayList<String>());
 		for (int i = 0; i < mActions.size(); i++) {
 			String action = String.format("%s:%s:%s", mSpriteBoxes.get(i)
-					.getSelectionModel().getSelectedItem(), mActions.get(i)
+					.getSelectionModel().getSelectedItem().split(", ")[1], 
+					mActions.get(i)
 					.getSelectionModel().getSelectedItem(), mParams.get(i)
 					.getText());
 			mResult.get(mStates.get(i).getSelectionModel().getSelectedItem())
@@ -130,7 +131,8 @@ public class ObjectiveDialog extends DataDialog {
       newObjective.addOnFailed(res.get("onFailed"), null);
       newObjective.addPrereqs(res.get("prereqs"));
       myParent.getMyParent().getParent().getCenterPane()
-          .getActiveTab().addObjective(newObjective);
+//          .getActiveTab().addObjective(newObjective);
+      .getActiveTab().setObjective(newObjective, myIndex);
   });
   }
 

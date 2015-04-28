@@ -19,7 +19,7 @@ public class Objective_XML {
 		this.description = description;
 	}
 
-	private Objective_XML(String description, List<String> prereqs,
+	public Objective_XML(String description, List<String> prereqs,
 			List<Behaviours_XML> onComplete, List<Behaviours_XML> onFailed) {
 		this.description = description;
 		this.prereqs = prereqs;
@@ -44,7 +44,7 @@ public class Objective_XML {
 		l.addAll(actions.stream().map(s -> {
 			String[] par = (s+" ").split(":");
 			System.out.println(s);
-			return new Behaviours_XML("sprite", "0", par[1], par[2]);
+			return new Behaviours_XML("sprite", par[0], par[1], par[2]);
 		}).collect(Collectors.toList()));
 	}
 
