@@ -167,8 +167,7 @@ public class VoogaGameBuilder {
 	private Sprite buildSprite(String spriteID, PhysicsEngine engine) {
 		parser.moveDown(spriteID);
 		
-		Map<String, List<RigidBody>> rigidBodies = new HashMap<>();
-		Animation animation = buildAnimation(rigidBodies, engine);
+		Animation animation = buildAnimation(engine);
 		PhysicsObject physObj = buildPhysicsObject(animation, engine);
 		String initialState = parser.getValue("initial_state");
 		
@@ -178,7 +177,7 @@ public class VoogaGameBuilder {
 		return sprite;
 	}
 	
-	private Animation buildAnimation(Map<String, List<RigidBody>> rigidbodies, PhysicsEngine engine) {
+	private Animation buildAnimation(PhysicsEngine engine) {
 		parser.moveDown("animations");
 		
 		Animation animation = new Animation(game.getHeight());
@@ -187,7 +186,6 @@ public class VoogaGameBuilder {
 			parser.moveDown(directory);
 			
 			String name = parser.getValue("name");
-			List<RigidBody> rb = new ArrayList<>();
 			
 			parser.moveDown("images");
 			for (String imageDirectory : parser.getValidSubDirectories()) {
@@ -197,7 +195,6 @@ public class VoogaGameBuilder {
 				double width = Double.parseDouble(parser.getValue("width"));
 				double height = Double.parseDouble(parser.getValue("height"));
 				RigidBody rBody = buildRigidBody(width, height, engine);
-				rb.add(rBody);
 				
 				animation.associateImage(name, source, rBody, delay, height, width);
 				
@@ -205,7 +202,6 @@ public class VoogaGameBuilder {
 			}
 			parser.moveUp();
 			
-			rigidbodies.put(name, rb);
 			parser.moveUp();
 		}
 		

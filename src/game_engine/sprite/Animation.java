@@ -24,7 +24,6 @@ import java.util.function.Supplier;
 public class Animation extends Observable implements Observer {
 
 	private ImageView image;
-	private RigidBody rigidBody;
     private Node current;
     Map<String, ImageLink> paths;
     private long timeElapsed;
@@ -33,6 +32,7 @@ public class Animation extends Observable implements Observer {
     public Animation(double h) {
     	image = new ImageView();
     	paths = new HashMap<>();
+    	current = null;
     	timeElapsed = 0;
     	height = h;
     }
@@ -53,6 +53,9 @@ public class Animation extends Observable implements Observer {
     	try {
 			FileInputStream fis = new FileInputStream(imagePath);
 			paths.get(state).add(new Image(fis, width, height, false, true), rBody, Duration.seconds(delay));
+			if(current == null) {
+				current = paths.get(state).first;
+			}
 		}
     	catch (FileNotFoundException e) {
     		e.printStackTrace();
@@ -67,14 +70,14 @@ public class Animation extends Observable implements Observer {
     protected class Node {
 		 
 		private Image image;
-		private RigidBody rBody;
+		private RigidBody rigidBody;
 		private Node next;
 		private Duration delay;
 		private int index;
 		
 		public Node(Image i, RigidBody rb, Node n, Duration d, int ind) {
 			image = i;
-			rBody = rb;
+			rigidBody = rb;
 			next = n;
 			delay = d;
 			index = ind;
@@ -123,7 +126,6 @@ public class Animation extends Observable implements Observer {
     private void rotateImage() {
     	current = current.next;
     	image.setImage(current.image);
-    	rigidBody = current.rBody;
     	setChanged();
     	notifyObservers();
     }
@@ -137,7 +139,7 @@ public class Animation extends Observable implements Observer {
     }
     
     public RigidBody getRigidBody() {
-    	return rigidBody;
+    	return current.rigidBody;
     }
     
     /**

@@ -5,10 +5,13 @@ public class RectRectCollision extends PhysicsCollision {
 	private RectangleBody rectA;
 	private RectangleBody rectB;
 
-	public RectRectCollision(PhysicsObject poA, PhysicsObject poB) {
-		super(poA, poB);
-		rectA = (RectangleBody) poA.getRigidBody();
-		rectB = (RectangleBody) poB.getRigidBody();
+	public RectRectCollision(PhysicsObject objectA, PhysicsObject objectB) {
+		super(objectA, objectB);
+	}
+	
+	protected void castRigidBodies() {
+		rectA = (RectangleBody) myObjectA.getRigidBody();
+		rectB = (RectangleBody) myObjectB.getRigidBody();
 	}
 
 	// TODO refactor if statements with strategy pattern

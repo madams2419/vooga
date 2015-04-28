@@ -14,6 +14,7 @@ public abstract class PhysicsCollision {
 	public PhysicsCollision(PhysicsObject objectA, PhysicsObject objectB) {
 		myObjectA = objectA;
 		myObjectB = objectB;
+		castRigidBodies();
 		solve();
 	}
 
@@ -21,6 +22,8 @@ public abstract class PhysicsCollision {
 	 * Compute collision normal and penetration depth
 	 */
 	protected abstract void solve();
+	
+	protected abstract void castRigidBodies();
 
 	public void resolve() {
 		// return if objects are moving apart

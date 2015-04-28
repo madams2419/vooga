@@ -7,8 +7,11 @@ public class CircleRectCollision extends PhysicsCollision {
 
 	public CircleRectCollision(PhysicsObject poA, PhysicsObject poB) {
 		super(poA, poB);
-		myCircle = (CircleBody) poA.getRigidBody();
-		myRectangle = (RectangleBody) poB.getRigidBody();
+	}
+	
+	protected void castRigidBodies() {
+		myCircle = (CircleBody) myObjectA.getRigidBody();
+		myRectangle = (RectangleBody) myObjectB.getRigidBody();
 	}
 
 	//TODO refactor if statements with strategy pattern
