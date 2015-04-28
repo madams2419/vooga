@@ -18,6 +18,7 @@ public class KeyControlMap {
 	
 	public void addBehavior(KeyCode key, IBehavior value) {
 		behaviors.put(key, value);
+		System.out.println(behaviors);
 	}
 	
 	public void perform(KeyCode key) {

@@ -258,7 +258,7 @@ public class VoogaGameBuilder {
             if (directory.toLowerCase().startsWith("on")) {
                 parser.moveDown(directory);
                 IBehavior behavior = buildBehaviorList();
-                objective.setBehavior(directory.substring(2, directory.length() - 1), behavior);
+                objective.setBehavior(directory.substring(2), behavior);
                 parser.moveUp();
             }
         }
@@ -410,7 +410,6 @@ public class VoogaGameBuilder {
         		
         		parser.moveUp();
     		}
-    		
     		manager.addControlScheme(scheme);
     		parser.moveUp();
     	}
