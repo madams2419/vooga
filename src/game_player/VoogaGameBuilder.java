@@ -147,16 +147,18 @@ public class VoogaGameBuilder {
 		
 		parser.moveDown("global_accelerations");
 		for (String label : parser.getValidLabels()) {
+			String accelName = label.substring(label.lastIndexOf("/") + 1);
 			String[] vector = parser.getValue(label).split(" ");
-			System.out.println(Arrays.asList(vector));
-			engine.setGlobalAccel(label, new Vector(Double.parseDouble(vector[0]), Double.parseDouble(vector[1])));
+			System.out.println(accelName);
+			engine.setGlobalAccel(accelName, new Vector(Double.parseDouble(vector[0]), Double.parseDouble(vector[1])));
 		}
 		parser.moveUp();
 		
 		parser.moveDown("global_forces");
 		for (String label : parser.getValidLabels()) {
+			String forceName = label.substring(label.lastIndexOf("/") + 1);
 			String[] vector = parser.getValue(label).split(" ");
-			engine.setGlobalForce(label, new Vector(Double.parseDouble(vector[0]), Double.parseDouble(vector[1])));
+			engine.setGlobalForce(forceName, new Vector(Double.parseDouble(vector[0]), Double.parseDouble(vector[1])));
 		}
 		parser.moveUp();
 		

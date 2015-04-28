@@ -74,22 +74,22 @@ public class PhysicsEngine {
 
 	public void setGlobalForce(String name, Vector force) {
 		myGlobalForces.put(name, force);
-		myNetGlobalForce.plus(force);
+		myNetGlobalForce = myNetGlobalForce.plus(force);
 	}
 
 	public void setGlobalAccel(String name, Vector accel) {
 		myGlobalAccels.put(name, accel);
-		myNetGlobalAccel.plus(accel);
+		myNetGlobalAccel = myNetGlobalAccel.plus(accel);
 	}
 
 	public void removeGlobalForce(String name) {
 		Vector removedForce = myGlobalForces.remove(name);
-		myNetGlobalForce.minus(removedForce);
+		myNetGlobalForce = myNetGlobalForce.minus(removedForce);
 	}
 
 	public void removeGlobalAccel(String name) {
 		Vector removedAccel = myGlobalAccels.remove(name);
-		myNetGlobalAccel.minus(removedAccel);
+		myNetGlobalAccel = myNetGlobalAccel.minus(removedAccel);
 	}
 	
 	public Scaler getScaler() {
