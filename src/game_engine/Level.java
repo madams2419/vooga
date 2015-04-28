@@ -44,7 +44,7 @@ public class Level implements IActor {
 	private Group myGroup;
 	private Map<String, IAction> myActions;
 	
-	@IActionAnnotation(description = "Remove sprite", numParams = 1)
+	@IActionAnnotation(description = "Remove sprite", numParams = 1, paramDetails = "sprite's id")
 	private IAction removeSprite = (params) -> {
 	        String id = params[0];
 	        Sprite removed = mySprites.filtered(sprite -> sprite.checkID(id)).get(0);
@@ -56,6 +56,7 @@ public class Level implements IActor {
 		mySprites = FXCollections.observableArrayList();
 		initGroup (mySprites);
 		myToBeRemoved = new ArrayList<>();
+		myActions = buildActionMap();
 	}
 	
 	private void initGroup (ObservableList<Sprite> sprites) {

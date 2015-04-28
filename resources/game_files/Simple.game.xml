@@ -24,7 +24,7 @@
 				
 				<objective_2>
 					<description></description>
-					<prereqs>0 1<prereqs>
+					<prereqs>0 1</prereqs>
 					<timer>1000</timer>
 					<onFailed>
 						<behaviors>

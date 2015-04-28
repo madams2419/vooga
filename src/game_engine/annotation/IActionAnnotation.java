@@ -12,4 +12,5 @@ import java.lang.annotation.Target;
 public @interface IActionAnnotation {
 	public int numParams();
 	public String description();
+	public String paramDetails();
 }

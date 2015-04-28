@@ -110,7 +110,7 @@ public class VoogaGameBuilder {
 		int i = 0;
 		for (String directory: parser.getValidSubDirectories()) {
 		    parser.moveDown(directory);
-		    if (parser.getValue("prereqs") != null) {
+		    if (parser.getValue("prereqs") != null && parser.getValue("prereqs").trim() != "") {
 		        String[] prereqs = parser.getValue("prereqs").split(" ");
 	                    List<Objective> list = new ArrayList<>();
 	                    for (String id: prereqs) {
@@ -277,7 +277,7 @@ public class VoogaGameBuilder {
             if (directory.toLowerCase().startsWith("on")) {
                 parser.moveDown(directory);
                 IBehavior behavior = buildBehaviorList();
-                objective.setBehavior(directory.substring(2, directory.length() - 1), behavior);
+                objective.setBehavior(directory.substring(2), behavior);
                 parser.moveUp();
             }
         }

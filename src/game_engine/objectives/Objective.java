@@ -117,7 +117,6 @@ public class Objective implements IActor {
     private boolean checkTimer (double now) {
         return myTimer.filter(timer -> {
             timer.update(now);
-            System.out.println(timer.getTimePassed());
             return timer.isFinished();
         }).isPresent();
     }
@@ -146,10 +145,6 @@ public class Objective implements IActor {
 
     private void executeStatus () {
         myBehaviors.getOrDefault(myStatus, () -> {}).perform();
-        if (myTimer.isPresent()) {
-            System.out.println(myBehaviors);
-            System.out.println(myStatus);
-        }
     }
 
     private void updateActive (double now) {
@@ -206,7 +201,7 @@ public class Objective implements IActor {
         return myName;
     }
 
-    @IActionAnnotation (description = "set status", numParams = 1)
+    @IActionAnnotation (description = "set status", numParams = 1, paramDetails = "complete, failed, or active")
     private IAction setStatus = (params) -> {
         if (isActive() && !params[0].equals("active")) {
             addCondition( (now) -> true, params[0]);

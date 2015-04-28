@@ -1,13 +1,9 @@
 package game_engine.scrolling;
 
-import game_engine.annotation.ActionExporter;
-import game_engine.annotation.IActionAnnotation;
-import game_engine.behaviors.IActor;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -18,7 +14,7 @@ import java.util.function.Predicate;
 public class SubClassFinder {
     private static final String JAVA_SUFFIX = ".java";
     private static final String SRC = "src" + File.separator;
-    private static final String MAIN_DIR = "src/game_engine";
+    public static final String MAIN_DIR = "src/game_engine";
 
     private SubClassFinder() {}
     

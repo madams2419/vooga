@@ -68,7 +68,7 @@ public class Sprite extends Observable implements IActor {
 	 * IAction setState
 	 * changes the state of the current sprite object
 	 */
-	@IActionAnnotation(description = "Changes the sprite state", numParams = 1)
+	@IActionAnnotation(description = "Changes the sprite state", numParams = 1, paramDetails = "String")
 	private IAction setState = (params) -> {
 		String newState = params[0];
 		state = newState;
@@ -93,7 +93,7 @@ public class Sprite extends Observable implements IActor {
 	}
 	
 	@IActionAnnotation(numParams = 1, description = "increments worth of sprite if no parent,"
-			+ " otherwise increments worth of parent sprite")
+			+ " otherwise increments worth of parent sprite", paramDetails = "double")
 	private IAction incrementScore = (params) -> {
 		if(owner.equals(null)){
 			incrementScore(Double.parseDouble(params[0]));
@@ -111,12 +111,12 @@ public class Sprite extends Observable implements IActor {
 		worth += value;
 	}
 
-	@IActionAnnotation(numParams = 2, description = "moves sprite forward in an x, y vector direction")
+	@IActionAnnotation(numParams = 2, description = "moves sprite forward in an x, y vector direction", paramDetails = "two doubles")
 	private IAction moveForward = (params) -> {
 		physicsObject.applyControlImpulse(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
 	};
 	
-	@IActionAnnotation(numParams = 1, description = "sprite jumps up or down")
+	@IActionAnnotation(numParams = 1, description = "sprite jumps up or down", paramDetails = "double")
 	private IAction jump = (params) -> {
 		Vector myVector = new Vector(0, Double.parseDouble(params[0]));
 		physicsObject.applyControlImpulse(myVector);
