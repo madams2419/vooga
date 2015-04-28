@@ -204,6 +204,7 @@ public class XMLParser {
             pathName += component + "/";
         }
         setActivePath(getActivePath() + pathName);
+        System.out.println(activePath);
     }
 
     /**
@@ -280,9 +281,5 @@ public class XMLParser {
         // read(node.getChildNodes().item(i), path + "/" + node.getNodeName(), child);
         // }
         // }
-    }
-
-    public static void main (String[] args) {
-        XMLParser x = new XMLParser(new File("output/test.xml"));
     }
 }

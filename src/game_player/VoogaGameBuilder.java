@@ -215,7 +215,7 @@ public class VoogaGameBuilder {
 				
 				animation.associateImage(name, source, delay, height, width);
 				
-				hb.add(buildHitbox());
+				//hb.add(buildHitbox());
 				parser.moveUp();
 			}
 			parser.moveUp();
