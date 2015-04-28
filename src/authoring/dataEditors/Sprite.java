@@ -97,6 +97,15 @@ public class Sprite extends ImageView {
     public Map<Sprite, Map<Action, String>> getInteractionMap() {
     	return mySpriteInteractionMap;
     }
+    
+    public Map<Action, String> getInteractionWithSprite(Sprite other) {
+        Map<Action, String> map = mySpriteInteractionMap.get(other);
+        if (map == null) {
+            map = new HashMap<Action, String>();
+            mySpriteInteractionMap.put(other, map);
+        }
+        return map;
+    }
 
     public void addDefaultCharacteristics (List<String> characteristics) {
         characteristics.forEach(characteristic -> myCharacteristics.put(

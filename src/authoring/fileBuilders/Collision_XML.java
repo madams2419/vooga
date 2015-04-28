@@ -36,8 +36,10 @@ public class Collision_XML {
 		Element current = xml.add(parent, "collision_" + index);
 		xml.addChildWithValue(current, "sprites", sprites);
 		Element det = xml.add(current, "detectors");
-		for (int i = 0; i < detectors.length; i++)
-			xml.addChildWithValue(det, "detector_" + i, detectors[i]);
+		if (detectors != null) {
+		    for (int i = 0; i < detectors.length; i++)
+		            xml.addChildWithValue(det, "detector_" + i, detectors[i]);
+		}
 		Element res = xml.add(current, "resolvers");
 		for (int i = 0; i < resolvers.size(); i++)
 			resolvers.get(i).writeToXML(res, i, xml);
