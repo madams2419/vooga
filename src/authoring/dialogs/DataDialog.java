@@ -66,7 +66,7 @@ public abstract class DataDialog extends Dialog<ButtonType> {
         System.out.println("add button: " + addButton);
         addButton.addEventFilter(ActionEvent.ACTION, event -> {
             this.setHeight(this.getHeight() + myBottomSpacing);
-            addBlankRow(myIndex++, myGrids);
+            addAdditionalBlankRow(myIndex++, myGrids);
             event.consume();
         });
     }
@@ -120,4 +120,8 @@ public abstract class DataDialog extends Dialog<ButtonType> {
     abstract Consumer<ButtonType> getTodoOnOK (Sprite... s);
 
     abstract void addOtherComponents(DialogGridOrganizer... grid);
+
+    void addAdditionalBlankRow (int index, DialogGridOrganizer[] grid) {
+        addBlankRow(index, grid);
+    }
 }

@@ -10,6 +10,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import authoring.dataEditors.Sprite;
 import authoring.dialogs.ControlsDialog;
 import authoring.userInterface.SpriteCursor;
@@ -34,6 +36,7 @@ class CharacterEditingPane extends EditingPane {
             DELETE = "Delete",
             ADD_CONTROLS = "",
             PLAYABLE = "Playable",
+            NAME = "Name",
             ADD_ANIMATIONS = "",
             ADD_PHYSICS = "",
             IMAGE_LABEL = "Click on the image to change it!",
@@ -48,6 +51,7 @@ class CharacterEditingPane extends EditingPane {
             PATH2 = 4;
     private String[] pathButtonContent;
     private TextField myDurationField, myDelayField;
+    private TextField myName;
 
     CharacterEditingPane (Scene scene,
                           RightPane parent,
@@ -60,6 +64,7 @@ class CharacterEditingPane extends EditingPane {
     private void initializeButtons(Sprite sprite, List<String> miscellaneousImages){
       addSpriteIcon(sprite);
       addLabel(IMAGE_LABEL);
+      setField(NAME, sprite.getName(), sprite);
       addAnimations(sprite, miscellaneousImages.get(ANIMATIONS));
       addPhysics(sprite, miscellaneousImages.get(PHYSICS));
       pathButtonContent = new String[] { miscellaneousImages.get(PATH1), miscellaneousImages.get(PATH2)};
@@ -179,5 +184,13 @@ class CharacterEditingPane extends EditingPane {
         if (selectedImageFile != null) {
             sprite.changeImage(selectedImageFile.toURI().toString());
         }
+    }
+
+    private void setField (String label, String value, Sprite sprite) {
+        HBox h = new HBox(10);
+        myName = new javafx.scene.control.TextField(value);
+        myName.setOnKeyReleased(e -> sprite.setName(myName.getText()));
+        h.getChildren().addAll(new Text(label), myName);
+        getChildren().add(h);
     }
 }

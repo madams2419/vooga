@@ -53,7 +53,6 @@ public class Level_XML {
 
 		// Adding collisions
 		Element collision = xml.add(currentLevel, "collisions");
-		System.out.println("num collisions: " + collisions.length);
 		for (Collision_XML c : collisions) {
 			c.writeToXML(collision, i++, xml);
 		}
