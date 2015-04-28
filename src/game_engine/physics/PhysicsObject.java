@@ -19,7 +19,8 @@ public class PhysicsObject extends Observable {
 	private List<Joint> myJoints;
 	private PhysicsEngine myPhysics;
 	private Scaler myScaler;
-	private MovementUpdater myUpdater;
+	
+	private Supplier<Vector> myPositionConstraint;
 
 	private RigidBody myRigidBody;
 
@@ -30,27 +31,35 @@ public class PhysicsObject extends Observable {
 		myMaterial = material;
 
 		myPosition = myScaler.vectorPixelsToMeters(positionPx);
-		myVelocity = new Vector();
-		myNetInternalForce = new Vector();
+		myVelocity = Vector.ZERO;
+		myNetInternalForce = Vector.ZERO;
 		myDirForceMagnitude = 0;
 
 		myInvMass = computeInvMass();
 		myAccel = computeAccel();
 		
-		positionSupplier = () -> myPosition.plus(myVelocity.
+		myPositionConstraint = null;
 	}
 
 	public void update(double dt) {
-		myAccel = computeAccel();
-		myVelocity = myVelocity.plus(myAccel.times(dt));
-		myPosition = myPosition.plus(myVelocity.times(dt));
+		//TODO replace with strategy pattern
+		if(myPositionConstraint == null) {
+			myAccel = computeAccel();
+			myVelocity = myVelocity.plus(myAccel.times(dt));
+			myPosition = myPosition.plus(myVelocity.times(dt));
+		} else {
+			myAccel = Vector.ZERO;
+			myVelocity = Vector.ZERO;
+			myPosition = myPositionConstraint.get();
+		}
 
 		setChanged();
 		notifyObservers();
 	}
 	
-	public void setPathConstraint(Supplier<Vector> positionSupplier) {
-		
+	public void constrainPosition(Supplier<Vector> positionConstraint) {
+		//TODO replace with strategy pattern
+		myPositionConstraint = positionConstraint;
 	}
 
 	private double computeInvMass() {

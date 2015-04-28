@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 import java.util.Observer;
+import java.util.function.Supplier;
 /**
  * 
  * @author Kevin Chang, Brian Lavalee
@@ -107,8 +108,12 @@ public class Animation extends Observable implements Observer {
     	}
     }
     
-    public Vector getPosition() {
-        return new Vector(image.getTranslateX(), -image.getTranslateY() + height - image.getImage().getHeight());
+//    public Vector getPosition() {
+//        return new Vector(image.getTranslateX(), -image.getTranslateY() + height - image.getImage().getHeight());
+//    }
+    
+    public Supplier<Vector> getPositionSupplier() {
+    	return () -> new Vector(image.getTranslateX(), height - image.getTranslateY());
     }
     
     public int getIndex() {

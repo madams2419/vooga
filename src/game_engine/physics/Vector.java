@@ -10,13 +10,10 @@ public class Vector {
 	public static final Vector SOUTH = new Vector(0, -1);
 	public static final Vector EAST = new Vector(1, 0);
 	public static final Vector WEST = new Vector(-1, 0);
+	public static final Vector ZERO = new Vector(0, 0);
 
 	private double myX;
 	private double myY;
-
-	public Vector() {
-		this(0, 0);
-	}
 
 	public Vector(double x, double y) {
 		myX = x;

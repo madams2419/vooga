@@ -27,8 +27,8 @@ public class PhysicsEngine {
 	public PhysicsEngine(double drag, double scaleFactor) {
 		myGlobalForces = new HashMap<>();
 		myGlobalAccels = new HashMap<>();
-		myNetGlobalForce = new Vector();
-		myNetGlobalAccel = new Vector();
+		myNetGlobalForce = Vector.ZERO;
+		myNetGlobalAccel = Vector.ZERO;
 		myCollisionFactory = new PhysicsCollisionFactory();
 		myRigidBodyFactory = new RigidBodyFactory();
 		myScaler = new Scaler(scaleFactor);
