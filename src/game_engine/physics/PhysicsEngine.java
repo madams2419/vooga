@@ -7,12 +7,6 @@ import java.util.HashMap;
 
 import game_engine.sprite.Sprite;
 
-// TODO
-// - convert to controller classs
-// - refactor with special controller for retreiving values in pixel form
-// - implement regions (regions are sprites)
-// - optimize net force computation
-
 public class PhysicsEngine {
 
 	private double myDrag;
@@ -30,8 +24,8 @@ public class PhysicsEngine {
 		myObjects = new ArrayList<>();
 		myGlobalForces = new HashMap<>();
 		myGlobalAccels = new HashMap<>();
-		myNetGlobalForce = Vector.ZERO;
-		myNetGlobalAccel = Vector.ZERO;
+		myNetGlobalForce = computeNetGlobalForce();
+		myNetGlobalAccel = computeNetGlobalAccel();
 		myCollisionManager = new CollisionManager();
 		myRigidBodyFactory = new RigidBodyFactory();
 		myScaler = new Scaler(scaleFactor);
@@ -80,22 +74,22 @@ public class PhysicsEngine {
 
 	public void setGlobalForce(String name, Vector force) {
 		myGlobalForces.put(name, force);
-		computeNetGlobalForce();
+		myNetGlobalForce.plus(force);
 	}
 
 	public void setGlobalAccel(String name, Vector accel) {
 		myGlobalAccels.put(name, accel);
-		computeNetGlobalAccel();
+		myNetGlobalAccel.plus(accel);
 	}
 
 	public void removeGlobalForce(String name) {
-		myGlobalForces.remove(name);
-		computeNetGlobalForce();
+		Vector removedForce = myGlobalForces.remove(name);
+		myNetGlobalForce.minus(removedForce);
 	}
 
 	public void removeGlobalAccel(String name) {
-		myGlobalAccels.remove(name);
-		computeNetGlobalAccel();
+		Vector removedAccel = myGlobalAccels.remove(name);
+		myNetGlobalAccel.minus(removedAccel);
 	}
 	
 	public Scaler getScaler() {
