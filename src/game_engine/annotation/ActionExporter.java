@@ -199,11 +199,12 @@ public class ActionExporter {
         e.addAttribute("name", e::getDefaultName);
         e.addAttribute("description");
         e.addAttribute("numParams");
+        e.addAttribute("paramDetails");
         
-        String folderName = "src/game_engine/annotation/";
+        String folderName = "resources/authoring_files/";
         Collection<Class<?>> classes =
                 SubClassFinder.findTypes(new File("src/game_engine"),
-                                         c -> IActor.class.isAssignableFrom(c),
+                                         c -> IActor.class.isAssignableFrom(c) && IActor.class != c,
                                          c -> c.getSimpleName()).values();
         for (Class<?> clazz : classes) {
             String name = folderName +clazz.getSimpleName() + ".properties";
