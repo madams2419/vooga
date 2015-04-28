@@ -2,6 +2,7 @@ package game_engine.physics;
 
 import java.util.List;
 import java.util.Observable;
+import java.util.function.Supplier;
 
 // TODO
 // - remove all Pixels methods (everything just needs to use the scaler)
@@ -18,6 +19,7 @@ public class PhysicsObject extends Observable {
 	private List<Joint> myJoints;
 	private PhysicsEngine myPhysics;
 	private Scaler myScaler;
+	private MovementUpdater myUpdater;
 
 	private RigidBody myRigidBody;
 
@@ -34,6 +36,8 @@ public class PhysicsObject extends Observable {
 
 		myInvMass = computeInvMass();
 		myAccel = computeAccel();
+		
+		positionSupplier = () -> myPosition.plus(myVelocity.
 	}
 
 	public void update(double dt) {
@@ -43,6 +47,10 @@ public class PhysicsObject extends Observable {
 
 		setChanged();
 		notifyObservers();
+	}
+	
+	public void setPathConstraint(Supplier<Vector> positionSupplier) {
+		
 	}
 
 	private double computeInvMass() {

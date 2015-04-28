@@ -33,15 +33,16 @@ public class Sprite extends Observable implements Observer, IActor {
 		actions = new HashMap<>();
 		owner = spriteOwner;
 		worth = initialWorth;
-		linkToAnimation(animation);
+		setObservations();
 		setChanged();
 		notifyObservers();
 		buildActionMap();
 	}
 	
-	private void linkToAnimation(Animation animation) {
+	private void setObservations() {
 		addObserver(animation);
 		animation.addObserver(this);
+		physicsObject.addObserver(animation);
 	}
 	
 	private void buildActionMap(){ 
