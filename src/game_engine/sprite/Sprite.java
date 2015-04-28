@@ -13,7 +13,7 @@ import java.util.Observable;
 import javafx.scene.image.ImageView;
 /**
  * 
- * @authors Brian Lavalee, Kevin Chang, Emre Sonmez
+ * @authors Brian Lavallee, Kevin Chang, Emre Sonmez
  * Sprite class to hold information for all characters in game
  */
 public class Sprite extends Observable implements IActor {
