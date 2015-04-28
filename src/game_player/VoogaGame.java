@@ -77,7 +77,7 @@ public class VoogaGame implements IActor {
 		if (!activeLevel.getSprites().isEmpty()) {
 			setUpScrolling();
 		}
-		transitionManager.playTransitions();
+		//transitionManager.playTransitions();
 	}
 	
 	public void setTransitionManager(TransitionManager manager){
