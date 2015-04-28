@@ -26,24 +26,25 @@ public class VoogaGame implements IActor {
 	private List<Level> levels;
 	private Level activeLevel;
 	private Group root;
-	private Timeline timeline;
 	private double width, height;
+	private Timeline animation;
 	private ControlsManager controlsManager;
+	private long lastUpdateTime;
 	private double frameRate;
 	private TransitionManager transitionManager;
 
-	public VoogaGame(double fr, double w, double h) {
+	public VoogaGame(double fps, double w, double h) {
 		levels = new ArrayList<Level>();
 		root = new Group();
-		frameRate = fr;
-		timeline = new Timeline(getFrame(frameRate));
-		timeline.setCycleCount(Timeline.INDEFINITE);
 		width = w;
 		height = h;
+		animation = new Timeline(fps, getFrame(fps));
+		animation.setCycleCount(Timeline.INDEFINITE);
+		lastUpdateTime = 0l;
 	}
 	
-	private KeyFrame getFrame(double frameRate) {
-		return new KeyFrame(Duration.millis(frameRate), (frame) -> update());
+	private KeyFrame getFrame(double fps) {
+		return new KeyFrame(Duration.millis(fps), (frame) -> update(System.currentTimeMillis()));
 	}
 
 	public void addLevel(Level l) {
@@ -76,7 +77,7 @@ public class VoogaGame implements IActor {
 		if (!activeLevel.getSprites().isEmpty()) {
 			setUpScrolling();
 		}
-		transitionManager.playTransitions();
+		//transitionManager.playTransitions();
 	}
 	
 	public void setTransitionManager(TransitionManager manager){
@@ -86,19 +87,27 @@ public class VoogaGame implements IActor {
 	public TransitionManager getTransitionManager(){
 	    return transitionManager;
 	}
+
+	public void update(long currentTime) {
+		if (lastUpdateTime == 0) {
+			lastUpdateTime = currentTime;
+		}
+
+		activeLevel.update(currentTime - lastUpdateTime);
+		lastUpdateTime = currentTime;
+	}
 	
+	protected Group getRoot() {
+		return root;
+	}
+
 	public void setUpScrolling () {
-	    System.out.println(width + height);
 	    IScrollFocus focus= new DeadZoneFocus(width, height, 0.2);
 	    SpriteTracker tracker = new SpriteTracker(focus, new BasicScroller(root));
 	    Sprite sprite = activeLevel.getSprites().get(0);
 	    tracker.setPlayer(sprite);
 	    sprite.getImageView().toFront();
 	    tracker.enable();
-	}
-
-	public void update() {
-		activeLevel.update(frameRate);
 	}
 	
 	public void start() {
@@ -112,11 +121,7 @@ public class VoogaGame implements IActor {
 		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.show();
-		stage.setOnCloseRequest(e -> timeline.stop());
-		timeline.play();
-	}
-
-	public Group getRoot() {
-		return root;
+		stage.setOnCloseRequest(e -> animation.stop());
+		animation.play();
 	}
 }

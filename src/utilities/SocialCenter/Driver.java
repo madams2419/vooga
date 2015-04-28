@@ -2,7 +2,6 @@ package utilities.SocialCenter;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Driver {
 
@@ -54,7 +53,6 @@ public class Driver {
 			}
 			return array;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

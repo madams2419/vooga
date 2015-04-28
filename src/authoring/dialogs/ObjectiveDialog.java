@@ -2,17 +2,14 @@ package authoring.dialogs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
-
-import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import authoring.dataEditors.Sprite;
@@ -21,141 +18,167 @@ import authoring.panes.rightPane.ObjectivePane;
 import authoring.userInterface.DialogGridOrganizer;
 
 /**
- * 
- * @author Daniel
+ * Creates a dialog that lets user define the objectives for the game.
+ * @author Daniel, Natalie, refactored by Andrew
  *
  */
-public class ObjectiveDialog extends Dialog<ButtonType> {
+public class ObjectiveDialog extends DataDialog {
 
-	private static final int BOTTOM_SPACING = 25;
-
+        private static final String SET_STATE = "setState";
+        private static final String JUMP = "jump";
+        private static final String MOVE_FORWARD = "moveForward";
+        private static final String INCREMENT_SCORE = "incrementScore";
+        private static final String EMPTY_STRING = "";
+        private static final String TITLE = "Objective %d Behaviors";
+        private static final String ACTION_SPLIT_BY = ", ";
+        private static final String ACTION_FORMAT = "%s:%s:%s";
+        private static final String PREREQS = "prereqs";
+        private static final String ON_FAILED = "onFailed";
+        private static final String ON_COMPLETE = "onComplete";
+        private static final String PRE_REQUISITES = "Pre-requisites";
+        private static final String PARAMETERS = "Parameters";
+        private static final String ACTION = "Action";
+        private static final String SPRITE = "Sprite";
+        private static final String COMPLETE_FAILED = "Complete/Failed";
+        private static final List<String> myActionsList = Arrays.asList(new String[]{INCREMENT_SCORE, 
+                                                          MOVE_FORWARD, JUMP, SET_STATE});
+        
 	private List<ComboBox<String>> mActions = new ArrayList<>();
 	private List<ComboBox<String>> mPrereqs = new ArrayList<>();
-	private List<ComboBox<String>> mSprites = new ArrayList<>();
+	private List<ComboBox<String>> mSpriteBoxes = new ArrayList<>();
 	private List<ComboBox<String>> mStates = new ArrayList<>();
 	private List<TextField> mParams = new ArrayList<>();
+	private List<Sprite> mSprites = new ArrayList<>();
+	private List<String> mSpriteNames = new ArrayList<>();
 	private TextField myDescription;
 
 	private ObjectivePane myParent;
+	private int selected, myIndex;
 
-	private int myIndex;
-	private int selected;
-
-	public ObjectiveDialog(ObjectivePane parent, int objectiveNumber) {
+	public ObjectiveDialog(ObjectivePane parent, int objectiveNumber, List<Sprite> sprites) {
 		myParent = parent;
-
-		DialogGridOrganizer grid = new DialogGridOrganizer(5);
-		grid.addRowEnd(new Label("Description"),
-				myDescription = new TextField());
-		grid.addRowEnd(new Label("Complete/Failed"), new Label("Sprite"),
-				new Label("Action"), new Label("Parameters"), new Label(
-						"Pre-requisites"));
-
-		grid.addRowEnd(addStatesBox(), addSpritesBox(0), addActionsBox(),
-				addTextField(), addPrereqsBox());
-		this.getDialogPane().setContent(grid);
-		ButtonType b = new ButtonType("Add");
-		this.getDialogPane().getButtonTypes()
-				.addAll(b, ButtonType.OK, ButtonType.CANCEL);
-
-		final Button addButton = (Button) this.getDialogPane().lookupButton(b);
-		addButton.addEventFilter(ActionEvent.ACTION, event -> {
-			this.setHeight(this.getHeight() + BOTTOM_SPACING);
-			grid.addRowEnd(addStatesBox(), addSpritesBox(mSprites.size()),
-					addActionsBox(), addTextField(), addPrereqsBox());
-			event.consume();
-		});
-		this.setTitle(String.format("Objective %d Behaviours",
-				myIndex = objectiveNumber));
+		myIndex = objectiveNumber;
+		myDescription = new TextField();
+		mSprites = sprites;
+		setupSprites();
+		initialize(5, 1, 1,
+		           new Node[] { new Label(COMPLETE_FAILED), new Label(SPRITE),
+		                        new Label(ACTION), new Label(PARAMETERS), new Label(
+		                                PRE_REQUISITES)});
+		addAddButton();
 		showBox();
 	}
 
-	public void showBox() {
-		this.showAndWait()
-				.filter(response -> response == ButtonType.OK)
-				.ifPresent(
-						response -> {
-							Map<String, List<String>> res = collectBehaviours();
-							Objective_XML newObjective = new Objective_XML(
-									myDescription.getText());
-							newObjective.addOnComplete(res.get("onComplete"), null);
-							newObjective.addOnFailed(res.get("onFailed"), null);
-							newObjective.addPrereqs(res.get("prereqs"));
-							myParent.getMyParent().getParent().getCenterPane()
-									.getActiveTab().addObjective(newObjective);
-						});
-	}
-
-	private Map<String, List<String>> collectBehaviours() {
+    private Map<String, List<String>> collectBehaviours() {
 		Map<String, List<String>> mResult = new HashMap<>();
-		mResult.put("onComplete", new ArrayList<String>());
-		mResult.put("onFailed", new ArrayList<String>());
-		mResult.put("prereqs", new ArrayList<String>());
+		mResult.put(ON_COMPLETE, new ArrayList<String>());
+		mResult.put(ON_FAILED, new ArrayList<String>());
+		String prereq = mPrereqs.get(0).getValue();
+		mResult.put(PREREQS, Arrays.asList(new String[]{prereq == null ? EMPTY_STRING : prereq}));
 		for (int i = 0; i < mActions.size(); i++) {
-			String action = String.format("%s:%s:%s", mSprites.get(i)
-					.getSelectionModel().getSelectedItem(), mActions.get(i)
+			String action = String.format(ACTION_FORMAT, mSpriteBoxes.get(i)
+					.getSelectionModel().getSelectedItem().split(ACTION_SPLIT_BY)[1], 
+					mActions.get(i)
 					.getSelectionModel().getSelectedItem(), mParams.get(i)
 					.getText());
 			mResult.get(mStates.get(i).getSelectionModel().getSelectedItem())
 					.add(action);
-			mResult.get("prereqs").add(
-					mPrereqs.get(i).getSelectionModel().getSelectedItem());
 		}
 		return mResult;
 	}
 
-	public ComboBox<String> addActionsBox() {
-		ComboBox<String> b = addComboBox("win", "lose", "die");
-		mActions.add(b);
-		return b;
-	}
-
-	public ComboBox<String> addSpritesBox(int index) {
-		ComboBox<String> b = addComboBox("Main player", "other");
-		mSprites.add(b);
-		b.valueProperty().addListener((ov, t, t1) -> {
-			if (t1.equals("other")) {
-				this.selected = index;
-				this.myParent.getMyParent().getParent().setSpriteWaiting(true);
-				this.close();
-			}
-		});
-		return b;
+	public ComboBox<String> addSpritesBox() {
+	    ComboBox<String> box = addComboBox(mSpriteBoxes, mSpriteNames);
+	    return box;
 	}
 
 	public ComboBox<String> addStatesBox() {
-		ComboBox<String> b = addComboBox("onComplete", "onFailed");
+		ComboBox<String> b = addComboBox(mStates, 
+		    Arrays.asList(new String[]{ON_COMPLETE, ON_FAILED}));
 		b.getSelectionModel().select(0);
-		mStates.add(b);
 		return b;
 	}
 
 	public ComboBox<String> addPrereqsBox() {
-		ComboBox<String> b = addComboBox(myParent.getObjectives().stream()
+		ComboBox<String> b = addComboBox(mPrereqs, myParent.getObjectives().stream()
 				.map(e -> {
 					return e.getText();
 				}).collect(Collectors.toList()));
-		mPrereqs.add(b);
 		return b;
 	}
 
-	private TextField addTextField() {
-		TextField t = new TextField();
-		mParams.add(t);
-		return t;
-	}
 
 	public void setSprite(Sprite s) {
-		mSprites.get(selected).getItems().add(s.toString());
+		mSpriteBoxes.get(selected).getItems().add(s.toString());
 	}
 
-	private ComboBox<String> addComboBox(Collection<String> elements) {
-		ComboBox<String> result = new ComboBox<>();
-		result.getItems().addAll(elements);
-		return result;
-	}
+  @Override
+  String getMyTitle() {
+    return String.format(TITLE, myIndex);
+  }
 
-	private ComboBox<String> addComboBox(String... elements) {
-		return addComboBox(Arrays.asList(elements));
-	}
+  @Override
+  void addBlankRow(int index, DialogGridOrganizer... grid) {
+    grid[0].addRowEnd(addStatesBox(), addSpritesBox(), addComboBox(mActions, 
+        myActionsList), addTextField(mParams), addPrereqsBox());
+  }
+  
+  @Override
+  void addAdditionalBlankRow(int index, DialogGridOrganizer... grid) {
+    grid[0].addRowEnd(addStatesBox(), addSpritesBox(), addComboBox(mActions, 
+        myActionsList), addTextField(mParams));
+  }
+
+  @Override
+  Consumer<ButtonType> getTodoOnOK(Sprite... s) {
+    return (response -> {
+      Map<String, List<String>> res = collectBehaviours();
+      Objective_XML newObjective = new Objective_XML(
+          myDescription.getText());
+      newObjective.addOnComplete(res.get(ON_COMPLETE), null);
+      newObjective.addOnFailed(res.get(ON_FAILED), null);
+      newObjective.addPrereqs(res.get(PREREQS));
+      myParent.getMyParent().getParent().getCenterPane()
+      .getActiveTab().setObjective(newObjective, myIndex);
+  });
+  }
+
+  @Override
+  void addOtherComponents(DialogGridOrganizer... grid) {
+    // not needed    
+  }
+  
+  private void setupSprites () {
+      mSpriteNames = new ArrayList<>();
+      for (Sprite sprite : mSprites) {
+          mSpriteNames.add(sprite.toString());
+      }
+      
+  }
+
+public void update () {
+    setupSprites();
+    updateLists();
+    this.showBox();
+}
+
+private void updateLists () {
+    List<String> prereqList = myParent.getObjectives().stream()
+            .map(e -> {
+                return e.getText();
+        }).collect(Collectors.toList());
+    
+    updateList(mSpriteBoxes, mSpriteNames);
+    updateList(mPrereqs, prereqList);
+}
+private void updateList(List<ComboBox<String>> comboBoxes, List<String> list) {
+    for (ComboBox<String> box : comboBoxes) {
+        String value = box.getValue();
+        box.getItems().clear();
+        box.getItems().addAll(list);
+        box.setValue(value);
+    }
+}
+
+
 }

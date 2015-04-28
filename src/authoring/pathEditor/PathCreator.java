@@ -2,31 +2,15 @@ package authoring.pathEditor;
 
 import game_engine.sprite.Animation;
 import game_engine.sprite.Sprite;
-import game_engine.sprite.TransitionManager;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javafx.animation.PathTransition;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.application.Application;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.event.EventHandler;
 import javafx.scene.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 
 /**
@@ -36,7 +20,6 @@ import javafx.util.Duration;
  */
 
 public class PathCreator extends Application {
-    private Group myGroup;
     private HashMap<Sprite, String[]> myTransitionMap = new HashMap<Sprite, String[]>();
     private HashMap<CubicCurve, Sprite> myFollowingMap = new HashMap<CubicCurve, Sprite>();
     private HashMap<ArrayList<Anchor>, CubicCurve> myCurveMap = new HashMap<>();
@@ -52,7 +35,6 @@ public class PathCreator extends Application {
     
     @Override
     public void start (Stage stage) throws Exception {
-        // TODO Auto-generated method stub
         stage.setTitle("Cubic Curve Manipulation Sample");
         Group group = new Group();
         Scene scene = new Scene(group);
@@ -86,7 +68,7 @@ public class PathCreator extends Application {
                                     System.out.println("new path");
                                     CubicCurve target = myCurveMap.get(anchors);
                                     Sprite follower = (Sprite) myFollowingMap.get(target);
-                                    String[] transition = myTransitionMap.get(target);
+                                    myTransitionMap.get(target);
                                     myFollowingMap.replace(target, follower);
                                     myTransitionMap.replace(follower, createParams(target));
                                     myCurveMap.replace(anchors, target);
@@ -123,12 +105,10 @@ public class PathCreator extends Application {
 
                         // Create elements to test sprite path following
                         Animation anim = new Animation(50);
-                        FileInputStream fis;
-                    
-                            anim.associateImage("standing", "resources/images/brick.png", 0, 50, 50);
+                        anim.associateImage("standing", "resources/images/brick.png", 0, 50, 50);
 
                         myCurveMap.put(elements, path.getPath());
-                        Sprite temp = new Sprite(null, anim, "standing",1);
+                        Sprite temp = new Sprite(null, anim, "standing", null, 1);
                         ArrayList<String[]> parameters = new ArrayList<String[]>();
                         String[] params = createParams(path.getPath());
                         parameters.add(params);

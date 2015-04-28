@@ -12,7 +12,7 @@ import authoring.util.PropertiesFileParser;
 
 
 /**
- * 
+ * Creates a dialog that allows users to modify physics of a sprite.
  * @author Natalie, Andrew
  *
  */
@@ -38,16 +38,11 @@ public class CharacterPhysicsDialog extends DataDialog {
     
     public CharacterPhysicsDialog (Sprite sprite) {
         initializeEverything(sprite);
-        initialize(sprite, 1, new Node[]{}, 0);
+        initialize(1, 0, 1, new Node[]{});
     }
 
     @Override
-    public void addAddButton () {
-        // don't make an add button
-    }
-
-    @Override
-    Consumer<ButtonType> getTodoOnOK () {
+    Consumer<ButtonType> getTodoOnOK (Sprite... s) {
         return (response -> {
             updateSpritePhysics();
         });
@@ -68,7 +63,8 @@ public class CharacterPhysicsDialog extends DataDialog {
     }
 
     @Override
-    void addBlankRow (DialogGridOrganizer grid, int index) {
+    void addBlankRow (int index, DialogGridOrganizer... grid) {
+      // not needed
     }
 
     void initializeEverything (Sprite sprite) {
@@ -102,10 +98,10 @@ public class CharacterPhysicsDialog extends DataDialog {
     }
 
     @Override
-    void addOtherComponents (DialogGridOrganizer grid) {
-        grid.addRowEnd(myTypeLabel);
-        grid.addRowEnd(myTypeBox);
-        grid.addRowEnd(myMaterialLabel);
-        grid.addRowEnd(myMaterialBox);
+    void addOtherComponents (DialogGridOrganizer... grid) {
+        grid[0].addRowEnd(myTypeLabel);
+        grid[0].addRowEnd(myTypeBox);
+        grid[0].addRowEnd(myMaterialLabel);
+        grid[0].addRowEnd(myMaterialBox);
     }
 }

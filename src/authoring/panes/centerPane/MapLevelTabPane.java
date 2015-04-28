@@ -11,8 +11,6 @@ import javafx.scene.layout.AnchorPane;
 
 public class MapLevelTabPane extends AnchorPane {
 
-//	private CenterPane myCenterPane;
-	
 	public MapLevelTabPane(CenterPane c){
 
 		    final TabPane tabs = new TabPane();

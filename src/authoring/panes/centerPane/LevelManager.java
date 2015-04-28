@@ -10,7 +10,7 @@ import javafx.scene.control.Tab;
 import authoring.userInterface.AuthoringWindow;
 
 /**
- * Singleton class that keeps track of the levels and maps.
+ * Class that keeps track of the levels and maps.
  * 
  * @author Mengchao & Daniel Luker
  *

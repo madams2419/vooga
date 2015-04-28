@@ -31,10 +31,8 @@ import game_engine.physics.Material;
 import game_engine.physics.Vector;
 import game_engine.physics.engines.ComplexPhysicsEngine;
 import game_engine.physics.engines.PhysicsEngine;
-import game_engine.physics.objects.AcceleratingPhysicsObject;
 import game_engine.physics.objects.ComplexPhysicsObject;
-import game_engine.physics.objects.MovingPhysicsObject;
-import game_engine.physics.objects.PhysicsObject;
+import game_engine.physics.objects.SimplePhysicsObject;
 import game_engine.sprite.Animation;
 import game_engine.sprite.Sprite;
 import game_engine.sprite.TransitionManager;
@@ -70,7 +68,9 @@ public class VoogaGameBuilder {
 		
 		parser.moveDown("level");
 		for (String directory : parser.getValidSubDirectories()) {
+		    if (directory.startsWith("level")) {
 			game.addLevel(buildLevel(directory));
+		    }
 		}
 		
 		int start = Integer.parseInt(parser.getValue("first_level"));
@@ -145,12 +145,13 @@ public class VoogaGameBuilder {
 		parser.moveDown("physics_engine");
 		
 		String type = parser.getValue("type");
-		
-		PhysicsEngine engine = type.equals("ComlexPhysicsEngine") ? new ComplexPhysicsEngine(Double.parseDouble(parser.getValue("drag_coefficient"))) : new PhysicsEngine();
+		System.out.println(type);
+		PhysicsEngine engine = type.equals("ComplexPhysicsEngine") ? new ComplexPhysicsEngine(Double.parseDouble(parser.getValue("drag_coefficient"))) : new PhysicsEngine();
 		
 		parser.moveDown("global_accelerations");
 		for (String label : parser.getValidLabels()) {
 			String[] vector = parser.getValue(label).split(" ");
+			System.out.println(Arrays.asList(vector));
 			engine.addGlobalAccel(new Vector(Double.parseDouble(vector[0]), Double.parseDouble(vector[1])));
 		}
 		parser.moveUp();
@@ -171,7 +172,7 @@ public class VoogaGameBuilder {
 		
 		Map<String, List<IHitbox>> hitboxes = new HashMap<>();
 		Animation animation = buildAnimation(hitboxes);
-		PhysicsObject physObj = buildPhysicsObject(animation, engine, hitboxes);
+		SimplePhysicsObject physObj = buildPhysicsObject(animation, engine, hitboxes);
 		String initialState = parser.getValue("initial_state");
 		
 		Sprite sprite = new Sprite(physObj, animation, initialState, null, 0);
@@ -181,7 +182,7 @@ public class VoogaGameBuilder {
 	}
 	
 	private Animation buildAnimation(Map<String, List<IHitbox>> hitboxes) {
-		parser.moveDown("animation");
+		parser.moveDown("animations");
 		
 		Animation animation = new Animation(game.getHeight());
 		
@@ -235,16 +236,15 @@ public class VoogaGameBuilder {
 		return hitbox;
 	}
 	
-	private PhysicsObject buildPhysicsObject(Animation animation, PhysicsEngine engine, Map<String, List<IHitbox>> hitboxes) {
+	private SimplePhysicsObject buildPhysicsObject(Animation animation, PhysicsEngine engine, Map<String, List<IHitbox>> hitboxes) {
 		parser.moveDown("physics");
 		
 		String type = parser.getValue("type");
 		String[] point = parser.getValue("position").split(" ");
 		Vector position = new Vector(Double.parseDouble(point[0]), Double.parseDouble(point[1]));
 		
-		PhysicsObject physObj = type.equals("ComplexPhysicsObject") ? new ComplexPhysicsObject(engine, hitboxes, position, animation, Material.valueOf(parser.getValue("material").toUpperCase())) :
-								type.equals("AcceleratingPhysicsObject") ? new AcceleratingPhysicsObject(engine, hitboxes, position, animation) :
-																				new MovingPhysicsObject(engine, hitboxes, position, animation);
+		SimplePhysicsObject physObj = type.equals("ComplexPhysicsObject") ? new ComplexPhysicsObject(engine, hitboxes, position, animation, Material.valueOf(parser.getValue("material").toUpperCase())) :
+																	  new SimplePhysicsObject(engine, hitboxes, position, animation, Double.parseDouble(parser.getValue("mass")));
 		parser.moveUp();
 		return physObj;
 	}
@@ -258,7 +258,7 @@ public class VoogaGameBuilder {
             if (directory.toLowerCase().startsWith("on")) {
                 parser.moveDown(directory);
                 IBehavior behavior = buildBehaviorList();
-                objective.setBehavior(directory.substring(2, directory.length()), behavior);
+                objective.setBehavior(directory.substring(2, directory.length() - 1), behavior);
                 parser.moveUp();
             }
         }
@@ -290,7 +290,9 @@ public class VoogaGameBuilder {
     }
     
     private IActor getActor(String id) {
+        System.out.println(id);
     	String[] details = id.split("_");
+    	System.out.println(Arrays.asList(details));
     	IActor actor = details[0].startsWith("sprite") ? sprites.get(Integer.parseInt(details[1])) : details[0].startsWith("objective") ? objectives.get(Integer.parseInt(details[1])) : null;
     	return actor;
     }
@@ -371,6 +373,7 @@ public class VoogaGameBuilder {
     
     private ControlsManager buildControlsManager() {
     	parser.moveDown("controls");
+    	System.out.println(parser.getValue("active_scheme"));
     	
     	int startIndex = Integer.parseInt(parser.getValue("active_scheme"));
     	
@@ -401,9 +404,9 @@ public class VoogaGameBuilder {
         		onReleased.addBehavior(keyCode, buildBehaviorList());
         		parser.moveUp();
 
-        		parser.moveDown("whilePressed");
-        		whilePressed.addBehavior(keyCode, buildBehaviorList());
-        		parser.moveUp();
+        		//parser.moveDown("whilePressed");
+        		//whilePressed.addBehavior(keyCode, buildBehaviorList());
+        		//parser.moveUp();
         		
         		parser.moveUp();
     		}
