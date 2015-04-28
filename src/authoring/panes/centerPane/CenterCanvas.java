@@ -150,10 +150,17 @@ public class CenterCanvas extends ScrollPane {
 		return myCurrentRectangle;
 	}
 
-	public void addObjective(Objective_XML e) {
-		myListOfObjectives.add(e);
-	}
+//	public void addObjective(Objective_XML e) {
+//		myListOfObjectives.add(e);
+//	}
 
+	public void setObjective(Objective_XML e, int i) {
+	    while (myListOfObjectives.size() <= i) {
+	        myListOfObjectives.add(null);
+	    }
+	    myListOfObjectives.set(i, e);
+	}
+	
 	public List<Objective_XML> getObjectives() {
 		return myListOfObjectives;
 	}
