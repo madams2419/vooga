@@ -1,28 +1,20 @@
 package game_engine.sprite;
 
-import game_engine.behaviors.IAction;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.PathElement;
-import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 /**
  * 
@@ -30,7 +22,6 @@ import javafx.util.Duration;
  * Class to manage Transitions for all sprites
  */
 public class TransitionManager {
-    private Group myGroup;
     private Map<Sprite,List<PathElement>> myTransitionMap;
     private List<SequentialTransition> myTransitions;
     private List<Sprite> mySprites;
@@ -41,7 +32,6 @@ public class TransitionManager {
     
    public TransitionManager(Group group, ArrayList<Sprite> sprites,ArrayList<String[]> params,ArrayList<Integer> duration,
                             ArrayList<Integer> delay){
-       myGroup = group;
        myTransitionMap = new HashMap<Sprite,List<PathElement>>();
        myTransitions = new ArrayList<SequentialTransition>();
        mySprites = sprites;
@@ -64,7 +54,6 @@ public class TransitionManager {
            
            createTransitions(mySprites.get(i),myParams.get(i));
            Sprite sprite = mySprites.get(i);
-           myGroup.getChildren().add(sprite.getImageView());
            Path path = new Path();
            path.getElements().addAll(myTransitionMap.get(sprite));
            sprite.getPhysicsObject().constrainPosition(sprite.getAnimation().getPositionSupplier());
