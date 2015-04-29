@@ -4,7 +4,7 @@ import game_engine.annotation.IActionAnnotation;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.physics.PhysicsObject;
-import game_engine.physics.Vector;
+import game_engine.physics.utilities.Vector;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.image.ImageView;
