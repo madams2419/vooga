@@ -268,13 +268,16 @@ public class XMLParser {
      * Recursively builds the Directory tree and populates the map.
      */
     private void read (Node node, String path, Directory parent) {
-        if (node.getNodeType() != Node.TEXT_NODE) {
+        if (node.getNodeType() == Node.TEXT_NODE) {
+            return;
+        }
+        if (countSubDir(node) == 0) {
             xml.put(path + "/" + node.getNodeName(), node.getTextContent());
-            Directory child = new Directory(node.getNodeName());
-            parent.addSubDirectory(child);
-            for (int i = 0; i < node.getChildNodes().getLength(); i++) {
-                read(node.getChildNodes().item(i), path + "/" + node.getNodeName(), child);
-            }
+        }
+        Directory child = new Directory(node.getNodeName());
+        parent.addSubDirectory(child);
+        for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+            read(node.getChildNodes().item(i), path + "/" + node.getNodeName(), child);
         }
         // else if (node.getChildNodes().getLength() == 0 && !node.getNodeName().equals("#text")) {
         // Directory child = new Directory(node.getNodeName());
@@ -289,8 +292,18 @@ public class XMLParser {
         // }
         // }
     }
+    
+    private int countSubDir (Node node) {
+        int ans = 0;
+        for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+            if (node.getChildNodes().item(i).getNodeType() == Node.ELEMENT_NODE) {
+                ans ++;
+            }
+        }
+        return ans;
+    }
 
     public static void main (String[] args) {
-        XMLParser x = new XMLParser(new File("output/test.xml"));
+        XMLParser x = new XMLParser(new File("src/game_player/NewFile.xml"));
     }
 }
