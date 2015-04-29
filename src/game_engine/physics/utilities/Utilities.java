@@ -19,4 +19,8 @@ public class Utilities {
 		}
 	}
 
+	public static double solvePythagorean(double aVal, double bVal) {
+		return Math.sqrt(aVal * aVal + bVal * bVal);
+	}
+
 }

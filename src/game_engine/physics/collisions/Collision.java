@@ -3,6 +3,7 @@ package game_engine.physics.collisions;
 import game_engine.physics.PhysicsObject;
 import game_engine.physics.utilities.Vector;
 import game_engine.physics.utilities.Constants;
+import game_engine.physics.utilities.Utilities;
 
 public abstract class Collision {
 
@@ -36,17 +37,34 @@ public abstract class Collision {
 			return;
 		}
 
-		applyImpulses();
+		applyCollisionImpulses();
 
 		applySinkCorrection();
+		
+		applyFrictionModification();
 	}
 
-	private void applyImpulses() {
-		Vector rVector = computeResolutionVector();
-		Vector impulseA = rVector.times(myObjectA.getInvMass()).negate();
-		Vector impulseB = rVector.times(myObjectB.getInvMass());
-		myObjectA.applyVelocity(impulseA);
-		myObjectB.applyVelocity(impulseB);
+	private void applyCollisionImpulses() {
+		double rvScale = computeResolutionScalar();
+		Vector rVector = myNormal.times(rvScale);
+		applyImpulses(rVector);
+	}
+	
+	private void applyFrictionModification() {
+		Vector relVel = getRelativeVelocity();
+		Vector tangent = relVel.minus(myNormal.times(computeRVProjection())).normalize();
+		double fricMag = -relVel.dot(tangent) / (myObjectA.getInvMass() + myObjectB.getInvMass());
+		double staticFriction = computeStaticFriction();
+		double rvScale = computeResolutionScalar();
+		
+		Vector fVector = Vector.ZERO;
+		if(Math.abs(fricMag) < Math.abs(rvScale * staticFriction)) {
+  			fVector = tangent.times(fricMag);
+		} else {
+			double dynamicFriction = computeKineticFriction();
+			fVector = tangent.times(rvScale * dynamicFriction);
+		}
+		applyImpulses(fVector);
 	}
 
 	private void applySinkCorrection() {
@@ -66,11 +84,26 @@ public abstract class Collision {
 	protected double computeRestitution() {
 		return Math.min(myObjectA.getRestitution(), myObjectB.getRestitution());
 	}
-
-	protected Vector computeResolutionVector() {
-		double rVectorMag = -(1 + computeRestitution()) * computeRVProjection();
-		rVectorMag /= myObjectA.getInvMass() + myObjectB.getInvMass();
-		return myNormal.times(rVectorMag);
+	
+	private void applyImpulses(Vector raw) {
+		Vector impulseA = raw.times(myObjectA.getInvMass()).negate();
+		Vector impulseB = raw.times(myObjectB.getInvMass());
+		myObjectA.applyVelocity(impulseA);
+		myObjectB.applyVelocity(impulseB);
+	}
+	
+	protected double computeStaticFriction() {
+		return Utilities.solvePythagorean(myObjectA.getStaticFriction(), myObjectB.getStaticFriction());
+	}
+	
+	protected double computeKineticFriction() {
+		return Utilities.solvePythagorean(myObjectA.getKineticFriction(), myObjectB.getKineticFriction());
+	}
+	
+	private double computeResolutionScalar() {
+		double rvMag = -(1 + computeRestitution()) * computeRVProjection();
+		rvMag /= myObjectA.getInvMass() + myObjectB.getInvMass();
+		return rvMag;
 	}
 
 	protected double computeRVProjection() {

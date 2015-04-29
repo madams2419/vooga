@@ -208,6 +208,14 @@ public class PhysicsObject extends Observable {
 		return myMaterial.getRestitution();
 	}
 
+	public double getStaticFriction() {
+		return myMaterial.getStaticFriction();
+	}
+
+	public double getKineticFriction() {
+		return myMaterial.getKineticFriction();
+	}
+
 	public void setMaterial(Material material) {
 		myMaterial = material;
 		myInvMass = computeInvMass();
