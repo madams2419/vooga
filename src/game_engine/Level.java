@@ -154,6 +154,7 @@ public class Level implements IActor {
 	                    new WrapAround(new Image(new FileInputStream("Resources/images/samplebackground.png")),
 	                                   width, height);
 	            wrap.repeatHorizontal();
+	            wrap.repeatVertical();
 	            scroller.addBackground(wrap, 0.5);
 	            myGroup.getChildren().add(wrap.getGroup());
 	            wrap.getGroup().toBack();
@@ -161,8 +162,8 @@ public class Level implements IActor {
 	            Sprite sprite = mySprites.get(0);
 	            sprite.getImageView().toFront();
 	            tracker.setPlayer(sprite, true, false);
-	            //tracker.enable();
-	            //tracker.tellY(height - 200);
+	            tracker.enable();
+	            tracker.tellY(height - 200);
 	        }
 	        catch (Exception e) {
 	            e.printStackTrace();

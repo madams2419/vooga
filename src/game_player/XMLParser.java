@@ -170,6 +170,12 @@ public class XMLParser {
         }
         return subDirectories;
     }
+    
+    public List<String> getValidSubDirectories (String prefix) {
+        List<String> subDirectories = getValidSubDirectories();
+        subDirectories.removeIf(dir -> !dir.startsWith(prefix));
+        return subDirectories;
+    }
 
     /**
      * Finds all of the valid labels within the current activePath. Also useful for interpreting
@@ -261,13 +267,14 @@ public class XMLParser {
      * Recursively builds the Directory tree and populates the map.
      */
     private void read (Node node, String path, Directory parent) {
-        if (node.getNodeType() != Node.TEXT_NODE) {
-            xml.put(path + "/" + node.getNodeName(), node.getTextContent());
-            Directory child = new Directory(node.getNodeName());
-            parent.addSubDirectory(child);
-            for (int i = 0; i < node.getChildNodes().getLength(); i++) {
-                read(node.getChildNodes().item(i), path + "/" + node.getNodeName(), child);
-            }
+        if (node.getNodeType() == Node.TEXT_NODE) {
+            return;
+        }
+        xml.put(path + "/" + node.getNodeName(), node.getTextContent());
+        Directory child = new Directory(node.getNodeName());
+        parent.addSubDirectory(child);
+        for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+            read(node.getChildNodes().item(i), path + "/" + node.getNodeName(), child);
         }
         // else if (node.getChildNodes().getLength() == 0 && !node.getNodeName().equals("#text")) {
         // Directory child = new Directory(node.getNodeName());
@@ -282,4 +289,7 @@ public class XMLParser {
         // }
         // }
     }
+    
+
+
 }

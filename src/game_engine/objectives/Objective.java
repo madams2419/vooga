@@ -127,7 +127,6 @@ public class Objective implements IActor {
      * @param now
      */
     public void update (double now) {
-
         updateActive(now);
         if (isActive()) {
             updateStatus(now);
