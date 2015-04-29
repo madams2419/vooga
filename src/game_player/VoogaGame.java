@@ -72,7 +72,7 @@ public class VoogaGame implements IActor {
 		root.getChildren().clear();
 		activeLevel = levels.get(index);
 		activeLevel.getSprites().forEach(sprite -> {
-			root.getChildren().add(sprite.getRect());
+			//root.getChildren().add(sprite.getRect());
 			root.getChildren().add(sprite.getImageView());
 		});
 		root.requestFocus();

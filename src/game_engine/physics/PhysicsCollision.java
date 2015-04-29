@@ -26,6 +26,11 @@ public abstract class PhysicsCollision {
 	protected abstract void castRigidBodies();
 
 	public void resolve() {
+		// return if either object is transparent
+		if(myObjectA.isTransparent() || myObjectB.isTransparent()) {
+			return;
+		}
+		
 		// return if objects are moving apart
 		if(computeRVProjection() > 0) {
 			return;

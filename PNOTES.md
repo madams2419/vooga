@@ -17,6 +17,7 @@
   causing some sychronization problems
 
 TODO
+* sub hitboxes
 * add support for non-collidable sprites (transparent material)
 * polish up control parameters (sprite is very hard to control now)
 * Add interfaces for physics engine and physics object

@@ -219,5 +219,9 @@ public class PhysicsObject extends Observable {
 	public boolean isPositionConstrained() {
 		return myPositionConstraint != null;
 	}
+	
+	public boolean isTransparent() {
+		return getRestitution() < 0;
+	}
 
 }
