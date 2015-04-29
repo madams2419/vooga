@@ -11,12 +11,15 @@ import game_engine.scrolling.tracker.SpriteTracker;
 import game_engine.sprite.Sprite;
 import game_engine.sprite.TransitionManager;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.shape.Circle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -69,6 +72,7 @@ public class VoogaGame implements IActor {
 		root.getChildren().clear();
 		activeLevel = levels.get(index);
 		activeLevel.getSprites().forEach(sprite -> {
+			root.getChildren().add(sprite.getRect());
 			root.getChildren().add(sprite.getImageView());
 		});
 		root.requestFocus();

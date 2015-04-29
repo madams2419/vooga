@@ -379,7 +379,7 @@
 				<type>ComplexPhysicsEngine</type>
 				<drag_coefficient>0.5</drag_coefficient>
 				<global_accelerations>
-					<accel_0>0 -.0005</accel_0>
+					<gravity>0 -9.8</gravity>
 				</global_accelerations>
 				<global_forces></global_forces>
 			</physics_engine>
@@ -396,19 +396,13 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>moveForward</name>
-									<parameters>1000 0</parameters>
+									<parameters>5 0</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
 
 						<onReleased>
 							<behaviors>
-								<behavior_0>
-									<targetType>sprite</targetType>
-									<targetIndex>0</targetIndex>
-									<name>moveForward</name>
-									<parameters>-1000 0</parameters>
-								</behavior_0>
 							</behaviors>
 						</onReleased>
 						
@@ -426,19 +420,13 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>moveForward</name>
-									<parameters>-100 0</parameters>
+									<parameters>-5 0</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
 
 						<onReleased>
 							<behaviors>
-								<behavior_0>
-									<targetType>sprite</targetType>
-									<targetIndex>0</targetIndex>
-									<name>moveForward</name>
-									<parameters>100 0</parameters>
-								</behavior_0>
 							</behaviors>
 						</onReleased>
 						
@@ -456,7 +444,7 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>jump</name>
-									<parameters>100</parameters>
+									<parameters>7</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>

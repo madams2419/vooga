@@ -229,6 +229,58 @@
 						<position>0 0</position>
 					</physics>
 				</sprite_1>
+				<sprite_2>
+					<initial_state>immobile</initial_state>
+
+					<animations>
+						<state_0>
+							<name>immobile</name>
+
+							<images>
+								<image_0>
+									<source>resources/images/ground.png</source>
+
+									<delay>1.0</delay>
+
+									<width>400</width>
+									<height>100</height>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>floating</material>
+						<position>700 500</position>
+					</physics>
+				</sprite_2>
+				<sprite_3>
+					<initial_state>immobile</initial_state>
+
+					<animations>
+						<state_0>
+							<name>immobile</name>
+
+							<images>
+								<image_0>
+									<source>resources/images/ground.png</source>
+
+									<delay>1.0</delay>
+
+									<width>400</width>
+									<height>100</height>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>bouncy_ball</material>
+						<position>400 300</position>
+					</physics>
+				</sprite_3>
 			</sprites>
 
 			<physics_engine>
@@ -252,7 +304,7 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>moveForward</name>
-									<parameters>10 0</parameters>
+									<parameters>5 0</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
@@ -276,7 +328,7 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>moveForward</name>
-									<parameters>-10 0</parameters>
+									<parameters>-5 0</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
@@ -300,7 +352,7 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>jump</name>
-									<parameters>15</parameters>
+									<parameters>7</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>

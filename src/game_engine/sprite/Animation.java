@@ -13,6 +13,8 @@ import java.util.Observable;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.util.Observer;
@@ -25,6 +27,7 @@ import java.util.function.Supplier;
 public class Animation {
 
 	private ImageView image;
+	private Rectangle rectangle;
     private Node current;
     Map<String, ImageLink> paths;
     private long timeElapsed;
@@ -138,6 +141,10 @@ public class Animation {
     	return image;
     }
     
+    public Rectangle getRect() {
+    	return rectangle;
+    }
+    
     public RigidBody getRigidBody() {
     	return current.rigidBody;
     }
@@ -151,7 +158,7 @@ public class Animation {
     }
   
     
-    /**
+    /**s
      * method changePosition
      * @param source the observable that is changed
      * sets the position of the image based on the position of the 
@@ -163,6 +170,8 @@ public class Animation {
     	Vector imgTranslate = Utilities.physicsCenterToNodeTranslation(poCenter, imgWidth, imgHeight, height);
     	image.setTranslateX(imgTranslate.getX());
     	image.setTranslateY(imgTranslate.getY());
+    	rectangle.setTranslateX(imgTranslate.getX());
+    	rectangle.setTranslateY(imgTranslate.getY());
     }
     
     /**
@@ -174,5 +183,8 @@ public class Animation {
     	current = paths.get(state).first;
     	System.out.println(current);
     	image.setImage(current.image);
+    	image.setFitWidth(current.image.getWidth());
+    	image.setFitHeight(current.image.getHeight());
+    	rectangle = new Rectangle(current.image.getWidth(), current.image.getHeight());
     }
 }

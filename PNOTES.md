@@ -1,7 +1,7 @@
 * Physics is now a completely self contained package--that is, it's
   independent of all classes in the rest of the project
 * Physics is accessed through three interfaces: IPhysicsEngine,
-  IPhysicsObject and IRigidBody
+  IPhysicsObject and IRigidBody (not implemented yet)
 	> These interfaces allow the physics engine to be easily swapped with
 	a different engine
 * PhysicsCollisions no longer need to be defined
@@ -12,25 +12,14 @@
 * The collisions package is purely for behavioral collisions
 	> all behavioral collisions must still be defined
 * A single call to PhysicsEngine.update() will check and resolve all
-  collisions
-* Not sure how to deal with paths yet
-	> maybe pass a path supplier function into physics object
-	> have path-constrained physics object
-* For now, just using animation height and width to build RigidBodies
-	> if time, extend to take extra parameters from hitbox definition
-
-DONE
-* make it so all physics object construction must go through physics
-  engine
-* make physics engine update function that checks all collisions and
-  then updates shit
-* change update sequence
-* make animation update physics state
+  physical collisions
+* Observer/Observable removed from Sprite and Animation b/c it was
+  causing some sychronization problems
 
 TODO
-* remove observers from sprites/animation
+* add support for non-collidable sprites (transparent material)
+* polish up control parameters (sprite is very hard to control now)
 * Add interfaces for physics engine and physics object
 * Add ComplexResolver which takes in collision normal and does direction
   based resolution
-* Change velocity and force handling to reset every timestep
-
+* (maybe) Change velocity and force handling to reset every timestep

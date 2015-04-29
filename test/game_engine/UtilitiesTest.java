@@ -47,7 +47,7 @@ public class UtilitiesTest {
 		double width = 10.0;
 		double height = 20.0;
 		
-		Vector expected = new Vector(20, 30);
+		Vector expected = new Vector(30, 30);
 		Vector actual = Utilities.physicsUpperLeftToCenter(upperLeft, width, height);
 		
 		assertEquals(expected, actual);
@@ -60,7 +60,7 @@ public class UtilitiesTest {
 		double height = 30.0;
 		double screenHeight = 800;
 		
-		Vector expected = new Vector(295, 735);
+		Vector expected = new Vector(305, 735);
 		Vector actual = Utilities.nodeTranslationToPhysicsCenter(nTranslate, width, height, screenHeight);
 		
 		assertEquals(expected, actual);
@@ -77,5 +77,23 @@ public class UtilitiesTest {
 		Vector actual = Utilities.physicsCenterToNodeTranslation(pCenter, width, height, screenHeight);
 		
 		assertEquals(expected, actual);
+	}
+	
+	@Test 
+	public void testConversionInvertibility() {
+		Vector pCenter = new Vector(45, 90);
+		double width = 50;
+		double height = 20;
+		double screenHeight = 800;
+		
+		Vector intermediate1 = Utilities.physicsCenterToNodeTranslation(pCenter, width, height, screenHeight);
+		Vector actual1 = Utilities.nodeTranslationToPhysicsCenter(intermediate1, width, height, screenHeight);
+		
+		assertEquals(pCenter, actual1);
+		
+		Vector intermediate2 = Utilities.nodeTranslationToPhysicsCenter(pCenter, width, height, screenHeight);
+		Vector actual2 = Utilities.physicsCenterToNodeTranslation(intermediate2, width, height, screenHeight);
+		
+		assertEquals(pCenter, actual2);
 	}
 }

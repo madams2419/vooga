@@ -12,6 +12,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 /**
  * 
  * @authors Brian Lavalee, Kevin Chang, Emre Sonmez
@@ -61,6 +62,10 @@ public class Sprite implements IActor {
 	 */
 	public ImageView getImageView() {
 	    return animation.getImageView();
+	}
+	
+	public Rectangle getRect() {
+		return animation.getRect();
 	}
 	
 	/**

@@ -18,7 +18,7 @@ public class Utilities {
 	}
 	
 	public static Vector physicsUpperLeftToCenter(Vector center, double width, double height) {
-		Vector translation = new Vector(-width/2, -height/2);
+		Vector translation = new Vector(width/2, -height/2);
 		return center.plus(translation);
 	}
 	
