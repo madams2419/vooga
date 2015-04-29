@@ -28,6 +28,10 @@ import authoring.util.ImageEditor;
  */
 public class Sprite extends ImageView {
 
+    private static final String SPACE = " ";
+    private static final String TOSTRING_FORMAT = "%s, %s";
+    private static final String EMPTY_STRING = "";
+    private static final String DOUBLE_0 = "0.0";
     private static final String NAME = "Name";
     private static final String X_STRING = "x";
     private static final String Y_STRING = "y";
@@ -78,11 +82,12 @@ public class Sprite extends ImageView {
 
     public Sprite (CenterPane parent) {
         myParent = parent;
+        myName = NAME;
         myPosition = new HashMap<>();
         myVelocity = new HashMap<>();
         mySpriteInteractionMap = new HashMap<>();
-        myVelocity.put(X_STRING, "0.0");
-        myVelocity.put(Y_STRING, "0.0");
+        myVelocity.put(X_STRING, DOUBLE_0);
+        myVelocity.put(Y_STRING, DOUBLE_0);
         myKeyActions = new HashMap<>();
         myCharacteristics = new HashMap<>();
         myPath = new String[0];
@@ -97,10 +102,19 @@ public class Sprite extends ImageView {
     public Map<Sprite, Map<Action, String>> getInteractionMap() {
     	return mySpriteInteractionMap;
     }
+    
+    public Map<Action, String> getInteractionWithSprite(Sprite other) {
+        Map<Action, String> map = mySpriteInteractionMap.get(other);
+        if (map == null) {
+            map = new HashMap<Action, String>();
+            mySpriteInteractionMap.put(other, map);
+        }
+        return map;
+    }
 
     public void addDefaultCharacteristics (List<String> characteristics) {
         characteristics.forEach(characteristic -> myCharacteristics.put(
-                                                                        characteristic, ""));
+                                                                        characteristic, EMPTY_STRING));
     }
 
     public void setName (String name) {
@@ -187,8 +201,6 @@ public class Sprite extends ImageView {
 
         this.setScaleX(scale);
         this.setScaleY(scale);
-        // myCharacteristics.put(SCALE, scale);
-        // double newScale = Double.parseDouble(scale);
     }
 
     public double getXPosition () {
@@ -334,7 +346,7 @@ public class Sprite extends ImageView {
 
     @Override
     public String toString () {
-        return String.format("%s, %s, %s", this.myName, this.myID, this.getImageURI());
+        return String.format(TOSTRING_FORMAT, this.myName, this.myID);
     }
 
     public void setPath (String[] path) {
@@ -342,9 +354,9 @@ public class Sprite extends ImageView {
     }
     
     public String getPath () {
-        String ret = "";
+        String ret = EMPTY_STRING;
         for (String point : myPath) {
-            ret += point + " ";
+            ret += point + SPACE;
         }
         return ret.trim();
     }

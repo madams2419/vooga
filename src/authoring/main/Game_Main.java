@@ -19,7 +19,7 @@ public class Game_Main extends Application {
 				1000));
 		primaryStage.setScene(myScene);
 		primaryStage.setResizable(true);
-		// primaryStage.setFullScreen(true);
+//		 primaryStage.setFullScreen(true);
 		primaryStage.show();
 	}
 

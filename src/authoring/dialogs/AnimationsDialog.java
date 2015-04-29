@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -16,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import authoring.dataEditors.Sprite;
 import authoring.userInterface.DialogGridOrganizer;
+import authoring.util.ImageEditor;
 
 
 /**
@@ -33,11 +33,13 @@ public class AnimationsDialog extends DataDialog {
     private Map<String, String> myAnimations;
     private Sprite mySprite;
 
+    private static final int PREVIEW_HEIGHT = 100;
     private static final String TITLE = "Animations of Character";
     private static final String ADD_IMAGE = "Set image for state";
     private static final String STATE = "State";
     private static final String IMAGE = "Image";
     private static final String PREVIEW = "Preview";
+    private static final String BLANK = "";
 
     private static final String IMAGE_CHOOSER_DESCRIPTION = "Image Files";
     private static final String[] IMAGE_CHOOSER_EXTENSIONS = { "*.png", "*.jpg",
@@ -62,7 +64,7 @@ public class AnimationsDialog extends DataDialog {
         if ((selectedImageFile =
                 new FileChooserDialog(IMAGE_CHOOSER_DESCRIPTION, IMAGE_CHOOSER_EXTENSIONS)
                         .initialize()) != null) {
-            myImageURLs.add(selectedImageFile.toURI().toString());
+            myImageURLs.set(index, selectedImageFile.toURI().toString());
             myImageViews.get(index).setImage(new Image(selectedImageFile.toURI().toString()));
         }
     }
@@ -82,6 +84,7 @@ public class AnimationsDialog extends DataDialog {
 
     private void changeSpriteImage () {
         String image = myImageURLs.get(0);
+        System.out.println(image);
         if (image.length() > 0) {
             mySprite.changeImage(image);
         }
@@ -97,8 +100,7 @@ public class AnimationsDialog extends DataDialog {
     private ImageView addImageView(){
       ImageView result = new ImageView();
       myImageViews.add(result);
-      result.setPreserveRatio(true);
-      result.setFitHeight(100);
+      ImageEditor.setToHeight(result, PREVIEW_HEIGHT);
       return result;
     }
     
@@ -112,6 +114,7 @@ public class AnimationsDialog extends DataDialog {
     @Override
     void addBlankRow (int index, DialogGridOrganizer... grid) {
         grid[0].addRowEnd(addTextField(myTextFields), addImageButton(ADD_IMAGE, index), addImageView());
+        myImageURLs.add(BLANK);
     }
 
     void initializeEverything (Sprite sprite) {
@@ -125,6 +128,10 @@ public class AnimationsDialog extends DataDialog {
 
     public AnimationsDialog update () {
         myImageURLs.set(0, mySprite.getImageURI());
+        ImageView preview = myImageViews.get(0);
+        preview.setImage(mySprite.getImage());
+        ImageEditor.setToHeight(preview, PREVIEW_HEIGHT);
+        
         return this;
     }
 

@@ -107,7 +107,7 @@ public class RightPane extends WindowPane {
     
     public void switchToObjectivePane() {
     	if(myObjectives == null)
-    		myObjectives = new ObjectivePane(myScene, this);
+    		myObjectives = new ObjectivePane(myScene, this, myParent.getCenterPane().getSprites());
     	switchToPane(myObjectives);
     }
     
