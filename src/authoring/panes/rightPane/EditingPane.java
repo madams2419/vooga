@@ -1,7 +1,6 @@
 package authoring.panes.rightPane;
 
 import java.util.List;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import authoring.dataEditors.Sprite;
 import authoring.userInterface.ClickHandler;
@@ -56,14 +56,6 @@ public class EditingPane extends VBox {
         this.getChildren().add(b);
     }
     
-    Button createButton(String label, EventHandler<ActionEvent> onAction) {
-        Button button = new Button(label);
-        button.setOnAction(onAction);
-        this.getChildren().add(button);
-        return button;
-    }
-    
-    
     TextField addLabeledTextField(String label){
       HBox h = new HBox(10);
       TextField text = new TextField();
@@ -80,9 +72,25 @@ public class EditingPane extends VBox {
     }
     
     Button createButton(Sprite sprite, String label, EventHandler<ActionEvent> onAction, String image) {
-        Button b = createButton(label, onAction);
+        return createButton(sprite, label, onAction, image, this);
+    }
+    
+    Button createButton(Sprite sprite, String label, EventHandler<ActionEvent> onAction, 
+                        String image, Pane container) {
+        Button b = createButton(label, onAction, container);
         b.setGraphic(new ImageView(image));
         return b;
+    }
+    
+    Button createButton(String label, EventHandler<ActionEvent> onAction) {
+        return createButton(label, onAction, this);
+    }
+    
+    Button createButton(String label, EventHandler<ActionEvent> onAction, Pane container) {
+        Button button = new Button(label);
+        button.setOnAction(onAction);
+        container.getChildren().add(button);
+        return button;
     }
 
     protected ObjectProperty<String> addComboBoxToPane (
