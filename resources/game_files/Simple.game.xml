@@ -390,7 +390,7 @@
 
 					<physics>
 						<type>ComplexPhysicsObject</type>
-						<material>static</material>
+						<material>transparent</material>
 						<position>1800 120</position>
 					</physics>
 				</sprite_5>
@@ -491,7 +491,7 @@
 					</detectors>
 
 					<resolvers>
-						<resolve_1>
+						<resolver_1>
 							<type>SimpleResolver</type>
 							<behaviors>
 								<behavior_0>
@@ -512,10 +512,10 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>moveForward</name>
-									<parameters>-1000000 300</parameters>
+									<parameters>-10 7</parameters>
 								</behavior_2>
 							</behaviors>
-						</resolve_1>
+						</resolver_1>
 					</resolvers>
 				</collision_0>
 
@@ -576,7 +576,6 @@
 
 					<detectors>
 						<detector_0>SimpleDetector</detector_0>
-						<detector_1>PixelPerfectDetector</detector_1>
 					</detectors>
 
 					<resolvers>
@@ -611,13 +610,13 @@
 			<sprite_paths>
 				<path_0>
 					<id>4</id>
-					<values>0 500 100 100 300 100 500 100</values>
+					<values>0 500 100 500 300 500 800 500</values>
 					<duration>10</duration>
 					<delay>0</delay></path_0>
 				<path_1>
 					<id>3</id>
-					<values>100 800 50 800 400 800 400 800</values>
+					<values>300 800 400 800 400 800 500 800</values>
 					<duration>5</duration>
-					<delay>1</delay></path_1></sprite_paths></level_0>
+					<delay>0</delay></path_1></sprite_paths></level_0>
 	</level>
 </game>
