@@ -108,7 +108,7 @@ public class FrontEndUtils {
 	public static void buildXMLFile(AuthoringWindow parent, String filename) {
 		// Adding the root element
 		XMLBuilder xml = XMLBuilder.getInstance("game");
-
+		
 		parent.getGlobalProperties().forEach(
 				(label, value) -> xml.addChildWithValue(xml.getRoot(), label,
 						value));
@@ -132,7 +132,7 @@ public class FrontEndUtils {
 		}
 
 		// Streaming result
-		xml.streamFile("output/test.xml");
+		xml.streamFile(filename);
 
 	}
 }

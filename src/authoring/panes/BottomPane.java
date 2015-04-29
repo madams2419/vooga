@@ -26,11 +26,7 @@ import authoring.util.FrontEndUtils;
 public class BottomPane extends WindowPane {
 
     private List<Button> mButtonList = new ArrayList<>();
-    public static final String XML_FILE_OUTPUT = "res/game.xml";
-
-    // BottomPane() {
-    // this(myScene,myContainer);
-    // }
+    public static final String XML_FILE_OUTPUT = "output/test.xml";
 
     public BottomPane(Scene s, AuthoringWindow parent) {
         super(s, new HBox(), parent);
