@@ -3,8 +3,6 @@ package authoring.panes.rightPane;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import authoring.fileBuilders.PhysicsEngine_XML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -14,34 +12,42 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import authoring.fileBuilders.PhysicsEngine_XML;
 
 /**
- * @author hojeanniechung & Daniel Luker
+ * @author hojeanniechung, Daniel Luker, Natalie
  *
  */
 public class MapSettingPane extends EditingPane {
 
-	private ComboBox<String> myType;
+	private static final String UPDATE = "Update";
+        private static final String ACCEL_0 = "Gravitational     ";
+        private static final String GLOBAL_ACCELERATIONS = "Global Accelerations";
+        private static final String DRAG_COEFFICIENT = "Drag coefficient";
+        private static final String TYPES = "Types";
+        private static final String COMPLEX_PHYSICS_ENGINE = "ComplexPhysicsEngine";
+        private static final String SIMPLE_PHYSICS_ENGINE = "SimplePhysicsEngine";
+        private static final String PHYSICS_ENGINE = "Physics Engine";
+        private ComboBox<String> myType;
 	private TextField myDragCoefficient;
 	private List<TextField> myGlobalAccelerations = new ArrayList<>();
 
 	public MapSettingPane(Scene myScene, RightPane parent) {
-		// TODO Auto-generated constructor stub
 		super(myScene, parent);
 
-		this.getChildren().add(new Label("Physics Engine"));
+		this.getChildren().add(new Label(PHYSICS_ENGINE));
 
 		ObservableList<String> types = FXCollections.observableArrayList();
-		types.addAll("SimplePhysicsEngine", "ComplexPhysicsEngine");
-		addComboBox("Types", types);
+		types.addAll(SIMPLE_PHYSICS_ENGINE, COMPLEX_PHYSICS_ENGINE);
+		addComboBox(TYPES, types);
 
-		myDragCoefficient = addFields("drag_coefficient");
+		myDragCoefficient = addFields(DRAG_COEFFICIENT);
 
-		this.getChildren().add(new Label("Global Accelerations"));
+		this.getChildren().add(new Label(GLOBAL_ACCELERATIONS));
 
-		myGlobalAccelerations.add(addFields("accel_0"));
+		myGlobalAccelerations.add(addFields(ACCEL_0));
 
-		Button c = new Button("Update");
+		Button c = new Button(UPDATE);
 		c.setOnAction(e -> addPhysicsEngine());
 		this.getChildren().add(c);
 	}
@@ -50,14 +56,15 @@ public class MapSettingPane extends EditingPane {
 		HBox h = new HBox(5);
 		h.getChildren().addAll(new Text(label),
 				myType = new ComboBox<String>(types));
+		myType.setValue(COMPLEX_PHYSICS_ENGINE);
 		this.getChildren().add(h);
 	}
 
 	private TextField addFields(String label) {
-		TextField ret;
-		HBox toAdd = new HBox(5);
-		toAdd.getChildren().addAll(new Label(label), ret = new TextField());
-		this.getChildren().add(toAdd);
+	        HBox h = new HBox(5);
+		TextField ret = new TextField();
+		h.getChildren().addAll(new Label(label), ret);
+		this.getChildren().addAll(h);
 		return ret;
 	}
 

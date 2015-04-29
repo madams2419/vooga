@@ -166,8 +166,11 @@ public class CenterCanvas extends ScrollPane {
 	}
 
 	public void addSetting(String type, String value) {
-		if (type.equals("gravity"))
-			myGravity = Float.parseFloat(value);
+		if (type.equals("gravity")) {
+		    if (value.length() > 0) {
+		        myGravity = Float.parseFloat(value);
+		    } 
+		}
 	}
 
 	public String getSetting(String type) {
