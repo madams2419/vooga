@@ -65,8 +65,7 @@ class CharacterEditingPane extends EditingPane {
       addSpriteIcon(sprite);
       addLabel(IMAGE_LABEL);
       setField(NAME, sprite.getName(), sprite);
-      addAnimations(sprite, miscellaneousImages.get(ANIMATIONS));
-      addPhysics(sprite, miscellaneousImages.get(PHYSICS));
+      addAnimationsAndPhysicsHBox(sprite, miscellaneousImages);
       pathButtonContent = new String[] { miscellaneousImages.get(PATH1), miscellaneousImages.get(PATH2)};
       addCreatePathButton(sprite, miscellaneousImages.get(PATH1));
       myDurationField = addLabeledTextField("Path Duration", "5");
@@ -79,6 +78,13 @@ class CharacterEditingPane extends EditingPane {
       addDeleteButton(sprite);
     }
 
+    private void addAnimationsAndPhysicsHBox (Sprite sprite, List<String> miscellaneousImages) {
+        HBox h = new HBox(50);
+        addAnimations(sprite, miscellaneousImages.get(ANIMATIONS), h);
+        addPhysics(sprite, miscellaneousImages.get(PHYSICS), h);
+        getChildren().add(h);
+    }
+
     private void addDuplicateButton (Sprite sprite) {
         createButton(DUPLICATE, e -> duplicateSprite(sprite));
     }
@@ -87,19 +93,16 @@ class CharacterEditingPane extends EditingPane {
         this.getMyScene().setCursor(new SpriteCursor(sprite.getCopy()));
     }
 
-    private Button addAnimations (Sprite sprite, String image) {
-        Button animationsButton = new Button(ADD_ANIMATIONS, new ImageView(image));
-        animationsButton.setOnAction(e -> addAnimation(sprite));
-        this.getChildren().add(animationsButton);
-        return animationsButton;
+    private Button addAnimations (Sprite sprite, String image, HBox h) {
+        return createButton(sprite, ADD_ANIMATIONS, e -> addAnimation(sprite), image, h);
     }
 
     private void addAnimation (Sprite sprite) {
         sprite.getAnimations().showBox(sprite);
     }
 
-    private Button addPhysics (Sprite sprite, String image) {
-        return createButton(sprite, ADD_PHYSICS, e -> addPhysics(sprite), image);
+    private Button addPhysics (Sprite sprite, String image, HBox h) {
+        return createButton(sprite, ADD_PHYSICS, e -> addPhysics(sprite), image, h);
     }
 
     private void addPhysics (Sprite sprite) {
