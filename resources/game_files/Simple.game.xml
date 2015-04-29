@@ -227,7 +227,7 @@
 
 									<delay>1.0</delay>
 
-									<width>2000</width>
+									<width>3000</width>
 									<height>200</height>
 
 									<hitboxes>
@@ -283,7 +283,7 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>floating</material>
-						<position>1000 300</position>
+						<position>500 300</position>
 					</physics>
 				</sprite_2>
 
@@ -319,7 +319,7 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>bouncy_ball</material>
-						<position>600 300</position>
+						<position>200 50</position>
 					</physics>
 				</sprite_3>
 
@@ -500,6 +500,7 @@
 									<name>setStatus</name>
 									<parameters>active</parameters>
 								</behavior_0>
+								
 								<behavior_1>
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
@@ -527,18 +528,7 @@
 					</detectors>
 
 					<resolvers>
-						<resolver_0>
-							<type>SimpleResolver</type>
-
-							<behaviors>
-								<behavior_1>
-									<targetType>sprite</targetType>
-									<targetIndex>0</targetIndex>
-									<name>jump</name>
-									<parameters>100</parameters>
-								</behavior_1>
-							</behaviors>
-						</resolver_0>
+						
 					</resolvers>
 				</collision_1>
 
@@ -614,18 +604,7 @@
 					</detectors>
 
 					<resolvers>
-						<resolver_0>
-							<type>SimpleResolver</type>
-
-							<behaviors>
-								<behavior_1>
-									<targetType>sprite</targetType>
-									<targetIndex>3</targetIndex>
-									<name>jump</name>
-									<parameters>100</parameters>
-								</behavior_1>
-							</behaviors>
-						</resolver_0>
+						
 					</resolvers>
 				</collision_5>
 			</collisions>
@@ -637,7 +616,7 @@
 					<delay>0</delay></path_0>
 				<path_1>
 					<id>3</id>
-					<values>50 50 100 50 300 50 400 50</values>
+					<values>100 800 50 800 400 800 400 800</values>
 					<duration>5</duration>
 					<delay>1</delay></path_1></sprite_paths></level_0>
 	</level>

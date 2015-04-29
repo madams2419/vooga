@@ -13,6 +13,7 @@ import game_engine.scrolling.scroller.BasicScroller;
 import game_engine.scrolling.scroller.IScroller;
 import game_engine.scrolling.scrollfocus.BasicFocus;
 import game_engine.scrolling.scrollfocus.IScrollFocus;
+import game_engine.scrolling.tracker.MiniMapTracker;
 import game_engine.scrolling.tracker.SpriteTracker;
 import game_engine.sprite.Sprite;
 import java.io.FileInputStream;
@@ -157,13 +158,12 @@ public class Level implements IActor {
 	            IScrollFocus focus = new BasicFocus(width, height);
 	            IScroller scroller = new BasicScroller(mySpriteGroup);
 	            WrapAround wrap =
-	                    new WrapAround(new Image(new FileInputStream("Resources/images/samplebackground.png")),
-	                                   width, height);
-	            wrap.repeatHorizontal();
-	            wrap.repeatVertical();
-	            scroller.addBackground(wrap, 0.5);
-	            myGroup.getChildren().add(wrap.getGroup());
-	            wrap.getGroup().toBack();
+                            new WrapAround(new Image(new FileInputStream("Resources/images/samplebackground.png")),
+                                           width, height);
+                    wrap.repeatHorizontal();
+                    scroller.addBackground(wrap, 0.5);
+                    myGroup.getChildren().add(wrap.getGroup());
+                    wrap.getGroup().toBack();
 	            SpriteTracker tracker = new SpriteTracker(focus, scroller);
 	            Sprite sprite = mySprites.get(0);
 	            sprite.getImageView().toFront();
