@@ -2,12 +2,9 @@ package game_engine.physics.collisions;
 
 import game_engine.physics.PhysicsObject;
 import game_engine.physics.utilities.Vector;
+import game_engine.physics.utilities.Constants;
 
 public abstract class Collision {
-
-	//TODO move these to properties file
-	private static double SC_PERCENT = 0.5;
-	private static double SC_SLOP = 0.01;
 
 	protected PhysicsObject myObjectA;
 	protected PhysicsObject myObjectB;
@@ -54,11 +51,11 @@ public abstract class Collision {
 
 	private void applySinkCorrection() {
 		// return if penetration depth is less than threshold
-		if(myPenetrationDepth < SC_SLOP) {
+		if(myPenetrationDepth < Constants.SC_SLOP) {
 			return;
 		}
 
-		double correctionCoef = SC_PERCENT * myPenetrationDepth / (myObjectA.getInvMass() + myObjectB.getInvMass());
+		double correctionCoef = Constants.SC_PERCENT * myPenetrationDepth / (myObjectA.getInvMass() + myObjectB.getInvMass());
 		Vector correction = myNormal.times(correctionCoef);
 		Vector aCorrection = correction.times(myObjectA.getInvMass()).negate();
 		Vector bCorrection = correction.times(myObjectB.getInvMass());

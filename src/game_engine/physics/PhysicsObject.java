@@ -114,8 +114,8 @@ public class PhysicsObject extends Observable {
 	}
 
 	//TODO refactor so apply and add velocity have different behaviors
-	public void applyVelocity(Vector impulse) {
-		addVelocity(impulse.times(myInvMass));
+	public void applyVelocity(Vector velocity) {
+		addVelocity(velocity);
 	}
 
 	public void addVelocity(Vector velocity) {
