@@ -1,11 +1,10 @@
 package launcher;
 
-import java.io.File;
-
 import game_player.VoogaGame;
 import game_player.VoogaGameBuilder;
 import game_player.XMLParser;
-import authoring.userInterface.*;
+import java.io.File;
+import java.io.FileInputStream;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -27,6 +26,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import authoring.userInterface.AuthoringWindow;
 
 /**
  * MainMenu provides VoogaSaladMain with an intro and the choice to either play
@@ -311,52 +311,58 @@ public class VoogaMenu {
 	}
 
 	private StackPane createBackButton(Pos position, double rotate, double sign) {
-		ImageView backButton = new ImageView(new Image(
-				"resources/images/backArrow.png"));
-		backButton.setFitWidth(100);
-		backButton.setFitHeight(100);
-		backButton.setTranslateX(50 * sign);
-		backButton.setOpacity(INVISIBLE);
-		backButton.setRotate(rotate);
-
-		Rectangle buttonOutline = new Rectangle(200, height);
-		buttonOutline.setFill(Color.TRANSPARENT);
-		buttonOutline.setTranslateX(100 * sign);
-		buttonOutline.setOnMouseEntered((entered) -> {
-			doTranslate(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, 0,
-					backButton.getTranslateY(), DO_NOTHING);
-			doFade(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, OPAQUE,
-					DO_NOTHING);
-		});
-		buttonOutline.setOnMouseExited((exited) -> {
-			doTranslate(backButton, TRANSITION_TIME.divide(5), IMMEDIATE,
-					50 * sign, backButton.getTranslateY(), DO_NOTHING);
-			doFade(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, INVISIBLE,
-					DO_NOTHING);
-		});
-		buttonOutline
-				.setOnMouseClicked((clicked) -> {
-					doTranslate(backButton, TRANSITION_TIME.divide(5),
-							IMMEDIATE, 50 * sign, backButton.getTranslateY(),
-							DO_NOTHING);
-					doFade(backButton, TRANSITION_TIME.divide(5), IMMEDIATE,
-							INVISIBLE, DO_NOTHING);
-					buttonOutline.setOnMouseClicked(null);
-					buttonOutline.setOnMouseEntered(null);
-					buttonOutline.setOnMouseExited(null);
-					doTranslate(choiceMenu, DELAY, choiceMenu.getTranslateX(),
-							height, DO_NOTHING);
-					doFade(choiceMenu, IMMEDIATE, INVISIBLE,
-							(finished) -> resetMenu());
-				});
-
-		StackPane button = new StackPane();
-		button.setMaxWidth(200);
-		button.setTranslateX(width * sign / 2 - 100 * sign);
-		button.getChildren().addAll(backButton, buttonOutline);
-		button.setAlignment(position);
-
-		return button;
+	        try{
+        		ImageView backButton = new ImageView(new Image(
+        				new FileInputStream("resources/images/backArrow.png")));
+        		backButton.setFitWidth(100);
+        		backButton.setFitHeight(100);
+        		backButton.setTranslateX(50 * sign);
+        		backButton.setOpacity(INVISIBLE);
+        		backButton.setRotate(rotate);
+        
+        		Rectangle buttonOutline = new Rectangle(200, height);
+        		buttonOutline.setFill(Color.TRANSPARENT);
+        		buttonOutline.setTranslateX(100 * sign);
+        		buttonOutline.setOnMouseEntered((entered) -> {
+        			doTranslate(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, 0,
+        					backButton.getTranslateY(), DO_NOTHING);
+        			doFade(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, OPAQUE,
+        					DO_NOTHING);
+        		});
+        		buttonOutline.setOnMouseExited((exited) -> {
+        			doTranslate(backButton, TRANSITION_TIME.divide(5), IMMEDIATE,
+        					50 * sign, backButton.getTranslateY(), DO_NOTHING);
+        			doFade(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, INVISIBLE,
+        					DO_NOTHING);
+        		});
+        		buttonOutline
+        				.setOnMouseClicked((clicked) -> {
+        					doTranslate(backButton, TRANSITION_TIME.divide(5),
+        							IMMEDIATE, 50 * sign, backButton.getTranslateY(),
+        							DO_NOTHING);
+        					doFade(backButton, TRANSITION_TIME.divide(5), IMMEDIATE,
+        							INVISIBLE, DO_NOTHING);
+        					buttonOutline.setOnMouseClicked(null);
+        					buttonOutline.setOnMouseEntered(null);
+        					buttonOutline.setOnMouseExited(null);
+        					doTranslate(choiceMenu, DELAY, choiceMenu.getTranslateX(),
+        							height, DO_NOTHING);
+        					doFade(choiceMenu, IMMEDIATE, INVISIBLE,
+        							(finished) -> resetMenu());
+        				});
+        
+        		StackPane button = new StackPane();
+        		button.setMaxWidth(200);
+        		button.setTranslateX(width * sign / 2 - 100 * sign);
+        		button.getChildren().addAll(backButton, buttonOutline);
+        		button.setAlignment(position);
+        
+        		return button;
+	        }
+	        catch (Exception e) {
+	            e.printStackTrace();
+	            return null;
+	        }
 	}
 
 	private void resetMenu() {

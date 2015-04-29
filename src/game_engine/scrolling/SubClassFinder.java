@@ -1,6 +1,5 @@
 package game_engine.scrolling;
 
-import game_engine.collisions.resolvers.ICollisionResolver;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
@@ -10,17 +9,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 
 
 public class SubClassFinder {
     private static final String JAVA_SUFFIX = ".java";
     private static final String SRC = "src" + File.separator;
+    public static final String MAIN_DIR = "src/game_engine";
 
-    private SubClassFinder() {
-        
-    }
+    private SubClassFinder() {}
     
     public static File toFile (Class<?> clazz) {
         String fileName = toFileName(clazz.getName());
@@ -54,25 +50,28 @@ public class SubClassFinder {
         return Modifier.isAbstract(clazz.getModifiers());
     }
 
-    public static Map<String, Class<?>> findTypes (Class<?> clazz) throws ClassNotFoundException {
-        Package classPackage = clazz.getPackage();
-        File dir = new File(toDirName(classPackage.getName()));
-        File[] files = dir.listFiles();
-        return findTypes(files, fileClass -> isInstantiable(fileClass, clazz),
+    public static Map<String, Class<?>> findInstantiableTypes (Class<?> clazz) throws ClassNotFoundException {
+        return findTypes(new File(MAIN_DIR), fileClass -> isInstantiable(fileClass, clazz),
                          SubClassFinder::removeSuffix);
     }
-
-    public static Map<String, Class<?>> findTypes (File[] files,
-                                                   Predicate<Class<?>> predicate,
-                                                   Function<Class<?>, String> formatter)
-            throws ClassNotFoundException {
+    
+    public static Map<String, Class<?>> findTypes (File file,  Predicate<Class<?>> predicate,
+                                                   Function<Class<?>, String> formatter) throws ClassNotFoundException {
         Map<String, Class<?>> types = new HashMap<>();
-        for (File file : files) {
-            if (isJavaClass(file)) {
+        if (file.isDirectory()) {
+            for (File f: file.listFiles()) {
+                types.putAll(findTypes(f, predicate, formatter));
+            }
+        }
+        else if (isJavaClass(file)) {
+            try{
                 Class<?> fileClazz = toClass(file);
-                if (predicate.test(fileClazz)) {
+                if (predicate.test(fileClazz)){
                     types.put(formatter.apply(fileClazz), fileClazz);
                 }
+            }
+            catch (Exception e) {
+                System.out.println(file);
             }
         }
         return types;
@@ -106,7 +105,7 @@ public class SubClassFinder {
     
     public static Map<String, Constructor<?>[]> getConstructors (Class<?> clazz) throws ClassNotFoundException, SecurityException {
         Map<String, Constructor<?>[]> constructors = new HashMap<>();
-        for (Entry<String, Class<?>> entry: findTypes(clazz).entrySet()) {
+        for (Entry<String, Class<?>> entry: findInstantiableTypes(clazz).entrySet()) {
             constructors.put(entry.getKey(), entry.getValue().getConstructors());
         }
         return constructors;
@@ -114,9 +113,8 @@ public class SubClassFinder {
 
     public static void main (String[] args) {
         try {
-            XStream x = new XStream (new DomDriver());
-            Map<String, Map<String, Constructor<?>[]>> map= getConstructorMap(ICollisionResolver.class);
-            System.out.println(x.toXML(map));
+            
+            
         }
         catch (Exception e) {
             // TODO Auto-generated catch block

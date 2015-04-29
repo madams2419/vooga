@@ -24,12 +24,16 @@ public class SpriteTracker extends ObservableTracker {
      * Sets the sprite to be followed by the camera.
      * @param sprite
      */
-    public void setPlayer (Sprite sprite) {
+    public void setPlayer (Sprite sprite, boolean x, boolean y) {
         removePlayer();
         Node node = sprite.getImageView();
         enableTracking(node.translateXProperty(), node.translateYProperty());
-        setXSupplier( () -> node.getTranslateX());
-        setYSupplier( () -> node.getTranslateY());
+        if (x) {
+            setXSupplier( () -> node.getTranslateX());
+        }
+        if (y) {
+            setYSupplier( () -> node.getTranslateY());
+        }
     }
 
     private void removePlayer () {

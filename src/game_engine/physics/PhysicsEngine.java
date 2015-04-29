@@ -1,9 +1,9 @@
 package game_engine.physics;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 import game_engine.physics.collisions.CollisionManager;
 import game_engine.physics.rigidbodies.RigidBody;
@@ -11,7 +11,6 @@ import game_engine.physics.rigidbodies.RigidBodyFactory;
 import game_engine.physics.utilities.Constants;
 import game_engine.physics.utilities.Scaler;
 import game_engine.physics.utilities.Vector;
-import game_engine.sprite.Sprite;
 
 public class PhysicsEngine {
 
