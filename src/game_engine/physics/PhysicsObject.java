@@ -113,7 +113,8 @@ public class PhysicsObject extends Observable {
 		myDirForceMagnitude -= magnitude;
 	}
 
-	public void applyImpulse(Vector impulse) {
+	//TODO refactor so apply and add velocity have different behaviors
+	public void applyVelocity(Vector impulse) {
 		addVelocity(impulse.times(myInvMass));
 	}
 

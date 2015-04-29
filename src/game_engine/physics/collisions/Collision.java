@@ -25,7 +25,7 @@ public abstract class Collision {
 	 * Compute collision normal and penetration depth
 	 */
 	protected abstract void solve();
-	
+
 	protected abstract void castRigidBodies();
 
 	public void resolve() {
@@ -33,20 +33,23 @@ public abstract class Collision {
 		if(myObjectA.isTransparent() || myObjectB.isTransparent()) {
 			return;
 		}
-		
+
 		// return if objects are moving apart
 		if(computeRVProjection() > 0) {
 			return;
 		}
 
-		// apply impulse
-		Vector impulse = computeImpulse();
-		//TODO change to an addVelocity() call
-		myObjectA.applyImpulse(impulse.negate());
-		myObjectB.applyImpulse(impulse);
+		applyImpulses();
 
-		// apply sink correction
 		applySinkCorrection();
+	}
+
+	private void applyImpulses() {
+		Vector rVector = computeResolutionVector();
+		Vector impulseA = rVector.times(myObjectA.getInvMass()).negate();
+		Vector impulseB = rVector.times(myObjectB.getInvMass());
+		myObjectA.applyVelocity(impulseA);
+		myObjectB.applyVelocity(impulseB);
 	}
 
 	private void applySinkCorrection() {
@@ -67,10 +70,10 @@ public abstract class Collision {
 		return Math.min(myObjectA.getRestitution(), myObjectB.getRestitution());
 	}
 
-	protected Vector computeImpulse() {
-		double implsMag = -(1 + computeRestitution()) * computeRVProjection();
-		implsMag /= myObjectA.getInvMass() + myObjectB.getInvMass();
-		return myNormal.times(implsMag);
+	protected Vector computeResolutionVector() {
+		double rVectorMag = -(1 + computeRestitution()) * computeRVProjection();
+		rVectorMag /= myObjectA.getInvMass() + myObjectB.getInvMass();
+		return myNormal.times(rVectorMag);
 	}
 
 	protected double computeRVProjection() {
@@ -104,7 +107,7 @@ public abstract class Collision {
 	public double getPenetrationDepth() {
 		return myPenetrationDepth;
 	}
-	
+
 	public boolean isCollided() {
 		return myPenetrationDepth >= 0;
 	}
