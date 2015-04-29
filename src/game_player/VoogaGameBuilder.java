@@ -45,7 +45,7 @@ public class VoogaGameBuilder {
 	
 	private XMLParser parser;
 	
-	private List<Sprite> sprites;
+	private Map<String, Sprite> sprites;
 	private List<Objective> objectives;
 	private Map<String, IActor> actors;
 	
@@ -81,7 +81,7 @@ public class VoogaGameBuilder {
 		PhysicsEngine engine = buildPhysicsEngine();
 		
 		Level level = new Level(engine);
-		sprites = new ArrayList<>();
+		sprites = new HashMap<>();
 		objectives = new ArrayList<>();
 		actors = new HashMap<>();
 		actors.put(levelID, level);
@@ -90,7 +90,7 @@ public class VoogaGameBuilder {
 		for (String directory : parser.getValidSubDirectories("sprite")) {
 			Sprite sprite = buildSprite(directory, engine);
 			level.addSprite(sprite);
-			sprites.add(sprite);
+			sprites.put(directory.split("_")[1], sprite);
 			actors.put(directory, sprite);
 		}
 		parser.moveUp();
@@ -137,7 +137,7 @@ public class VoogaGameBuilder {
 	    ArrayList<Integer> delays = new ArrayList<>();
 	    for (String directory: parser.getValidSubDirectories("path")) {
 	        parser.moveDown(directory);
-	        int id = Integer.parseInt(parser.getValue("id"));
+	        String id = parser.getValue("id");
 	        Sprite sprite = sprites.get(id);
 	        String[] values = parser.getValue("values").split(" ");
 	        pathSprites.add(sprite);
@@ -183,10 +183,10 @@ public class VoogaGameBuilder {
 	private Sprite buildSprite(String spriteID, PhysicsEngine engine) {
 		parser.moveDown(spriteID);
 		
+		String id = spriteID.split("_")[1];
 		Animation animation = buildAnimation(engine);
 		PhysicsObject physObj = buildPhysicsObject(animation, engine);
 		String initialState = parser.getValue("initial_state");
-		String id = parser.getValue("id");
 		Sprite sprite = new Sprite(physObj, animation, initialState, null, 0, id);
 		
 		parser.moveUp();
@@ -300,6 +300,7 @@ public class VoogaGameBuilder {
         parser.moveDown(behaviorID);
         String id = parser.getValue("targetType") + "_" + parser.getValue("targetIndex");
         String name = parser.getValue("name");
+        System.out.println(id + " " + name);
         IActor actor = getActor(id);
         IAction behavior = actor.getAction(name);
         String[] params = parser.getValue("parameters").split(" ");
@@ -330,9 +331,9 @@ public class VoogaGameBuilder {
     private Collision buildCollision(String collisionID, PhysicsEngine engine) {
     	parser.moveDown(collisionID);
     	
-    	String[] sprites = parser.getValue("sprites").split(" ");
-    	Sprite a = getSprite(Integer.parseInt(sprites[0]));
-    	Sprite b = getSprite(Integer.parseInt(sprites[1]));
+    	String[] spriteIds = parser.getValue("sprites").split(" ");
+    	Sprite a = sprites.get(spriteIds[0]);
+    	Sprite b = sprites.get(spriteIds[1]);
     	
     	ICollisionDetector detector = buildDetector(engine);
     	ICollisionResolver resolver = buildResolver(engine);
@@ -342,10 +343,6 @@ public class VoogaGameBuilder {
     	return collision;
     }
 
-    
-    private Sprite getSprite(int id) {
-    	return sprites.get(id);
-    }
     
     private ICollisionDetector buildDetector(PhysicsEngine engine) {
     	parser.moveDown("detectors");

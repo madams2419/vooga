@@ -32,7 +32,7 @@
 								<targetType>level</targetType>
 								<targetIndex>0</targetIndex>
 								<name>removeSprite</name>
-								<parameters>mario</parameters>
+								<parameters>0</parameters>
 							</behavior_0>
 						</behaviors>
 					</onFailed>
@@ -106,7 +106,6 @@
 
 			<sprites>
 				<sprite_0>
-					<id>mario</id>
 					<initial_state>standing</initial_state>
 					<animations>
 						<state_0>
@@ -214,7 +213,6 @@
 				</sprite_0>
 
 				<sprite_1>
-					<id>ground</id>
 					<initial_state>immobile</initial_state>
 
 					<animations>
@@ -251,7 +249,6 @@
 				</sprite_1>
 
 				<sprite_2>
-					<id>platform</id>
 					<initial_state>immobile</initial_state>
 
 					<animations>
@@ -289,7 +286,6 @@
 
 				<sprite_3>
 					<initial_state>immobile</initial_state>
-					<id>bowser</id>
 					<animations>
 						<state_0>
 							<name>immobile</name>
@@ -325,7 +321,6 @@
 
 				<sprite_4>
 					<initial_state>immobile</initial_state>
-					<id>key</id>
 					<animations>
 						<state_0>
 							<name>immobile</name>
@@ -361,7 +356,6 @@
 
 				<sprite_5>
 					<initial_state>immobile</initial_state>
-					<id>flag</id>
 					<animations>
 						<state_0>
 							<name>immobile</name>

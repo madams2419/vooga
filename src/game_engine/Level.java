@@ -13,7 +13,6 @@ import game_engine.scrolling.scroller.BasicScroller;
 import game_engine.scrolling.scroller.IScroller;
 import game_engine.scrolling.scrollfocus.BasicFocus;
 import game_engine.scrolling.scrollfocus.IScrollFocus;
-import game_engine.scrolling.tracker.MiniMapTracker;
 import game_engine.scrolling.tracker.SpriteTracker;
 import game_engine.sprite.Sprite;
 import java.io.FileInputStream;
