@@ -4,38 +4,37 @@ import game_engine.annotation.IActionAnnotation;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.physics.Vector;
-import game_engine.physics.objects.SimplePhysicsObject;
+import game_engine.physics.PhysicsObject;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
+import java.util.Observer;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 /**
  * 
  * @authors Brian Lavalee, Kevin Chang, Emre Sonmez
  * Sprite class to hold information for all characters in game
  */
-public class Sprite extends Observable implements IActor {
+public class Sprite implements IActor {
 	
 	private String state;
 	private Sprite owner; // null if no owner
 	private double worth;
 	private Animation animation;
 	private Map<String, IAction> actions;
-	private SimplePhysicsObject physicsObject;
+	private PhysicsObject physicsObject;
 	
-	public Sprite(SimplePhysicsObject po, Animation a, String initialState, Sprite spriteOwner, double initialWorth) {
+	public Sprite(PhysicsObject po, Animation a, String initialState, Sprite spriteOwner, double initialWorth) {
 		state = initialState;
 		physicsObject = po;
 		animation = a;
+		a.setState(initialState);
 		actions = new HashMap<>();
 		owner = spriteOwner;
 		worth = initialWorth;
-		addObserver(animation);
-		addObserver(physicsObject);
-		setChanged();
-		notifyObservers();
 		buildActionMap();
 	}
 	
@@ -46,10 +45,13 @@ public class Sprite extends Observable implements IActor {
 	}
 	
 	public void update(long timeLapse) {
-	    physicsObject.update(timeLapse);
-	    animation.update(timeLapse);
-	
+		if(!physicsObject.isPositionConstrained()) {
+			animation.updatePosition(physicsObject.getPositionPixels());
+		}
+	    animation.updateImage(timeLapse);
+	    physicsObject.setRigidBody(animation.getRigidBody());
 	}
+	
 	public Animation getAnimation(){
 	    return animation;
 	}
@@ -62,11 +64,15 @@ public class Sprite extends Observable implements IActor {
 	    return animation.getImageView();
 	}
 	
+	public Rectangle getRect() {
+		return animation.getRect();
+	}
+	
 	/**
 	 * getPhysicsObject() 
 	 * @return the physics object associated with the sprite
 	 */
-	public SimplePhysicsObject getPhysicsObject() {
+	public PhysicsObject getPhysicsObject() {
 	    return physicsObject;
 	}
 	
@@ -77,8 +83,7 @@ public class Sprite extends Observable implements IActor {
 	private IAction setState = (params) -> {
 		String newState = params[0];
 		state = newState;
-		setChanged();
-		notifyObservers();
+		animation.setState(newState);
 	};
 	
 	/**
@@ -118,13 +123,13 @@ public class Sprite extends Observable implements IActor {
 
 	@IActionAnnotation(numParams = 2, description = "moves sprite forward in an x, y vector direction")
 	private IAction moveForward = (params) -> {
-		physicsObject.applyControlImpulse(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
+		physicsObject.addVelocity(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
 	};
 	
 	@IActionAnnotation(numParams = 1, description = "sprite jumps up or down")
 	private IAction jump = (params) -> {
 		Vector myVector = new Vector(0, Double.parseDouble(params[0]));
-		physicsObject.applyControlImpulse(myVector);
+		physicsObject.addVelocity(myVector);
 	};
 	
 	/**
@@ -135,4 +140,5 @@ public class Sprite extends Observable implements IActor {
 	public IAction getAction(String name) {
 		return actions.get(name);
 	}
+
 }

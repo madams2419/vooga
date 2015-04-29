@@ -10,13 +10,10 @@ public class Vector {
 	public static final Vector SOUTH = new Vector(0, -1);
 	public static final Vector EAST = new Vector(1, 0);
 	public static final Vector WEST = new Vector(-1, 0);
+	public static final Vector ZERO = new Vector(0, 0);
 
 	private double myX;
 	private double myY;
-
-	public Vector() {
-		this(0, 0);
-	}
 
 	public Vector(double x, double y) {
 		myX = x;
@@ -31,7 +28,7 @@ public class Vector {
 	}
 
 	public static Vector sum(List<Vector> vectors) {
-		Vector sum = new Vector();
+		Vector sum = Vector.ZERO;
 
 		for(Vector vect : vectors) {
 			sum = sum.plus(vect);
@@ -42,6 +39,9 @@ public class Vector {
 
 	@Override
 	public boolean equals(Object other) {
+		if(other == this) {
+			return true;
+		}
 
 		if(!(other instanceof Vector)) {
 			return false;
@@ -78,7 +78,7 @@ public class Vector {
 
 	public Vector normalize() {
 		if(isZeroVector()) {
-			return new Vector();
+			return Vector.ZERO;
 		} else {
 			double mag = getMagnitude();
 			return new Vector(myX / mag, myY / mag);
@@ -112,16 +112,6 @@ public class Vector {
 	public double getAngle() {
 		return isZeroVector() ? 0 : Math.atan(myY/myX);
 	}
-	
-	public double getAngleDegrees() {
-		double arcTangent = getAngle();
-		Math.toDegrees(arcTangent);
-		if(myX < 0)
-			arcTangent += 180;
-		else if(myY < 0)
-			arcTangent += 360;
-		return arcTangent;
-	}
 
 	public boolean isZeroVector() {
 		return (myX == 0 && myY == 0);
@@ -134,4 +124,5 @@ public class Vector {
 	public String toString() {
 		return String.format("Vector (%f, %f)\n", myX, myY);
 	}
+
 }
