@@ -1,24 +1,33 @@
 package game_engine.sprite;
 
+import game_engine.Utilities;
+import game_engine.physics.RigidBody;
 import game_engine.physics.Vector;
-import game_engine.physics.objects.PhysicsObject;
+import game_engine.physics.PhysicsObject;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+
 import java.util.Observer;
+import java.util.function.Supplier;
 /**
  * 
  * @author Kevin Chang, Brian Lavalee
  * Class to hold images and deal with switching images in sprites
  */
-public class Animation extends Observable implements Observer {
+public class Animation {
 
-    private ImageView image;
+	private ImageView image;
+	private Rectangle rectangle;
     private Node current;
     Map<String, ImageLink> paths;
     private long timeElapsed;
@@ -27,6 +36,7 @@ public class Animation extends Observable implements Observer {
     public Animation(double h) {
     	image = new ImageView();
     	paths = new HashMap<>();
+    	current = null;
     	timeElapsed = 0;
     	height = h;
     }
@@ -39,14 +49,17 @@ public class Animation extends Observable implements Observer {
      * @param height the height to set the image to
      * @param width  the width to set the image to
      */
-    public void associateImage(String state, String imagePath, double delay, double height, double width) {
+    public void associateImage(String state, String imagePath, RigidBody rBody, double delay, double height, double width) {
     	if (!paths.containsKey(state)) {
     		paths.put(state, new ImageLink());
     	}
     	
     	try {
 			FileInputStream fis = new FileInputStream(imagePath);
-			paths.get(state).add(new Image(fis, width, height, false, true), Duration.seconds(delay));
+			paths.get(state).add(new Image(fis, width, height, false, true), rBody, Duration.seconds(delay));
+			if(current == null) {
+				current = paths.get(state).first;
+			}
 		}
     	catch (FileNotFoundException e) {
     		e.printStackTrace();
@@ -61,12 +74,14 @@ public class Animation extends Observable implements Observer {
     protected class Node {
 		 
 		private Image image;
+		private RigidBody rigidBody;
 		private Node next;
 		private Duration delay;
 		private int index;
 		
-		public Node(Image i, Node n, Duration d, int ind) {
+		public Node(Image i, RigidBody rb, Node n, Duration d, int ind) {
 			image = i;
+			rigidBody = rb;
 			next = n;
 			delay = d;
 			index = ind;
@@ -77,10 +92,10 @@ public class Animation extends Observable implements Observer {
     	
     	private Node first;
     	
-    	public void add(Image image, Duration delay) {
+    	public void add(Image image, RigidBody rBody, Duration delay) {
     		
     		if (first == null) {
-    			first = new Node(image, first, delay, 0);
+    			first = new Node(image, rBody, first, delay, 0);
     			first.next = first;
     			return;
     		}
@@ -88,11 +103,11 @@ public class Animation extends Observable implements Observer {
     		while (current.next != first) {
     			current = current.next;
     		}
-    		current.next = new Node(image, first, delay, current.index + 1);
+    		current.next = new Node(image, rBody, first, delay, current.index + 1);
     	}
     }
     
-    public void update(long timeLapse) {
+    public void updateImage(long timeLapse) {
     	timeElapsed += timeLapse;
     	if (current.delay.toMillis() < timeElapsed) {
     		rotateImage();
@@ -100,8 +115,13 @@ public class Animation extends Observable implements Observer {
     	}
     }
     
-    public Vector getPosition() {
-        return new Vector(image.getTranslateX(), -image.getTranslateY() + height - image.getImage().getHeight());
+    public Supplier<Vector> getPositionSupplier() {
+    	return () -> {
+    		Vector imgTranslate = new Vector(image.getTranslateX(), image.getTranslateY());
+    		double imgWidth = image.getImage().getWidth();
+    		double imgHeight = image.getImage().getHeight();
+    		return Utilities.nodeTranslationToPhysicsCenter(imgTranslate, imgWidth, imgHeight, height);
+    	};
     }
     
     public int getIndex() {
@@ -111,8 +131,6 @@ public class Animation extends Observable implements Observer {
     private void rotateImage() {
     	current = current.next;
     	image.setImage(current.image);
-    	setChanged();
-    	notifyObservers();
     }
     
     /**
@@ -123,46 +141,37 @@ public class Animation extends Observable implements Observer {
     	return image;
     }
     
-    /**
-     * method update
-     * observes and listens for a state change or position change in the sprite
-     */
-    public void update(Observable source, Object arg) {
-    	changeState(source);
-    	changePosition(source);
+    public Rectangle getRect() {
+    	return rectangle;
+    }
+    
+    public RigidBody getRigidBody() {
+    	return current.rigidBody;
     }
     
     /**
      * method changeState
-     * @param source the observable that is changed
-     * sets state based on the changed sprite state
+     * @param the new state
      */
-    private void changeState(Observable source) {
-    	try {
-    		Sprite sprite = (Sprite) source;
-    		changeImage(sprite.getState());
-    	}
-    	catch (Exception e) {
-    		// do nothing
-    	}
+    public void setState(String state) {
+    	changeImage(state);
     }
   
     
-    /**
+    /**s
      * method changePosition
      * @param source the observable that is changed
      * sets the position of the image based on the position of the 
      * sprite as contained in the physics object
      */
-    private void changePosition(Observable source) {
-    	try { 
-    		PhysicsObject physicsObject = (PhysicsObject) source;
-    		image.setTranslateX(physicsObject.getPosition().getX());
-    		image.setTranslateY(height - physicsObject.getPosition().getY() - image.getImage().getHeight());
-    	}
-    	catch (Exception e) {
-    		// do nothing
-    	}
+    public void updatePosition(Vector poCenter) {
+    	double imgWidth = image.getImage().getWidth();
+    	double imgHeight = image.getImage().getHeight();
+    	Vector imgTranslate = Utilities.physicsCenterToNodeTranslation(poCenter, imgWidth, imgHeight, height);
+    	image.setTranslateX(imgTranslate.getX());
+    	image.setTranslateY(imgTranslate.getY());
+    	rectangle.setTranslateX(imgTranslate.getX());
+    	rectangle.setTranslateY(imgTranslate.getY());
     }
     
     /**
@@ -174,5 +183,8 @@ public class Animation extends Observable implements Observer {
     	current = paths.get(state).first;
     	System.out.println(current);
     	image.setImage(current.image);
+    	image.setFitWidth(current.image.getWidth());
+    	image.setFitHeight(current.image.getHeight());
+    	rectangle = new Rectangle(current.image.getWidth(), current.image.getHeight());
     }
 }

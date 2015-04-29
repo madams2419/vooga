@@ -3,10 +3,14 @@ package game_engine;
 import game_engine.collisions.CollisionsManager;
 import game_engine.controls.ControlsManager;
 import game_engine.objectives.Objective;
+import game_engine.physics.PhysicsEngine;
 import game_engine.sprite.Sprite;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -26,12 +30,14 @@ public class Level {
 	private ControlsManager myControlManager;
 	private Collection<Sprite> myToBeRemoved;
 	private Group myGroup;
+	private PhysicsEngine myPhysics;
 
-	public Level() {
+	public Level(PhysicsEngine physics) {
 		myObjectives = new ArrayList<>();
 		mySprites = FXCollections.observableArrayList();
 		initGroup (mySprites);
 		myToBeRemoved = new ArrayList<>();
+		myPhysics = physics;
 	}
 	
 	private void initGroup (ObservableList<Sprite> sprites) {
@@ -51,11 +57,13 @@ public class Level {
 	/**
 	 * method update Update contents of a layer
 	 */
-	public void update(long timeLapse) {
-		myObjectives.forEach(objective -> objective.update(timeLapse));
-		mySprites.forEach(sprite -> sprite.update(timeLapse));
+	public void update(double framePeriod) {
+		long framePeriodMillis = (long) (framePeriod * 1000);
+		myObjectives.forEach(objective -> objective.update(framePeriodMillis));
+		myPhysics.update(framePeriod); // update PhysicsObjects and handle physical collisions
+		mySprites.forEach(sprite -> sprite.update(framePeriodMillis)); // update animations
 		myControlManager.update();
-		myCollisionEngine.checkCollisions();
+		myCollisionEngine.checkCollisions(); // handle behavioral collisions
 		myToBeRemoved.forEach(this::removeSprite);
 		myToBeRemoved.clear();
 	}
