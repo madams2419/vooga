@@ -11,12 +11,15 @@ import game_engine.scrolling.tracker.SpriteTracker;
 import game_engine.sprite.Sprite;
 import game_engine.sprite.TransitionManager;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.shape.Circle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -29,8 +32,6 @@ public class VoogaGame implements IActor {
 	private double width, height;
 	private Timeline animation;
 	private ControlsManager controlsManager;
-	private long lastUpdateTime;
-	private double frameRate;
 	private TransitionManager transitionManager;
 
 	public VoogaGame(double fps, double w, double h) {
@@ -40,11 +41,11 @@ public class VoogaGame implements IActor {
 		height = h;
 		animation = new Timeline(fps, getFrame(fps));
 		animation.setCycleCount(Timeline.INDEFINITE);
-		lastUpdateTime = 0l;
 	}
 	
 	private KeyFrame getFrame(double fps) {
-		return new KeyFrame(Duration.millis(fps), (frame) -> update(System.currentTimeMillis()));
+		double framePeriod = 1/fps;
+		return new KeyFrame(Duration.seconds(framePeriod), (frame) -> update(framePeriod));
 	}
 
 	public void addLevel(Level l) {
@@ -69,6 +70,7 @@ public class VoogaGame implements IActor {
 		root.getChildren().clear();
 		activeLevel = levels.get(index);
 		activeLevel.getSprites().forEach(sprite -> {
+			//root.getChildren().add(sprite.getRect());
 			root.getChildren().add(sprite.getImageView());
 		});
 		root.requestFocus();
@@ -88,13 +90,8 @@ public class VoogaGame implements IActor {
 	    return transitionManager;
 	}
 
-	public void update(long currentTime) {
-		if (lastUpdateTime == 0) {
-			lastUpdateTime = currentTime;
-		}
-
-		activeLevel.update(currentTime - lastUpdateTime);
-		lastUpdateTime = currentTime;
+	public void update(double framePeriod) {
+		activeLevel.update(framePeriod);
 	}
 	
 	protected Group getRoot() {

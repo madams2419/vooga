@@ -67,7 +67,7 @@ public class TransitionManager {
            myGroup.getChildren().add(sprite.getImageView());
            Path path = new Path();
            path.getElements().addAll(myTransitionMap.get(sprite));
-           sprite.getPhysicsObject().ignorePhysics(sprite.getAnimation());
+           sprite.getPhysicsObject().constrainPosition(sprite.getAnimation().getPositionSupplier());
            System.out.println("TIME PARAMS:"+myDuration+ " "+myDelay);
            SequentialTransition pt = initializePath((Node) sprite.getImageView(),path,myDuration.get(i),myDelay.get(i));
            myTransitions.add(pt);
