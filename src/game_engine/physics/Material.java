@@ -10,7 +10,7 @@ public class Material {
 	public static final Material PILLOW = new Material(0.1, 0.2);
 	public static final Material STATIC = new Material(0.0, 0.0);
 	public static final Material FLOATING = new Material(0.0, 0.2);
-	public static final Material TRANSPARENT = new Material(-1.0, -1.0); 
+	public static final Material TRANSPARENT = new Material(-1.0, -1.0);
 
 	private double myDensity;
 	private double myRestitution;
@@ -27,7 +27,7 @@ public class Material {
 	public double getRestitution() {
 		return myRestitution;
 	}
-	
+
 	public static Material valueOf(String name) {
 	    switch(name) {
 	    case "ROCK": return ROCK;

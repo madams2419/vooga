@@ -1,6 +1,9 @@
-package game_engine.physics;
+package game_engine.physics.collisions;
 
-public abstract class PhysicsCollision {
+import game_engine.physics.PhysicsObject;
+import game_engine.physics.utilities.Vector;
+
+public abstract class Collision {
 
 	//TODO move these to properties file
 	private static double SC_PERCENT = 0.5;
@@ -11,7 +14,7 @@ public abstract class PhysicsCollision {
 	protected Vector myNormal;
 	protected double myPenetrationDepth;
 
-	public PhysicsCollision(PhysicsObject objectA, PhysicsObject objectB) {
+	public Collision(PhysicsObject objectA, PhysicsObject objectB) {
 		myObjectA = objectA;
 		myObjectB = objectB;
 		castRigidBodies();

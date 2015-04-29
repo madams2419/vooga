@@ -1,4 +1,5 @@
-package game_engine.physics;
+package game_engine.physics.rigidbodies;
+
 
 public class RigidBodyFactory {
 	

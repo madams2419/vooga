@@ -1,6 +1,6 @@
 package game_engine;
 
-import game_engine.physics.Vector;
+import game_engine.physics.utilities.Vector;
 
 public class Utilities {
 	

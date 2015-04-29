@@ -1,9 +1,9 @@
 package game_engine.sprite;
 
 import game_engine.Utilities;
-import game_engine.physics.RigidBody;
-import game_engine.physics.Vector;
 import game_engine.physics.PhysicsObject;
+import game_engine.physics.rigidbodies.RigidBody;
+import game_engine.physics.utilities.Vector;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
