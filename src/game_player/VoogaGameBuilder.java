@@ -8,39 +8,36 @@ import game_engine.behaviors.IBehavior;
 import game_engine.behaviors.MultipleBehaviors;
 import game_engine.collisions.Collision;
 import game_engine.collisions.CollisionsManager;
-import game_engine.collisions.detectors.HitboxDetector;
+import game_engine.collisions.detectors.PhysicsDetector;
 import game_engine.collisions.detectors.ICollisionDetector;
 import game_engine.collisions.detectors.MultipleDetector;
 import game_engine.collisions.detectors.PixelPerfectDetector;
 import game_engine.collisions.detectors.SimpleDetector;
 import game_engine.collisions.resolvers.ICollisionResolver;
 import game_engine.collisions.resolvers.MultipleResolver;
-import game_engine.collisions.resolvers.PhysicalResolver;
 import game_engine.collisions.resolvers.SimpleResolver;
 import game_engine.controls.ControlScheme;
 import game_engine.controls.ControlsManager;
 import game_engine.controls.key_controls.KeyControlMap;
 import game_engine.controls.key_controls.PressedKeyControlMap;
 import game_engine.controls.key_controls.ReleasedKeyControlMap;
-import game_engine.hitboxes.IHitbox;
-import game_engine.hitboxes.MultipleHitbox;
-import game_engine.hitboxes.SingleHitbox;
 import game_engine.objectives.GameTimer;
 import game_engine.objectives.Objective;
 import game_engine.physics.Material;
+import game_engine.physics.RigidBody;
 import game_engine.physics.Vector;
-import game_engine.physics.engines.ComplexPhysicsEngine;
-import game_engine.physics.engines.PhysicsEngine;
-import game_engine.physics.objects.ComplexPhysicsObject;
-import game_engine.physics.objects.SimplePhysicsObject;
+import game_engine.physics.PhysicsEngine;
+import game_engine.physics.PhysicsObject;
 import game_engine.sprite.Animation;
 import game_engine.sprite.Sprite;
 import game_engine.sprite.TransitionManager;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 
@@ -81,12 +78,13 @@ public class VoogaGameBuilder {
 	private Level buildLevel(String levelID) {
 		parser.moveDown(levelID);
 		
-		Level level = new Level();
+		PhysicsEngine engine = buildPhysicsEngine();
+		
+		Level level = new Level(engine);
 		sprites = new ArrayList<>();
 		objectives = new ArrayList<>();
 		actors = new HashMap<>();
 		actors.put(levelID, level);
-		PhysicsEngine engine = buildPhysicsEngine();
 		
 		parser.moveDown("sprites");
 		for (String directory : parser.getValidSubDirectories("sprite")) {
@@ -158,19 +156,23 @@ public class VoogaGameBuilder {
 		parser.moveDown("physics_engine");
 		
 		String type = parser.getValue("type");
-		PhysicsEngine engine = type.equals("ComplexPhysicsEngine") ? new ComplexPhysicsEngine(Double.parseDouble(parser.getValue("drag_coefficient"))) : new PhysicsEngine();
+		System.out.println(type);
+		PhysicsEngine engine = new PhysicsEngine();
 		
 		parser.moveDown("global_accelerations");
 		for (String label : parser.getValidLabels()) {
+			String accelName = label.substring(label.lastIndexOf("/") + 1);
 			String[] vector = parser.getValue(label).split(" ");
-			engine.addGlobalAccel(new Vector(Double.parseDouble(vector[0]), Double.parseDouble(vector[1])));
+			System.out.println(accelName);
+			engine.setGlobalAccel(accelName, new Vector(Double.parseDouble(vector[0]), Double.parseDouble(vector[1])));
 		}
 		parser.moveUp();
 		
 		parser.moveDown("global_forces");
 		for (String label : parser.getValidLabels()) {
+			String forceName = label.substring(label.lastIndexOf("/") + 1);
 			String[] vector = parser.getValue(label).split(" ");
-			engine.addGlobalForce(new Vector(Double.parseDouble(vector[0]), Double.parseDouble(vector[1])));
+			engine.setGlobalForce(forceName, new Vector(Double.parseDouble(vector[0]), Double.parseDouble(vector[1])));
 		}
 		parser.moveUp();
 		
@@ -181,9 +183,8 @@ public class VoogaGameBuilder {
 	private Sprite buildSprite(String spriteID, PhysicsEngine engine) {
 		parser.moveDown(spriteID);
 		
-		Map<String, List<IHitbox>> hitboxes = new HashMap<>();
-		Animation animation = buildAnimation(hitboxes);
-		SimplePhysicsObject physObj = buildPhysicsObject(animation, engine, hitboxes);
+		Animation animation = buildAnimation(engine);
+		PhysicsObject physObj = buildPhysicsObject(animation, engine);
 		String initialState = parser.getValue("initial_state");
 		String id = parser.getValue("id");
 		Sprite sprite = new Sprite(physObj, animation, initialState, null, 0, id);
@@ -192,7 +193,7 @@ public class VoogaGameBuilder {
 		return sprite;
 	}
 	
-	private Animation buildAnimation(Map<String, List<IHitbox>> hitboxes) {
+	private Animation buildAnimation(PhysicsEngine engine) {
 		parser.moveDown("animations");
 		
 		Animation animation = new Animation(game.getHeight());
@@ -201,7 +202,6 @@ public class VoogaGameBuilder {
 			parser.moveDown(directory);
 			
 			String name = parser.getValue("name");
-			List<IHitbox> hb = new ArrayList<>();
 			
 			parser.moveDown("images");
 			for (String imageDirectory : parser.getValidSubDirectories()) {
@@ -210,15 +210,14 @@ public class VoogaGameBuilder {
 				double delay = Double.parseDouble(parser.getValue("delay"));
 				double width = Double.parseDouble(parser.getValue("width"));
 				double height = Double.parseDouble(parser.getValue("height"));
+				RigidBody rBody = buildRigidBody(width, height, engine);
 				
-				animation.associateImage(name, source, delay, height, width);
+				animation.associateImage(name, source, rBody, delay, height, width);
 				
-				hb.add(buildHitbox());
 				parser.moveUp();
 			}
 			parser.moveUp();
 			
-			hitboxes.put(name, hb);
 			parser.moveUp();
 		}
 		
@@ -226,36 +225,43 @@ public class VoogaGameBuilder {
 		return animation;
 	}
 	
-	private IHitbox buildHitbox() {
-		parser.moveDown("hitboxes");
-		
-		MultipleHitbox hitbox = new MultipleHitbox();
-		for (String directory : parser.getValidSubDirectories("hitbox")) {
-			parser.moveDown(directory);
-			
-			SingleHitbox hb = new SingleHitbox();
-			for (String label : parser.getValidLabels()) {
-				String[] point = parser.getValue(label).split(" ");
-				hb.addPoint(new Vector(Double.parseDouble(point[0]), Double.parseDouble(point[1])));
-			}
-			
-			hitbox.addHitbox(hb);
-			parser.moveUp();
-		}
-		
-		parser.moveUp();
-		return hitbox;
+	private RigidBody buildRigidBody(double width, double height, PhysicsEngine engine) {
+		//TODO refactor this if we have time to add complex rigid bodies
+		return engine.createRigidBody(width, height);
 	}
 	
-	private SimplePhysicsObject buildPhysicsObject(Animation animation, PhysicsEngine engine, Map<String, List<IHitbox>> hitboxes) {
+//	private IHitbox buildHitbox() {
+//		parser.moveDown("hitboxes");
+//		
+//		MultipleHitbox hitbox = new MultipleHitbox();
+//		for (String directory : parser.getValidSubDirectories()) {
+//			parser.moveDown(directory);
+//			
+//			SingleHitbox hb = new SingleHitbox();
+//			for (String label : parser.getValidLabels()) {
+//				String[] point = parser.getValue(label).split(" ");
+//				hb.addPoint(new Vector(Double.parseDouble(point[0]), Double.parseDouble(point[1])));
+//			}
+//			
+//			hitbox.addHitbox(hb);
+//			parser.moveUp();
+//		}
+//		
+//		parser.moveUp();
+//		return hitbox;
+//	}
+	
+	private PhysicsObject buildPhysicsObject(Animation animation, PhysicsEngine engine) {
 		parser.moveDown("physics");
 		
 		String type = parser.getValue("type");
 		String[] point = parser.getValue("position").split(" ");
 		Vector position = new Vector(Double.parseDouble(point[0]), Double.parseDouble(point[1]));
+		Material material = Material.valueOf(parser.getValue("material").toUpperCase());
 		
-		SimplePhysicsObject physObj = type.equals("ComplexPhysicsObject") ? new ComplexPhysicsObject(engine, hitboxes, position, animation, Material.valueOf(parser.getValue("material").toUpperCase())) :
-																	  new SimplePhysicsObject(engine, hitboxes, position, animation, Double.parseDouble(parser.getValue("mass")));
+		
+		PhysicsObject physObj = engine.addPhysicsObject(animation.getRigidBody(), material, position);
+		
 		parser.moveUp();
 		return physObj;
 	}
@@ -328,7 +334,7 @@ public class VoogaGameBuilder {
     	Sprite a = getSprite(Integer.parseInt(sprites[0]));
     	Sprite b = getSprite(Integer.parseInt(sprites[1]));
     	
-    	ICollisionDetector detector = buildDetector();
+    	ICollisionDetector detector = buildDetector(engine);
     	ICollisionResolver resolver = buildResolver(engine);
     	
     	Collision collision = new Collision(detector, resolver, a, b);
@@ -341,13 +347,13 @@ public class VoogaGameBuilder {
     	return sprites.get(id);
     }
     
-    private ICollisionDetector buildDetector() {
+    private ICollisionDetector buildDetector(PhysicsEngine engine) {
     	parser.moveDown("detectors");
     	
     	MultipleDetector detector = new MultipleDetector();
     	for (String label : parser.getValidLabels()) {
     		ICollisionDetector component = parser.getValue(label).equals("SimpleDetector") ? new SimpleDetector() : 
-    										parser.getValue(label).equals("HitboxDetector") ? new HitboxDetector() :
+    										parser.getValue(label).equals("HitboxDetector") ? new PhysicsDetector(engine) :
     											parser.getValue(label).equals("PixelPerfectDetector") ? new PixelPerfectDetector() : null;
     		detector.addDetector(component);
     	}
@@ -366,7 +372,7 @@ public class VoogaGameBuilder {
     		
     		String type = parser.getValue("type");
     		if (type.equals("PhysicalResolver")) {
-    			resolver.addResolver(new PhysicalResolver(engine));
+    			// physical resolver doesn't exist anymore
     		}
     		else if (type.equals("SimpleResolver")) {
     			resolver.addResolver(new SimpleResolver(buildBehaviorList()));

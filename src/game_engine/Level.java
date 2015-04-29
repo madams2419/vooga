@@ -7,6 +7,7 @@ import game_engine.behaviors.IActor;
 import game_engine.collisions.CollisionsManager;
 import game_engine.controls.ControlsManager;
 import game_engine.objectives.Objective;
+import game_engine.physics.PhysicsEngine;
 import game_engine.scrolling.WrapAround;
 import game_engine.scrolling.scroller.BasicScroller;
 import game_engine.scrolling.scroller.IScroller;
@@ -44,6 +45,7 @@ public class Level implements IActor {
 	private Group mySpriteGroup;
 	private Group myGroup;
 	private Map<String, IAction> myActions;
+	private PhysicsEngine myPhysics;
 	
 	@IActionAnnotation(description = "Remove sprite", numParams = 1, paramDetails = "sprite's id")
 	private IAction removeSprite = (params) -> {
@@ -51,13 +53,15 @@ public class Level implements IActor {
 	        Sprite removed = mySprites.filtered(sprite -> sprite.checkID(id)).get(0);
 	        myToBeRemoved.add(removed);
 	    };
+	
 
-	public Level() {
+	public Level(PhysicsEngine physics) {
 		myObjectives = new ArrayList<>();
 		mySprites = FXCollections.observableArrayList();
 		initGroup (mySprites);
 		myToBeRemoved = new ArrayList<>();
 		myActions = buildActionMap();
+		myPhysics = physics;
 	}
 	
 	private void initGroup (ObservableList<Sprite> sprites) {
@@ -77,11 +81,13 @@ public class Level implements IActor {
 	/**
 	 * method update Update contents of a layer
 	 */
-	public void update(long timeLapse) {
-		myObjectives.forEach(objective -> objective.update(timeLapse));
-		mySprites.forEach(sprite -> sprite.update(timeLapse));
+	public void update(double framePeriod) {
+		long framePeriodMillis = (long) (framePeriod * 1000);
+		myObjectives.forEach(objective -> objective.update(framePeriodMillis));
+		myPhysics.update(framePeriod); // update PhysicsObjects and handle physical collisions
+		mySprites.forEach(sprite -> sprite.update(framePeriodMillis)); // update animations
 		myControlManager.update();
-		myCollisionEngine.checkCollisions();
+		myCollisionEngine.checkCollisions(); // handle behavioral collisions
 		myToBeRemoved.forEach(this::removeSprite);
 		myToBeRemoved.clear();
 	}

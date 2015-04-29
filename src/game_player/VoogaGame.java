@@ -19,36 +19,28 @@ import javafx.util.Duration;
 
 
 public class VoogaGame implements IActor {
-    private List<Level> levels;
-    private Level activeLevel;
-    private Group root;
-    private double width, height;
-    private Timeline animation;
-    private ControlsManager controlsManager;
-    private long lastUpdateTime;
-    private TransitionManager transitionManager;
-    private Map<String, IAction> myActions;
+	private List<Level> levels;
+	private Level activeLevel;
+	private Group root;
+	private double width, height;
+	private Timeline animation;
+	private ControlsManager controlsManager;
+	private TransitionManager transitionManager;
+	private Map<String, IAction> actions;
 
-    public VoogaGame(double fps, double w, double h) {
-            levels = new ArrayList<Level>();
-            root = new Group();
-            width = w;
-            height = h;
-            animation = new Timeline(fps, getFrame(fps));
-            animation.setCycleCount(Timeline.INDEFINITE);
-            lastUpdateTime = 0l;
-    }
-
-    public void addLevel (Level l) {
-        levels.add(l);
-    }
-
-    public double getHeight () {
-        return height;
-    }
+	public VoogaGame(double fps, double w, double h) {
+		levels = new ArrayList<Level>();
+		root = new Group();
+		width = w;
+		height = h;
+		animation = new Timeline(fps, getFrame(fps));
+		animation.setCycleCount(Timeline.INDEFINITE);
+		actions = buildActionMap();
+	}
 	
 	private KeyFrame getFrame(double fps) {
-		return new KeyFrame(Duration.millis(fps), (frame) -> update(System.currentTimeMillis()));
+		double framePeriod = 1/fps;
+		return new KeyFrame(Duration.seconds(framePeriod), (frame) -> update(framePeriod));
 	}
 	
     @IActionAnnotation(description = "Sets the active level to the parameter", numParams = 1, paramDetails = "level's id")	
@@ -56,6 +48,10 @@ public class VoogaGame implements IActor {
         int index = Integer.parseInt(params[0]);
         setActiveLevel(index);
     };
+    
+    public void addLevel (Level level) {
+        levels.add(level);
+    }
 
     public void setActiveLevel (int index) {
         root.getChildren().clear();
@@ -65,6 +61,7 @@ public class VoogaGame implements IActor {
         root.getChildren().add(activeLevel.getRoot());
         transitionManager.playTransitions();
     }
+
 	
 	public void setTransitionManager(TransitionManager manager){
 	    transitionManager =manager; 
@@ -74,13 +71,8 @@ public class VoogaGame implements IActor {
 	    return transitionManager;
 	}
 
-	public void update(long currentTime) {
-		if (lastUpdateTime == 0) {
-			lastUpdateTime = currentTime;
-		}
-
-		activeLevel.update(currentTime - lastUpdateTime);
-		lastUpdateTime = currentTime;
+	public void update(double framePeriod) {
+		activeLevel.update(framePeriod);
 	}
 	
 	protected Group getRoot() {
@@ -104,9 +96,10 @@ public class VoogaGame implements IActor {
 
     @Override
     public IAction getAction (String name) {
-        if (myActions == null) {
-            myActions = buildActionMap();
-        }
-        return myActions.get(name);
+        return actions.get(name);
+    }
+
+    public double getHeight () {
+        return height;
     }
 }
