@@ -1,5 +1,8 @@
 * Physics is now a completely self contained package--that is, it's
   independent of all classes in the rest of the project
+* Hitbox specifications are no longer used...the image bounds are used
+  as the hitbox. Because of this, the image must have very little
+  whitespace on the edges, or it will not look good
 * Physics is accessed through three interfaces: IPhysicsEngine,
   IPhysicsObject and IRigidBody (not implemented yet)
 	> These interfaces allow the physics engine to be easily swapped with
@@ -17,7 +20,8 @@
   causing some sychronization problems
 
 TODO
-* sub hitboxes
+* implement friction
+* implement sub hitboxes
 * add support for non-collidable sprites (transparent material)
 * polish up control parameters (sprite is very hard to control now)
 * Add interfaces for physics engine and physics object

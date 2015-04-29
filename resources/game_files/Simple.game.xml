@@ -30,7 +30,7 @@
 								<targetType>sprite</targetType>
 								<targetIndex>0</targetIndex>
 								<name>jump</name>
-								<parameters>1000</parameters>
+								<parameters>10</parameters>
 							</behavior_1>
 						</behaviors>
 					</onComplete>

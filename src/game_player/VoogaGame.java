@@ -32,7 +32,6 @@ public class VoogaGame implements IActor {
 	private double width, height;
 	private Timeline animation;
 	private ControlsManager controlsManager;
-	private long lastUpdateTime;
 	private TransitionManager transitionManager;
 
 	public VoogaGame(double fps, double w, double h) {
@@ -42,7 +41,6 @@ public class VoogaGame implements IActor {
 		height = h;
 		animation = new Timeline(fps, getFrame(fps));
 		animation.setCycleCount(Timeline.INDEFINITE);
-		lastUpdateTime = 0l;
 	}
 	
 	private KeyFrame getFrame(double fps) {
@@ -79,7 +77,7 @@ public class VoogaGame implements IActor {
 		controlsManager = activeLevel.getControlManager();
 
 		if (!activeLevel.getSprites().isEmpty()) {
-			//setUpScrolling();
+			setUpScrolling();
 		}
 		//transitionManager.playTransitions();
 	}

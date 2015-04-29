@@ -182,7 +182,7 @@ public class PhysicsObject extends Observable {
 	public Vector getVelocity() {
 		return myVelocity;
 	}
-
+	
 	public void setVelocity(Vector velocity) {
 		myVelocity = velocity;
 	}
