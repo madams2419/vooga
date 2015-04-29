@@ -33,7 +33,6 @@ import game_engine.sprite.Sprite;
 import game_engine.sprite.TransitionManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +47,7 @@ public class VoogaGameBuilder {
 	
 	private List<Sprite> sprites;
 	private List<Objective> objectives;
+	private Map<String, IActor> actors;
 	
 	private VoogaGame game;
 	
@@ -83,20 +83,38 @@ public class VoogaGameBuilder {
 		Level level = new Level(engine);
 		sprites = new ArrayList<>();
 		objectives = new ArrayList<>();
+		actors = new HashMap<>();
+		actors.put(levelID, level);
 		
 		parser.moveDown("sprites");
 		for (String directory : parser.getValidSubDirectories("sprite")) {
 			Sprite sprite = buildSprite(directory, engine);
 			level.addSprite(sprite);
 			sprites.add(sprite);
+			actors.put(directory, sprite);
 		}
 		parser.moveUp();
 		
 		parser.moveDown("level_objectives");
 		for (String directory : parser.getValidSubDirectories("objective")) {
 			Objective objective = buildObjective(directory);
-			level.addObjective(objective);
 			objectives.add(objective);
+			actors.put(directory, objective);
+		}
+		level.setObjectives(objectives);
+		int i = 0;
+		for (String directory: parser.getValidSubDirectories()) {
+		    parser.moveDown(directory);
+		    if (parser.getValue("prereqs") != null && parser.getValue("prereqs").trim() != "") {
+		        String[] prereqs = parser.getValue("prereqs").split(" ");
+	                    List<Objective> list = new ArrayList<>();
+	                    for (String id: prereqs) {
+	                        list.add(objectives.get(Integer.parseInt(id)));
+	                    }
+	                    objectives.get(i).setPreReqs(list);
+		    }
+		    i++;
+		    parser.moveUp();
 		}
 		parser.moveUp();
 		
@@ -104,12 +122,10 @@ public class VoogaGameBuilder {
 		level.setControlManager(buildControlsManager());
 		game.setTransitionManager(buildTransitionManager(game.getRoot()));
 		game.getTransitionManager().initialize();
-		game.getTransitionManager().getParams().forEach(param->{
-		    System.out.println(Arrays.toString(param));
-		});
 		game.getTransitionManager().playTransitions();
 		
 		parser.moveUp();
+		
 		return level;
 	}
 	
@@ -170,8 +186,8 @@ public class VoogaGameBuilder {
 		Animation animation = buildAnimation(engine);
 		PhysicsObject physObj = buildPhysicsObject(animation, engine);
 		String initialState = parser.getValue("initial_state");
-		
-		Sprite sprite = new Sprite(physObj, animation, initialState, null, 0);
+		String id = parser.getValue("id");
+		Sprite sprite = new Sprite(physObj, animation, initialState, null, 0, id);
 		
 		parser.moveUp();
 		return sprite;
@@ -250,16 +266,19 @@ public class VoogaGameBuilder {
 		return physObj;
 	}
 	
+    
     private Objective buildObjective(String objectiveID) {
         parser.moveDown(objectiveID);
         
         Objective objective = new Objective();
 
-        for (String directory : parser.getValidSubDirectories("on")) {
-            parser.moveDown(directory);
-            IBehavior behavior = buildBehaviorList();
-            objective.setBehavior(directory.substring(2), behavior);
-            parser.moveUp();
+        for (String directory : parser.getValidSubDirectories()) {
+            if (directory.toLowerCase().startsWith("on")) {
+                parser.moveDown(directory);
+                IBehavior behavior = buildBehaviorList();
+                objective.setBehavior(directory.substring(2), behavior);
+                parser.moveUp();
+            }
         }
         String timer = parser.getValue("timer");
         Optional.ofNullable(timer).ifPresent(string -> objective.setTimer(new GameTimer(Long.parseLong(string))));
@@ -289,11 +308,10 @@ public class VoogaGameBuilder {
     }
     
     private IActor getActor(String id) {
-        System.out.println(id);
-    	String[] details = id.split("_");
-    	System.out.println(Arrays.asList(details));
-    	IActor actor = details[0].startsWith("sprite") ? sprites.get(Integer.parseInt(details[1])) : details[0].startsWith("objective") ? objectives.get(Integer.parseInt(details[1])) : null;
-    	return actor;
+    	//String[] details = id.split("_");
+    	//IActor actor = details[0].startsWith("sprite") ? sprites.get(Integer.parseInt(details[1])) : details[0].startsWith("objective") ? objectives.get(Integer.parseInt(details[1])) : null;
+    	//return actor;
+    	return actors.get(id);
     }
     
     private CollisionsManager buildCollisionsManager(PhysicsEngine engine) {
@@ -372,7 +390,6 @@ public class VoogaGameBuilder {
     
     private ControlsManager buildControlsManager() {
     	parser.moveDown("controls");
-    	System.out.println(parser.getValue("active_scheme"));
     	
     	int startIndex = Integer.parseInt(parser.getValue("active_scheme"));
     	

@@ -3,14 +3,10 @@ package game_engine.sprite;
 import game_engine.annotation.IActionAnnotation;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
-import game_engine.physics.Vector;
 import game_engine.physics.PhysicsObject;
-
+import game_engine.physics.Vector;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
-
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 /**
@@ -25,9 +21,10 @@ public class Sprite implements IActor {
 	private double worth;
 	private Animation animation;
 	private Map<String, IAction> actions;
+	private String id;
 	private PhysicsObject physicsObject;
 	
-	public Sprite(PhysicsObject po, Animation a, String initialState, Sprite spriteOwner, double initialWorth) {
+	public Sprite(PhysicsObject po, Animation a, String initialState, Sprite spriteOwner, double initialWorth, String id) {
 		state = initialState;
 		physicsObject = po;
 		animation = a;
@@ -35,13 +32,8 @@ public class Sprite implements IActor {
 		actions = new HashMap<>();
 		owner = spriteOwner;
 		worth = initialWorth;
-		buildActionMap();
-	}
-	
-	private void buildActionMap(){ 
-		actions.put("moveForward", moveForward);
-		actions.put("jump", jump);
-		actions.put("setState", setState);
+		this.id = id;
+		actions = buildActionMap();
 	}
 	
 	public void update(long timeLapse) {
@@ -80,6 +72,7 @@ public class Sprite implements IActor {
 	 * IAction setState
 	 * changes the state of the current sprite object
 	 */
+	@IActionAnnotation(description = "Changes the sprite state", numParams = 1, paramDetails = "String")
 	private IAction setState = (params) -> {
 		String newState = params[0];
 		state = newState;
@@ -103,7 +96,7 @@ public class Sprite implements IActor {
 	}
 	
 	@IActionAnnotation(numParams = 1, description = "increments worth of sprite if no parent,"
-			+ " otherwise increments worth of parent sprite")
+			+ " otherwise increments worth of parent sprite", paramDetails = "double")
 	private IAction incrementScore = (params) -> {
 		if(owner.equals(null)){
 			incrementScore(Double.parseDouble(params[0]));
@@ -121,12 +114,12 @@ public class Sprite implements IActor {
 		worth += value;
 	}
 
-	@IActionAnnotation(numParams = 2, description = "moves sprite forward in an x, y vector direction")
+	@IActionAnnotation(numParams = 2, description = "moves sprite forward in an x, y vector direction", paramDetails = "two doubles")
 	private IAction moveForward = (params) -> {
 		physicsObject.addVelocity(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
 	};
 	
-	@IActionAnnotation(numParams = 1, description = "sprite jumps up or down")
+	@IActionAnnotation(numParams = 1, description = "sprite jumps up or down", paramDetails = "double")
 	private IAction jump = (params) -> {
 		Vector myVector = new Vector(0, Double.parseDouble(params[0]));
 		physicsObject.addVelocity(myVector);
@@ -140,5 +133,8 @@ public class Sprite implements IActor {
 	public IAction getAction(String name) {
 		return actions.get(name);
 	}
-
+	
+	public boolean checkID (String string) {
+	    return id.equals(string);
+	}
 }

@@ -10,7 +10,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.NodeType;
 
 
 /**
@@ -271,9 +270,7 @@ public class XMLParser {
         if (node.getNodeType() == Node.TEXT_NODE) {
             return;
         }
-        if (countSubDir(node) == 0) {
-            xml.put(path + "/" + node.getNodeName(), node.getTextContent());
-        }
+        xml.put(path + "/" + node.getNodeName(), node.getTextContent());
         Directory child = new Directory(node.getNodeName());
         parent.addSubDirectory(child);
         for (int i = 0; i < node.getChildNodes().getLength(); i++) {
@@ -293,17 +290,6 @@ public class XMLParser {
         // }
     }
     
-    private int countSubDir (Node node) {
-        int ans = 0;
-        for (int i = 0; i < node.getChildNodes().getLength(); i++) {
-            if (node.getChildNodes().item(i).getNodeType() == Node.ELEMENT_NODE) {
-                ans ++;
-            }
-        }
-        return ans;
-    }
 
-    public static void main (String[] args) {
-        XMLParser x = new XMLParser(new File("src/game_player/NewFile.xml"));
-    }
+
 }

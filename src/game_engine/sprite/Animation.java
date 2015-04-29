@@ -181,7 +181,6 @@ public class Animation {
      */
     private void changeImage(String state) {
     	current = paths.get(state).first;
-    	System.out.println(current);
     	image.setImage(current.image);
     	image.setFitWidth(current.image.getWidth());
     	image.setFitHeight(current.image.getHeight());
