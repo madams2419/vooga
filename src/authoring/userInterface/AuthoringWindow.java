@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import authoring.dataEditors.Sprite;
 import authoring.dialogs.FileChooserDialog;
 import authoring.dialogs.NewRegionDialog;
@@ -51,17 +52,20 @@ public class AuthoringWindow {
 //		System.out.println("Instantiated AuthoringWindow");
 	}
 
-	public Scene GameCreateUI(Scene parentScene) {
+	public void GameCreateUI() {
+		
+		Stage stage = new Stage();
 
 		VBox root = new VBox();
-		parentScene.setRoot(root);
+		Scene parentScene = new Scene(root, 1000, 1000);
+		stage.setScene(parentScene);
+		
 		myScene = parentScene;
 		BorderPane rootContainer = setupRootContainer();
 		root.getChildren().addAll(makeMenuBar(), rootContainer);
 		populatePaneMap();
 		UIElementDistributer.distributeElements(myScene, this);
-
-		return myScene;
+		stage.show();
 	}
 
 	private void populatePaneMap() {
