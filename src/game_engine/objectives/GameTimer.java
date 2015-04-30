@@ -46,5 +46,6 @@ public class GameTimer {
     
     public void update (double now) {
         myCurrent += now;
+        System.out.println("Current" + myCurrent);
     }
 }

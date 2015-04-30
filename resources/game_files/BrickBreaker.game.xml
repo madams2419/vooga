@@ -21,7 +21,7 @@
 								<targetType>sprite</targetType>
 								<targetIndex>0</targetIndex>
 								<name>moveForward</name>
-								<parameters>-10 -5</parameters>
+								<parameters>-5 -5</parameters>
 							</behavior_0>
 						</behaviors>
 					</onFailed>
@@ -39,7 +39,7 @@
 									<source>resources/images/ground.png</source>
 									<delay>1.0</delay>
 									<width>300</width>
-									<height>100</height>
+									<height>50</height>
 								</image_0>
 							</images>
 						</state_0>
@@ -47,7 +47,7 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>super_ball</material>
-						<position>200 60</position>
+						<position>200 25</position>
 					</physics>
 				</sprite_4>
 				<sprite_0>
@@ -59,8 +59,8 @@
 								<image_0>
 									<source>resources/images/ball.png</source>
 									<delay>1.0</delay>
-									<width>100</width>
-									<height>100</height>
+									<width>50</width>
+									<height>50</height>
 									<hitboxes>
 										<hitbox_0>
 											<point_0>0 0</point_0>
@@ -76,7 +76,7 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>super_ball</material>
-						<position>50 300</position>
+						<position>500 300</position>
 					</physics>
 				</sprite_0>
 
@@ -85,14 +85,12 @@
 					<animations>
 						<state_0>
 							<name>immobile</name>
-
 							<images>
 								<image_0>
 									<source>resources/images/ground.png</source>
-
 									<delay>1.0</delay>
 
-									<width>1000</width>
+									<width>1500</width>
 									<height>200</height>
 
 									<hitboxes>
@@ -111,7 +109,7 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>static</material>
-						<position>500 -100</position>
+						<position>750 -100</position>
 					</physics>
 				</sprite_1>
 				<sprite_2>
@@ -131,8 +129,8 @@
 					</animations>
 					<physics>
 						<type>ComplexPhysicsObject</type>
-						<material>static</material>
-						<position>-60 400</position>
+						<material>trampoline</material>
+						<position>-55 400</position>
 					</physics>
 				</sprite_2>
 				<sprite_3>
@@ -152,8 +150,8 @@
 					</animations>
 					<physics>
 						<type>ComplexPhysicsObject</type>
-						<material>static</material>
-						<position>1060 400</position>
+						<material>trampoline</material>
+						<position>1555 400</position>
 					</physics>
 				</sprite_3>
 				<sprite_5>
@@ -166,7 +164,7 @@
 								<image_0>
 									<source>resources/images/brickwall.png</source>
 									<delay>1.0</delay>
-									<width>1000</width>
+									<width>1500</width>
 									<height>200</height>
 									<hitboxes>
 										<hitbox_0>
@@ -184,7 +182,7 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>trampoline</material>
-						<position>500 800</position>
+						<position>750 800</position>
 					</physics>
 				</sprite_5>
 				</sprites>
@@ -210,7 +208,7 @@
 									<targetType>sprite</targetType>
 									<targetIndex>4</targetIndex>
 									<name>moveForward</name>
-									<parameters>5 0</parameters>
+									<parameters>1 0</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
@@ -234,7 +232,7 @@
 									<targetType>sprite</targetType>
 									<targetIndex>4</targetIndex>
 									<name>moveForward</name>
-									<parameters>-5 0</parameters>
+									<parameters>-1 0</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>

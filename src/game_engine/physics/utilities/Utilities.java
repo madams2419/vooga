@@ -1,4 +1,4 @@
-package game_engine.physics;
+package game_engine.physics.utilities;
 
 public class Utilities {
 
@@ -17,6 +17,10 @@ public class Utilities {
 		} else {
 			return value;
 		}
+	}
+
+	public static double solvePythagorean(double aVal, double bVal) {
+		return Math.sqrt(aVal * aVal + bVal * bVal);
 	}
 
 }

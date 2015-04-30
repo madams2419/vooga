@@ -1,4 +1,7 @@
-package game_engine.physics;
+package game_engine.physics.rigidbodies;
+
+import game_engine.physics.utilities.Utilities;
+import game_engine.physics.utilities.Vector;
 
 // TODO
 // - remove generic helper methods up to RigidBody class (inXRange and inYRange to name two)

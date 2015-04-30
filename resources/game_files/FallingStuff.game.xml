@@ -88,7 +88,7 @@
 				</objective_3>
 				<objective_4>
 					<prereqs></prereqs>
-					<timer>1000</timer>
+					<timer>3000</timer>
 					<onFailed>
 						<behaviors>
 							<behavior_0>

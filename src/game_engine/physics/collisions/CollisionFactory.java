@@ -1,9 +1,14 @@
-package game_engine.physics;
+package game_engine.physics.collisions;
 
-public class PhysicsCollisionFactory {
+import game_engine.physics.PhysicsObject;
+import game_engine.physics.rigidbodies.CircleBody;
+import game_engine.physics.rigidbodies.RectangleBody;
+import game_engine.physics.rigidbodies.RigidBody;
+
+public class CollisionFactory {
 
 	// TODO refactor with 2D array of suppliers
-	public PhysicsCollision createCollision(PhysicsObject poA, PhysicsObject poB) {
+	public Collision createCollision(PhysicsObject poA, PhysicsObject poB) {
 		RigidBody rbA = poA.getRigidBody();
 		RigidBody rbB = poB.getRigidBody();
 
