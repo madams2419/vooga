@@ -52,20 +52,17 @@ public class AuthoringWindow {
 //		System.out.println("Instantiated AuthoringWindow");
 	}
 
-	public void GameCreateUI() {
-		
-		Stage stage = new Stage();
+	public Scene GameCreateUI() {
 
 		VBox root = new VBox();
 		Scene parentScene = new Scene(root, 1000, 1000);
-		stage.setScene(parentScene);
 		
 		myScene = parentScene;
 		BorderPane rootContainer = setupRootContainer();
 		root.getChildren().addAll(makeMenuBar(), rootContainer);
 		populatePaneMap();
 		UIElementDistributer.distributeElements(myScene, this);
-		stage.show();
+		return parentScene;
 	}
 
 	private void populatePaneMap() {
