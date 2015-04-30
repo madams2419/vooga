@@ -15,12 +15,15 @@ import game_engine.scrolling.scrollfocus.BasicFocus;
 import game_engine.scrolling.scrollfocus.IScrollFocus;
 import game_engine.scrolling.tracker.SpriteTracker;
 import game_engine.sprite.Sprite;
+import game_player.HeadsUpDisplay;
+
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -171,6 +174,8 @@ public class Level implements IActor {
 	            tracker.enable();
 	            tracker.setPlayer(sprite, true, false);
 	            tracker.tellY(height - 200);
+	            HeadsUpDisplay hud = new HeadsUpDisplay(sprite);
+	            myGroup.getChildren().add(hud.getHUD());
 	        }
 	        catch (Exception e) {
 	            e.printStackTrace();
