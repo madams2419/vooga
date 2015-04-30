@@ -7,6 +7,8 @@ import game_engine.physics.PhysicsObject;
 import game_engine.physics.utilities.Vector;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observer;
+import java.util.Observable;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 /**
@@ -14,7 +16,7 @@ import javafx.scene.shape.Rectangle;
  * @authors Brian Lavallee, Kevin Chang, Emre Sonmez
  * Sprite class to hold information for all characters in game
  */
-public class Sprite implements IActor {
+public class Sprite extends Observable implements IActor {
 	
 	private String state;
 	private Sprite owner; // null if no owner
@@ -34,6 +36,7 @@ public class Sprite implements IActor {
 		worth = initialWorth;
 		this.id = id;
 		actions = buildActionMap();
+		this.addObserver(animation);
 	}
 	
 	public void update(long timeLapse) {
@@ -77,6 +80,8 @@ public class Sprite implements IActor {
 		String newState = params[0];
 		state = newState;
 		animation.setState(newState);
+		setChanged();
+                notifyObservers();
 	};
 	
 	/**
@@ -137,4 +142,9 @@ public class Sprite implements IActor {
 	public boolean checkID (String string) {
 	    return id.equals(string);
 	}
+	
+	public void removeObserver(Observer obs){
+	    this.removeObserver(obs);
+	}
+ 
 }
