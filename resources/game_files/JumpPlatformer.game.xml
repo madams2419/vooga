@@ -11,7 +11,6 @@
 				<objective_0>
 					<description></description>
 					<prereqs></prereqs>
-					<timer>30000</timer>
 					<onFailed>
 						<behaviors>
 							<behavior_0>
@@ -139,7 +138,7 @@
 						<name>jumping</name>
 							<images>
 								<image_0>
-									<source>resources/images/jumpingMario.png</source>
+									<source>resources/images/happymario.png</source>
 								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
 									<hitbox_0>
 										<point_0>0 0</point_0>
@@ -493,14 +492,13 @@
 
 					<key_2>
 						<key>UP</key>
-
 						<onPressed>
 							<behaviors>
 								<behavior_0>
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>jump</name>
-									<parameters>7</parameters>
+									<parameters>10</parameters>
 								</behavior_0>
 								<behavior_1>
 									<targetType>controlManager</targetType>
