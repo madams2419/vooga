@@ -62,13 +62,13 @@
 			</level_objectives>
 			<sprites>
 				<sprite_0>
-					<initial_state>standing</initial_state>
+					<initial_state>standingL</initial_state>
 					<animations>
 						<state_0>
-							<name>standing</name>
+							<name>standingL</name>
 							<images>
 								<image_0>
-									<source>resources/images/standingMario.png</source>
+									<source>resources/images/standingMarioL.png</source>
 								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
 									<hitbox_0>
 										<point_0>0 0</point_0>
@@ -95,10 +95,10 @@
 							</images>
 						</state_1>
 						<state_2>
-							<name>walking</name>
+							<name>walkingL</name>
 							<images>
 								<image_0>
-									<source>resources/images/standingMario.png</source>
+									<source>resources/images/standingMarioL.png</source>
 								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
 									<hitbox_0>
 										<point_0>0 0</point_0>
@@ -108,7 +108,7 @@
 									</hitbox_0>
 								</hitboxes></image_0>
 								<image_1>
-									<source>resources/images/walkingMario.png</source>
+									<source>resources/images/walkingMarioL.png</source>
 								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
 									<hitbox_0>
 										<point_0>0 0</point_0>
@@ -117,16 +117,6 @@
 										<point_3>0 200</point_3>
 									</hitbox_0>
 								</hitboxes></image_1>
-								<image_2>
-										<source>resources/images/walkingMario2.png</source>
-								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
-									<hitbox_0>
-										<point_0>0 0</point_0>
-										<point_1>100 0</point_1>
-										<point_2>100 200</point_2>
-										<point_3>0 200</point_3>
-									</hitbox_0>
-								</hitboxes></image_2>
 								</images>
 						</state_2>
 						<state_3>
@@ -158,7 +148,37 @@
 										<point_3>0 200</point_3>
 									</hitbox_0>
 								</hitboxes></image_0>
-							</images></state_4></animations>
+							</images></state_4>
+						<state_5>
+						<name>standingR</name>
+							<images>
+								<image_0>
+									<source>resources/images/jumpingMario.png</source>
+								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes></image_0>
+							</images>
+							</state_5>
+						<state_6>
+						<name>walkingR</name>
+							<images>
+								<image_0>
+									<source>resources/images/jumpingMario.png</source>
+								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes></image_0>
+							</images>
+							</state_6></animations>
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>bouncy_ball</material>
