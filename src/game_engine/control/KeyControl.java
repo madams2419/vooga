@@ -29,23 +29,6 @@ public class KeyControl extends SceneControl {
 		myWhilePressedKey = new ArrayList<>();
 	}
 
-	
-	public void executeKeyEvent(KeyCode keycode, boolean pressed){
-		if(myKeyPressedMap.containsKey(keycode)){
-			if(pressed){
-				if(myKeyPressedMap.get(keycode) != null){
-					myKeyPressedMap.get(keycode).perform();
-					myWhilePressedKey.add(keycode);
-				}
-			} else {
-				if(myKeyReleasedMap.get(keycode) != null){
-					myKeyReleasedMap.get(keycode).perform();
-					myWhilePressedKey.remove(keycode);
-				}
-			}
-		}
-	}
-
 	@Override
 	public void executeEvent(InputEvent e){
 		executeKeyEvent((KeyEvent) e);

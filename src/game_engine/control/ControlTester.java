@@ -231,7 +231,6 @@ public class ControlTester extends Application{
 
 	
 	private void handleClick(double x, double y){
-		enterTag = true;
 		if(!boundCheck(x, y)){
 			dragTag = true;
 		} 
@@ -252,14 +251,6 @@ public class ControlTester extends Application{
 	
 	private void handleRelease(){
 		dragTag = false;
-		enterTag = true;
-		System.out.println("DragRelease" + dragTag + enterTag);
-	}
-
-	private boolean checkB(MouseEvent e){
-		return (e.getX() < myCircle.getCenterX() + myCircle.getRadius()) &&
-				(e.getX() > myCircle.getCenterX() - myCircle.getRadius()) &&
-				(e.getY() < myCircle.getCenterY() + myCircle.getRadius()) &&
-				(e.getY() > myCircle.getCenterY() - myCircle.getRadius());
+		System.out.println("MouseRelease "+dragTag);
 	}
 }

@@ -33,7 +33,6 @@ public class SceneControlManager extends ControlManager{
 	 */
 	@Override
 	public void addControl(Control control){
-	//  ((SceneControl) control).addControlFactory(myControlFactory);
 		myControlFactory.addControlType(control);
 	}
 

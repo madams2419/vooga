@@ -15,13 +15,4 @@ public abstract class SceneControl implements Control{
 	 */
 	public void executeEvent(InputEvent e){System.out.println("Get called");}
 	
-
-//	public void addControlFactory(SceneControlFactory sceneControlFactory){
-//		myControlFactory = sceneControlFactory;
-//	}
-//	
-//	public SceneControlFactory getControlFactory(){
-//		return myControlFactory;
-//	}
-	
 }
