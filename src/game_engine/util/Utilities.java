@@ -1,4 +1,4 @@
-package game_engine;
+package game_engine.util;
 
 import game_engine.physics.utilities.Vector;
 
