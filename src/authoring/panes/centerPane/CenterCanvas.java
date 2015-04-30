@@ -199,10 +199,14 @@ public class CenterCanvas extends ScrollPane {
 		else
 			myKeyActions.put(key, action);
 	}
+	
+	public void resetKeyActions() {
+	    myKeyActions = new HashMap<>();
+	}
 
-    public void toggleMode () {
-        myMode = myMode.getToggle();
-    }
+	public void toggleMode () {
+	    myMode = myMode.getToggle();
+	}
     
 	public void addCollision(Collision_XML collision, Sprite... interactors) {
 		myCollisions.put(FrontEndUtils.getSpritesIDSorted(interactors), collision);

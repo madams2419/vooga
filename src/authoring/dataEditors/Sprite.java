@@ -78,9 +78,10 @@ public class Sprite extends ImageView {
         myCharacteristics.put(SCALE, String.valueOf(myScale));
         myIcon = new ImageView();
         changeImage(imageURI);
+        getAnimations();
     }
 
-    public Sprite (CenterPane parent) {
+    private Sprite (CenterPane parent) {
         myParent = parent;
         myName = NAME;
         myPosition = new HashMap<>();

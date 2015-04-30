@@ -28,7 +28,8 @@ public class Sprite_XML {
 
     public Sprite_XML (Sprite s) {
         populateAnimations(s);
-        initial_state = animation.size() > 0 ? animation.get(0).name : DEFAULT_INITIAL_STATE;
+        initial_state = animation.get(0).name.length() > 0 ? animation.get(0).name : DEFAULT_INITIAL_STATE;
+        System.out.println("initial state: " + initial_state);
         path = s.getPath();
         physics =
                 new Physics(s.getMyType(), s.getMyMaterial(), String.format(
@@ -89,6 +90,7 @@ public class Sprite_XML {
         private static final String DELAY = "delay";
         private static final String SOURCE = "source";
         private static final String IMAGE_ = "image_";
+        private static final String PROJECT_NAME = "voogasalad_HighScrollers/";
         private String source;
         private String delay;
         private String width;
@@ -97,11 +99,15 @@ public class Sprite_XML {
 
         private Image (String source, String delay, String width, String height,
                        Hitbox ... hitboxes) {
-            this.source = source;
+            this.source = getRelativePath(source);
             this.delay = delay;
             this.width = width;
             this.height = height;
             this.hitboxes = hitboxes;
+        }
+
+        private String getRelativePath (String longSource) {
+            return longSource.split(PROJECT_NAME)[1];
         }
 
         public void writeToXML (Element parent, int index, XMLBuilder xml) {
