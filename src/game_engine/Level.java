@@ -83,14 +83,13 @@ public class Level implements IActor {
 	 */
 	public void update(double framePeriod) {
 		long framePeriodMillis = (long) (framePeriod * 1000);
-		System.out.println(framePeriodMillis);
 		myObjectives.forEach(objective -> objective.update(framePeriodMillis));
 		myPhysics.update(framePeriod); // update PhysicsObjects and handle physical collisions
 		mySprites.forEach(sprite -> sprite.update(framePeriodMillis)); // update animations
 		myControlManager.update();
-		myCollisionEngine.checkCollisions(); // handle behavioral collisions
 		myToBeRemoved.forEach(this::removeSprite);
-		myToBeRemoved.clear();
+                myToBeRemoved.clear();
+		myCollisionEngine.checkCollisions(); // handle behavioral collisions
 	}
 	
 	private void removeSprite (Sprite sprite) {
@@ -155,7 +154,7 @@ public class Level implements IActor {
 	public void start (double width, double height) {
 	    try {
 	            myGroup = new Group(mySpriteGroup);
-	            IScrollFocus focus = new BasicFocus(width, height);
+	            IScrollFocus focus = new BasicFocus(width, height, 0, 600);
 	            IScroller scroller = new BasicScroller(mySpriteGroup);
 	            WrapAround wrap =
                             new WrapAround(new Image(new FileInputStream("Resources/images/samplebackground.png")),
