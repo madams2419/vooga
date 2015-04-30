@@ -83,7 +83,6 @@ public class Level implements IActor {
 	 */
 	public void update(double framePeriod) {
 		long framePeriodMillis = (long) (framePeriod * 1000);
-		System.out.println(framePeriodMillis);
 		myObjectives.forEach(objective -> objective.update(framePeriodMillis));
 		myPhysics.update(framePeriod); // update PhysicsObjects and handle physical collisions
 		mySprites.forEach(sprite -> sprite.update(framePeriodMillis)); // update animations

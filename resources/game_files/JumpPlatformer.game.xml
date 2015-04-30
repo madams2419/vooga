@@ -11,7 +11,6 @@
 				<objective_0>
 					<description></description>
 					<prereqs></prereqs>
-					<timer>30000</timer>
 					<onFailed>
 						<behaviors>
 							<behavior_0>
@@ -62,13 +61,13 @@
 			</level_objectives>
 			<sprites>
 				<sprite_0>
-					<initial_state>standing</initial_state>
+					<initial_state>standingR</initial_state>
 					<animations>
 						<state_0>
-							<name>standing</name>
+							<name>standingL</name>
 							<images>
 								<image_0>
-									<source>resources/images/mario.png</source>
+									<source>resources/images/standingMarioL.png</source>
 								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
 									<hitbox_0>
 										<point_0>0 0</point_0>
@@ -95,11 +94,11 @@
 							</images>
 						</state_1>
 						<state_2>
-							<name>walking</name>
+							<name>walkingL</name>
 							<images>
 								<image_0>
-									<source>resources/images/mario.png</source>
-								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
+									<source>resources/images/standingMarioL.png</source>
+								<delay>0.1</delay><width>100</width><height>200</height><hitboxes>
 									<hitbox_0>
 										<point_0>0 0</point_0>
 										<point_1>100 0</point_1>
@@ -108,8 +107,8 @@
 									</hitbox_0>
 								</hitboxes></image_0>
 								<image_1>
-									<source>resources/images/walkingMario.png</source>
-								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
+									<source>resources/images/walkingMarioL.png</source>
+								<delay>0.1</delay><width>100</width><height>200</height><hitboxes>
 									<hitbox_0>
 										<point_0>0 0</point_0>
 										<point_1>100 0</point_1>
@@ -117,7 +116,7 @@
 										<point_3>0 200</point_3>
 									</hitbox_0>
 								</hitboxes></image_1>
-							</images>
+								</images>
 						</state_2>
 						<state_3>
 							<name>win</name>
@@ -134,11 +133,65 @@
 								</hitboxes></image_0>
 							</images>
 						</state_3>
-						
-					</animations>
+
+						<state_4>							
+						<name>jumping</name>
+							<images>
+								<image_0>
+									<source>resources/images/happymario.png</source>
+								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes></image_0>
+							</images></state_4>
+						<state_5>
+						<name>standingR</name>
+							<images>
+								<image_0>
+									<source>resources/images/standingMarioR.png</source>
+								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes></image_0>
+							</images>
+							</state_5>
+						<state_6>
+						<name>walkingR</name>
+							<images>
+								<image_0>
+									<source>resources/images/walkingMarioR.png</source>
+								<delay>0.1</delay><width>100</width><height>200</height><hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes></image_0>
+								<image_1>
+								<source>resources/images/standingMarioR.png</source>
+								<delay>0.1</delay><width>100</width><height>200</height><hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes>
+								</image_1>
+							</images>
+							</state_6></animations>
 					<physics>
 						<type>ComplexPhysicsObject</type>
-						<material>bouncy_ball</material>
+						<material>human</material>
 						<position>50 300</position>
 					</physics>
 				</sprite_0>
@@ -150,14 +203,14 @@
 							<images>
 								<image_0>
 									<source>resources/images/ground.png</source>
-								<width>200</width><delay>1.0</delay><height>100</height></image_0>
+								<width>800</width><delay>1.0</delay><height>100</height></image_0>
 							</images>
 						</state_0>
 					</animations>
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>floating</material>
-						<position>50 200</position>
+						<position>100 200</position>
 					</physics>
 				</sprite_1>
 				<sprite_2>
@@ -175,7 +228,7 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>floating</material>
-						<position>350 250</position>
+						<position>500 400</position>
 					</physics>
 				</sprite_2>
 				<sprite_3>
@@ -211,7 +264,7 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>floating</material>
-						<position>1200 300</position>
+						<position>1200 800</position>
 					</physics>
 				</sprite_4>
 				<sprite_5>
@@ -323,7 +376,24 @@
 						<position>2700 200</position>
 					</physics>
 				</sprite_10>
-			</sprites>
+				<sprite_11>
+					<initial_state>immobile</initial_state>
+					<animations>
+						<state_0>
+							<name>immobile</name>
+							<images>
+								<image_0>
+									<source>resources/images/ground.png</source>
+								<width>200</width><delay>1.0</delay><height>100</height></image_0>
+							</images>
+						</state_0>
+					</animations>
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>floating</material>
+						<position>-300 400</position>
+					</physics>
+				</sprite_11></sprites>
 			<physics_engine>
 				<type>ComplexPhysicsEngine</type>
 				<drag_coefficient>0.5</drag_coefficient>
@@ -347,16 +417,46 @@
 									<name>moveForward</name>
 									<parameters>5 0</parameters>
 								</behavior_0>
-							</behaviors>
+								<behavior_1>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>walkingR</parameters>
+									</behavior_1></behaviors>
 						</onPressed>
 
 						<onReleased>
 							<behaviors>
+								<behavior_0>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>standingR</parameters>
+								</behavior_0>
+								<behavior_1>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>removeVelocity</name>
+								<parameters>5 0</parameters>
+								</behavior_1>
 							</behaviors>
 						</onReleased>
 						
 						<whilePressed>
-							<behaviors></behaviors>
+							<behaviors>
+							<behavior_0>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>walkingR</parameters>
+									</behavior_0>
+							<behavior_1>
+							<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>moveForward</name>
+									<parameters>5 0</parameters>
+									</behavior_1>
+							</behaviors>
 						</whilePressed>
 					</key_0>
 
@@ -371,22 +471,51 @@
 									<name>moveForward</name>
 									<parameters>-5 0</parameters>
 								</behavior_0>
+								<behavior_1>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>walkingL</parameters>
+									</behavior_1>
 							</behaviors>
 						</onPressed>
 
 						<onReleased>
 							<behaviors>
+								<behavior_0>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>standingL</parameters>
+									</behavior_0>
+								<behavior_1>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>removeVelocity</name>
+								<parameters>-5 0</parameters>
+								</behavior_1>
 							</behaviors>
 						</onReleased>
 						
 						<whilePressed>
-							<behaviors></behaviors>
+							<behaviors>
+								<behavior_0>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>walkingL</parameters>
+									</behavior_0>
+								<behavior_1>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>moveForward</name>
+									<parameters>-5 0</parameters>
+									</behavior_1></behaviors>
 						</whilePressed>
 					</key_1>
 
 					<key_2>
 						<key>UP</key>
-
 						<onPressed>
 							<behaviors>
 								<behavior_0>
@@ -401,11 +530,23 @@
 									<name>setActiveControl</name>
 									<parameters>1</parameters>
 								</behavior_1>
+								<behavior_2>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>jumping</parameters>
+									</behavior_2>
 							</behaviors>
 						</onPressed>
 						
 						<onReleased>
-							<behaviors></behaviors>
+							<behaviors>
+								<behavior_0>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>standing</parameters>
+									</behavior_0></behaviors>
 						</onReleased>
 						
 						<whilePressed>
@@ -694,7 +835,12 @@
 					<values>2700 800 2700 800 3700 800 3700 800</values>
 					<duration>5</duration>
 					<delay>0</delay></path_0>
-			</sprite_paths>
+				<path_1>
+				<id>4</id>
+					<values>1200 100 1200 300 1200 500 1200 800</values>
+					<duration>5</duration>
+					<delay>1</delay>
+					</path_1></sprite_paths>
 		</level_0>
 		<level_1>
 			<level_objectives>
@@ -702,13 +848,13 @@
 			</level_objectives>
 			<sprites>
 				<sprite_0>
-					<initial_state>standing</initial_state>
+					<initial_state>standingR</initial_state>
 					<animations>
 						<state_0>
-							<name>standing</name>
+							<name>standingL</name>
 							<images>
 								<image_0>
-									<source>resources/images/mario.png</source>
+									<source>resources/images/standingMarioL.png</source>
 								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
 									<hitbox_0>
 										<point_0>0 0</point_0>
@@ -735,10 +881,10 @@
 							</images>
 						</state_1>
 						<state_2>
-							<name>walking</name>
+							<name>walkingL</name>
 							<images>
 								<image_0>
-									<source>resources/images/mario.png</source>
+									<source>resources/images/standingMarioL.png</source>
 								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
 									<hitbox_0>
 										<point_0>0 0</point_0>
@@ -748,7 +894,7 @@
 									</hitbox_0>
 								</hitboxes></image_0>
 								<image_1>
-									<source>resources/images/walkingMario.png</source>
+									<source>resources/images/walkingMarioL.png</source>
 								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
 									<hitbox_0>
 										<point_0>0 0</point_0>
@@ -757,7 +903,7 @@
 										<point_3>0 200</point_3>
 									</hitbox_0>
 								</hitboxes></image_1>
-							</images>
+								</images>
 						</state_2>
 						<state_3>
 							<name>win</name>
@@ -774,8 +920,62 @@
 								</hitboxes></image_0>
 							</images>
 						</state_3>
-						
-					</animations>
+
+						<state_4>							
+						<name>jumping</name>
+							<images>
+								<image_0>
+									<source>resources/images/jumpingMario.png</source>
+								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes></image_0>
+							</images></state_4>
+						<state_5>
+						<name>standingR</name>
+							<images>
+								<image_0>
+									<source>resources/images/standingMarioR.png</source>
+								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes></image_0>
+							</images>
+							</state_5>
+						<state_6>
+						<name>walkingR</name>
+							<images>
+								<image_0>
+									<source>resources/images/walkingMarioR.png</source>
+								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes></image_0>
+								<image_1>
+								<source>resources/images/standingMarioR.png</source>
+								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes>
+								</image_1>
+							</images>
+							</state_6></animations>
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>bouncy_ball</material>
@@ -968,6 +1168,12 @@
 									<name>moveForward</name>
 									<parameters>5 0</parameters>
 								</behavior_0>
+								<behavior_1>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>walkingR</parameters>
+									</behavior_1>
 							</behaviors>
 						</onPressed>
 
@@ -992,6 +1198,12 @@
 									<name>moveForward</name>
 									<parameters>-5 0</parameters>
 								</behavior_0>
+								<behavior_1>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>walkingL</parameters>
+									</behavior_1>
 							</behaviors>
 						</onPressed>
 
