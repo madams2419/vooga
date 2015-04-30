@@ -87,7 +87,7 @@
 
 			<sprites>
 				<sprite_0>
-					<initial_state>standing</initial_state>
+					<initial_state>mario</initial_state>
 
 					<animations>
 						<state_0>
@@ -99,8 +99,8 @@
 
 									<delay>1.0</delay>
 
-									<width>100</width>
-									<height>200</height>
+									<width>50</width>
+									<height>50</height>
 
 									<hitboxes>
 										<hitbox_0>
@@ -113,89 +113,89 @@
 								</image_0>
 							</images>
 						</state_0>
-
-						<state_1>
-							<name>dead</name>
-
-							<images>
-								<image_0>
-									<source>resources/images/surprisedMario.png</source>
-
-									<delay>1.0</delay>
-
-									<width>100</width>
-									<height>200</height>
-
-									<hitboxes>
-										<hitbox_0>
-											<point_0>0 0</point_0>
-											<point_1>100 0</point_1>
-											<point_2>100 200</point_2>
-											<point_3>0 200</point_3>
-										</hitbox_0>
-									</hitboxes>
-								</image_0>
-							</images>
-						</state_1>
-
-						<state_2>
-							<name>win</name>
-
-							<images>
-								<image_0>
-									<source>resources/images/happymario.png</source>
-
-									<delay>1.0</delay>
-
-									<width>100</width>
-									<height>200</height>
-
-									<hitboxes>
-										<hitbox_0>
-											<point_0>0 0</point_0>
-											<point_1>100 0</point_1>
-											<point_2>100 200</point_2>
-											<point_3>0 200</point_3>
-										</hitbox_0>
-									</hitboxes>
-								</image_0>
-							</images>
-						</state_2>
-
-						<state_3>
-							<name>key</name>
-
-							<images>
-								<image_0>
-									<source>resources/images/keyMario.png</source>
-
-									<delay>1.0</delay>
-
-									<width>100</width>
-									<height>200</height>
-
-									<hitboxes>
-										<hitbox_0>
-											<point_0>0 0</point_0>
-											<point_1>100 0</point_1>
-											<point_2>100 200</point_2>
-											<point_3>0 200</point_3>
-										</hitbox_0>
-									</hitboxes>
-								</image_0>
-							</images>
-						</state_3>
 					</animations>
 
 					<physics>
 						<type>ComplexPhysicsObject</type>
-						<material>bouncy_ball</material>
-						<position>50 300</position>
+						<material>insane_bouncy_ball</material>
+						<position>0 400</position>
 					</physics>
 				</sprite_0>
-
+				
 				<sprite_1>
-					<initial_state>immobile</initial_state>
+					<initial_state>left_platform</initial_state>
+
+					<animations>
+						<state_0>
+							<name>standing</name>
+
+							<images>
+								<image_0>
+									<source>resources/images/brick.png</source>
+
+									<delay>1.0</delay>
+
+									<width>50</width>
+									<height>100</height>
+
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>100 0</point_1>
+											<point_2>100 200</point_2>
+											<point_3>0 200</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>insane_bouncy_ball</material>
+						<position>-480 0</position>
+					</physics>
+				</sprite_1>
+				
+				<sprite_2>
+					<initial_state>right_platform</initial_state>
+
+					<animations>
+						<state_0>
+							<name>standing</name>
+
+							<images>
+								<image_0>
+									<source>resources/images/brick.png</source>
+
+									<delay>1.0</delay>
+
+									<width>50</width>
+									<height>100</height>
+
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>100 0</point_1>
+											<point_2>100 200</point_2>
+											<point_3>0 200</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>insanse_bouncy_ball</material>
+						<position>480 0</position>
+					</physics>
+				</sprite_2>
+
+				<sprite_3>
+					<initial_state>left_wall</initial_state>
 
 					<animations>
 						<state_0>
@@ -207,8 +207,8 @@
 
 									<delay>1.0</delay>
 
-									<width>8000</width>
-									<height>200</height>
+									<width>1000</width>
+									<height>10</height>
 
 									<hitboxes>
 										<hitbox_0>
@@ -226,11 +226,11 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>floating</material>
-						<position>0 0</position>
+						<position>0 -500</position>
 					</physics>
-				</sprite_1>
-				<sprite_2>
-					<initial_state>immobile</initial_state>
+				</sprite_3>
+				<sprite_4>
+					<initial_state>right_wall</initial_state>
 
 					<animations>
 						<state_0>
@@ -242,8 +242,17 @@
 
 									<delay>1.0</delay>
 
-									<width>400</width>
-									<height>100</height>
+									<width>980</width>
+									<height>10</height>
+
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>2000 0</point_1>
+											<point_2>2000 200</point_2>
+											<point_3>0 200</point_3>
+										</hitbox_0>
+									</hitboxes>
 								</image_0>
 							</images>
 						</state_0>
@@ -252,11 +261,11 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>floating</material>
-						<position>700 500</position>
+						<position>0 500</position>
 					</physics>
-				</sprite_2>
-				<sprite_3>
-					<initial_state>immobile</initial_state>
+				</sprite_4>
+				<sprite_5>
+					<initial_state>top_wall</initial_state>
 
 					<animations>
 						<state_0>
@@ -268,8 +277,17 @@
 
 									<delay>1.0</delay>
 
-									<width>400</width>
-									<height>100</height>
+									<width>10</width>
+									<height>980</height>
+
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>2000 0</point_1>
+											<point_2>2000 200</point_2>
+											<point_3>0 200</point_3>
+										</hitbox_0>
+									</hitboxes>
 								</image_0>
 							</images>
 						</state_0>
@@ -277,17 +295,157 @@
 
 					<physics>
 						<type>ComplexPhysicsObject</type>
-						<material>bouncy_ball</material>
-						<position>400 300</position>
+						<material>floating</material>
+						<position>500 0</position>
 					</physics>
-				</sprite_3>
+				</sprite_5>
+				<sprite_6>
+					<initial_state>bottom_wall</initial_state>
+
+					<animations>
+						<state_0>
+							<name>immobile</name>
+
+							<images>
+								<image_0>
+									<source>resources/images/ground.png</source>
+
+									<delay>1.0</delay>
+
+									<width>10</width>
+									<height>1000</height>
+
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>2000 0</point_1>
+											<point_2>2000 200</point_2>
+											<point_3>0 200</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>floating</material>
+						<position>-500 0</position>
+					</physics>
+				</sprite_6>
+				<sprite_7>
+					<initial_state>immobile</initial_state>
+
+					<animations>
+						<state_0>
+							<name>immobile</name>
+
+							<images>
+								<image_0>
+									<source>resources/images/transparent.png</source>
+
+									<delay>1.0</delay>
+
+									<width>10</width>
+									<height>1000</height>
+
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>2000 0</point_1>
+											<point_2>2000 200</point_2>
+											<point_3>0 200</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>transparent</material>
+						<position>-500 0</position>
+					</physics>
+				</sprite_7>
+				<sprite_8>
+					<initial_state>immobile</initial_state>
+
+					<animations>
+						<state_0>
+							<name>immobile</name>
+
+							<images>
+								<image_0>
+									<source>resources/images/transparent.png</source>
+
+									<delay>1.0</delay>
+
+									<width>10</width>
+									<height>1000</height>
+
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>2000 0</point_1>
+											<point_2>2000 200</point_2>
+											<point_3>0 200</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>transparent</material>
+						<position>500 0</position>
+					</physics>
+				</sprite_8>
+				<sprite_9>
+					<initial_state>immobile</initial_state>
+
+					<animations>
+						<state_0>
+							<name>immobile</name>
+
+							<images>
+								<image_0>
+									<source>resources/images/transparent.png</source>
+
+									<delay>1.0</delay>
+
+									<width>10</width>
+									<height>1000</height>
+
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>2000 0</point_1>
+											<point_2>2000 200</point_2>
+											<point_3>0 200</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>transparent</material>
+						<position>0 500</position>
+					</physics>
+				</sprite_9>
 			</sprites>
 
 			<physics_engine>
 				<type>ComplexPhysicsEngine</type>
 				<drag_coefficient>0.5</drag_coefficient>
 				<global_accelerations>
-					<gravity>0 -9.8</gravity>
+					<gravity>0 0</gravity>
 				</global_accelerations>
 				<global_forces></global_forces>
 			</physics_engine>
@@ -352,7 +510,7 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>jump</name>
-									<parameters>7</parameters>
+									<parameters>5</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
@@ -365,6 +523,28 @@
 							<behaviors></behaviors>
 						</whilePressed>
 					</key_2>
+					<key_3>
+						<key>DOWN</key>
+
+						<onPressed>
+							<behaviors>
+								<behavior_0>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>moveForward</name>
+									<parameters>0 -5</parameters>
+								</behavior_0>
+							</behaviors>
+						</onPressed>
+						
+						<onReleased>
+							<behaviors></behaviors>
+						</onReleased>
+						
+						<whilePressed>
+							<behaviors></behaviors>
+						</whilePressed>
+					</key_3>
 				</control_scheme_0>
 			</controls>
 
