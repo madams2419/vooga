@@ -1,4 +1,4 @@
-package game_engine;
+package game_engine.util;
 
 import game_engine.physics.utilities.Vector;
 
@@ -26,13 +26,13 @@ public class Utilities {
 		return center.plus(translation);
 	}
 	
-	public static double[] nodeTranslationToPhysicsCenter(double nxVal, double nyVal, double nWidth, double nHeight, double screenWidth, double screenHeight) {
+	public static double[] nodeTranslationToPhysicsCenter(double nxVal, double nyVal, double nWidth, double nHeight, double screenHeight) {
 		Vector nTranslate = new Vector(nxVal, nyVal);
-		Vector pTranslate = nodeTranslationToPhysicsCenter(nTranslate, nWidth, nHeight, screenWidth, screenHeight);
+		Vector pTranslate = nodeTranslationToPhysicsCenter(nTranslate, nWidth, nHeight, screenHeight);
 		return pTranslate.asArray();
 	}
 	
-	public static Vector nodeTranslationToPhysicsCenter(Vector nTranslate, double nWidth, double nHeight, double screenWidth, double screenHeight) {
+	public static Vector nodeTranslationToPhysicsCenter(Vector nTranslate, double nWidth, double nHeight, double screenHeight) {
 		Vector pTranslate = jfxToPhysicsPoint(nTranslate, screenHeight);
 		return physicsUpperLeftToCenter(pTranslate, nWidth, nHeight);
 	}

@@ -7,14 +7,16 @@ import game_engine.physics.PhysicsObject;
 import game_engine.physics.utilities.Vector;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observer;
+import java.util.Observable;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 /**
  * 
- * @authors Brian Lavalee, Kevin Chang, Emre Sonmez
+ * @authors Brian Lavallee, Kevin Chang, Emre Sonmez
  * Sprite class to hold information for all characters in game
  */
-public class Sprite implements IActor {
+public class Sprite extends Observable implements IActor {
 	
 	private String state;
 	private Sprite owner; // null if no owner
@@ -23,6 +25,7 @@ public class Sprite implements IActor {
 	private Map<String, IAction> actions;
 	private String id;
 	private PhysicsObject physicsObject;
+	private boolean alive;
 	
 	public Sprite(PhysicsObject po, Animation a, String initialState, Sprite spriteOwner, double initialWorth, String id) {
 		state = initialState;
@@ -33,7 +36,9 @@ public class Sprite implements IActor {
 		owner = spriteOwner;
 		worth = initialWorth;
 		this.id = id;
+		alive = true;
 		actions = buildActionMap();
+		this.addObserver(animation);
 	}
 	
 	public void update(long timeLapse) {
@@ -77,6 +82,8 @@ public class Sprite implements IActor {
 		String newState = params[0];
 		state = newState;
 		animation.setState(newState);
+		setChanged();
+                notifyObservers();
 	};
 	
 	/**
@@ -98,7 +105,7 @@ public class Sprite implements IActor {
 	@IActionAnnotation(numParams = 1, description = "increments worth of sprite if no parent,"
 			+ " otherwise increments worth of parent sprite", paramDetails = "double")
 	private IAction incrementScore = (params) -> {
-		if(owner.equals(null)){
+		if(owner==null){
 			incrementScore(Double.parseDouble(params[0]));
 		}else{
 			owner.incrementScore(Double.parseDouble(params[0]));
@@ -121,8 +128,30 @@ public class Sprite implements IActor {
 	
 	@IActionAnnotation(numParams = 1, description = "sprite jumps up or down", paramDetails = "double")
 	private IAction jump = (params) -> {
+	    System.out.println("jumps");
 		Vector myVector = new Vector(0, Double.parseDouble(params[0]));
 		physicsObject.addVelocity(myVector);
+	};
+	
+	@IActionAnnotation (numParams = 0, description = "sprite is removed", paramDetails = "none")
+	private IAction die = (params) -> {
+	    alive = false;
+	};
+	
+	@IActionAnnotation (numParams = 2, description = "add force", paramDetails = "2d vector")
+	private IAction addForce = (params) -> {
+	    physicsObject.addForce(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
+	};
+	
+	
+	@IActionAnnotation(numParams = 2, description = "sets sprites velocity", paramDetails = "double")
+	private IAction setVelocity = (params) -> {
+		physicsObject.setVelocity(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
+	};
+	
+	@IActionAnnotation(numParams = 2, description = "remove velocity", paramDetails = "double")
+	private IAction removeVelocity = (params) -> {
+		physicsObject.removeVelocity(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
 	};
 	
 	/**
@@ -137,4 +166,9 @@ public class Sprite implements IActor {
 	public boolean checkID (String string) {
 	    return id.equals(string);
 	}
+	
+	public void removeObserver(Observer obs){
+	    this.removeObserver(obs);
+	}
+ 
 }

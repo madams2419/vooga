@@ -1,0 +1,922 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+	<title>Sawblades</title>
+
+	<frame_rate>30</frame_rate>
+	
+	<scene_width>1500</scene_width>
+	<scene_height>1000</scene_height>
+
+	<level>
+		<first_level>0</first_level>
+
+		<level_0>
+			<level_objectives>
+				<objective_0>
+					<description>never complete</description>
+					<prereqs>1</prereqs>
+				</objective_0>
+				
+				<objective_1>
+					<description>never complete</description>
+					<prereqs>0</prereqs>
+				</objective_1>
+				
+				<objective_2>
+					<description></description>
+					<prereqs>0 1</prereqs>
+					<timer>1000</timer>
+					<onFailed>
+						<behaviors>
+							<behavior_0>
+								<targetType>level</targetType>
+								<targetIndex>0</targetIndex>
+								<name>removeSprite</name>
+								<parameters>0</parameters>
+							</behavior_0>
+						</behaviors>
+					</onFailed>
+				</objective_2>
+				
+				<objective_3>
+					<description>Reach the flag</description>
+					<prereqs>4</prereqs>
+					<timer>10000</timer>
+					<onComplete>
+						<behaviors>
+							<behavior_0>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>setState</name>
+								<parameters>win</parameters>
+							</behavior_0>
+
+							<behavior_1>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>jump</name>
+								<parameters>10</parameters>
+							</behavior_1>
+						</behaviors>
+					</onComplete>
+				</objective_3>
+
+				<objective_4>
+					<description>Get the key</description>
+					<prereqs></prereqs>
+					<timer>20000</timer>
+					<onComplete>
+						<behaviors>
+							<behavior_0>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>setState</name>
+								<parameters>key</parameters>
+							</behavior_0>
+						</behaviors>
+					</onComplete>
+
+					<onFailed>
+						<behaviors>
+							<behavior_0>
+								<targetType>objective</targetType>
+								<targetIndex>2</targetIndex>
+								<name>setStatus</name>
+								<parameters>active</parameters>
+							</behavior_0>
+						</behaviors>
+					</onFailed>
+				</objective_4>
+
+				<objective_5>
+					<description>Don't collide with bowser</description>
+					<prereqs></prereqs>
+					<onComplete>
+						<behaviors>
+							<behavior_0>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>jump</name>
+								<parameters>1000</parameters>
+							</behavior_0>
+						</behaviors>
+					</onComplete>
+				</objective_5>
+			</level_objectives>
+
+			<sprites>
+<sprite_0>
+					<initial_state>standingR</initial_state>
+					<animations>
+						<state_0>
+							<name>standingL</name>
+							<images>
+								<image_0>
+									<source>resources/images/standingMarioL.png</source>
+								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes></image_0>
+							</images>
+						</state_0>
+						<state_1>
+							<name>dead</name>
+							<images>
+								<image_0>
+									<source>resources/images/surprisedMario.png</source>
+								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes></image_0>
+							</images>
+						</state_1>
+						<state_2>
+							<name>walkingL</name>
+							<images>
+								<image_0>
+									<source>resources/images/standingMarioL.png</source>
+								<delay>0.1</delay><width>100</width><height>200</height><hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes></image_0>
+								<image_1>
+									<source>resources/images/walkingMarioL.png</source>
+								<delay>0.1</delay><width>100</width><height>200</height><hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes></image_1>
+								</images>
+						</state_2>
+						<state_3>
+							<name>win</name>
+							<images>
+								<image_0>
+									<source>resources/images/happyMario.png</source>
+								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes></image_0>
+							</images>
+						</state_3>
+
+						<state_4>							
+						<name>jumping</name>
+							<images>
+								<image_0>
+									<source>resources/images/happymario.png</source>
+								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes></image_0>
+							</images></state_4>
+						<state_5>
+						<name>standingR</name>
+							<images>
+								<image_0>
+									<source>resources/images/standingMarioR.png</source>
+								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes></image_0>
+							</images>
+							</state_5>
+						<state_6>
+						<name>walkingR</name>
+							<images>
+								<image_0>
+									<source>resources/images/walkingMarioR.png</source>
+								<delay>0.1</delay><width>100</width><height>200</height><hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes></image_0>
+								<image_1>
+								<source>resources/images/standingMarioR.png</source>
+								<delay>0.1</delay><width>100</width><height>200</height><hitboxes>
+									<hitbox_0>
+										<point_0>0 0</point_0>
+										<point_1>100 0</point_1>
+										<point_2>100 200</point_2>
+										<point_3>0 200</point_3>
+									</hitbox_0>
+								</hitboxes>
+								</image_1>
+							</images>
+							</state_6></animations>
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>human</material>
+						<position>50 300</position>
+					</physics>
+				</sprite_0>
+
+				<sprite_1>
+					<initial_state>immobile</initial_state>
+
+					<animations>
+						<state_0>
+							<name>immobile</name>
+
+							<images>
+								<image_0>
+									<source>resources/images/ground.png</source>
+
+									<delay>1.0</delay>
+
+									<width>3000</width>
+									<height>200</height>
+
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>2000 0</point_1>
+											<point_2>2000 200</point_2>
+											<point_3>0 200</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>floating</material>
+						<position>0 0</position>
+					</physics>
+				</sprite_1>
+
+				<sprite_2>
+					<initial_state>immobile</initial_state>
+
+					<animations>
+						<state_0>
+							<name>immobile</name>
+
+							<images>
+								<image_0>
+									<source>resources/images/sawblade.png</source>
+
+									<delay>1</delay>
+
+									<width>50</width>
+									<height>50</height>
+
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>50 0</point_1>
+											<point_2>50 50</point_2>
+											<point_3>0 50</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>pillow</material>
+						<position>500 700</position>
+					</physics>
+				</sprite_2>
+				
+				<sprite_3>
+					<initial_state>immobile</initial_state>
+
+					<animations>
+						<state_0>
+							<name>immobile</name>
+
+							<images>
+								<image_0>
+									<source>resources/images/sawblade.png</source>
+
+									<delay>1</delay>
+
+									<width>50</width>
+									<height>50</height>
+
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>50 0</point_1>
+											<point_2>50 50</point_2>
+											<point_3>0 50</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>floating</material>
+						<position>800 300</position>
+					</physics>
+				</sprite_3>
+				
+				<sprite_4>
+					<initial_state>immobile</initial_state>
+
+					<animations>
+						<state_0>
+							<name>immobile</name>
+
+							<images>
+								<image_0>
+									<source>resources/images/sawblade.png</source>
+
+									<delay>1</delay>
+
+									<width>50</width>
+									<height>50</height>
+
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>50 0</point_1>
+											<point_2>50 50</point_2>
+											<point_3>0 50</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>floating</material>
+						<position>1500 500</position>
+					</physics>
+				</sprite_4>
+				
+				
+
+				<sprite_5>
+					<initial_state>immobile</initial_state>
+					<animations>
+						<state_0>
+							<name>immobile</name>
+
+							<images>
+								<image_0>
+									<source>resources/images/bowser.png</source>
+
+									<delay>1</delay>
+
+									<width>100</width>
+									<height>200</height>
+
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>100 0</point_1>
+											<point_2>100 200</point_2>
+											<point_3>0 200</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>bouncy_ball</material>
+						<position>1500 50</position>
+					</physics>
+				</sprite_5>
+
+				<sprite_6>
+					<initial_state>immobile</initial_state>
+					<animations>
+						<state_0>
+							<name>immobile</name>
+
+							<images>
+								<image_0>
+									<source>resources/images/key.png</source>
+
+									<delay>1</delay>
+
+									<width>50</width>
+									<height>50</height>
+
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>50 0</point_1>
+											<point_2>50 50</point_2>
+											<point_3>0 50</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>static</material>
+						<position>2000 350</position>
+					</physics>
+				</sprite_6>
+
+				<sprite_7>
+					<initial_state>immobile</initial_state>
+					<animations>
+						<state_0>
+							<name>immobile</name>
+
+							<images>
+								<image_0>
+									<source>resources/images/goal.png</source>
+
+									<delay>1</delay>
+
+									<width>200</width>
+									<height>500</height>
+
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>500 0</point_1>
+											<point_2>500 100</point_2>
+											<point_3>0 100</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>transparent</material>
+						<position>2500 120</position>
+					</physics>
+				</sprite_7>
+			</sprites>
+
+			<physics_engine>
+				<type>ComplexPhysicsEngine</type>
+				<drag_coefficient>0.5</drag_coefficient>
+				<global_accelerations>
+					<gravity>0 -9.8</gravity>
+				</global_accelerations>
+				<global_forces></global_forces>
+			</physics_engine>
+
+	<controls>
+				<active_scheme>0</active_scheme>
+				<control_scheme_0>
+					<key_0>
+						<key>RIGHT</key>
+
+						<onPressed>
+							<behaviors>
+								<behavior_0>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>moveForward</name>
+									<parameters>5 0</parameters>
+								</behavior_0>
+								<behavior_1>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>walkingR</parameters>
+									</behavior_1></behaviors>
+						</onPressed>
+
+						<onReleased>
+							<behaviors>
+								<behavior_0>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>standingR</parameters>
+								</behavior_0>
+								<behavior_1>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>removeVelocity</name>
+								<parameters>5 0</parameters>
+								</behavior_1>
+							</behaviors>
+						</onReleased>
+						
+						<whilePressed>
+							<behaviors>
+							<behavior_0>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>walkingR</parameters>
+									</behavior_0>
+							<behavior_1>
+							<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>moveForward</name>
+									<parameters>5 0</parameters>
+									</behavior_1>
+							</behaviors>
+						</whilePressed>
+					</key_0>
+
+					<key_1>
+						<key>LEFT</key>
+
+						<onPressed>
+							<behaviors>
+								<behavior_0>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>moveForward</name>
+									<parameters>-5 0</parameters>
+								</behavior_0>
+								<behavior_1>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>walkingL</parameters>
+									</behavior_1>
+							</behaviors>
+						</onPressed>
+
+						<onReleased>
+							<behaviors>
+								<behavior_0>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>standingL</parameters>
+									</behavior_0>
+								<behavior_1>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>removeVelocity</name>
+								<parameters>-5 0</parameters>
+								</behavior_1>
+							</behaviors>
+						</onReleased>
+						
+						<whilePressed>
+							<behaviors>
+								<behavior_0>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>walkingL</parameters>
+									</behavior_0>
+								<behavior_1>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>moveForward</name>
+									<parameters>-5 0</parameters>
+									</behavior_1></behaviors>
+						</whilePressed>
+					</key_1>
+
+					<key_2>
+						<key>UP</key>
+						<onPressed>
+							<behaviors>
+								<behavior_0>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>jump</name>
+									<parameters>7</parameters>
+								</behavior_0>
+								<behavior_1>
+									<targetType>controlManager</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setActiveControl</name>
+									<parameters>0</parameters>
+								</behavior_1>
+								<behavior_2>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>jumping</parameters>
+									</behavior_2>
+							</behaviors>
+						</onPressed>
+						
+						<onReleased>
+							<behaviors>
+								<behavior_0>
+								<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>standing</parameters>
+									</behavior_0></behaviors>
+						</onReleased>
+						
+						<whilePressed>
+							<behaviors></behaviors>
+						</whilePressed>
+					</key_2>
+				</control_scheme_0>
+				<control_scheme_1>
+					<key_0>
+						<key>RIGHT</key>
+
+						<onPressed>
+							<behaviors>
+								<behavior_0>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>moveForward</name>
+									<parameters>5 0</parameters>
+								</behavior_0>
+							</behaviors>
+						</onPressed>
+
+						<onReleased>
+							<behaviors>
+							</behaviors>
+						</onReleased>
+						
+						<whilePressed>
+							<behaviors></behaviors>
+						</whilePressed>
+					</key_0>
+
+					<key_1>
+						<key>LEFT</key>
+
+						<onPressed>
+							<behaviors>
+								<behavior_0>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>moveForward</name>
+									<parameters>-5 0</parameters>
+								</behavior_0>
+							</behaviors>
+						</onPressed>
+
+						<onReleased>
+							<behaviors>
+							</behaviors>
+						</onReleased>
+						
+						<whilePressed>
+							<behaviors></behaviors>
+						</whilePressed>
+					</key_1>
+				</control_scheme_1>
+				<control_scheme_2></control_scheme_2>
+			</controls>
+
+			<collisions>
+				<collision_0>
+					<sprites>0 1</sprites>
+
+					<detectors>
+						<detector_0>SimpleDetector</detector_0>
+						<detector_1>PixelPerfectDetector</detector_1>
+					</detectors>
+
+					<resolvers>
+					</resolvers>
+				</collision_0>
+
+				<collision_1>
+					<sprites>0 2</sprites>
+
+					<detectors>
+						<detector_0>SimpleDetector</detector_0>
+						<detector_1>PixelPerfectDetector</detector_1>
+					</detectors>
+
+					<resolvers>
+						<resolver_1>
+							<type>SimpleResolver</type>
+							<behaviors>
+								<behavior_0>
+									<targetType>objective</targetType>
+									<targetIndex>2</targetIndex>
+									<name>setStatus</name>
+									<parameters>active</parameters>
+								</behavior_0>
+								
+								<behavior_1>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>dead</parameters>
+								</behavior_1>
+								
+								<behavior_2>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>moveForward</name>
+									<parameters>-10 7</parameters>
+								</behavior_2>
+								<behavior_3>
+									<targetType>controlManager</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setActiveControl</name>
+									<parameters>1</parameters></behavior_3></behaviors>
+						</resolver_1>
+					</resolvers>
+				</collision_1>
+
+				<collision_2>
+					<sprites>0 3</sprites>
+
+					<detectors>
+						<detector_0>SimpleDetector</detector_0>
+						<detector_1>PixelPerfectDetector</detector_1>
+					</detectors>
+
+					<resolvers>
+						<resolver_1>
+							<type>SimpleResolver</type>
+							<behaviors>
+								<behavior_0>
+									<targetType>objective</targetType>
+									<targetIndex>2</targetIndex>
+									<name>setStatus</name>
+									<parameters>active</parameters>
+								</behavior_0>
+								
+								<behavior_1>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>dead</parameters>
+								</behavior_1>
+								
+								<behavior_2>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>moveForward</name>
+									<parameters>-10 7</parameters>
+								</behavior_2>
+								<behavior_3>
+									<targetType>controlManager</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setActiveControl</name>
+									<parameters>1</parameters></behavior_3></behaviors>
+						</resolver_1>
+					</resolvers>
+				</collision_2>
+
+				<collision_3>
+					<sprites>0 4</sprites>
+
+					<detectors>
+						<detector_0>SimpleDetector</detector_0>
+						<detector_1>PixelPerfectDetector</detector_1>
+					</detectors>
+
+					<resolvers>
+						<resolver_1>
+							<type>SimpleResolver</type>
+							<behaviors>
+								<behavior_0>
+									<targetType>objective</targetType>
+									<targetIndex>2</targetIndex>
+									<name>setStatus</name>
+									<parameters>active</parameters>
+								</behavior_0>
+								
+								<behavior_1>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>dead</parameters>
+								</behavior_1>
+								
+								<behavior_2>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>moveForward</name>
+									<parameters>-10 7</parameters>
+								</behavior_2>
+								<behavior_3>
+									<targetType>controlManager</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setActiveControl</name>
+									<parameters>1</parameters></behavior_3></behaviors>
+						</resolver_1>
+					</resolvers>
+					
+					
+				</collision_3>
+
+				<collision_4>
+					<sprites>0 5</sprites>
+
+					<detectors>
+						<detector_0>SimpleDetector</detector_0>
+					</detectors>
+
+					<resolvers>
+						<resolver_1>
+							<type>SimpleResolver</type>
+							<behaviors>
+								<behavior_0>
+									<targetType>objective</targetType>
+									<targetIndex>2</targetIndex>
+									<name>setStatus</name>
+									<parameters>active</parameters>
+								</behavior_0>
+								
+								<behavior_1>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setState</name>
+									<parameters>dead</parameters>
+								</behavior_1>
+								
+								<behavior_2>
+									<targetType>sprite</targetType>
+									<targetIndex>0</targetIndex>
+									<name>moveForward</name>
+									<parameters>-10 7</parameters>
+								</behavior_2>
+								<behavior_3>
+									<targetType>controlManager</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setActiveControl</name>
+									<parameters>1</parameters></behavior_3></behaviors>
+						</resolver_1>
+					</resolvers>
+				</collision_4>
+
+				<collision_7>
+					<sprites>0 6</sprites>
+
+					<detectors>
+						<detector_0>SimpleDetector</detector_0>
+						<detector_1>PixelPerfectDetector</detector_1>
+					</detectors>
+
+										<resolvers>
+						<resolver_0>
+							<type>SimpleResolver</type>
+
+							<behaviors>
+								<behavior_1>
+									<targetType>objective</targetType>
+									<targetIndex>4</targetIndex>
+									<name>setStatus</name>
+									<parameters>complete</parameters>
+								</behavior_1>
+							</behaviors>
+						</resolver_0>
+					</resolvers>					
+				</collision_7>
+			</collisions>
+			<sprite_paths>
+				<path_0>
+					<id>4</id>
+					<values>0 500 100 500 300 500 800 500</values>
+					<duration>10</duration>
+					<delay>0</delay></path_0>
+				<path_1>
+					<id>3</id>
+					<values>300 800 400 800 400 800 500 800</values>
+					<duration>5</duration>
+					<delay>0</delay></path_1></sprite_paths></level_0>
+	</level>
+</game>

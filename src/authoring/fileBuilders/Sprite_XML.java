@@ -1,6 +1,6 @@
 package authoring.fileBuilders;
 
-import game_engine.Utilities;
+import game_engine.util.Utilities;
 import java.util.ArrayList;
 import java.util.List;
 import org.w3c.dom.Element;
@@ -27,8 +27,8 @@ public class Sprite_XML {
     private Physics physics;
     private int index;
 
-    public Sprite_XML (Sprite s, double width, double height) {
-        double[] translatedPosition = setTranslation(s, width, height);
+    public Sprite_XML (Sprite s, double height) {
+        double[] translatedPosition = setTranslation(s, height);
         populateAnimations(s, translatedPosition);
         initial_state = animation.get(0).name.length() > 0 ? animation.get(0).name : DEFAULT_INITIAL_STATE;
         System.out.println("initial state: " + initial_state);
@@ -42,12 +42,12 @@ public class Sprite_XML {
     }
 
 
-    private double[] setTranslation (Sprite s, double width, double height) {
+    private double[] setTranslation (Sprite s, double height) {
         double nxVal = s.getXPosition();
         double nyVal = s.getYPosition();
         double nWidth = s.getImage().getWidth();
         double nHeight = s.getImage().getHeight();
-        return Utilities.nodeTranslationToPhysicsCenter(nxVal, nyVal, nWidth, nHeight, width, height);
+        return Utilities.nodeTranslationToPhysicsCenter(nxVal, nyVal, nWidth, nHeight, height);
     }
 
 
