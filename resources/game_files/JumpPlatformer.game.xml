@@ -138,7 +138,7 @@
 						<name>jumping</name>
 							<images>
 								<image_0>
-									<source>resources/images/happymario.png</source>
+									<source>resources/images/jumpingMario.png</source>
 								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
 									<hitbox_0>
 										<point_0>0 0</point_0>
@@ -264,7 +264,7 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>floating</material>
-						<position>1200 800</position>
+						<position>1200 350</position>
 					</physics>
 				</sprite_4>
 				<sprite_5>
@@ -545,8 +545,9 @@
 								<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>setState</name>
-									<parameters>standing</parameters>
-									</behavior_0></behaviors>
+									<parameters>jumping</parameters>
+									</behavior_0>
+									</behaviors>
 						</onReleased>
 						
 						<whilePressed>
@@ -571,6 +572,13 @@
 
 						<onReleased>
 							<behaviors>
+								<behavior_0>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>removeVelocity</name>
+								<parameters>5 0</parameters>
+								
+								</behavior_0>
 							</behaviors>
 						</onReleased>
 						
@@ -595,7 +603,14 @@
 
 						<onReleased>
 							<behaviors>
+								<behavior_0>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>removeVelocity</name>
+								<parameters>-5 0</parameters>
+								</behavior_0>
 							</behaviors>
+							
 						</onReleased>
 						
 						<whilePressed>
@@ -832,15 +847,10 @@
 			<sprite_paths>
 				<path_0>
 					<id>10</id>
-					<values>2700 800 2700 800 3700 800 3700 800</values>
+					<values>2250 1000 3100 800 3600 100 3700 800</values>
 					<duration>5</duration>
 					<delay>0</delay></path_0>
-				<path_1>
-				<id>4</id>
-					<values>1200 100 1200 300 1200 500 1200 800</values>
-					<duration>5</duration>
-					<delay>1</delay>
-					</path_1></sprite_paths>
+				</sprite_paths>
 		</level_0>
 		<level_1>
 			<level_objectives>
@@ -1263,6 +1273,12 @@
 
 						<onReleased>
 							<behaviors>
+								<behavior_0>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>removeVelocity</name>
+								<parameters>5 0</parameters>
+								</behavior_0>
 							</behaviors>
 						</onReleased>
 						
@@ -1287,6 +1303,12 @@
 
 						<onReleased>
 							<behaviors>
+								<behavior_0>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>removeVelocity</name>
+								<parameters>-5 0</parameters>
+								</behavior_0>
 							</behaviors>
 						</onReleased>
 						

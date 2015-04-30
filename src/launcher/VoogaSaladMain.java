@@ -1,10 +1,10 @@
- package launcher;           
-               
+package launcher;
+
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-               
+
 /**
  * VoogaSaladMain is responsible only for launching the application.
  * 
@@ -12,37 +12,37 @@ import javafx.stage.Stage;
  * @since 2 April 2015
  */
 public class VoogaSaladMain extends Application {
-    
-    /**
-     * Initializes the stage, creates the first scene, and displays the
-     * application to the use.
-     */
-    public void start(Stage stage) throws Exception{
-	stage.setTitle("VoogaSalad");
 
-	Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+	/**
+	 * Initializes the stage, creates the first scene, and displays the
+	 * application to the use.
+	 */
+	public void start(Stage stage) throws Exception {
+		stage.setTitle("VoogaSalad");
 
-	stage.setX(primaryScreenBounds.getMinX());
-	stage.setY(primaryScreenBounds.getMinY());
+		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
-	stage.setWidth(primaryScreenBounds.getWidth());
-	stage.setHeight(primaryScreenBounds.getHeight());
+		stage.setX(primaryScreenBounds.getMinX());
+		stage.setY(primaryScreenBounds.getMinY());
 
-	stage.setResizable(false);
+		stage.setWidth(primaryScreenBounds.getWidth());
+		stage.setHeight(primaryScreenBounds.getHeight());
 
-	VoogaMenu menu = new VoogaMenu(stage.getWidth(), stage.getHeight());
-	stage.setScene(menu.initialize());
+		stage.setResizable(false);
 
-	stage.show();
-    }
+		VoogaMenu menu = new VoogaMenu(stage.getWidth(), stage.getHeight());
+		stage.setScene(menu.initialize());
 
-    /**
-     * Launches the application.
-     * 
-     * @param args
-     *             are generally empty.
-     */
-    public static void main(String[] args) {
-	launch(args);
-    }
+		stage.show();
+	}
+
+	/**
+	 * Launches the application.
+	 * 
+	 * @param args
+	 *            are generally empty.
+	 */
+	public static void main(String[] args) {
+		launch(args);
+	}
 }

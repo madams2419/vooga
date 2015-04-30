@@ -32,7 +32,7 @@ public class SpriteTracker extends ObservableTracker {
             setXSupplier( () -> node.getTranslateX());
         }
         if (y) {
-            setYSupplier( () -> node.getTranslateY());
+//            setYSupplier( () -> node.getTranslateY());
         }
     }
 
