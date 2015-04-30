@@ -1,5 +1,7 @@
 package game_engine.control;
 
+import game_engine.behaviors.IAction;
+
 import java.util.*;
 
 /**
@@ -23,7 +25,6 @@ public class VoiceControlManager extends ControlManager{
 	@Override
 	public void addControl(Control control){
 		myVoiceControls.add((VoiceControl) control);
-		myActiveVoiceControl++;
 	}
 	
 	/**
@@ -33,5 +34,13 @@ public class VoiceControlManager extends ControlManager{
 	@Override
 	public void handleEvent(Object obj){
 		myVoiceControls.get(myActiveVoiceControl).executeEvent();
+	}
+
+
+
+	@Override
+	public void switchControl(String... params) {
+		int voiceIndex = Integer.parseInt(params[0]);
+		myActiveVoiceControl = voiceIndex;
 	}
 }

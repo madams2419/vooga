@@ -1,13 +1,18 @@
 package game_engine.control;
 
+import java.util.Map;
+
+import game_engine.annotation.IActionAnnotation;
 import game_engine.behaviors.IAction;
+import game_engine.behaviors.IActor;
 
 /**
  * This class is the super class for control managers. It specifies the public APIs of
  * control managers.
  * @author Yancheng Zeng 
  */
-public abstract class ControlManager {
+public abstract class ControlManager implements IActor{
+	private Map<String, IAction> myActions;
 	/**
 	 * Method addControl.
 	 * @param control Control
@@ -20,17 +25,17 @@ public abstract class ControlManager {
 	 */
 	public void handleEvent(Object obj){}
 
-	/**
-	 * Method setActiveControl.
-	 * @param indexArray String[]
-	 * @return IAction
-	 */
-	public IAction setActiveControl(String... indexArray){
-		return new IAction(){
-			@Override
-			public void execute(String... params) {
-				System.out.println(PrintMessage.SWITCH_CONTROL.getVal());
-			}
-		};
+	@IActionAnnotation(description = "Changings the active control scheme", numParams = 1, paramDetails = "Control scheme id")
+	private IAction setActiveControl = (params) -> {
+		switchControl(params);
+	};
+	
+	public abstract void switchControl(String... params);
+	
+	public IAction getAction(String name) {
+		if (name.equals("setActiveControl")) {
+			return setActiveControl;
+		}
+		return null;
 	}
 }
