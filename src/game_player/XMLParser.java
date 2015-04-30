@@ -79,7 +79,7 @@ public class XMLParser {
         }
     }
 
-    private static Map<String, String> xml;
+    private Map<String, String> xml;
 
     private List<Directory> activePath;
 

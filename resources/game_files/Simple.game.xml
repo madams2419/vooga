@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game>
-	<title>Physics Test</title>
+	<title>Simple Game</title>
 
 	<frame_rate>30</frame_rate>
 	
@@ -32,7 +32,7 @@
 								<targetType>level</targetType>
 								<targetIndex>0</targetIndex>
 								<name>removeSprite</name>
-								<parameters>mario</parameters>
+								<parameters>0</parameters>
 							</behavior_0>
 						</behaviors>
 					</onFailed>
@@ -106,7 +106,6 @@
 
 			<sprites>
 				<sprite_0>
-					<id>mario</id>
 					<initial_state>standing</initial_state>
 					<animations>
 						<state_0>
@@ -214,7 +213,6 @@
 				</sprite_0>
 
 				<sprite_1>
-					<id>ground</id>
 					<initial_state>immobile</initial_state>
 
 					<animations>
@@ -251,7 +249,6 @@
 				</sprite_1>
 
 				<sprite_2>
-					<id>platform</id>
 					<initial_state>immobile</initial_state>
 
 					<animations>
@@ -289,7 +286,6 @@
 
 				<sprite_3>
 					<initial_state>immobile</initial_state>
-					<id>bowser</id>
 					<animations>
 						<state_0>
 							<name>immobile</name>
@@ -325,7 +321,6 @@
 
 				<sprite_4>
 					<initial_state>immobile</initial_state>
-					<id>key</id>
 					<animations>
 						<state_0>
 							<name>immobile</name>
@@ -361,7 +356,6 @@
 
 				<sprite_5>
 					<initial_state>immobile</initial_state>
-					<id>flag</id>
 					<animations>
 						<state_0>
 							<name>immobile</name>
@@ -390,7 +384,7 @@
 
 					<physics>
 						<type>ComplexPhysicsObject</type>
-						<material>static</material>
+						<material>transparent</material>
 						<position>1800 120</position>
 					</physics>
 				</sprite_5>
@@ -479,7 +473,7 @@
 						</whilePressed>
 					</key_2>
 				</control_scheme_0>
-			</controls>
+				<control_scheme_1></control_scheme_1></controls>
 
 			<collisions>
 				<collision_0>
@@ -491,7 +485,7 @@
 					</detectors>
 
 					<resolvers>
-						<resolve_1>
+						<resolver_1>
 							<type>SimpleResolver</type>
 							<behaviors>
 								<behavior_0>
@@ -512,10 +506,14 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>moveForward</name>
-									<parameters>-1000000 300</parameters>
+									<parameters>-10 7</parameters>
 								</behavior_2>
-							</behaviors>
-						</resolve_1>
+								<behavior_3>
+									<targetType>controlManager</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setActiveControl</name>
+									<parameters>1</parameters></behavior_3></behaviors>
+						</resolver_1>
 					</resolvers>
 				</collision_0>
 
@@ -576,7 +574,6 @@
 
 					<detectors>
 						<detector_0>SimpleDetector</detector_0>
-						<detector_1>PixelPerfectDetector</detector_1>
 					</detectors>
 
 					<resolvers>
@@ -611,13 +608,13 @@
 			<sprite_paths>
 				<path_0>
 					<id>4</id>
-					<values>0 500 100 100 300 100 500 100</values>
+					<values>0 500 100 500 300 500 800 500</values>
 					<duration>10</duration>
 					<delay>0</delay></path_0>
 				<path_1>
 					<id>3</id>
-					<values>100 800 50 800 400 800 400 800</values>
+					<values>300 800 400 800 400 800 500 800</values>
 					<duration>5</duration>
-					<delay>1</delay></path_1></sprite_paths></level_0>
+					<delay>0</delay></path_1></sprite_paths></level_0>
 	</level>
 </game>

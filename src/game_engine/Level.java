@@ -13,7 +13,6 @@ import game_engine.scrolling.scroller.BasicScroller;
 import game_engine.scrolling.scroller.IScroller;
 import game_engine.scrolling.scrollfocus.BasicFocus;
 import game_engine.scrolling.scrollfocus.IScrollFocus;
-import game_engine.scrolling.tracker.MiniMapTracker;
 import game_engine.scrolling.tracker.SpriteTracker;
 import game_engine.sprite.Sprite;
 import java.io.FileInputStream;
@@ -84,6 +83,7 @@ public class Level implements IActor {
 	 */
 	public void update(double framePeriod) {
 		long framePeriodMillis = (long) (framePeriod * 1000);
+		System.out.println(framePeriodMillis);
 		myObjectives.forEach(objective -> objective.update(framePeriodMillis));
 		myPhysics.update(framePeriod); // update PhysicsObjects and handle physical collisions
 		mySprites.forEach(sprite -> sprite.update(framePeriodMillis)); // update animations
@@ -96,8 +96,8 @@ public class Level implements IActor {
 	private void removeSprite (Sprite sprite) {
 	    myCollisionEngine.remove(sprite);
 	    mySprites.remove(sprite);
+	    myPhysics.removePhysicsObject(sprite.getPhysicsObject());
 	}
-	
 
 	public void setControlManager(ControlsManager controlManager) {
 		myControlManager = controlManager;
@@ -161,14 +161,15 @@ public class Level implements IActor {
                             new WrapAround(new Image(new FileInputStream("Resources/images/samplebackground.png")),
                                            width, height);
                     wrap.repeatHorizontal();
+                    wrap.repeatVertical();
                     scroller.addBackground(wrap, 0.5);
                     myGroup.getChildren().add(wrap.getGroup());
                     wrap.getGroup().toBack();
 	            SpriteTracker tracker = new SpriteTracker(focus, scroller);
 	            Sprite sprite = mySprites.get(0);
 	            sprite.getImageView().toFront();
-	            tracker.setPlayer(sprite, true, false);
 	            tracker.enable();
+	            tracker.setPlayer(sprite, true, false);
 	            tracker.tellY(height - 200);
 	        }
 	        catch (Exception e) {

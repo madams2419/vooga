@@ -1,6 +1,9 @@
-package game_engine.physics;
+package game_engine.physics.collisions;
 
-public class CircleCircleCollision extends PhysicsCollision {
+import game_engine.physics.PhysicsObject;
+import game_engine.physics.rigidbodies.CircleBody;
+
+public class CircleCircleCollision extends Collision {
 
 	private CircleBody myCircleA;
 	private CircleBody myCircleB;
