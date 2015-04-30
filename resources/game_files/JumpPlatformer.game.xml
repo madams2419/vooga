@@ -122,7 +122,7 @@
 							<name>win</name>
 							<images>
 								<image_0>
-									<source>resources/images/happyMario.png</source>
+									<source>resources/images/happymario.png</source>
 								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
 									<hitbox_0>
 										<point_0>0 0</point_0>
@@ -919,7 +919,7 @@
 							<name>win</name>
 							<images>
 								<image_0>
-									<source>resources/images/happyMario.png</source>
+									<source>resources/images/happymario.png</source>
 								<delay>1.0</delay><width>100</width><height>200</height><hitboxes>
 									<hitbox_0>
 										<point_0>0 0</point_0>

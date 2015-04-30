@@ -169,18 +169,18 @@ public class Level implements IActor {
 	public void start (double width, double height) {
 	    try {
 	            myGroup = new Group(mySpriteGroup);
-	            IScrollFocus focus = new BasicFocus(width, height);
+	            IScrollFocus focus = new BasicFocus(width, height, width * 0.5, height * 0.5);
 	            IScroller scroller = new BasicScroller(mySpriteGroup);
 	            SpriteTracker tracker = new SpriteTracker(focus, scroller);
 	            Sprite sprite = mySprites.get(0);
 	            sprite.getImageView().toFront();
 	            tracker.enable();
-	            tracker.setPlayer(sprite, true, true);
+	            tracker.setPlayer(sprite, true, false);
 	            tracker.tellY(height - 200);
 	            hud = new HeadsUpDisplay(sprite);
 	            myGroup.getChildren().add(hud.getHUD());
 	            WrapAround wrap =
-                            new WrapAround(new Image(new FileInputStream("Resources/images/samplebackground.png")),
+                            new WrapAround(new Image(new FileInputStream("resources/images/samplebackground.png")),
                                            width, height);
                     wrap.repeatHorizontal();
                     wrap.repeatVertical();

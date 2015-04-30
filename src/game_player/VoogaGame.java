@@ -52,6 +52,7 @@ public class VoogaGame implements IActor {
     private IAction setActiveLevel = (params) -> {
         int index = Integer.parseInt(params[0]);
         setActiveLevel(index);
+        System.out.println(index);
     };
     
     public void addLevel (Level level) {

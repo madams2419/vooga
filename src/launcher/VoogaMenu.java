@@ -53,6 +53,7 @@ public class VoogaMenu {
 	
 	private static final Duration DELAY = Duration.millis(500);
 	private static final Duration IMMEDIATE = Duration.ZERO;
+
 	private static final Duration TRANSITION_TIME = Duration.millis(2000);
 	
 	private static final EventHandler<ActionEvent> DO_NOTHING = (finished) -> {};
