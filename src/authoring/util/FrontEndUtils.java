@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -20,9 +19,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-
 import org.w3c.dom.Element;
-
 import authoring.dataEditors.Sprite;
 import authoring.fileBuilders.Level_XML;
 import authoring.fileBuilders.XMLBuilder;
@@ -37,7 +34,16 @@ import authoring.userInterface.AuthoringWindow;
  */
 public class FrontEndUtils {
 
-	public static File selectFile(String imageChooserTitle,
+    private static final String EQUALS = "=";
+    private static final String SPLITBY = ", ";
+    private static final String SPACE = " ";
+    private static final String DEFAULT_FIRST_LEVEL = "0";
+    private static final String FIRST_LEVEL = "first_level";
+    private static final String LEVEL = "level";
+    private static final String ROOT_ELEMENT = "game";
+    private static final char OPEN_BRACKET = '{';
+
+    public static File selectFile(String imageChooserTitle,
 			String imageChooserDescription, String imageChooserExtensions[]) {
 		FileChooser imageChooser = new FileChooser();
 		imageChooser.setTitle(imageChooserTitle);
@@ -56,10 +62,10 @@ public class FrontEndUtils {
 
 	public static Map<String, String> stringToMap(String s) {
 		Map<String, String> result = new HashMap<>();
-		if (s.charAt(0) == '{')
+		if (s.charAt(0) == OPEN_BRACKET)
 			s = s.substring(1, s.length() - 1);
-		Arrays.asList(s.split(", ")).forEach(
-				entry -> result.put(entry.split("=")[0], entry.split("=")[1]));
+		Arrays.asList(s.split(SPLITBY)).forEach(
+				entry -> result.put(entry.split(EQUALS)[0], entry.split(EQUALS)[1]));
 		return result;
 	}
 
@@ -81,13 +87,13 @@ public class FrontEndUtils {
 		setKeyActions((Parent) t);
 	}
 
-	public static HBox makeToggleGroup() {
+	public static HBox makeToggleGroup(String label1, String label2) {
 		HBox hbox = new HBox(10);
 		ToggleGroup toggleGroup = new ToggleGroup();
-		RadioButton button1 = new RadioButton("Sprite");
+		RadioButton button1 = new RadioButton(label1);
 		button1.setToggleGroup(toggleGroup);
 		button1.setSelected(true);
-		RadioButton button2 = new RadioButton("Hit Box");
+		RadioButton button2 = new RadioButton(label2);
 		button2.setToggleGroup(toggleGroup);
 		hbox.getChildren().addAll(button1, button2);
 		// toggleGroup.selectedToggleProperty().addListener(); edit this line to
@@ -101,20 +107,20 @@ public class FrontEndUtils {
 			return sprite.getID();
 		}).collect(Collectors.toList());
 		Collections.sort(elements);
-		elements.forEach(num -> s.append(num + " "));
+		elements.forEach(num -> s.append(num + SPACE));
 		return s.toString();
 	}
 	
 	public static void buildXMLFile(AuthoringWindow parent, String filename) {
 		// Adding the root element
-		XMLBuilder xml = XMLBuilder.getInstance("game");
-
+		XMLBuilder xml = XMLBuilder.getInstance(ROOT_ELEMENT);
+		
 		parent.getGlobalProperties().forEach(
 				(label, value) -> xml.addChildWithValue(xml.getRoot(), label,
 						value));
 
 		// Adding the level tag
-		Element level = xml.addToRoot("level");
+		Element level = xml.addToRoot(LEVEL);
 
 
 		List<CenterCanvas> allMaps = new ArrayList<>();
@@ -123,7 +129,7 @@ public class FrontEndUtils {
 
 		int i = 0;
 		// Adding start
-		xml.addChildWithValue(level, "first_level", "0");
+		xml.addChildWithValue(level, FIRST_LEVEL, DEFAULT_FIRST_LEVEL);
 		for (CenterCanvas c : allMaps) {
 
 			Level_XML currentLevel = new Level_XML(c);
@@ -132,7 +138,7 @@ public class FrontEndUtils {
 		}
 
 		// Streaming result
-		xml.streamFile("output/test.xml");
+		xml.streamFile(filename);
 
 	}
 }

@@ -62,6 +62,7 @@ public class VoogaGameBuilder {
 
 	public VoogaGame buildGame() {
 		parser.moveDown("game");
+		System.out.println("labels" + parser.getValidLabels());
 		actors = new HashMap<>();
 		double frameRate = Double.parseDouble(parser.getValue("frame_rate"));
 		double width = Double.parseDouble(parser.getValue("scene_width"));
@@ -111,17 +112,17 @@ public class VoogaGameBuilder {
 		level.setObjectives(objectives);
 		int i = 0;
 		for (String directory: parser.getValidSubDirectories()) {
-			parser.moveDown(directory);
-			if (parser.getValue("prereqs") != null && parser.getValue("prereqs").trim() != "") {
-				String[] prereqs = parser.getValue("prereqs").split(" ");
-				List<Objective> list = new ArrayList<>();
-				for (String id: prereqs) {
-					list.add(objectives.get(Integer.parseInt(id)));
-				}
-				objectives.get(i).setPreReqs(list);
-			}
-			i++;
-			parser.moveUp();
+		    parser.moveDown(directory);
+		    if (parser.getValue("prereqs") != null && parser.getValue("prereqs").trim().length() > 0) {
+		        String[] prereqs = parser.getValue("prereqs").split(" ");
+	                    List<Objective> list = new ArrayList<>();
+	                    for (String id: prereqs) {
+	                        list.add(objectives.get(Integer.parseInt(id.trim())));
+	                    }
+	                    objectives.get(i).setPreReqs(list);
+		    }
+		    i++;
+		    parser.moveUp();
 		}
 		parser.moveUp();
 		
@@ -204,9 +205,7 @@ public class VoogaGameBuilder {
 
 	private Animation buildAnimation(PhysicsEngine engine) {
 		parser.moveDown("animations");
-
 		Animation animation = new Animation(game.getHeight());
-
 		for (String directory : parser.getValidSubDirectories("state")) {
 			parser.moveDown(directory);
 
@@ -215,7 +214,7 @@ public class VoogaGameBuilder {
 			parser.moveDown("images");
 			for (String imageDirectory : parser.getValidSubDirectories()) {
 				parser.moveDown(imageDirectory);
-				String source = parser.getValue("source");
+				String source = parser.getValue("source").trim();
 				double delay = Double.parseDouble(parser.getValue("delay"));
 				double width = Double.parseDouble(parser.getValue("width"));
 				double height = Double.parseDouble(parser.getValue("height"));

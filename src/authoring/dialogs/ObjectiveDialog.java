@@ -34,6 +34,7 @@ public class ObjectiveDialog extends DataDialog {
         private static final String ACTION_FORMAT = "%s:%s:%s";
         private static final String PREREQS = "prereqs";
         private static final String ON_FAILED = "onFailed";
+        private static final String ON_ACTIVE = "onActive";
         private static final String ON_COMPLETE = "onComplete";
         private static final String PRE_REQUISITES = "Pre-requisites";
         private static final String PARAMETERS = "Parameters";
@@ -71,6 +72,7 @@ public class ObjectiveDialog extends DataDialog {
 
     private Map<String, List<String>> collectBehaviours() {
 		Map<String, List<String>> mResult = new HashMap<>();
+		mResult.put(ON_ACTIVE, new ArrayList<String>());
 		mResult.put(ON_COMPLETE, new ArrayList<String>());
 		mResult.put(ON_FAILED, new ArrayList<String>());
 		String prereq = mPrereqs.get(0).getValue();
@@ -94,7 +96,7 @@ public class ObjectiveDialog extends DataDialog {
 
 	public ComboBox<String> addStatesBox() {
 		ComboBox<String> b = addComboBox(mStates, 
-		    Arrays.asList(new String[]{ON_COMPLETE, ON_FAILED}));
+		    Arrays.asList(new String[]{ON_COMPLETE, ON_ACTIVE, ON_FAILED}));
 		b.getSelectionModel().select(0);
 		return b;
 	}
@@ -135,8 +137,9 @@ public class ObjectiveDialog extends DataDialog {
       Map<String, List<String>> res = collectBehaviours();
       Objective_XML newObjective = new Objective_XML(
           myDescription.getText());
-      newObjective.addOnComplete(res.get(ON_COMPLETE), null);
-      newObjective.addOnFailed(res.get(ON_FAILED), null);
+      newObjective.addOnComplete(res.get(ON_COMPLETE));
+      newObjective.addOnActive(res.get(ON_ACTIVE));
+      newObjective.addOnFailed(res.get(ON_FAILED));
       newObjective.addPrereqs(res.get(PREREQS));
       myParent.getMyParent().getParent().getCenterPane()
       .getActiveTab().setObjective(newObjective, myIndex);

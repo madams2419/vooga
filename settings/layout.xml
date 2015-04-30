@@ -3,22 +3,16 @@
 	<panes.BottomPane>
 		<buttons>
 			<Button>
-				<X>1</X>
-				<Y>0</Y>
-				<label>Map Settings</label>
-				<listener>switchToMapSettingPane</listener>
-			</Button>
-			<Button>
 				<X>0</X>
 				<Y>0</Y>
 				<label>Global Settings</label>
 				<listener>switchToGlobalSettingPane</listener>
 			</Button>
 			<Button>
-				<X>0</X>
+				<X>1</X>
 				<Y>0</Y>
-				<label>Physics</label>
-				<listener>showPhysicsSettings</listener>
+				<label>Map Settings</label>
+				<listener>switchToMapSettingPane</listener>
 			</Button>
 			<Button>
 				<X>0</X>

@@ -9,11 +9,14 @@ public class Action {
 	
 	private String myAction;
 	private String myDescription;
+	private String myParamDescription;
 	private int myNumParams;
 	
-	public Action(String action, String description, int numParams){
+	public Action(String action, String description, String paramDescription,
+	              int numParams){
 		setAction(action);
 		setDescription(description);
+		setParamDescription(paramDescription);
 		myNumParams = numParams;
 	}
 
@@ -42,4 +45,12 @@ public class Action {
 	public String toString(){
 		return myAction;
 	}
+
+    public String getParamDescription () {
+        return myParamDescription;
+    }
+
+    public void setParamDescription (String paramDescription) {
+        myParamDescription = paramDescription;
+    }
 }

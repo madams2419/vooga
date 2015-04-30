@@ -45,9 +45,8 @@ public class XMLBuilder {
 	// ====== Constructors =====================================================
 
 	public static XMLBuilder getInstance(String rootElement) {
-		if (mInstance == null)
-			mInstance = new XMLBuilder(rootElement);
-		return mInstance;
+	    mInstance = new XMLBuilder(rootElement);
+	    return mInstance;
 	}
 
 	private XMLBuilder(String rootElement, String... attributes_values) {
