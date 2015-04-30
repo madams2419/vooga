@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game>
-	<title>Untitled</title>
+	<title>Sawblades</title>
 	<frame_rate>30</frame_rate>
-	<scene_width>1500></scene_width>
-	<scene_height>1000></scene_height>
+	<scene_width>1500</scene_width>
+	<scene_height>1000</scene_height>
 	<level>
 		<first_level>0</first_level>
 		<level_0>
@@ -353,7 +353,8 @@
 									<targetIndex>0</targetIndex>
 									<name>setState</name>
 									<parameters>walking</parameters>
-									</behavior_1></behaviors>
+								</behavior_1>
+							</behaviors>
 						</onPressed>
 
 						<onReleased>
@@ -429,7 +430,8 @@
 									<targetIndex>0</targetIndex>
 									<name>setState</name>
 									<parameters>standing</parameters>
-									</behavior_0></behaviors>
+									</behavior_0>
+							</behaviors>
 						</onReleased>
 						
 						<whilePressed>
@@ -497,10 +499,6 @@
 					</detectors>
 
 					<resolvers>
-							<resolver_1>
-								<type>SimpleResolver</type>
-								<behaviors>
-									<resolvers>
 						<resolver_1>
 							<type>SimpleResolver</type>
 							<behaviors>
@@ -527,7 +525,7 @@
 								</behaviors>
 						</resolver_1>
 					</resolvers>								
-				<collision_0>
+				</collision_0>
 
 				<collision_1>
 					<sprites>0 2</sprites>
@@ -537,10 +535,6 @@
 					</detectors>
 
 					<resolvers>
-							<resolver_1>
-								<type>SimpleResolver</type>
-								<behaviors>
-									<resolvers>
 						<resolver_1>
 							<type>SimpleResolver</type>
 							<behaviors>
@@ -567,7 +561,7 @@
 								</behaviors>
 						</resolver_1>
 					</resolvers>								
-				<collision_1>
+				</collision_1>
 				<collision_2>
 					<sprites>0 3</sprites>
 					<detectors>
@@ -576,10 +570,6 @@
 					</detectors>
 
 					<resolvers>
-							<resolver_1>
-								<type>SimpleResolver</type>
-								<behaviors>
-									<resolvers>
 						<resolver_1>
 							<type>SimpleResolver</type>
 							<behaviors>
@@ -606,8 +596,8 @@
 								</behaviors>
 						</resolver_1>
 					</resolvers>								
+				</collision_2>
 				<collision_3>
-				<collision_4>
 					<sprites>0 4</sprites>
 					<detectors>
 						<detector_0>SimpleDetector</detector_0>
@@ -615,10 +605,6 @@
 					</detectors>
 
 					<resolvers>
-							<resolver_1>
-								<type>SimpleResolver</type>
-								<behaviors>
-									<resolvers>
 						<resolver_1>
 							<type>SimpleResolver</type>
 							<behaviors>
@@ -645,8 +631,8 @@
 								</behaviors>
 						</resolver_1>
 					</resolvers>								
-				<collision_4>	
-				<collision_5>
+				</collision_3>	
+				<collision_4>
 					<sprites>0 5</sprites>
 					<detectors>
 						<detector_0>SimpleDetector</detector_0>
@@ -654,10 +640,6 @@
 					</detectors>
 
 					<resolvers>
-							<resolver_1>
-								<type>SimpleResolver</type>
-								<behaviors>
-									<resolvers>
 						<resolver_1>
 							<type>SimpleResolver</type>
 							<behaviors>
@@ -684,8 +666,8 @@
 								</behaviors>
 						</resolver_1>
 					</resolvers>								
+				</collision_4>
 				<collision_5>
-				<collision_6>
 					<sprites>0 6</sprites>
 					<detectors>
 						<detector_0>SimpleDetector</detector_0>
@@ -693,10 +675,6 @@
 					</detectors>
 
 					<resolvers>
-							<resolver_1>
-								<type>SimpleResolver</type>
-								<behaviors>
-									<resolvers>
 						<resolver_1>
 							<type>SimpleResolver</type>
 							<behaviors>
@@ -723,8 +701,8 @@
 								</behaviors>
 						</resolver_1>
 					</resolvers>								
+				</collision_5>
 				<collision_6>
-				<collision_7>
 					<sprites>0 7</sprites>
 					<detectors>
 						<detector_0>SimpleDetector</detector_0>
@@ -732,10 +710,6 @@
 					</detectors>
 
 					<resolvers>
-							<resolver_1>
-								<type>SimpleResolver</type>
-								<behaviors>
-									<resolvers>
 						<resolver_1>
 							<type>SimpleResolver</type>
 							<behaviors>
@@ -762,8 +736,8 @@
 								</behaviors>
 						</resolver_1>
 					</resolvers>								
-				<collision_7>	
-				<collision_8>
+				</collision_6>	
+				<collision_7>
 					<sprites>0 8</sprites>
 					<detectors>
 						<detector_0>SimpleDetector</detector_0>
@@ -771,10 +745,6 @@
 					</detectors>
 
 					<resolvers>
-							<resolver_1>
-								<type>SimpleResolver</type>
-								<behaviors>
-									<resolvers>
 						<resolver_1>
 							<type>SimpleResolver</type>
 							<behaviors>
@@ -801,8 +771,8 @@
 								</behaviors>
 						</resolver_1>
 					</resolvers>								
-				<collision_8>	
-					<collision_9>
+				</collision_7>	
+					<collision_8>
 					<sprites>0 9</sprites>
 					<detectors>
 						<detector_0>SimpleDetector</detector_0>
@@ -810,10 +780,6 @@
 					</detectors>
 
 					<resolvers>
-							<resolver_1>
-								<type>SimpleResolver</type>
-								<behaviors>
-									<resolvers>
 						<resolver_1>
 							<type>SimpleResolver</type>
 							<behaviors>
@@ -830,10 +796,10 @@
 									<name>setState</name>
 									<parameters>win</parameters>
 								</behavior_1>
-								</behaviors>
+							</behaviors>
 						</resolver_1>
 					</resolvers>								
-				<collision_9>							
+				</collision_8>							
 			</collisions>
 		</level_0>
 	</level>
