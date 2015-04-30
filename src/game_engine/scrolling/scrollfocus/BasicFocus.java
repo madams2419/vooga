@@ -25,16 +25,16 @@ public class BasicFocus implements IScrollFocus {
      * @param width Camera width
      * @param height Camera height
      */
-    public BasicFocus (double width, double height) {
-        myX = new SimpleDoubleProperty(0.5 * width);
-        myY = new SimpleDoubleProperty(0.5 * height);
+    public BasicFocus (double width, double height, double centerX, double centerY) {
+        myX = new SimpleDoubleProperty(centerX);
+        myY = new SimpleDoubleProperty(centerY);
         myWidth = width;
         myHeight = height;
     }
 
     public void bind (Group group) {
-        myX = group.translateXProperty().negate().add(0.5 * myWidth);
-        myY = group.translateYProperty().negate().add(0.5 * myHeight);
+        myX = group.translateXProperty().negate().add(myX.get());
+        myY = group.translateYProperty().negate().add(myY.get());
     }
   
     public void setBoundaryChecker (double mapWidth, double mapHeight) {

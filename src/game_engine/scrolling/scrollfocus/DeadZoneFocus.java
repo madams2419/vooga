@@ -29,8 +29,10 @@ public class DeadZoneFocus extends BasicFocus {
                           double left,
                           double right,
                           double top,
-                          double bottom) {
-        super(width, height);
+                          double bottom,
+                          double centerX,
+                          double centerY) {
+        super(width, height, centerX, centerY);
         myRight = new DeadZoneCalculator(right);
         myLeft = new DeadZoneCalculator(-left);
         myTop = new DeadZoneCalculator(top);
@@ -40,14 +42,18 @@ public class DeadZoneFocus extends BasicFocus {
     public DeadZoneFocus (double width,
                           double height,
                           double horizontal,
-                          double vertical) {
-        this(width, height, horizontal, horizontal, vertical, vertical);
+                          double vertical,
+                          double centerX,
+                          double centerY) {
+        this(width, height, horizontal, horizontal, vertical, vertical, centerX, centerY);
     }
 
     public DeadZoneFocus (double width,
                           double height,
+                          double centerX,
+                          double centerY,
                           double ratio) {
-        this(width, height, ratio * width * 0.5, ratio * height * 0.5);
+        this(width, height, ratio * width * 0.5, ratio * height * 0.5, centerX, centerY);
     }
 
     @Override

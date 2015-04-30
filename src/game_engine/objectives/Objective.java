@@ -200,7 +200,7 @@ public class Objective implements IActor {
         return myName;
     }
 
-    @IActionAnnotation (description = "set status", numParams = 1, paramDetails = "complete, failed, or active")
+    @IActionAnnotation (description = "set status", numParams = 1, paramDetails = "complete, failed, active")
     private IAction setStatus = (params) -> {
         if (isActive() && !params[0].equals("active")) {
             addCondition( (now) -> true, params[0]);

@@ -82,9 +82,7 @@ public class VoogaGameBuilder {
 
 	private Level buildLevel(String levelID) {
 		parser.moveDown(levelID);
-
 		PhysicsEngine engine = buildPhysicsEngine();
-
 		Level level = new Level(engine);
 		sprites = new HashMap<>();
 		objectives = new ArrayList<>();
@@ -269,8 +267,6 @@ public class VoogaGameBuilder {
 		String[] point = parser.getValue("position").split(" ");
 		Vector position = new Vector(Double.parseDouble(point[0]), Double.parseDouble(point[1]));
 		Material material = Material.valueOf(parser.getValue("material").toUpperCase());
-
-
 		PhysicsObject physObj = engine.addPhysicsObject(animation.getRigidBody(), material, position);
 
 		parser.moveUp();
