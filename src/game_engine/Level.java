@@ -5,6 +5,7 @@ import game_engine.annotation.IActionAnnotation;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.collisions.CollisionsManager;
+import game_engine.control.ControlManagerFactory;
 import game_engine.controls.ControlsManager;
 import game_engine.objectives.Objective;
 import game_engine.physics.PhysicsEngine;
@@ -44,6 +45,7 @@ public class Level implements IActor {
 	private ObservableList<Sprite> mySprites;
 	private CollisionsManager myCollisionEngine;
 	private ControlsManager myControlManager;
+	private ControlManagerFactory myControlFactory;
 	private Collection<Sprite> myToBeRemoved;
 	private Group mySpriteGroup;
 	private Group myGroup;
@@ -90,7 +92,7 @@ public class Level implements IActor {
 		myObjectives.forEach(objective -> objective.update(framePeriodMillis));
 		myPhysics.update(framePeriod); // update PhysicsObjects and handle physical collisions
 		mySprites.forEach(sprite -> sprite.update(framePeriodMillis)); // update animations
-		myControlManager.update();
+		//myControlManager.update();
 		myCollisionEngine.checkCollisions(); // handle behavioral collisions
 		myToBeRemoved.forEach(this::removeSprite);
 		myToBeRemoved.clear();
@@ -106,9 +108,17 @@ public class Level implements IActor {
 	public void setControlManager(ControlsManager controlManager) {
 		myControlManager = controlManager;
 	}
+	
+	public void setControlFactory(ControlManagerFactory controlFactory){
+		myControlFactory = controlFactory;
+	}
 
 	public ControlsManager getControlManager() {
 		return myControlManager;
+	}
+	
+	public ControlManagerFactory getControlFactory(){
+		return myControlFactory;
 	}
 
 	public void setCollisionEngine(CollisionsManager collisionEngine) {
