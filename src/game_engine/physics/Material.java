@@ -10,7 +10,7 @@ public class Material {
 	public static final Material SUPER_BALL = new Material(0.3, 1, 0, 0);
 	public static final Material PILLOW = new Material(0.1, 0.2, 1.0, 1.0);
 	public static final Material STATIC = new Material(0.0, 0.0, 0, 0);
-	public static final Material FLOATING = new Material(0.0, 0.2, 0.3, 0.3);
+	public static final Material FLOATING = new Material(0.0, 0.2, 0.8, 0.8);
 	public static final Material TRANSPARENT = new Material(0.0, -1.0, 0.0, 0.0);
 	public static final Material TRAMPOLINE = new Material (0.0, 1, 0.0, 0.0);
 
