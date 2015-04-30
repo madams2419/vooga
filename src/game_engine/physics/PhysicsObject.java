@@ -33,6 +33,7 @@ public class PhysicsObject extends Observable {
 		myMaterial = material;
 
 		myPosition = myScaler.vectorPixelsToMeters(positionPx);
+		
 		myVelocity = Vector.ZERO;
 		myNetInternalForce = Vector.ZERO;
 		myDirForceMagnitude = 0;
@@ -41,6 +42,7 @@ public class PhysicsObject extends Observable {
 		myAccel = computeAccel();
 
 		myPositionConstraint = null;
+		System.out.println(myPosition);
 	}
 
 	public void update(double dt) {
@@ -54,7 +56,7 @@ public class PhysicsObject extends Observable {
 			myVelocity = Vector.ZERO;
 			myPosition = myPositionConstraint.get();
 		}
-
+		
 		setChanged();
 		notifyObservers();
 	}

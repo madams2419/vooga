@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game>
-	<title>Physics Test</title>
+	<title>Simple Game</title>
 
 	<frame_rate>30</frame_rate>
 	
@@ -473,7 +473,7 @@
 						</whilePressed>
 					</key_2>
 				</control_scheme_0>
-			</controls>
+				<control_scheme_1></control_scheme_1></controls>
 
 			<collisions>
 				<collision_0>
@@ -508,7 +508,11 @@
 									<name>moveForward</name>
 									<parameters>-10 7</parameters>
 								</behavior_2>
-							</behaviors>
+								<behavior_3>
+									<targetType>controlManager</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setActiveControl</name>
+									<parameters>1</parameters></behavior_3></behaviors>
 						</resolver_1>
 					</resolvers>
 				</collision_0>

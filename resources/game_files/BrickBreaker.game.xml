@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+	<title>Brick Breaker</title>
+
+	<frame_rate>30</frame_rate>
+	
+	<scene_width>1500</scene_width>
+	<scene_height>1000</scene_height>
+
+	<level>
+		<first_level>0</first_level>
+
+		<level_0>
+			<level_objectives>
+				<objective>
+					<prereqs></prereqs>
+					<timer>1000</timer>
+					<onFailed>
+						<behaviors>
+							<behavior_0>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>moveForward</name>
+								<parameters>-5 -5</parameters>
+							</behavior_0>
+						</behaviors>
+					</onFailed>
+				</objective>
+			</level_objectives>
+
+			<sprites>
+				<sprite_4>
+					<initial_state>platform</initial_state>
+					<animations>
+						<state_0>
+							<name>platform</name>
+							<images>
+								<image_0>
+									<source>resources/images/ground.png</source>
+									<delay>1.0</delay>
+									<width>300</width>
+									<height>50</height>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>super_ball</material>
+						<position>200 25</position>
+					</physics>
+				</sprite_4>
+				<sprite_0>
+					<initial_state>standing</initial_state>
+					<animations>
+						<state_0>
+							<name>standing</name>
+							<images>
+								<image_0>
+									<source>resources/images/ball.png</source>
+									<delay>1.0</delay>
+									<width>50</width>
+									<height>50</height>
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>100 0</point_1>
+											<point_2>100 200</point_2>
+											<point_3>0 200</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>super_ball</material>
+						<position>500 300</position>
+					</physics>
+				</sprite_0>
+
+				<sprite_1>
+					<initial_state>immobile</initial_state>
+					<animations>
+						<state_0>
+							<name>immobile</name>
+							<images>
+								<image_0>
+									<source>resources/images/ground.png</source>
+									<delay>1.0</delay>
+
+									<width>1500</width>
+									<height>200</height>
+
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>2000 0</point_1>
+											<point_2>2000 200</point_2>
+											<point_3>0 200</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>static</material>
+						<position>750 -100</position>
+					</physics>
+				</sprite_1>
+				<sprite_2>
+					<initial_state>immobile</initial_state>
+					<animations>
+						<state_0>
+							<name>immobile</name>
+							<images>
+								<image_0>
+									<source>resources/images/brickwall.png</source>
+									<delay>1.0</delay>
+									<width>100</width>
+									<height>800</height>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>trampoline</material>
+						<position>-55 400</position>
+					</physics>
+				</sprite_2>
+				<sprite_3>
+					<initial_state>immobile</initial_state>
+					<animations>
+						<state_0>
+							<name>immobile</name>
+							<images>
+								<image_0>
+									<source>resources/images/brickwall.png</source>
+									<delay>1.0</delay>
+									<width>100</width>
+									<height>1000</height>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>trampoline</material>
+						<position>1555 400</position>
+					</physics>
+				</sprite_3>
+				<sprite_5>
+					<initial_state>immobile</initial_state>
+					<animations>
+						<state_0>
+							<name>immobile</name>
+
+							<images>
+								<image_0>
+									<source>resources/images/brickwall.png</source>
+									<delay>1.0</delay>
+									<width>1500</width>
+									<height>200</height>
+									<hitboxes>
+										<hitbox_0>
+											<point_0>0 0</point_0>
+											<point_1>2000 0</point_1>
+											<point_2>2000 200</point_2>
+											<point_3>0 200</point_3>
+										</hitbox_0>
+									</hitboxes>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>trampoline</material>
+						<position>750 800</position>
+					</physics>
+				</sprite_5>
+				</sprites>
+
+			<physics_engine>
+				<type>ComplexPhysicsEngine</type>
+				<drag_coefficient>0</drag_coefficient>
+				<global_accelerations>
+					<gravity>0 0</gravity>
+				</global_accelerations>
+				<global_forces></global_forces>
+			</physics_engine>
+
+			<controls>
+				<active_scheme>0</active_scheme>
+				<control_scheme_0>
+					<key_0>
+						<key>RIGHT</key>
+
+						<onPressed>
+							<behaviors>
+								<behavior_0>
+									<targetType>sprite</targetType>
+									<targetIndex>4</targetIndex>
+									<name>moveForward</name>
+									<parameters>1 0</parameters>
+								</behavior_0>
+							</behaviors>
+						</onPressed>
+
+						<onReleased>
+							<behaviors>
+							</behaviors>
+						</onReleased>
+						
+						<whilePressed>
+							<behaviors></behaviors>
+						</whilePressed>
+					</key_0>
+
+					<key_1>
+						<key>LEFT</key>
+
+						<onPressed>
+							<behaviors>
+								<behavior_0>
+									<targetType>sprite</targetType>
+									<targetIndex>4</targetIndex>
+									<name>moveForward</name>
+									<parameters>-1 0</parameters>
+								</behavior_0>
+							</behaviors>
+						</onPressed>
+
+						<onReleased>
+							<behaviors>
+							</behaviors>
+						</onReleased>
+						
+						<whilePressed>
+							<behaviors></behaviors>
+						</whilePressed>
+					</key_1>
+
+					
+				</control_scheme_0>
+				<control_scheme_1></control_scheme_1></controls>
+
+			<collisions>
+				
+			</collisions>
+			<sprite_paths>
+				</sprite_paths></level_0>
+	</level>
+</game>
