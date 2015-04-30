@@ -22,14 +22,12 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -314,16 +312,8 @@ public class VoogaMenu {
 		revertMenu();
 	}
 	
-	private void doFade(Node source, double toValue) {
-		doFade(source, toValue, IMMEDIATE, DO_NOTHING);
-	}
-	
 	private void doFade(Node source, double toValue, Duration delay) {
 		doFade(source, toValue, delay, DO_NOTHING);
-	}
-	
-	private void doFade(Node source, double toValue, EventHandler<ActionEvent> onFinished) {
-		doFade(source, toValue, IMMEDIATE, onFinished);
 	}
 	
 	private void doFade(Node source, double toValue, Duration delay, EventHandler<ActionEvent> onFinished) {
@@ -344,10 +334,6 @@ public class VoogaMenu {
 	
 	private void doTranslate(Node source, double toX, double toY, Duration delay) {
 		doTranslate(source, toX, toY, delay, DO_NOTHING);
-	}
-	
-	private void doTranslate(Node source, double toX, double toY, EventHandler<ActionEvent> onFinished) {
-		doTranslate(source, toX, toY, IMMEDIATE, onFinished);
 	}
 	
 	private void doTranslate(Node source, double toX, double toY, Duration delay, EventHandler<ActionEvent> onFinished) {

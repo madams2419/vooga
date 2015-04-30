@@ -3,22 +3,76 @@
 	<first_level>0</first_level>
 	<scene_height>500</scene_height>
 	<scene_width>500</scene_width>
-	<title>mario</title>
+	<title>simple</title>
 	<frame_rate>60</frame_rate>
 	<level>
 		<first_level>0</first_level>
 		<level_0>
-			<level_objectives />
+			<level_objectives>
+				<objective_0>
+					<description />
+					<prereqs>
+					</prereqs>
+					<onComplete>
+						<behaviors>
+							<behavior_0>
+								<targetType>sprite</targetType>
+								<targetIndex>4</targetIndex>
+								<name>incrementScore</name>
+								<parameters>10 </parameters>
+							</behavior_0>
+						</behaviors>
+					</onComplete>
+					<onFailed>
+						<behaviors>
+							<behavior_0>
+								<targetType>sprite</targetType>
+								<targetIndex>4</targetIndex>
+								<name>setState</name>
+								<parameters>grayMario </parameters>
+							</behavior_0>
+						</behaviors>
+					</onFailed>
+				</objective_0>
+				<objective_1>
+					<description />
+					<prereqs>objective_0 </prereqs>
+					<onComplete>
+						<behaviors>
+							<behavior_0>
+								<targetType>sprite</targetType>
+								<targetIndex>4</targetIndex>
+								<name>setState</name>
+								<parameters>winner </parameters>
+							</behavior_0>
+						</behaviors>
+					</onComplete>
+					<onFailed>
+						<behaviors />
+					</onFailed>
+				</objective_1>
+			</level_objectives>
 			<sprites>
 				<sprite_0>
-					<initial_state>one</initial_state>
+					<initial_state>0</initial_state>
+					<path />
+					<animations />
+					<physics>
+						<type />
+						<material />
+						<position>0.500000 579.500000</position>
+					</physics>
+				</sprite_0>
+				<sprite_4>
+					<initial_state>standing</initial_state>
 					<path />
 					<animations>
 						<state_0>
-							<name>one</name>
+							<name>standing</name>
 							<images>
 								<image_0>
-									<source>resources/images/walkingMario.png</source>
+									<source>/authoring_images/characters/smallStandingMarioR.png
+									</source>
 									<delay>1.0</delay>
 									<width>0.0</width>
 									<height>0.0</height>
@@ -26,57 +80,139 @@
 							</images>
 						</state_0>
 						<state_1>
-							<name>two</name>
+							<name>jumping</name>
 							<images>
 								<image_0>
-									<source>resources/images/jumpingMario.png</source>
+									<source>/authoring_images/characters/smallJumpingMarioR.png
+									</source>
 									<delay>1.0</delay>
 									<width>0.0</width>
 									<height>0.0</height>
 								</image_0>
 							</images>
 						</state_1>
+						<state_2>
+							<name>winner</name>
+							<images>
+								<image_0>
+									<source>/authoring_images/characters/smallerLuigi.png
+									</source>
+									<delay>1.0</delay>
+									<width>0.0</width>
+									<height>0.0</height>
+								</image_0>
+							</images>
+						</state_2>
+						<state_3>
+							<name>grayMario</name>
+							<images>
+								<image_0>
+									<source>/authoring_images/characters/grayMario.png
+									</source>
+									<delay>1.0</delay>
+									<width>0.0</width>
+									<height>0.0</height>
+								</image_0>
+							</images>
+						</state_3>
 					</animations>
 					<physics>
-						<type />
-						<material />
-						<position>205.000000 103.500000</position>
+						<type>ComplexPhysicsObject</type>
+						<material>rock</material>
+						<position>51.000000 528.500000</position>
 					</physics>
-				</sprite_0>
-				<sprite_1>
+				</sprite_4>
+				<sprite_5>
 					<initial_state>0</initial_state>
-					<path />
-					<animations >
-						<state_0>
-							<name></name></state_0></animations>
+					<path>345.0 466.0 295.0 401.0 378.0 389.0 339.0 322.0</path>
+					<animations />
 					<physics>
 						<type />
 						<material />
-						<position>504.500000 185.000000</position>
+						<position>279.000000 455.500000</position>
 					</physics>
-				</sprite_1>
+				</sprite_5>
+				<sprite_6>
+					<initial_state>0</initial_state>
+					<path />
+					<animations />
+					<physics>
+						<type />
+						<material />
+						<position>461.000000 340.500000</position>
+					</physics>
+				</sprite_6>
+				<sprite_7>
+					<initial_state>0</initial_state>
+					<path />
+					<animations />
+					<physics>
+						<type />
+						<material />
+						<position>757.000000 208.500000</position>
+					</physics>
+				</sprite_7>
+				<sprite_8>
+					<initial_state>0</initial_state>
+					<path />
+					<animations />
+					<physics>
+						<type />
+						<material />
+						<position>544.000000 510.500000</position>
+					</physics>
+				</sprite_8>
+				<sprite_9>
+					<initial_state>0</initial_state>
+					<path />
+					<animations />
+					<physics>
+						<type />
+						<material />
+						<position>594.000000 340.500000</position>
+					</physics>
+				</sprite_9>
+				<sprite_11>
+					<initial_state>0</initial_state>
+					<path />
+					<animations />
+					<physics>
+						<type />
+						<material />
+						<position>794.000000 103.500000</position>
+					</physics>
+				</sprite_11>
+				<sprite_13>
+					<initial_state>0</initial_state>
+					<path />
+					<animations />
+					<physics>
+						<type />
+						<material />
+						<position>695.000000 545.500000</position>
+					</physics>
+				</sprite_13>
 			</sprites>
 			<physics_engine>
-				<type>SimplePhysicsEngine</type>
-				<drag_coefficient>0.5</drag_coefficient>
+				<type>ComplexPhysicsEngine</type>
+				<drag_coefficient>0.2</drag_coefficient>
 				<global_accelerations>
-					<accel_0>0 -0.005</accel_0>
-				</global_accelerations>
-				<global_forces></global_forces>
-			</physics_engine>
+					<accel_0>0 0</accel_0>
+					</global_accelerations>
+			<global_forces></global_forces></physics_engine>
 			<controls>
-				<active_scheme >0</active_scheme>
+				<active_scheme />
 				<control_scheme_0>
 					<key_0>
-						<key>D</key>
+						<key>SPACE</key>
 						<onPressed>
 							<behaviors>
-								<behaviour_0>
+								<behavior_0>
 									<targetType>sprite</targetType>
-									<targetIndex>0</targetIndex>
-									<name>moveForward</name>
-									<parameters>0 700 </parameters>
-								</behaviour_0>
+									<targetIndex>4</targetIndex>
+									<name>jump</name>
+									<parameters>1000 </parameters>
+								</behavior_0>
 							</behaviors>
 						</onPressed>
 						<onReleased>
@@ -84,24 +220,92 @@
 						</onReleased>
 					</key_0>
 					<key_1>
-						<key>W</key>
+						<key>LEFT</key>
 						<onPressed>
 							<behaviors>
-								<behaviour_0>
+								<behavior_0>
 									<targetType>sprite</targetType>
-									<targetIndex>0</targetIndex>
-									<name>jump</name>
-									<parameters>2000 </parameters>
-								</behaviour_0>
+									<targetIndex>4</targetIndex>
+									<name>moveForward</name>
+									<parameters>-20 0 </parameters>
+								</behavior_0>
 							</behaviors>
 						</onPressed>
 						<onReleased>
 							<behaviors />
 						</onReleased>
 					</key_1>
+					<key_2>
+						<key>RIGHT</key>
+						<onPressed>
+							<behaviors>
+								<behavior_0>
+									<targetType>sprite</targetType>
+									<targetIndex>4</targetIndex>
+									<name>moveForward</name>
+									<parameters>20 0 </parameters>
+								</behavior_0>
+							</behaviors>
+						</onPressed>
+						<onReleased>
+							<behaviors />
+						</onReleased>
+					</key_2>
 				</control_scheme_0>
 			</controls>
-			<collisions />
+			<collisions>
+				<collision_0>
+					<sprites>4 11 </sprites>
+					<detectors />
+					<resolvers>
+						<resolver_0>
+							<type>SimpleResolver</type>
+							<behaviors>
+								<behavior_0>
+									<targetType>objective</targetType>
+									<targetIndex>1</targetIndex>
+									<name>setStatus</name>
+									<parameters>complete</parameters>
+								</behavior_0>
+							</behaviors>
+						</resolver_0>
+					</resolvers>
+				</collision_0>
+				<collision_1>
+					<sprites>4 8 </sprites>
+					<detectors />
+					<resolvers>
+						<resolver_0>
+							<type>SimpleResolver</type>
+							<behaviors>
+								<behavior_0>
+									<targetType>objective</targetType>
+									<targetIndex>1</targetIndex>
+									<name>setStatus</name>
+									<parameters>failed</parameters>
+								</behavior_0>
+							</behaviors>
+						</resolver_0>
+					</resolvers>
+				</collision_1>
+				<collision_2>
+					<sprites>4 13 </sprites>
+					<detectors />
+					<resolvers>
+						<resolver_0>
+							<type>SimpleResolver</type>
+							<behaviors>
+								<behavior_0>
+									<targetType>objective</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setStatus</name>
+									<parameters>complete</parameters>
+								</behavior_0>
+							</behaviors>
+						</resolver_0>
+					</resolvers>
+				</collision_2>
+			</collisions>
 		</level_0>
 	</level>
 </game>

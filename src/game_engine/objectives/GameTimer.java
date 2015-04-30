@@ -7,24 +7,23 @@ package game_engine.objectives;
  *
  */
 public class GameTimer {
-    private static final long SECOND = 1000000000;
     private double myDuration;
-    private double myStart;
+    private double myCurrent;
     
     /***
      * Constructs a timer with the given duration.
      * @param duration Duration of the timer, measured in seconds.
      */
     public GameTimer(double duration){
-        myDuration = duration * SECOND;
-        myStart = Long.MAX_VALUE;
+        myDuration = duration;
+        myCurrent = 0;
     }
     
     /**
      * @param now Time when timer is started
      */
-    public void start(double now){
-        myStart = now;
+    public void start(){
+        myCurrent = 0;
     }
     
     /**
@@ -32,8 +31,8 @@ public class GameTimer {
      * @param now Current time
      * @return Time that has passed for the timer.
      */
-    public double getTimePassed(double now){
-        return now - myStart;
+    public double getTimePassed(){
+        return myCurrent;
     }
     
     /**
@@ -41,7 +40,12 @@ public class GameTimer {
      * @param now Current time.
      * @return True if timer has expired and false otherwise.
      */
-    public boolean isFinished(double now){
-        return getTimePassed(now) >= myDuration;
+    public boolean isFinished(){
+        return getTimePassed() >= myDuration;
+    }
+    
+    public void update (double now) {
+        myCurrent += now;
+        System.out.println("Current" + myCurrent);
     }
 }
