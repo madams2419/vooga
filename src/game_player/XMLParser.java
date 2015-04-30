@@ -65,7 +65,7 @@ public class XMLParser {
         }
 
         public String toString () {
-            return name;
+            return name.substring(0, name.length() - 1);
         }
 
         public boolean equals (Object o) {
@@ -79,7 +79,7 @@ public class XMLParser {
         }
     }
 
-    private static Map<String, String> xml;
+    private Map<String, String> xml;
 
     private List<Directory> activePath;
 
@@ -151,7 +151,7 @@ public class XMLParser {
     public String getActivePath () {
         String path = "";
         for (Directory directory : activePath) {
-            path += directory.toString();
+            path += directory.toString() + "/";
         }
         return path;
     }
@@ -168,6 +168,12 @@ public class XMLParser {
         for (Directory directory : activePath.get(activePath.size() - 1).getSubDirectories()) {
             subDirectories.add(directory.toString());
         }
+        return subDirectories;
+    }
+    
+    public List<String> getValidSubDirectories (String prefix) {
+        List<String> subDirectories = getValidSubDirectories();
+        subDirectories.removeIf(dir -> !dir.startsWith(prefix));
         return subDirectories;
     }
 
@@ -204,6 +210,7 @@ public class XMLParser {
             pathName += component + "/";
         }
         setActivePath(getActivePath() + pathName);
+        System.out.println(activePath);
     }
 
     /**
@@ -260,20 +267,29 @@ public class XMLParser {
      * Recursively builds the Directory tree and populates the map.
      */
     private void read (Node node, String path, Directory parent) {
-        if (node.getChildNodes().getLength() == 1) {
-            xml.put(path + "/" + node.getNodeName(), node.getTextContent());
+        if (node.getNodeType() == Node.TEXT_NODE) {
+            return;
         }
-        else if (node.getChildNodes().getLength() == 0 && !node.getNodeName().equals("#text")) {
-            Directory child = new Directory(node.getNodeName());
-            parent.addSubDirectory(child);
-            xml.put(path + "/" + node.getNodeName(), "");
+        xml.put(path + "/" + node.getNodeName(), node.getTextContent());
+        Directory child = new Directory(node.getNodeName());
+        parent.addSubDirectory(child);
+        for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+            read(node.getChildNodes().item(i), path + "/" + node.getNodeName(), child);
         }
-        else if (!node.getNodeName().equals("#text")) {
-            Directory child = new Directory(node.getNodeName());
-            parent.addSubDirectory(child);
-            for (int i = 0; i < node.getChildNodes().getLength(); i++) {
-                read(node.getChildNodes().item(i), path + "/" + node.getNodeName(), child);
-            }
-        }
+        // else if (node.getChildNodes().getLength() == 0 && !node.getNodeName().equals("#text")) {
+        // Directory child = new Directory(node.getNodeName());
+        // parent.addSubDirectory(child);
+        // xml.put(path + "/" + node.getNodeName(), "");
+        // }
+        // else if (!node.getNodeName().equals("#text")) {
+        // Directory child = new Directory(node.getNodeName());
+        // parent.addSubDirectory(child);
+        // for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+        // read(node.getChildNodes().item(i), path + "/" + node.getNodeName(), child);
+        // }
+        // }
     }
+    
+
+
 }

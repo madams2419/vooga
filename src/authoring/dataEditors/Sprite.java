@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -13,6 +12,7 @@ import authoring.dialogs.AnimationsDialog;
 import authoring.dialogs.CharacterPhysicsDialog;
 import authoring.dialogs.ControlsDialog;
 import authoring.panes.centerPane.CenterPane;
+import authoring.panes.rightPane.CreationPane;
 import authoring.panes.rightPane.RightPane;
 import authoring.userInterface.ClickHandler;
 import authoring.util.FrontEndUtils;
@@ -28,40 +28,36 @@ import authoring.util.ImageEditor;
  */
 public class Sprite extends ImageView {
 
+    private static final String SPACE = " ";
+    private static final String TOSTRING_FORMAT = "%s, %s";
+    private static final String EMPTY_STRING = "";
+    private static final String DOUBLE_0 = "0.0";
     private static final String NAME = "Name";
     private static final String X_STRING = "x";
     private static final String Y_STRING = "y";
     private static final String VELOCITY = "velocity";
     private static final String POSITION = "position";
     private static final String KEY_ACTIONS = "key_actions";
-    public static final String SCALE = "Scale";
     private static final String IMAGE_URI = "imageURI";
     private static final String SWITCH_PANE_METHOD = "switchPane";
     private static final int MAX_ICON_WIDTH = 100;
     private static final int MAX_ICON_HEIGHT = 100;
 
+    public static final String SCALE = "Scale";
     public static final double OPACITY_REDUCTION_RATIO = 0.5;
 
-    private Map<String, String> myPosition;
-    private Map<String, String> myVelocity;
-    private Map<String, String> myKeyActions;
-    private Map<String, String> myCharacteristics;
+    private Map<String, String> myPosition, myVelocity, myKeyActions, myCharacteristics;
 
     private int myID;
-    private int myCurrentScore;
     private double myScale;
     private boolean isPlayable = false;
-    private String myName;
     private ImageView myIcon;
     private ControlsDialog myControls;
     private AnimationsDialog myAnimations;
     private CharacterPhysicsDialog myPhysics;
-    private String myType;
-    private String myMaterial;
+    private String myName, myType, myMaterial;
     private Map<Sprite, Map<Action, String>> mySpriteInteractionMap;
-    private Map<Sprite, Interaction> myInteractions;
     private Consumer<Sprite> myOnMouseClickedAction;
-
     private CenterPane myParent;
     private String[] myPath;
 
@@ -82,17 +78,16 @@ public class Sprite extends ImageView {
         myCharacteristics.put(SCALE, String.valueOf(myScale));
         myIcon = new ImageView();
         changeImage(imageURI);
-        myCurrentScore = 0;
     }
 
     public Sprite (CenterPane parent) {
         myParent = parent;
-        myInteractions = new HashMap<>(); // TODO: not needed?
+        myName = NAME;
         myPosition = new HashMap<>();
         myVelocity = new HashMap<>();
         mySpriteInteractionMap = new HashMap<>();
-        myVelocity.put(X_STRING, "0.0");
-        myVelocity.put(Y_STRING, "0.0");
+        myVelocity.put(X_STRING, DOUBLE_0);
+        myVelocity.put(Y_STRING, DOUBLE_0);
         myKeyActions = new HashMap<>();
         myCharacteristics = new HashMap<>();
         myPath = new String[0];
@@ -104,14 +99,22 @@ public class Sprite extends ImageView {
         this(ID, sprite.getImageURI(), parent);
     }
 
-    
     public Map<Sprite, Map<Action, String>> getInteractionMap() {
     	return mySpriteInteractionMap;
+    }
+    
+    public Map<Action, String> getInteractionWithSprite(Sprite other) {
+        Map<Action, String> map = mySpriteInteractionMap.get(other);
+        if (map == null) {
+            map = new HashMap<Action, String>();
+            mySpriteInteractionMap.put(other, map);
+        }
+        return map;
     }
 
     public void addDefaultCharacteristics (List<String> characteristics) {
         characteristics.forEach(characteristic -> myCharacteristics.put(
-                                                                        characteristic, ""));
+                                                                        characteristic, EMPTY_STRING));
     }
 
     public void setName (String name) {
@@ -193,21 +196,11 @@ public class Sprite extends ImageView {
         setXPosition(myPosition.get(X_STRING));
         setYPosition(myPosition.get(Y_STRING));
     }
-
-    public void setScore (int score) {
-        myCurrentScore = score;
-    }
-
-    public int getScore () {
-        return myCurrentScore;
-    }
-
+    
     public void setScale (double scale) {
 
         this.setScaleX(scale);
         this.setScaleY(scale);
-        // myCharacteristics.put(SCALE, scale);
-        // double newScale = Double.parseDouble(scale);
     }
 
     public double getXPosition () {
@@ -267,10 +260,8 @@ public class Sprite extends ImageView {
     }
 
     public void addInteraction (Sprite otherSprite, Map<Action, String> interaction) {
-    	//mySpriteInteractionMap.getOrDefault(otherSprite, interaction);
     	mySpriteInteractionMap.putIfAbsent(otherSprite, interaction);
         mySpriteInteractionMap.replace(otherSprite, interaction);
-        String s = "buffer";
     }
 
     @SuppressWarnings("unchecked")
@@ -307,7 +298,7 @@ public class Sprite extends ImageView {
         if (myAnimations != null) {
             return myAnimations.update();
         }
-        return myAnimations = AnimationsDialog.defaultAnimations(this);
+        return myAnimations = new AnimationsDialog(this);
     }
 
     public void setPhysics (CharacterPhysicsDialog physics) {
@@ -355,7 +346,7 @@ public class Sprite extends ImageView {
 
     @Override
     public String toString () {
-        return String.format("%s, %s, %s", this.myName, this.myID, this.getImageURI());
+        return String.format(TOSTRING_FORMAT, this.myName, this.myID);
     }
 
     public void setPath (String[] path) {
@@ -363,10 +354,21 @@ public class Sprite extends ImageView {
     }
     
     public String getPath () {
-        String ret = "";
+        String ret = EMPTY_STRING;
         for (String point : myPath) {
-            ret += point + " ";
+            ret += point + SPACE;
         }
         return ret.trim();
+    }
+
+    public Sprite getCopy () {
+        Sprite copy = new Sprite(this, CreationPane.incrementID(), this.myParent);
+        copy.myControls = myControls;
+        copy.myAnimations = myAnimations;
+        copy.myPhysics = myPhysics;
+        copy.myType = myType;
+        copy.myMaterial = myMaterial;
+        copy.mySpriteInteractionMap = mySpriteInteractionMap;
+        return copy;
     }
 }

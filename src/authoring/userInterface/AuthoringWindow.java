@@ -19,7 +19,6 @@ import authoring.panes.WindowPane;
 import authoring.panes.centerPane.CenterPane;
 import authoring.panes.menuBar.GameMenu;
 import authoring.panes.menuBar.HelpMediaPlayer;
-import authoring.panes.rightPane.GlobalCreationPane;
 import authoring.panes.rightPane.RightPane;
 
 /**

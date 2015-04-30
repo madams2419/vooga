@@ -19,7 +19,7 @@ public class Level_XML {
 		sprites = ObjectToXML.spritesToXML(level.getSprites());
 		physics_engine = level.getPhysics();
 		controls = new Control_XML(level.getKeyActions());
-		collisions = ObjectToXML.collisionToXML();
+		collisions = ObjectToXML.collisionToXML(level);
 	}
 
 	public void writeToXML(Element root, int index, XMLBuilder xml) {

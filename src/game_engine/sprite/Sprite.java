@@ -3,81 +3,49 @@ package game_engine.sprite;
 import game_engine.annotation.IActionAnnotation;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
-import game_engine.physics.Vector;
-import game_engine.physics.objects.PhysicsObject;
-
+import game_engine.physics.PhysicsObject;
+import game_engine.physics.utilities.Vector;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observable;
-
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 /**
  * 
  * @authors Brian Lavalee, Kevin Chang, Emre Sonmez
  * Sprite class to hold information for all characters in game
  */
-public class Sprite extends Observable implements IActor {
+public class Sprite implements IActor {
 	
 	private String state;
 	private Sprite owner; // null if no owner
 	private double worth;
 	private Animation animation;
 	private Map<String, IAction> actions;
+	private String id;
 	private PhysicsObject physicsObject;
 	
-	public Sprite(PhysicsObject po, Animation a, String initialState, 
-			Sprite spriteOwner, double initialWorth) {
+	public Sprite(PhysicsObject po, Animation a, String initialState, Sprite spriteOwner, double initialWorth, String id) {
 		state = initialState;
 		physicsObject = po;
 		animation = a;
+		a.setState(initialState);
 		actions = new HashMap<>();
 		owner = spriteOwner;
 		worth = initialWorth;
-		addObserver(animation);
-		addObserver(physicsObject);
-		setChanged();
-		notifyObservers();
-		buildActionMap();
+		this.id = id;
+		actions = buildActionMap();
 	}
 	
-	public Sprite(PhysicsObject po, Animation a, String initialState, 
-			double initialWorth) {
-		state = initialState;
-		physicsObject = po;
-		animation = a;
-		actions = new HashMap<>();
-		owner = null;
-		worth = initialWorth;
-		addObserver(animation);
-//		addObserver(physicsObject);
-		setChanged();
-		notifyObservers();
-		buildActionMap();
-	}
-	
-	/**
-	 * method buildActionMap
-	 * sets Strings to IAction objects
-	 */
-	private void buildActionMap(){ 
-		actions.put("moveForward", moveForward);
-		actions.put("jump", jump);
-		actions.put("setState", setState);
+	public void update(long timeLapse) {
+		if(!physicsObject.isPositionConstrained()) {
+			animation.updatePosition(physicsObject.getPositionPixels());
+		}
+	    animation.updateImage(timeLapse);
+	    physicsObject.setRigidBody(animation.getRigidBody());
 	}
 	
 	public Animation getAnimation(){
 	    return animation;
-	}
-	
-	/**
-	 * method update
-	 * @param frameRate the frameRate with which to update items
-	 * updates physicsObject and animation parameters at the specified frame rate
-	 */
-	public void update(double frameRate) {
-	    physicsObject.update(frameRate);
-	    animation.update(frameRate);
-	    physicsObject.setPosition(animation.getPosition());
 	}
 	
 	/**
@@ -86,6 +54,10 @@ public class Sprite extends Observable implements IActor {
 	 */
 	public ImageView getImageView() {
 	    return animation.getImageView();
+	}
+	
+	public Rectangle getRect() {
+		return animation.getRect();
 	}
 	
 	/**
@@ -100,11 +72,11 @@ public class Sprite extends Observable implements IActor {
 	 * IAction setState
 	 * changes the state of the current sprite object
 	 */
+	@IActionAnnotation(description = "Changes the sprite state", numParams = 1, paramDetails = "String")
 	private IAction setState = (params) -> {
 		String newState = params[0];
 		state = newState;
-		setChanged();
-		notifyObservers();
+		animation.setState(newState);
 	};
 	
 	/**
@@ -124,7 +96,7 @@ public class Sprite extends Observable implements IActor {
 	}
 	
 	@IActionAnnotation(numParams = 1, description = "increments worth of sprite if no parent,"
-			+ " otherwise increments worth of parent sprite")
+			+ " otherwise increments worth of parent sprite", paramDetails = "double")
 	private IAction incrementScore = (params) -> {
 		if(owner.equals(null)){
 			incrementScore(Double.parseDouble(params[0]));
@@ -142,15 +114,15 @@ public class Sprite extends Observable implements IActor {
 		worth += value;
 	}
 
-	@IActionAnnotation(numParams = 2, description = "moves sprite forward in an x, y vector direction")
+	@IActionAnnotation(numParams = 2, description = "moves sprite forward in an x, y vector direction", paramDetails = "two doubles")
 	private IAction moveForward = (params) -> {
-		physicsObject.applyImpulse(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
+		physicsObject.addVelocity(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
 	};
 	
-	@IActionAnnotation(numParams = 1, description = "sprite jumps up or down")
+	@IActionAnnotation(numParams = 1, description = "sprite jumps up or down", paramDetails = "double")
 	private IAction jump = (params) -> {
 		Vector myVector = new Vector(0, Double.parseDouble(params[0]));
-		physicsObject.applyImpulse(myVector);
+		physicsObject.addVelocity(myVector);
 	};
 	
 	/**
@@ -160,5 +132,9 @@ public class Sprite extends Observable implements IActor {
 	 */
 	public IAction getAction(String name) {
 		return actions.get(name);
+	}
+	
+	public boolean checkID (String string) {
+	    return id.equals(string);
 	}
 }

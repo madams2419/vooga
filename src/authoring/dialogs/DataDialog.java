@@ -2,6 +2,7 @@ package authoring.dialogs;
 
 import java.util.List;
 import java.util.function.Consumer;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -12,6 +13,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import authoring.dataEditors.Sprite;
 import authoring.userInterface.DialogGridOrganizer;
 
@@ -25,25 +27,30 @@ import authoring.userInterface.DialogGridOrganizer;
 public abstract class DataDialog extends Dialog<ButtonType> {
 
     private static final String ADD = "Add";
-    private static final int BOTTOM_SPACING = 25;
+    private int myBottomSpacing = 25; // default value
     private int myIndex;
-    private DialogGridOrganizer myGrid;
+    private DialogGridOrganizer[] myGrids;
 
-    void initialize (Sprite s, int sizeOfGridOrganizer, Node[] titleLabelRow, int numCols) {
+    void initialize (int sizeOfGridOrganizer, int numCols, int numGrids,
+        Node[]... titleLabelRow) {
         setTitle(getMyTitle());
-        myGrid = new DialogGridOrganizer(sizeOfGridOrganizer);
-        myGrid.addRowEnd(titleLabelRow);
+        HBox myHBox = new HBox();
+        myGrids = new DialogGridOrganizer[numGrids];
+        for (int i = 0; i < numGrids; i++){
+          DialogGridOrganizer myGrid = new DialogGridOrganizer(sizeOfGridOrganizer);
+          myGrid.addRowEnd(titleLabelRow[i]);
+          myGrids[i] = myGrid;
+          myHBox.getChildren().add(myGrid);
+        }
 
         for (int i = 0; i < numCols; i++) {
-            this.setHeight(this.getHeight() + BOTTOM_SPACING);
-            addBlankRow(myGrid, myIndex++);
+            this.setHeight(this.getHeight() + myBottomSpacing);
+            addBlankRow(myIndex++, myGrids);
         }
         
-        addOtherComponents(myGrid);
-
-        addAddButton();
+        addOtherComponents(myGrids);
         getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-        getDialogPane().setContent(myGrid);
+        getDialogPane().setContent(myHBox);
     }
 
     abstract String getMyTitle ();
@@ -58,16 +65,16 @@ public abstract class DataDialog extends Dialog<ButtonType> {
         final Button addButton = (Button) this.getDialogPane().lookupButton(b);
         System.out.println("add button: " + addButton);
         addButton.addEventFilter(ActionEvent.ACTION, event -> {
-            this.setHeight(this.getHeight() + BOTTOM_SPACING);
-            addBlankRow(myGrid, myIndex++);
+            this.setHeight(this.getHeight() + myBottomSpacing);
+            addAdditionalBlankRow(myIndex++, myGrids);
             event.consume();
         });
     }
 
-    public void showBox (Sprite s) {
+    public void showBox (Sprite... s) {
         this.showAndWait()
                 .filter(response -> response == ButtonType.OK)
-                .ifPresent(getTodoOnOK());
+                .ifPresent(getTodoOnOK(s));
     }
     
     ComboBox<String> addComboBox (List<ComboBox<String>> list, List<String> toAdd) {
@@ -96,13 +103,25 @@ public abstract class DataDialog extends Dialog<ButtonType> {
         return textField;
     }
     
-    void addRow (int index) {
-        addBlankRow(myGrid, index);
+    DialogGridOrganizer[] getGrid(){
+      return myGrids;
     }
     
-    abstract void addBlankRow (DialogGridOrganizer grid, int index);
+    void setBottomSpacing(int i){
+      myBottomSpacing = i;
+    }
     
-    abstract Consumer<ButtonType> getTodoOnOK ();
+    void addRow (int index) {
+        addBlankRow(index, myGrids);
+    }
+    
+    abstract void addBlankRow (int index, DialogGridOrganizer... grid);
+    
+    abstract Consumer<ButtonType> getTodoOnOK (Sprite... s);
 
-    abstract void addOtherComponents(DialogGridOrganizer grid);
+    abstract void addOtherComponents(DialogGridOrganizer... grid);
+
+    void addAdditionalBlankRow (int index, DialogGridOrganizer[] grid) {
+        addBlankRow(index, grid);
+    }
 }

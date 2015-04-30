@@ -2,7 +2,6 @@ package authoring.panes.rightPane;
 
 import java.io.File;
 import java.util.List;
-
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -96,14 +95,14 @@ public class CreationPane extends EditingPane {
 
     }
 
-    // an image in the right pane is clicked to be moved to the center pane
     private void imageClicked (Sprite sampleImage, int id) {
-        // need to now set mouse cursor to the sprite image
-        // getMyScene().setCursor(new SpriteCursor(new Sprite(sampleImage, ID,
-        // spriteClicked)));
         getMyScene().setCursor(
                                new SpriteCursor(new Sprite(sampleImage, ID++, myParent
                                        .getParent().getCenterPane())));
 
+    }
+
+    public static int incrementID () {
+        return ID++;
     }
 }

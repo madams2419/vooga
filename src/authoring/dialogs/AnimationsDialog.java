@@ -11,12 +11,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import authoring.dataEditors.Sprite;
 import authoring.userInterface.DialogGridOrganizer;
+import authoring.util.ImageEditor;
 
 
 /**
- * 
+ * Provides a dialog for user to specify sequence of images
+ * for animation.
  * @author Natalie, Andrew
  *
  */
@@ -24,28 +28,31 @@ public class AnimationsDialog extends DataDialog {
 
     private List<Button> myImageAdderButtons;
     private List<TextField> myTextFields;
-    private List<String> myStates;
-    private List<String> myImageURLs;
+    private List<String> myStates, myImageURLs;
+    private List<ImageView> myImageViews;
     private Map<String, String> myAnimations;
     private Sprite mySprite;
 
+    private static final int PREVIEW_HEIGHT = 100;
     private static final String TITLE = "Animations of Character";
     private static final String ADD_IMAGE = "Set image for state";
     private static final String STATE = "State";
     private static final String IMAGE = "Image";
+    private static final String PREVIEW = "Preview";
+    private static final String BLANK = "";
 
     private static final String IMAGE_CHOOSER_DESCRIPTION = "Image Files";
     private static final String[] IMAGE_CHOOSER_EXTENSIONS = { "*.png", "*.jpg",
                                                               "*.gif" };
 
-    public static AnimationsDialog defaultAnimations (Sprite s) {
-        return new AnimationsDialog(s);
-    }
-
     public AnimationsDialog (Sprite sprite) {
         initializeEverything(sprite);
-        initialize(sprite, 3,
-                   new Node[] { new Label(STATE), new Label(IMAGE) }, 1);
+        initialize(3, 1, 1,
+            new Node[] { new Label(STATE), new Label(IMAGE) , new Label(PREVIEW)});
+        setBottomSpacing(130);
+        addAddButton();
+        myImageURLs.add(mySprite.getImageURI());
+        myImageViews.get(0).setImage(new Image(mySprite.getImageURI()));
     }
 
     private Button addImageButton (String label, int index) {
@@ -58,6 +65,7 @@ public class AnimationsDialog extends DataDialog {
                 new FileChooserDialog(IMAGE_CHOOSER_DESCRIPTION, IMAGE_CHOOSER_EXTENSIONS)
                         .initialize()) != null) {
             myImageURLs.set(index, selectedImageFile.toURI().toString());
+            myImageViews.get(index).setImage(new Image(selectedImageFile.toURI().toString()));
         }
     }
 
@@ -66,7 +74,7 @@ public class AnimationsDialog extends DataDialog {
     }
 
     @Override
-    Consumer<ButtonType> getTodoOnOK () {
+    Consumer<ButtonType> getTodoOnOK (Sprite... s) {
         return (response -> {
             populateStates();
             populateAnimationsMap();
@@ -76,6 +84,7 @@ public class AnimationsDialog extends DataDialog {
 
     private void changeSpriteImage () {
         String image = myImageURLs.get(0);
+        System.out.println(image);
         if (image.length() > 0) {
             mySprite.changeImage(image);
         }
@@ -87,18 +96,25 @@ public class AnimationsDialog extends DataDialog {
             myStates.add(field.getText());
         }
     }
-
+    
+    private ImageView addImageView(){
+      ImageView result = new ImageView();
+      myImageViews.add(result);
+      ImageEditor.setToHeight(result, PREVIEW_HEIGHT);
+      return result;
+    }
+    
     private void populateAnimationsMap () {
         myAnimations = new LinkedHashMap<>();
-        for (int i = 0; i < myImageAdderButtons.size(); i++) {
+        for (int i = 0; i < myImageViews.size(); i++) {
             myAnimations.put(myStates.get(i), myImageURLs.get(i));
         }
     }
 
     @Override
-    void addBlankRow (DialogGridOrganizer grid, int index) {
-        grid.addRowEnd(addTextField(myTextFields), addImageButton(ADD_IMAGE, index));
-        myImageURLs.add(mySprite.getImageURI());
+    void addBlankRow (int index, DialogGridOrganizer... grid) {
+        grid[0].addRowEnd(addTextField(myTextFields), addImageButton(ADD_IMAGE, index), addImageView());
+        myImageURLs.add(BLANK);
     }
 
     void initializeEverything (Sprite sprite) {
@@ -107,15 +123,20 @@ public class AnimationsDialog extends DataDialog {
         myTextFields = new ArrayList<>();
         myImageAdderButtons = new ArrayList<>();
         myImageURLs = new ArrayList<>();
+        myImageViews = new ArrayList<>();
     }
 
     public AnimationsDialog update () {
         myImageURLs.set(0, mySprite.getImageURI());
+        ImageView preview = myImageViews.get(0);
+        preview.setImage(mySprite.getImage());
+        ImageEditor.setToHeight(preview, PREVIEW_HEIGHT);
+        
         return this;
     }
 
     @Override
-    void addOtherComponents (DialogGridOrganizer grid) {
+    void addOtherComponents (DialogGridOrganizer... grid) {
         // don't add any other components
     }
     
