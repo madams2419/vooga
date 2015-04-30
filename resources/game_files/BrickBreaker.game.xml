@@ -21,7 +21,7 @@
 								<targetType>sprite</targetType>
 								<targetIndex>0</targetIndex>
 								<name>moveForward</name>
-								<parameters>-4 -5</parameters>
+								<parameters>-10 -5</parameters>
 							</behavior_0>
 						</behaviors>
 					</onFailed>
@@ -47,7 +47,7 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>super_ball</material>
-						<position>200 0</position>
+						<position>200 60</position>
 					</physics>
 				</sprite_4>
 				<sprite_0>
@@ -131,7 +131,7 @@
 					</animations>
 					<physics>
 						<type>ComplexPhysicsObject</type>
-						<material>floating</material>
+						<material>static</material>
 						<position>-60 400</position>
 					</physics>
 				</sprite_2>
@@ -152,7 +152,7 @@
 					</animations>
 					<physics>
 						<type>ComplexPhysicsObject</type>
-						<material>floating</material>
+						<material>static</material>
 						<position>1060 400</position>
 					</physics>
 				</sprite_3>
@@ -183,7 +183,7 @@
 
 					<physics>
 						<type>ComplexPhysicsObject</type>
-						<material>static</material>
+						<material>trampoline</material>
 						<position>500 800</position>
 					</physics>
 				</sprite_5>
@@ -191,7 +191,7 @@
 
 			<physics_engine>
 				<type>ComplexPhysicsEngine</type>
-				<drag_coefficient>-1</drag_coefficient>
+				<drag_coefficient>0</drag_coefficient>
 				<global_accelerations>
 					<gravity>0 0</gravity>
 				</global_accelerations>
@@ -254,46 +254,7 @@
 				<control_scheme_1></control_scheme_1></controls>
 
 			<collisions>
-				<collision_0>
-					<sprites>0 4</sprites>
-					<detectors>
-						<detector_0>SimpleDetector</detector_0>
-						<detector_1>PixelPerfectDetector</detector_1>
-					</detectors>
-					<resolvers>
-						<resolver_0>
-								<type>SimpleResolver</type>
-								<behaviors>
-									<behavior_0>
-										<targetType>sprite</targetType>
-										<targetIndex>0</targetIndex>
-										<name>jump</name>
-										<parameters>10</parameters>
-									</behavior_0>
-								</behaviors>
-							</resolver_0>
-					</resolvers>
-				</collision_0>
-				<collision_1>
-					<sprites>0 5</sprites>
-					<detectors>
-						<detector_0>SimpleDetector</detector_0>
-						<detector_1>PixelPerfectDetector</detector_1>
-					</detectors>
-					<resolvers>
-						<resolver_0>
-								<type>SimpleResolver</type>
-								<behaviors>
-									<behavior_0>
-										<targetType>sprite</targetType>
-										<targetIndex>0</targetIndex>
-										<name>jump</name>
-										<parameters>-10</parameters>
-									</behavior_0>
-								</behaviors>
-							</resolver_0>
-					</resolvers>
-				</collision_1>
+				
 			</collisions>
 			<sprite_paths>
 				</sprite_paths></level_0>
