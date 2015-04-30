@@ -18,6 +18,8 @@ import authoring.dataEditors.Action;
 
 public abstract class ActionsDialog extends DataDialog {
 
+    private static final String PROPERTIES_EXTENSION = ".properties";
+    private static final String PARAM_DETAILS = "paramDetails";
     private static final String NUM_PARAMS = "numParams";
     private static final String DESCRIPTION = "description";
     private static final String NAME = "name";
@@ -76,7 +78,7 @@ public abstract class ActionsDialog extends DataDialog {
     List<Action> grabActions (String properties) throws IOException {
         ReadProperties reader = new ReadProperties();
         Map<Integer, Map<String, String>> actionsMap = reader
-                .getPropertiesMap(properties+".properties");
+                .getPropertiesMap(properties+PROPERTIES_EXTENSION);
         List<Action> actionsList = new ArrayList<>();
         actionsLoop(actionsMap, actionsList);
         return actionsList;
@@ -85,7 +87,7 @@ public abstract class ActionsDialog extends DataDialog {
     private void actionsLoop (Map<Integer, Map<String, String>> actionMap, List<Action> actionsList) {
         for (Map<String, String> action : actionMap.values()) {
             actionsList.add(new Action(action.get(NAME), action
-                    .get(DESCRIPTION), Integer.parseInt(action
+                    .get(DESCRIPTION), action.get(PARAM_DETAILS), Integer.parseInt(action
                     .get(NUM_PARAMS))));
         }
     }

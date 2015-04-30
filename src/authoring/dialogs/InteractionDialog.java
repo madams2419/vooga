@@ -32,8 +32,6 @@ public abstract class InteractionDialog extends ActionsDialog {
     private static final String COLON = ":";
     private static final String SPRITE2 = "sprite:";
     private static final String SIMPLE_RESOLVER = "SimpleResolver:";
-    private static final String ACTION2 = " Action";
-    private static final String ADD_SPRITE = "Add Sprite ";
     private static final int BOTTOM_SPACING = 31;
     static final String BLANK = "";
     // static final String SPRITE = "Sprite";
@@ -69,12 +67,13 @@ public abstract class InteractionDialog extends ActionsDialog {
             myDescriptions.add(new ArrayList<>());
             myChecks.add(new ArrayList<>());
             myParams.add(new ArrayList<>());
-            ButtonType bType = new ButtonType(ADD_SPRITE +
-                                              Integer.toString(k) + ACTION2);
+            ButtonType bType = new ButtonType(getButtonLabel(k));
             this.getDialogPane().getButtonTypes().add(bType);
             myAddButtons.add(bType);
         }
     }
+
+    abstract String getButtonLabel (int k);
 
     private void loopThroughMaps (List<Map<Action, String>> mySpriteInteractions,
                                   List<String> totalInteractions, Sprite ... s) {

@@ -42,7 +42,6 @@ public class BottomPane extends WindowPane {
 
     public BottomPane(Scene s, AuthoringWindow parent) {
         super(s, new HBox(), parent);
-//        System.out.printf("Instantiated %s%n", this.getClass().getName());
         myScene = s;
         getContainer().getStylesheets().add(STYLES_TOP_PANE);
     }

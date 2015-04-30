@@ -25,7 +25,9 @@ public class InteractionsSpritesDialog extends InteractionDialog {
     private static final String DESCRIPTION2 = "Description";
     private static final String PARAMS = "Params";
     private static final String ACTION = "Action";
+    private static final String ACTION2 = " Action";
     private static final String PROPERTY = "Sprite";
+    private static final String ADD_SPRITE = "Add Sprite ";
     private static final int NUM_GRIDS = 2;
     private static final int GRID_ORGANIZER_SIZE = 4;
     private static final int INITIAL_ROWS = 0;
@@ -85,6 +87,11 @@ public class InteractionsSpritesDialog extends InteractionDialog {
     @Override
     String getProperty () {
         return PROPERTY;
+    }
+    
+    @Override
+    String getButtonLabel(int k) {
+        return (ADD_SPRITE + Integer.toString(k) + ACTION2);
     }
 
 }
