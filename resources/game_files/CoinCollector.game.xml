@@ -36,6 +36,12 @@
 								<name>removeSprite</name>
 								<parameters>11</parameters>
 							</behavior_0>
+							<behavior_1>
+										<targetType>sprite</targetType>
+											<targetIndex>0</targetIndex>
+											<name>incrementScore</name>
+											<parameters>5</parameters>
+									</behavior_1>
 						</behaviors>
 					</onComplete>
 				</objective_1>
@@ -49,6 +55,12 @@
 								<name>removeSprite</name>
 								<parameters>12</parameters>
 							</behavior_0>
+							<behavior_1>
+										<targetType>sprite</targetType>
+											<targetIndex>0</targetIndex>
+											<name>incrementScore</name>
+											<parameters>5</parameters>
+									</behavior_1>
 						</behaviors>
 					</onComplete>
 				</objective_2>
@@ -547,6 +559,12 @@
 										<name>removeSprite</name>
 										<parameters>4</parameters>
 									</behavior_0>
+									<behavior_1>
+										<targetType>sprite</targetType>
+											<targetIndex>0</targetIndex>
+											<name>incrementScore</name>
+											<parameters>1</parameters>
+									</behavior_1>
 								</behaviors>
 							</resolver_0>
 						</resolvers>
@@ -567,6 +585,13 @@
 										<name>removeSprite</name>
 										<parameters>5</parameters>
 									</behavior_0>
+									<behavior_1>
+										<targetType>sprite</targetType>
+											<targetIndex>0</targetIndex>
+											<name>incrementScore</name>
+											<parameters>1</parameters>
+									</behavior_1>
+									
 								</behaviors>
 							</resolver_0>
 						</resolvers>
@@ -587,6 +612,12 @@
 										<name>removeSprite</name>
 										<parameters>6</parameters>
 									</behavior_0>
+									<behavior_1>
+										<targetType>sprite</targetType>
+											<targetIndex>0</targetIndex>
+											<name>incrementScore</name>
+											<parameters>1</parameters>
+									</behavior_1>
 								</behaviors>
 							</resolver_0>
 						</resolvers>
@@ -607,6 +638,12 @@
 										<name>removeSprite</name>
 										<parameters>7</parameters>
 									</behavior_0>
+									<behavior_1>
+										<targetType>sprite</targetType>
+											<targetIndex>0</targetIndex>
+											<name>incrementScore</name>
+											<parameters>1</parameters>
+									</behavior_1>
 								</behaviors>
 							</resolver_0>
 						</resolvers>
@@ -627,6 +664,12 @@
 										<name>removeSprite</name>
 										<parameters>8</parameters>
 									</behavior_0>
+									<behavior_1>
+										<targetType>sprite</targetType>
+											<targetIndex>0</targetIndex>
+											<name>incrementScore</name>
+											<parameters>1</parameters>
+									</behavior_1>
 								</behaviors>
 							</resolver_0>
 						</resolvers>
@@ -647,6 +690,12 @@
 										<name>removeSprite</name>
 										<parameters>3</parameters>
 									</behavior_0>
+									<behavior_1>
+										<targetType>sprite</targetType>
+											<targetIndex>0</targetIndex>
+											<name>incrementScore</name>
+											<parameters>1</parameters>
+									</behavior_1>
 								</behaviors>
 							</resolver_0>
 						</resolvers>
