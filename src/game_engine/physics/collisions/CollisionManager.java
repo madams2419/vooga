@@ -23,9 +23,9 @@ public class CollisionManager {
 			for(int j = i + 1; j < myObjects.size(); j++) {
 				PhysicsObject poB = myObjects.get(j);
 				Collision collision = myCollisionFactory.createCollision(poA, poB);
+				mapCollision(poA, poB, collision);
+				mapCollision(poB, poA, collision);
 				if(collision.isCollided()) {
-					mapCollision(poA, poB, collision);
-					mapCollision(poB, poA, collision);
 					collision.resolve();
 				}
 			}
@@ -33,7 +33,12 @@ public class CollisionManager {
 	}
 	
 	public boolean isCollided(PhysicsObject poA, PhysicsObject poB) {
-		return getCollision(poA, poB).isCollided();
+		Collision collision = getCollision(poA, poB);
+		if(collision == null) {
+			return false;
+		}
+		
+		return collision.isCollided();
 	}
 	
 	public Collision getCollision(PhysicsObject poA, PhysicsObject poB) {

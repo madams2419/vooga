@@ -193,6 +193,12 @@ public class PhysicsObject extends Observable {
 	public void setVelocity(Vector velocity) {
 		myVelocity = velocity;
 	}
+	
+	public void removeVelocity(Vector velocity) {
+		double newX = (Math.abs(myVelocity.getX()) < Math.abs(velocity.getX())) ? 0 : myVelocity.getX() - velocity.getX();
+		double newY = (Math.abs(myVelocity.getY()) < Math.abs(velocity.getY())) ? 0 : myVelocity.getY() - velocity.getY();
+		myVelocity = new Vector(newX, newY);
+	}
 
 	public Vector getAccel() {
 		return myAccel;
