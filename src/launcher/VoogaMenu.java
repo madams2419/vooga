@@ -133,6 +133,7 @@ public class VoogaMenu {
 		VoogaFileChooser chooser = new VoogaFileChooser(width, height);
 		VBox choiceMenu = chooser.getContent(width, height);
 		header.setOnMouseClicked((clicked) -> {
+			header.setOnMouseClicked(null);
 			doTranslate(choiceMenu, 0, height, DELAY);
 			doFade(choiceMenu, INVISIBLE, DELAY.multiply(2), (finished) -> {
 				revertMenu();

@@ -105,7 +105,7 @@ public class Sprite extends Observable implements IActor {
 	@IActionAnnotation(numParams = 1, description = "increments worth of sprite if no parent,"
 			+ " otherwise increments worth of parent sprite", paramDetails = "double")
 	private IAction incrementScore = (params) -> {
-		if(owner == null){
+		if(owner==null){
 			incrementScore(Double.parseDouble(params[0]));
 		}else{
 			owner.incrementScore(Double.parseDouble(params[0]));

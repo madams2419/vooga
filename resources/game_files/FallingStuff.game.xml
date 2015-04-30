@@ -461,6 +461,12 @@
 										<name>removeSprite</name>
 										<parameters>4</parameters>
 									</behavior_0>
+									<behavior_1>
+										<targetType>sprite</targetType>
+										<targetIndex>0</targetIndex>
+										<name>incrementScore</name>
+										<parameters>2</parameters>
+									</behavior_1>
 								</behaviors>
 							</resolver_0>
 						</resolvers>
@@ -476,11 +482,17 @@
 								<type>SimpleResolver</type>
 								<behaviors>
 									<behavior_0>
-										<targetType>level</targetType>
+										<targetType>sprite</targetType>
+										<targetIndex>0</targetIndex>
+										<name>incrementScore</name>
+										<parameters>2</parameters>
+									</behavior_0>
+									<behavior_1>
+									<targetType>level</targetType>
 										<targetIndex>0</targetIndex>
 										<name>removeSprite</name>
 										<parameters>5</parameters>
-									</behavior_0>
+										</behavior_1>
 								</behaviors>
 							</resolver_0>
 						</resolvers>
@@ -501,6 +513,12 @@
 										<name>removeSprite</name>
 										<parameters>6</parameters>
 									</behavior_0>
+									<behavior_1>
+										<targetType>sprite</targetType>
+										<targetIndex>0</targetIndex>
+										<name>incrementScore</name>
+										<parameters>2</parameters>
+									</behavior_1>
 								</behaviors>
 							</resolver_0>
 						</resolvers>
@@ -521,6 +539,12 @@
 										<name>removeSprite</name>
 										<parameters>7</parameters>
 									</behavior_0>
+									<behavior_1>
+										<targetType>sprite</targetType>
+										<targetIndex>0</targetIndex>
+										<name>incrementScore</name>
+										<parameters>2</parameters>
+									</behavior_1>
 								</behaviors>
 							</resolver_0>
 						</resolvers>
@@ -541,6 +565,12 @@
 										<name>removeSprite</name>
 										<parameters>8</parameters>
 									</behavior_0>
+									<behavior_1>
+										<targetType>sprite</targetType>
+										<targetIndex>0</targetIndex>
+										<name>incrementScore</name>
+										<parameters>2</parameters>
+									</behavior_1>
 								</behaviors>
 							</resolver_0>
 						</resolvers>
