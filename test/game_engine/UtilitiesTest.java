@@ -2,7 +2,7 @@ package game_engine;
 
 import static org.junit.Assert.*;
 import game_engine.physics.utilities.Vector;
-
+import game_engine.util.Utilities;
 import org.junit.Test;
 
 public class UtilitiesTest {
