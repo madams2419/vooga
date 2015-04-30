@@ -125,6 +125,16 @@ public class Sprite implements IActor {
 		physicsObject.addVelocity(myVector);
 	};
 	
+	@IActionAnnotation(numParams = 2, description = "sets sprites velocity", paramDetails = "double")
+	private IAction setVelocity = (params) -> {
+		physicsObject.setVelocity(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
+	};
+	
+	@IActionAnnotation(numParams = 2, description = "remove velocity", paramDetails = "double")
+	private IAction removeVelocity = (params) -> {
+		physicsObject.removeVelocity(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
+	};
+	
 	/**
 	 * IAction getAction
 	 * @param name
