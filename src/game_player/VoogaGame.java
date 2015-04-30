@@ -4,7 +4,7 @@ import game_engine.Level;
 import game_engine.annotation.IActionAnnotation;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
-import game_engine.control.ControlManagerFactory;
+import game_engine.control.*;
 import game_engine.controls.ControlsManager;
 import game_engine.sprite.TransitionManager;
 
@@ -92,6 +92,7 @@ public class VoogaGame implements IActor {
 		//scene.setOnKeyReleased(e -> controlsManager.handleInput(e));
 		scene.setOnKeyPressed(e -> controlFactory.getControlManager(KEYBOARD).handleEvent(e));
 		scene.setOnKeyReleased(e -> controlFactory.getControlManager(KEYBOARD).handleEvent(e));
+		System.out.println("Num of key control is "+((SceneControlManager)controlFactory.getControlManager(KEYBOARD)).getKeyCount());
 		stage.setX(Screen.getPrimary().getVisualBounds().getMinX());
 		stage.setY(Screen.getPrimary().getVisualBounds().getMinY());
 		root.requestFocus();

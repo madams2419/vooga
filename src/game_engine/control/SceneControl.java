@@ -13,6 +13,6 @@ public abstract class SceneControl implements Control{
 	 * Method executeEvent.
 	 * @param e InputEvent
 	 */
-	public void executeEvent(InputEvent e){System.out.println("Get called");}
+	public void executeEvent(InputEvent e){}
 	
 }

@@ -3,7 +3,9 @@ package game_engine.control;
 import game_engine.*;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IBehavior;
+
 import java.util.*;
+
 import javafx.scene.input.*;
 
 /**
@@ -17,11 +19,15 @@ public class SceneControlManager extends ControlManager{
 	private List<KeyControl> myKeyControls;
 	private List<MouseControl> myMouseControls;
 	private SceneControlFactory myControlFactory; 
+	private int myKeyControlCount;
+	private int myMouseControlCount;
 	
 	
 	public SceneControlManager(){
 		myActiveKeyControl = ControlConstants.INITIAL_INDEX;		
 		myActiveMouseControl = ControlConstants.INITIAL_INDEX;		
+		myKeyControlCount = ControlConstants.INITIAL_INDEX;
+		myMouseControlCount = ControlConstants.INITIAL_INDEX;
 		myKeyControls = new ArrayList<>();
 		myMouseControls = new ArrayList<>();
 		myControlFactory = new SceneControlFactory(this);
@@ -41,8 +47,9 @@ public class SceneControlManager extends ControlManager{
 	 * @param newControl KeyControl
 	 */
 	public void addKeyControl(KeyControl newControl){
+		System.out.println("add control");
 		myKeyControls.add(newControl);
-		myActiveKeyControl++;
+		myKeyControlCount++;
 	}
 
 	/**
@@ -51,7 +58,7 @@ public class SceneControlManager extends ControlManager{
 	 */
 	public void addMouseControl(MouseControl newControl){
 		myMouseControls.add(newControl);
-		myActiveMouseControl++;
+		myMouseControlCount++;
 	}
 	
 	/**
@@ -60,21 +67,17 @@ public class SceneControlManager extends ControlManager{
 	 * @return IAction
 	 */
 	@Override
-	public IAction setActiveControl(String... indexArray){
-		int keyIndex = Integer.parseInt(indexArray[0]);
-		int mouseIndex = Integer.parseInt(indexArray[1]);
+	public void switchControl(String... params){
+		int keyIndex = Integer.parseInt(params[0]);
+		int mouseIndex = ControlConstants.INITIAL_INDEX;
 		if(validActiveIndex(mouseIndex, keyIndex)){			
 			System.out.println(PrintMessage.INVALID_INDEX.getVal());
-			return null;
 		} else {
-			IAction activeControl = (params) -> {
 				myActiveKeyControl = keyIndex;
 				myActiveMouseControl = mouseIndex;
-			};
-			return activeControl;
 		}
 	}
-
+	
 	/**
 	 * Method validActiveIndex.
 	 * @param mouseIndex int
@@ -82,7 +85,7 @@ public class SceneControlManager extends ControlManager{
 	 * @return boolean
 	 */
 	private boolean validActiveIndex(int mouseIndex, int keyIndex){
-		return (mouseIndex >= 0 && keyIndex >= 0 && myActiveKeyControl >= 0 && myActiveMouseControl >= 0 && myActiveKeyControl >= 0
+		return (mouseIndex >= 0 && keyIndex >= 0 && myActiveKeyControl >= 0 && myActiveMouseControl >= 0 
 				&& mouseIndex < myKeyControls.size() && keyIndex < myMouseControls.size());
 	}
 	
@@ -92,6 +95,7 @@ public class SceneControlManager extends ControlManager{
 	 */
 	@Override
 	public void handleEvent(Object obj){
+		//System.out.println("Currently the Active Control Index is "+myActiveKeyControl);
 		myControlFactory.getControlType((InputEvent) obj).executeEvent(myControlFactory.getEventType((InputEvent) obj));
 	}
 
@@ -109,6 +113,14 @@ public class SceneControlManager extends ControlManager{
 	 */
 	public KeyControl getActiveKeyControl(){
 		return myKeyControls.get(myActiveKeyControl);
+	}
+	
+	public int getKeyCount(){
+		return myKeyControlCount;
+	}
+	
+	public int getMouseCount(){
+		return myMouseControlCount;
 	}
 
 }

@@ -35,13 +35,13 @@ public class ControlTester extends Application{
 	private final String mySUB = "subtract";
 	private final String myMUL = "multiply";
 	private final String myDIV = "divide";
-	private final int my_text_1_x = 100;
+	private final int my_text_1_x = 400;
 	private final int my_text_1_y = 200;
-	private final int my_text_2_x = 100;
-	private final int my_text_2_y = 280;
+	private final int my_text_2_x = 400;
+	private final int my_text_2_y = 480;
 	private final int SCENE_WIDTH = 400;
 	private final int SCENE_HEIGHT = 400;
-	private final int FONT_SIZE = 20;
+	private final int FONT_SIZE = 80;
 	private int myTrackNum = 10;
 	private final int CIRCLE_X = 150;
 	private final int CIRCLE_Y = 150;
@@ -94,7 +94,7 @@ public class ControlTester extends Application{
 		s.setScene(scene);
 		
 		keyInitialization();
-		mouseInitialization();
+		//mouseInitialization();
 		
 		myGroup.getChildren().add(my_text1);
 		myGroup.getChildren().add(my_text2);
@@ -104,9 +104,9 @@ public class ControlTester extends Application{
 		
 		scene.setOnKeyPressed(e -> myControlFactory.getControlManager(ControlConstants.KEYBOARD).handleEvent(e));
 		scene.setOnKeyReleased(e -> myControlFactory.getControlManager(ControlConstants.KEYBOARD).handleEvent(e));
-		scene.setOnMouseClicked(e -> myControlFactory.getControlManager(ControlConstants.MOUSE).handleEvent(e));
-		scene.setOnMouseMoved(e -> myControlFactory.getControlManager(ControlConstants.MOUSE).handleEvent(e));
-		scene.setOnMouseReleased(e -> myControlFactory.getControlManager(ControlConstants.MOUSE).handleEvent(e));
+		//scene.setOnMouseClicked(e -> myControlFactory.getControlManager(ControlConstants.MOUSE).handleEvent(e));
+		//scene.setOnMouseMoved(e -> myControlFactory.getControlManager(ControlConstants.MOUSE).handleEvent(e));
+		//scene.setOnMouseReleased(e -> myControlFactory.getControlManager(ControlConstants.MOUSE).handleEvent(e));
 		s.show();
 	}
 

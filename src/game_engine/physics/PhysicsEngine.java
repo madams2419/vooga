@@ -44,6 +44,7 @@ public class PhysicsEngine {
 	public void update(double timeStep) {
 		myCollisionManager.checkAndResolveCollisions(myObjects);
 		myObjects.forEach(po -> po.update(timeStep));
+
 	}
 
 	public Vector getDragForce(PhysicsObject physObj) {

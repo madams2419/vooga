@@ -43,6 +43,7 @@ public class KeyControl extends SceneControl {
 	public Function<KeyEvent, Integer> executePressed(){
 		Function<KeyEvent, Integer> pressedFunction = t -> {
 			if(myKeyPressedMap.get(t.getCode()) != null){
+				//System.out.println(t.getCode().toString() + " key pressed ");
 				myKeyPressedMap.get(t.getCode()).perform();
 			}
 			myWhilePressedKey.add(t.getCode());
@@ -54,6 +55,7 @@ public class KeyControl extends SceneControl {
 	public Function<KeyEvent, Integer> executeReleased(){
 		Function<KeyEvent, Integer> releasedFunction = t -> {
 			if(myKeyReleasedMap.get(t.getCode()) != null){
+				//System.out.println(t.getCode().toString() + " key released");
 				myKeyReleasedMap.get(t.getCode()).perform();
 			}
 			myWhilePressedKey.remove(t.getCode());

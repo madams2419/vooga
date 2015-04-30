@@ -59,10 +59,8 @@ public class SceneControlFactory {
 	 */
 	public static InputEvent getEventType(InputEvent event){
 		if(event.getClass().getName().toString().equals(MOUSE_EVENT)){
-			//System.out.println("it's mouseevent " + event.getClass());
 			return (MouseEvent) event;
 		} else{
-			//System.out.println("it's keyevent " + event.getClass());
 			return (KeyEvent) event;
 		}
 	}
