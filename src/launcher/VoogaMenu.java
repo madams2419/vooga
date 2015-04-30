@@ -127,14 +127,17 @@ public class VoogaMenu {
 		sections.forEach((section) -> doTranslate(section, width/2, -height/2));
 		revertText();
 		setText("Return to Menu");
+		VoogaFileChooser chooser = new VoogaFileChooser(width, height);
+		VBox choiceMenu = chooser.getContent(width, height);
 		header.setOnMouseClicked((clicked) -> {
-			revertMenu();
-			revertText();
-			enableMouseListeners();
+			doTranslate(choiceMenu, 0, height, DELAY);
+			doFade(choiceMenu, INVISIBLE, DELAY.multiply(2), (finished) -> {
+				revertMenu();
+				revertText();
+				enableMouseListeners();
+			});
 		});
 		playSection.setOnMouseClicked((clicked) -> {
-			VoogaFileChooser chooser = new VoogaFileChooser(width, height);
-			VBox choiceMenu = chooser.getContent(width, height);
 			root.getChildren().add(choiceMenu);
 			doTranslate(choiceMenu, 0, HEADER_RADIUS, DELAY);
 			doFade(choiceMenu, OPAQUE, DELAY.multiply(2));
