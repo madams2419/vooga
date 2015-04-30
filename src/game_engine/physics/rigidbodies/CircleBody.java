@@ -1,4 +1,6 @@
-package game_engine.physics;
+package game_engine.physics.rigidbodies;
+
+import game_engine.physics.utilities.Vector;
 
 public class CircleBody extends RigidBody {
 

@@ -38,7 +38,7 @@ public class BottomPane extends WindowPane {
     private static final String BUTTON = "Button";
     private static final String STYLES_TOP_PANE = "styles/top_pane.css";
     private List<Button> mButtonList = new ArrayList<>();
-    public static final String XML_FILE_OUTPUT = "output/test.xml";
+    public static final String XML_FILE_OUTPUT = "resources/game_files/test.game.xml";
 
     public BottomPane(Scene s, AuthoringWindow parent) {
         super(s, new HBox(), parent);

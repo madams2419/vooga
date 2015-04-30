@@ -1,10 +1,15 @@
 package game_engine.physics;
 
-import java.util.List;
+import game_engine.physics.rigidbodies.RigidBody;
+import game_engine.physics.utilities.Scaler;
+import game_engine.physics.utilities.Vector;
+
 import java.util.Observable;
 import java.util.function.Supplier;
 
 // TODO
+// - change apply impulse to be what add velocity is now (maybe call this apply velocity)
+// - change add velocity to add a velocity to a list of velocities that gets applied at every time step
 // - remove all Pixels methods (everything just needs to use the scaler)
 
 public class PhysicsObject extends Observable {
@@ -16,7 +21,6 @@ public class PhysicsObject extends Observable {
 	private Vector myAccel;
 	private Vector myNetInternalForce;
 	private double myDirForceMagnitude;
-	private List<Joint> myJoints;
 	private PhysicsEngine myPhysics;
 	private Scaler myScaler;
 	private Supplier<Vector> myPositionConstraint;
@@ -29,14 +33,16 @@ public class PhysicsObject extends Observable {
 		myMaterial = material;
 
 		myPosition = myScaler.vectorPixelsToMeters(positionPx);
+		
 		myVelocity = Vector.ZERO;
 		myNetInternalForce = Vector.ZERO;
 		myDirForceMagnitude = 0;
 
 		myInvMass = computeInvMass();
 		myAccel = computeAccel();
-		
+
 		myPositionConstraint = null;
+		System.out.println(myPosition);
 	}
 
 	public void update(double dt) {
@@ -50,11 +56,11 @@ public class PhysicsObject extends Observable {
 			myVelocity = Vector.ZERO;
 			myPosition = myPositionConstraint.get();
 		}
-
+		
 		setChanged();
 		notifyObservers();
 	}
-	
+
 	//TODO change to posotion modifier
 	public void constrainPosition(Supplier<Vector> positionConstraint) {
 		//TODO replace with strategy pattern
@@ -64,7 +70,7 @@ public class PhysicsObject extends Observable {
 	private double computeInvMass() {
 		return (computeMass() == 0) ? 0 : 1/computeMass();
 	}
-	
+
 	private double computeMass() {
 		return myMaterial.getDensity() * myRigidBody.getVolume();
 	}
@@ -101,16 +107,17 @@ public class PhysicsObject extends Observable {
 		myNetInternalForce = myNetInternalForce.minus(force);
 	}
 
-	public void addDirectionalForce(double magnitude) {
+	public void addPointingForce(double magnitude) {
 		myDirForceMagnitude += magnitude;
 	}
 
-	public void removeDirectionalForce(double magnitude) {
+	public void removePointingForce(double magnitude) {
 		myDirForceMagnitude -= magnitude;
 	}
 
-	public void applyImpulse(Vector impulse) {
-		addVelocity(impulse.times(myInvMass));
+	//TODO refactor so apply and add velocity have different behaviors
+	public void applyVelocity(Vector velocity) {
+		addVelocity(velocity);
 	}
 
 	public void addVelocity(Vector velocity) {
@@ -127,7 +134,7 @@ public class PhysicsObject extends Observable {
 		myPosition = newPosition;
 	}
 
-	protected Vector getPositionMeters() {
+	public Vector getPositionMeters() {
 		return myPosition;
 	}
 
@@ -135,19 +142,19 @@ public class PhysicsObject extends Observable {
 		return myScaler.vectorMetersToPixels(getPositionMeters());
 	}
 
-	protected double getXMeters() {
+	public double getXMeters() {
 		return myPosition.getX();
 	}
 
-	protected void setXMeters(double xMeters) {
+	public void setXMeters(double xMeters) {
 		myPosition = myPosition.setX(xMeters);
 	}
 
-	protected double getYMeters() {
+	public double getYMeters() {
 		return myPosition.getY();
 	}
 
-	protected void setYMeters(double yMeters) {
+	public void setYMeters(double yMeters) {
 		myPosition = myPosition.setY(yMeters);
 	}
 
@@ -170,11 +177,11 @@ public class PhysicsObject extends Observable {
 	public double getRadiusPixels() {
 		return myScaler.metersToPixels(myRigidBody.getRadius());
 	}
-	
+
 	public double getWidthPixels() {
 		return myScaler.metersToPixels(myRigidBody.getWidth());
 	}
-	
+
 	public double getHeightPixels() {
 		return myScaler.metersToPixels(myRigidBody.getHeight());
 	}
@@ -182,7 +189,7 @@ public class PhysicsObject extends Observable {
 	public Vector getVelocity() {
 		return myVelocity;
 	}
-	
+
 	public void setVelocity(Vector velocity) {
 		myVelocity = velocity;
 	}
@@ -203,11 +210,19 @@ public class PhysicsObject extends Observable {
 		return myMaterial.getRestitution();
 	}
 
+	public double getStaticFriction() {
+		return myMaterial.getStaticFriction();
+	}
+
+	public double getKineticFriction() {
+		return myMaterial.getKineticFriction();
+	}
+
 	public void setMaterial(Material material) {
 		myMaterial = material;
 		myInvMass = computeInvMass();
 	}
-	
+
 	public void setRigidBody(RigidBody rigidBody) {
 		myRigidBody = rigidBody;
 	}
@@ -215,11 +230,11 @@ public class PhysicsObject extends Observable {
 	public RigidBody getRigidBody() {
 		return myRigidBody;
 	}
-	
+
 	public boolean isPositionConstrained() {
 		return myPositionConstraint != null;
 	}
-	
+
 	public boolean isTransparent() {
 		return getRestitution() < 0;
 	}

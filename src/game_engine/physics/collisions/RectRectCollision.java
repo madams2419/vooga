@@ -1,6 +1,10 @@
-package game_engine.physics;
+package game_engine.physics.collisions;
 
-public class RectRectCollision extends PhysicsCollision {
+import game_engine.physics.PhysicsObject;
+import game_engine.physics.rigidbodies.RectangleBody;
+import game_engine.physics.utilities.Vector;
+
+public class RectRectCollision extends Collision {
 
 	private RectangleBody rectA;
 	private RectangleBody rectB;

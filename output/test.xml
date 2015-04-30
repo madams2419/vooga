@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game>
-	<scene_width>500</scene_width>
-	<scene_height>500</scene_height>
-	<title>Mario Game</title>
+	<scene_width>1920</scene_width>
+	<scene_height>1080</scene_height>
+	<title>default</title>
 	<frame_rate>60</frame_rate>
 	<first_level>0</first_level>
 	<level>
@@ -20,8 +20,8 @@
 								<image_0>
 									<source>authoring_images/blocks/longGround.png</source>
 									<delay>1.0</delay>
-									<width>0.0</width>
-									<height>0.0</height>
+									<width>484.0</width>
+									<height>486.0</height>
 								</image_0>
 							</images>
 						</state_0>
@@ -29,47 +29,34 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>floating</material>
-						<position>-0.500000 586.500000</position>
+						<position>484.000000 486.000000</position>
 					</physics>
 				</sprite_0>
-				<sprite_2>
-					<initial_state>right</initial_state>
+				<sprite_1>
+					<initial_state>0</initial_state>
 					<path />
 					<animations>
 						<state_0>
-							<name>right</name>
+							<name>0</name>
 							<images>
 								<image_0>
-									<source>authoring_images/characters/smallStandingMarioR.png
-									</source>
+									<source>authoring_images/characters/smallStandingMarioR.png</source>
 									<delay>1.0</delay>
-									<width>0.0</width>
-									<height>0.0</height>
+									<width>164.0</width>
+									<height>523.0</height>
 								</image_0>
 							</images>
 						</state_0>
-						<state_1>
-							<name>left</name>
-							<images>
-								<image_0>
-									<source>authoring_images/characters/smallStandingMarioL.png
-									</source>
-									<delay>1.0</delay>
-									<width>0.0</width>
-									<height>0.0</height>
-								</image_0>
-							</images>
-						</state_1>
 					</animations>
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>bouncy_ball</material>
-						<position>86.500000 533.500000</position>
+						<position>164.000000 523.000000</position>
 					</physics>
-				</sprite_2>
-				<sprite_3>
+				</sprite_1>
+				<sprite_2>
 					<initial_state>0</initial_state>
-					<path>316.5 501.0 277.5 438.5 355.5 399.5 310.5 356.0</path>
+					<path>408.0 525.0 448.5 479.0 361.5 447.0 401.0 405.0</path>
 					<animations>
 						<state_0>
 							<name>0</name>
@@ -77,8 +64,8 @@
 								<image_0>
 									<source>authoring_images/blocks/platform.png</source>
 									<delay>1.0</delay>
-									<width>0.0</width>
-									<height>0.0</height>
+									<width>404.0</width>
+									<height>557.0</height>
 								</image_0>
 							</images>
 						</state_0>
@@ -86,9 +73,9 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>floating</material>
-						<position>250.000000 491.500000</position>
+						<position>404.000000 557.000000</position>
 					</physics>
-				</sprite_3>
+				</sprite_2>
 				<sprite_5>
 					<initial_state>0</initial_state>
 					<path />
@@ -99,8 +86,8 @@
 								<image_0>
 									<source>authoring_images/blocks/platform.png</source>
 									<delay>1.0</delay>
-									<width>0.0</width>
-									<height>0.0</height>
+									<width>575.0</width>
+									<height>645.0</height>
 								</image_0>
 							</images>
 						</state_0>
@@ -108,7 +95,7 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>floating</material>
-						<position>484.500000 405.500000</position>
+						<position>575.000000 645.000000</position>
 					</physics>
 				</sprite_5>
 				<sprite_6>
@@ -121,8 +108,8 @@
 								<image_0>
 									<source>authoring_images/blocks/platform.png</source>
 									<delay>1.0</delay>
-									<width>0.0</width>
-									<height>0.0</height>
+									<width>775.0</width>
+									<height>730.0</height>
 								</image_0>
 							</images>
 						</state_0>
@@ -130,7 +117,7 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>floating</material>
-						<position>714.500000 343.500000</position>
+						<position>775.000000 730.000000</position>
 					</physics>
 				</sprite_6>
 			</sprites>
@@ -151,9 +138,9 @@
 							<behaviors>
 								<behavior_0>
 									<targetType>sprite</targetType>
-									<targetIndex>2</targetIndex>
+									<targetIndex>1</targetIndex>
 									<name>jump</name>
-									<parameters>10 </parameters>
+									<parameters>2 </parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
@@ -167,16 +154,10 @@
 							<behaviors>
 								<behavior_0>
 									<targetType>sprite</targetType>
-									<targetIndex>2</targetIndex>
+									<targetIndex>1</targetIndex>
 									<name>moveForward</name>
-									<parameters>-10 0 </parameters>
+									<parameters>-2 0 </parameters>
 								</behavior_0>
-								<behavior_1>
-									<targetType>sprite</targetType>
-									<targetIndex>2</targetIndex>
-									<name>setState</name>
-									<parameters>left </parameters>
-								</behavior_1>
 							</behaviors>
 						</onPressed>
 						<onReleased>
@@ -189,16 +170,10 @@
 							<behaviors>
 								<behavior_0>
 									<targetType>sprite</targetType>
-									<targetIndex>2</targetIndex>
+									<targetIndex>1</targetIndex>
 									<name>moveForward</name>
-									<parameters>10 0 </parameters>
+									<parameters>2 0 </parameters>
 								</behavior_0>
-								<behavior_1>
-									<targetType>sprite</targetType>
-									<targetIndex>2</targetIndex>
-									<name>setState</name>
-									<parameters>right </parameters>
-								</behavior_1>
 							</behaviors>
 						</onPressed>
 						<onReleased>

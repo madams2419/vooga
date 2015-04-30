@@ -1,4 +1,4 @@
-package game_engine.physics;
+package game_engine.physics.utilities;
 
 import java.util.List;
 
@@ -123,6 +123,11 @@ public class Vector {
 
 	public String toString() {
 		return String.format("Vector (%f, %f)\n", myX, myY);
+	}
+	
+	public double[] asArray() {
+		double[] array = {myX, myY};
+		return array;
 	}
 
 }

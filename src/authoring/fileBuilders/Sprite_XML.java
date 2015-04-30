@@ -1,5 +1,6 @@
 package authoring.fileBuilders;
 
+import game_engine.Utilities;
 import java.util.ArrayList;
 import java.util.List;
 import org.w3c.dom.Element;
@@ -26,20 +27,32 @@ public class Sprite_XML {
     private Physics physics;
     private int index;
 
-    public Sprite_XML (Sprite s) {
-        populateAnimations(s);
+    public Sprite_XML (Sprite s, double height) {
+        double[] translatedPosition = setTranslation(s, height);
+        populateAnimations(s, translatedPosition);
         initial_state = animation.get(0).name.length() > 0 ? animation.get(0).name : DEFAULT_INITIAL_STATE;
         System.out.println("initial state: " + initial_state);
         path = s.getPath();
         physics =
                 new Physics(s.getMyType(), s.getMyMaterial(), String.format(
                                                                             PHYSICS_FORMAT,
-                                                                            s.getXPosition(),
-                                                                            s.getYPosition()));
+                                                                            translatedPosition[0],
+                                                                            translatedPosition[1]));
         index = s.getID();
     }
 
-    private void populateAnimations (Sprite s) {
+
+    private double[] setTranslation (Sprite s, double height) {
+        double nxVal = s.getXPosition();
+        double nyVal = s.getYPosition();
+        double nWidth = s.getImage().getWidth();
+        double nHeight = s.getImage().getHeight();
+        double screenHeight = height;
+        return Utilities.nodeTranslationToPhysicsCenter(nxVal, nyVal, nWidth, nHeight, screenHeight);
+    }
+
+
+    private void populateAnimations (Sprite s, double[] translatedPosition) {
         animation = new ArrayList<>();
         s.getAnimations()
                 .getAnimations()
@@ -47,9 +60,8 @@ public class Sprite_XML {
                          (state, imageuri) -> {
                              animation.add(new State(state,
                                                      new Image(imageuri,
-                                                               DELAY_TIME, Double.toString(s
-                                                                       .getWidth()),
-                                                               Double.toString(s.getHeight()))));
+                                                               DELAY_TIME, Double.toString(s.getImage().getWidth()),
+                                                               Double.toString(s.getImage().getHeight()))));
                          });
     }
 

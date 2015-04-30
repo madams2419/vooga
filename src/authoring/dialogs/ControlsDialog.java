@@ -107,7 +107,7 @@ public class ControlsDialog extends ActionsDialog {
   @Override
   void addBlankRow(int index, DialogGridOrganizer... grid) {
     try {
-      grid[0].addRowEnd(addActionComboBox(myComboBoxes, myDescriptions), addKeyPressedField(),
+      grid[0].addRowEnd(addActionComboBox(myComboBoxes, myDescriptions, "Sprite"), addKeyPressedField(),
           addTextField(myParamTextFields), addLabel("", myDescriptions), addLabel("", myChecks));
       this.setWidth(1200);
     } catch (IOException e) {

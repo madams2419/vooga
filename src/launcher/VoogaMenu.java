@@ -60,6 +60,7 @@ public class VoogaMenu {
 	//private static final String SIMPLE_GAME = "output/test.xml";
 	//private static final String SIMPLE_GAME = "resources/game_files/PhysicsTest.game.xml";
 	private static final String SIMPLE_GAME = "resources/game_files/test.game.xml";
+	//private static final String SIMPLE_GAME = "resources/game_files/BrickBreaker.game.xml";
 	//private static final String SIMPLE_GAME = "resources/game_files/Simple.game.xml";
 
 	private VoogaFileChooser chooser;
