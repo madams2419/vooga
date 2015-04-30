@@ -3,395 +3,148 @@ package launcher;
 import game_player.VoogaGame;
 import game_player.VoogaGameBuilder;
 import game_player.XMLParser;
-import java.io.File;
-import java.io.FileInputStream;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import utilities.SocialCenter.LoginScreen;
+import authoring.userInterface.AuthoringWindow;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
-import authoring.userInterface.AuthoringWindow;
 
-/**
- * MainMenu provides VoogaSaladMain with an intro and the choice to either play
- * an existing game or design a new one.
- * 
- * @author Brian Lavallee
- * @since 12 April 2015
- */
 public class VoogaMenu {
-	private static final double PADDING = 10;
-
+	
+	private static final int PADDING = 20;
+	
+	private static final double HEADER_RADIUS = 200;
+	
+	private static final double SHADOW_BLUR = 15;
+	private static final double SHADOW_OFFSET = 8;
+	
 	private static final double INVISIBLE = 0.0;
-	private static final double TRANSPARENT = 0.6;
 	private static final double OPAQUE = 1.0;
-
-	private static final int BUTTON_RADIUS = 250;
-
-	private static final Duration TRANSITION_TIME = Duration.millis(2500);
+	
+	private static final Color TEXT_COLOR = Color.WHITE;
+	
+	private static final int SMALL_TEXT_SIZE = 30;
+	private static final int LARGE_TEXT_SIZE = 45;
+	private static final int TITLE_TEXT_SIZE = 80;
+	
 	private static final Duration DELAY = Duration.millis(500);
 	private static final Duration IMMEDIATE = Duration.ZERO;
-
-	private static final EventHandler<ActionEvent> DO_NOTHING = (event) -> {
-	};
-
-	private static final int SMALL_TEXT = 30;
-	private static final int LARGE_TEXT = 40;
-	private static final int TITLE_TEXT = 80;
-
-	private static final String GAME = "game";
-	private static final String DESIGN = "dev";
-	//private static final String SIMPLE_GAME = "output/test.xml";
-	//private static final String SIMPLE_GAME = "resources/game_files/PhysicsTest.game.xml";
-	//private static final String SIMPLE_GAME = "resources/game_files/Simple.game.xml";
-	//private static final String SIMPLE_GAME = "resources/game_files/BrickBreaker.game.xml";
-	private static final String SIMPLE_GAME = "resources/game_files/JumpPlatformer.game.xml";
-	//private static final String SIMPLE_GAME = "resources/game_files/Pong.game.xml";
-
-	private VoogaFileChooser chooser;
-
-	private StackPane root;
-	private Scene scene;
-
+	private static final Duration TRANSITION_TIME = Duration.millis(2000);
+	
+	private static final EventHandler<ActionEvent> DO_NOTHING = (finished) -> {};
+	
+	private Group root;
+	
 	private double width, height;
-
-	private HBox background;
-
-	private StackPane mainMenu;
-	private Rectangle overlay;
-	private StackPane playButton, designButton;
-	private VBox textHolder;
-
-	private StackPane choiceMenu;
-
-	/**
-	 * Primary constructor for a MainMenu. Sets up all of the components
-	 * (background, overlay, title, and buttons) in the root (which is a
-	 * StackPane).
-	 * 
-	 * @param w
-	 *            the desired width of the Scene, based on the width of the
-	 *            stage it will be applied to.
-	 * 
-	 * @param h
-	 *            is the desired height of the Scene, also based on the size of
-	 *            the stage.
-	 */
+	
+	private Polygon playSection, designSection, socialSection;
+	private List<Polygon> sections = new ArrayList<>();
+	
+	
+	private Group header;
+	private VBox title;
+	private HBox subTitle;
+	
 	public VoogaMenu(double w, double h) {
 		width = w;
 		height = h;
-
-		root = new StackPane();
-		mainMenu = new StackPane();
-
-		// TODO: Replace rectangles with ImageViews which hold screenshots from
-		// our working game player / authoring environment
-
-		background = new HBox(2 * PADDING);
-		Rectangle left = new Rectangle(width, height);
-		left.setFill(Color.DARKRED.darker());
-		Rectangle right = new Rectangle(width, height);
-		right.setFill(Color.DARKBLUE.darker());
-		background.getChildren().addAll(left, right);
-		background.setOpacity(INVISIBLE);
-
-		overlay = new Rectangle(width, height);
-		overlay.setOpacity(TRANSPARENT);
-
-		textHolder = setUpText();
-
-		playButton = makeButton("Play", -width / 2);
-		designButton = makeButton("Design", width / 2);
-
-		root.setOnMouseClicked((clicked) -> displayMenu());
-
-		mainMenu.getChildren().addAll(overlay, textHolder, playButton,
-				designButton);
-
-		root.getChildren().addAll(background, mainMenu);
+		
+		root = new Group();
+		
+		header = initializeHeader();
+		
+		double[] playPoints = new double[] {0, 0, width/2, height/2, width/2, 3*height/2, -width/2, 3*height/2, -width/2, height/2};
+		playSection = initializeSection(playPoints, width/2, height, "launcher/game.png");
+		
+		double[] designPoints = new double[] {0, 0, width/2, height/2, width, height/2, width, -height, 0, -height};
+		designSection = initializeSection(designPoints, width, 0, "launcher/authoring.png");
+		
+		double[] socialPoints = new double[] {0, 0, -width/2, height/2, -width, height/2, -width, -height, 0, -height};
+		socialSection = initializeSection(socialPoints, 0, 0, "launcher/socialcenter.png");
+		
+		enableMouseListeners();
+		
+		sections.add(playSection);
+		sections.add(designSection);
+		sections.add(socialSection);
+		
+		root.getChildren().addAll(playSection, designSection, socialSection, header);
 	}
-
-	/**
-	 * Creates a Scene object from the root.
-	 * 
-	 * @return A Scene object containing all of the elements in the root.
-	 */
+	
+	private void setText(String message) {
+		Text text = new Text(message);
+		text.setFill(TEXT_COLOR);
+		text.setFont(new Font(LARGE_TEXT_SIZE));
+		text.setOpacity(INVISIBLE);
+		VBox textHolder = new VBox();
+		textHolder.setPrefWidth(width);
+		textHolder.getChildren().add(text);
+		textHolder.setAlignment(Pos.CENTER);
+		textHolder.setTranslateY(HEADER_RADIUS/2);
+		header.getChildren().add(textHolder);
+		
+		doFade(subTitle, INVISIBLE, TRANSITION_TIME.divide(5), IMMEDIATE, DO_NOTHING);
+		doFade(text, OPAQUE, TRANSITION_TIME.divide(5), IMMEDIATE, DO_NOTHING);
+	}
+	
+	private void revertText() {
+		doFade(header.getChildren().get(2), INVISIBLE, TRANSITION_TIME.divide(5), IMMEDIATE, (finished) -> header.getChildren().remove(2));
+		doFade(subTitle, OPAQUE, TRANSITION_TIME.divide(5), IMMEDIATE, DO_NOTHING);
+	}
+	
 	public Scene initialize() {
-		scene = new Scene(root, width, height);
+		Scene scene = new Scene(root, width, height);
 		scene.setFill(Color.BLACK);
-
-		scene.setOnKeyTyped((key) -> {
-			launchGame(new XMLParser(new File(SIMPLE_GAME)));
-		});
-
 		return scene;
 	}
-
-	/*
-	 * Creates two text objects and applies a FadeTransition to both.
-	 */
-	private VBox setUpText() {
-		VBox textHolder = new VBox(PADDING);
-
-		Text title = new Text("Welcome to VoogaSalad");
-		title.setEffect(createShadow(15, 10));
-		title.setStroke(Color.WHITE);
-		title.setFont(new Font(TITLE_TEXT));
-		title.setOpacity(INVISIBLE);
-
-		HBox subHolder = new HBox();
-		subHolder.getChildren().addAll(
-				makeText(SMALL_TEXT, "presented by the ", Color.WHITE),
-				makeText(LARGE_TEXT, "High ", Color.WHITE),
-				makeText(LARGE_TEXT, "$", Color.DARKGOLDENROD),
-				makeText(LARGE_TEXT, "croller", Color.WHITE),
-				makeText(LARGE_TEXT, "$", Color.DARKGOLDENROD));
-		subHolder.setAlignment(Pos.CENTER);
-		subHolder.setOpacity(INVISIBLE);
-
-		textHolder.getChildren().addAll(title, subHolder);
-		textHolder.setAlignment(Pos.CENTER);
-
-		doFade(title, DELAY, OPAQUE, (finished) -> {
-			displayMenu();
-			doFade(subHolder, DELAY, OPAQUE, DO_NOTHING);
-		});
-
-		return textHolder;
-	}
-
-	/*
-	 * Fades the full background into view, moves the title into place, and
-	 * moves the buttons onto the screen. Only does this if the method hasn't
-	 * been called before, indicated by the root onMouseClicked action.
-	 */
-	private void displayMenu() {
-		if (root.getOnMouseClicked() != null) {
-			doTranslate(textHolder, IMMEDIATE, textHolder.getTranslateX(),
-					-height / 3, DO_NOTHING);
-
-			doFade(background, IMMEDIATE, OPAQUE, DO_NOTHING);
-
-			doTranslate(playButton, IMMEDIATE, -width / 4,
-					playButton.getTranslateY(), (finished) -> enableButtons());
-			doTranslate(designButton, IMMEDIATE, width / 4,
-					designButton.getTranslateY(), DO_NOTHING);
-
-			doFade(playButton, DELAY, OPAQUE, DO_NOTHING);
-			doFade(designButton, DELAY, OPAQUE, DO_NOTHING);
-
-			root.setOnMouseClicked(null);
-		}
-	}
-
-	/*
-	 * Creates a single Text object. Useful in above method for setting up the
-	 * "presented by ..." message.
-	 */
-	private Text makeText(int size, String message, Color color) {
-		Text text = new Text(message);
-		text.setEffect(createShadow(15, 5));
-		text.setFill(color);
-		text.setFont(new Font(size));
-		text.setStroke(Color.BLACK);
-		return text;
-	}
-
-	/*
-	 * Creates the shadow for a Text object or a Circle.
-	 */
-	private DropShadow createShadow(int blurAmount, int offset) {
-		DropShadow shadow = new DropShadow();
-		shadow.setRadius(blurAmount);
-		shadow.setOffsetX(offset);
-		shadow.setOffsetY(offset);
-		shadow.setBlurType(BlurType.GAUSSIAN);
-		return shadow;
-	}
-
-	/*
-	 * Creates a button (which is Text description over a Circle). Circle is
-	 * fetched later to use for MouseEvents.
-	 */
-	private StackPane makeButton(String description, double location) {
-		StackPane button = new StackPane();
-
-		button.setOpacity(INVISIBLE);
-
-		DropShadow shadow = createShadow(15, 10);
-
-		Circle buttonContent = new Circle(BUTTON_RADIUS);
-		buttonContent.setFill(Color.TRANSPARENT);
-		buttonContent.setStroke(Color.TRANSPARENT);
-
-		Text buttonDescription = new Text(description);
-		buttonDescription.setFill(Color.WHITE);
-		buttonDescription.setFont(new Font(LARGE_TEXT));
-		buttonDescription.setEffect(shadow);
-
-		button.getChildren().addAll(buttonDescription, buttonContent);
-		button.setTranslateX(location);
-
-		button.setMaxSize(2 * BUTTON_RADIUS, 2 * BUTTON_RADIUS);
-
-		return button;
-	}
-
-	/*
-	 * Gets the internal Circles from the StackPane buttons and uses those
-	 * Circles to set up mouse listeners. Specifies where to move each element
-	 * of the root for each case.
-	 */
-	private void enableButtons() {
-		Circle play = (Circle) playButton.getChildren().get(1);
-		Circle design = (Circle) designButton.getChildren().get(1);
-
-		play.setOnMouseEntered((event) -> buttonSelectedAction(width / 2
-				+ PADDING, 31 * width / 40, INVISIBLE,
-				playButton.getTranslateX(), OPAQUE, width / 2, INVISIBLE,
-				INVISIBLE));
-
-		design.setOnMouseEntered((event) -> buttonSelectedAction(-width / 2
-				- PADDING, -31 * width / 40, INVISIBLE, -width / 2, INVISIBLE,
-				designButton.getTranslateX(), OPAQUE, INVISIBLE));
-
-		play.setOnMouseExited((event) -> buttonSelectedAction(0, 0, OPAQUE,
-				playButton.getTranslateX(), OPAQUE, width / 4, OPAQUE,
-				TRANSPARENT));
-
-		design.setOnMouseExited((event) -> buttonSelectedAction(0, 0, OPAQUE,
-				-width / 4, OPAQUE, designButton.getTranslateX(), OPAQUE,
-				TRANSPARENT));
-	}
-
-	/*
-	 * Allows the user to click on one of the buttons to display the relevant
-	 * options.
-	 */
-	private void enableClicking() {
-		Circle play = (Circle) playButton.getChildren().get(1);
-		Circle design = (Circle) designButton.getChildren().get(1);
-
-		play.setOnMouseClicked((event) -> {
-			addChoiceMenu(GAME, playButton, -1);
-			setUpBackButtons();
-			choiceMenu.setOnMouseClicked((clicked) -> {
-				launchGame(chooser.getChosenFile());
+	
+	private void focusPlay() {
+		disableMouseListeners();
+		sections.forEach((section) -> doTranslate(section, width/2, -height/2));
+		revertText();
+		setText("Return to Menu");
+		VoogaFileChooser chooser = new VoogaFileChooser(width, height);
+		VBox choiceMenu = chooser.getContent(width, height);
+		header.setOnMouseClicked((clicked) -> {
+			doTranslate(choiceMenu, 0, height, DELAY);
+			doFade(choiceMenu, INVISIBLE, DELAY.multiply(2), (finished) -> {
+				revertMenu();
+				revertText();
+				enableMouseListeners();
 			});
 		});
-
-		design.setOnMouseClicked((event) -> {
-			addChoiceMenu(DESIGN, designButton, 1);
-			setUpBackButtons();
-			choiceMenu.setOnMouseClicked((clicked) -> {
-				root.getChildren().removeAll(choiceMenu, background);
-
-				scene = new AuthoringWindow().GameCreateUI(scene);
-
-			});
+		playSection.setOnMouseClicked((clicked) -> {
+			root.getChildren().add(choiceMenu);
+			doTranslate(choiceMenu, 0, HEADER_RADIUS, DELAY);
+			doFade(choiceMenu, OPAQUE, DELAY.multiply(2));
+			choiceMenu.setOnMouseClicked((chosen) -> launchGame(chooser.getChosenFile()));
 		});
 	}
-
-	private void setUpBackButtons() {
-		root.getChildren().add(createBackButton(Pos.CENTER_RIGHT, 180, 1));
-		root.getChildren().add(createBackButton(Pos.CENTER_LEFT, 0, -1));
-	}
-
-	private StackPane createBackButton(Pos position, double rotate, double sign) {
-	        try{
-        		ImageView backButton = new ImageView(new Image(
-        				new FileInputStream("resources/images/backArrow.png")));
-        		backButton.setFitWidth(100);
-        		backButton.setFitHeight(100);
-        		backButton.setTranslateX(50 * sign);
-        		backButton.setOpacity(INVISIBLE);
-        		backButton.setRotate(rotate);
-        
-        		Rectangle buttonOutline = new Rectangle(200, height);
-        		buttonOutline.setFill(Color.TRANSPARENT);
-        		buttonOutline.setTranslateX(100 * sign);
-        		buttonOutline.setOnMouseEntered((entered) -> {
-        			doTranslate(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, 0,
-        					backButton.getTranslateY(), DO_NOTHING);
-        			doFade(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, OPAQUE,
-        					DO_NOTHING);
-        		});
-        		buttonOutline.setOnMouseExited((exited) -> {
-        			doTranslate(backButton, TRANSITION_TIME.divide(5), IMMEDIATE,
-        					50 * sign, backButton.getTranslateY(), DO_NOTHING);
-        			doFade(backButton, TRANSITION_TIME.divide(5), IMMEDIATE, INVISIBLE,
-        					DO_NOTHING);
-        		});
-        		buttonOutline
-        				.setOnMouseClicked((clicked) -> {
-        					doTranslate(backButton, TRANSITION_TIME.divide(5),
-        							IMMEDIATE, 50 * sign, backButton.getTranslateY(),
-        							DO_NOTHING);
-        					doFade(backButton, TRANSITION_TIME.divide(5), IMMEDIATE,
-        							INVISIBLE, DO_NOTHING);
-        					buttonOutline.setOnMouseClicked(null);
-        					buttonOutline.setOnMouseEntered(null);
-        					buttonOutline.setOnMouseExited(null);
-        					doTranslate(choiceMenu, DELAY, choiceMenu.getTranslateX(),
-        							height, DO_NOTHING);
-        					doFade(choiceMenu, IMMEDIATE, INVISIBLE,
-        							(finished) -> resetMenu());
-        				});
-        
-        		StackPane button = new StackPane();
-        		button.setMaxWidth(200);
-        		button.setTranslateX(width * sign / 2 - 100 * sign);
-        		button.getChildren().addAll(backButton, buttonOutline);
-        		button.setAlignment(position);
-        
-        		return button;
-	        }
-	        catch (Exception e) {
-	            e.printStackTrace();
-	            return null;
-	        }
-	}
-
-	private void resetMenu() {
-		root.getChildren().clear();
-		root.getChildren().addAll(background, mainMenu);
-
-		background.setEffect(null);
-
-		doTranslate(background, IMMEDIATE, 0, background.getTranslateY(),
-				DO_NOTHING);
-		doTranslate(textHolder, IMMEDIATE, 0, textHolder.getTranslateY(),
-				DO_NOTHING);
-		doTranslate(playButton, IMMEDIATE, -width / 4,
-				playButton.getTranslateY(), DO_NOTHING);
-		doTranslate(designButton, IMMEDIATE, width / 4,
-				designButton.getTranslateY(), DO_NOTHING);
-
-		doFade(textHolder, IMMEDIATE, OPAQUE, DO_NOTHING);
-		doFade(playButton, IMMEDIATE, OPAQUE, DO_NOTHING);
-		doFade(designButton, IMMEDIATE, OPAQUE, DO_NOTHING);
-		doFade(overlay, IMMEDIATE, TRANSPARENT, (finished) -> enableButtons());
-	}
-
-	/*
-	 * Launches the game specified by the XMLParser input.
-	 */
+	
 	private void launchGame(XMLParser file) {
 		if (file != null) {
 			VoogaGameBuilder gameBuilder = new VoogaGameBuilder(file);
@@ -399,113 +152,199 @@ public class VoogaMenu {
 			game.start();
 		}
 	}
-
-	/*
-	 * Removes the functionality set up by enableButtons so that when the choice
-	 * menu is loaded the events aren't triggered.
-	 */
-	private void disableButtons() {
-		Circle play = (Circle) playButton.getChildren().get(1);
-		Circle design = (Circle) designButton.getChildren().get(1);
-
-		play.setOnMouseEntered(null);
-		design.setOnMouseEntered(null);
-		play.setOnMouseExited(null);
-		design.setOnMouseExited(null);
-		play.setOnMouseClicked(null);
-		design.setOnMouseClicked(null);
+	
+	private void focusDesign() {
+		disableMouseListeners();
+		sections.forEach((section) -> doTranslate(section, 0, height));
+		revertText();
+		setText("Return to Menu");
+		header.setOnMouseClicked((clicked) -> {
+			revertMenu();
+			revertText();
+			enableMouseListeners();
+		});
+		designSection.setOnMouseClicked((clicked) -> {
+			Stage stage = new Stage();
+			stage.setTitle("Authoring Environment");
+			stage.setHeight(1000);
+			stage.setWidth(1200);
+			stage.setScene(new AuthoringWindow().GameCreateUI());
+			stage.show();
+		});
 	}
-
-	/*
-	 * Adds the choice menu to the root and removes the main menu, also blurs
-	 * the background for effect.
-	 */
-	private void addChoiceMenu(String fileType, StackPane button, int sign) {
-		chooser = new VoogaFileChooser(width, height, fileType);
-		choiceMenu = chooser.getContent(height);
-
-		disableButtons();
-
-		doTranslate(button, IMMEDIATE, (width / 2 + 50) * sign,
-				playButton.getTranslateY(), (finished) -> root.getChildren()
-						.remove(mainMenu));
-		doFade(button, IMMEDIATE, INVISIBLE, DO_NOTHING);
-
-		root.getChildren().add(choiceMenu);
-
-		doTranslate(choiceMenu, DELAY.multiply(2), choiceMenu.getTranslateX(),
-				0, DO_NOTHING);
-		doFade(choiceMenu, DELAY.multiply(3), OPAQUE, DO_NOTHING);
-
-		GaussianBlur blur = new GaussianBlur();
-		background.setEffect(blur);
+	
+	private void focusSocial() {
+		disableMouseListeners();
+		sections.forEach((section) -> doTranslate(section, width, height));
+		revertText();
+		setText("Return to Menu");
+		header.setOnMouseClicked((clicked) -> {
+			revertMenu();
+			revertText();
+			enableMouseListeners();
+		});
+		socialSection.setOnMouseClicked((clicked) -> {
+			Stage stage = new Stage();
+			stage.setTitle("Social Center");
+			stage.setWidth(1200);
+			stage.setHeight(900);
+			LoginScreen login = new LoginScreen(stage, stage.getWidth(), stage.getHeight());
+			login.getLoginScreen(stage);
+			stage.show();
+		});
 	}
-
-	/*
-	 * Moves all of the elements in the root to the desired location with a
-	 * pleasant transition.
-	 */
-	private void buttonSelectedAction(double backgroundLoc, double textLoc,
-			double textVis, double playLoc, double playVis, double designLoc,
-			double designVis, double overlayVis) {
-		doTranslate(background, IMMEDIATE, backgroundLoc,
-				background.getTranslateY(), DO_NOTHING);
-
-		doTranslate(textHolder, IMMEDIATE, textLoc, textHolder.getTranslateY(),
-				DO_NOTHING);
-		doFade(textHolder, IMMEDIATE, textVis, DO_NOTHING);
-
-		doTranslate(playButton, IMMEDIATE, playLoc, playButton.getTranslateY(),
-				DO_NOTHING);
-		doFade(playButton, IMMEDIATE, playVis, DO_NOTHING);
-
-		doTranslate(designButton, IMMEDIATE, designLoc,
-				designButton.getTranslateY(), DO_NOTHING);
-		doFade(designButton, IMMEDIATE, designVis, DO_NOTHING);
-
-		doFade(overlay, IMMEDIATE, overlayVis, DO_NOTHING);
-
-		enableClicking();
+	
+	private void enableMouseListeners() {
+		setMouseListeners(socialSection, (clicked) -> focusSocial(), (entered) -> setText("Connect"), (exited) -> revertText());
+		setMouseListeners(designSection, (clicked) -> focusDesign(), (entered) -> setText("Design a game"), (exited) -> revertText());
+		setMouseListeners(playSection, (clicked) -> focusPlay(), (entered) -> setText("Play a game"), (exited) -> revertText());
 	}
-
-	/*
-	 * Performs a TranslateTransition.
-	 */
-	private void doTranslate(Node source, Duration delay, double toX,
-			double toY, EventHandler<ActionEvent> onFinished) {
-		doTranslate(source, TRANSITION_TIME, delay, toX, toY, onFinished);
+	
+	private void disableMouseListeners() {
+		sections.forEach((section) -> section.setOnMouseClicked(null));
+		sections.forEach((section) -> section.setOnMouseEntered(null));
+		sections.forEach((section) -> section.setOnMouseExited(null));
 	}
-
-	/*
-	 * Performs a TranslateTransition.
-	 */
-	private void doTranslate(Node source, Duration time, Duration delay,
-			double toX, double toY, EventHandler<ActionEvent> onFinished) {
-		TranslateTransition translate = new TranslateTransition(time, source);
-		translate.setToX(toX);
-		translate.setToY(toY);
-		translate.setDelay(delay);
-		translate.setOnFinished(onFinished);
-		translate.play();
+	
+	private void revertMenu() {
+		doTranslate(playSection, width/2, height/2, DELAY);
+		doTranslate(designSection, width/2 + PADDING, height/2 - PADDING * Math.sqrt(3), DELAY);
+		doTranslate(socialSection, width/2 - PADDING, height/2 - PADDING * Math.sqrt(3), DELAY);
 	}
-
-	/*
-	 * Performs a FadeTransition.
-	 */
-	private void doFade(Node source, Duration delay, double toValue,
-			EventHandler<ActionEvent> onFinished) {
-		doFade(source, TRANSITION_TIME, delay, toValue, onFinished);
+	
+	private Polygon initializeSection(double[] points, double startX, double startY, String image) {
+		Polygon background = new Polygon(points);
+		
+		background.setFill(new ImagePattern(new Image(image)));
+		
+		background.setOpacity(INVISIBLE);
+		
+		background.setTranslateX(startX);
+		background.setTranslateY(startY);
+		
+		return background;
 	}
+	
+	private void setMouseListeners(Polygon section, EventHandler<MouseEvent> onClicked, EventHandler<MouseEvent> onEntered, EventHandler<MouseEvent> onExited) {
+		section.setOnMouseClicked(onClicked);
+		section.setOnMouseEntered(onEntered);
+		section.setOnMouseExited(onExited);
+	}
+	
+	private Group initializeHeader() {
+		Group header = new Group();
+		
+		Ellipse background = new Ellipse();
+		background.setRadiusX(width/2);
+		background.setRadiusY(HEADER_RADIUS);
+		background.setFill(Color.BLACK);
+		background.setTranslateX(width/2);
+		background.setTranslateY(-PADDING);
+		
+		initializeTitle();
+		
+		header.getChildren().addAll(background, title);
+		
+		return header;
+	}
+	
+	private void initializeTitle() {
+		title = new VBox(PADDING/2);
+		
+		Text titleText = new Text("Welcome to VoogaSalad");
+		titleText.setEffect(createShadow(SHADOW_BLUR, SHADOW_OFFSET));
+		titleText.setStroke(TEXT_COLOR);
+		titleText.setFont(new Font(TITLE_TEXT_SIZE));
+		titleText.setOpacity(INVISIBLE);
 
-	/*
-	 * Performs a FadeTransition.
-	 */
-	private void doFade(Node source, Duration time, Duration delay,
-			double toValue, EventHandler<ActionEvent> onFinished) {
+		subTitle = new HBox();
+		subTitle.getChildren().addAll(
+				makeText(SMALL_TEXT_SIZE, "presented by the ", TEXT_COLOR),
+				makeText(LARGE_TEXT_SIZE, "High ", TEXT_COLOR),
+				makeText(LARGE_TEXT_SIZE, "$", Color.DARKGOLDENROD),
+				makeText(LARGE_TEXT_SIZE, "croller", TEXT_COLOR),
+				makeText(LARGE_TEXT_SIZE, "$", Color.DARKGOLDENROD));
+		subTitle.setAlignment(Pos.CENTER);
+		subTitle.setOpacity(INVISIBLE);
+
+		title.getChildren().addAll(titleText, subTitle);
+		title.setAlignment(Pos.CENTER);
+		
+		Rectangle background = new Rectangle(width, height, Color.TRANSPARENT);
+		root.getChildren().add(background);
+		
+		doFade(titleText, OPAQUE, DELAY, (mainFinished) -> {
+			doFade(subTitle, OPAQUE, DELAY, (subFinished) -> {
+				root.setOnMouseClicked((clicked) -> {
+					root.setOnMouseClicked(null);
+					root.getChildren().remove(background);
+					displayMenu();
+				});
+			});
+		});
+		
+		title.setPrefWidth(width);
+		title.setTranslateY(height/3);
+	}
+	
+	private Text makeText(double textSize, String content, Color textColor) {
+		Text text = new Text(content);
+		text.setEffect(createShadow(SHADOW_BLUR, SHADOW_OFFSET));
+		text.setFill(textColor);
+		text.setFont(new Font(textSize));
+		text.setStroke(Color.BLACK);
+		return text;
+	}
+	
+	private DropShadow createShadow(double blurAmount, double blurOffset) {
+		DropShadow shadow = new DropShadow();
+		shadow.setRadius(blurAmount);
+		shadow.setOffsetX(blurOffset);
+		shadow.setOffsetY(blurOffset);
+		shadow.setBlurType(BlurType.GAUSSIAN);
+		return shadow;
+	}
+	
+	private void displayMenu() {
+		doFade(playSection, OPAQUE, DELAY.multiply(2));
+		doFade(designSection, OPAQUE, DELAY.multiply(2));
+		doFade(socialSection, OPAQUE, DELAY.multiply(2));
+		
+		doTranslate(title, 0, 0);
+		
+		revertMenu();
+	}
+	
+	private void doFade(Node source, double toValue, Duration delay) {
+		doFade(source, toValue, delay, DO_NOTHING);
+	}
+	
+	private void doFade(Node source, double toValue, Duration delay, EventHandler<ActionEvent> onFinished) {
+		doFade(source, toValue, TRANSITION_TIME, delay, onFinished);
+	}
+	
+	private void doFade(Node source, double toValue, Duration time, Duration delay, EventHandler<ActionEvent> onFinished) {
 		FadeTransition fade = new FadeTransition(time, source);
-		fade.setDelay(delay);
+		fade.setDelay(DELAY);
 		fade.setToValue(toValue);
 		fade.setOnFinished(onFinished);
 		fade.play();
+	}
+	
+	private void doTranslate(Node source, double toX, double toY) {
+		doTranslate(source, toX, toY, IMMEDIATE, DO_NOTHING);
+	}
+	
+	private void doTranslate(Node source, double toX, double toY, Duration delay) {
+		doTranslate(source, toX, toY, delay, DO_NOTHING);
+	}
+	
+	private void doTranslate(Node source, double toX, double toY, Duration delay, EventHandler<ActionEvent> onFinished) {
+		TranslateTransition translate = new TranslateTransition(TRANSITION_TIME, source);
+		translate.setDelay(delay);
+		translate.setToX(toX);
+		translate.setToY(toY);
+		translate.setOnFinished(onFinished);
+		translate.play();
 	}
 }

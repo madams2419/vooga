@@ -32,7 +32,6 @@ public class VoogaFileChooser {
 
 	private static final double INVISIBLE = 0.0;
 	private static final double TRANSPARENT = 0.6;
-	private static final double OPAQUE = 1.0;
 
 	private static final double OPTION_RATIO = .65;
 	private static final int OPTIONS_PER_ROW = 4;
@@ -58,12 +57,12 @@ public class VoogaFileChooser {
 	 *            is a String holding the file extension of the files to be put
 	 *            in the layout
 	 */
-	public VoogaFileChooser(double width, double height, String fileType) {
+	public VoogaFileChooser(double width, double height) {
 		verticalPadding = height * (1 - OPTION_RATIO) / (1 + OPTIONS_PER_ROW);
 		horizontalPadding = width * (1 - OPTION_RATIO) / (3 + OPTIONS_PER_ROW);
 		optionSize = width * OPTION_RATIO / OPTIONS_PER_ROW;
 
-		layout = createLayout(getFiles(fileType), height);
+		layout = createLayout(getFiles(), height);
 	}
 
 	/**
@@ -72,13 +71,11 @@ public class VoogaFileChooser {
 	 * 
 	 * @return a StackPane holding the layout of choices.
 	 */
-	public StackPane getContent(double height) {
-		StackPane content = new StackPane();
-		content.setAlignment(Pos.CENTER);
-		content.getChildren().add(layout);
-		content.setTranslateY(height / 2);
-		content.setOpacity(INVISIBLE);
-		return content;
+	public VBox getContent(double width, double height) {
+		layout.setPrefWidth(width);
+		layout.setTranslateY(height);
+		layout.setOpacity(INVISIBLE);
+		return layout;
 	}
 
 	/**
@@ -97,22 +94,15 @@ public class VoogaFileChooser {
 	private VBox createLayout(List<File> matchingFiles, double height) {
 		VBox options = new VBox(verticalPadding);
 
-		HBox row = new HBox();
-		row.getChildren().add(newContentOption());
-		int first = 1;
-
-		while (!matchingFiles.isEmpty() || first == 1) {
+		while (!matchingFiles.isEmpty()) {
 			List<File> temp = new ArrayList<File>();
 
 			int size = matchingFiles.size();
-			for (int i = 0; i < OPTIONS_PER_ROW - first && i < size; i++) {
+			for (int i = 0; i < OPTIONS_PER_ROW && i < size; i++) {
 				temp.add(matchingFiles.remove(0));
 			}
 
-			first = 0;
-
-			options.getChildren().add(createRow(temp, row));
-			row = new HBox();
+			options.getChildren().add(createRow(temp));
 		}
 
 		options.setAlignment(Pos.CENTER);
@@ -139,7 +129,9 @@ public class VoogaFileChooser {
 	 * Creates a single row using an HBox, a group of these are added to the
 	 * VBox to create the full layout.
 	 */
-	private HBox createRow(List<File> group, HBox row) {
+	private HBox createRow(List<File> group) {
+		HBox row = new HBox(10);
+		
 		row.setSpacing(horizontalPadding);
 
 		for (File f : group) {
@@ -167,24 +159,6 @@ public class VoogaFileChooser {
 
 		row.setAlignment(Pos.CENTER);
 		return row;
-	}
-
-	/*
-	 * Creates the menu option to design a new game rather than playing or
-	 * designing an existing one.
-	 */
-	private StackPane newContentOption() {
-		Rectangle background = createButtonContent(Color.TRANSPARENT,
-				Color.WHITE, 5, OPAQUE);
-		background.setEffect(createShadow(15, 10));
-		Text description = new Text("Create New Game");
-		description.setFont(new Font(20));
-		description.setFill(Color.WHITE);
-		description.setEffect(createShadow(15, 10));
-
-		StackPane content = new StackPane();
-		content.getChildren().addAll(background, description);
-		return content;
 	}
 
 	/*
@@ -220,30 +194,12 @@ public class VoogaFileChooser {
 	 * Finds every file in the directory where game files are stored and adds
 	 * them to a list.
 	 */
-	private List<File> getFiles(String type) {
-		File rootDirectory = new File(GAME_DATA_DIRECTORY);
-		List<File> matchingFiles = new ArrayList<File>();
-
-		for (File possible : rootDirectory.listFiles()) {
-			if (getGameType(possible).equals(type)) {
-				matchingFiles.add(possible);
-			}
+	private List<File> getFiles() {
+		File[] files = new File(GAME_DATA_DIRECTORY).listFiles();
+		List<File> matchingFiles = new ArrayList<>();
+		for (File file : files) {
+			matchingFiles.add(file);
 		}
-
 		return matchingFiles;
-	}
-
-	/*
-	 * Finds the file extension of a file so it can be compared to .game and
-	 * .dev.
-	 */
-	private String getGameType(File possible) {
-		String[] path = possible.getPath().split("/");
-		String fileName = path[path.length - 1];
-		int index = 0;
-		while ((index = fileName.indexOf(".")) != fileName.lastIndexOf(".")) {
-			fileName = fileName.substring(index + 1);
-		}
-		return fileName.substring(0, index);
 	}
 }

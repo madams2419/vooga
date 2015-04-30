@@ -36,11 +36,13 @@ import game_engine.physics.utilities.Vector;
 import game_engine.sprite.Animation;
 import game_engine.sprite.Sprite;
 import game_engine.sprite.TransitionManager;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 

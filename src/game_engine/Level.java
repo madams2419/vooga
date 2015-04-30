@@ -16,6 +16,7 @@ import game_engine.scrolling.scrollfocus.BasicFocus;
 import game_engine.scrolling.scrollfocus.IScrollFocus;
 import game_engine.scrolling.tracker.SpriteTracker;
 import game_engine.sprite.Sprite;
+import game_player.HeadsUpDisplay;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class Level implements IActor {
 	private Group myGroup;
 	private Map<String, IAction> myActions;
 	private PhysicsEngine myPhysics;
+	private  HeadsUpDisplay hud;
 	
 	@IActionAnnotation(description = "Remove sprite", numParams = 1, paramDetails = "sprite's id")
 	private IAction removeSprite = (params) -> {
@@ -94,6 +96,7 @@ public class Level implements IActor {
 		myCollisionEngine.checkCollisions(); // handle behavioral collisions
 		myToBeRemoved.forEach(this::removeSprite);
 		myToBeRemoved.clear();
+		hud.update(framePeriod);
 	}
 	
 	private void removeSprite (Sprite sprite) {
@@ -168,6 +171,14 @@ public class Level implements IActor {
 	            myGroup = new Group(mySpriteGroup);
 	            IScrollFocus focus = new BasicFocus(width, height);
 	            IScroller scroller = new BasicScroller(mySpriteGroup);
+	            SpriteTracker tracker = new SpriteTracker(focus, scroller);
+	            Sprite sprite = mySprites.get(0);
+	            sprite.getImageView().toFront();
+	            tracker.enable();
+	            tracker.setPlayer(sprite, true, true);
+	            tracker.tellY(height - 200);
+	            hud = new HeadsUpDisplay(sprite);
+	            myGroup.getChildren().add(hud.getHUD());
 	            WrapAround wrap =
                             new WrapAround(new Image(new FileInputStream("Resources/images/samplebackground.png")),
                                            width, height);
@@ -176,12 +187,6 @@ public class Level implements IActor {
                     scroller.addBackground(wrap, 0.5);
                     myGroup.getChildren().add(wrap.getGroup());
                     wrap.getGroup().toBack();
-	            SpriteTracker tracker = new SpriteTracker(focus, scroller);
-	            Sprite sprite = mySprites.get(0);
-	            sprite.getImageView().toFront();
-	            tracker.enable();
-	            tracker.setPlayer(sprite, true, true);
-	            tracker.tellY(height - 200);
 	        }
 	        catch (Exception e) {
 	            e.printStackTrace();
