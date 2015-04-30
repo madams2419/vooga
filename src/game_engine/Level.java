@@ -165,7 +165,7 @@ public class Level implements IActor {
 	            Sprite sprite = mySprites.get(0);
 	            sprite.getImageView().toFront();
 	            tracker.enable();
-	            tracker.setPlayer(sprite, true, false);
+	            tracker.setPlayer(sprite, true, true);
 	            tracker.tellY(height - 200);
 	            hud = new HeadsUpDisplay(sprite);
 	            myGroup.getChildren().add(hud.getHUD());

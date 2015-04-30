@@ -349,8 +349,10 @@ public class VoogaGameBuilder {
     	
     	MultipleDetector detector = new MultipleDetector();
     	for (String label : parser.getValidLabels()) {
+    		String test = parser.getValue(label);
     		ICollisionDetector component = parser.getValue(label).equals("SimpleDetector") ? new SimpleDetector() : 
     										parser.getValue(label).equals("HitboxDetector") ? new PhysicsDetector(engine) :
+    											parser.getValue(label).equals("PhysicsDetector") ? new PhysicsDetector(engine) :
     											parser.getValue(label).equals("PixelPerfectDetector") ? new PixelPerfectDetector() : null;
     		detector.addDetector(component);
     	}
