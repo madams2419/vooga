@@ -180,7 +180,7 @@ public class Level implements IActor {
 	            hud = new HeadsUpDisplay(sprite);
 	            myGroup.getChildren().add(hud.getHUD());
 	            WrapAround wrap =
-                            new WrapAround(new Image(new FileInputStream("Resources/images/samplebackground.png")),
+                            new WrapAround(new Image(new FileInputStream("resources/images/samplebackground.png")),
                                            width, height);
                     wrap.repeatHorizontal();
                     wrap.repeatVertical();
