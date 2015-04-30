@@ -51,7 +51,6 @@ public class VoogaGameBuilder {
 	private Map<String, Sprite> sprites;
 	private List<Objective> objectives;
 	private Map<String, IActor> actors;
-	ControlManagerFactory controlFactory = new ControlManagerFactory();
 
 	private VoogaGame game;
 
@@ -90,8 +89,9 @@ public class VoogaGameBuilder {
 		
 		actors.put(levelID, level);
 		ControlsManager manager = new ControlsManager();
+		ControlManagerFactory controlFactory = new ControlManagerFactory();
 		actors.put("controlManager_0", manager);
-		actors.put("controlManager_0", controlFactory.getControlManager("keyboard"));
+		//actors.put("controlManager_0", controlFactory.getControlManager("keyboard"));
 
 		parser.moveDown("sprites");
 		for (String directory : parser.getValidSubDirectories("sprite")) {
@@ -126,7 +126,7 @@ public class VoogaGameBuilder {
 		parser.moveUp();
 		
 		level.setControlManager(buildControlsManager(manager));
-		level.setControlFactory(buildControlFactory(controlFactory));
+		//level.setControlFactory(buildControlFactory(controlFactory));
 		level.setCollisionEngine(buildCollisionsManager(engine));
 
 		game.setTransitionManager(buildTransitionManager(game.getRoot()));
@@ -354,46 +354,9 @@ public class VoogaGameBuilder {
 	}
 
 
-	private ICollisionDetector buildDetector(PhysicsEngine engine) {
-		parser.moveDown("detectors");
 
-		MultipleDetector detector = new MultipleDetector();
-		for (String label : parser.getValidLabels()) {
-			ICollisionDetector component = parser.getValue(label).equals("SimpleDetector") ? new SimpleDetector() : 
-				parser.getValue(label).equals("HitboxDetector") ? new PhysicsDetector(engine) :
-					parser.getValue(label).equals("PixelPerfectDetector") ? new PixelPerfectDetector() : null;
-					detector.addDetector(component);
-		}
 
-		parser.moveUp();
-		return detector;
-	}
-
-	private ICollisionResolver buildResolver(PhysicsEngine engine) {
-		parser.moveDown("resolvers");
-
-		MultipleResolver resolver = new MultipleResolver();
-
-		for (String directory : parser.getValidSubDirectories("resolver")) {
-			parser.moveDown(directory);
-
-			String type = parser.getValue("type");
-			if (type.equals("PhysicalResolver")) {
-				// physical resolver doesn't exist anymore
-			}
-			else if (type.equals("SimpleResolver")) {
-				resolver.addResolver(new SimpleResolver(buildBehaviorList()));
-			}
-			else if (type.equals("HitboxResolver")) {
-				// implement
-			}
-
-			parser.moveUp();
-		}
-
-		parser.moveUp();
-		return resolver;
-	}
+	
 
 	private ControlManagerFactory buildControlFactory(ControlManagerFactory cFactory) {
 		parser.moveDown("controls");
@@ -477,6 +440,50 @@ public class VoogaGameBuilder {
 	
 
 
+    
+    private ICollisionDetector buildDetector(PhysicsEngine engine) {
+    	parser.moveDown("detectors");
+    	
+    	MultipleDetector detector = new MultipleDetector();
+    	for (String label : parser.getValidLabels()) {
+    		String test = parser.getValue(label);
+    		ICollisionDetector component = parser.getValue(label).equals("SimpleDetector") ? new SimpleDetector() : 
+    										parser.getValue(label).equals("HitboxDetector") ? new PhysicsDetector(engine) :
+    											parser.getValue(label).equals("PhysicsDetector") ? new PhysicsDetector(engine) :
+    											parser.getValue(label).equals("PixelPerfectDetector") ? new PixelPerfectDetector() : null;
+    		detector.addDetector(component);
+    	}
+    	
+    	parser.moveUp();
+    	return detector;
+    }
+    
+    private ICollisionResolver buildResolver(PhysicsEngine engine) {
+    	parser.moveDown("resolvers");
+    	
+    	MultipleResolver resolver = new MultipleResolver();
+    	
+    	for (String directory : parser.getValidSubDirectories("resolver")) {
+    		parser.moveDown(directory);
+    		
+    		String type = parser.getValue("type");
+    		if (type.equals("PhysicalResolver")) {
+    			// physical resolver doesn't exist anymore
+    		}
+    		else if (type.equals("SimpleResolver")) {
+    			resolver.addResolver(new SimpleResolver(buildBehaviorList()));
+    		}
+    		else if (type.equals("HitboxResolver")) {
+    			// implement
+    		}
+    		
+    		parser.moveUp();
+    	}
+    	
+    	parser.moveUp();
+    	return resolver;
+    }
+    
     private ControlsManager buildControlsManager(ControlsManager manager) {
     	parser.moveDown("controls");
     	

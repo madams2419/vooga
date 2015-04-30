@@ -402,8 +402,10 @@
 			<controls>
 				<active_scheme>0</active_scheme>
 				<control_scheme_0>
+				<!--  
 					<control_type_0>
 						<scene_type_0>
+						-->
 							<key_0>
 								<key>RIGHT</key>
 
@@ -474,6 +476,7 @@
 									<behaviors></behaviors>
 								</whilePressed>
 							</key_2>
+							<!-- 
 						</scene_type_0>
 					</control_type_0>
 					<control_type_1>
@@ -491,6 +494,7 @@
 							</voice_0>
 						</voice_control_0>
 					</control_type_1>
+					 -->
 				</control_scheme_0>
 				<control_scheme_1></control_scheme_1></controls>
 

@@ -126,8 +126,19 @@ public class Sprite extends Observable implements IActor {
 	
 	@IActionAnnotation(numParams = 1, description = "sprite jumps up or down", paramDetails = "double")
 	private IAction jump = (params) -> {
+	    System.out.println("jumps");
 		Vector myVector = new Vector(0, Double.parseDouble(params[0]));
 		physicsObject.addVelocity(myVector);
+	};
+	
+	@IActionAnnotation(numParams = 2, description = "sets sprites velocity", paramDetails = "double")
+	private IAction setVelocity = (params) -> {
+		physicsObject.setVelocity(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
+	};
+	
+	@IActionAnnotation(numParams = 2, description = "remove velocity", paramDetails = "double")
+	private IAction removeVelocity = (params) -> {
+		physicsObject.removeVelocity(new Vector(Double.parseDouble(params[0]), Double.parseDouble(params[1])));
 	};
 	
 	/**

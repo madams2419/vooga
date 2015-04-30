@@ -88,11 +88,11 @@ public class VoogaGame implements IActor {
 	public void start() {
 		Stage stage = new Stage();
 		Scene scene = new Scene(root, width, height);
-		//scene.setOnKeyPressed(e -> controlsManager.handleInput(e));
-		//scene.setOnKeyReleased(e -> controlsManager.handleInput(e));
-		scene.setOnKeyPressed(e -> controlFactory.getControlManager(KEYBOARD).handleEvent(e));
-		scene.setOnKeyReleased(e -> controlFactory.getControlManager(KEYBOARD).handleEvent(e));
-		System.out.println("Num of key control is "+((SceneControlManager)controlFactory.getControlManager(KEYBOARD)).getKeyCount());
+		scene.setOnKeyPressed(e -> controlsManager.handleInput(e));
+		scene.setOnKeyReleased(e -> controlsManager.handleInput(e));
+		//scene.setOnKeyPressed(e -> controlFactory.getControlManager(KEYBOARD).handleEvent(e));
+		//scene.setOnKeyReleased(e -> controlFactory.getControlManager(KEYBOARD).handleEvent(e));
+		//System.out.println("Num of key control is "+((SceneControlManager)controlFactory.getControlManager(KEYBOARD)).getKeyCount());
 		stage.setX(Screen.getPrimary().getVisualBounds().getMinX());
 		stage.setY(Screen.getPrimary().getVisualBounds().getMinY());
 		root.requestFocus();
