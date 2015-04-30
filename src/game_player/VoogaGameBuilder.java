@@ -196,7 +196,7 @@ public class VoogaGameBuilder {
 	private Animation buildAnimation(PhysicsEngine engine) {
 		parser.moveDown("animations");
 		
-		Animation animation = new Animation(game.getHeight());
+		Animation animation = new Animation(game.getHeight(), game.getWidth());
 		
 		for (String directory : parser.getValidSubDirectories("state")) {
 			parser.moveDown(directory);

@@ -17,6 +17,7 @@ public class Collision_XML {
     private static final String COLLISION = "collision_";
     private static final String PHYSICS_RESOLVER = "PhysicsResolver";
     private static final String SIMPLE_RESOLVER = "SimpleResolver";
+    private static final String SIMPLE_DETECTOR = "SimpleDetector";
     private static final String COLON = ":";
     private String sprites;
     private String[] detectors;
@@ -43,10 +44,7 @@ public class Collision_XML {
         Element current = xml.add(parent, COLLISION + index);
         xml.addChildWithValue(current, SPRITES, sprites);
         Element det = xml.add(current, DETECTORS);
-        if (detectors != null) {
-            for (int i = 0; i < detectors.length; i++)
-                xml.addChildWithValue(det, DETECTOR + i, detectors[i]);
-        }
+        xml.addChildWithValue(det, DETECTOR + 0, SIMPLE_DETECTOR);
         Element res = xml.add(current, RESOLVERS);
         for (int i = 0; i < resolvers.size(); i++)
             resolvers.get(i).writeToXML(res, i, xml);

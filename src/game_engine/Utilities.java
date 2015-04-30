@@ -26,13 +26,13 @@ public class Utilities {
 		return center.plus(translation);
 	}
 	
-	public static double[] nodeTranslationToPhysicsCenter(double nxVal, double nyVal, double nWidth, double nHeight, double screenHeight) {
+	public static double[] nodeTranslationToPhysicsCenter(double nxVal, double nyVal, double nWidth, double nHeight, double screenWidth, double screenHeight) {
 		Vector nTranslate = new Vector(nxVal, nyVal);
-		Vector pTranslate = nodeTranslationToPhysicsCenter(nTranslate, nWidth, nHeight, screenHeight);
+		Vector pTranslate = nodeTranslationToPhysicsCenter(nTranslate, nWidth, nHeight, screenWidth, screenHeight);
 		return pTranslate.asArray();
 	}
 	
-	public static Vector nodeTranslationToPhysicsCenter(Vector nTranslate, double nWidth, double nHeight, double screenHeight) {
+	public static Vector nodeTranslationToPhysicsCenter(Vector nTranslate, double nWidth, double nHeight, double screenWidth, double screenHeight) {
 		Vector pTranslate = jfxToPhysicsPoint(nTranslate, screenHeight);
 		return physicsUpperLeftToCenter(pTranslate, nWidth, nHeight);
 	}

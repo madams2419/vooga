@@ -169,8 +169,7 @@ public class Level implements IActor {
 	            Sprite sprite = mySprites.get(0);
 	            sprite.getImageView().toFront();
 	            tracker.enable();
-	            tracker.setPlayer(sprite, true, false);
-	            tracker.tellY(height - 200);
+	            tracker.setPlayer(sprite, true, true);
 	        }
 	        catch (Exception e) {
 	            e.printStackTrace();

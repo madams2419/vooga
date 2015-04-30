@@ -12,8 +12,8 @@ public class ObjectToXML {
 		return new Objective_XML[0];
 	}
 	
-	public static List<Sprite_XML> spritesToXML(List<Sprite> sprites, double x){
-		return sprites.stream().map(sprite -> {return new Sprite_XML(sprite, x);}).collect(Collectors.toList());
+	public static List<Sprite_XML> spritesToXML(List<Sprite> sprites, double width, double height){
+		return sprites.stream().map(sprite -> {return new Sprite_XML(sprite, width, height);}).collect(Collectors.toList());
 	}
 	
 	public static Collision_XML[] collisionToXML(CenterCanvas level){

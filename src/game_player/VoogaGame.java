@@ -102,4 +102,8 @@ public class VoogaGame implements IActor {
     public double getHeight () {
         return height;
     }
+
+    public double getWidth () {
+        return width;
+    }
 }

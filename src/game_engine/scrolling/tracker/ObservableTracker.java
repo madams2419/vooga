@@ -99,6 +99,7 @@ public class ObservableTracker extends AbstractTracker {
             tell(xSupplier.getAsDouble(), ySupplier.getAsDouble());
         }
         else if (xSupplier != null) {
+            System.out.println("xsuppl" + xSupplier.getAsDouble());
             tellX(xSupplier.getAsDouble());
         }
         else if (ySupplier != null) {

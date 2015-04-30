@@ -44,6 +44,8 @@ public class BasicFocus implements IScrollFocus {
     @Override
     public double focusX (double x) {
         double change = getChangeX(x);
+        System.out.println("changeX" + change);
+        System.out.println(myX.get() + " " + myY.get());
         return inBoundsX(change);
     }
 

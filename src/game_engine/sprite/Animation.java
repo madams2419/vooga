@@ -32,13 +32,15 @@ public class Animation {
     Map<String, ImageLink> paths;
     private long timeElapsed;
     private double height;
+    private double width;
 
-    public Animation(double h) {
+    public Animation(double h, double w) {
     	image = new ImageView();
     	paths = new HashMap<>();
     	current = null;
     	timeElapsed = 0;
     	height = h;
+    	width = w;
     }
     
     /**
@@ -120,7 +122,7 @@ public class Animation {
     		Vector imgTranslate = new Vector(image.getTranslateX(), image.getTranslateY());
     		double imgWidth = image.getImage().getWidth();
     		double imgHeight = image.getImage().getHeight();
-    		return Utilities.nodeTranslationToPhysicsCenter(imgTranslate, imgWidth, imgHeight, height);
+    		return Utilities.nodeTranslationToPhysicsCenter(imgTranslate, imgWidth, imgHeight, width, height);
     	};
     }
     
