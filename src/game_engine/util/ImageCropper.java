@@ -24,6 +24,6 @@ public class ImageCropper {
     }
     
     public static void main(String[] args){
-        ImageCropper cropper = new ImageCropper("resources/images/paperMarioSpriteSheetLarge.png",580,10,650,1000,"resources/images/cropTest.png");
+        ImageCropper cropper = new ImageCropper("resources/images/paperMarioSpriteSheetLarge.png",580,10,650,900,"resources/images/cropTest.png");
     }
 }
