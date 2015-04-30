@@ -27,18 +27,18 @@ import javafx.stage.Stage;
  * @author Yancheng Zeng
  */
 public class ControlTester extends Application{
-	private final String TITLE = "CONTROL_DEMO";
+	private final String myTITLE = "CONTROL_DEMO";
 	private String myAction = "do something";
-	private final String printout = "Tracking Number is: ";
-	private final String LET = "Let's ";
-	private final String ADD = "add";
-	private final String SUB = "subtract";
-	private final String MUL = "multiply";
-	private final String DIV = "divide";
-	private final int text_1_x = 100;
-	private final int text_1_y = 200;
-	private final int text_2_x = 100;
-	private final int text_2_y = 280;
+	private final String myPrintout = "Tracking Number is: ";
+	private final String myLET = "Let's ";
+	private final String myADD = "add";
+	private final String mySUB = "subtract";
+	private final String myMUL = "multiply";
+	private final String myDIV = "divide";
+	private final int my_text_1_x = 100;
+	private final int my_text_1_y = 200;
+	private final int my_text_2_x = 100;
+	private final int my_text_2_y = 280;
 	private final int SCENE_WIDTH = 400;
 	private final int SCENE_HEIGHT = 400;
 	private final int FONT_SIZE = 20;
@@ -47,34 +47,33 @@ public class ControlTester extends Application{
 	private final int CIRCLE_Y = 150;
 	private final int CIRCLE_R = 30;
 	private final Color CIRCLE_C = Color.RED;
-	private boolean dragTag = true;
-	private boolean enterTag = false;
-	private Text text1 = new Text(text_1_x, text_1_y, printout + myTrackNum);
-	private Text text2 = new Text(text_2_x, text_2_y, LET + myAction);
+	private boolean myDragTag = true;
+	private Text my_text1 = new Text(my_text_1_x, my_text_1_y, myPrintout + myTrackNum);
+	private Text my_text2 = new Text(my_text_2_x, my_text_2_y, myLET + myAction);
 	private Circle myCircle = new Circle(CIRCLE_X, CIRCLE_Y, CIRCLE_R, CIRCLE_C);
-	private ControlManagerFactory cFactory = new ControlManagerFactory();
+	private ControlManagerFactory myControlFactory = new ControlManagerFactory();
 
 	private void addTrack(){
 		myTrackNum++;
-		myAction = ADD;
+		myAction = myADD;
 		updateText();
 	}
 
 	private void subTrack(){
 		myTrackNum--;
-		myAction = SUB;
+		myAction = mySUB;
 		updateText();
 	}
 
 	private void mulTrack(){
 		myTrackNum*=2;
-		myAction = MUL;
+		myAction = myMUL;
 		updateText();
 	}
 
 	private void divTrack(){
 		myTrackNum/=2;
-		myAction = DIV;
+		myAction = myDIV;
 		updateText();
 	}
 
@@ -86,28 +85,28 @@ public class ControlTester extends Application{
 	 */
 	@Override
 	public void start(Stage s) throws Exception {
-		s.setTitle(TITLE);
+		s.setTitle(myTITLE);
 		Group myGroup = new Group();
 		Scene scene = new Scene(myGroup, SCENE_WIDTH, SCENE_HEIGHT, Color.WHITE);
-		text1.setFont(new Font(FONT_SIZE));
-		text2.setFont(new Font(FONT_SIZE));
+		my_text1.setFont(new Font(FONT_SIZE));
+		my_text2.setFont(new Font(FONT_SIZE));
 		myGroup.getChildren().add(myCircle);
 		s.setScene(scene);
 		
 		keyInitialization();
 		mouseInitialization();
 		
-		myGroup.getChildren().add(text1);
-		myGroup.getChildren().add(text2);
+		myGroup.getChildren().add(my_text1);
+		myGroup.getChildren().add(my_text2);
 		
 		voiceInitialization();
-		cFactory.getControlManager(ControlConstants.VOICE_CONTROL).handleEvent(null);
+		myControlFactory.getControlManager(ControlConstants.VOICE_CONTROL).handleEvent(null);
 		
-		scene.setOnKeyPressed(e -> cFactory.getControlManager(ControlConstants.KEYBOARD).handleEvent(e));
-		scene.setOnKeyReleased(e -> cFactory.getControlManager(ControlConstants.KEYBOARD).handleEvent(e));
-		scene.setOnMouseClicked(e -> cFactory.getControlManager(ControlConstants.MOUSE).handleEvent(e));
-		scene.setOnMouseMoved(e -> cFactory.getControlManager(ControlConstants.MOUSE).handleEvent(e));
-		scene.setOnMouseReleased(e -> cFactory.getControlManager(ControlConstants.MOUSE).handleEvent(e));
+		scene.setOnKeyPressed(e -> myControlFactory.getControlManager(ControlConstants.KEYBOARD).handleEvent(e));
+		scene.setOnKeyReleased(e -> myControlFactory.getControlManager(ControlConstants.KEYBOARD).handleEvent(e));
+		scene.setOnMouseClicked(e -> myControlFactory.getControlManager(ControlConstants.MOUSE).handleEvent(e));
+		scene.setOnMouseMoved(e -> myControlFactory.getControlManager(ControlConstants.MOUSE).handleEvent(e));
+		scene.setOnMouseReleased(e -> myControlFactory.getControlManager(ControlConstants.MOUSE).handleEvent(e));
 		s.show();
 	}
 
@@ -142,7 +141,7 @@ public class ControlTester extends Application{
 		List<IAction> releaseM = new ArrayList<IAction>(){{add(release);}};
 		
 		Control mouseC = new MouseControl(clickM, moveM, releaseM);
-		cFactory.getControlManager(ControlConstants.MOUSE).addControl(mouseC);
+		myControlFactory.getControlManager(ControlConstants.MOUSE).addControl(mouseC);
 		
 	}
 
@@ -183,42 +182,42 @@ public class ControlTester extends Application{
 		releaseMap.put(KeyCode.UP, null);
 		releaseMap.put(KeyCode.DOWN, null);
 		Control keyC1 = new KeyControl(pressMap, releaseMap, null);
-		cFactory.getControlManager(ControlConstants.KEYBOARD).addControl(keyC1);    
+		myControlFactory.getControlManager(ControlConstants.KEYBOARD).addControl(keyC1);    
 	}
 
 	private void voiceInitialization(){
 		Map<String, IBehavior> voiceMap = new HashMap<>();
-		voiceMap.put(ADD, new IBehavior(){
+		voiceMap.put(myADD, new IBehavior(){
 			@Override
 			public void perform() {
 				addTrack();
 			}});
 
-		voiceMap.put(MUL, new IBehavior(){
+		voiceMap.put(myMUL, new IBehavior(){
 			@Override
 			public void perform() {
 				mulTrack();
 			}});
 
-		voiceMap.put(SUB, new IBehavior(){
+		voiceMap.put(mySUB, new IBehavior(){
 			@Override
 			public void perform() {
 				subTrack();
 			}});
 
-		voiceMap.put(DIV, new IBehavior(){
+		voiceMap.put(myDIV, new IBehavior(){
 			@Override
 			public void perform() {
 				divTrack();
 			}});
 
 		Control voiceC1 = new VoiceControl(voiceMap);
-		cFactory.getControlManager(ControlConstants.VOICE_CONTROL).addControl(voiceC1);
+		myControlFactory.getControlManager(ControlConstants.VOICE_CONTROL).addControl(voiceC1);
 	}
 
 	private void updateText(){
-		text1.setText(printout + myTrackNum);
-		text2.setText(LET + myAction);
+		my_text1.setText(myPrintout + myTrackNum);
+		my_text2.setText(myLET + myAction);
 	}
 	
 	private boolean boundCheck(double x, double y){
@@ -232,25 +231,21 @@ public class ControlTester extends Application{
 	
 	private void handleClick(double x, double y){
 		if(!boundCheck(x, y)){
-			dragTag = true;
+			myDragTag = true;
 		} 
-		System.out.println("MouseClick" + dragTag);
 	}
 
 
 
 	private void handleMove(double x, double y){
-		if(dragTag && boundCheck(x, y)){
+		if(myDragTag && boundCheck(x, y)){
 			myCircle.setCenterX(x);
 			myCircle.setCenterY(y);
-			System.out.println("X and Y is " + x + y);
-			System.out.println("CX and CY is " + myCircle.getCenterX() + myCircle.getCenterY());
 		}
 	}
 
 	
 	private void handleRelease(){
-		dragTag = false;
-		System.out.println("MouseRelease "+dragTag);
+		myDragTag = false;
 	}
 }

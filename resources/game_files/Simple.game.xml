@@ -3,7 +3,7 @@
 	<title>Physics Test</title>
 
 	<frame_rate>30</frame_rate>
-	
+
 	<scene_width>1500</scene_width>
 	<scene_height>1000</scene_height>
 
@@ -16,12 +16,12 @@
 					<description>never complete</description>
 					<prereqs>1</prereqs>
 				</objective_0>
-				
+
 				<objective_1>
 					<description>never complete</description>
 					<prereqs>0</prereqs>
 				</objective_1>
-				
+
 				<objective_2>
 					<description></description>
 					<prereqs>0 1</prereqs>
@@ -37,7 +37,7 @@
 						</behaviors>
 					</onFailed>
 				</objective_2>
-				
+
 				<objective_3>
 					<description>Reach the flag</description>
 					<prereqs>4</prereqs>
@@ -402,76 +402,95 @@
 			<controls>
 				<active_scheme>0</active_scheme>
 				<control_scheme_0>
-					<key_0>
-						<key>RIGHT</key>
+					<control_type_0>
+						<scene_type_0>
+							<key_0>
+								<key>RIGHT</key>
 
-						<onPressed>
-							<behaviors>
-								<behavior_0>
-									<targetType>sprite</targetType>
-									<targetIndex>0</targetIndex>
-									<name>moveForward</name>
-									<parameters>5 0</parameters>
-								</behavior_0>
-							</behaviors>
-						</onPressed>
+								<onPressed>
+									<behaviors>
+										<behavior_0>
+											<targetType>sprite</targetType>
+											<targetIndex>0</targetIndex>
+											<name>moveForward</name>
+											<parameters>5 0</parameters>
+										</behavior_0>
+									</behaviors>
+								</onPressed>
 
-						<onReleased>
-							<behaviors>
-							</behaviors>
-						</onReleased>
-						
-						<whilePressed>
-							<behaviors></behaviors>
-						</whilePressed>
-					</key_0>
+								<onReleased>
+									<behaviors>
+									</behaviors>
+								</onReleased>
 
-					<key_1>
-						<key>LEFT</key>
+								<whilePressed>
+									<behaviors></behaviors>
+								</whilePressed>
+							</key_0>
 
-						<onPressed>
-							<behaviors>
-								<behavior_0>
-									<targetType>sprite</targetType>
-									<targetIndex>0</targetIndex>
-									<name>moveForward</name>
-									<parameters>-5 0</parameters>
-								</behavior_0>
-							</behaviors>
-						</onPressed>
+							<key_1>
+								<key>LEFT</key>
 
-						<onReleased>
-							<behaviors>
-							</behaviors>
-						</onReleased>
-						
-						<whilePressed>
-							<behaviors></behaviors>
-						</whilePressed>
-					</key_1>
+								<onPressed>
+									<behaviors>
+										<behavior_0>
+											<targetType>sprite</targetType>
+											<targetIndex>0</targetIndex>
+											<name>moveForward</name>
+											<parameters>-5 0</parameters>
+										</behavior_0>
+									</behaviors>
+								</onPressed>
 
-					<key_2>
-						<key>UP</key>
+								<onReleased>
+									<behaviors>
+									</behaviors>
+								</onReleased>
 
-						<onPressed>
-							<behaviors>
-								<behavior_0>
-									<targetType>sprite</targetType>
-									<targetIndex>0</targetIndex>
-									<name>jump</name>
-									<parameters>7</parameters>
-								</behavior_0>
-							</behaviors>
-						</onPressed>
-						
-						<onReleased>
-							<behaviors></behaviors>
-						</onReleased>
-						
-						<whilePressed>
-							<behaviors></behaviors>
-						</whilePressed>
-					</key_2>
+								<whilePressed>
+									<behaviors></behaviors>
+								</whilePressed>
+							</key_1>
+
+							<key_2>
+								<key>UP</key>
+
+								<onPressed>
+									<behaviors>
+										<behavior_0>
+											<targetType>sprite</targetType>
+											<targetIndex>0</targetIndex>
+											<name>jump</name>
+											<parameters>7</parameters>
+										</behavior_0>
+									</behaviors>
+								</onPressed>
+
+								<onReleased>
+									<behaviors></behaviors>
+								</onReleased>
+
+								<whilePressed>
+									<behaviors></behaviors>
+								</whilePressed>
+							</key_2>
+						</scene_type_0>
+					</control_type_0>
+					<control_type_1>
+						<voice_control_0>
+							<voice_0>
+								<voice>jump</voice>
+								<behaviors>
+									<behavior_0>
+										<targetType>sprite</targetType>
+										<targetIndex>0</targetIndex>
+										<name>jump</name>
+										<parameters>7</parameters>
+									</behavior_0>
+								</behaviors>
+							</voice_0>
+						</voice_control_0>
+					</control_type_1>
 				</control_scheme_0>
 			</controls>
 
@@ -494,14 +513,14 @@
 									<name>setStatus</name>
 									<parameters>active</parameters>
 								</behavior_0>
-								
+
 								<behavior_1>
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>setState</name>
 									<parameters>dead</parameters>
 								</behavior_1>
-								
+
 								<behavior_2>
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
@@ -522,7 +541,7 @@
 					</detectors>
 
 					<resolvers>
-						
+
 					</resolvers>
 				</collision_1>
 
@@ -597,7 +616,7 @@
 					</detectors>
 
 					<resolvers>
-						
+
 					</resolvers>
 				</collision_5>
 			</collisions>
@@ -606,11 +625,15 @@
 					<id>4</id>
 					<values>0 500 100 500 300 500 800 500</values>
 					<duration>10</duration>
-					<delay>0</delay></path_0>
+					<delay>0</delay>
+				</path_0>
 				<path_1>
 					<id>3</id>
 					<values>300 800 400 800 400 800 500 800</values>
 					<duration>5</duration>
-					<delay>0</delay></path_1></sprite_paths></level_0>
+					<delay>0</delay>
+				</path_1>
+			</sprite_paths>
+		</level_0>
 	</level>
 </game>
