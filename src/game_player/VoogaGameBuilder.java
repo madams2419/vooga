@@ -8,9 +8,9 @@ import game_engine.behaviors.IBehavior;
 import game_engine.behaviors.MultipleBehaviors;
 import game_engine.collisions.Collision;
 import game_engine.collisions.CollisionsManager;
-import game_engine.collisions.detectors.PhysicsDetector;
 import game_engine.collisions.detectors.ICollisionDetector;
 import game_engine.collisions.detectors.MultipleDetector;
+import game_engine.collisions.detectors.PhysicsDetector;
 import game_engine.collisions.detectors.PixelPerfectDetector;
 import game_engine.collisions.detectors.SimpleDetector;
 import game_engine.collisions.resolvers.ICollisionResolver;
@@ -31,13 +31,11 @@ import game_engine.physics.utilities.Vector;
 import game_engine.sprite.Animation;
 import game_engine.sprite.Sprite;
 import game_engine.sprite.TransitionManager;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 
@@ -57,12 +55,12 @@ public class VoogaGameBuilder {
 	
 	public VoogaGame buildGame() {
 		parser.moveDown("game");
-		
+		actors = new HashMap<>();
 		double frameRate = Double.parseDouble(parser.getValue("frame_rate"));
 		double width = Double.parseDouble(parser.getValue("scene_width"));
 		double height = Double.parseDouble(parser.getValue("scene_height"));
 		game = new VoogaGame(frameRate, width, height);
-		
+		actors.put("game_0", game);
 		parser.moveDown("level");
 		for (String directory : parser.getValidSubDirectories("level")) {
 			game.addLevel(buildLevel(directory));
@@ -83,8 +81,10 @@ public class VoogaGameBuilder {
 		Level level = new Level(engine);
 		sprites = new HashMap<>();
 		objectives = new ArrayList<>();
-		actors = new HashMap<>();
+		
 		actors.put(levelID, level);
+		ControlsManager manager = new ControlsManager();
+		actors.put("controlManager_0", manager);
 		
 		parser.moveDown("sprites");
 		for (String directory : parser.getValidSubDirectories("sprite")) {
@@ -117,9 +117,8 @@ public class VoogaGameBuilder {
 		    parser.moveUp();
 		}
 		parser.moveUp();
-		
+		level.setControlManager(buildControlsManager(manager));
 		level.setCollisionEngine(buildCollisionsManager(engine));
-		level.setControlManager(buildControlsManager());
 		game.setTransitionManager(buildTransitionManager(game.getRoot()));
 		game.getTransitionManager().initialize();
 		game.getTransitionManager().playTransitions();
@@ -300,7 +299,6 @@ public class VoogaGameBuilder {
         parser.moveDown(behaviorID);
         String id = parser.getValue("targetType") + "_" + parser.getValue("targetIndex");
         String name = parser.getValue("name");
-        System.out.println(id + " " + name);
         IActor actor = getActor(id);
         IAction behavior = actor.getAction(name);
         String[] params = parser.getValue("parameters").split(" ");
@@ -311,7 +309,7 @@ public class VoogaGameBuilder {
     private IActor getActor(String id) {
     	//String[] details = id.split("_");
     	//IActor actor = details[0].startsWith("sprite") ? sprites.get(Integer.parseInt(details[1])) : details[0].startsWith("objective") ? objectives.get(Integer.parseInt(details[1])) : null;
-    	//return actor;
+    	//return actor; 
     	return actors.get(id);
     }
     
@@ -385,12 +383,10 @@ public class VoogaGameBuilder {
     	return resolver;
     }
     
-    private ControlsManager buildControlsManager() {
+    private ControlsManager buildControlsManager(ControlsManager manager) {
     	parser.moveDown("controls");
     	
     	int startIndex = Integer.parseInt(parser.getValue("active_scheme"));
-    	
-    	ControlsManager manager = new ControlsManager();
     	
     	for (String directory : parser.getValidSubDirectories("control_scheme")) {
     		parser.moveDown(directory);

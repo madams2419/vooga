@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 
 public class Material {
 
+
 	public static final Material ROCK = new Material(0.6, 0.1, 1.0, 0.8);
 	public static final Material WOOD = new Material(0.3, 0.2, 0.3, 0.2);
 	public static final Material METAL = new Material(1.2, 0.05, 0.74, 0.57);
