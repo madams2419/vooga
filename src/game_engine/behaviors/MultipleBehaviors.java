@@ -1,5 +1,7 @@
 package game_engine.behaviors;
 
+import groovy.ui.SystemOutputInterceptor;
+
 import java.util.ArrayList;
 import java.util.List;
 
