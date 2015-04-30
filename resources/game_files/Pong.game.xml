@@ -545,7 +545,7 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>moveForward</name>
-									<parameters>4 2</parameters>
+									<parameters>5 2</parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
@@ -622,7 +622,7 @@
 								<targetType>sprite</targetType>
 								<targetIndex>0</targetIndex>
 								<name>moveForward</name>
-								<parameters>-4.5 2</parameters>
+								<parameters>-6 2</parameters>
 							</behavior_0>
 						</behaviors>
 					</onFailed>
@@ -1215,7 +1215,7 @@
 								<targetType>sprite</targetType>
 								<targetIndex>0</targetIndex>
 								<name>moveForward</name>
-								<parameters>5 -2</parameters>
+								<parameters>7 -2</parameters>
 							</behavior_0>
 						</behaviors>
 					</onFailed>
@@ -1808,7 +1808,7 @@
 								<targetType>sprite</targetType>
 								<targetIndex>0</targetIndex>
 								<name>moveForward</name>
-								<parameters>-5.5 -2</parameters>
+								<parameters>-8 -2</parameters>
 							</behavior_0>
 						</behaviors>
 					</onFailed>
