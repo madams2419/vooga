@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game>
-	<title>Simple Game</title>
+	<title>Pong</title>
 
 	<frame_rate>30</frame_rate>
 	
