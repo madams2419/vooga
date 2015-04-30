@@ -106,11 +106,11 @@ public class VoogaGameBuilder {
 		int i = 0;
 		for (String directory: parser.getValidSubDirectories()) {
 		    parser.moveDown(directory);
-		    if (parser.getValue("prereqs") != null && parser.getValue("prereqs").trim() != "") {
+		    if (parser.getValue("prereqs") != null && parser.getValue("prereqs").trim().length() > 0) {
 		        String[] prereqs = parser.getValue("prereqs").split(" ");
 	                    List<Objective> list = new ArrayList<>();
 	                    for (String id: prereqs) {
-	                        list.add(objectives.get(Integer.parseInt(id)));
+	                        list.add(objectives.get(Integer.parseInt(id.trim())));
 	                    }
 	                    objectives.get(i).setPreReqs(list);
 		    }
@@ -206,7 +206,7 @@ public class VoogaGameBuilder {
 			parser.moveDown("images");
 			for (String imageDirectory : parser.getValidSubDirectories()) {
 				parser.moveDown(imageDirectory);
-				String source = parser.getValue("source");
+				String source = parser.getValue("source").trim();
 				double delay = Double.parseDouble(parser.getValue("delay"));
 				double width = Double.parseDouble(parser.getValue("width"));
 				double height = Double.parseDouble(parser.getValue("height"));

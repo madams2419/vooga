@@ -113,4 +113,13 @@ public class InteractionObjectiveDialog extends InteractionDialog {
         return (ADD_OBJECTIVE + Integer.toString(k) + ACTION2);
     }
 
+    @Override
+    String getSummary (int k, int i, Sprite[] s) {
+        return
+        InteractionDialog.SIMPLE_RESOLVER + getProperty().toLowerCase() + COLON +
+        myParams.get(k).get(i).getText() + COLON + 
+        myComboBoxes.get(k).get(i).getValue().getAction() + COLON
+        + myObjectiveComboBoxes.get(i).getValue();
+        }
+
 }

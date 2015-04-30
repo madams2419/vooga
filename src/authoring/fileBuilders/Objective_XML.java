@@ -15,23 +15,25 @@ public class Objective_XML {
     private static final String PREREQS = "prereqs";
     private static final String DESCRIPTION = "description";
     private static final String OBJECTIVE = "objective_";
-    private static final String SPRITE = "sprite";
     private static final String COLON = ":";
     private static final String SPACE = " ";
     private String description;
     private List<String> prereqs = new ArrayList<>();
     private List<Behaviours_XML> onComplete = new ArrayList<>();
     private List<Behaviours_XML> onFailed = new ArrayList<>();
+    private List<Behaviours_XML> onActive = new ArrayList<>();
 
     public Objective_XML (String description) {
         this.description = description;
     }
 
     public Objective_XML (String description, List<String> prereqs,
-                          List<Behaviours_XML> onComplete, List<Behaviours_XML> onFailed) {
+                          List<Behaviours_XML> onComplete, List<Behaviours_XML> onFailed,
+                          List<Behaviours_XML> onActive) {
         this.description = description;
         this.prereqs = prereqs;
         this.onComplete = onComplete;
+        this.onActive = onActive;
         this.onFailed = onFailed;
     }
 
@@ -39,19 +41,22 @@ public class Objective_XML {
         this.prereqs.addAll(prereqs);
     }
 
-    public void addOnComplete (List<String> actions, IActor targetType) {
-        addToBehaviour(onComplete, actions, targetType);
+    public void addOnComplete (List<String> actions) {
+        addToBehaviour(onComplete, actions);
     }
 
-    public void addOnFailed (List<String> actions, IActor targetType) {
-        addToBehaviour(onFailed, actions, targetType);
+    public void addOnActive (List<String> actions) {
+        addToBehaviour(onActive, actions);
     }
 
-    private void addToBehaviour (List<Behaviours_XML> l, List<String> actions,
-                                 IActor target) {
+    public void addOnFailed (List<String> actions) {
+        addToBehaviour(onFailed, actions);
+    }
+
+    private void addToBehaviour (List<Behaviours_XML> l, List<String> actions) {
+        String SPRITE = "asjkldf";
         l.addAll(actions.stream().map(s -> {
             String[] par = (s + SPACE).split(COLON);
-            System.out.println(s);
             return new Behaviours_XML(SPRITE, par[0], par[1], par[2]);
         }).collect(Collectors.toList()));
     }

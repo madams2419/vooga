@@ -8,7 +8,26 @@
 	<level>
 		<first_level>0</first_level>
 		<level_0>
-			<level_objectives />
+			<level_objectives>
+				<objective_0>
+					<description />
+					<prereqs>
+					</prereqs>
+					<onComplete>
+						<behaviors>
+							<behavior_0>
+								<targetType>sprite</targetType>
+								<targetIndex>0</targetIndex>
+								<name>incrementScore</name>
+								<parameters>100 </parameters>
+							</behavior_0>
+						</behaviors>
+					</onComplete>
+					<onFailed>
+						<behaviors />
+					</onFailed>
+				</objective_0>
+			</level_objectives>
 			<sprites>
 				<sprite_0>
 					<initial_state>0</initial_state>
@@ -18,10 +37,10 @@
 							<name>0</name>
 							<images>
 								<image_0>
-									<source>authoring_images/characters/smallStandingMarioR.png</source>
+									<source>authoring_images/characters/doodle.png</source>
 									<delay>1.0</delay>
-									<width>30.0</width>
-									<height>53.0</height>
+									<width>131.0</width>
+									<height>138.0</height>
 								</image_0>
 							</images>
 						</state_0>
@@ -29,31 +48,9 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>bouncy_ball</material>
-						<position>147.000000 525.000000</position>
+						<position>413.000000 738.000000</position>
 					</physics>
 				</sprite_0>
-				<sprite_1>
-					<initial_state>0</initial_state>
-					<path>373.0 469.0 317.0 405.5 418.0 365.5 361.0 324.0</path>
-					<animations>
-						<state_0>
-							<name>0</name>
-							<images>
-								<image_0>
-									<source>authoring_images/blocks/platform.png</source>
-									<delay>1.0</delay>
-									<width>134.0</width>
-									<height>19.0</height>
-								</image_0>
-							</images>
-						</state_0>
-					</animations>
-					<physics>
-						<type>ComplexPhysicsObject</type>
-						<material>floating</material>
-						<position>374.000000 618.000000</position>
-					</physics>
-				</sprite_1>
 				<sprite_2>
 					<initial_state>0</initial_state>
 					<path />
@@ -62,43 +59,21 @@
 							<name>0</name>
 							<images>
 								<image_0>
-									<source>authoring_images/blocks/platform.png</source>
+									<source>authoring_images/characters/doodle.png</source>
 									<delay>1.0</delay>
-									<width>134.0</width>
-									<height>19.0</height>
+									<width>131.0</width>
+									<height>138.0</height>
 								</image_0>
 							</images>
 						</state_0>
 					</animations>
 					<physics>
 						<type>ComplexPhysicsObject</type>
-						<material>floating</material>
-						<position>601.000000 703.000000</position>
+						<material>bouncy_ball</material>
+						<position>647.000000 799.000000</position>
 					</physics>
 				</sprite_2>
 				<sprite_3>
-					<initial_state>0</initial_state>
-					<path />
-					<animations>
-						<state_0>
-							<name>0</name>
-							<images>
-								<image_0>
-									<source>authoring_images/blocks/platform.png</source>
-									<delay>1.0</delay>
-									<width>134.0</width>
-									<height>19.0</height>
-								</image_0>
-							</images>
-						</state_0>
-					</animations>
-					<physics>
-						<type>ComplexPhysicsObject</type>
-						<material>floating</material>
-						<position>802.000000 801.000000</position>
-					</physics>
-				</sprite_3>
-				<sprite_4>
 					<initial_state>0</initial_state>
 					<path />
 					<animations>
@@ -117,9 +92,9 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>floating</material>
-						<position>477.000000 486.000000</position>
+						<position>481.000000 501.000000</position>
 					</physics>
-				</sprite_4>
+				</sprite_3>
 			</sprites>
 			<physics_engine>
 				<type>ComplexPhysicsEngine</type>
@@ -182,7 +157,25 @@
 					</key_2>
 				</control_scheme_0>
 			</controls>
-			<collisions />
+			<collisions>
+				<collision_0>
+					<sprites>0 2 </sprites>
+					<detectors />
+					<resolvers>
+						<resolver_0>
+							<type>SimpleResolver</type>
+							<behaviors>
+								<behavior_0>
+									<targetType>objective</targetType>
+									<targetIndex>0</targetIndex>
+									<name>setStatus</name>
+									<parameters>complete </parameters>
+								</behavior_0>
+							</behaviors>
+						</resolver_0>
+					</resolvers>
+				</collision_0>
+			</collisions>
 		</level_0>
 	</level>
 </game>

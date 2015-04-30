@@ -94,4 +94,13 @@ public class InteractionsSpritesDialog extends InteractionDialog {
         return (ADD_SPRITE + Integer.toString(k) + ACTION2);
     }
 
+    @Override
+    String getSummary (int k, int i, Sprite [] s) {
+        return
+        InteractionDialog.SIMPLE_RESOLVER + getProperty().toLowerCase() + COLON + s[k].getID()
+        + COLON + myComboBoxes.get(k).get(i).getValue().getAction() +
+        COLON + myParams.get(k).get(i).getText();
+
+    }
+
 }

@@ -29,11 +29,10 @@ import authoring.userInterface.DialogGridOrganizer;
  */
 
 public abstract class InteractionDialog extends ActionsDialog {
-    private static final String COLON = ":";
-    private static final String SPRITE2 = "sprite:";
-    private static final String SIMPLE_RESOLVER = "SimpleResolver:";
     private static final int BOTTOM_SPACING = 31;
     static final String BLANK = "";
+    static final String COLON = ":";
+    static final String SIMPLE_RESOLVER = "SimpleResolver:";
     // static final String SPRITE = "Sprite";
 
     private RightPane myParent;
@@ -82,13 +81,12 @@ public abstract class InteractionDialog extends ActionsDialog {
             for (int i = 0; i < myDescriptions.get(k).size(); i++) {
                 mySpriteInteractions.get(k).put(myComboBoxes.get(k).get(i).getValue(),
                                                 myParams.get(k).get(i).getText());
-                totalInteractions.add(SIMPLE_RESOLVER + SPRITE2 + s[k].getID()
-                                      + COLON + myComboBoxes.get(k).get(i).getValue().getAction() +
-                                      COLON
-                                      + myParams.get(k).get(i).getText());
+                totalInteractions.add(getSummary(k, i, s));
             }
         }
     }
+
+    abstract String getSummary (int k, int i, Sprite[] s);
 
     @Override
     Consumer<ButtonType> getTodoOnOK (Sprite ... s) {
@@ -151,4 +149,5 @@ public abstract class InteractionDialog extends ActionsDialog {
         final Button addButton = (Button) this.getDialogPane().lookupButton(b);
         addButton.addEventFilter(ActionEvent.ACTION, e);
     }
+
 }

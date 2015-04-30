@@ -12,7 +12,6 @@ import authoring.userInterface.DialogGridOrganizer;
 
 public class ChooseInteractionDialog extends DataDialog{
 
-    private static final int BOTTOM_SPACING = 31;
     private static final int GRID_ORGANIZER_SIZE = 1;
     private static final int INITIAL_ROWS = 0;
     private static final int NUM_GRIDS = 1;
