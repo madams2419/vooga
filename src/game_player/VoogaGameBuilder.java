@@ -57,7 +57,7 @@ public class VoogaGameBuilder {
 	
 	public VoogaGame buildGame() {
 		parser.moveDown("game");
-		
+		System.out.println("labels" + parser.getValidLabels());
 		double frameRate = Double.parseDouble(parser.getValue("frame_rate"));
 		double width = Double.parseDouble(parser.getValue("scene_width"));
 		double height = Double.parseDouble(parser.getValue("scene_height"));

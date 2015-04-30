@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game>
-	<scene_width>500</scene_width>
-	<scene_height>500</scene_height>
+	<scene_width>1500</scene_width>
+	<scene_height>1000</scene_height>
 	<title>Mario Game</title>
 	<frame_rate>60</frame_rate>
 	<first_level>0</first_level>
@@ -29,7 +29,7 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>floating</material>
-						<position>-0.500000 586.500000</position>
+						<position>000000 586.500000</position>
 					</physics>
 				</sprite_0>
 				<sprite_2>
@@ -40,8 +40,7 @@
 							<name>right</name>
 							<images>
 								<image_0>
-									<source>authoring_images/characters/smallStandingMarioR.png
-									</source>
+									<source>authoring_images/characters/smallStandingMarioR.png</source>
 									<delay>1.0</delay>
 									<width>0.0</width>
 									<height>0.0</height>
@@ -52,8 +51,7 @@
 							<name>left</name>
 							<images>
 								<image_0>
-									<source>authoring_images/characters/smallStandingMarioL.png
-									</source>
+									<source>authoring_images/characters/smallStandingMarioL.png</source>
 									<delay>1.0</delay>
 									<width>0.0</width>
 									<height>0.0</height>
