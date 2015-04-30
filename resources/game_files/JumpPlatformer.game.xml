@@ -264,7 +264,7 @@
 					<physics>
 						<type>ComplexPhysicsObject</type>
 						<material>floating</material>
-						<position>1200 300</position>
+						<position>1200 800</position>
 					</physics>
 				</sprite_4>
 				<sprite_5>
@@ -498,7 +498,7 @@
 									<targetType>sprite</targetType>
 									<targetIndex>0</targetIndex>
 									<name>jump</name>
-									<parameters>10</parameters>
+									<parameters>7</parameters>
 								</behavior_0>
 								<behavior_1>
 									<targetType>controlManager</targetType>
@@ -811,7 +811,12 @@
 					<values>2700 800 2700 800 3700 800 3700 800</values>
 					<duration>5</duration>
 					<delay>0</delay></path_0>
-			</sprite_paths>
+				<path_1>
+				<id>4</id>
+					<values>1200 100 1200 300 1200 500 1200 800</values>
+					<duration>5</duration>
+					<delay>1</delay>
+					</path_1></sprite_paths>
 		</level_0>
 		<level_1>
 			<level_objectives>
