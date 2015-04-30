@@ -5,6 +5,7 @@ import game_engine.annotation.IActionAnnotation;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.collisions.CollisionsManager;
+import game_engine.control.ControlManagerFactory;
 import game_engine.controls.ControlsManager;
 import game_engine.objectives.Objective;
 import game_engine.physics.PhysicsEngine;
@@ -15,12 +16,14 @@ import game_engine.scrolling.scrollfocus.BasicFocus;
 import game_engine.scrolling.scrollfocus.IScrollFocus;
 import game_engine.scrolling.tracker.SpriteTracker;
 import game_engine.sprite.Sprite;
+
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -41,6 +44,7 @@ public class Level implements IActor {
 	private ObservableList<Sprite> mySprites;
 	private CollisionsManager myCollisionEngine;
 	private ControlsManager myControlManager;
+	private ControlManagerFactory myControlFactory;
 	private Collection<Sprite> myToBeRemoved;
 	private Group mySpriteGroup;
 	private Group myGroup;
@@ -86,7 +90,7 @@ public class Level implements IActor {
 		myObjectives.forEach(objective -> objective.update(framePeriodMillis));
 		myPhysics.update(framePeriod); // update PhysicsObjects and handle physical collisions
 		mySprites.forEach(sprite -> sprite.update(framePeriodMillis)); // update animations
-		myControlManager.update();
+		//myControlManager.update();
 		myCollisionEngine.checkCollisions(); // handle behavioral collisions
 		myToBeRemoved.forEach(this::removeSprite);
 		myToBeRemoved.clear();
@@ -101,9 +105,17 @@ public class Level implements IActor {
 	public void setControlManager(ControlsManager controlManager) {
 		myControlManager = controlManager;
 	}
+	
+	public void setControlFactory(ControlManagerFactory controlFactory){
+		myControlFactory = controlFactory;
+	}
 
 	public ControlsManager getControlManager() {
 		return myControlManager;
+	}
+	
+	public ControlManagerFactory getControlFactory(){
+		return myControlFactory;
 	}
 
 	public void setCollisionEngine(CollisionsManager collisionEngine) {
