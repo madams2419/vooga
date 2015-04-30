@@ -57,6 +57,8 @@ public class VoogaMenu {
 	
 	private static final EventHandler<ActionEvent> DO_NOTHING = (finished) -> {};
 	
+	private static final String RETURN_PROMPT = "Return to Menu";
+	
 	private Group root;
 	
 	private double width, height;
@@ -126,7 +128,7 @@ public class VoogaMenu {
 		disableMouseListeners();
 		sections.forEach((section) -> doTranslate(section, width/2, -height/2));
 		revertText();
-		setText("Return to Menu");
+		setText(RETURN_PROMPT);
 		VoogaFileChooser chooser = new VoogaFileChooser(width, height);
 		VBox choiceMenu = chooser.getContent(width, height);
 		header.setOnMouseClicked((clicked) -> {
@@ -157,7 +159,7 @@ public class VoogaMenu {
 		disableMouseListeners();
 		sections.forEach((section) -> doTranslate(section, 0, height));
 		revertText();
-		setText("Return to Menu");
+		setText(RETURN_PROMPT);
 		header.setOnMouseClicked((clicked) -> {
 			revertMenu();
 			revertText();
@@ -177,7 +179,7 @@ public class VoogaMenu {
 		disableMouseListeners();
 		sections.forEach((section) -> doTranslate(section, width, height));
 		revertText();
-		setText("Return to Menu");
+		setText(RETURN_PROMPT);
 		header.setOnMouseClicked((clicked) -> {
 			revertMenu();
 			revertText();
