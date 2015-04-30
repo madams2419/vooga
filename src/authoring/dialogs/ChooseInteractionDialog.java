@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import authoring.dataEditors.Sprite;
@@ -51,12 +50,6 @@ public class ChooseInteractionDialog extends DataDialog{
     void addOtherComponents (DialogGridOrganizer ... grid) {
         grid[0].addRowEnd(addButton("Set Interactions", e -> setInteraction(), new ArrayList<>()));
         grid[0].addRowEnd(addButton("Set Objectives", e -> setObjectives(), new ArrayList<>()));
-        grid[0].addRowEnd(addButton("Set Levels", e -> setLevels(), new ArrayList<>()));
-    }
-
-
-    private void setLevels () {
-       new LevelsDialog(myParent, mySprite1, mySprite2);
     }
 
 
