@@ -124,5 +124,10 @@ public class Vector {
 	public String toString() {
 		return String.format("Vector (%f, %f)\n", myX, myY);
 	}
+	
+	public double[] asArray() {
+		double[] array = {myX, myY};
+		return array;
+	}
 
 }
