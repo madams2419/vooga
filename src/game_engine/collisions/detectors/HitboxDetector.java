@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Brian Lavallee
+
 package game_engine.collisions.detectors;
 
 import game_engine.hitboxes.IHitbox;
