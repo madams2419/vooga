@@ -8,22 +8,23 @@ public class HexTile {
 	private Polygon hexagon;
 	
 	double[] connectionPoints;
-	private static final int POINTS = 12;
-	private double startAngle = 30;
-	private static final int HEX = 60;
+//	private static final int POINTS = 12;
+//	private double startAngle = 30;
+//	private static final int HEX = 60;
+	private Constants constants=new Constants();
 
 	public HexTile(double x, double y, double side, double offset) {
 		double[] points = new double[12];
 		connectionPoints = new double[12];
 
-		for (int i = 0; i < POINTS; i += 2) {
-			double newX = x + side * Math.cos(Math.toRadians(startAngle));
-			double newY = y - side * Math.sin(Math.toRadians(startAngle));
+		for (int i = 0; i <constants.POINTS; i += 2) {
+			double newX = x + side * Math.cos(Math.toRadians(constants.startAngle));
+			double newY = y - side * Math.sin(Math.toRadians(constants.startAngle));
 			points[i] = newX;
 			points[i + 1] = newY;
-			connectionPoints[i] = newX + (side+offset) * Math.cos(Math.toRadians(startAngle + HEX));
-			connectionPoints[i + 1] = newY- (side + offset) * Math.sin(Math.toRadians(startAngle + HEX));;
-			startAngle += HEX;
+			connectionPoints[i] = newX + (side+offset) * Math.cos(Math.toRadians(constants.startAngle + constants.HEX));
+			connectionPoints[i + 1] = newY- (side + offset) * Math.sin(Math.toRadians(constants.startAngle + constants.HEX));;
+			constants.startAngle += constants.HEX;
 		}
 		
 		hexagon = new Polygon(points);

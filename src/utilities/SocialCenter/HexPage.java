@@ -6,8 +6,7 @@ import javafx.scene.Group;
 
 public class HexPage implements IShapePage {
 	private ArrayList<HexTile> hexList = new ArrayList<>();
-	public static final int COORDINATES = 2;
-	public static final int NUMBER = 6;
+	private Constants constants=new Constants();
 
 	public HexPage(double centerX, double centerY, double size, double offset) {
 		initializePage(centerX, centerY, size, offset);
@@ -19,7 +18,7 @@ public class HexPage implements IShapePage {
 		HexTile hex = new HexTile(centerX, centerY, size, offset);
 		hexList.add(hex);
 
-		for (int i = 0; i < NUMBER * COORDINATES; i += COORDINATES) {
+		for (int i = 0; i < constants.NUMBER * constants.COORDINATES; i += constants.COORDINATES) {
 			hexList.add(new HexTile(hex.getConnections()[i], hex
 					.getConnections()[i + 1], size, offset));
 		}
@@ -46,7 +45,7 @@ public class HexPage implements IShapePage {
 	}
 
 	public int getNumberOfHexagons() {
-		return NUMBER + 1;
+		return  constants.NUMBER + 1;
 	}
 
 }

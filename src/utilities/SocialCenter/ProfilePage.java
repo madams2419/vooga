@@ -35,34 +35,8 @@ public class ProfilePage {
 	private double myHeight;
 	private Stage myStage;
 	private Scene myMenu;
-
-	// CSS
-	private static final String CSS = "styles/profile.css";
-	private static final String FONT = "http://fonts.googleapis.com/css?family=Exo:100,200,400";
-	private static final String CSS_BACKGROUND = "background";
-	private static final String CSS_FONT = "prof_font";
-	
-	//PROF PIC
-	private static final int PROF_WIDTH = 200;
-	private static final int PROF_HEIGHT = 200;
-	private static final double HEIGHT_CONSTANT = .10;
-	
-	//GRID PANE Positioning
-	private static final int GRID_X = 350;
-	private static final int GRID_Y = 300;
-	private static final String SET_PIC = "Set Profile Pic URL";
-	
-	//POP UP URL DIMENSIONS
-	Group URLgroup;
-	private static final int POP_WIDTH = 500;
-	private static final int POP_HEIGHT = 150;
-	
-	//BACK BUTTON
-	private static final String BACK_BUTTON = "http://eingleses.com/wp-content/uploads/2014/03/duke-footer-logo.png";
-	private static final double BACK_X = -225;
-	private static final double BACK_Y = -225;
-	private static final double BACK_WIDTH = 150;
-	private static final double BACK_HEIGHT = 75;
+	private Constants constants=new Constants();
+	private Group URLgroup;
 	
 	/**
 	 * @param menu 
@@ -82,11 +56,11 @@ public class ProfilePage {
 	}
 
 	private void createBackButton() {
-		ImageView backButton = new ImageView(new Image(BACK_BUTTON));
-		backButton.setTranslateX(BACK_X);
-		backButton.setTranslateY(BACK_Y);
-		backButton.setFitWidth(BACK_WIDTH);
-		backButton.setFitHeight(BACK_HEIGHT);
+		ImageView backButton = new ImageView(new Image(constants.Profile_BACK_BUTTON));
+		backButton.setTranslateX(constants.BACK_X);
+		backButton.setTranslateY(constants.BACK_Y);
+		backButton.setFitWidth(constants.BACK_WIDTH);
+		backButton.setFitHeight(constants.BACK_HEIGHT);
 		
 		backButton.setOnMouseClicked(e->backMenu());
 		root.getChildren().add(backButton);
@@ -99,16 +73,16 @@ public class ProfilePage {
 
 	private void initialize(double width, double height) {
 		profilePage = new Scene(root, width, height);
-		profilePage.getStylesheets().add(CSS);
-		profilePage.getStylesheets().add(FONT);
-		root.getStyleClass().add(CSS_BACKGROUND);
+		profilePage.getStylesheets().add(constants.Profile_CSS);
+		profilePage.getStylesheets().add(constants.FONT);
+		root.getStyleClass().add(constants.Profile_CSS_BACKGROUND);
 	}
 
 	private void profileImage() {
 		HBox hbox = new HBox();
 		Image picture;
 		ArrayList<String> imageURL = new ArrayList<>();
-		Rectangle rect = new Rectangle(PROF_WIDTH, PROF_HEIGHT);
+		Rectangle rect = new Rectangle(constants.PROF_WIDTH, constants.PROF_HEIGHT);
 		rect.getStyleClass().add("profile_pic");
 		try {
 			imageURL=db.get("LoginInfo","SELECT ProfilePic FROM profile WHERE ID = '"+ID+"'", "ProfilePic");
@@ -122,7 +96,7 @@ public class ProfilePage {
 		rect.setOnMouseClicked(e -> saveURL());
 		hbox.getChildren().add(rect);
 		hbox.setTranslateX((myWidth / 2) - rect.getWidth()/2  );
-		hbox.setTranslateY(myHeight * HEIGHT_CONSTANT);
+		hbox.setTranslateY(myHeight * constants.HEIGHT_CONSTANT);
 		root.getChildren().add(hbox);
 
 	}
@@ -137,10 +111,10 @@ public class ProfilePage {
 		Button close = new Button("Close");
 		TextField URLinsert = new TextField();
 		
-		t.getStyleClass().add(CSS_FONT);
-		submit.getStyleClass().add(CSS_FONT);
-		close.getStyleClass().add(CSS_FONT);
-		URLinsert.getStyleClass().add(CSS_FONT);
+		t.getStyleClass().add(constants.CSS_FONT);
+		submit.getStyleClass().add(constants.CSS_FONT);
+		close.getStyleClass().add(constants.CSS_FONT);
+		URLinsert.getStyleClass().add(constants.CSS_FONT);
 		
 		submit.setOnMouseClicked(e -> insertQuery(URLinsert.getText()));
 		close.setOnMouseClicked(e -> insert.close());
@@ -150,11 +124,11 @@ public class ProfilePage {
 		URLgroup.getChildren().addAll(stack);
 		stack.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 
-		Scene URLscene = new Scene(URLgroup, POP_WIDTH, POP_HEIGHT);
+		Scene URLscene = new Scene(URLgroup,constants.POP_WIDTH, constants.POP_HEIGHT);
 
 		insert.setScene(URLscene);
 		insert.initModality(Modality.WINDOW_MODAL);
-		insert.setTitle(SET_PIC);
+		insert.setTitle(constants.SET_PIC);
 
 		insert.show();
 	}
@@ -182,8 +156,8 @@ public class ProfilePage {
 		for (int i = 0; i < s.length; i++) {
 			setConstraints(gridpane, s[i]+": "+query.get(i), i, 0);
 		}
-		gridpane.setTranslateX(GRID_X);
-		gridpane.setTranslateY(GRID_Y);
+		gridpane.setTranslateX(constants.GRID_X);
+		gridpane.setTranslateY(constants.GRID_Y);
 		root.getChildren().add(gridpane);
 
 	}
@@ -191,7 +165,7 @@ public class ProfilePage {
 	private void setConstraints(GridPane g, String s, int row, int col) {
 		HBox region = new HBox();
 		Text temp = new Text(String.format("%s", s));
-		temp.getStyleClass().add(CSS_FONT);
+		temp.getStyleClass().add(constants.CSS_FONT);
 		region.getChildren().add(temp);
 		g.setConstraints(region, col, row);
 		g.getChildren().add(region);

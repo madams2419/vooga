@@ -34,7 +34,6 @@ import javafx.util.Duration;
  *
  */
 public class ChatPage {
-	private static final double TRANSLATE_Y = .75;
 	private Stage myStage;
 	private String ID;
 	private Scene chatScreen;
@@ -46,6 +45,7 @@ public class ChatPage {
 	private double myWidth;
 	private double myHeight;
 	private Button myBack;
+	private Constants constants=new Constants();
 	
 	ChatPage(String id, double width, double height, Scene menu){
 		Menu=menu;
@@ -63,7 +63,7 @@ public class ChatPage {
 	
 	private void addBack(){
 		myBack=new Button("Back");
-		myBack.setTranslateY(TRANSLATE_Y*myHeight/2);
+		myBack.setTranslateY(constants.TRANSLATE_Y*myHeight/2);
 		root.getChildren().add(myBack);
 	}
 
