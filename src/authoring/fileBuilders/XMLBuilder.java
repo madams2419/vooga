@@ -1,20 +1,22 @@
+// This entire file is part of my masterpiece.
+// Daniel Luker
+
 package authoring.fileBuilders;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import authoring.dataEditors.Sprite;
 
 /***
  * This is a class that will contain information in a tree structure, and encode
@@ -263,39 +265,13 @@ public class XMLBuilder {
 		properties.forEach((s1, s2) -> add(e, "" + s1).setTextContent(s2));
 	}
 
+	/**
+	 * Get the root of the document tree
+	 * 
+	 * @return root of the current document tree
+	 */
 	public Element getRoot() {
 		return root;
 	}
 
-	public void addAllSprites(Element parent, List<Sprite> sprites) {
-		for(int i = 0; i < sprites.size(); i++)
-			addSprite(parent, sprites.get(i), i);
-	}
-
-	private void addSprite(Element parent, Sprite sprite, int index) {
-		Element s = add(parent, String.format("sprite_%d",index));
-//		s.setAttribute("name", sprite.getName());
-		add(s, "type");
-		add(s, "inital_state");
-		addChildWithValue(s, "width", Double.toString(sprite.getFitWidth()));
-		addChildWithValue(s, "height", Double.toString(sprite.getFitHeight()));
-		addChildWithValue(s, "animation", "null");
-//		sprite.getCharacteristics().forEach(
-//				(key, value) -> addChildWithValue(s, key, value));
-		addChildWithValue(s, "physics", "null");
-	}
-
-	public void addAllEnvironment(Element parent, Collection<Map<String, String>> environments) {
-		Element mapElement = add(parent, "map_environment");
-		assert (mapElement != null);
-		environments.forEach(map -> {
-			map.forEach((s1, s2) -> {
-				Element newel = add(mapElement, (String) s1);
-				newel.setTextContent((String) s2);
-			});
-		});
-	}
-	
-	
-	
 }

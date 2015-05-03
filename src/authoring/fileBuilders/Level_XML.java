@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Daniel Luker
+
 package authoring.fileBuilders;
 
 import java.util.List;
@@ -6,7 +9,7 @@ import org.w3c.dom.Element;
 
 import authoring.panes.centerPane.CenterCanvas;
 
-public class Level_XML {
+public class Level_XML extends Object_XML {
 
 	private List<Objective_XML> level_objectives;
 	private List<Sprite_XML> sprites;
@@ -22,6 +25,7 @@ public class Level_XML {
 		collisions = ObjectToXML.collisionToXML(level);
 	}
 
+	@Override
 	public void writeToXML(Element root, int index, XMLBuilder xml) {
 		Element currentLevel = xml.add(root, "level_" + index);
 
@@ -38,18 +42,18 @@ public class Level_XML {
 		// Adding sprites
 		Element sprite = xml.add(currentLevel, "sprites");
 		for (Sprite_XML sp : sprites) {
-			sp.writeToXML(sprite, xml);
+			sp.writeToXML(sprite, sp.getID(), xml);
 		}
 
 		i = 0;
 
 		// Adding physics engine
 		Element physicsEngine = xml.add(currentLevel, "physics_engine");
-		physics_engine.writeToXML(physicsEngine, xml);
+		physics_engine.writeToXML(physicsEngine, 0, xml);
 
 		// Adding controls
 		Element control = xml.add(currentLevel, "controls");
-		controls.writeToXML(control, xml);
+		controls.writeToXML(control, 0, xml);
 
 		// Adding collisions
 		Element collision = xml.add(currentLevel, "collisions");

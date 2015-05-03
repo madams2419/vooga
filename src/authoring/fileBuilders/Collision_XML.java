@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Daniel Luker
+
 package authoring.fileBuilders;
 
 import java.util.ArrayList;
@@ -8,22 +11,13 @@ import authoring.dataEditors.Sprite;
 import authoring.util.FrontEndUtils;
 
 
-public class Collision_XML {
+public class Collision_XML extends Object_XML {
 
-    private static final String RESOLVERS = "resolvers";
-    private static final String DETECTOR = "detector_";
-    private static final String DETECTORS = "detectors";
-    private static final String SPRITES = "sprites";
-    private static final String COLLISION = "collision_";
-    private static final String PHYSICS_RESOLVER = "PhysicsResolver";
-    private static final String SIMPLE_RESOLVER = "SimpleResolver";
-    private static final String COLON = ":";
     private String sprites;
     private String[] detectors;
     private List<Resolver> resolvers = new ArrayList<>();
 
     public Collision_XML (Sprite a, Sprite b, List<String> interactions) {
-        System.err.println(interactions.toString());
         sprites = FrontEndUtils.getSpritesIDSorted(a, b);
         parseInteractions(interactions);
     }
@@ -39,6 +33,7 @@ public class Collision_XML {
             });
     }
 
+    @Override
     public void writeToXML (Element parent, int index, XMLBuilder xml) {
         Element current = xml.add(parent, COLLISION + index);
         xml.addChildWithValue(current, SPRITES, sprites);
@@ -52,10 +47,8 @@ public class Collision_XML {
             resolvers.get(i).writeToXML(res, i, xml);
     }
 
-    private class Resolver {
-        private static final String BEHAVIOURS = "behaviors";
-        private static final String TYPE = "type";
-        private static final String RESOLVER = "resolver_";
+    private class Resolver extends Object_XML {
+
         private String type;
         private Behaviours_XML[] behaviours;
 
@@ -64,6 +57,7 @@ public class Collision_XML {
             this.behaviours = behaviours;
         }
 
+        @Override
         public void writeToXML (Element parent, int index, XMLBuilder xml) {
             Element current = xml.add(parent, RESOLVER + index);
             xml.addChildWithValue(current, TYPE, type);

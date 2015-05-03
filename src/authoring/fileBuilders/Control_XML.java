@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Daniel Luker
+
 package authoring.fileBuilders;
 
 import java.util.ArrayList;
@@ -7,9 +10,8 @@ import org.w3c.dom.Element;
 import authoring.dataEditors.Sprite;
 
 
-public class Control_XML {
+public class Control_XML extends Object_XML {
 
-    private static final String ACTIVE_SCHEME = "active_scheme";
     private String active_scheme;
     private List<ControlScheme> control_schemes;
 
@@ -25,7 +27,8 @@ public class Control_XML {
         control_schemes.add(new ControlScheme(mActions));
     }
 
-    public void writeToXML (Element control, XMLBuilder xml) {
+    @Override
+    public void writeToXML (Element control, int index, XMLBuilder xml) {
         xml.addChildWithValue(control, ACTIVE_SCHEME, active_scheme);
         for (int i = 0; i < control_schemes.size(); i++)
             control_schemes.get(i).writeToXML(control, i, xml);

@@ -1,0 +1,89 @@
+body {
+  background-color: #223344;
+}
+
+.contentPane {
+  background-image: url("../images/blue.jpg");
+}
+
+.header {
+  color: #ffffff;
+}
+
+.header table {
+  border: 0;
+  width: 100%;
+}
+
+.nav a {
+  background-color: #668e4a;
+  color: #ffffff;
+}
+
+.nav a:hover {
+  background-color: #466e2a;
+}
+
+.mainBody table {
+  empty-cells: show;
+}
+
+.mainBody td {
+  vertical-align: top;
+}
+
+.mainBody th {
+  padding: 5px;
+}
+
+
+table.sched {
+/*  width: 50%; */
+  margin: auto;
+  padding:: 0px;
+  border-spacing: 0px;
+  border-style: none;
+}
+
+table.sched td.topic, td.reading {
+  text-align: left;
+  padding: .5ex .5em;
+  border-right-width: thin;
+  border-right-style: solid;
+  border-color: #FFFFFF;
+}
+
+table.sched td.day, td.assign {
+  text-align: left;
+  padding: .3ex .5em;
+  border-bottom-width: thin;
+  border-bottom-style: solid;
+  border-color: #FFFFFF;
+}
+
+table.sched tr { 
+  padding: 0; 
+  margin: 0;
+}
+
+table.sched tr.odd {
+  background-color: #CCCCCC;
+}
+
+table.sched tr.evn { 
+  background-color: #EEEEEE;
+}
+
+table.sched span.lect {
+  color: #cd6333;
+}
+
+table.grading {
+  border-collapse: collapse;
+}
+
+table.grading td {
+  border-width: thin thin thin thin;
+  border-style: solid;
+  padding: 2px;
+}

@@ -1,0 +1,55 @@
+body {
+  margin: 0px 0px 25px 0px;
+  padding: 0px;
+  min-height: 101%;
+}
+
+.contentPane {
+  width: 95%;
+  margin: 0px auto;
+}
+
+.header {
+  /* needs to be px rather than ex since */
+  /* the header image does not resize    */
+  margin: 0px;
+  padding: 20px 25px 20px 10px;
+  height: 85px;
+}
+
+.back {
+  width: 51em;
+}
+
+.icon {
+  float: left;
+  margin: -10px 0px 10px 0px;
+}
+
+.nav {
+  width: 100%;
+}
+
+.nav ul {
+  list-style-type: none;
+  margin: 0.03ex 0ex 0.03ex 0ex;
+  padding: 0ex 0ex 0.48ex 0ex;
+}
+
+.nav li {
+  display: inline;
+}
+
+.nav a {
+  margin: 0ex 0.7ex;
+  padding: 0.525ex 2.0ex;
+}
+
+.mainBody {
+  padding: 0.5ex 2ex;
+  clear: both;
+}
+
+.footer {
+  margin-top: 2ex;
+}

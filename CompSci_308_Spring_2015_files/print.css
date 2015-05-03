@@ -1,0 +1,61 @@
+.contentPane {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    border: none;
+}
+
+.header {
+    margin: 0em;
+    padding: 0em;
+    font-size: 2em;
+    text-align: center;
+}
+
+.mainBody {
+    border: none;
+    padding: 0px;
+    margin: 0em 0em 0em 0em;
+    width: 100%;
+}
+
+.mainBody a {
+    margin: 0px;
+    padding: 0px;
+    text-decoration: underline;
+}
+
+.mainBody p, ul, ol, li {
+    text-align: justify;
+}
+
+.icon {
+    display: none;
+}
+
+.nav {
+    margin: 0px;
+    padding: 0px;
+    display: none;
+}
+
+.nav ul {
+    display: none;
+}
+
+.nav li {
+    display: none;
+}
+
+.nav a {
+    display: none;
+}
+
+.email {
+    font-style: italic;
+}
+
+.footer {
+    margin: 0px;
+    display: none;
+}

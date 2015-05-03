@@ -1,17 +1,12 @@
+// This entire file is part of my masterpiece.
+// Daniel Luker
+
 package authoring.fileBuilders;
 
 import org.w3c.dom.Element;
 
 
-public class PhysicsEngine_XML {
-
-    private static final String ACCEL = "accel_";
-    private static final String GLOBAL_ACCELERATIONS = "global_accelerations";
-    private static final String DRAG_COEFFICIENT = "drag_coefficient";
-    private static final String TYPE = "type";
-    private static final String DEFAULT_TYPE = "ComplexPhysicsEngine";
-    private static final String DEFAULT_DRAG = "0.2";
-    private static final String[] DEFAULT_ACCEL = { "0 0" };
+public class PhysicsEngine_XML extends Object_XML {
 
     private String type;
     private String drag_coefficient;
@@ -28,7 +23,8 @@ public class PhysicsEngine_XML {
         return new PhysicsEngine_XML(DEFAULT_TYPE, DEFAULT_DRAG, DEFAULT_ACCEL);
     }
 
-    public void writeToXML (Element parent, XMLBuilder xml) {
+    @Override
+    public void writeToXML (Element parent, int index, XMLBuilder xml) {
         xml.addChildWithValue(parent, TYPE, type);
         xml.addChildWithValue(parent, DRAG_COEFFICIENT, drag_coefficient);
         Element global = xml.add(parent, GLOBAL_ACCELERATIONS);

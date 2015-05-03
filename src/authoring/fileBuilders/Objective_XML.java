@@ -1,23 +1,19 @@
+// This entire file is part of my masterpiece.
+// Daniel Luker
+
 package authoring.fileBuilders;
 
 import game_engine.behaviors.IActor;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.w3c.dom.Element;
 
 
-public class Objective_XML {
+public class Objective_XML extends Object_XML {
 
-    private static final String BEHAVIORS = "behaviors";
-    private static final String ON_FAILED = "onFailed";
-    private static final String ON_COMPLETE = "onComplete";
-    private static final String PREREQS = "prereqs";
-    private static final String DESCRIPTION = "description";
-    private static final String OBJECTIVE = "objective_";
-    private static final String SPRITE = "sprite";
-    private static final String COLON = ":";
-    private static final String SPACE = " ";
     private String description;
     private List<String> prereqs = new ArrayList<>();
     private List<Behaviours_XML> onComplete = new ArrayList<>();
@@ -56,6 +52,7 @@ public class Objective_XML {
         }).collect(Collectors.toList()));
     }
 
+    @Override
     public void writeToXML (Element parent, int index, XMLBuilder xml) {
         Element thisObjective = xml.add(parent, OBJECTIVE + index);
         xml.addChildWithValue(thisObjective, DESCRIPTION, description);

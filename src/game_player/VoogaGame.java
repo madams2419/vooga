@@ -22,6 +22,7 @@ import javafx.util.Duration;
 
 
 public class VoogaGame implements IActor {
+	
 	private List<Level> levels;
 	private Level activeLevel;
 	private Group root;

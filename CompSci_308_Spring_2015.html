@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!-- saved from url=(0081)http://www.cs.duke.edu/courses/compsci308/spring15/assign/04_voogasalad/part7.php -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+ <title>CompSci 308 : Spring 2015</title>
+ <meta http-equiv="content-language" content="en-us">
+ 
+ <meta http-equiv="content-style-type" content="text/css">
+ <meta name="author" content="Robert C. Duvall">
+ <meta name="robots" content="all">
+ <link href="./CompSci_308_Spring_2015_files/horizontal.css" type="text/css" rel="stylesheet" media="screen">
+ <link href="./CompSci_308_Spring_2015_files/common.css" type="text/css" rel="stylesheet" media="screen">
+ <link href="./CompSci_308_Spring_2015_files/compsci308.css" type="text/css" rel="stylesheet" media="screen">
+ <link href="./CompSci_308_Spring_2015_files/print.css" type="text/css" rel="stylesheet" media="print">
+<style type="text/css"></style></head>
+
+<body class=" hasGoogleVoiceExt">
+<div class="contentPane">
+  <div class="header">
+    <table>
+      <tbody><tr>
+        <td class="left">CompSci 308<br>Spring 2015</td>
+        <td class="right">Software Design and Implementation</td>
+      </tr>
+    </tbody></table>
+  </div>
+	
+  <div class="nav">
+    <ul>
+      <li><a href="http://www.cs.duke.edu/courses/compsci308/spring15/">Home</a></li>
+      <li><a href="http://www.cs.duke.edu/courses/compsci308/spring15/classwork">Calendar</a></li>
+      <li><a class="selected" href="http://www.cs.duke.edu/courses/compsci308/spring15/assign">Projects</a></li>
+      <li><a href="http://www.cs.duke.edu/courses/compsci308/spring15/resources">Resources</a></li>
+      <li><a href="http://piazza.com/class#spring2015/compsci308/" target="new">Discussion</a></li>
+      <li><a href="http://www.cs.duke.edu/courses/compsci308/spring15/admin">Policies</a></li>
+    </ul>
+  </div>
+
+  <div class="mainBody">
+
+<h3> <a href="http://www.cs.duke.edu/courses/compsci308/spring15/assign/04_voogasalad/index.php">VOOGASalad</a>   : Analysis</h3>
+
+<p>This part  is an <em>individual</em> effort (like an exam) and should represent your own thinking about the project. </p>
+<p>Write one last piece of code to demonstrate what you have learned during the semester and reflect on your project experience.</p>
+<h4>Submission</h4>
+<p>Create three <a href="https://help.github.com/articles/creating-a-pull-request">Pull Requests on GitHub</a> in three separate repositories to represent your complete analysis. </p>
+<ul>
+  <li><strong>Written analysis</strong>: <a href="http://www.gitguys.com/topics/adding-and-removing-remote-branches/">create a branch</a>, within your <code>analysis</code> repository, called <code>VOOGASalad</code>. Write your analysis in a   single file, <code>ANALYSIS.md</code>, in this new branch then create a Pull Request  from this branch back to <code>master</code>. To make it possible for the course staff to read and give you individual feedback, it <em>must</em> be completed using GitHub's <a href="https://guides.github.com/features/mastering-markdown/">markdown format</a> (here is a <a href="https://stackedit.io/editor">web-based WYSIWYG editor</a> for markdown).</li>
+  <li><strong>Code masterpiece</strong>: <a href="http://www.gitguys.com/topics/adding-and-removing-remote-branches/">create a branch</a>, within your <code>voogasalad_XX</code> repository, called <code>analysis_NETID</code>. Refactor one or more classes from your project in this new branch then create a Pull Request from this  branch back to <code>master</code>. These changes do <em>not</em> need to be compatible with the current code in the master branch (i.e., you can change the signature of an existing method if you think it improves the overall code).</li>
+  <li><strong>SLogo addition</strong>: <a href="http://www.gitguys.com/topics/adding-and-removing-remote-branches/">create a branch</a>, within your <code>slogo_teamXX</code> repository, called <code>addition_NETID</code>. Add or update one or more classes  in this new branch then create a Pull Request from this  branch back to <code>master</code>. These changes <em>must</em> be compatible with the current code in the master branch (i.e., this Pull Request should be able to be accepted and work with the existing stable version of the code).</li>
+</ul>
+<p>Each class that you want to be considered as part of your masterpiece must compile and have <em>exactly</em> this comment at the top:</p>
+<blockquote>
+  <pre>// This entire file is part of my masterpiece.
+// YOUR NAME
+</pre>
+</blockquote>
+<h4>Specifications</h4>
+<p>Your analysis should be divided into three  parts: </p>
+<ul>
+  <li> project journal (~1000-1500 words)</li>
+  <li>review
+    of the project's design (~2500-3500 words)</li>
+  <li>small, but functionally significant, code submission that shows off how well you can write  code (~300-600 words and ~100-200 lines of code)</li>
+</ul>
+<p>This analysis is your opportunity to demonstrate your knowledge of 
+  design concepts   represented (or not) in the project's code. If it is also an honest and 
+  thoughtful reflection, it can help you identify specific actions you can do to   improve  future projects. </p>
+<p>The following sections must be included in your analysis. Questions
+  are provided to get you started thinking about what to consider within each
+  section; you may, of course, include anything else you feel is relevant. In other
+  words, <em>d</em><em>o not be limited by these questions, but respond to them at
+    least</em>.</p>
+<h5>Project Journal</h5>
+<p>This section represents your personal view of the project's planning and progress. Analyze your own role  and the roles each person assumed in the team  (not their personalities) and how
+the outcome could be improved. Describe specific, important, events during the project's time line to justify your comments rather than  general terms like "always late", "writes bad code", etc.</p>
+<ul>
+  <li><b>Time Review<br>
+    </b>Reflect on how <em>you</em> spent your time while working on this project.
+    <ul>
+      <li>Report how many hours you spent on the project as well as its
+        start and finish dates (do not forget to include time spent planning and in meetings). </li>
+      <li>Describe how you spent your time  (i.e., coding
+        new features, refactoring, testing, reading, designing, debugging,
+        documenting, or meeting with team members).</li>
+      <li>Describe how you  personally managed your code  (i.e.,
+        develop, test, package, and push it)? </li>
+      <li>Reflect on what what tasks were easiest for you to do and what were hardest; what were good uses of your time and what were bad.</li>
+    </ul>
+  </li>
+  <li><strong>Teamwork</strong><br>
+Reflect on  how the <em>team</em> worked together, focus on  each person's role in contributing to the team.
+<ul>
+  <li>Report how many hours the team spent planning and designing the project and when these design meetings occurred. </li>
+  <li>Describe each person's role in the team (including outside people with whom you
+    collaborated)  and for what parts each person was responsible.</li>
+  <li>How did you feel about the communication within the team (was it too much, too little, just right) and why? Were there any  warning signs of problems that occurred later in the project?</li>
+  <li>Describe the  team's plan
+    for completing the project and how stable the plan was (from choosing roles to how components would fit together to avoiding deadlocking to how to integrate,
+    update, and test the code).</li>
+  <li>How did the plan and team roles hold up to the project's extensions to the original specifications?</li>
+  </ul>
+  </li>
+  <li><strong>Issues</strong><br>
+Reflect on how  you worked on the project's issues.
+  <ul>
+    <li>How did you  manage your code individually (i.e.,
+      develop, test, package, and push it)? </li>
+    <li>Look back over your commit messages, do you feel they accurately represent your contribution to the project?</li>
+    <li>Report how many issues you took responsibility for,  closed, and worked on but did not close.</li>
+    <li>Choose one issue you closed and describe its progress to completion in detail:
+      <ul>
+        <li>what design choices did you face in working on this issue?</li>
+        <li>how did you work with others on the team to determine the scope and goals of this issue?</li>
+        <li>what, if any, work did you need to do on this issue after it was initially closed?</li>
+        </ul>
+    </li>
+    </ul>
+  </li>
+  <li><b>Conclusions<br>
+  </b>Reflect on   how effectively your team worked together and how much you contributed to that effectiveness.
+  <ul>
+    <li>Did you over- or underestimate the size of this project? 
+      How can you estimate better in the future?</li>
+    <li>Did you take on enough responsibility within the team? Did you keep your team informed about your progress?</li>
+    <li>Which parts of your code required the most editing?
+      why?</li>
+    <li>To be a better designer, what should you start doing, keep doing, or stop doing?</li>
+    <li>To be a better  teammate, what should you start doing, keep doing, or stop doing?</li>
+    <li>If you could work on one part right now to improve any aspect of your project, what would it be? 
+  </li>
+  </ul>
+  </li>
+</ul>
+<h5>Design Review</h5>
+<p>This section represents your personal view of  how your program is organized and why it was done that way. It can be a chance for you to describe how you might fix a problem or refactor the design if you did not agree with the team or did not have time to actually change the code. You might also learn something by looking at someone else's code. </p>
+<p>If you think something is good, justify your opinion. If you think something is bad, justify your opinion <em>and</em> suggest how to improve it. Use <em>specific</em> code examples  and  reasons related to principles or patterns discussed in class or in the readings rather than general terms like "clearly/obviously", "good/sucks", "elegant/ugly", or "like/hate". Note, since no design is perfect, including both pros and cons of a design (i.e., its trade-offs) or alternate designs you considered is highly encouraged.</p>
+<ul>
+  <li><b>Status<br>
+  </b>Reflect on the coding details  of the <em>entire</em> project by looking  at <em>all</em> the code.
+  <ul>
+    <li>Is the code generally consistent in its layout, naming conventions and descriptiveness, and style?</li>
+    <li>Is the code generally readable (i.e., does it do what you expect, does it require comments to understand)? </li>
+    <li>Are the  dependencies in the code clear and easy to find or do they exist  through "back channels" (e.g., global variables, order of method call, type requirements, or get methods instead of parameters)? </li>
+    <li>Are  there implemented features  that are particularly easy or hard to extend? </li>
+    <li>Review three classes in the program you did <em>not</em> write or refactor in detail:
+  <ul>
+    <li>What is interesting about this code (why did you choose it? is it especially good or bad?)</li>
+    <li>What suggestions would you give the code's author about the code (i.e., improving it or making it easier to understand or extend)? Or what you learned about design by reading the code?</li>
+    <li>What would be required to make the code reusable in a completely different project (like your CellSociety or SLogo)? </li>
+    </ul>
+    </li>
+    </ul>
+  </li>
+  <li><b>Design<br>
+  </b>Reflect on how <em>the entire</em> program is <em>currently</em> organized.<b><br>
+  </b>
+  <ul>
+    <li>Describe the overall design of the complete program:  the basic design of <em>each</em> sub-part  and how they work together (i.e., what behavior,  data, or resources each part depends on from the others).</li>
+    <li>As briefly as possible, describe what is needed to represent a specific game (include both  code and resource files that are needed).</li>
+    <li>Describe how <em>your</em> code is  designed in more detail, but still try not to reference specific  data structures or actual code.</li>
+    <li>Justify why your overall code is designed the way it is or what issues you wrestled with if you think its design is lacking in some way. Are there any assumptions or dependencies in your code that  impact the overall design of the program?</li>
+    <li>Describe  three  features from the assignment  specification (at least two you did <em>not</em> implement)  in detail:
+      <ul>
+        <li>What classes or resources are required to implement this feature?</li>
+        <li>Describe the design of this feature in detail (what parts are closed? what implementation details are encapsulated? what assumptions are made? do they limit its flexibility?)</li>
+        <li>How extensible is the design for this feature (is it clear how to extend the code as designed? what kind of change might be hard given this design?)</li>
+        </ul>
+    </li>
+    </ul>
+  </li>
+  <li><b>Alternate Designs<br>
+  </b>Reflect on alternate designs for the project based on your analysis of the current design or project discussions.
+  <ul>
+    <li>How  did the original design handle   extensions over the course of the project's development?</li>
+    <li>How  did the original APIs change over the course of the project?</li>
+    <li>Describe  three design decisions   discussed, either as a team of with a TA, in detail:
+      <ul>
+        <li>What  alternate designs were proposed?</li>
+        <li>What are the trade-offs of the design choice (describe the pros and
+          cons of the different designs)?</li>
+        <li>Which would you prefer and why (it does not have to be the one that is currently implemented)?</li>
+      </ul>
+    </li>
+    <li>What are the two best features of the project's current design?</li>
+    <li>What are the two most important issues that remain in the project's current design?
+  </li>
+  </ul>
+  </li>
+</ul>
+<h5>Code Masterpiece</h5>
+<p>Take part of the project and refactor it to demonstrate what you <em>now</em> think of as good design  and that you are <em><strong>proud to defend</strong></em> as well-designed according to what you have learned during the semester.  It should represent a feature or component within your larger project that is   small enough to be workable, but large enough to have some interesting design element. I use the term "component", rather than "class", because it may be several classes that work together, e.g., a superclass and its sub-classes or a few classes that work together.  Note, if your component is specifically intended to be superclass, it <em>must</em> include enough detail that it is clear how to extend it and at least one example subclass to show it in "action".</p>
+<p><strong><em>In addition to the code</em></strong>, include a section at the end of your written analysis describing the component's purpose and why you think it is well designed (i.e., what you think it shows that you have learned so far in the course).  Your code masterpiece must be   something you wrote or something you refactored <em>significantly</em>. If you choose to refactor someone else's code, <em>strongly</em> justify your decision<em> </em>in your written analysis.</p>
+<h5><strong>SLogo Addition</strong></h5>
+<p>Add <em>one</em> of the features <a href="http://www.cs.duke.edu/courses/compsci308/spring15/assign/03_slogo/part5.php">described here</a> to your team's SLogo project based on the part of the project you worked on or with which you feel more comfortable working. After you have completed the code, answer the following questions in a single file, <code>ADDITION.md</code>, in your new branch:</p>
+<ul>
+  <li><strong>Estimation</strong>: before looking at the old code:
+<ul>
+      <li> how long do you think it will take you to complete this new feature?</li>
+      <li>how many files will you need to add or update? Why?</li>
+    </ul>
+  </li>
+  <li><strong>Review</strong>: after completing the feature:
+<ul>
+      <li>how long did it take you to  complete this new feature?</li>
+      <li>did you get it completely right on the first try?</li>
+      <li>how many files did you need to add or update? Why?</li>
+    </ul>
+  </li>
+  <li><strong>Analysis</strong>: what do you feel this exercise reveals about your project's design and documentation?
+    <ul>
+      <li>was it as good (or bad) as you remembered?</li>
+      <li>what could be improved?</li>
+      <li>what would it have been like if you were not familiar with the code at all?</li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+<div class="footer">
+  <table width="100%">
+    <tbody><tr>
+      <td class="right">
+        <a href="http://creativecommons.org/licenses/by-nc-sa/1.0">
+          <img src="./CompSci_308_Spring_2015_files/somerights.png" alt="Copyright 2009">
+        </a>
+      </td>
+      <td>
+        Last modified 27 Apr 2015      </td>
+      <td class="left">
+        <a href="http://www.cs.duke.edu/csed/feedback/index.php?course=compsci308">
+          <img src="./CompSci_308_Spring_2015_files/suggestion_box.png" alt="Feedback?">
+        </a>
+      </td>
+    </tr>
+  </tbody></table>
+</div>
+
+</div>
+
+
+</body></html>

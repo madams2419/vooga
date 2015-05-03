@@ -1,17 +1,14 @@
+// This entire file is part of my masterpiece.
+// Daniel Luker
+
 package authoring.fileBuilders;
 
 import java.util.Arrays;
 import org.w3c.dom.Element;
 
 
-public class Behaviours_XML {
+public class Behaviours_XML extends Object_XML {
 
-    private static final String PARAMETERS = "parameters";
-    private static final String NAME = "name";
-    private static final String TARGET_INDEX = "targetIndex";
-    private static final String TARGET_TYPE = "targetType";
-    private static final String BEHAVIOR = "behavior_";
-    private static final String SPACE = " ";
     private String targetType;
     private String targetIndex;
     private String name;
@@ -40,6 +37,7 @@ public class Behaviours_XML {
         }
     }
 
+    @Override
     public void writeToXML (Element parent, int index, XMLBuilder xml) {
         Element currentBehaviour = xml.add(parent, BEHAVIOR + index);
         xml.addChildWithValue(currentBehaviour, TARGET_TYPE, targetType);

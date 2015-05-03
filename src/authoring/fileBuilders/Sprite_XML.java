@@ -1,8 +1,13 @@
+// This entire file is part of my masterpiece.
+// Daniel Luker
+
 package authoring.fileBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.w3c.dom.Element;
+
 import authoring.dataEditors.Sprite;
 
 
@@ -11,15 +16,8 @@ import authoring.dataEditors.Sprite;
  * @author daniel
  *
  */
-public class Sprite_XML {
+public class Sprite_XML extends Object_XML {
 
-    private static final String ANIMATIONS = "animations";
-    private static final String PATH = "path";
-    private static final String INITIAL_STATE = "initial_state";
-    private static final String SPRITE_ = "sprite_";
-    private static final String DELAY_TIME = "1.0";
-    private static final String PHYSICS_FORMAT = "%f %f";
-    private static final String DEFAULT_INITIAL_STATE = "0";
     private String initial_state;
     private String path;
     private List<State> animation;
@@ -52,20 +50,23 @@ public class Sprite_XML {
                          });
     }
 
-    public void writeToXML (Element parent, XMLBuilder xml) {
+    @Override
+    public void writeToXML (Element parent, int index, XMLBuilder xml) {
         Element current = xml.add(parent, SPRITE_ + index);
         xml.addChildWithValue(current, INITIAL_STATE, initial_state);
         xml.addChildWithValue(current, PATH, path);
         Element am = xml.add(current, ANIMATIONS);
         for (int i = 0; i < animation.size(); i++)
             animation.get(i).writeToXML(am, i, xml);
-        physics.writeToXML(current, xml);
+        physics.writeToXML(current, 0, xml);
     }
 
-    private class State {
-        private static final String IMAGES = "images";
-        private static final String NAME = "name";
-        private static final String STATE = "state_";
+    int getID() {
+    	return index;
+    }
+    
+    private class State extends Object_XML {
+
         private String name;
         private Image[] images;
 
@@ -83,12 +84,8 @@ public class Sprite_XML {
         }
     }
 
-    private class Image {
-        private static final String HEIGHT = "height";
-        private static final String WIDTH = "width";
-        private static final String DELAY = "delay";
-        private static final String SOURCE = "source";
-        private static final String IMAGE_ = "image_";
+    private class Image extends Object_XML {
+
         private String source;
         private String delay;
         private String width;
@@ -104,6 +101,7 @@ public class Sprite_XML {
             this.hitboxes = hitboxes;
         }
 
+        @Override
         public void writeToXML (Element parent, int index, XMLBuilder xml) {
             Element current = xml.add(parent, IMAGE_ + index);
             xml.addChildWithValue(current, SOURCE, source);
@@ -115,12 +113,8 @@ public class Sprite_XML {
         }
     }
 
-    private class Hitbox {
-        private static final String POINT_3 = "point_3";
-        private static final String POINT_2 = "point_2";
-        private static final String POINT_1 = "point_1";
-        private static final String POINT_0 = "point_0";
-        private static final String HITBOX = "hitbox_";
+    private class Hitbox extends Object_XML {
+
         private String point_0;
         private String point_1;
         private String point_2;
@@ -143,11 +137,8 @@ public class Sprite_XML {
         }
     }
 
-    private class Physics {
-        private static final String POSITION = "position";
-        private static final String MATERIAL = "material";
-        private static final String TYPE = "type";
-        private static final String PHYSICS = "physics";
+    private class Physics extends Object_XML {
+
         private String type;
         private String material;
         private String position;
@@ -158,7 +149,8 @@ public class Sprite_XML {
             this.position = position;
         }
 
-        public void writeToXML (Element parent, XMLBuilder xml) {
+        @Override
+        public void writeToXML (Element parent, int index, XMLBuilder xml) {
             Element physics = xml.add(parent, PHYSICS);
             xml.addChildWithValue(physics, TYPE, type);
             xml.addChildWithValue(physics, MATERIAL, material);

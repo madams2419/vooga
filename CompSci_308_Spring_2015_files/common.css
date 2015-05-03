@@ -1,0 +1,276 @@
+body {
+  font-family: Garamond, serif;
+  text-align: justify;
+}
+
+.back {
+  font-size: 1.5ex;
+  color: #FFFFFF;
+  text-align: left; 
+  margin: 0.5em auto;
+  border: none;
+}
+ 
+.back a {
+  color: #FFFFFF;
+  font-size: 90%;
+}
+ 
+.back a:hover {
+  color: orange;
+  text-decoration: underline; 
+}
+
+.contentPane {
+  border: 1px solid #223344;
+}
+
+.header {
+  font-weight: bold;
+  text-align: center;
+} 
+
+.header td.left {
+  font-family: "gill sans", verdana, sans-serif;
+  font-size: 1.5em;
+  vertical-align: top;
+  color: #CCCCCC;
+} 
+
+.header td.right {
+  font-family: "gill sans", verdana, sans-serif;
+  font-size: 2.1em;
+  vertical-align: top;
+  color: #CCCCCC;
+}
+
+.nav {
+  font-size: 1.9ex;
+  font-weight: bold;
+  text-align: center;
+}
+
+.nav ul {
+  border-bottom: 1px solid #223344;
+  text-align: center;
+  font-family: sans-serif, arial;
+}
+ 
+.nav a {
+  border: 1px solid #223344;
+  border-bottom: none;
+  color: #FFFFFF;
+}
+
+.nav a.selected {
+  font-size: 2.1ex;
+  background-color: #FFFFFF;
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
+.nav a.selected:hover {
+  background-color: #FFFFFF;
+  color: #000000;
+  cursor: default;
+}
+
+
+.mainBody {
+  background-color: #FFFFFF;
+}
+
+.mainBody h1, h2, h3, h4, h5 {
+  text-align: justify;
+  color: #1e637f;
+  padding: 0ex;
+  margin: 1ex 0ex;
+}
+
+.mainBody p, ul, ol {
+  text-align: justify;
+}
+
+.mainBody h1 {
+  font-family: "gill sans", verdana, sans-serif;
+  font-size: 150%; 
+  font-weight: bold;
+} 
+  
+.mainBody h2 {
+  font-family: "gill sans", verdana, sans-serif;
+  font-size: 140%;
+  font-weight: bold;
+} 
+     
+.mainBody h3 {
+  font-family: "gill sans", verdana, sans-serif;
+  font-size: 130%;
+  font-weight: bold;
+  text-align: center;
+} 
+     
+.mainBody h4 {  
+  font-family: "gill sans", verdana, sans-serif;
+  font-size: 120%;
+  font-weight: bold;
+} 
+  
+.mainBody h5 { 
+  font-family: "gill sans", verdana, sans-serif;
+  font-weight: bold;
+} 
+  
+.mainBody a { 
+  color: #0070df;
+  font-weight: bold;
+}
+
+.mainBody a:hover {
+  color: #1e90ff;
+  text-decoration: underline;
+}
+
+.mainBody pre {
+  font-family: "Bitstream Vera Sans Mono", monaco, "Courier New", courier, monospace;
+  font-weight: normal;
+  background-color: #fff5e9;
+  font-size: 1.6ex;
+  padding: 1.2ex;
+  text-align: left;
+  border: 1px solid #98b3be;
+}
+
+.mainBody select {
+    border: 1px solid #445566;
+    color: #223344;
+    background-color: #ffffff;
+}
+
+.option {
+    border: 1px solid #445566;
+    color: #223344;
+    background-color: #ffffff;
+}
+
+.mainBody input.text {
+    border: 1px solid #445566;
+    padding-left: 0.25em;
+    padding-right: 0.25em;
+    color: #223344;
+    background-color: #ffffff;
+    width: 22em;
+}
+
+.mainBody input.button {
+    padding: 0.25em;
+    font-weight: bold;
+    color: #202080;
+}
+
+.mainBody input.file {
+    padding: 0ex 0ex 0ex 12px;
+    margin: 0ex 0.4ex 0ex 0ex;
+    font-size: 2ex;
+    font-weight: bold;
+    color: #245b72;
+    background: #fff5c9 url('../images/bullet.gif') no-repeat left center;
+    border: none;
+    cursor: pointer;
+}
+
+.mainBody textarea { 
+  border: 1px solid #445566;
+  padding: 0.25em;
+}
+
+.mainBody td.info {
+  text-align: left;
+  vertical-align: top;
+}
+
+.mainBody ul.info {
+  list-style-type: none;
+}
+
+.footer {
+  color: #ffffff;
+}
+
+.footer td {
+  vertical-align: top;
+  text-align: center;
+}
+
+.footer a { 
+  color: #FF0000;
+}
+
+
+/* this probably shouldnt be here, but we can change */
+/* it later if we find the need to make another form */
+form {
+  text-align: left;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  border: 0px none;
+}
+
+img.left {
+  float: left;
+}
+
+img.right {
+  float: right;
+}
+
+hr {
+  border-top: 1px solid #98b3be;
+  border-bottom: 1px solid #98b3be;
+  width: 100%;
+  margin: 2ex 0ex;
+  clear: both;
+}
+
+
+td {
+  text-align: justify;
+  vertical-align: top;
+}
+
+td.left {
+  text-align: left;
+} 
+
+td.right {
+  text-align: right;
+}
+
+
+.error {
+  font-weight: bold;
+  color: #ff0000;
+}
+
+.formtable {
+  text-align: left;
+  font-size: 1em;
+}
+
+.bib {
+  padding: 0px 20px 10px 40px;
+  margin: 0px;
+}
+
+.center {
+  text-align: center;
+}
+
+.email {
+  font-style: italic;
+}

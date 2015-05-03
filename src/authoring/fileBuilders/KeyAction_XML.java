@@ -1,18 +1,16 @@
+// This entire file is part of my masterpiece.
+// Daniel Luker
+
 package authoring.fileBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.w3c.dom.Element;
 
 
-public class KeyAction_XML {
-    private static final String ON_RELEASED = "onReleased";
-    private static final String BEHAVIOURS = "behaviors";
-    private static final String ON_PRESSED = "onPressed";
-    private static final String KEY_ = "key_";
-    private static final String KEY = "key";
-    private static final String SPRITE = "sprite";
-    private static final String COLON = ":";
+public class KeyAction_XML extends Object_XML {
+
     private String key;
     private List<Behaviours_XML> onPressed = new ArrayList<>();
     private List<Behaviours_XML> onReleased = new ArrayList<>();
@@ -44,6 +42,7 @@ public class KeyAction_XML {
         this.onReleased.addAll(other.onReleased);
     }
 
+    @Override
     public void writeToXML (Element parent, int index, XMLBuilder xml) {
         Element currentKey = xml.add(parent, KEY_ + index);
         xml.addChildWithValue(currentKey, KEY, key);
