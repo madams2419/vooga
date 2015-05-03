@@ -10,8 +10,10 @@ public class PhysicsEngine_XML {
     private static final String DRAG_COEFFICIENT = "drag_coefficient";
     private static final String TYPE = "type";
     private static final String DEFAULT_TYPE = "ComplexPhysicsEngine";
-    private static final String DEFAULT_DRAG = "0.2";
-    private static final String[] DEFAULT_ACCEL = { "0 0" };
+    private static final String DEFAULT_DRAG = "0.5";
+    private static final String[] DEFAULT_ACCEL = { "0 -9.8" };
+    private static final String GLOBAL_FORCES = "global_forces";
+    private static final String DEFAULT_GLOBAL_FORCES = "";
 
     private String type;
     private String drag_coefficient;
@@ -34,6 +36,7 @@ public class PhysicsEngine_XML {
         Element global = xml.add(parent, GLOBAL_ACCELERATIONS);
         for (int i = 0; i < global_accelerations.length; i++)
             xml.addChildWithValue(global, ACCEL + i, global_accelerations[i]);
+        xml.addChildWithValue(parent, GLOBAL_FORCES, DEFAULT_GLOBAL_FORCES);
     }
 
 }

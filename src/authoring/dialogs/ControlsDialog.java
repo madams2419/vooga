@@ -56,6 +56,7 @@ public class ControlsDialog extends ActionsDialog {
 
   private void loopThroughKeyMap(Sprite s){
     myKeyActions = new HashMap<>();
+    myParent.getParent().getCenterPane().getActiveTab().resetKeyActions();
     for (int i = 0; i < myTextFields.size(); i++) {
       myKeyActions.put(myTextFields.get(i).getText(), myComboBoxes.get(i).getValue()
           + ", " + myParamTextFields.get(i).getText());
@@ -106,7 +107,7 @@ public class ControlsDialog extends ActionsDialog {
   @Override
   void addBlankRow(int index, DialogGridOrganizer... grid) {
     try {
-      grid[0].addRowEnd(addActionComboBox(myComboBoxes, myDescriptions), addKeyPressedField(),
+      grid[0].addRowEnd(addActionComboBox(myComboBoxes, myDescriptions, "Sprite"), addKeyPressedField(),
           addTextField(myParamTextFields), addLabel("", myDescriptions), addLabel("", myChecks));
       this.setWidth(1200);
     } catch (IOException e) {

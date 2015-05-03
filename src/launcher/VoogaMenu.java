@@ -61,7 +61,7 @@ public class VoogaMenu {
 	private static final String RETURN_PROMPT = "Return to Menu";
 	
 	private Group root;
-	
+
 	private double width, height;
 	
 	private Polygon playSection, designSection, socialSection;

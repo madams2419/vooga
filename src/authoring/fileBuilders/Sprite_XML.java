@@ -1,5 +1,6 @@
 package authoring.fileBuilders;
 
+import game_engine.util.Utilities;
 import java.util.ArrayList;
 import java.util.List;
 import org.w3c.dom.Element;
@@ -26,19 +27,31 @@ public class Sprite_XML {
     private Physics physics;
     private int index;
 
-    public Sprite_XML (Sprite s) {
-        populateAnimations(s);
-        initial_state = animation.size() > 0 ? animation.get(0).name : DEFAULT_INITIAL_STATE;
+    public Sprite_XML (Sprite s, double height) {
+        double[] translatedPosition = setTranslation(s, height);
+        populateAnimations(s, translatedPosition);
+        initial_state = animation.get(0).name.length() > 0 ? animation.get(0).name : DEFAULT_INITIAL_STATE;
+        System.out.println("initial state: " + initial_state);
         path = s.getPath();
         physics =
                 new Physics(s.getMyType(), s.getMyMaterial(), String.format(
                                                                             PHYSICS_FORMAT,
-                                                                            s.getXPosition(),
-                                                                            s.getYPosition()));
+                                                                            translatedPosition[0],
+                                                                            translatedPosition[1]));
         index = s.getID();
     }
 
-    private void populateAnimations (Sprite s) {
+
+    private double[] setTranslation (Sprite s, double height) {
+        double nxVal = s.getXPosition();
+        double nyVal = s.getYPosition();
+        double nWidth = s.getImage().getWidth();
+        double nHeight = s.getImage().getHeight();
+        return Utilities.nodeTranslationToPhysicsCenter(nxVal, nyVal, nWidth, nHeight, height);
+    }
+
+
+    private void populateAnimations (Sprite s, double[] translatedPosition) {
         animation = new ArrayList<>();
         s.getAnimations()
                 .getAnimations()
@@ -46,9 +59,8 @@ public class Sprite_XML {
                          (state, imageuri) -> {
                              animation.add(new State(state,
                                                      new Image(imageuri,
-                                                               DELAY_TIME, Double.toString(s
-                                                                       .getWidth()),
-                                                               Double.toString(s.getHeight()))));
+                                                               DELAY_TIME, Double.toString(s.getImage().getWidth()),
+                                                               Double.toString(s.getImage().getHeight()))));
                          });
     }
 
@@ -89,6 +101,7 @@ public class Sprite_XML {
         private static final String DELAY = "delay";
         private static final String SOURCE = "source";
         private static final String IMAGE_ = "image_";
+        private static final String PROJECT_NAME = "voogasalad_HighScrollers/";
         private String source;
         private String delay;
         private String width;
@@ -97,11 +110,15 @@ public class Sprite_XML {
 
         private Image (String source, String delay, String width, String height,
                        Hitbox ... hitboxes) {
-            this.source = source;
+            this.source = getRelativePath(source);
             this.delay = delay;
             this.width = width;
             this.height = height;
             this.hitboxes = hitboxes;
+        }
+
+        private String getRelativePath (String longSource) {
+            return longSource.split(PROJECT_NAME)[1];
         }
 
         public void writeToXML (Element parent, int index, XMLBuilder xml) {

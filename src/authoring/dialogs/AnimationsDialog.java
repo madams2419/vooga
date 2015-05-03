@@ -26,13 +26,6 @@ import authoring.util.ImageEditor;
  */
 public class AnimationsDialog extends DataDialog {
 
-    private List<Button> myImageAdderButtons;
-    private List<TextField> myTextFields;
-    private List<String> myStates, myImageURLs;
-    private List<ImageView> myImageViews;
-    private Map<String, String> myAnimations;
-    private Sprite mySprite;
-
     private static final int PREVIEW_HEIGHT = 100;
     private static final String TITLE = "Animations of Character";
     private static final String ADD_IMAGE = "Set image for state";
@@ -40,10 +33,17 @@ public class AnimationsDialog extends DataDialog {
     private static final String IMAGE = "Image";
     private static final String PREVIEW = "Preview";
     private static final String BLANK = "";
-
     private static final String IMAGE_CHOOSER_DESCRIPTION = "Image Files";
     private static final String[] IMAGE_CHOOSER_EXTENSIONS = { "*.png", "*.jpg",
-                                                              "*.gif" };
+    "*.gif" };
+    
+    private List<Button> myImageAdderButtons;
+    private List<TextField> myTextFields;
+    private List<String> myStates, myImageURLs;
+    private List<ImageView> myImageViews;
+    private Map<String, String> myAnimations;
+    private Sprite mySprite;
+    private int myCount;
 
     public AnimationsDialog (Sprite sprite) {
         initializeEverything(sprite);
@@ -51,8 +51,9 @@ public class AnimationsDialog extends DataDialog {
             new Node[] { new Label(STATE), new Label(IMAGE) , new Label(PREVIEW)});
         setBottomSpacing(130);
         addAddButton();
-        myImageURLs.add(mySprite.getImageURI());
+        myImageURLs.set(0, mySprite.getImageURI());
         myImageViews.get(0).setImage(new Image(mySprite.getImageURI()));
+        populate();
     }
 
     private Button addImageButton (String label, int index) {
@@ -76,15 +77,18 @@ public class AnimationsDialog extends DataDialog {
     @Override
     Consumer<ButtonType> getTodoOnOK (Sprite... s) {
         return (response -> {
-            populateStates();
-            populateAnimationsMap();
+            populate();
             changeSpriteImage();
         });
     }
 
+    private void populate () {
+        populateStates();
+        populateAnimationsMap();
+    }
+
     private void changeSpriteImage () {
         String image = myImageURLs.get(0);
-        System.out.println(image);
         if (image.length() > 0) {
             mySprite.changeImage(image);
         }
@@ -113,7 +117,8 @@ public class AnimationsDialog extends DataDialog {
 
     @Override
     void addBlankRow (int index, DialogGridOrganizer... grid) {
-        grid[0].addRowEnd(addTextField(myTextFields), addImageButton(ADD_IMAGE, index), addImageView());
+        grid[0].addRowEnd(addTextField(myTextFields, BLANK + myCount++), 
+                          addImageButton(ADD_IMAGE, index), addImageView());
         myImageURLs.add(BLANK);
     }
 

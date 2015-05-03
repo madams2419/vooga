@@ -13,6 +13,8 @@ import authoring.dataEditors.Sprite;
 public class DefaultMode implements Mode {
 
     public void mouseDragged (MouseEvent a, Sprite s) {
+        System.out.println(a.getSceneX() - (s.getImage().getWidth() / 2));
+        System.out.println(a.getSceneY() - (s.getImage().getHeight() / 2));
         s.setXPosition(a.getSceneX() - (s.getImage().getWidth() / 2));
         s.setYPosition(a.getSceneY() - (s.getImage().getHeight() / 2));
     }

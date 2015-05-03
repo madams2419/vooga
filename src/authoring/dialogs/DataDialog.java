@@ -27,6 +27,7 @@ import authoring.userInterface.DialogGridOrganizer;
 public abstract class DataDialog extends Dialog<ButtonType> {
 
     private static final String ADD = "Add";
+    private static final String BLANK = "";
     private int myBottomSpacing = 25; // default value
     private int myIndex;
     private DialogGridOrganizer[] myGrids;
@@ -98,7 +99,12 @@ public abstract class DataDialog extends Dialog<ButtonType> {
     }
     
     TextField addTextField (List<TextField> list) {
+        return addTextField(list, BLANK);
+    }
+    
+    TextField addTextField (List<TextField> list, String value) {
         TextField textField = new TextField();
+        textField.setText(value);
         list.add(textField);
         return textField;
     }
