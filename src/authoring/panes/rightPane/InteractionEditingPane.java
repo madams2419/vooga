@@ -45,7 +45,7 @@ public class InteractionEditingPane extends EditingPane {
         GUIElementCreator.addComboBoxToPane(collisionChoices, Constants.SIMPLE, this);
 
         getInteractions();
-        addButtonToReturnToCreationPane(Constants.DONE_BUTTON_STRING);
+        addButtonToReturnToCreationPane(Constants.DONE);
     }
 
     private void setupSprite (ObservableList<String> mySpriteInteractions,

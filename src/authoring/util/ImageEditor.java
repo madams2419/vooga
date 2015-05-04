@@ -11,7 +11,8 @@ import javafx.scene.image.ImageView;
  *
  */
 public class ImageEditor {
-    private static final double maximumOpacity = 1.0;
+    private static final double MAXIMUM_OPACITY = 1.0;
+    private static final double DEFAULT_REDUCTION_RATIO = 0.8;
 
     /**
      * This method reduces the opacity according to a reduction ratio between 0 and 1.
@@ -31,7 +32,7 @@ public class ImageEditor {
      * @param reductionRatio
      */
     public static void restoreOpacity (ImageView imageView) {
-        imageView.setOpacity(maximumOpacity);
+        imageView.setOpacity(MAXIMUM_OPACITY);
     }
 
     /**
@@ -79,6 +80,10 @@ public class ImageEditor {
     public static void setToHeight (ImageView imageView, int height) {
         imageView.setPreserveRatio(true);
         imageView.setFitHeight(height);
+    }
+
+    public static void reduceOpacity (ImageView imageView) {
+        reduceOpacity(imageView, DEFAULT_REDUCTION_RATIO);
     }
 
 }
