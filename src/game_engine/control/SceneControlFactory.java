@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Yancheng Zeng
+
 package game_engine.control;
 
 import java.util.*;
