@@ -302,7 +302,10 @@ public class Sprite extends ImageView {
         myControls = c;
     }
 
-    public ControlsDialog getControls () {
+    public ControlsDialog getControls (RightPane rightPane) {
+        if (myControls == null) {
+            setControls(new ControlsDialog(this, rightPane));
+        }
         return myControls;
     }
 

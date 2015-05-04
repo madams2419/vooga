@@ -23,7 +23,7 @@ public class LevelSettingPane extends EditingPane {
     public void updateLevels(RightPane parent){
         this.getChildren().clear();
         /* Default Map */
-        List<List<CenterCanvas>> it = myParent.getParent().getCenterPane().getMaps();
+        List<List<CenterCanvas>> it = getMyParent().getParent().getCenterPane().getMaps();
         int levelIndex = 0, mapIndex = 0;
         HBox h = new HBox(5);
         for(int i = 0; i < it.size(); i++){

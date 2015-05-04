@@ -75,7 +75,7 @@ public class MapSettingPane extends EditingPane {
 	}
 
 	private void addPhysicsEngine() {
-		myParent.getParent()
+	    getMyParent().getParent()
 				.getCenterPane()
 				.getActiveTab()
 				.addPhysics(

@@ -71,7 +71,7 @@ public class ObjectivePane extends EditingPane {
 
     public void returnFromSpriteSelection (Sprite s) {
         currentDialog.setSprite(s);
-        myParent.getParent().setSpriteWaiting(false);
+        getMyParent().getParent().setSpriteWaiting(false);
         currentDialog.showBox();
     }
 

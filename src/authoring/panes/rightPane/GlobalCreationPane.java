@@ -113,7 +113,7 @@ public class GlobalCreationPane extends EditingPane {
             myValueMap.put((((Text) hbox.getChildren().get(0)).getText()),
                        (((TextField) hbox.getChildren().get(1)).getText()));
         });
-        myParent.getParent().setGlobalProperties(myValueMap);
+        getMyParent().getParent().setGlobalProperties(myValueMap);
         return myValueMap;
         // System.out.println(sprite.getCharacteristics().toString());
     }

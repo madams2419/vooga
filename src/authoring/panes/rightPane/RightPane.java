@@ -70,7 +70,7 @@ public class RightPane extends WindowPane {
     }
 
     public void switchToCharacterEditingPane (Sprite sprite) {
-        switchToPane(new CharacterEditingPane(myScene, this, sprite, miscellaneousImages));
+        switchToPane(new CharacterEditingPane(myScene, this, sprite, null));
     }
     
     void deleteSprite (Sprite sprite) {

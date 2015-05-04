@@ -16,7 +16,7 @@ public abstract class EditingPane extends SafeVBox {
 
     private static final String RETURN_TO_CREATION_METHOD = "switchToCharacterCreationPane";
     private Scene myScene;
-    protected RightPane myParent;
+    private RightPane myParent;
 
     public EditingPane (Scene scene, RightPane parent) {
         assert (scene != null);
@@ -36,7 +36,7 @@ public abstract class EditingPane extends SafeVBox {
     void addButtonToReturnToCreationPane (String label) {
         try {
             GUIElementCreator.
-                    createButton(label,
+                    addButton(label,
                                  new ClickHandler(RightPane.class
                                          .getMethod(RETURN_TO_CREATION_METHOD), myParent), this);
         }

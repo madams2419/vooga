@@ -38,9 +38,9 @@ public class CreationPane extends EditingPane {
     }
 
     private void createComponents (List<String> availableTypeURIs) {
-        GUIElementCreator.createLabel(HELP_LABEL_CONTENT, this);
+        GUIElementCreator.addLabel(HELP_LABEL_CONTENT, this);
         addSpritesToPane();
-        GUIElementCreator.createButton(ADD_NEW_SPRITE_LABEL, i -> addNewCreatable(), this);
+        GUIElementCreator.addButton(ADD_NEW_SPRITE_LABEL, i -> addNewCreatable(), this);
         myAvailableTypeURIs = availableTypeURIs;
     }
 
@@ -67,7 +67,7 @@ public class CreationPane extends EditingPane {
     }
 
     private void addSpriteToPane (int id, String imageURI, VBox v) {
-        Sprite sampleImage = new Sprite(id, imageURI, myParent.getParent()
+        Sprite sampleImage = new Sprite(id, imageURI, getMyParent().getParent()
                 .getCenterPane());
 
         ImageView sampleImageIcon = sampleImage.getIcon();
@@ -81,7 +81,7 @@ public class CreationPane extends EditingPane {
 
     private void imageClicked (Sprite sampleImage) {
         getMyScene().setCursor(
-                               new SpriteCursor(new Sprite(sampleImage, ID++, myParent
+                               new SpriteCursor(new Sprite(sampleImage, ID++, getMyParent()
                                        .getParent().getCenterPane())));
 
     }
