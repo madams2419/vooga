@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Andrew Sun
+
 package authoring.dialogs;
 
 import game_engine.annotation.ReadProperties;
@@ -15,7 +18,13 @@ import javafx.scene.control.TextField;
 import javafx.util.Callback;
 import authoring.dataEditors.Action;
 
-
+/**
+ * This class creates dialogs that deal with Actions.
+ * The reason that this class needs to be in a separate class is because 
+ * instead of String comboBoxes, we need Action comboBoxes.
+ * @author Andrew Sun
+ *
+ */
 public abstract class ActionsDialog extends DataDialog {
 
     private static final String PROPERTIES_EXTENSION = ".properties";
@@ -23,7 +32,6 @@ public abstract class ActionsDialog extends DataDialog {
     private static final String NUM_PARAMS = "numParams";
     private static final String DESCRIPTION = "description";
     private static final String NAME = "name";
-    private static final String ACTIONS_PROPERTIES = "Sprite.properties";
 
     TextField addParamTextField (List<TextField> list, List<ComboBox<Action>> comboList,
                                  List<Label> check) {
@@ -52,12 +60,7 @@ public abstract class ActionsDialog extends DataDialog {
                     @Override
                     protected void updateItem (Action t, boolean bln) {
                         super.updateItem(t, bln);
-                        if (t != null) {
                             setText(t.getAction());
-                        }
-                        else {
-                            setText(null);
-                        }
                     }
                 };
                 return cell;

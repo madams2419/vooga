@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Andrew Sun
+
 package authoring.dialogs;
 
 import java.io.IOException;
@@ -14,7 +17,11 @@ import authoring.dataEditors.Sprite;
 import authoring.panes.rightPane.RightPane;
 import authoring.userInterface.DialogGridOrganizer;
 
-
+/**
+ * Creates Dialog to set objectives when two sprites interact.
+ * @author Andrew Sun, Natalie
+ *
+ */
 public class InteractionObjectiveDialog extends InteractionDialog {
 
     private static final String OBJECTIVE_ID = "Objective ID";

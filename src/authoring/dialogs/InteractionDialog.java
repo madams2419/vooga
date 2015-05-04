@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Andrew Sun
+
 package authoring.dialogs;
 
 import java.io.IOException;
@@ -23,7 +26,7 @@ import authoring.userInterface.DialogGridOrganizer;
 
 /**
  * Superclass for interaction dialogs
- * 
+ * These dialogs are special because they manage interactions between sprites
  * @author Andrew, Natalie
  *
  */
@@ -33,8 +36,6 @@ public abstract class InteractionDialog extends ActionsDialog {
     static final String BLANK = "";
     static final String COLON = ":";
     static final String SIMPLE_RESOLVER = "SimpleResolver:";
-    // static final String SPRITE = "Sprite";
-
     private RightPane myParent;
     List<List<ComboBox<Action>>> myComboBoxes = new ArrayList<>();
     List<List<Label>> myDescriptions = new ArrayList<>();
@@ -136,9 +137,9 @@ public abstract class InteractionDialog extends ActionsDialog {
                           addParamTextField(myParams.get(k),
                                             myComboBoxes.get(k),
                                             myChecks.get(k)),
-                          addLabel(InteractionDialog.BLANK,
+                          addLabel(BLANK,
                                    myDescriptions.get(k)),
-                          addLabel(InteractionDialog.BLANK, myChecks.get(k)) };
+                          addLabel(BLANK, myChecks.get(k)) };
     }
 
     abstract String getProperty ();

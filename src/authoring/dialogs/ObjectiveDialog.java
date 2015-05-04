@@ -125,11 +125,6 @@ public class ObjectiveDialog extends DataDialog {
         myActionsList), addTextField(mParams), addPrereqsBox());
   }
   
-  @Override
-  void addAdditionalBlankRow(int index, DialogGridOrganizer... grid) {
-    grid[0].addRowEnd(addStatesBox(), addSpritesBox(), addComboBox(mActions, 
-        myActionsList), addTextField(mParams));
-  }
 
   @Override
   Consumer<ButtonType> getTodoOnOK(Sprite... s) {

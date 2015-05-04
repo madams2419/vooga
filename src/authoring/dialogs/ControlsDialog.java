@@ -35,7 +35,7 @@ public class ControlsDialog extends ActionsDialog {
 
   private String[] myMouseClickedStrings = { "onClicked", "whilePressed", "onReleased" };
 
-  // TODO: refactoring
+  
   public ControlsDialog(Sprite s, RightPane r) {
     initializeVariables(r);
     initialize (5, 1, 1,

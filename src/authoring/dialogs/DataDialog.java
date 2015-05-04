@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Andrew Sun
+
 package authoring.dialogs;
 
 import java.util.List;
@@ -19,8 +22,7 @@ import authoring.userInterface.DialogGridOrganizer;
 
 /**
  * Superclass for the dialogs.
- * 
- * @author Natalie, Andrew
+ * @author Natalie, Andrew Sun
  *
  */
 
@@ -67,7 +69,7 @@ public abstract class DataDialog extends Dialog<ButtonType> {
         System.out.println("add button: " + addButton);
         addButton.addEventFilter(ActionEvent.ACTION, event -> {
             this.setHeight(this.getHeight() + myBottomSpacing);
-            addAdditionalBlankRow(myIndex++, myGrids);
+            addRow(myIndex++);
             event.consume();
         });
     }
@@ -127,7 +129,4 @@ public abstract class DataDialog extends Dialog<ButtonType> {
 
     abstract void addOtherComponents(DialogGridOrganizer... grid);
 
-    void addAdditionalBlankRow (int index, DialogGridOrganizer[] grid) {
-        addBlankRow(index, grid);
-    }
 }
