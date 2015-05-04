@@ -1,20 +1,12 @@
 package game_engine.physics;
 
-public interface IPhysicsEngine {
+import game_engine.physics.utilities.Vector;
 
-	public IPhysicsEngine buildEngine();
+public interface IPhysicsEngine{
 
 	public void update(double timeStep);
 
-	public void addGlobalForce(String name, double xVal, double yVal);
-
-	public void addGlobalAccel(String name, double xVal, double yVal);
-
-	public void removeGlobalForce(String name);
-
-	public void removeGlobalAccel(String name);
-
-	public IPhysicsObject addPhysicsObject(double xPos, double yPos, double width, double height, double density, double restitution);
+	public IPhysicsObject addPhysicsObject(Vector position);
 
 	public boolean isCollided(IPhysicsObject poA, IPhysicsObject poB);
 

@@ -1,26 +1,24 @@
+// This entire file is part of my masterpiece.
+// Emre Sonmez
 package game_engine.physics;
+
+import game_engine.physics.utilities.Vector;
 
 public interface IPhysicsObject {
 
-	public void addForce(double xVal, double yVal);
+	public void addVelocity(Vector velocity);
 
-	public void removeForce(double xVal, double yVal);
+	public void setVelocity(Vector velocity);
+	
+	public void removeVelocity(Vector velocity);
 
-	public void addPointingForce(double xVal, double yVal);
+	public void applyVelocity(Vector velocity);
 
-	public void addPointingForce(double magnitude);
-
-	public void addVelocity(double xVal, double yVal);
-
-	public void removeVelocity(double xVal, double yVal);
-
-	public void applyVelocity(double xVal, double yVal);
-
-	public double setXPixels();
+	public void setXPixels(double xPixels);
 
 	public double getXPixels();
 
-	public double setYPixels();
+	public void setYPixels(double xPixels);
 
 	public double getYPixels();
 
@@ -29,6 +27,8 @@ public interface IPhysicsObject {
 	public double getWidthPixels();
 
 	public double getHeightPixels();
+
+	public boolean isTransparent();
 
 }
 

@@ -12,7 +12,7 @@ import game_engine.physics.utilities.Constants;
 import game_engine.physics.utilities.Scaler;
 import game_engine.physics.utilities.Vector;
 
-public class PhysicsEngine {
+public class PhysicsEngine implements IComplexPhysicsEngine{
 
 	private double myDrag;
 	private Map<String, Vector> myGlobalForces;
@@ -120,6 +120,36 @@ public class PhysicsEngine {
 
 	public boolean isCollided(PhysicsObject poA, PhysicsObject poB) {
 		return myCollisionManager.isCollided(poA, poB);
+	}
+
+	@Override
+	public IPhysicsObject addPhysicsObject(Vector position) {
+		return null;
+	}
+
+	@Override
+	public boolean isCollided(IPhysicsObject poA, IPhysicsObject poB) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void addGlobalForce(String name, double xVal, double yVal) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addGlobalAccel(String name, double xVal, double yVal) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public IPhysicsObject addPhysicsObject(double xPos, double yPos,
+			double width, double height, double density, double restitution) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Emre Sonmez
+
 package game_engine.physics;
 
 import game_engine.physics.rigidbodies.RigidBody;
@@ -7,12 +10,7 @@ import game_engine.physics.utilities.Vector;
 import java.util.Observable;
 import java.util.function.Supplier;
 
-// TODO
-// - change apply impulse to be what add velocity is now (maybe call this apply velocity)
-// - change add velocity to add a velocity to a list of velocities that gets applied at every time step
-// - remove all Pixels methods (everything just needs to use the scaler)
-
-public class PhysicsObject extends Observable {
+public class PhysicsObject extends Observable implements IComplexPhysicsObject{
 
 	private double myInvMass;
 	private Material myMaterial;
@@ -46,7 +44,6 @@ public class PhysicsObject extends Observable {
 	}
 
 	public void update(double dt) {
-		//TODO replace with strategy pattern
 		if(myPositionConstraint == null) {
 			myAccel = computeAccel();
 			myVelocity = myVelocity.plus(myAccel.times(dt));
@@ -61,9 +58,7 @@ public class PhysicsObject extends Observable {
 		notifyObservers();
 	}
 
-	//TODO change to posotion modifier
 	public void constrainPosition(Supplier<Vector> positionConstraint) {
-		//TODO replace with strategy pattern
 		myPositionConstraint = positionConstraint;
 	}
 
@@ -97,22 +92,6 @@ public class PhysicsObject extends Observable {
 		Vector direction = myVelocity.normalize();
 		Vector intForce = direction.times(myDirForceMagnitude);
 		return intForce.plus(myPhysics.getDragForce(this));
-	}
-
-	public void addForce(Vector force) {
-		myNetInternalForce = myNetInternalForce.plus(force);
-	}
-
-	public void removeForce(Vector force) {
-		myNetInternalForce = myNetInternalForce.minus(force);
-	}
-
-	public void addPointingForce(double magnitude) {
-		myDirForceMagnitude += magnitude;
-	}
-
-	public void removePointingForce(double magnitude) {
-		myDirForceMagnitude -= magnitude;
 	}
 
 	//TODO refactor so apply and add velocity have different behaviors
@@ -243,6 +222,26 @@ public class PhysicsObject extends Observable {
 
 	public boolean isTransparent() {
 		return getRestitution() < 0;
+	}
+
+	@Override
+	public void addForce(Vector force) {
+		myNetInternalForce = myNetInternalForce.plus(force);
+	}
+
+	@Override
+	public void removeForce(Vector force) {
+		myNetInternalForce = myNetInternalForce.minus(force);
+	}
+
+	@Override
+	public void addPointingForce(double magnitude) {
+		myDirForceMagnitude += magnitude;
+	}
+	
+	@Override
+	public void removePointingForce(double magnitude) {
+		myDirForceMagnitude -= magnitude;
 	}
 
 }
