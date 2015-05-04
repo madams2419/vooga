@@ -1,3 +1,6 @@
+//This entire file is part of my masterpiece
+//Michael Lee
+
 package utilities.SocialCenter;
 
 import javafx.animation.RotateTransition;
@@ -8,6 +11,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import utilities.SocialCenter.shape_pages.IShapePage;
 
 public class SocialCenterMenu {
 	private Stage myStage;
@@ -15,10 +19,9 @@ public class SocialCenterMenu {
 	private Scene myMenu;
 	private Scene myLogin;
 	// hexpage variables
-	private HexPage myHexPage;
-	private Group myHexGroup = new Group();
-	private static final int HEX_SIZE = 90;
-	private static final int MENU_OFFSET = 20;
+	private double[] params = {400, 300, 90, 20};
+	private IShapePage myPage;
+	private Group myPageGroup = new Group();
 	// menu
 	private static final int ROTATION = 3;
 	private static final int ROTATION_CYCLE = 7;
@@ -27,8 +30,8 @@ public class SocialCenterMenu {
 	// CSS tags
 	private static final String CSS = "styles/social_menu.css";
 	private static final String CSS_BACKGROUND = "background";
-	private static final String CSS_HEX = "hex";
-	private static final String CSS_HEXHOVER = "hexHover";
+	private static final String CSS_TILE = "hex";
+	private static final String CSS_HOVER = "hexHover";
 
 	// image url
 	private static final String PROFILE = "http://upload.wikimedia.org/wikipedia/en/a/a5/StickFigurePortrait.jpg";
@@ -42,6 +45,10 @@ public class SocialCenterMenu {
 	private ProfilePage pp;
 	private StatsPage sp;
 	private ChatPage cp;
+	
+	private static final String PAGE_TYPE = "utilities.SocialCenter.shape_pages.HexPage";
+	private static final String TILE_TYPE = "utilities.SocialCenter.shape_pages.HexTile";
+	
 
 	public SocialCenterMenu(String id, double width, double height,
 			Scene login, Stage stage) {
@@ -50,61 +57,72 @@ public class SocialCenterMenu {
 		ID = id;
 		WIDTH = width;
 		HEIGHT = height;
-		initializeHexPage();
+//		initializeHexPage();
+
+		initializeMenu(PAGE_TYPE, TILE_TYPE);
 		myRoot.getStyleClass().add(CSS_BACKGROUND);
 		myMenu.getStylesheets().add(CSS);
 	}
 
-	private void initializeHexPage() {
+	private void initializeMenu(String pageType, String tileType){
+		
 		myMenu = new Scene(myRoot, WIDTH, HEIGHT);
-		myHexPage = new HexPage(WIDTH / 2, HEIGHT / 2, HEX_SIZE, MENU_OFFSET);
-		myHexPage.addGroup(myHexGroup);
-		myHexPage.addTag(CSS_HEX);
+	
+			try {
+				myPage = (IShapePage) Class.forName(pageType).newInstance();
+			} catch (InstantiationException | IllegalAccessException
+					| ClassNotFoundException e1) {
+				e1.printStackTrace();
+			}
+			myPage.defineMatrix(params[0], params[1], params[2], params[3], tileType);
+			myPage.addGroup(myPageGroup);
+			myPage.addTag(CSS_TILE);
+			
+			//apply unique css id
+			//apply a animation?
+			for (int i = 0; i < myPage.getNumberOfTiles(); i++) {
+				int temp = i;
+				String id = CSS_TILE + temp;
+				myPage.getPosition(i).getTile().getStyleClass().add(id);
+				myPage.getPosition(i).getTile().setOnMouseEntered(e -> handleHoverEnter(temp));
+				myPage.getPosition(i).getTile().setOnMouseExited(e -> handleHoverExit(temp));
+			}
+			
+			// PROFILE
+			myPage.getPosition(0).getTile().setOnMouseClicked(e -> goProfilePage());
+			Image profilePic = new Image(PROFILE);
+			myPage.getPosition(0).getTile()
+					.setFill(new ImagePattern(profilePic));
+	
+			// STATSPAGE
+			myPage.getPosition(2).getTile().setOnMouseClicked(e -> goScorePage());
+			Image score = new Image(STATS);
+			myPage.getPosition(2).getTile().setFill(new ImagePattern(score));
+	
+			// BACK TO LOGIN
+			myPage.getPosition(3).getTile().setOnMouseClicked(e -> goLoginPage());
+			Image back = new Image(BACK_BUTTON);
+			myPage.getPosition(3).getTile().setFill(new ImagePattern(back));
+	
+			// CHATPAGE
+			myPage.getPosition(6).getTile().setOnMouseClicked(e -> goChatPage());
+			Image chat = new Image(CHAT);
+			myPage.getPosition(6).getTile().setFill(new ImagePattern(chat));
 
-		for (int i = 0; i < myHexPage.getNumberOfHexagons(); i++) {
-			int temp = i;
-			String id = CSS_HEX + temp;
-			myHexPage.getPosition(i).getHexagon().getStyleClass().add(id);
-
-			myHexPage.getPosition(i).setOnMouseEnter(
-					e -> handleHoverEnter(temp));
-			myHexPage.getPosition(i).setOnMouseExit(e -> handleHoverExit(temp));
-		}
-
-		// PROFILE
-		myHexPage.getPosition(0).setOnMouseClicked(e -> goProfilePage());
-		Image profilePic = new Image(PROFILE);
-		myHexPage.getPosition(0).getHexagon()
-				.setFill(new ImagePattern(profilePic));
-
-		// STATSPAGE
-		myHexPage.getPosition(2).setOnMouseClicked(e -> goScorePage());
-		Image score = new Image(STATS);
-		myHexPage.getPosition(2).getHexagon().setFill(new ImagePattern(score));
-
-		// BACK TO LOGIN
-		myHexPage.getPosition(3).setOnMouseClicked(e -> goLoginPage());
-		Image back = new Image(BACK_BUTTON);
-		myHexPage.getPosition(3).getHexagon().setFill(new ImagePattern(back));
-
-		// CHATPAGE
-		myHexPage.getPosition(6).setOnMouseClicked(e -> goChatPage());
-		Image chat = new Image(CHAT);
-		myHexPage.getPosition(6).getHexagon().setFill(new ImagePattern(chat));
-
-		myRoot.getChildren().add(myHexGroup);
-	}
+			myRoot.getChildren().add(myPageGroup);
+		
+	};
 
 	private void handleHoverExit(int i) {
-		myHexPage.getPosition(i).getHexagon().getStyleClass()
-				.removeAll(CSS_HEXHOVER);
+		myPage.getPosition(i).getTile().getStyleClass()
+				.removeAll(CSS_HOVER);
 	}
 
 	private void handleHoverEnter(int i) {
-		myHexPage.getPosition(i).getHexagon().getStyleClass().add(CSS_HEXHOVER);
+		myPage.getPosition(i).getTile().getStyleClass().add(CSS_HOVER);
 		RotateTransition rt = new RotateTransition(
-				Duration.millis(ROTATION_DURATION), myHexPage.getPosition(i)
-						.getHexagon());
+				Duration.millis(ROTATION_DURATION), myPage.getPosition(i)
+						.getTile());
 		rt.setFromAngle(-ROTATION);
 		rt.setByAngle(ROTATION);
 		rt.setCycleCount(ROTATION_CYCLE);
