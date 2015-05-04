@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Jeannie Chung
+
 package XML;
 
 import java.io.File;
