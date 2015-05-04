@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Andrew Sun
+
 package authoring.dialogs;
 
 import java.io.IOException;
