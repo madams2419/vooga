@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Observer;
 import java.util.Observable;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Rectangle; 
 /**
  * 
  * @authors Brian Lavallee, Kevin Chang, Emre Sonmez

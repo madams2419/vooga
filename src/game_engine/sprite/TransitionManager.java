@@ -59,7 +59,7 @@ public class TransitionManager {
            sprite.getPhysicsObject().constrainPosition(sprite.getAnimation().getPositionSupplier());
            System.out.println("TIME PARAMS:"+myDuration+ " "+myDelay);
            SequentialTransition pt = initializePath((Node) sprite.getImageView(),path,myDuration.get(i),myDelay.get(i));
-           myTransitions.add(pt);
+           myTransitions.add(pt); 
            
            System.out.println(myParams.get(i).length);
           for(int count = 0;count<myParams.get(i).length;count++){
