@@ -1,10 +1,22 @@
 package utilities.SocialCenter;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import XML.QueryParser;
 
 public class Driver {
-
+	private static Map<String,String> queryMap=new HashMap<>();
+	public Driver(){
+		//parse commands
+		QueryParser queries=new QueryParser();
+		queryMap=queries.parse("resources/XML/Query.xml");
+	}
 	// public static void main(String[] args) throws Exception {
 	// getConnection();
 	// createTable();
@@ -12,6 +24,7 @@ public class Driver {
 	// //get();
 	// }
 	//
+	
 	public static ArrayList<String> get(String database, String statement,
 			String... strings) throws Exception {
 		try {
@@ -36,37 +49,35 @@ public class Driver {
 		}
 	}
 
-	public ArrayList<String> getScores(String database, String game,String columnName) {
-		try {
-			Connection con=getConnection(database);
-			PreparedStatement update = con.prepareStatement("SELECT HoJean.HighScore, Duvall.HighScore, Michael.HighScore FROM HoJean INNER JOIN Duvall ON HoJean.GamesPlayed=Duvall.GamesPlayed INNER JOIN Michael ON HoJean.GamesPlayed=Michael.GamesPlayed");
-			ResultSet result = update.executeQuery();
-			ArrayList<String> array = new ArrayList<String>();
-			while (result.next()) {
-				String[] strings={"HoJean.HighScore", "Duvall.HighScore", "Michael.HighScore"};
-				for (int i = 0; i < strings.length; i++) {
-					array.add(result.getString(strings[i]));
-				}
-			}
-			if (result.first() == false) {
-				array.add("none");
-			}
-			return array;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-		
-
-	}
+//	public ArrayList<String> getScores(String database, String game,String columnName) {
+//		try {
+//			Connection con=getConnection(database);
+//			PreparedStatement update = con.prepareStatement("SELECT HoJean.HighScore, Duvall.HighScore, Michael.HighScore FROM HoJean INNER JOIN Duvall ON HoJean.GamesPlayed=Duvall.GamesPlayed INNER JOIN Michael ON HoJean.GamesPlayed=Michael.GamesPlayed");
+//			ResultSet result = update.executeQuery();
+//			ArrayList<String> array = new ArrayList<String>();
+//			while (result.next()) {
+//				String[] strings={"HoJean.HighScore", "Duvall.HighScore", "Michael.HighScore"};
+//				for (int i = 0; i < strings.length; i++) {
+//					array.add(result.getString(strings[i]));
+//				}
+//			}
+//			if (result.first() == false) {
+//				array.add("none");
+//			}
+//			return array;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+//		
+//
+//	}
 
 	public static void updateHS(String database, String ID, String GamesPlayed,
 			String HighScore) throws Exception {
 		try {
 			Connection con = getConnection(database);
-			PreparedStatement update = con.prepareStatement("UPDATE '" + ID
-					+ "' SET HighScore='" + HighScore + "' WHERE Gamesplayed='"
-					+ GamesPlayed + "'");
+			PreparedStatement update = con.prepareStatement(queryMap.get("updateHS"));
 			update.executeUpdate();
 		} catch (Exception e) {
 			System.out.println(e);
@@ -80,8 +91,7 @@ public class Driver {
 		try {
 			Connection con = getConnection(database);
 			PreparedStatement update = con
-					.prepareStatement("UPDATE profile SET ProfilePic='" + URL
-							+ "' WHERE ID='" + ID + "'");
+					.prepareStatement(queryMap.get("updateURL"));
 			update.executeUpdate();
 		} catch (Exception e) {
 			System.out.println(e);
@@ -95,9 +105,7 @@ public class Driver {
 		try {
 			Connection con = getConnection(database);
 			// PreparedStatement posted = con.prepareStatement(statement);
-			PreparedStatement posted = con.prepareStatement("INSERT INTO "
-					+ table + " (GAMESPLAYED,HIGHSCORE) VALUES ('"
-					+ GamesPlayed + "','" + HighScore + "')");
+			PreparedStatement posted = con.prepareStatement("INSERT INTO " + table + " (GAMESPLAYED,HIGHSCORE) VALUES ('" + GamesPlayed + "','" + HighScore + "')");
 			// executeQuery (receives info), executeUpdate(manipulates info)
 			posted.executeUpdate();
 		} catch (Exception e) {
@@ -111,8 +119,7 @@ public class Driver {
 			throws Exception {
 		try {
 			Connection con = getConnection(database);
-			PreparedStatement posted = con.prepareStatement("INSERT INTO "
-					+ table + " (CHATLINE) VALUES ('" + CHAT + "')");
+			PreparedStatement posted = con.prepareStatement("INSERT INTO " + table + " (CHATLINE) VALUES ('" + CHAT + "')");
 			posted.executeUpdate();
 		} catch (Exception e) {
 			System.out.println(e);
@@ -130,8 +137,7 @@ public class Driver {
 			// con.prepareStatement("CREATE TABLE IF NOT EXISTS profile(ID VARCHAR(30), NICKNAME VARCHAR(30), GAMESPLAYED VARCHAR(255), HIGHSCORE INT,PRIMARY KEY(ID))");
 			PreparedStatement create = con
 					.prepareStatement(String
-							.format("CREATE TABLE IF NOT EXISTS %s(GamesPlayed VARCHAR(255), HighScore VARCHAR(255))",
-									ID));
+							.format(queryMap.get("createTable")));
 			create.executeUpdate();
 		} catch (Exception e) {
 			System.out.println(e);
@@ -145,8 +151,7 @@ public class Driver {
 		try {
 			Connection con = getConnection(database);
 			PreparedStatement create = con.prepareStatement(String.format(
-					"CREATE TABLE IF NOT EXISTS %s(CHATLINE VARCHAR(255))",
-					gamename));
+					queryMap.get("createChat")));
 			create.executeUpdate();
 		} catch (Exception e) {
 			System.out.println(e);
@@ -157,7 +162,7 @@ public class Driver {
 
 	public static Connection getConnection(String database) throws Exception {
 		try {
-
+			//System.out.println(queryMap);
 			String driver = "com.mysql.jdbc.Driver";
 			String url=String.format("jdbc:mysql://localhost:3306/%s",database);
 //			String url = String.format("jdbc:mysql://10.190.93.173:3306/%s",database);

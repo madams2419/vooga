@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commands>
+  <gameList>"HighScore",String.format("SELECT GamesPlayed FROM %s",ID),"GamesPlayed"</gameList>
+  <updateHS>"UPDATE '" + ID + "' SET HighScore='" + HighScore + "' WHERE Gamesplayed='" + GamesPlayed + "'"</updateHS>
+  <updateURL>"UPDATE profile SET ProfilePic='" + URL + "' WHERE ID='" + ID + "'"</updateURL>
+  <addGame>"INSERT INTO " + table + " (GAMESPLAYED,HIGHSCORE) VALUES ('" + GamesPlayed + "','" + HighScore + "')"</addGame>
+  <addLine>"INSERT INTO " + table + " (CHATLINE) VALUES ('" + CHAT + "')"</addLine>
+  <createTable>"CREATE TABLE IF NOT EXISTS %s(GamesPlayed VARCHAR(255), HighScore VARCHAR(255))",ID</createTable>
+  <createChat>"CREATE TABLE IF NOT EXISTS %s(CHATLINE VARCHAR(255))",gamename</createChat>
+</commands>
