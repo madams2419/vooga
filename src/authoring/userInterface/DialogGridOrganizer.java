@@ -1,10 +1,11 @@
+
 package authoring.userInterface;
 
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 
 /**
- * 
+ * Creates basic grid to base dialog on
  * @author Andrew
  *
  */
