@@ -1,9 +1,9 @@
 package game_engine.objectives;
 
+import game_engine.annotation.IActionAnnotation;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
 import game_engine.behaviors.IBehavior;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -32,6 +32,7 @@ public class Objective implements IActor {
     private Optional<GameTimer> myTimer;
     private Status myStatus;
     private String myName;
+    private Map<String, IAction> myActions;
 
     protected enum Status {
         INACTIVE,
@@ -57,6 +58,7 @@ public class Objective implements IActor {
         myConditions = new HashMap<>();
         myBehaviors = new HashMap<>();
         myTimer = Optional.empty();
+        myActions = buildActionMap();
     }
 
     /**
@@ -67,8 +69,8 @@ public class Objective implements IActor {
     public void setPreReqs (List<Objective> preReqs) {
         myPreReqs = preReqs;
     }
-    
-    public Collection<Objective> getPreReqs() {
+
+    public Collection<Objective> getPreReqs () {
         return myPreReqs;
     }
 
@@ -113,7 +115,10 @@ public class Objective implements IActor {
      * @return
      */
     private boolean checkTimer (double now) {
-        return myTimer.filter(timer -> timer.isFinished(now)).isPresent();
+        return myTimer.filter(timer -> {
+            timer.update(now);
+            return timer.isFinished();
+        }).isPresent();
     }
 
     /**
@@ -122,10 +127,8 @@ public class Objective implements IActor {
      * @param now
      */
     public void update (double now) {
-        
         updateActive(now);
         if (isActive()) {
-            
             updateStatus(now);
             executeStatus();
         }
@@ -184,28 +187,30 @@ public class Objective implements IActor {
     public void setActive (boolean active, double now) {
         myStatus = active ? Status.ACTIVE : Status.INACTIVE;
         if (isActive()) {
-            myTimer.ifPresent(timer -> timer.start(now));
+            myTimer.ifPresent(timer -> timer.start());
         }
     }
-    
-    public void setName(String name) {
+
+    public void setName (String name) {
         myName = name;
     }
-    
+
     @Override
-    public String toString() {
+    public String toString () {
         return myName;
     }
 
-    public IAction getAction (String name) {
-        if (name.equals("setStatus")){
-            return (params) -> {
-                if (isActive()){
-                    addCondition((now) -> true, params[0]);
-                }
-            };
+    @IActionAnnotation (description = "set status", numParams = 1, paramDetails = "complete, failed, active")
+    private IAction setStatus = (params) -> {
+        if (isActive() && !params[0].equals("active")) {
+            addCondition( (now) -> true, params[0]);
         }
-        return (params) -> {
-        };
+        if (!isFinished() && params[0].equals("active")) {
+            myStatus = Status.ACTIVE;
+        }
+    };
+
+    public IAction getAction (String name) {
+        return myActions.get(name);
     }
 }

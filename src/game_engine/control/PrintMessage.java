@@ -24,6 +24,7 @@ public enum PrintMessage {
 	MICROPHONE_DISABLE("microphone_disable"),
 	MISCROPHONE_ERROR("microphone_error"),
 	RECOGNITION_THREAD_ERROR("recognition_thread_error"),
+	INVALID_CONTROL_TYPE("invalid_control_type"),
 	KEYBOARD("keyboard");
 	private String myString;
 	

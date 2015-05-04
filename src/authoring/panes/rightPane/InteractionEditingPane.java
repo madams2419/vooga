@@ -12,7 +12,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import authoring.dataEditors.Action;
 import authoring.dataEditors.Sprite;
-import authoring.dialogs.InteractionsDialog;
+import authoring.dialogs.ChooseInteractionDialog;
+import authoring.dialogs.InteractionsSpritesDialog;
 
 /**
  * This will allow the user to edit the interaction between two characters.
@@ -85,11 +86,7 @@ public class InteractionEditingPane extends EditingPane {
     }
 
     private void newInteractionDialog (){
-        try {
-            new InteractionsDialog(myParent, mySprite1, mySprite2);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        new ChooseInteractionDialog(myParent, mySprite1, mySprite2);
         getInteractions();
     }
     

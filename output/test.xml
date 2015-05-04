@@ -1,207 +1,136 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game>
-	<first_level>0</first_level>
-	<scene_height>500</scene_height>
-	<scene_width>500</scene_width>
-	<title>simple</title>
+	<scene_width>1920</scene_width>
+	<scene_height>1080</scene_height>
+	<title>default</title>
 	<frame_rate>60</frame_rate>
+	<first_level>0</first_level>
 	<level>
 		<first_level>0</first_level>
 		<level_0>
-			<level_objectives>
-				<objective_0>
-					<description />
-					<prereqs>
-					</prereqs>
-					<onComplete>
-						<behaviors>
-							<behavior_0>
-								<targetType>sprite</targetType>
-								<targetIndex>4</targetIndex>
-								<name>incrementScore</name>
-								<parameters>10 </parameters>
-							</behavior_0>
-						</behaviors>
-					</onComplete>
-					<onFailed>
-						<behaviors>
-							<behavior_0>
-								<targetType>sprite</targetType>
-								<targetIndex>4</targetIndex>
-								<name>setState</name>
-								<parameters>grayMario </parameters>
-							</behavior_0>
-						</behaviors>
-					</onFailed>
-				</objective_0>
-				<objective_1>
-					<description />
-					<prereqs>objective_0 </prereqs>
-					<onComplete>
-						<behaviors>
-							<behavior_0>
-								<targetType>sprite</targetType>
-								<targetIndex>4</targetIndex>
-								<name>setState</name>
-								<parameters>winner </parameters>
-							</behavior_0>
-						</behaviors>
-					</onComplete>
-					<onFailed>
-						<behaviors />
-					</onFailed>
-				</objective_1>
-			</level_objectives>
+			<level_objectives />
 			<sprites>
 				<sprite_0>
 					<initial_state>0</initial_state>
 					<path />
-					<animations />
-					<physics>
-						<type />
-						<material />
-						<position>0.500000 579.500000</position>
-					</physics>
-				</sprite_0>
-				<sprite_4>
-					<initial_state>standing</initial_state>
-					<path />
 					<animations>
 						<state_0>
-							<name>standing</name>
+							<name>0</name>
 							<images>
 								<image_0>
-									<source>/authoring_images/characters/smallStandingMarioR.png
-									</source>
+									<source>authoring_images/blocks/longGround.png</source>
 									<delay>1.0</delay>
-									<width>0.0</width>
-									<height>0.0</height>
+									<width>484.0</width>
+									<height>486.0</height>
 								</image_0>
 							</images>
 						</state_0>
-						<state_1>
-							<name>jumping</name>
-							<images>
-								<image_0>
-									<source>/authoring_images/characters/smallJumpingMarioR.png
-									</source>
-									<delay>1.0</delay>
-									<width>0.0</width>
-									<height>0.0</height>
-								</image_0>
-							</images>
-						</state_1>
-						<state_2>
-							<name>winner</name>
-							<images>
-								<image_0>
-									<source>/authoring_images/characters/smallerLuigi.png
-									</source>
-									<delay>1.0</delay>
-									<width>0.0</width>
-									<height>0.0</height>
-								</image_0>
-							</images>
-						</state_2>
-						<state_3>
-							<name>grayMario</name>
-							<images>
-								<image_0>
-									<source>/authoring_images/characters/grayMario.png
-									</source>
-									<delay>1.0</delay>
-									<width>0.0</width>
-									<height>0.0</height>
-								</image_0>
-							</images>
-						</state_3>
 					</animations>
 					<physics>
 						<type>ComplexPhysicsObject</type>
-						<material>rock</material>
-						<position>51.000000 528.500000</position>
+						<material>floating</material>
+						<position>484.000000 486.000000</position>
 					</physics>
-				</sprite_4>
+				</sprite_0>
+				<sprite_1>
+					<initial_state>0</initial_state>
+					<path />
+					<animations>
+						<state_0>
+							<name>0</name>
+							<images>
+								<image_0>
+									<source>authoring_images/characters/smallStandingMarioR.png</source>
+									<delay>1.0</delay>
+									<width>164.0</width>
+									<height>523.0</height>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>bouncy_ball</material>
+						<position>164.000000 523.000000</position>
+					</physics>
+				</sprite_1>
+				<sprite_2>
+					<initial_state>0</initial_state>
+					<path>408.0 525.0 448.5 479.0 361.5 447.0 401.0 405.0</path>
+					<animations>
+						<state_0>
+							<name>0</name>
+							<images>
+								<image_0>
+									<source>authoring_images/blocks/platform.png</source>
+									<delay>1.0</delay>
+									<width>404.0</width>
+									<height>557.0</height>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
+					<physics>
+						<type>ComplexPhysicsObject</type>
+						<material>floating</material>
+						<position>404.000000 557.000000</position>
+					</physics>
+				</sprite_2>
 				<sprite_5>
 					<initial_state>0</initial_state>
-					<path>345.0 466.0 295.0 401.0 378.0 389.0 339.0 322.0</path>
-					<animations />
+					<path />
+					<animations>
+						<state_0>
+							<name>0</name>
+							<images>
+								<image_0>
+									<source>authoring_images/blocks/platform.png</source>
+									<delay>1.0</delay>
+									<width>575.0</width>
+									<height>645.0</height>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
 					<physics>
-						<type />
-						<material />
-						<position>279.000000 455.500000</position>
+						<type>ComplexPhysicsObject</type>
+						<material>floating</material>
+						<position>575.000000 645.000000</position>
 					</physics>
 				</sprite_5>
 				<sprite_6>
 					<initial_state>0</initial_state>
 					<path />
-					<animations />
+					<animations>
+						<state_0>
+							<name>0</name>
+							<images>
+								<image_0>
+									<source>authoring_images/blocks/platform.png</source>
+									<delay>1.0</delay>
+									<width>775.0</width>
+									<height>730.0</height>
+								</image_0>
+							</images>
+						</state_0>
+					</animations>
 					<physics>
-						<type />
-						<material />
-						<position>461.000000 340.500000</position>
+						<type>ComplexPhysicsObject</type>
+						<material>floating</material>
+						<position>775.000000 730.000000</position>
 					</physics>
 				</sprite_6>
-				<sprite_7>
-					<initial_state>0</initial_state>
-					<path />
-					<animations />
-					<physics>
-						<type />
-						<material />
-						<position>757.000000 208.500000</position>
-					</physics>
-				</sprite_7>
-				<sprite_8>
-					<initial_state>0</initial_state>
-					<path />
-					<animations />
-					<physics>
-						<type />
-						<material />
-						<position>544.000000 510.500000</position>
-					</physics>
-				</sprite_8>
-				<sprite_9>
-					<initial_state>0</initial_state>
-					<path />
-					<animations />
-					<physics>
-						<type />
-						<material />
-						<position>594.000000 340.500000</position>
-					</physics>
-				</sprite_9>
-				<sprite_11>
-					<initial_state>0</initial_state>
-					<path />
-					<animations />
-					<physics>
-						<type />
-						<material />
-						<position>794.000000 103.500000</position>
-					</physics>
-				</sprite_11>
-				<sprite_13>
-					<initial_state>0</initial_state>
-					<path />
-					<animations />
-					<physics>
-						<type />
-						<material />
-						<position>695.000000 545.500000</position>
-					</physics>
-				</sprite_13>
 			</sprites>
 			<physics_engine>
 				<type>ComplexPhysicsEngine</type>
-				<drag_coefficient>0.2</drag_coefficient>
+				<drag_coefficient>0.5</drag_coefficient>
 				<global_accelerations>
-					<accel_0>0 0</accel_0>
+					<accel_0>0 -9.8</accel_0>
 				</global_accelerations>
+				<global_forces />
 			</physics_engine>
 			<controls>
-				<active_scheme />
+				<active_scheme>0</active_scheme>
 				<control_scheme_0>
 					<key_0>
 						<key>SPACE</key>
@@ -209,9 +138,9 @@
 							<behaviors>
 								<behavior_0>
 									<targetType>sprite</targetType>
-									<targetIndex>4</targetIndex>
+									<targetIndex>1</targetIndex>
 									<name>jump</name>
-									<parameters>1000 </parameters>
+									<parameters>2 </parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
@@ -225,9 +154,9 @@
 							<behaviors>
 								<behavior_0>
 									<targetType>sprite</targetType>
-									<targetIndex>4</targetIndex>
+									<targetIndex>1</targetIndex>
 									<name>moveForward</name>
-									<parameters>-20 0 </parameters>
+									<parameters>-2 0 </parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
@@ -241,9 +170,9 @@
 							<behaviors>
 								<behavior_0>
 									<targetType>sprite</targetType>
-									<targetIndex>4</targetIndex>
+									<targetIndex>1</targetIndex>
 									<name>moveForward</name>
-									<parameters>20 0 </parameters>
+									<parameters>2 0 </parameters>
 								</behavior_0>
 							</behaviors>
 						</onPressed>
@@ -253,59 +182,7 @@
 					</key_2>
 				</control_scheme_0>
 			</controls>
-			<collisions>
-				<collision_0>
-					<sprites>4 11 </sprites>
-					<detectors />
-					<resolvers>
-						<resolver_0>
-							<type>SimpleResolver</type>
-							<behaviors>
-								<behavior_0>
-									<targetType>objective</targetType>
-									<targetIndex>1</targetIndex>
-									<name>setStatus</name>
-									<parameters>complete</parameters>
-								</behavior_0>
-							</behaviors>
-						</resolver_0>
-					</resolvers>
-				</collision_0>
-				<collision_1>
-					<sprites>4 8 </sprites>
-					<detectors />
-					<resolvers>
-						<resolver_0>
-							<type>SimpleResolver</type>
-							<behaviors>
-								<behavior_0>
-									<targetType>objective</targetType>
-									<targetIndex>1</targetIndex>
-									<name>setStatus</name>
-									<parameters>failed</parameters>
-								</behavior_0>
-							</behaviors>
-						</resolver_0>
-					</resolvers>
-				</collision_1>
-				<collision_2>
-					<sprites>4 13 </sprites>
-					<detectors />
-					<resolvers>
-						<resolver_0>
-							<type>SimpleResolver</type>
-							<behaviors>
-								<behavior_0>
-									<targetType>objective</targetType>
-									<targetIndex>0</targetIndex>
-									<name>setStatus</name>
-									<parameters>complete</parameters>
-								</behavior_0>
-							</behaviors>
-						</resolver_0>
-					</resolvers>
-				</collision_2>
-			</collisions>
+			<collisions />
 		</level_0>
 	</level>
 </game>

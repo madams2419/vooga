@@ -34,6 +34,7 @@ import javafx.util.Duration;
  *
  */
 public class ChatPage {
+	private static final double TRANSLATE_Y = .75;
 	private Stage myStage;
 	private String ID;
 	private Scene chatScreen;
@@ -41,10 +42,17 @@ public class ChatPage {
 	private StackPane root=new StackPane();
 	private Driver db=new Driver();
 	private String chatName;
+	private Scene Menu;
+	private double myWidth;
+	private double myHeight;
+	private Button myBack;
 	
 	ChatPage(String id, double width, double height, Scene menu){
+		Menu=menu;
 		ID=id;
 		initialize(width,height);
+		myWidth = width;
+		myHeight = height;
 		gameList();
 	}
 	
@@ -53,6 +61,11 @@ public class ChatPage {
 	
 	}
 	
+	private void addBack(){
+		myBack=new Button("Back");
+		myBack.setTranslateY(TRANSLATE_Y*myHeight/2);
+		root.getChildren().add(myBack);
+	}
 
 	private void gameList(){
 		//get the different types of games the user played
@@ -161,6 +174,8 @@ public class ChatPage {
 			prev=db.get("Chat", String.format("SELECT * FROM %s",game), "CHATLINE");
 			ObservableList<String> listViewData=FXCollections.observableArrayList(prev);
 			myChat.setItems(listViewData);
+			addBack();
+			myBack.setOnMouseClicked(e->goBack());
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -170,5 +185,10 @@ public class ChatPage {
 	void getChatScreen(Stage s){
 		myStage=s;
 		s.setScene(chatScreen);
+	}
+	
+	void goBack(){	
+		System.out.println("back");
+		myStage.setScene(Menu);
 	}
 }

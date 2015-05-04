@@ -16,7 +16,8 @@ public class Level_XML {
 
 	public Level_XML(CenterCanvas level) {
 		level_objectives = level.getObjectives();
-		sprites = ObjectToXML.spritesToXML(level.getSprites());
+		sprites = ObjectToXML.spritesToXML(level.getSprites(), 
+		                                   level.getRegion().getHeight());
 		physics_engine = level.getPhysics();
 		controls = new Control_XML(level.getKeyActions());
 		collisions = ObjectToXML.collisionToXML(level);

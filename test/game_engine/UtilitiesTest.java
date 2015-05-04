@@ -1,12 +1,12 @@
 package game_engine;
 
-import static org.junit.Assert.*;
-import game_engine.physics.Vector;
-
+import static org.junit.Assert.assertEquals;
+import game_engine.physics.utilities.Vector;
+import game_engine.util.Utilities;
 import org.junit.Test;
 
 public class UtilitiesTest {
-	
+    
 	@Test
 	public void testPhysicsToJFXPoint() {
 		Vector point = new Vector(300, 50);

@@ -10,7 +10,7 @@ import authoring.dataEditors.Sprite;
 public class Control_XML {
 
     private static final String ACTIVE_SCHEME = "active_scheme";
-    private String active_scheme;
+    private String DEFAULT_ACTIVE_SCHEME = "0";
     private List<ControlScheme> control_schemes;
 
     public Control_XML (Map<Sprite, Map<String, List<String>>> controls) {
@@ -26,7 +26,7 @@ public class Control_XML {
     }
 
     public void writeToXML (Element control, XMLBuilder xml) {
-        xml.addChildWithValue(control, ACTIVE_SCHEME, active_scheme);
+        xml.addChildWithValue(control, ACTIVE_SCHEME, DEFAULT_ACTIVE_SCHEME);
         for (int i = 0; i < control_schemes.size(); i++)
             control_schemes.get(i).writeToXML(control, i, xml);
     }

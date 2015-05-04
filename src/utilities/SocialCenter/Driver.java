@@ -160,10 +160,10 @@ public class Driver {
 
 			String driver = "com.mysql.jdbc.Driver";
 			String url=String.format("jdbc:mysql://localhost:3306/%s",database);
-			//String url = String.format("jdbc:mysql://10.190.59.147:3306/%s",database);
+//			String url = String.format("jdbc:mysql://10.190.93.173:3306/%s",database);
 			
-			//String username = "guest";
-			//String password = "password";
+//			String username = "guest";
+//			String password = "password";
 			String username="root";
 			String password="Tkfkdgo<3";
 			Class.forName(driver);

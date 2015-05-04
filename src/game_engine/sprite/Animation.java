@@ -1,22 +1,19 @@
 package game_engine.sprite;
 
-import game_engine.Utilities;
-import game_engine.physics.RigidBody;
-import game_engine.physics.Vector;
 import game_engine.physics.PhysicsObject;
-
+import game_engine.physics.rigidbodies.RigidBody;
+import game_engine.physics.utilities.Vector;
+import game_engine.util.Utilities;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-
 import java.util.Observer;
 import java.util.function.Supplier;
 /**
@@ -24,7 +21,7 @@ import java.util.function.Supplier;
  * @author Kevin Chang, Brian Lavalee
  * Class to hold images and deal with switching images in sprites
  */
-public class Animation {
+public class Animation implements Observer{
 
 	private ImageView image;
 	private Rectangle rectangle;
@@ -181,10 +178,16 @@ public class Animation {
      */
     private void changeImage(String state) {
     	current = paths.get(state).first;
-    	System.out.println(current);
     	image.setImage(current.image);
     	image.setFitWidth(current.image.getWidth());
     	image.setFitHeight(current.image.getHeight());
     	rectangle = new Rectangle(current.image.getWidth(), current.image.getHeight());
+    }
+
+    @Override
+    public void update (Observable o, Object arg) {
+        // TODO Auto-generated method stub
+        rotateImage();
+        
     }
 }

@@ -11,14 +11,14 @@ import java.util.*;
  * @author Yancheng Zeng
  */
 public class VoiceControl implements Control{
-	
+
 	private final String QUIT = "quit";
 	private final String GRAM_FILE = "words";
 	private final String WORD_START = "You said: ";
-	
+
 	private Map<String, IBehavior> mySpeechMap;
 	private SpeechInterface mySpeechInterface;
-	
+
 	/**
 	 * Constructor for VoiceControl.
 	 * @param speechMap Map<String,IBehavior>
@@ -27,7 +27,7 @@ public class VoiceControl implements Control{
 		mySpeechMap = speechMap;
 		mySpeechInterface = new SpeechInterface();
 	}
-	
+
 	public void executeEvent(){
 		initializeRecognizer();
 		Thread voiceThread = new Thread(new Runnable(){
@@ -37,11 +37,11 @@ public class VoiceControl implements Control{
 			}});
 		voiceThread.start();
 	}
-	
+
 	public void initializeRecognizer(){
 		mySpeechInterface.init(GRAM_FILE);
 	}
-	
+
 	private void processInput(){
 		System.out.println(PrintMessage.SPEAK_CUE.getVal());
 		boolean quit = false;
@@ -52,14 +52,14 @@ public class VoiceControl implements Control{
 			} catch (InterruptedException e) {
 				System.out.println(PrintMessage.THREAD_ERROR.getVal());
 			}
-			
+
 			while(mySpeechInterface.getRecognizerQueueSize() > 0){
 				input = mySpeechInterface.popRecognizedString();
-				
+
 				if(input.contains(QUIT)){
 					quit = true;
 				}
-				
+
 				printInput(input);
 
 				if(mySpeechMap.containsKey(input)){
@@ -67,18 +67,14 @@ public class VoiceControl implements Control{
 				}
 			}
 		}
-		
+
 		System.out.println(PrintMessage.CLOSE_SPEECH.getVal());
 		mySpeechInterface.destroy();
 	}
-	
-	/**
-	 * Method printInput.
-	 * @param message String
-	 */
-	private void printInput(String message){
+
+	void printInput(String message){
 		System.out.println(WORD_START + message);
 	}
-	
-	
+
+
 }

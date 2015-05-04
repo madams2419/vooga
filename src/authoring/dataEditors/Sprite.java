@@ -57,6 +57,7 @@ public class Sprite extends ImageView {
     private CharacterPhysicsDialog myPhysics;
     private String myName, myType, myMaterial;
     private Map<Sprite, Map<Action, String>> mySpriteInteractionMap;
+    private Map<Sprite, Map<Action, String>> mySpriteObjectivesMap;
     private Consumer<Sprite> myOnMouseClickedAction;
     private CenterPane myParent;
     private String[] myPath;
@@ -78,14 +79,16 @@ public class Sprite extends ImageView {
         myCharacteristics.put(SCALE, String.valueOf(myScale));
         myIcon = new ImageView();
         changeImage(imageURI);
+        getAnimations();
     }
 
-    public Sprite (CenterPane parent) {
+    private Sprite (CenterPane parent) {
         myParent = parent;
         myName = NAME;
         myPosition = new HashMap<>();
         myVelocity = new HashMap<>();
         mySpriteInteractionMap = new HashMap<>();
+        mySpriteObjectivesMap = new HashMap<>();
         myVelocity.put(X_STRING, DOUBLE_0);
         myVelocity.put(Y_STRING, DOUBLE_0);
         myKeyActions = new HashMap<>();
@@ -101,6 +104,10 @@ public class Sprite extends ImageView {
 
     public Map<Sprite, Map<Action, String>> getInteractionMap() {
     	return mySpriteInteractionMap;
+    }
+    
+    public Map<Sprite, Map<Action, String>> getObjectivesMap() {
+        return mySpriteObjectivesMap;
     }
     
     public Map<Action, String> getInteractionWithSprite(Sprite other) {
@@ -260,10 +267,19 @@ public class Sprite extends ImageView {
     }
 
     public void addInteraction (Sprite otherSprite, Map<Action, String> interaction) {
-    	mySpriteInteractionMap.putIfAbsent(otherSprite, interaction);
-        mySpriteInteractionMap.replace(otherSprite, interaction);
+    	addToMap(mySpriteInteractionMap, otherSprite, interaction);
+    }
+    
+    public void addObjective (Sprite otherSprite, Map<Action, String> interaction){
+        addToMap(mySpriteObjectivesMap, otherSprite, interaction);
     }
 
+    public void addToMap(Map<Sprite, Map<Action, String>> map,
+        Sprite otherSprite, Map<Action, String> interaction){
+        map.putIfAbsent(otherSprite, interaction);
+        map.replace(otherSprite, interaction);
+    }
+    
     @SuppressWarnings("unchecked")
     /***
      * pls make sure all instance variables are string,string maps
