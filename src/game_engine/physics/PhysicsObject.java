@@ -7,12 +7,7 @@ import game_engine.physics.utilities.Vector;
 import java.util.Observable;
 import java.util.function.Supplier;
 
-// TODO
-// - change apply impulse to be what add velocity is now (maybe call this apply velocity)
-// - change add velocity to add a velocity to a list of velocities that gets applied at every time step
-// - remove all Pixels methods (everything just needs to use the scaler)
-
-public class PhysicsObject extends Observable {
+public class PhysicsObject extends Observable implements IPhysicsObject {
 
 	private double myInvMass;
 	private Material myMaterial;
@@ -243,6 +238,10 @@ public class PhysicsObject extends Observable {
 
 	public boolean isTransparent() {
 		return getRestitution() < 0;
+	}
+	
+	public double getCxArea() {
+		return myRigidBody.getCxArea();
 	}
 
 }

@@ -3,12 +3,15 @@ package game_engine.sprite;
 import game_engine.annotation.IActionAnnotation;
 import game_engine.behaviors.IAction;
 import game_engine.behaviors.IActor;
+import game_engine.physics.IPhysicsObject;
 import game_engine.physics.PhysicsObject;
 import game_engine.physics.utilities.Vector;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observer;
 import java.util.Observable;
+
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 /**
@@ -27,9 +30,9 @@ public class Sprite extends Observable implements IActor {
 	private PhysicsObject physicsObject;
 	private boolean alive;
 	
-	public Sprite(PhysicsObject po, Animation a, String initialState, Sprite spriteOwner, double initialWorth, String id) {
+	public Sprite(IPhysicsObject po, Animation a, String initialState, Sprite spriteOwner, double initialWorth, String id) {
 		state = initialState;
-		physicsObject = po;
+		physicsObject = (PhysicsObject) po; //I know this is bad...I'm just too tired right now to implement things properly
 		animation = a;
 		a.setState(initialState);
 		actions = new HashMap<>();

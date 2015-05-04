@@ -12,7 +12,7 @@ import game_engine.physics.utilities.Constants;
 import game_engine.physics.utilities.Scaler;
 import game_engine.physics.utilities.Vector;
 
-public class PhysicsEngine {
+public class PhysicsEngine implements IPhysicsEngine {
 
 	private double myDrag;
 	private Map<String, Vector> myGlobalForces;
@@ -23,7 +23,7 @@ public class PhysicsEngine {
 	private RigidBodyFactory myRigidBodyFactory;
 	private Scaler myScaler;
 
-	private List<PhysicsObject> myObjects;
+	private List<IPhysicsObject> myObjects;
 
 	public PhysicsEngine(double drag, double scaleFactor) {
 		myObjects = new ArrayList<>();
@@ -40,6 +40,10 @@ public class PhysicsEngine {
 	public PhysicsEngine() {
 		this(Constants.DRAG_COEF, Constants.SCALE_FACTOR);
 	}
+	
+	public IPhysicsEngine buildEngine() {
+		return new PhysicsEngine();
+	}
 
 	public void update(double timeStep) {
 		myCollisionManager.checkAndResolveCollisions(myObjects);
@@ -47,8 +51,8 @@ public class PhysicsEngine {
 
 	}
 
-	public Vector getDragForce(PhysicsObject physObj) {
-		double dragCoef = - myDrag * physObj.getRigidBody().getCxArea();
+	public Vector getDragForce(IPhysicsObject physObj) {
+		double dragCoef = - myDrag * physObj.getCxArea();
 		return physObj.getVelocity().times(dragCoef);
 	}
 
@@ -102,13 +106,13 @@ public class PhysicsEngine {
 		return myScaler;
 	}
 
-	public PhysicsObject addPhysicsObject(RigidBody rBody, Material material, Vector position) {
-		PhysicsObject physicsObject = new PhysicsObject(this, rBody, material, position);
+	public IPhysicsObject addPhysicsObject(RigidBody rBody, Material material, Vector position) {
+		IPhysicsObject physicsObject = new PhysicsObject(this, rBody, material, position);
 		myObjects.add(physicsObject);
 		return physicsObject;
 	}
 
-	public void removePhysicsObject(PhysicsObject physicsObject) {
+	public void removePhysicsObject(IPhysicsObject physicsObject) {
 		myObjects.remove(physicsObject);
 	}
 
@@ -118,7 +122,7 @@ public class PhysicsEngine {
 		return myRigidBodyFactory.createRigidBody(width, height);
 	}
 
-	public boolean isCollided(PhysicsObject poA, PhysicsObject poB) {
+	public boolean isCollided(IPhysicsObject poA, IPhysicsObject poB) {
 		return myCollisionManager.isCollided(poA, poB);
 	}
 

@@ -1,26 +1,33 @@
+// This entire file is part of my masterpiece.
+// Michael Adams
+
 package game_engine.physics;
 
+import game_engine.physics.utilities.*;
+
 public interface IPhysicsObject {
+	
+	public void update(double timestep);
 
-	public void addForce(double xVal, double yVal);
+	public void addForce(Vector vector);
 
-	public void removeForce(double xVal, double yVal);
-
-	public void addPointingForce(double xVal, double yVal);
+	public void removeForce(Vector vector);
 
 	public void addPointingForce(double magnitude);
 
-	public void addVelocity(double xVal, double yVal);
+	public void addVelocity(Vector vector);
 
-	public void removeVelocity(double xVal, double yVal);
+	public void removeVelocity(Vector vector);
 
-	public void applyVelocity(double xVal, double yVal);
+	public void applyVelocity(Vector vector);
+	
+	public Vector getPositionPixels();
 
-	public double setXPixels();
+	public void setXPixels(double pixels);
 
 	public double getXPixels();
 
-	public double setYPixels();
+	public void setYPixels(double pixels);
 
 	public double getYPixels();
 
@@ -29,6 +36,12 @@ public interface IPhysicsObject {
 	public double getWidthPixels();
 
 	public double getHeightPixels();
+	
+	public Vector getVelocity();
+	
+	public double getCxArea();
+	
+	public boolean isPositionConstrained();
 
 }
 

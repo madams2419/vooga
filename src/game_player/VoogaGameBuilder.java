@@ -28,6 +28,7 @@ import game_engine.controls.key_controls.PressedKeyControlMap;
 import game_engine.controls.key_controls.ReleasedKeyControlMap;
 import game_engine.objectives.GameTimer;
 import game_engine.objectives.Objective;
+import game_engine.physics.IPhysicsObject;
 import game_engine.physics.Material;
 import game_engine.physics.PhysicsEngine;
 import game_engine.physics.PhysicsObject;
@@ -195,7 +196,7 @@ public class VoogaGameBuilder {
 
 		String id = spriteID.split("_")[1];
 		Animation animation = buildAnimation(engine);
-		PhysicsObject physObj = buildPhysicsObject(animation, engine);
+		IPhysicsObject physObj = buildPhysicsObject(animation, engine);
 		String initialState = parser.getValue("initial_state");
 		Sprite sprite = new Sprite(physObj, animation, initialState, null, 0, id);
 
@@ -259,14 +260,14 @@ public class VoogaGameBuilder {
 	//		return hitbox;
 	//	}
 
-	private PhysicsObject buildPhysicsObject(Animation animation, PhysicsEngine engine) {
+	private IPhysicsObject buildPhysicsObject(Animation animation, PhysicsEngine engine) {
 		parser.moveDown("physics");
 
 		String type = parser.getValue("type");
 		String[] point = parser.getValue("position").split(" ");
 		Vector position = new Vector(Double.parseDouble(point[0]), Double.parseDouble(point[1]));
 		Material material = Material.valueOf(parser.getValue("material").toUpperCase());
-		PhysicsObject physObj = engine.addPhysicsObject(animation.getRigidBody(), material, position);
+		IPhysicsObject physObj = engine.addPhysicsObject(animation.getRigidBody(), material, position);
 
 		parser.moveUp();
 		return physObj;
