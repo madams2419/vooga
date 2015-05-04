@@ -1,3 +1,5 @@
+// This entire file is part of my masterpiece.
+// Emre Sonmez
 package game_engine.physics;
 
 import game_engine.physics.utilities.Vector;

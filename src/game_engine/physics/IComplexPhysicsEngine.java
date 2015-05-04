@@ -1,3 +1,5 @@
+// This entire file is part of my masterpiece.
+// Emre Sonmez
 package game_engine.physics;
 
 public interface IComplexPhysicsEngine extends IPhysicsEngine{
