@@ -120,10 +120,6 @@ public class RightPane extends WindowPane {
 
     }
 
-    public void switchToDefaultPane () {
-        switchToPane(new DefaultEditingPane(myScene, this));
-    }
-
     public void switchPane (Sprite s) throws IOException {
         if (AuthoringWindow.getControl())
             switchToInteractionEditingPane((Sprite) AuthoringWindow.getCurrentlySelected(), s);

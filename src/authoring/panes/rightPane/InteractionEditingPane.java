@@ -13,7 +13,7 @@ import javafx.scene.image.ImageView;
 import authoring.dataEditors.Action;
 import authoring.dataEditors.Sprite;
 import authoring.dialogs.ChooseInteractionDialog;
-import authoring.dialogs.InteractionsSpritesDialog;
+import authoring.util.GUIElementCreator;
 
 /**
  * This will allow the user to edit the interaction between two characters.
@@ -49,7 +49,7 @@ public class InteractionEditingPane extends EditingPane {
         addInteractionParams(UPDATE_INTERACTION_PARAMS);
         
         List<String> collisionChoices = Arrays.asList(SIMPLE, PIXEL_PERFECT, HIT_BOX);
-        addComboBoxToPane(collisionChoices, SIMPLE);
+        GUIElementCreator.addComboBoxToPane(collisionChoices, SIMPLE, this);
         
         getInteractions();
         addButtonToUpdate(UPDATE_BUTTON_STRING);
@@ -70,7 +70,6 @@ public class InteractionEditingPane extends EditingPane {
     	list.clear();
     	Map<Action, String> m = s.getInteractionWithSprite(other);
     	for (Action a : m.keySet()){
-    	    System.out.println("printing");
     	    list.add(a.getAction());
     	}
     }

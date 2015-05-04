@@ -83,4 +83,5 @@ public class MapSettingPane extends EditingPane {
 								.getSelectedItem(),
 								myDragCoefficient.getText(), getAccels()));
 	}
+	
 }

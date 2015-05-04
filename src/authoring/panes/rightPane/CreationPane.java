@@ -3,15 +3,13 @@ package authoring.panes.rightPane;
 import java.io.File;
 import java.util.List;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import authoring.dataEditors.Sprite;
 import authoring.userInterface.SpriteCursor;
 import authoring.util.FrontEndUtils;
+import authoring.util.GUIElementCreator;
 import authoring.util.ImageEditor;
 
 
@@ -25,52 +23,46 @@ import authoring.util.ImageEditor;
 
 public class CreationPane extends EditingPane {
     private static final String HELP_LABEL_CONTENT = "Click on one of the images to select it.";
-    private List<String> myAvailableTypeURIs;
-    private VBox myVBox;
-    private static final String buttonLabel = "+";
-    private static final String imageChooserTitle = "Add New Image";
-    private static final String imageChooserDescription = "Image Files";
-    private static final String[] imageChooserExtensions = { "*.png", "*.jpg",
+    private static final String ADD_NEW_SPRITE_LABEL = "+";
+    private static final String IMAGE_CHOOSER_TITLE = "Add New Image";
+    private static final String IMAGE_CHOOSER_DESCRIPTION = "Image Files";
+    private static final String[] IMAGE_CHOOSER_EXTENSIONS = { "*.png", "*.jpg",
                                                             "*.gif" };
     private static int ID; //we have a static instance variable because we only want to create this once.
+    private List<String> myAvailableTypeURIs;
+    private VBox mySpriteHolder;
     
     CreationPane (Scene scene, RightPane parent, List<String> availableTypeURIs) {
         super(scene, parent);
-        addHelpLabel();
-        myAvailableTypeURIs = availableTypeURIs;
+        createComponents(availableTypeURIs);
+    }
+
+    private void createComponents (List<String> availableTypeURIs) {
+        GUIElementCreator.createLabel(HELP_LABEL_CONTENT, this);
         addSpritesToPane();
-        addButtonToPane(buttonLabel);
+        GUIElementCreator.createButton(ADD_NEW_SPRITE_LABEL, i -> addNewCreatable(), this);
+        myAvailableTypeURIs = availableTypeURIs;
     }
 
-    private void addHelpLabel () {
-        Label label = new Label(HELP_LABEL_CONTENT);
-        getChildren().add(label);
-    }
-
-    private void addButtonToPane (String buttonLabel) {
-        Button b = new Button(buttonLabel);
-        b.setOnAction(i -> addNewCreatable());
-        getChildren().add(b);
-    }
-    
     private void addNewCreatable() {
         File selectedImageFile =
-                FrontEndUtils.selectFile(imageChooserTitle, imageChooserDescription, imageChooserExtensions);
+                FrontEndUtils.selectFile(IMAGE_CHOOSER_TITLE, IMAGE_CHOOSER_DESCRIPTION, 
+                                         IMAGE_CHOOSER_EXTENSIONS);
         
         if (selectedImageFile != null) {
             // not sure if "file://" is the right beginning for all computers
             String path = "file://" + selectedImageFile.getAbsolutePath();
             myAvailableTypeURIs.add(path);
-            addSpriteToPane(myAvailableTypeURIs.size(), path, myVBox);
+            addSpriteToPane(myAvailableTypeURIs.size(), path, mySpriteHolder);
         }
     }
     
     private void addSpritesToPane () {
-        myVBox = new VBox(20);
-        ScrollPane s = new ScrollPane(myVBox);
+        mySpriteHolder = new VBox(20);
+        ScrollPane s = new ScrollPane(mySpriteHolder);
         this.getChildren().add(s);
         for (int i = 0; i < myAvailableTypeURIs.size(); i++) {
-            addSpriteToPane(i, myAvailableTypeURIs.get(i), myVBox);
+            addSpriteToPane(i, myAvailableTypeURIs.get(i), mySpriteHolder);
         }
     }
 
@@ -78,12 +70,8 @@ public class CreationPane extends EditingPane {
         Sprite sampleImage = new Sprite(id, imageURI, myParent.getParent()
                 .getCenterPane());
 
-        int ID = 100; // for now, it doesn't change, but this should eventually
-                      // be unique for each sprite
-
         ImageView sampleImageIcon = sampleImage.getIcon();
-        sampleImageIcon.setOnMouseClicked(e -> imageClicked(sampleImage, ID));
-        sampleImageIcon.setOnMouseDragged(e -> imageDragged(e));
+        sampleImageIcon.setOnMouseClicked(e -> imageClicked(sampleImage));
         sampleImageIcon.setOnMouseEntered(i -> ImageEditor
                 .reduceOpacity(sampleImageIcon, Sprite.OPACITY_REDUCTION_RATIO));
         sampleImageIcon.setOnMouseExited(i -> ImageEditor
@@ -91,11 +79,7 @@ public class CreationPane extends EditingPane {
         v.getChildren().add(sampleImageIcon);
     }
 
-    private void imageDragged (MouseEvent e) {
-
-    }
-
-    private void imageClicked (Sprite sampleImage, int id) {
+    private void imageClicked (Sprite sampleImage) {
         getMyScene().setCursor(
                                new SpriteCursor(new Sprite(sampleImage, ID++, myParent
                                        .getParent().getCenterPane())));

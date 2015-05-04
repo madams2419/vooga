@@ -78,5 +78,6 @@ public class ObjectivePane extends EditingPane {
     public List<Node> getComponents () {
         return components;
     }
+    
 
 }
