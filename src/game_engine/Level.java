@@ -43,7 +43,7 @@ public class Level implements IActor {
 
 	private List<Objective> myObjectives;
 	private ObservableList<Sprite> mySprites;
-	private CollisionsManager myCollisionEngine;
+	private CollisionsManager<Sprite> myCollisionEngine;
 	private ControlsManager myControlManager;
 	private ControlManagerFactory myControlFactory;
 	private Collection<Sprite> myToBeRemoved;
@@ -121,7 +121,7 @@ public class Level implements IActor {
 		return myControlFactory;
 	}
 
-	public void setCollisionEngine(CollisionsManager collisionEngine) {
+	public void setCollisionEngine(CollisionsManager<Sprite> collisionEngine) {
 		myCollisionEngine = collisionEngine;
 	}
 
@@ -184,7 +184,7 @@ public class Level implements IActor {
                                            width, height);
                     wrap.repeatHorizontal();
                     wrap.repeatVertical();
-                    scroller.addBackground(wrap, 0.5);
+                    wrap.scrollParallax(mySpriteGroup, 0.5);
                     myGroup.getChildren().add(wrap.getGroup());
                     wrap.getGroup().toBack();
 	        }

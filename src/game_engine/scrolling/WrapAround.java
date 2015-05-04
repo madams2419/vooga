@@ -137,4 +137,10 @@ public class WrapAround{
             node.setTranslateY(newPos);
         }
     }
+    
+    
+    public void scrollParallax (Group group, double ratio) {
+        myGroup.translateXProperty().bind(group.translateXProperty().multiply(ratio));
+        myGroup.translateYProperty().bind(group.translateYProperty().multiply(ratio));
+    }
 }

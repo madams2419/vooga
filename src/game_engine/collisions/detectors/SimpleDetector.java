@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
  * @author Michael Lee
  * @since 21 April 2015
  */
-public class SimpleDetector implements ICollisionDetector {
+public class SimpleDetector implements ICollisionDetector<Sprite> {
 
 	public boolean detectCollision(Sprite spriteA, Sprite spriteB) {
 		ImageView objectA = spriteA.getImageView();

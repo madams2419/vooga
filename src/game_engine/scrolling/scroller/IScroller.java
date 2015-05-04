@@ -1,6 +1,7 @@
+// This entire file is part of my masterpiece.
+// Tony Qiao
 package game_engine.scrolling.scroller;
 
-import game_engine.scrolling.WrapAround;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 
@@ -30,13 +31,6 @@ public interface IScroller {
     public default void scroll (Point2D point) {
         scroll(point.getX(), point.getY());
     }
-    
-    /**
-     * Adds parallax scrolling.
-     * @param WrapAround
-     * @param ratio Ratio of speed of the background image to the normal group. Should be less than 1.
-     */
-    public void addBackground (WrapAround background, double ratio);
     
     /**
      * 

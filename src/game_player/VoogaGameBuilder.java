@@ -323,10 +323,10 @@ public class VoogaGameBuilder {
 		return actors.get(id);
 	}
 
-	private CollisionsManager buildCollisionsManager(PhysicsEngine engine) {
+	private CollisionsManager<Sprite> buildCollisionsManager(PhysicsEngine engine) {
 		parser.moveDown("collisions");
 
-		CollisionsManager manager = new CollisionsManager();
+		CollisionsManager<Sprite> manager = new CollisionsManager<>();
 
 		for (String directory : parser.getValidSubDirectories("collision")) {
 			manager.addCollision(buildCollision(directory, engine));
@@ -336,17 +336,17 @@ public class VoogaGameBuilder {
 		return manager;
 	}
 
-	private Collision buildCollision(String collisionID, PhysicsEngine engine) {
+	private Collision<Sprite> buildCollision(String collisionID, PhysicsEngine engine) {
 		parser.moveDown(collisionID);
 
 		String[] spriteIds = parser.getValue("sprites").split(" ");
 		Sprite a = sprites.get(spriteIds[0]);
 		Sprite b = sprites.get(spriteIds[1]);
 
-		ICollisionDetector detector = buildDetector(engine);
-		ICollisionResolver resolver = buildResolver(engine);
+		ICollisionDetector<Sprite> detector = buildDetector(engine);
+		ICollisionResolver<Sprite> resolver = buildResolver(engine);
 
-		Collision collision = new Collision(detector, resolver, a, b);
+		Collision<Sprite> collision = new Collision<>(detector, resolver, a, b);
 		parser.moveUp();
 		return collision;
 	}
@@ -439,13 +439,13 @@ public class VoogaGameBuilder {
 
 
     
-    private ICollisionDetector buildDetector(PhysicsEngine engine) {
+    private ICollisionDetector<Sprite> buildDetector(PhysicsEngine engine) {
     	parser.moveDown("detectors");
     	
-    	MultipleDetector detector = new MultipleDetector();
+    	MultipleDetector<Sprite> detector = new MultipleDetector<>();
     	for (String label : parser.getValidLabels()) {
     		String test = parser.getValue(label);
-    		ICollisionDetector component = parser.getValue(label).equals("SimpleDetector") ? new SimpleDetector() : 
+    		ICollisionDetector<Sprite> component = parser.getValue(label).equals("SimpleDetector") ? new SimpleDetector() : 
     										parser.getValue(label).equals("HitboxDetector") ? new PhysicsDetector(engine) :
     											parser.getValue(label).equals("PhysicsDetector") ? new PhysicsDetector(engine) :
     											parser.getValue(label).equals("PixelPerfectDetector") ? new PixelPerfectDetector() : null;
@@ -456,10 +456,10 @@ public class VoogaGameBuilder {
     	return detector;
     }
     
-    private ICollisionResolver buildResolver(PhysicsEngine engine) {
+    private ICollisionResolver<Sprite> buildResolver(PhysicsEngine engine) {
     	parser.moveDown("resolvers");
     	
-    	MultipleResolver resolver = new MultipleResolver();
+    	MultipleResolver<Sprite> resolver = new MultipleResolver<Sprite>();
     	
     	for (String directory : parser.getValidSubDirectories("resolver")) {
     		parser.moveDown(directory);
@@ -469,7 +469,7 @@ public class VoogaGameBuilder {
     			// physical resolver doesn't exist anymore
     		}
     		else if (type.equals("SimpleResolver")) {
-    			resolver.addResolver(new SimpleResolver(buildBehaviorList()));
+    			resolver.addResolver(new SimpleResolver<Sprite>(buildBehaviorList()));
     		}
     		else if (type.equals("HitboxResolver")) {
     			// implement

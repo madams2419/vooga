@@ -34,13 +34,4 @@ public class BasicScroller implements IScroller {
     public Group getGroup () {
         return myGroup;
     }
-    
-    @Override
-    public void addBackground (WrapAround background, double ratio) {
-        Node node = background.getGroup();
-        node.translateXProperty().bind(myGroup.translateXProperty().multiply(ratio));
-        node.translateYProperty().bind(myGroup.translateYProperty().multiply(ratio));
-    }
-
-
 }

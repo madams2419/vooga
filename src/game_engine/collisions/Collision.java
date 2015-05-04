@@ -1,30 +1,30 @@
+// This entire file is part of my masterpiece.
+// Tony Qiao
 package game_engine.collisions;
 
 import game_engine.collisions.detectors.ICollisionDetector;
 import game_engine.collisions.resolvers.ICollisionResolver;
-import game_engine.sprite.Sprite;
 
-public class Collision {
+public class Collision <T> {
+	private T a, b;
 	
-	private Sprite spriteA, spriteB;
+	private ICollisionDetector<T> detector;
+	private ICollisionResolver<T> resolver;
 	
-	private ICollisionDetector detector;
-	private ICollisionResolver resolver;
-	
-	public Collision(ICollisionDetector detect, ICollisionResolver resolve, Sprite a, Sprite b) {
+	public Collision(ICollisionDetector<T> detect, ICollisionResolver<T> resolve, T a, T b) {
 		detector = detect;
 		resolver = resolve;
-		spriteA = a;
-		spriteB = b;
+		this.a = a;
+		this.b = b;
 	}
 	
 	public void update() {
-		if (detector.detectCollision(spriteA, spriteB)) {
-			resolver.resolveCollision(spriteA, spriteB);
+		if (detector.detectCollision(a, b)) {
+			resolver.resolveCollision(a,b );
 		}
 	}
 	
-	public boolean involves (Sprite sprite) {
-	    return spriteA == sprite || spriteB == sprite;
+	public boolean involves (T t) {
+	    return a == t || b == t;
 	}
 }

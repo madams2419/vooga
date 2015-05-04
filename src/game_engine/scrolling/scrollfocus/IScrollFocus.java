@@ -1,3 +1,5 @@
+// This entire file is part of my masterpiece.
+// Tony Qiao
 package game_engine.scrolling.scrollfocus;
 
 import javafx.geometry.Point2D;

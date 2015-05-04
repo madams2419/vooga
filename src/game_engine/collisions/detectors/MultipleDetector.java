@@ -1,7 +1,6 @@
 package game_engine.collisions.detectors;
-
-import game_engine.sprite.Sprite;
-
+//This entire file is part of my masterpiece.
+//Tony Qiao
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +14,9 @@ import java.util.List;
  * @author Brian Lavallee
  * @since 21 April 2015
  */
-public class MultipleDetector implements ICollisionDetector {
+public class MultipleDetector<T> implements ICollisionDetector<T> {
 
-	private List<ICollisionDetector> detectors;
+	private List<ICollisionDetector<T>> detectors;
 
 	/**
 	 * Creates a new MultipleDetectors, must add the detectors.
@@ -32,12 +31,12 @@ public class MultipleDetector implements ICollisionDetector {
 	 * @param list
 	 *            list is a list of pre-determined detectors to be used.
 	 */
-	public MultipleDetector(List<ICollisionDetector> list) {
+	public MultipleDetector(List<ICollisionDetector<T>> list) {
 		detectors = list;
 	}
 
-	public boolean detectCollision(Sprite spriteA, Sprite spriteB) {
-		for (ICollisionDetector detector : detectors) {
+	public boolean detectCollision(T spriteA, T spriteB) {
+		for (ICollisionDetector<T> detector : detectors) {
 			if (!detector.detectCollision(spriteA, spriteB)) {
 				return false;
 			}
@@ -51,7 +50,7 @@ public class MultipleDetector implements ICollisionDetector {
 	 * @param newDetector
 	 *            newDetector is the added detector to be checked.
 	 */
-	public void addDetector(ICollisionDetector newDetector) {
+	public void addDetector(ICollisionDetector<T> newDetector) {
 		detectors.add(newDetector);
 	}
 
@@ -66,7 +65,7 @@ public class MultipleDetector implements ICollisionDetector {
 	 *            priority determines in what order this detector will be
 	 *            checked compared to the other ones.
 	 */
-	public void addDetector(ICollisionDetector newDetector, int priority) {
+	public void addDetector(ICollisionDetector<T> newDetector, int priority) {
 		detectors.add(priority, newDetector);
 	}
 }

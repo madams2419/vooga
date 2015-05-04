@@ -16,7 +16,7 @@ import javafx.scene.image.PixelReader;
  *
  */
 
-public class PixelPerfectDetector implements ICollisionDetector {
+public class PixelPerfectDetector implements ICollisionDetector<Sprite> {
 
     private static Map<Image, boolean[][]> imageToBits = new HashMap<Image, boolean[][]>();
 
