@@ -26,6 +26,7 @@ public class Sprite extends Observable implements IActor {
 	private String id;
 	private PhysicsObject physicsObject;
 	private boolean alive;
+	private TransitionObject transition;
 	
 	public Sprite(PhysicsObject po, Animation a, String initialState, Sprite spriteOwner, double initialWorth, String id) {
 		state = initialState;
@@ -39,6 +40,7 @@ public class Sprite extends Observable implements IActor {
 		alive = true;
 		actions = buildActionMap();
 		this.addObserver(animation);
+		transition = new TransitionObject();
 	}
 	
 	public void update(long timeLapse) {
@@ -169,6 +171,10 @@ public class Sprite extends Observable implements IActor {
 	
 	public void removeObserver(Observer obs){
 	    this.removeObserver(obs);
+	}
+	
+	public TransitionObject getTransitionObject(){
+	    return this.transition;
 	}
  
 }
