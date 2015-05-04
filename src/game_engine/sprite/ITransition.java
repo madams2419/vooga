@@ -1,3 +1,5 @@
+// This entire file is part of my masterpiece.
+// Kevin Chang
 package game_engine.sprite;
 
 import javafx.animation.SequentialTransition;
