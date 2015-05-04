@@ -17,6 +17,11 @@ import javafx.scene.control.TextField;
 import javafx.util.Callback;
 import authoring.dataEditors.Action;
 
+/**
+ * Abstract class that adds action comboboxes and params.
+ * @author Andrew Sun
+ *
+ */
 public abstract class ActionsDialog extends DataDialog{  
   
   TextField addParamTextField(List<TextField> list, List<ComboBox<Action>> comboList,
