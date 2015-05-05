@@ -1,3 +1,5 @@
+// This entire file is part of my masterpiece.
+// Mengchao Feng
 package XML;
 
 import java.io.File;
